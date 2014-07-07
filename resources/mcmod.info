@@ -1,0 +1,16 @@
+[
+{
+  "modid": "gearbox",
+  "name": "Gearbox Mod",
+  "description": "A mod adding better RF power generation.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authors": ["theflogat"],
+  "credits": "The Forge, MCP and FML guys, for making this possible. All modders for being a source of inspiration. All youtubers/streamers for making me wanting to play minecraft",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

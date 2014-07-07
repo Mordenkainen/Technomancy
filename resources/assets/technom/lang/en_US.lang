@@ -1,0 +1,117 @@
+#Item Names
+
+item.techno:essentiaCannon.name=Essentia Cannon
+item.Wand.electric.rod=Energized
+techno:itemMaterial.0.name=Neutronized Metal
+techno:itemMaterial.1.name=Enchanted Coil
+techno:itemMaterial.2.name=Neutronized Gear
+techno:itemMaterial.3.name=Pen Core
+techno:itemMaterial.4.name=Coil Coupler
+techno:pen.name=Pen
+techno:wandCores.0.name=Energized Wand Core
+techno:itemBM.0.name=Sacrificial Ingot
+techno:itemBM.1.name=Life Coil
+techno:itemBO.0.name=Mana Coil
+techno:itemBO.1.name=Manasteel Gear
+techno:pureIron.name=Purified Iron
+techno:pureGold.name=Purified Gold
+techno:pureCopper.name=Purified Copper
+techno:pureTin.name=Purified Tin
+techno:pureSilver.name=Purified Silver
+techno:pureLead.name=Purified Lead
+techno:pureNickel.name=Purified Nickel
+
+#Block Names
+tile.techno:cosmeticOpaque.name=Quantized Glass
+tile.techno:cosmeticPane.name=Quantized Glass Pane
+tile.techno:nodeDynamo.name=Node Dynamo
+tile.techno:essentiaDynamo.name=Essentia Dynamo
+tile.techno:essentiaContainer.name=Quantum Jar
+tile.techno:biomeMorpher.name= Ecologic Transmuter
+tile.techno:nodeGenerator.name=Node Fabricator
+tile.techno:fluxLamp.name=Orderly Lamp
+tile.techno:teslaCoil.name=Essentia Coil
+tile.techno:electricBellows.name=Galvanized Bellows
+tile.techno:creativeJar.name=Creative Jar
+tile.techno:reconstructorBlock.name=Essentia Reconstructor
+tile.techno:crystalBlock.0.name=Spatial Crystal
+tile.techno:crystalBlock.1.name=Reality Crystal
+tile.techno:crystalBlock.2.name=Energy Crystal
+tile.techno:bloodDynamo.name=Blood Dynamo
+tile.techno:condenserBlock.name=Energy Condenser
+tile.techno:bloodFabricator.name=Blood Fabricator
+tile.techno:flowerDynamo.name=Hippie Dynamo
+tile.techno:manaFabricator.name=Mana Fabricator
+tile.techno:processorTC.name=Ignis Incinerator
+tile.techno:processorBM.name=Sanguine Infuser
+tile.techno:processorBO.name=Botanical Purifier
+tile.technom:eldritchConsumer.name=Eldritch Consumer
+
+#Information
+info.techno:purity=Purity
+info.techno:shift=-Hold shift for info-
+info.techno:process=Processed by
+
+#Research Tab
+tc.research_category.TECHNOMANCY=Technomancy
+
+#Research
+tc.research_name.TECHNOBASICS=Magic Machinery
+tc.research_text.TECHNOBASICS=It's auto-magical!
+techno.research_page.TECHNOBASICS.1=After a series of scientifical discoveries, you've figured out ways to incorporate your pre-existing electronics into your new magical discoveries unlocking some new basic materials.
+
+tc.research_name.QUANTUMJARS=Quantum jars
+tc.research_text.QUANTUMJARS=I hear you like essentia...
+techno.research_page.QUANTUMJARS.1=You have discovered a way to use the power of the almighty science to cram more essentia into a jar. This new jar uses quantum mechanics to increase it's maximum storage capacity and therefore can be a bit unstable. The quantum jar is a bit more intelligent and has a higher suction rate than unlabeled warded jars and its suction increases depending on the amount of essentia within it.
+
+tc.research_name.DYNAMO=Magic Dynamos
+tc.research_text.DYNAMO=Making magic energy out of magic energy.
+techno.research_page.DYNAMO.1=After studying the way the Arcane Bore and Infernal Furnce draw essentia for power, you've decided to make your own spinoff using Redstone Flux instead. By hooking the Essentia Dynamo to a series of pipes and wires, you are able to take unused essentia and turn it into Redstone Flux. Certain aspects carry more energy than others and will last longer in the dynamo outputting more power.
+techno.research_page.DYNAMO.2=Continuing on previous research of magical energy, you've realised that vis from nodes is similar to the essentia that items have. By channelling the nodes power, you can drain its vis to make more power. Placing the dynamo underneath the node and attatching appropriate conduits should suffice.
+
+tc.research_name.PEN=Advanced Writing
+tc.research_text.PEN=It's a frickin pen.
+techno.research_page.PEN.1=Do you realise how stupid you are to use an ink and quill all this time? I mean, you've got frickin' wands that shoot frickin' lightning bolts and machines that make energy out of MAGIC for Pete's sake. Has it seriously taken you long just to make a pen? The answer is yes, yes it has. But now you have a pen to use instead of that stupid inkwell.
+
+tc.research_name.NODEGENERATOR=Node Generation
+tc.research_text.NODEGENERATOR=Totally OP.
+techno.research_page.NODEGENERATOR.1=Converting magic to energy is easy enough, but the other way around is far more difficult and expensive. The fabricators need to have 5 blocks space between the two of them as well as facing each other. If done properly, they will start drawing the appropriate essentia. If there is a node between the two blocks (one block higher than the fabricators), then the fabricators will draw all types of essentia and add them to the node, but won't exceed the max vis size. If there is no node, they will either draw taint or aurum depending on their location. You can put however much essentia into either fabricator as long as it exceeds a total of 64.
+techno.research_page.NODEGENERATOR.2= To generate the node, simply right click one of the fabricators with a wand and both will lose all essentia they contain and the fabricator clicked will draw energy ((((Aurum+Taint)/2)^2)*762.939453125 = Energy(RF)) from their internal storage. The size of the node is determined by the total amount of essentia divided by two. The type/modifier is determined by the ratio of aurum to taint and the total amount of essentia. Making a node too big or too small isn't going to turn out pretty as well as putting in too much of one aspect.
+
+tc.research_name.BIOMEMORPHER=Biome Transmutation
+tc.research_text.BIOMEMORPHER=Stupid taint...
+techno.research_page.BIOMEMORPHER.1=After making an excessive amount of ethereal blooms, you've decided to make one that uses energy instead of precious materials to gradually change the surrounding area. By right clicking the Transmuter, you can select the type of biome to a Magical Forest, an Eerie, or Tainted Land. This process doesn't come for free and will require a decent amount of Redstone Flux to operate.
+
+tc.research_name.TESLACOIL=Wireless Essentia
+tc.research_text.TESLACOIL=The only reason you downloaded this mod.
+techno.research_page.TESLACOIL.1=After realising how poorly essentia tubes work, you decide to switch over to a new wireless method that is much more refined. By using a Coil Coupler on an Essentia Coil, you can link the coil to any other source of essentia, particularly jars and coils. Once linked, the coil will draw from the source until it has filled its internal buffer. Any coil can be linked to any amount of sources and any source can be linked to any amount of coils. In order to clear the links the coil has created, simply right click the coil with the coupler to clear all links.
+techno.research_page.TESLACOIL.2=Each coil has an internal buffer of 8 to store essentia in. This buffer will automatically output the base of the coil into any object that can accept essentia through the same side. The coil can be filtered using the same technique as filter tubes.
+
+tc.research_name.FLUXLAMP=Orderly Lamp
+tc.research_text.FLUXLAMP=Did I mention flux florbs?
+techno.research_page.FLUXLAMP.1=By getting seriously annoyed with instability, you've decided to materialize it's unnatural power to a physical form, liquid flux. By feeding Ordo into the top of the lamp, the lamp will check nearby altars for instability and reduce them slightly producing flux as a byproduct. Unfortunately, the lamps don't reduce much instability, you figure that you'll need 5 of them to completely nullify it.
+
+tc.research_name.ENERGIZEDWAND=Energized Wand
+tc.research_text.ENERGIZEDWAND=Drain all the energy!
+techno.research_page.ELECTRICWAND.1=By infusing a normal silverwood wand core with some energy and machines gives it special properties at the cost of its vis storage. By have an active capacitor in your inventory, the wand will draw energy from the capacitor to refill its own vis storage. This wand has a vis storage of 25.
+
+tc.research_name.ELECTRICBELLOWS=Powered Magic
+tc.research_text.ELECTRICBELLOWS=Power power for magic power.
+techno.research_page.ELECTRICBELLOWS.1=After messing around with the power of bellows, you've discovered a way to add some energy into them making them even more powerful. These new bellows can be attatched to either Infernal or Alchemy furnaces. When attatched to the Infernal furnace and supplied with power, the speed at which the furnace cooks is increased greatly. When attatched to an Alchemy furnace and supplied with power, the bellows supplies the furnace with heat to decompose items within it without using any other fuel.
+
+
+tc.research_name.CONDENSER=Condensing Energy
+tc.research_text.CONDENSER=WE NEED MORE POWAH
+techno.research_page.CONDENSER.1=Too much power is never a thing, and now you've got a machine to put it to good use. By hooking up a Energy Condenser to some conduits, you can turn RF into some potentia. The potentia can then easily be piped out of the condenser into your favorite jar.
+
+tc.research_name.PROCESSOR=Processing Ores
+tc.research_text.PROCESSOR=Because Thaumcraft can't do it right.
+techno.research_page.PROCESSOR.1=You've been hunting down a way to increase your ore output without using silly purification methods, and now you've found one. By placing blocks in the left slot and adding Ignis essentia, you've successfully acquired ore doubling through purification. These new purified ores can be processed through other magical devices similar to this one to increase ore output further. To obtain the ingots after the ore has been processed as many times as desired, throw the purified ore into a furnace in order to cook it.
+
+tc.research_name.ELDRITCHCONSUMER=Absorb Your Surroundings
+tc.research_text.ELDRITCHCONSUMER=Shenanigans!
+techno.research_page.ELDRITCHCONSUMER.1=You've been putting a lot of effort to find a way to extract raw essentia directly from those blocks that you see around. While experimenting you found a crossbreed in between a quarry and an alchemical furnace, which can be controlled to either rip off the land beneath it. Unfortunatly you have found that this device is a huge power sink (20 000 RF/block). If you have gogles of revealing, you can see what aspects had the last block eaten.
+
+
+#Creative Tab
+itemGroup.Technomancy=Technomancy

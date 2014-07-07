@@ -1,4 +1,4 @@
 Technomancy
 ===========
 
-Magic and Science, what can go wrong
+Magic and science. What can go wrong?
