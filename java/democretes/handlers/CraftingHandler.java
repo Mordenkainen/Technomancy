@@ -19,35 +19,36 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import democretes.blocks.TMBlocks;
 import democretes.compat.Thaumcraft;
 import democretes.compat.ThermalExpansion;
+import democretes.items.ItemProcessedOre;
 import democretes.items.TMItems;
 
 public class CraftingHandler {
 
 	public static void initFurnaceRecipe() {
-		for(int i = 0; i < 5; i++) {
+		for(int i = 0; i < ((ItemProcessedOre)TMItems.processedIron).itemIcon.length; i++) {
 			FurnaceRecipes.smelting().addSmelting(TMItems.processedIron.itemID, i, new ItemStack(Item.ingotIron, 2 + i, 0), 100);
 		}
-		for(int i = 0; i < 5; i++) {
+		for(int i = 0; i < ((ItemProcessedOre)TMItems.processedIron).itemIcon.length; i++) {
 			FurnaceRecipes.smelting().addSmelting(TMItems.processedGold.itemID, i, new ItemStack(Item.ingotGold, 2 + i, 0), 100);
 		}
 		try{
-			for(int i = 0; i < 5; i++) {
+			for(int i = 0; i < ((ItemProcessedOre)TMItems.processedIron).itemIcon.length; i++) {
 				FurnaceRecipes.smelting().addSmelting(TMItems.processedCopper.itemID, i, new ItemStack(ThermalExpansion.ingotCopper.getItem(),
 						2 + i, ThermalExpansion.ingotCopper.getItemDamage()), 100);
 			}
-			for(int i = 0; i < 5; i++) {
+			for(int i = 0; i < ((ItemProcessedOre)TMItems.processedIron).itemIcon.length; i++) {
 				FurnaceRecipes.smelting().addSmelting(TMItems.processedTin.itemID, i, new ItemStack(ThermalExpansion.ingotTin.getItem(),
 						2 + i, ThermalExpansion.ingotTin.getItemDamage()), 100);
 			}
-			for(int i = 0; i < 5; i++) {
+			for(int i = 0; i < ((ItemProcessedOre)TMItems.processedIron).itemIcon.length; i++) {
 				FurnaceRecipes.smelting().addSmelting(TMItems.processedSilver.itemID, i, new ItemStack(ThermalExpansion.ingotSilver.getItem(),
 						2 + i, ThermalExpansion.ingotSilver.getItemDamage()), 100);
 			}
-			for(int i = 0; i < 5; i++) {
+			for(int i = 0; i < ((ItemProcessedOre)TMItems.processedIron).itemIcon.length; i++) {
 				FurnaceRecipes.smelting().addSmelting(TMItems.processedLead.itemID, i, new ItemStack(ThermalExpansion.ingotLead.getItem(),
 						2 + i, ThermalExpansion.ingotLead.getItemDamage()), 100);
 			}
-			for(int i = 0; i < 5; i++) {
+			for(int i = 0; i < ((ItemProcessedOre)TMItems.processedIron).itemIcon.length; i++) {
 				FurnaceRecipes.smelting().addSmelting(TMItems.processedNickel.itemID, i, new ItemStack(ThermalExpansion.ingotNickel.getItem(),
 						2 + i, ThermalExpansion.ingotNickel.getItemDamage()), 100);
 			}

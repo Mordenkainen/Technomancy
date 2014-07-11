@@ -1,40 +1,35 @@
 package democretes.blocks.machines.tiles;
 
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 
 public class TileBMProcessor extends TileProcessorBase {
-	
-	public String owner;
-	
+
+	public String owner = "";
+
 	public TileBMProcessor() {
-		tagCompound = "Blood Magic";
+		super(2);
 	}
-	
+
 	@Override
-	boolean canProcess() {
-		if(this.owner != null) {
-			if(SoulNetworkHandler.getCurrentEssence(this.owner) > (250 * (this.multiplier + 1))) {
-				return true;
-			}
+	protected boolean getFuel(ItemStack items, int multiplier) {
+		if(!(SoulNetworkHandler.getCurrentEssence(owner) > (75 * (multiplier + 1)))){
+			return false;
 		}
-		return false;		
+		SoulNetworkHandler.setCurrentEssence(owner, (SoulNetworkHandler.getCurrentEssence(owner) - (75 * (multiplier + 1))));
+		return true;
 	}
-	
-	@Override
-	void getFuel() {
-		if(SoulNetworkHandler.getCurrentEssence(this.owner) > (250 * (this.multiplier + 1))) {
-			SoulNetworkHandler.setCurrentEssence(this.owner, (SoulNetworkHandler.getCurrentEssence(this.owner) - (250 * (this.multiplier + 1)))); 
-		}
-	}
-	
+
 	@Override
 	public void writeCustomNBT(NBTTagCompound compound) {
-		compound.setString("Owner", this.owner);
+		super.writeCustomNBT(compound);
+		compound.setString("Owner", owner);
 	}
-	
+
 	@Override
 	public void readCustomNBT(NBTTagCompound compound) {
-		compound.getString("Owner");
+		super.readCustomNBT(compound);
+		owner = compound.getString("Owner");
 	}
 }

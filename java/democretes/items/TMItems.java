@@ -5,6 +5,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import thaumcraft.api.wands.WandRod;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import democretes.lib.Ids;
 import democretes.lib.Names;
 
@@ -34,13 +36,13 @@ public class TMItems {
         itemPen = new ItemPen(Ids.pen);
         itemWandCores = new ItemWandCores(Ids.wandCores);
         itemFusionFocus = new ItemFusionFocus(Ids.focusFusion);        
-        processedIron = new ItemProcessedOre.ItemProcessedIron(Ids.procIron);
-        processedGold = new ItemProcessedOre.ItemProcessedGold(Ids.procGold);
-        processedCopper = new ItemProcessedOre.ItemProcessedCopper(Ids.procCopp);
-        processedTin = new ItemProcessedOre.ItemProcessedTin(Ids.procTin);
-        processedSilver = new ItemProcessedOre.ItemProcessedSilver(Ids.procSilver);
-        processedLead = new ItemProcessedOre.ItemProcessedLead(Ids.procLead);
-        processedNickel = new ItemProcessedOre.ItemProcessedNickel(Ids.procNickel);
+        processedIron = new ItemProcessedOre(Ids.procIron, 14211288, Names.pureIron);
+        processedGold = new ItemProcessedOre(Ids.procGold, 14605824, Names.pureGold);
+        processedCopper = new ItemProcessedOre(Ids.procCopp, 16758834, Names.pureCopper);
+        processedTin = new ItemProcessedOre(Ids.procTin, 12243942, Names.pureTin);
+        processedSilver = new ItemProcessedOre(Ids.procSilver, 13163770, Names.pureSilver);
+        processedLead = new ItemProcessedOre(Ids.procLead, 8163006, Names.pureLead);
+        processedNickel = new ItemProcessedOre(Ids.procNickel, 16053453, Names.pureNickel);
         
         //Registry
         //GameRegistry.registerItem(essentiaCannon, LibNames.ESSENTIA_CANNON_NAME);

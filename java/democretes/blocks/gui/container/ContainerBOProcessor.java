@@ -36,7 +36,7 @@ public class ContainerBOProcessor extends Container {
 	@Override
 	public void addCraftingToCrafters(ICrafting craft) {
 		super.addCraftingToCrafters(craft);
-		craft.sendProgressBarUpdate(this, 0, this.processor.time);
+		craft.sendProgressBarUpdate(this, 0, this.processor.progress);
 		craft.sendProgressBarUpdate(this, 1, this.processor.maxTime);		
 	}
 	
@@ -45,14 +45,14 @@ public class ContainerBOProcessor extends Container {
 		super.detectAndSendChanges();
 		for (int i = 0; i < this.crafters.size(); i++) {
 			ICrafting craft = (ICrafting)this.crafters.get(i);
-			if(this.lastTime != this.processor.time) {
-				craft.sendProgressBarUpdate(this, 0, this.processor.time);
+			if(this.lastTime != this.processor.progress) {
+				craft.sendProgressBarUpdate(this, 0, this.processor.progress);
 		    }
 			if(this.lastMax != this.processor.maxTime) {
 				craft.sendProgressBarUpdate(this, 1, this.processor.maxTime);
 			}
 		}
-		this.lastTime = this.processor.time;
+		this.lastTime = this.processor.progress;
 		this.lastMax = this.processor.maxTime;
 	}
 	
@@ -60,10 +60,7 @@ public class ContainerBOProcessor extends Container {
 	@SideOnly(Side.CLIENT)
 	  public void updateProgressBar(int i, int j)	  {
 		if(i == 0) {
-			this.processor.time = j;
-		}
-		if(i == 1) {
-			this.processor.maxTime = j;
+			this.processor.progress = j;
 		}
 	}
 	

@@ -17,8 +17,9 @@ import democretes.handlers.ConfigHandler;
 
 public class TileTeslaCoil extends TileTechnomancy implements IAspectSource, IEssentiaTransport {
 	
-	public int maxAmount = 2;
-	AspectList aspects = new AspectList();
+	public static final int maxAmount = 16;
+	public int amount = 16;
+	public Aspect as = null;
 	public Aspect aspectFilter = null;
 	public ArrayList<ChunkCoordinates> sources = new ArrayList();
 	public boolean link = false;
@@ -67,21 +68,23 @@ public class TileTeslaCoil extends TileTechnomancy implements IAspectSource, IEs
 		if(!this.sources.isEmpty()) {
 			for(int i = 0; i < sources.size(); i++) {
 				ChunkCoordinates chords = sources.get(i);
-				TileEntity tile = this.worldObj.getBlockTileEntity(chords.posX, chords.posY, chords.posZ);
+				TileEntity tile = worldObj.getBlockTileEntity(chords.posX, chords.posY, chords.posZ);
 				if(tile != null) {
 					IAspectSource source = (IAspectSource)tile;
 					AspectList al = source.getAspects();				
 					for(int ii = 0; ii < al.size(); ii++) {
 						Aspect aspect = al.getAspects()[ii];
-						if(aspect != null) {
+						if(aspect != null && (as==null || as == aspect)) {
 							if(this.aspectFilter == null || aspect == this.aspectFilter) {
 								this.color = aspect.getColor();
-								while(this.aspects.getAmount(aspect) < maxAmount) {							
+								while(amount < maxAmount) {							
 									if(source.takeFromContainer(aspect, 1)) {
 										this.addToContainer(aspect, 1);
 										if(ConfigHandler.fancy) {
 											if(this != null && tile != null && color > 0) {
-												Technomancy.proxy.essentiaTrail(this.worldObj, (double)this.xCoord + 0.5D, (double)this.yCoord + 0.5D, (double)this.zCoord + 0.5D, (double)(tile.xCoord) + 0.5D, (double)(tile.yCoord) + 0.5D, (double)(tile.zCoord) + 0.5D, color);
+												Technomancy.proxy.essentiaTrail(worldObj, (double)xCoord + 0.5D, (double)yCoord + 0.5D,
+														(double)zCoord + 0.5D, (double)(tile.xCoord) + 0.5D, (double)(tile.yCoord) + 0.5D,
+														(double)(tile.zCoord) + 0.5D, color);
 											}
 										}
 									}else{
@@ -107,7 +110,7 @@ public class TileTeslaCoil extends TileTechnomancy implements IAspectSource, IEs
 			if(te instanceof TileTeslaCoil) {
 				return;
 			}
-			int opposite = ForgeDirection.OPPOSITES[this.facing];
+			int opposite = ForgeDirection.OPPOSITES[facing];
 			IEssentiaTransport ic = (IEssentiaTransport)te;
 			if (!ic.canOutputTo(ForgeDirection.getOrientation(opposite))) {
 				return;
@@ -125,17 +128,19 @@ public class TileTeslaCoil extends TileTechnomancy implements IAspectSource, IEs
 	
 	@Override
 	public AspectList getAspects()  {
-	    return this.aspects;
+		AspectList al = new AspectList();
+		al.add(as, amount);
+	    return al;
 	}
 
 	@Override
 	public int addToContainer(Aspect tag, int amount)  {
-		if (amount != 1) {
+		if (amount != 1 ||  (as!=null && as!=tag)) {
 			return amount;
 		}
-		if(this.aspects.getAmount(tag) < 8) {
-			this.aspects.add(tag, amount);				
-			this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+		if(this.amount < maxAmount) {
+			this.amount += amount;				
+			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 			return 0;
 		}
 		return amount;
@@ -143,9 +148,9 @@ public class TileTeslaCoil extends TileTechnomancy implements IAspectSource, IEs
 
 	@Override
 	public boolean takeFromContainer(Aspect tag, int amount)  {
-		if (this.aspects.getAmount(tag) >= amount){
-			this.aspects.remove(tag, amount);
-			this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+		if (this.amount >= amount && (as==null || as==tag)){
+			this.amount -= amount;
+			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 			return true;
 		}
 		return false;		
@@ -158,27 +163,27 @@ public class TileTeslaCoil extends TileTechnomancy implements IAspectSource, IEs
 
 	@Override
 	public boolean doesContainerContainAmount(Aspect tag, int amt) {
-		return this.aspects.getAmount(tag) >= amt;
+		return as==tag && amount>=amt;
 	}
 	
 	@Override
 	public int containerContains(Aspect tag) {
-		return 0;
+		return tag==as ? amount : 0;
 	}
 
 	@Override
 	public boolean isConnectable(ForgeDirection face) {
-		return face == ForgeDirection.getOrientation(this.facing);
+		return face == ForgeDirection.getOrientation(facing);
 	}
 
 	@Override
 	public boolean canInputFrom(ForgeDirection face) {
-		return face == ForgeDirection.getOrientation(this.facing);
+		return face == ForgeDirection.getOrientation(facing);
 	}
 
 	@Override
 	public boolean canOutputTo(ForgeDirection face) {
-		return face == ForgeDirection.getOrientation(this.facing);
+		return face == ForgeDirection.getOrientation(facing);
 	}
 
 	@Override
@@ -224,17 +229,16 @@ public class TileTeslaCoil extends TileTechnomancy implements IAspectSource, IEs
 
 	@Override
 	public Aspect getEssentiaType(ForgeDirection face) {
-		return this.aspects.size() > 0 ? this.aspects.getAspects()[this.worldObj.rand.nextInt(this.aspects.getAspects().length)] : null;
+		return as;
 	}
 
 	@Override
 	public int getEssentiaAmount(ForgeDirection face) {
-		return this.aspects.visSize();
+		return amount;
 	}
 
 	@Override
 	public boolean doesContainerContain(AspectList ot) {
-		return false;
+		return as!=null && ot.aspects.containsKey(as);
 	}
-
 }

@@ -98,7 +98,7 @@ public class BlockProcessor extends BlockBase {
 			return icons[3];
 		}
 		if(side > 1) {
-			if(((TileProcessorBase)tile).isActive()) {
+			if(((TileProcessorBase)tile).isActive) {
 				return icons[1];
 			}
 			return icons[2];
@@ -110,7 +110,7 @@ public class BlockProcessor extends BlockBase {
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(World world, int x, int y, int z, Random r)	  {
 		TileEntity te = world.getBlockTileEntity(x, y, z);
-	    if ((te != null) && ((TileProcessorBase)te).isActive())	    {
+	    if ((te != null) && ((TileProcessorBase)te).isActive)	    {
 	    	float f = x + 0.5F;
     		float f1 = y + 0.2F + r.nextFloat() * 5.0F / 16.0F;
     		float f2 = z + 0.5F;
@@ -145,7 +145,7 @@ public class BlockProcessor extends BlockBase {
 	@Override
 	public int getLightValue(IBlockAccess world, int x, int y, int z) {
 		if(world.getBlockTileEntity(x, y, z) instanceof TileProcessorBase) {
-			if(((TileProcessorBase)world.getBlockTileEntity(x, y, z)).isActive()) {
+			if(((TileProcessorBase)world.getBlockTileEntity(x, y, z)).isActive) {
 				return 12;
 			}
 		}
@@ -182,6 +182,16 @@ public class BlockProcessor extends BlockBase {
 		public BlockBMProcessor(int id) {
 			super(id);
 			this.name = "BM";
+		}
+		
+		@Override
+		public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+			TileBMProcessor te = (TileBMProcessor) w.getBlockTileEntity(x, y, z);
+			if(te.owner.equals("")){
+				te.owner = player.getEntityName();
+				return true;
+			}
+			return super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ);
 		}
 		
 		@Override

@@ -78,24 +78,24 @@ public class BlockCreativeJar extends BlockBase {
 			}
 			if(item != null) {
 				//Adds labels
-				if (container.aspectFilter == null && item.getItemDamage() == 13 && item.getItem() == Thaumcraft.itemResource &&
-						container.aspect != null) {
-					if(((IEssentiaContainerItem)item.getItem()).getAspects(item) != null) {
-						container.aspectFilter = ((IEssentiaContainerItem)item.getItem()).getAspects(item).getAspects()[0];
-						item.stackSize -= 1;
-						if (world.isRemote) {
-							world.playSound(x + 0.5F, y + 0.5F, z + 0.5F, "thaumcraft:page", 1.0F, 1.0F, false);
-						}
-						player.inventoryContainer.detectAndSendChanges();
-					}
-					container.aspectFilter = container.aspect;
-					item.stackSize -= 1;
-					if (world.isRemote) {
-						world.playSound(x + 0.5F, y + 0.5F, z + 0.5F, "thaumcraft:page", 1.0F, 1.0F, false);
-					}
-					player.inventoryContainer.detectAndSendChanges();
-					return true;
-				}				
+//				if (container.aspectFilter == null && item.getItemDamage() == 13 && item.getItem() == Thaumcraft.itemResource &&
+//						container.aspect != null) {
+//					if(((IEssentiaContainerItem)item.getItem()).getAspects(item) != null) {
+//						container.aspectFilter = ((IEssentiaContainerItem)item.getItem()).getAspects(item).getAspects()[0];
+//						item.stackSize -= 1;
+//						if (world.isRemote) {
+//							world.playSound(x + 0.5F, y + 0.5F, z + 0.5F, "thaumcraft:page", 1.0F, 1.0F, false);
+//						}
+//						player.inventoryContainer.detectAndSendChanges();
+//					}
+//					container.aspectFilter = container.aspect;
+//					item.stackSize -= 1;
+//					if (world.isRemote) {
+//						world.playSound(x + 0.5F, y + 0.5F, z + 0.5F, "thaumcraft:page", 1.0F, 1.0F, false);
+//					}
+//					player.inventoryContainer.detectAndSendChanges();
+//					return true;
+//				}
 				//Adds Essentia from Phials
 				if (item.getItem() == Thaumcraft.itemEssence && item.getItemDamage() == 1 && container.amount <= (container.maxAmount - 8)) {
 						if(container.addToContainer(((IEssentiaContainerItem)(IEssentiaContainerItem)player.getHeldItem().getItem())

@@ -1,5 +1,7 @@
 package democretes.blocks.machines.tiles;
 
+import java.util.ArrayList;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
@@ -12,231 +14,208 @@ import cpw.mods.fml.relauncher.SideOnly;
 import democretes.blocks.TileTechnomancy;
 import democretes.items.TMItems;
 
-public class TileProcessorBase extends TileTechnomancy implements ISidedInventory {
+public abstract class TileProcessorBase extends TileTechnomancy implements ISidedInventory {
 
 	public ItemStack[] inv = new ItemStack[2];
+	public boolean isActive;
 	public byte facing;
-	public int time = 0;
-	public int maxTime = 100;
+	public int progress = 0;
+	public static final int maxTime = 100;
 	public String tagCompound;
-	public boolean active;
-	public int multiplier = 0;
+	public ArrayList<String> ores = new ArrayList<String>();
+	public ArrayList<Item> processed = new ArrayList<Item>();
+	public Object[][] associatedObj = {
+			{
+				"oreIron", TMItems.processedIron
+			},{
+				"oreGold", TMItems.processedGold
+			},{
+				"oreCopper", TMItems.processedCopper
+			},{
+				"oreTin", TMItems.processedTin
+			},{
+				"oreSilver", TMItems.processedSilver
+			},{
+				"oreLead", TMItems.processedLead
+			},{
+				"oreNickel", TMItems.processedNickel
+			}
+	};
 
-	public static ItemStack[] pureOres = { 
-		new ItemStack(TMItems.processedIron), 
-		new ItemStack(TMItems.processedGold), 
-		new ItemStack(TMItems.processedCopper), 
-		new ItemStack(TMItems.processedTin), 
-		new ItemStack(TMItems.processedSilver), 
-		new ItemStack(TMItems.processedLead), 
-		new ItemStack(TMItems.processedNickel)};
-
-	String[] processors = {"Thaumcraft", "Botania", "Blood Magic", "Ars Magica", "Witchery", "Totemic" }; 
-
-	boolean ore1 = false;
-	boolean ore2 = false;
-	int f;
+	public TileProcessorBase(int tag) {
+		tagCompound = processors[tag];
+		ores.add("oreIron");processed.add(TMItems.processedIron);
+		ores.add("oreGold");processed.add(TMItems.processedGold);
+		ores.add("oreCopper");processed.add(TMItems.processedCopper);
+		ores.add("oreTin");processed.add(TMItems.processedTin);
+		ores.add("oreSilver");processed.add(TMItems.processedSilver);
+		ores.add("oreLead");processed.add(TMItems.processedLead);
+		ores.add("oreNickel");processed.add(TMItems.processedNickel);
+	}
+	protected String[] processors = {"Thaumcraft", "Botania", "Blood Magic", "Ars Magica", "Witchery", "Totemic" }; 
 
 	@Override
 	public void updateEntity() {
 		if(inv[0] == null) {
-			time = 0;
+			return;
 		}
-		if((ore1 || ore2) && inv[0] != null) {
-			if(inv[0].getTagCompound() != null) {
-				if(inv[0].stackTagCompound.getBoolean(tagCompound)) {
-					return;
-				}
-			}
-			if(canProcess()) {
-				if(inv[1] != null) {
-					if(ore2) {
-						if(inv[1].getItem().itemID != getOreEquivalencies(OreDictionary.getOreID(inv[0])).itemID) {
-							active = false;
-							return;
-						}
-					}
-					if(ore1) {
-						if(inv[0].getItem().itemID != inv[1].getItem().itemID) {
-							active = false;
-							return;
-						}
-					}
-				}
-				if(inv[0] != null) {
-					active = true;
-					time++;
-					worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+
+		if(canProcess(inv[0])){
+			if(isActive){
+				if(progress==0){
+					isActive = !process();
 				}else{
-					return;
-				}
-				if(time >= maxTime) {
-					getFuel();
-					processStuff(f, ore1, ore2);
-					time = 0;
-					return;
-				}else{
-					return;
-				}
-			}
-		}
-		active = false;
-		if(canProcess() && inv[0] != null) {
-			int id = OreDictionary.getOreID(inv[0]);
-			if(!OreDictionary.getOres(id).isEmpty()) {
-				ore2 = true;
-				multiplier = inv[0].getItemDamage() + 1;
-			}
-			for(int i = 0; i < pureOres.length; i++) {
-				if(inv[0].getItem() == pureOres[i].getItem()) {
-					if(inv[0].getItemDamage() < 5) {
-						f = i;					
-						ore1 = true;
-						break;
+					ItemStack stack = getOutput(inv[0]);
+					if(getFuel(stack, stack.getItemDamage() + (stack.stackTagCompound.getInteger(tagCompound) * 2)^2)){
+						progress--;
 					}
 				}
+			}else{
+				isActive = true;
+				progress = maxTime;
 			}
+			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		}
 	}
 
-	void processStuff(int j, boolean ore1, boolean ore2) {
-		if(ore1) {
-			if(inv[1] == null) {
-				ItemStack stack = new ItemStack(pureOres[j].getItem(), 1, inv[0].getItemDamage() + 1);
-				stack.stackTagCompound = new NBTTagCompound();
-				for(int i = 0; i < processors.length; i++) {
-					if(inv[0].stackTagCompound.hasKey(processors[i])) {
-						stack.stackTagCompound.setBoolean(processors[i], inv[0].stackTagCompound.getBoolean(processors[i]));
-					}
+	protected boolean process() {
+		ItemStack out = getOutput(inv[0]);if(out==null)return false;
+		if(inv[1]==null){
+			inv[1] = out;
+			inv[0].stackSize--;
+			if(inv[0].stackSize==0){
+				inv[0] = null;
+			}
+			return true;
+		}else{
+			boolean suc = inv[1].getItem()==out.getItem() && inv[1].getItemDamage()==out.getItemDamage()
+					&& ItemStack.areItemStackTagsEqual(out, inv[1]);
+			if(suc && inv[1].stackSize<64){
+				int ns = inv[1].stackSize;
+				inv[1] = out;inv[1].stackSize+=ns;
+				inv[0].stackSize--;
+				if(inv[0].stackSize==0){
+					inv[0] = null;
 				}
-				stack.stackTagCompound.setBoolean(tagCompound, true);
-				inv[1] = stack.copy();
-				if(inv[0] != null) {
-					inv[0].stackSize -= 1;
-					if(inv[0].stackSize == 0) {
-						inv[0] = null;
-					}
-				}
-			}else if(inv[1].getItem() == pureOres[j].getItem()) {
-				if(inv[1].stackSize < inv[1].getMaxStackSize()) {
-					inv[1].stackSize += 1;
-					if(inv[0] != null) {
-						inv[0].stackSize -= 1;
-						if(inv[0].stackSize == 0) {
-							inv[0] = null;
-						}
-					}
-				}
+				return true;
 			}
 		}
-		if(ore2) {
-			if(inv[1] == null) {
-				ItemStack stack = new ItemStack(getOreEquivalencies(OreDictionary.getOreID(inv[0])), 1, 0);
-				stack.stackTagCompound = new NBTTagCompound();
-				stack.stackTagCompound.setBoolean(tagCompound, true);
-				inv[1] = stack.copy();
-				if(inv[0] != null) {
-					inv[0].stackSize -= 1;
-					if(inv[0].stackSize == 0) {
-						inv[0] = null;
-					}
-				}
-			}else if(inv[1] != null) {
-				if(getOreEquivalencies(OreDictionary.getOreID(inv[0])) == inv[1].getItem()) {
-					if(inv[1].stackSize < inv[1].getMaxStackSize()) {
-						inv[1].stackSize += 1;
-						inv[1].stackTagCompound.setBoolean(tagCompound, true);
-						if(inv[0] != null) {
-							inv[0].stackSize -= 1;
-							if(inv[0].stackSize == 0) {
-								inv[0] = null;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	Item getOreEquivalencies(int id) {
-		if(OreDictionary.getOreName(id).equals("oreIron")) {
-			return pureOres[0].getItem();
-		}else if(OreDictionary.getOreName(id).equals("oreGold")) {
-			return pureOres[1].getItem();
-		}else if(OreDictionary.getOreName(id).equals("oreCopper")) {
-			return pureOres[2].getItem();
-		}else if(OreDictionary.getOreName(id).equals("oreTin")) {
-			return pureOres[3].getItem();
-		}else if(OreDictionary.getOreName(id).equals("oreSilver")) {
-			return pureOres[4].getItem();
-		}else if(OreDictionary.getOreName(id).equals("oreLead")) {
-			return pureOres[5].getItem();
-		}else if(OreDictionary.getOreName(id).equals("oreNickel")) {
-			return pureOres[6].getItem();
-		}
-		return null;		
-	}
-
-	boolean canProcess() {
 		return false;
-	}	
+	}
 
-	void getFuel() {}
+	protected ItemStack getOutput(ItemStack items){
+		if(isOreDictName(items)){
+			return addTag(new ItemStack(itemFormOreDictName(items), 1));
+		}else if(isProcessed(items) && isProcessable(items.stackTagCompound)){
+			ItemStack it = items.copy();it.stackSize = 1;it.setItemDamage(it.getItemDamage()+1);
+			return addTag(it);
+		}
+		return null;
+	}
+
+	protected ItemStack addTag(ItemStack items) {
+		if(items==null)
+			return null;
+		
+		if(items.stackTagCompound==null)
+			items.stackTagCompound = new NBTTagCompound();
+		
+		items.stackTagCompound.setInteger(tagCompound, items.stackTagCompound.getInteger(tagCompound) + 1);
+		
+		return items;
+	}
+
+	protected boolean canProcess(ItemStack items) {
+		return isOreDictName(items) || (isProcessed(items) && isProcessable(items.stackTagCompound));
+	}
+
+	protected boolean isProcessable(NBTTagCompound comp) {
+		return comp.getInteger(tagCompound)<2;
+	}
+
+	protected boolean isOreDictName(ItemStack items) {
+		if(ores.contains(OreDictionary.getOreName(OreDictionary.getOreID(items)))){
+			return true;
+		}
+		return false;
+	}
+
+	protected Item itemFormOreDictName(ItemStack items) {
+		//for(int i : OreDictionary.getOreIDs(items)){
+		int i = OreDictionary.getOreID(items);
+		for(int j = 0; j<associatedObj.length; j++){
+			if(associatedObj[j][0] == OreDictionary.getOreName(i)){
+				return (Item) associatedObj[j][1];
+			}
+		}
+		//}
+		return null;
+	}
+
+	protected boolean isProcessed(ItemStack items) {
+		return processed.contains(items.getItem());
+	}
+
+	protected abstract boolean getFuel(ItemStack items, int multiplier);
 
 	@SideOnly(Side.CLIENT)
-	public int getTimeScaled(int j) {		
-		return time * j / maxTime;
-	}
-
-	public boolean isActive() {
-		return active;
+	public int getTimeScaled(int j) {
+		return progress * j / maxTime;
 	}
 
 	@Override
 	public void readCustomNBT(NBTTagCompound compound)  {
 		facing = compound.getByte("Facing");
-		time = compound.getInteger("Time");
-		active = compound.getBoolean("Active");	    
+		progress = compound.getInteger("Time");
+		isActive = compound.getBoolean("Active");	    
 	}	
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound compound)  {
 		compound.setByte("Facing", facing);
-		compound.setInteger("Time", time);
-		compound.setBoolean("Active", active);		 
-	}	
-
-	@Override
+		compound.setInteger("Time", progress);
+		compound.setBoolean("Active", isActive);		 
+	}
+	
 	public void writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
-		NBTTagList nbttaglist = new NBTTagList();
-		for (int i = 0; i < inv.length; ++i) {
-			if (inv[i] != null) {
-				NBTTagCompound compound1 = new NBTTagCompound();
-				compound1.setByte("Slot", (byte)i);
-				inv[i].writeToNBT(compound1);
-				nbttaglist.appendTag(compound1);
+		
+		NBTTagList list = new NBTTagList();
+
+		for(int i = 0; i < this.getSizeInventory(); i++) {
+			ItemStack itemstack = this.getStackInSlot(i);
+
+			if(itemstack != null) {
+				NBTTagCompound item = new NBTTagCompound();
+
+				item.setByte("SlotsTile", (byte) i);
+				itemstack.writeToNBT(item);
+				list.appendTag(item);
 			}
 		}
-		compound.setTag("Items", nbttaglist);
+		
+		compound.setTag("ItemsTile", list);
 	}
 
-	@Override
 	public void readFromNBT(NBTTagCompound compound) {
-		NBTTagList nbttaglist = compound.getTagList("Items");
-		inv = new ItemStack[getSizeInventory()];
-		for (int i = 0; i < nbttaglist.tagCount(); ++i) {
-			NBTTagCompound compound1 = (NBTTagCompound)nbttaglist.tagAt(i);
-			int j = compound1.getByte("Slot") & 255;
-			if (j >= 0 && j < inv.length)            {
-				inv[j] = ItemStack.loadItemStackFromNBT(compound1);
+		super.readFromNBT(compound);
+		
+		NBTTagList list = compound.getTagList("ItemsTile");
+
+		for(int i = 0; i < list.tagCount(); i++) {
+			NBTTagCompound item = (NBTTagCompound) list.tagAt(i);
+			int slot = item.getByte("SlotsTile");
+
+			if(slot >= 0 && slot < getSizeInventory()) {
+				setInventorySlotContents(slot, ItemStack.loadItemStackFromNBT(item));
 			}
 		}
 	}
+
 
 	@Override
 	public int getSizeInventory() {
-		return 2;
+		return inv.length;
 	}
 
 	@Override
@@ -272,21 +251,6 @@ public class TileProcessorBase extends TileTechnomancy implements ISidedInventor
 	@Override
 	public void setInventorySlotContents(int i, ItemStack stack) {
 		inv[i] = stack;
-		if(stack != null) {
-			if(stack.stackSize > getInventoryStackLimit()) {
-				inv[i].stackSize = getInventoryStackLimit();
-			}
-		}
-	}
-
-	@Override
-	public String getInvName() {
-		return "processorInv" + tagCompound;
-	}
-
-	@Override
-	public boolean isInvNameLocalized() {
-		return false;
 	}
 
 	@Override
@@ -300,29 +264,18 @@ public class TileProcessorBase extends TileTechnomancy implements ISidedInventor
 	}
 
 	@Override
-	public void openChest() {}
-
-	@Override
-	public void closeChest() {}
-
-	@Override
-	public boolean isItemValidForSlot(int i, ItemStack stack) {
-		return true;
+	public boolean isItemValidForSlot(int i, ItemStack items) {
+		return i==0 && (isOreDictName(items) || (isProcessed(items) && items.stackTagCompound!=null && isProcessable(items.stackTagCompound)));
 	}
 
 	@Override
 	public int[] getAccessibleSlotsFromSide(int i) {
-		if(i == 0 || i == 1) {
-			return new int[] {0};
-		}
-		return new int[] {1};
+		return new int[] {0, 1};
 	}
 
 	@Override
 	public boolean canInsertItem(int i, ItemStack stack, int j) {
-		if(j == 1 && stack == inv[0] && i == 0) {
-			return true;
-		}else if(stack == inv[1]){
+		if(i==0) {
 			return true;
 		}
 		return false;
@@ -330,9 +283,27 @@ public class TileProcessorBase extends TileTechnomancy implements ISidedInventor
 
 	@Override
 	public boolean canExtractItem(int i, ItemStack itemstack, int j) {
-		if(i == 0 && j == 1) {
+		if(i==1) {
 			return true;
 		}
+		return false;
+	}
+
+	@Override
+	public void openChest() {}
+
+	@Override
+	public void closeChest() {}
+
+	@Override
+	public String getInvName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isInvNameLocalized() {
+		// TODO Auto-generated method stub
 		return false;
 	}
 

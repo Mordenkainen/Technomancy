@@ -49,6 +49,8 @@ public class Thaumcraft {
 	public static Class TileNode;
 	public static Class TileMirrorEssentia;
 	public static Class TileTube;
+	public static Class TileTable;
+	public static Class TileResearchTable;
 	public static Class ItemWandCasting;
 	public static Class ResearchPage;
 	public static Class ResearchPageArr;
@@ -161,6 +163,8 @@ public class Thaumcraft {
 			TileNode = Class.forName("thaumcraft.common.tiles.TileNode");
 			TileMirrorEssentia = Class.forName("thaumcraft.common.tiles.TileMirrorEssentia");
 			TileTube = Class.forName("thaumcraft.common.tiles.TileTube");
+			TileTable = Class.forName("thaumcraft.common.tiles.TileTable");
+			TileResearchTable = Class.forName("thaumcraft.common.tiles.TileResearchTable");
 
 			for(Method method : TileNode.getMethods()){
 				if(method.getName().equalsIgnoreCase("getAspects")){getAspects = method;

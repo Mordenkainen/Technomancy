@@ -32,7 +32,7 @@ public class GuiProcessorBM extends GuiContainer {
 		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);	
 		
 		int k = 0;
-		if(this.processor.isActive()) {
+		if(this.processor.isActive) {
 			k = this.processor.getTimeScaled(37);
 		}
 		drawTexturedModalRect(guiLeft+ 69, guiTop + 26, xSize + 1, 0, k, 16);

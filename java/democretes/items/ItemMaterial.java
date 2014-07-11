@@ -40,10 +40,35 @@ public class ItemMaterial extends ItemBase {
 		itemIcon[3] = icon.registerIcon(Ref.TEXTURE_PREFIX + "penCore");
 		itemIcon[4] = icon.registerIcon(Ref.TEXTURE_PREFIX + "coilCoupler");
 	}
+	
+	@Override
+	public void addInformation(ItemStack items, EntityPlayer player, List list, boolean moreInfo) {
+		if(items.getItemDamage()==4){
+			if(items.stackTagCompound==null){
+				items.stackTagCompound = new NBTTagCompound();
+				items.stackTagCompound.setBoolean("ent", false);
+				items.stackTagCompound.setInteger("x", 0);
+				items.stackTagCompound.setInteger("y", 0);
+				items.stackTagCompound.setInteger("z", 0);
+				items.stackTagCompound.setInteger("dimId", 0);
+			}
+			boolean ent = items.stackTagCompound.getBoolean("ent");
+			if(ent){
+				int[] i = retrievePos(items.stackTagCompound);
+				list.add("Linking to Wireless Essentia coil at:");
+				list.add("x: " + i[0] + " y: " + i[1] + " z: " + i[2]);
+				list.add("In dimension " + items.stackTagCompound.getInteger("dimId"));
+			}else{
+				list.add("Right click on a coil to begin the linking process.");
+				list.add("Shift right click on a essentia storing device to complete the link.");
+				list.add("Shift right click on a coil to remove all its links.");
+			}
+		}
+	}
 
 	@SideOnly(Side.CLIENT)
-	public Icon getIconFromDamage(int par) {
-		return this.itemIcon[par];
+	public Icon getIconFromDamage(int dmg) {
+		return this.itemIcon[dmg];
 	}
 
 	@Override
@@ -60,7 +85,7 @@ public class ItemMaterial extends ItemBase {
 	}
 
 	@Override
-	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+	public boolean onItemUse(ItemStack stack, EntityPlayer player, World w, int x, int y, int z, int side, float hitX, float hitY,float hitZ){
 		if(stack.stackTagCompound==null && stack.getItemDamage() == 4){
 			stack.stackTagCompound = new NBTTagCompound();
 			stack.stackTagCompound.setBoolean("ent", false);
@@ -70,15 +95,15 @@ public class ItemMaterial extends ItemBase {
 			stack.stackTagCompound.setInteger("dimId", 0);
 		}
 
-		if(!world.isRemote) {
-			TileEntity tile = world.getBlockTileEntity(x, y, z);
+		if(!w.isRemote) {
+			TileEntity tile = w.getBlockTileEntity(x, y, z);
 			if(tile != null && stack.getItemDamage() == 4) {			
-				if(tile instanceof IAspectSource && !Thaumcraft.TileMirrorEssentia.isInstance(tile) && !(tile instanceof TileTeslaCoil)) {
+				if(tile instanceof IAspectSource && !tile.getClass().getName().equals("TileMirrorEssentia") && !(tile instanceof TileTeslaCoil)) {
 					if(stack.stackTagCompound.getBoolean("ent")) {
 						if(tile.getWorldObj().provider.dimensionId == stack.stackTagCompound.getInteger("dimId")){
 							if(!areCoordsEqual(stack.stackTagCompound, x, y, z)) {
 								int[] i = retrievePos(stack.stackTagCompound);
-								((TileTeslaCoil)world.getBlockTileEntity(i[0], i[1], i[2])).sources.add(new ChunkCoordinates(x, y, z));
+								((TileTeslaCoil)w.getBlockTileEntity(i[0], i[1], i[2])).sources.add(new ChunkCoordinates(x, y, z));
 								player.sendChatToPlayer(ChatMessageComponent.createFromText("Linked"));
 								stack.stackTagCompound.setBoolean("ent", false);
 								return true;
@@ -87,7 +112,7 @@ public class ItemMaterial extends ItemBase {
 							player.sendChatToPlayer(ChatMessageComponent.createFromText("Cannot create an interdimensional link"));
 						}
 					}else{
-						player.sendChatToPlayer(ChatMessageComponent.createFromText("No valid wireless destination available"));
+						player.sendChatToPlayer(ChatMessageComponent.createFromText("No source to link from."));
 					}
 				}else if(tile instanceof TileTeslaCoil && (!stack.stackTagCompound.getBoolean("ent") || player.isSneaking())) {
 					if(player.isSneaking()) {
@@ -103,7 +128,6 @@ public class ItemMaterial extends ItemBase {
 						stack.stackTagCompound.setInteger("dimId", tile.worldObj.provider.dimensionId);
 						return true;
 					}
-
 				}else{
 					player.sendChatToPlayer(ChatMessageComponent.createFromText("Not a valid source"));
 				}
