@@ -40,7 +40,13 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
 
 	@Override
 	public void readCustomNBT(NBTTagCompound compound) {
-		amount = compound.getShort("Amount");
+		try {
+			amount = compound.getShort("Amount");
+		} catch (ClassCastException e) {
+			try {
+				amount = compound.getInteger("Amount");
+			} catch (ClassCastException ee) {}
+		}
 		aspect = Aspect.getAspect(compound.getString("Aspect"));
 		stabilize = compound.getBoolean("Stabilize");
 		placed = compound.getBoolean("Placed");
