@@ -1,0 +1,116 @@
+#Item Names
+
+item.techno:essentiaCannon.name=Essenční dělo
+item.Wand.electric.rod=Zelektrizované
+techno:itemMaterial.0.name=Neutronizovaný kov
+techno:itemMaterial.1.name=Očarovaná cívka
+techno:itemMaterial.2.name=Neutronizované kolečko
+techno:itemMaterial.3.name=Jádro pera
+techno:itemMaterial.4.name=Cívková spojka
+techno:pen.name=Pero
+techno:wandCores.0.name=Zelektrizované jádro hůlky
+techno:itemBM.0.name=Obětní cihla
+techno:itemBM.1.name=Cívka života
+techno:itemBO.0.name=Cívka many
+techno:itemBO.1.name=Mano-ocelové kolečko
+techno:pureIron.name=Čištěné železo
+techno:pureGold.name=Čištěné zlato
+techno:pureCopper.name=Čištěná měď
+techno:pureTin.name=Čištěný cín
+techno:pureSilver.name=Čištěné stříbro
+techno:pureLead.name=Čištěné olovo
+techno:pureNickel.name=Čištěný nikl
+
+#Block Names
+tile.techno:cosmeticOpaque.name=Kvantované sklo
+tile.techno:cosmeticPane.name=Kvantovaná tabulka skla
+tile.techno:nodeDynamo.name=Uzlové dynamo
+tile.techno:essentiaDynamo.name=Essenční dynamo
+tile.techno:essentiaContainer.name=Kvantová baňka
+tile.techno:biomeMorpher.name=Ekologický měnič
+tile.techno:nodeGenerator.name=Uzlový padělatel
+tile.techno:fluxLamp.name=Pravidelná lampa
+tile.techno:teslaCoil.name=Essenční cívka
+tile.techno:electricBellows.name=Pozinkované měchy
+tile.techno:creativeJar.name=Kreativní baňka
+tile.techno:reconstructorBlock.name=Essenční přestavbovač
+tile.techno:crystalBlock.0.name=Krystal prostoru
+tile.techno:crystalBlock.1.name=Krystal reality
+tile.techno:crystalBlock.2.name=Krystal energie
+tile.techno:bloodDynamo.name=Dynamo krve
+tile.techno:condenserBlock.name=Kondenzátor energie
+tile.techno:bloodFabricator.name=Padělatel krve
+tile.techno:flowerDynamo.name=Hipícké dynamo
+tile.techno:manaFabricator.name=Padělatel many
+tile.techno:processorTC.name=Ohnivá spalovna
+tile.techno:processorBM.name=Optimistický nalévač
+tile.techno:processorBO.name=Botanický čistič
+tile.technom:eldritchConsumer.name=Podivný konzument
+
+#Information
+info.techno:purity=Čistota
+info.techno:shift=-Podrž shift pro info-
+info.techno:process=Zprocesoval
+
+#Research Tab
+tc.research_category.TECHNOMANCY=Technomancy
+
+#Research
+tc.research_name.TECHNOBASICS=Magická strojovna
+tc.research_text.TECHNOBASICS=Je to auto-magické!
+techno.research_page.TECHNOBASICS.1=Po řadách výzkumných objevech jsi našel způsoby jak začlenit před-existenční elektroniku do tvých nových magických objevů odemykajících pár nových základních materiálů.
+
+tc.research_name.QUANTUMJARS=Kvantové baňky
+tc.research_text.QUANTUMJARS=Slyšel jsem, že máš rád essenci...
+techno.research_page.QUANTUMJARS.1=Objevil jsi způsob jak využít energii všemohoucí vědy pro napěchování ještě více essence do baňky. Tato nová baňka využívá kvantové mechaniky pro zvětšení její maximální úložné kapacity a proto může být trochu nestabilní. Kvantová baňka je trochu více chytřejší a má větší sací míru než neoznačené chráněné baňky a její sání roste na základě počtu essence uvnitř.
+
+tc.research_name.DYNAMO=Magická dynama
+tc.research_text.DYNAMO=Tvoření magické energie z magické energie.
+techno.research_page.DYNAMO.1=Po studiích způsobu, jak Arkánový vrt a Pekelná pec čerpá essenci pro sílu jsi se rozhodl raději vyrobit vlastní odvozeninu použitím ruditového toku. Zachycením essenčního dynama do řad trubek a vedení jsi schopný použít nevyužitou essenci a přeměnit ji na ruditový tok. Určité aspekty nesou více energie než jiné a vydrží déle v dynamu, které produkuje více energie.
+techno.research_page.DYNAMO.2=Pokračováním na předchozím výzkumu magické energie jsi dosáhl toho, že vis z uzlů je podobný essenci, kterou mají předměty. Vedením síly z uzlů můžeš odčerpat jejich vis pro získání více síly. Položení dynama pod uzel a připojení vhodného potrubí by mělo postačit.
+
+tc.research_name.PEN=Pokročilé psaní
+tc.research_text.PEN=Je to podělané pero.
+techno.research_page.PEN.1=Umíš si představit jak jsi hloupý když používáš inkoust a pero v tuhle dobu ? Chti tím říct, že máš podělanou hůlku, která střílí podělaný bleskový střely a stroje vyrabějící magii z magie, proboha. Opravdu ti to trvalo tak dlouho udělat pero ? Odpověď zní ano, trvalo. Ale nyní máš k dispozici pero místo hloupého kalamáře.
+
+tc.research_name.NODEGENERATOR=Generování uzlů
+tc.research_text.NODEGENERATOR=Naprosto OP.
+techno.research_page.NODEGENERATOR.1=Přeměňování magie na energii je poměrně lehké, ale další způsob je daleko více obtížný a drahý. Padělatelé potřebují mít 5 bloků místa mezi sebou stejně jako aby byl každý otočený proti sobě. Pokud to správně uděláš, začnou čerpat přiměřenou essenci. Pokud je uzel mezi dvěma bloky (jeden blok výše než padělatelé), padělatelé vyčerpají všechny typy essence a přidají je do uzlu, ale nepřesáhnou maximální vis velikost. Pokud tam není žádný uzel, budou také čerpat skvrny nebo zlato, podle toho, kde jsou umístěny. Nicméně můžeš umístit tolik essence do každého padělatele, kolik se ho tam vejde, celkově 64.
+techno.research_page.NODEGENERATOR.2=Pro generování uzlu jednoduše klikni pravým tlačítkem na jeden z padělatelů s hůlkou a oba přijdou o všechnu essenci, kterou obsahují a padělatel, na kterého jsi kliknul vyčerpá energii (((železo+skvrna)/2)^2)*762.939453125 = Energie(RF)) z jejich vnitřního úložiště. Velikost uzlu je stanovena celkovým množstvím essence vyděleného dvěma. Typ/měnič je stanovený jako násobek železa se skvrnou a celkové množství essence. Vytváření uzlu příliš velkého, nebo malého není dobrý nápad, stejně jako vkládání příliš mnoho z jednoho aspektu.
+
+tc.research_name.BIOMEMORPHER=Transmutace biomů
+tc.research_text.BIOMEMORPHER=Hloupá skvrna...
+techno.research_page.BIOMEMORPHER.1=Po dělání přehnaného počtu éterických biomů jsi se rozhodl udělat jeden, který využívá energii namísto vzácných materiálů pro postupnou změnu okolní oblasti. Kliknutím pravým tlačítkem na měnič můžeš vybrat typ biomu na Magický les, Eerii nebo Poskvrněnou zem. Tento proces není zadarmo a vyžaduje pro funkci větší množství ruditového toku.
+
+tc.research_name.TESLACOIL=Bezdrátová essence
+tc.research_text.TESLACOIL=Jedinný důvod proč jsi stáhnul tento mód.
+techno.research_page.TESLACOIL.1=Po zjištění, jak špatně pracují essenční trubky jsi se rozhodl přejít na novou bezdrátovou metodu, která je daleko více propracovaná. Použitím cívkové spojky na essenční cívku můžeš propojit cívku s jinými zdroji essence, zejména baňky a cívky. Po propojení bude cívka čerpat ze zdroje, dokud se nenaplní vnitřní vyrovnávací paměť. Jakákoliv cívka může být napojena na jakýkoliv počet zdrojů a jakýkoliv zdroj může být napojen na jakýkoliv počet cívek. Pro jednoduché promazání spojení cívek, které bylu vytvořeny jednoduše klikni pravým tlačítkem na cívku se spojkou pro smazání všech spojení.
+techno.research_page.TESLACOIL.2=Každá cívka má vnitřví vyrovnávací paměť pro uložení 8 essencí. Tato vyrovnávací paměť bude automaticky vydávat základ cívky do jakéhokoliv oběktu, který může přijímat essenci skrs stejnou stranu. Cívka může být filtrována použitím stejné techniky jako filtrované trubky.
+
+tc.research_name.FLUXLAMP=Pořádná lampa
+tc.research_text.FLUXLAMP=Vzpomenul jsem tokové tekutinové orby ?
+techno.research_page.FLUXLAMP.1=Poté, co jsi začal být opravdu otráven nestabilitou jsi se rozhodl zhmotnit její neobvyklou sílu do fyzické formy, tekutého toku. Po nakrmení Orda na vršku lampy bude kontrolovat oltáře poblíž pro nestabilitu a lehce ji sníží produkcí toku jako vedlejšího produktu. Naneštěstí lampa nesnižuje tolik nestability, kolik by sis přál a proto jich budeš potřebovat 5 pro kompletní její vyrušení.
+
+tc.research_name.ENERGIZEDWAND=Zelektrizovaná hůlka
+tc.research_text.ENERGIZEDWAND=Čerpá všechnu energii!
+techno.research_page.ELECTRICWAND.1=Nabitím normální hůlky ze stříbrného dřeva trochou energie dostaneš speciální vlastnosti za cenu její vis úložiště. Když máš aktivní kondenzátor v inventáři, hůlka bude čerpat energii z kondenzátoru pro doplnění jeho vlastního vis úložiště. Tato hůlka má velikost vis úložiště 25.
+
+tc.research_name.ELECTRICBELLOWS=Poháněná magie
+tc.research_text.ELECTRICBELLOWS=Silná síla pro magickou sílu.
+techno.research_page.ELECTRICBELLOWS.1=Poté, co jsi vyplýtval sílu z měchů jsi objevil způsob jak do nich přidat trochu energie a udělat je ještě více silné. Tyto nové měchy mohou být připnuty jak do Pekelných, tak Alchymistických pecí. Po připnutí do Pekelné pece a zásobení energií velmi vzroste rychlost pečení. Po připnutí do Alchymistické pece a zásobení energií měchy zásobují pec teplem pro zpracování předmětů uvnitř bez nutnosti použití jakéhokoliv dalšího paliva.
+
+tc.research_name.CONDENSER=Zhušťující se energie
+tc.research_text.CONDENSER=POTŘEBUJEM VÍCE SÍLY
+techno.research_page.CONDENSER.1=Příliš mnoho energie není nikdy na škodu a nyní máš stroj, který ji dokáže velmi dobře využít. Po připnutí Energetického kondenzátoru k trubkám můžeš změnit RF na energii, která může být poté odvedena z kondenzátoru do tvé oblíbené baňky.
+
+tc.research_name.PROCESSOR=Zpracovávající se rudy
+tc.research_text.PROCESSOR=Protože Thaumcraft to neumí udělat pořádně.
+techno.research_page.PROCESSOR.1=Snažil jsi se najít způsob, jak zvětšit zisk z rud bez použití hloupých čistících způsobů a nyní jsi jeden našel. Umístěním bloků do levého slotu a přidáním Ohnivé essence jsi úspěšně získal schopnost zdvojnásobit zisk z rud pomocí čištění. Tyto nové čištěné rudy mohou být zpracovány přes jiné magické zařízení podobné tomuto pro další navýšení zisku rud. Pro získání cihliček po zpracování rudy tolikrát, kolikrát jste chtěli, vhoď čištěnou rudu do pece pro vypečení.
+
+tc.research_name.ELDRITCHCONSUMER=Absorbuj své okolí
+tc.research_text.ELDRITCHCONSUMER=Výmluvníci!
+techno.research_page.ELDRITCHCONSUMER.1=Vložil jsi mnoho snahy do nalezení způsobu přímého vyextrahování čisté essence z těchto bloků, které můžeš vidět kolem. Při experimentování jsi vynalezl skřížení mezi Lomem a Alchymistickou pecí, které může být nastaveno pro vytrhnutí země pod ním. Naneštěstí jsi zjistil, že toto zařízení je velký žrout energie (20 000 RF/blok). Pokud máš Brýle odhalení, můžeš vidět které aspekty měl poslední vytržený blok.
+
+
+#Creative Tab
+itemGroup.Technomancy=Technomancy
