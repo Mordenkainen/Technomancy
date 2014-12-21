@@ -1,10 +1,10 @@
 package WayofTime.alchemicalWizardry.api.alchemy;
 
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
+import net.minecraft.item.ItemStack;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import net.minecraft.item.ItemStack;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
 
 public class AlchemyRecipeRegistry
 {
@@ -75,7 +75,7 @@ public class AlchemyRecipeRegistry
             {
                 if (result.isItemEqual(itemStack))
                 {
-                    return ar.getRecipe().clone();
+                    return ar.getRecipe();
                 }
             }
         }

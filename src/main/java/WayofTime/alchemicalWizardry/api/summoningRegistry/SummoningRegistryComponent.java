@@ -174,7 +174,7 @@ public class SummoningRegistryComponent
                     continue;
                 }
 
-                if ((checkedItemStack.getItemDamage() == recipeItemStack.getItemDamage() || OreDictionary.WILDCARD_VALUE == recipeItemStack.getItemDamage()) && checkedItemStack.itemID == recipeItemStack.itemID)
+                if ((checkedItemStack.getItemDamage() == recipeItemStack.getItemDamage() || OreDictionary.WILDCARD_VALUE == recipeItemStack.getItemDamage()) && checkedItemStack.getItem() == recipeItemStack.getItem())
                 {
                     test = true;
                     checkList[j] = true;
@@ -224,7 +224,7 @@ public class SummoningRegistryComponent
         }
     }
 
-    public int getSummoningHelperID()
+    public String getSummoningHelperID()
     {
         return this.summoningHelper.getSummoningHelperID();
     }

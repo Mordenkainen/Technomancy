@@ -1,45 +1,31 @@
-/** 
- * Copyright (c) SpaceToad, 2011
+/**
+ * Copyright (c) 2011-2014, SpaceToad and the BuildCraft Team
  * http://www.mod-buildcraft.com
- * 
- * BuildCraft is distributed under the terms of the Minecraft Mod Public 
- * License 1.0, or MMPL. Please check the inventory of the license located in
- * http://www.mod-buildcraft.com/MMPL-1.0.txt
+ *
+ * The BuildCraft API is distributed under the terms of the MIT License.
+ * Please check the contents of the license, which should be located
+ * as "LICENSE.API" in the BuildCraft source code distribution.
  */
-
 package buildcraft.api.transport;
 
-import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.util.ForgeDirection;
+import buildcraft.api.gates.IGate;
 
 public interface IPipe {
 
-	enum DrawingState {
-		DrawingPipe, DrawingRedWire, DrawingBlueWire, DrawingGreenWire, DrawingYellowWire, DrawingGate
-	}
+	int x();
 
-	enum WireColor {
-		Red, Blue, Green, Yellow;
+	int y();
 
-		public WireColor reverse() {
-			switch (this) {
-			case Red:
-				return Yellow;
-			case Blue:
-				return Green;
-			case Green:
-				return Blue;
-			default:
-				return Red;
-			}
-		}
-	}
+	int z();
 
-	public boolean isWired(WireColor color);
+	IPipeTile getTile();
 
-	public boolean hasGate();
-
-	public TileEntity getContainer();
-
-	public boolean isWireConnectedTo(TileEntity tile, WireColor color);
-
+	IGate getGate(ForgeDirection side);
+	
+	boolean hasGate(ForgeDirection side);
+	
+	boolean isWired(PipeWire wire);
+	
+	boolean isWireActive(PipeWire wire);
 }

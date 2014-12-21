@@ -1,8 +1,6 @@
 package WayofTime.alchemicalWizardry.api.alchemy;
 
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
 
 import java.util.ArrayList;
 
@@ -13,7 +11,6 @@ public class AlchemicalPotionCreationHandler
     public static void addPotion(ItemStack itemStack, int potionID, int tickDuration)
     {
         registeredPotionEffects.add(new AlchemyPotionHandlerComponent(itemStack, potionID, tickDuration));
-        //EXAMPLE: addPotion(new ItemStack(Item.ghastTear), Potion.regeneration.id, 450);
     }
 
     public static int getPotionIDForStack(ItemStack itemStack)

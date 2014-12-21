@@ -1,36 +1,64 @@
 package thaumcraft.api.wands;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.World;
+import thaumcraft.api.aspects.AspectList;
 
-public abstract interface IWandFocus
-{
-  public abstract int getFocusColor();
-  
-  public abstract net.minecraft.util.Icon getFocusDepthLayerIcon();
-  
-  public abstract net.minecraft.util.Icon getOrnament();
-  
-  public static enum WandFocusAnimation {
-    WAVE,  CHARGE;
-    
-    private WandFocusAnimation() {}
-  }
-  
-  public abstract WandFocusAnimation getAnimation();
-  
-  public abstract thaumcraft.api.aspects.AspectList getVisCost();
-  
-  public abstract boolean isVisCostPerTick();
-  
-  public abstract ItemStack onFocusRightClick(ItemStack paramItemStack, net.minecraft.world.World paramWorld, net.minecraft.entity.player.EntityPlayer paramEntityPlayer, net.minecraft.util.MovingObjectPosition paramMovingObjectPosition);
-  
-  public abstract void onUsingFocusTick(ItemStack paramItemStack, net.minecraft.entity.player.EntityPlayer paramEntityPlayer, int paramInt);
-  
-  public abstract void onPlayerStoppedUsingFocus(ItemStack paramItemStack, net.minecraft.world.World paramWorld, net.minecraft.entity.player.EntityPlayer paramEntityPlayer, int paramInt);
-  
-  public abstract String getSortingHelper(ItemStack paramItemStack);
-  
-  public abstract boolean onFocusBlockStartBreak(ItemStack paramItemStack, int paramInt1, int paramInt2, int paramInt3, net.minecraft.entity.player.EntityPlayer paramEntityPlayer);
-  
-  public abstract boolean acceptsEnchant(int paramInt);
+
+public interface IWandFocus  {
+	
+	public enum WandFocusAnimation {
+		WAVE, CHARGE;
+	}
+
+	/**
+	 * @return The color the focus should be changed to.
+	 */
+	public int getFocusColor();
+		
+	/**
+	 * @return An icon that will be drawn as a block inside the focus "block".
+	 */
+	IIcon getFocusDepthLayerIcon();
+	
+	public IIcon getOrnament();
+	
+	public WandFocusAnimation getAnimation();
+	
+	/**
+	 * Gets the amount of vis used per aspect per click or tick. This cost is actually listed as
+	 * a hundredth of a single point of vis, so a cost of 100 will equal one vis per tick/click.
+	 * It is returned as an AspectList to allow for multiple vis types in different ratios.
+	 */
+	public AspectList getVisCost();
+	
+	public boolean isVisCostPerTick();
+
+	public ItemStack onFocusRightClick(ItemStack itemstack, World world, EntityPlayer player, MovingObjectPosition movingobjectposition);
+	
+	public void onUsingFocusTick(ItemStack itemstack, EntityPlayer player, int count);
+	
+	public void onPlayerStoppedUsingFocus(ItemStack itemstack, World world, EntityPlayer player, int count);
+		
+	/**
+	 * Helper method to determine in what order foci should be iterated through when 
+	 * the user presses the 'change focus' keybinding.
+	 * @return a string of characters that foci will be sorted against. 
+	 * For example AA00 will be placed before FG12
+	 * <br>As a guide build the sort string from two alphanumeric characters followed by 
+	 * two numeric characters based on... whatever. 
+	 */
+	public String getSortingHelper(ItemStack itemstack);
+
+	boolean onFocusBlockStartBreak(ItemStack itemstack, int x, int y, int z, EntityPlayer player);
+
+	public boolean acceptsEnchant(int id);
+
+	
+
+	
+
 }

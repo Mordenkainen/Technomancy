@@ -1,51 +1,62 @@
+/**
+ * This class was created by <Vazkii>. It's distributed as
+ * part of the Botania Mod. Get the Source Code in github:
+ * https://github.com/Vazkii/Botania
+ * 
+ * Botania is Open Source and distributed under a
+ * Creative Commons Attribution-NonCommercial-ShareAlike 3.0 License
+ * (http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_GB)
+ * 
+ * File Created @ [Jan 31, 2014, 4:36:13 PM (GMT)]
+ */
 package vazkii.botania.api.internal;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChunkCoordinates;
 
-public abstract interface IManaBurst
-{
-  public abstract boolean isFake();
-  
-  public abstract void setMotion(double paramDouble1, double paramDouble2, double paramDouble3);
-  
-  public abstract int getColor();
-  
-  public abstract void setColor(int paramInt);
-  
-  public abstract int getMana();
-  
-  public abstract void setMana(int paramInt);
-  
-  public abstract int getStartingMana();
-  
-  public abstract void setStartingMana(int paramInt);
-  
-  public abstract int getMinManaLoss();
-  
-  public abstract void setMinManaLoss(int paramInt);
-  
-  public abstract float getManaLossPerTick();
-  
-  public abstract void setManaLossPerTick(float paramFloat);
-  
-  public abstract float getGravity();
-  
-  public abstract void setGravity(float paramFloat);
-  
-  public abstract ChunkCoordinates getBurstSourceChunkCoordinates();
-  
-  public abstract void setBurstSourceCoords(int paramInt1, int paramInt2, int paramInt3);
-  
-  public abstract ItemStack getSourceLens();
-  
-  public abstract void setSourceLens(ItemStack paramItemStack);
-  
-  public abstract boolean hasAlreadyCollidedAt(int paramInt1, int paramInt2, int paramInt3);
-}
-
-
-/* Location:           C:\Brett\Development\Deobfuscation\Sources\Botania.zip
- * Qualified Name:     vazkii.botania.api.internal.IManaBurst
- * JD-Core Version:    0.7.0.1
+/**
+ * Interface for the Mana Burst entity. This can safely be casted to EntityThrowable.
  */
+public interface IManaBurst {
+
+	public boolean isFake();
+
+	public void setMotion(double x, double y, double z);
+
+	public int getColor();
+
+	public void setColor(int color);
+
+	public int getMana();
+
+	public void setMana(int mana);
+
+	public int getStartingMana();
+
+	public void setStartingMana(int mana);
+
+	public int getMinManaLoss();
+
+	public void setMinManaLoss(int minManaLoss);
+
+	public float getManaLossPerTick();
+
+	public void setManaLossPerTick(float mana);
+
+	public float getGravity();
+
+	public void setGravity(float gravity);
+
+	public ChunkCoordinates getBurstSourceChunkCoordinates();
+
+	public void setBurstSourceCoords(int x, int y, int z);
+
+	public ItemStack getSourceLens();
+
+	public void setSourceLens(ItemStack lens);
+
+	public boolean hasAlreadyCollidedAt(int x, int y, int z);
+
+	public int getTicksExisted();
+
+}

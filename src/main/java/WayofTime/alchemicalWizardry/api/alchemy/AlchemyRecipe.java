@@ -104,7 +104,7 @@ public class AlchemyRecipe
                     continue;
                 }
 
-                if ((checkedItemStack.getItemDamage() == recipeItemStack.getItemDamage() || OreDictionary.WILDCARD_VALUE == recipeItemStack.getItemDamage()) && checkedItemStack.itemID == recipeItemStack.itemID)
+                if ((checkedItemStack.getItemDamage() == recipeItemStack.getItemDamage() || OreDictionary.WILDCARD_VALUE == recipeItemStack.getItemDamage()) && checkedItemStack.getItem() == recipeItemStack.getItem())
                 {
                     test = true;
                     checkList[j] = true;
@@ -135,9 +135,9 @@ public class AlchemyRecipe
     {
         return this.recipe;
     }
-    
+
     public int getOrbLevel()
     {
-    	return this.bloodOrbLevel;
+        return this.bloodOrbLevel;
     }
 }

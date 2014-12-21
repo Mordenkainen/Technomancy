@@ -1,21 +1,20 @@
 package WayofTime.alchemicalWizardry.api.summoningRegistry;
 
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.world.World;
 
 public abstract class SummoningHelper
 {
-    protected int id;
+    protected String id;
 
-    public SummoningHelper(int id)
+    public SummoningHelper(String id)
     {
         this.id = id;
     }
 
     public abstract EntityLivingBase getEntity(World worldObj);
 
-    public int getSummoningHelperID()
+    public String getSummoningHelperID()
     {
         return id;
     }

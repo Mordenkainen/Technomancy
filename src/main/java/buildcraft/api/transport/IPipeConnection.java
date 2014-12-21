@@ -1,21 +1,23 @@
 /**
- * Copyright (c) SpaceToad, 2011 http://www.mod-buildcraft.com
+ * Copyright (c) 2011-2014, SpaceToad and the BuildCraft Team
+ * http://www.mod-buildcraft.com
  *
- * BuildCraft is distributed under the terms of the Minecraft Mod Public License
- * 1.0, or MMPL. Please check the inventory of the license located in
- * http://www.mod-buildcraft.com/MMPL-1.0.txt
+ * The BuildCraft API is distributed under the terms of the MIT License.
+ * Please check the contents of the license, which should be located
+ * as "LICENSE.API" in the BuildCraft source code distribution.
  */
 package buildcraft.api.transport;
 
+import net.minecraftforge.common.util.ForgeDirection;
+
 import buildcraft.api.transport.IPipeTile.PipeType;
-import net.minecraftforge.common.ForgeDirection;
 
 public interface IPipeConnection {
 
 	enum ConnectOverride {
 
 		CONNECT, DISCONNECT, DEFAULT
-	};
+	}
 
 	/**
 	 * Allows you to override pipe connection logic.
@@ -25,5 +27,5 @@ public interface IPipeConnection {
 	 * @return CONNECT to force a connection, DISCONNECT to force no connection,
 	 * and DEFAULT to let the pipe decide.
 	 */
-	public ConnectOverride overridePipeConnection(PipeType type, ForgeDirection with);
+	ConnectOverride overridePipeConnection(PipeType type, ForgeDirection with);
 }

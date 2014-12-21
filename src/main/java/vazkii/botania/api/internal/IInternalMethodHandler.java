@@ -1,54 +1,95 @@
+/**
+ * This class was created by <Vazkii>. It's distributed as
+ * part of the Botania Mod. Get the Source Code in github:
+ * https://github.com/Vazkii/Botania
+ * 
+ * Botania is Open Source and distributed under a
+ * Creative Commons Attribution-NonCommercial-ShareAlike 3.0 License
+ * (http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_GB)
+ * 
+ * File Created @ [Jan 14, 2014, 6:34:34 PM (GMT)]
+ */
 package vazkii.botania.api.internal;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import vazkii.botania.api.boss.IBotaniaBoss;
 import vazkii.botania.api.lexicon.LexiconPage;
+import vazkii.botania.api.recipe.RecipeElvenTrade;
 import vazkii.botania.api.recipe.RecipeManaInfusion;
 import vazkii.botania.api.recipe.RecipePetals;
 import vazkii.botania.api.recipe.RecipeRuneAltar;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
-public abstract interface IInternalMethodHandler
-{
-  public abstract LexiconPage textPage(String paramString);
-  
-  public abstract LexiconPage imagePage(String paramString1, String paramString2);
-  
-  public abstract LexiconPage craftingRecipesPage(String paramString, List<IRecipe> paramList);
-  
-  public abstract LexiconPage craftingRecipePage(String paramString, IRecipe paramIRecipe);
-  
-  public abstract LexiconPage petalRecipesPage(String paramString, List<RecipePetals> paramList);
-  
-  public abstract LexiconPage petalRecipePage(String paramString, RecipePetals paramRecipePetals);
-  
-  public abstract LexiconPage runeRecipesPage(String paramString, List<RecipeRuneAltar> paramList);
-  
-  public abstract LexiconPage runeRecipePage(String paramString, RecipeRuneAltar paramRecipeRuneAltar);
-  
-  public abstract LexiconPage manaInfusionRecipesPage(String paramString, List<RecipeManaInfusion> paramList);
-  
-  public abstract LexiconPage manaInfusionRecipePage(String paramString, RecipeManaInfusion paramRecipeManaInfusion);
-  
-  public abstract IManaNetwork getManaNetworkInstance();
-  
-  public abstract ItemStack getSubTileAsStack(String paramString);
-  
-  public abstract Icon getSubTileIconForName(String paramString);
-  
-  @SideOnly(Side.CLIENT)
-  public abstract void drawSimpleManaHUD(int paramInt1, int paramInt2, int paramInt3, String paramString, ScaledResolution paramScaledResolution);
-  
-  public abstract void sparkleFX(World paramWorld, double paramDouble1, double paramDouble2, double paramDouble3, float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4, int paramInt);
-}
-
-
-/* Location:           C:\Brett\Development\Deobfuscation\Sources\Botania.zip
- * Qualified Name:     vazkii.botania.api.internal.IInternalMethodHandler
- * JD-Core Version:    0.7.0.1
+/**
+ * Any methods that refer to internal methods in Botania are here.
+ * This is defaulted to a dummy handler, whose methods do nothing.
+ * This handler is set to a proper one on PreInit. Make sure to
+ * make your mod load after Botania if you have any intention of
+ * doing anythign with this on PreInit.
  */
+public interface IInternalMethodHandler {
+
+	public LexiconPage textPage(String key);
+
+	public LexiconPage imagePage(String key, String resource);
+
+	public LexiconPage craftingRecipesPage(String key, List<IRecipe> recipes);
+
+	public LexiconPage craftingRecipePage(String key, IRecipe recipe);
+
+	public LexiconPage petalRecipesPage(String key, List<RecipePetals> recipes);
+
+	public LexiconPage petalRecipePage(String key, RecipePetals recipe);
+
+	public LexiconPage runeRecipesPage(String key, List<RecipeRuneAltar> recipes);
+
+	public LexiconPage runeRecipePage(String key, RecipeRuneAltar recipe);
+
+	public LexiconPage manaInfusionRecipesPage(String key, List<RecipeManaInfusion> recipes);
+
+	public LexiconPage manaInfusionRecipePage(String key, RecipeManaInfusion recipe);
+
+	public LexiconPage elvenTradePage(String key, List<RecipeElvenTrade> recipes);
+
+	public LexiconPage elvenTradesPage(String key, RecipeElvenTrade recipe);
+
+	public IManaNetwork getManaNetworkInstance();
+
+	public ItemStack getSubTileAsStack(String subTile);
+
+	public IIcon getSubTileIconForName(String name);
+
+	public void registerBasicSignatureIcons(String name, IIconRegister register);
+
+	public boolean shouldForceCheck();
+
+	public int getPassiveFlowerDecay();
+
+	public IInventory getBaublesInventory(EntityPlayer player);
+
+	@SideOnly(Side.CLIENT)
+	public void drawSimpleManaHUD(int color, int mana, int maxMana, String name, ScaledResolution res);
+
+	@SideOnly(Side.CLIENT)
+	public void renderLexiconText(int x, int y, int width, int height, String unlocalizedText);
+
+	@SideOnly(Side.CLIENT)
+	public ResourceLocation getDefaultBossBarTexture();
+	
+	@SideOnly(Side.CLIENT)
+	public void setBossStatus(IBotaniaBoss status);
+	
+	public void sparkleFX(World world, double x, double y, double z, float r, float g, float b, float size, int m);
+
+}
