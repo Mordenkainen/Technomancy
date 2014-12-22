@@ -1,22 +1,17 @@
 package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
 import java.lang.reflect.Method;
-import java.util.Random;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.nodes.INode;
 import thaumcraft.api.nodes.NodeModifier;
 import thaumcraft.api.nodes.NodeType;
-import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
 import theflogat.technomancy.handlers.compat.Thaumcraft;
-import cofh.api.energy.EnergyStorage;
-
 
 public class TileBiomeMorpher extends TileMachineBase implements INode{	
 	
@@ -74,7 +69,7 @@ public class TileBiomeMorpher extends TileMachineBase implements INode{
 		BiomeGenBase bg = this.worldObj.getBiomeGenForCoords(xx, zz);
 		if (bg.biomeID != bm.biomeID) {
 			try {
-				Class Utils = Class.forName("thaumcraft.common.lib.Utils");
+				Class Utils = Class.forName("thaumcraft.common.lib.utils.Utils");
 				for(Method method : Utils.getMethods()){
 					if(method.getName().equalsIgnoreCase("setBiomeAt")){
 						method.invoke(null, worldObj, xx, zz, bm);
