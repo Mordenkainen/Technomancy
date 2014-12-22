@@ -24,7 +24,7 @@ public class TileBloodFabricator extends TileMachineBase implements IFluidHandle
 	}
 	@Override
 	public void updateEntity() {
-		if(getEnergyStored()>=cost && tank.getFluidAmount()+100<=tank.getCapacity()) {
+		if(getEnergyStored()>=cost && tank.getFluidAmount()+200<=tank.getCapacity()) {
 			extractEnergy(cost, false);
 			tank.fill(new FluidStack(BloodMagic.lifeEssenceFluid, 200), true);
 			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
