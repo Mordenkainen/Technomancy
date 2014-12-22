@@ -1,14 +1,10 @@
 package theflogat.technomancy.common.tiles.dynamos;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
-import theflogat.technomancy.common.tiles.base.EnergyStorage;
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
 import theflogat.technomancy.handlers.compat.Botania;
 import vazkii.botania.api.mana.IManaPool;
@@ -21,6 +17,7 @@ public class TileFlowerDynamo extends TileDynamoBase implements IManaReceiver {
 	
 	@Override
 	public int extractFuel(int ener) {
+		if (mana == 0) return 0;
 		float ratio = ((float) ener) / 80F;
 		int val = (int) (20 * ratio);
 		float fuel = (float) val / (float) Math.min(mana, val);mana -= Math.min(mana, val);
@@ -63,9 +60,9 @@ public class TileFlowerDynamo extends TileDynamoBase implements IManaReceiver {
 	@Override
 	public boolean isFull() {
 		if(mana < maxMana) {
-			return true;
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	@Override
