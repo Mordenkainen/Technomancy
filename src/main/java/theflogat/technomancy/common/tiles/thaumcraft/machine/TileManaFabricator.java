@@ -77,7 +77,7 @@ public class TileManaFabricator extends TileMachineBase implements IManaPool {
 	
 	@Override
 	public boolean canConnectEnergy(ForgeDirection from) {
-		return from==ForgeDirection.DOWN;
+		return from.ordinal() == facing;
 	}
 
 }
