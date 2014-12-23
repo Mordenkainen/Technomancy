@@ -88,7 +88,7 @@ public class TileBOProcessor extends TileProcessorBase implements IManaReceiver 
 	}
 
 	public void renderHUD(Minecraft mc, ScaledResolution res) {
-		int color = Color.LIGHT_GRAY.getRGB();
+		int color = Color.CYAN.getRGB();
 		try {
 			Botania.drawHUD.invoke(null, color, mana, maxMana, TMBlocks.processorBO.getLocalizedName(), res);
 		} catch (Exception e) {
