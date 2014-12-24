@@ -10,7 +10,6 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
-import theflogat.technomancy.common.tiles.base.EnergyStorage;
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
 import theflogat.technomancy.handlers.compat.Thaumcraft;
 
@@ -18,7 +17,7 @@ public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContain
 
 	private int amount;
 	private int maxAmount = 64;
-	private static Aspect aspect = null;
+	private Aspect aspect = null;
 	public int count;
 	
 	@Override
@@ -28,6 +27,10 @@ public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContain
 		}
 		float ratio = ((float) ener) / 80F;
 		int val = getAspectFuel(aspect);amount -= Math.ceil(ratio);
+		if(amount<=0) {
+			amount = 0;
+			aspect = null;
+		}
 		return val;
 	}
 
@@ -196,12 +199,12 @@ public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContain
 
 	@Override
 	public boolean takeFromContainer(Aspect tag, int amount) {
-		if ((amount >= amount) && (tag == aspect))
+		if ((this.amount >= amount) && (tag == aspect))
 		{
-			amount -= amount;
-			if (amount <= 0)  {
+			this.amount -= amount;
+			if (this.amount <= 0)  {
 				aspect = null;
-				amount = 0;
+				this.amount = 0;
 			}
 			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 			return true;
@@ -211,7 +214,7 @@ public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContain
 
 	@Override
 	public boolean doesContainerContainAmount(Aspect tag, int amount) {
-		if ((amount >= amount) && (tag == aspect)) {
+		if ((this.amount >= amount) && (tag == aspect)) {
 			return true;
 		}
 		return false;
@@ -219,6 +222,7 @@ public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContain
 
 	@Override
 	public boolean doesContainerContain(AspectList ot) {
+		if (ot.size() > 1) return false;
 		for (Aspect tt : ot.getAspects()) {
 			if ((amount > 0) && (tt == aspect)) {
 				return true;
@@ -254,7 +258,7 @@ public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContain
 	}
 
 	@Override
-	public boolean doesContainerAccept(Aspect tag) {return aspect!=null || tag==aspect;}
+	public boolean doesContainerAccept(Aspect tag) {return aspect==null || tag==aspect;}
 
 	@Override
 	public int containerContains(Aspect tag) {return (aspect!=null && tag==aspect) ? amount : 0;}

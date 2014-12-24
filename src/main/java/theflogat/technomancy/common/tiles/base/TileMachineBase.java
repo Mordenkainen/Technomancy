@@ -2,14 +2,13 @@ package theflogat.technomancy.common.tiles.base;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
-import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyStorage;
 
 public abstract class TileMachineBase extends TileTechnomancy implements IEnergyHandler, IEnergyStorage {
 	
 	public int energy;
-	public static int capacity;
+	public int capacity;
 	
 	public TileMachineBase(int capacity) {
 		this.capacity = capacity;
@@ -18,29 +17,23 @@ public abstract class TileMachineBase extends TileTechnomancy implements IEnergy
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
-		compound.setInteger("energy", energy);
+		energy = compound.getInteger("energy");
 	}
 
 	@Override
 	public void writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);		
-		energy = compound.getInteger("energy");
+		compound.setInteger("energy", energy);
 	}
 
 	@Override
 	public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate) {
-		if(!simulate)worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-		int energy = this.energy;
-		if(!simulate)this.energy += Math.min(maxReceive, capacity-energy);
-		return Math.min(maxReceive, capacity-energy);
+		return receiveEnergy(maxReceive, simulate);
 	}
 
 	@Override
 	public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate) {
-		if(!simulate)worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-		int energy = this.energy;
-		if(!simulate)this.energy -= Math.min(maxExtract, energy);
-		return Math.min(maxExtract, energy);
+		return extractEnergy(maxExtract, simulate);
 	}
 
 	@Override
@@ -50,12 +43,12 @@ public abstract class TileMachineBase extends TileTechnomancy implements IEnergy
 
 	@Override
 	public int getEnergyStored(ForgeDirection from) {
-		return energy;
+		return getEnergyStored();
 	}
 
 	@Override
 	public int getMaxEnergyStored(ForgeDirection from) {
-		return capacity;
+		return getMaxEnergyStored();
 	}
 
 	@Override

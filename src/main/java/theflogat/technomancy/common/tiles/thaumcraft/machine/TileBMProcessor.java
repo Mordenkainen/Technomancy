@@ -19,7 +19,9 @@ public class TileBMProcessor extends TileProcessorBase {
 		if(!(SoulNetworkHandler.getCurrentEssence(owner) > cost)){
 			return false;
 		}
-		SoulNetworkHandler.setCurrentEssence(owner, (SoulNetworkHandler.getCurrentEssence(owner) - cost));
+		if (!worldObj.isRemote) {
+			SoulNetworkHandler.setCurrentEssence(owner, (SoulNetworkHandler.getCurrentEssence(owner) - cost));
+		}
 		return true;
 	}
 

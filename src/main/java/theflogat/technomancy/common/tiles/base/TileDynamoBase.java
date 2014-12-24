@@ -105,7 +105,7 @@ public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyH
 
 	@Override
 	public void readCustomNBT(NBTTagCompound comp) {
-		set = set.load(comp);
+		set = RedstoneSet.load(comp);
 		ener = comp.getInteger("energy");
 		facing = comp.getByte("face");
 		fuel = comp.getInteger("fuel");
@@ -150,8 +150,8 @@ public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyH
 	public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate) {
 		if(from.ordinal()==facing){
 			int ener = this.ener;
-			this.ener -= simulate ? 0 : Math.min(maxExtract, this.ener);
-			return Math.min(maxExtract, this.ener);
+			this.ener -= simulate ? 0 : Math.min(maxExtract, ener);
+			return Math.min(maxExtract, ener);
 		}
 		return 0;
 	}

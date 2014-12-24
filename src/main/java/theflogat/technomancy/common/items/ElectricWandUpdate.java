@@ -42,7 +42,7 @@ public class ElectricWandUpdate implements IWandRodOnUpdate{
 						while(energy >= 10000) {
 							if(isSmaller(Thaumcraft.getVis.invoke(itemstack.getItem(), itemstack, al),
 									Thaumcraft.getMaxVis.invoke(itemstack.getItem(), itemstack))){
-								Thaumcraft.addEssentia.invoke(itemstack.getItem(), itemstack, al, 1, true);
+								Thaumcraft.addVis.invoke(itemstack.getItem(), itemstack, al, 1, true);
 								energy -= 10000;
 							}else{
 								break;

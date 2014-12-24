@@ -11,14 +11,13 @@ import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
-import thaumcraft.api.aspects.IAspectSource;
+import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
 import theflogat.technomancy.handlers.compat.Thaumcraft;
 import theflogat.technomancy.handlers.util.Coords;
-import cofh.api.energy.EnergyStorage;
 
-public class TileEldritchConsumer extends TileMachineBase implements IAspectSource, IEssentiaTransport{
+public class TileEldritchConsumer extends TileMachineBase implements IAspectContainer, IEssentiaTransport{
 	
 	public enum Range{
 		LARGE(9, -1, 0, "Large"),
@@ -212,10 +211,7 @@ public class TileEldritchConsumer extends TileMachineBase implements IAspectSour
 
 	@Override
 	public void setAspects(AspectList al) {
-		for(Aspect as : al.getAspects()){
-			int amount = al.getAmount(as);
-			list.merge(as, amount);
-		}
+		list = al;
 	}
 
 	@Override
@@ -230,17 +226,19 @@ public class TileEldritchConsumer extends TileMachineBase implements IAspectSour
 
 	@Override
 	public boolean takeFromContainer(Aspect paramAspect, int paramInt) {
-		if(list.aspects.containsKey(paramAspect))
-			return true;
-
-		return false;
+		if(!list.aspects.containsKey(paramAspect) || list.getAmount(paramAspect) < paramInt)
+			return false;
+		list.reduce(paramAspect, paramInt);
+		if (list.getAmount(paramAspect) <= 0) {
+			list.remove(paramAspect);
+		}
+		return true;		
 	}
 
 	@Override
 	public boolean takeFromContainer(AspectList al) {
 		for(Aspect as : al.getAspects()){
-			int amount = al.getAmount(as);
-			boolean bool = list.reduce(as, amount);
+			boolean bool = takeFromContainer(as, al.getAmount(as));
 			if(!bool)return false;
 		}
 		return true;
@@ -282,9 +280,7 @@ public class TileEldritchConsumer extends TileMachineBase implements IAspectSour
 	}
 
 	@Override
-	public void setSuction(Aspect paramAspect, int paramInt) {
-		
-	}
+	public void setSuction(Aspect paramAspect, int paramInt) {}
 
 	@Override
 	public Aspect getSuctionType(ForgeDirection paramForgeDirection) {
@@ -300,7 +296,12 @@ public class TileEldritchConsumer extends TileMachineBase implements IAspectSour
 	public int takeEssentia(Aspect paramAspect, int paramInt, ForgeDirection paramForgeDirection) {
 		if(!list.aspects.containsKey(paramAspect))
 			return 0;
-		return Math.min(paramInt, list.getAmount(paramAspect));
+		int amountToRemove = Math.min(paramInt, list.getAmount(paramAspect));
+		list.reduce(paramAspect, amountToRemove);
+		if (list.getAmount(paramAspect) <= 0) {
+			list.remove(paramAspect);
+		}
+		return amountToRemove;
 	}
 
 	@Override

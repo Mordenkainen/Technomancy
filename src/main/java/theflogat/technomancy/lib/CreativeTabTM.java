@@ -20,6 +20,7 @@ public class CreativeTabTM extends CreativeTabs {
         return "Technomancy";
     }
     
+    @SideOnly(Side.CLIENT)
     @Override
     public ItemStack getIconItemStack() {
     	if(TMItems.itemMaterial!=null){
@@ -30,6 +31,7 @@ public class CreativeTabTM extends CreativeTabs {
 	      return super.getIconItemStack();
     }
 
+    @SideOnly(Side.CLIENT)
 	@Override
 	public Item getTabIconItem() {
 	      return Item.getItemFromBlock(Blocks.stone);

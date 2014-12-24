@@ -96,7 +96,7 @@ public class Thaumcraft {
 	public static Method getAspectsWithRoom;
 	public static Method getVis;
 	public static Method getMaxVis;
-	public static Method addEssentia;
+	public static Method addVis;
 	//TileNode
 	public static Method getAspects;
 	public static Method getNodeModifier;
@@ -214,7 +214,7 @@ public class Thaumcraft {
 				}else if(method.getName().equalsIgnoreCase("getAspectsWithRoom")){getAspectsWithRoom = method;
 				}else if(method.getName().equalsIgnoreCase("getVis")){getVis = method;
 				}else if(method.getName().equalsIgnoreCase("getMaxVis")){getMaxVis = method;
-				}else if(method.getName().equalsIgnoreCase("addEssentia")){addEssentia = method;
+				}else if(method.getName().equalsIgnoreCase("addVis")){addVis = method;
 				}
 			}
 
