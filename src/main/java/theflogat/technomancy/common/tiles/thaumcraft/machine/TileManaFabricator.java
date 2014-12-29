@@ -8,7 +8,6 @@ import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
 import theflogat.technomancy.handlers.compat.Botania;
 import vazkii.botania.api.mana.IManaPool;
-import cofh.api.energy.EnergyStorage;
 
 public class TileManaFabricator extends TileMachineBase implements IManaPool {
 	
@@ -22,7 +21,7 @@ public class TileManaFabricator extends TileMachineBase implements IManaPool {
 	}
 	@Override
 	public void updateEntity() {
-		if(getEnergyStored()>cost && mana+100<maxMana) {
+		if(getEnergyStored()>=cost && mana+100<=maxMana) {
 			mana += 100;
 			extractEnergy(cost, false);
 			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
@@ -48,7 +47,7 @@ public class TileManaFabricator extends TileMachineBase implements IManaPool {
 
 	@Override
 	public void recieveMana(int mana) {
-		mana += mana;		
+		this.mana += mana;		
 	}
 
 	@Override
