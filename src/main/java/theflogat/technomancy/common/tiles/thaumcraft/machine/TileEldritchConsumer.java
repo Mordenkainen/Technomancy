@@ -16,6 +16,7 @@ import thaumcraft.api.aspects.IEssentiaTransport;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
 import theflogat.technomancy.handlers.compat.Thaumcraft;
 import theflogat.technomancy.handlers.util.Coords;
+import theflogat.technomancy.lib.Costs;
 
 public class TileEldritchConsumer extends TileMachineBase implements IAspectContainer, IEssentiaTransport{
 	
@@ -73,20 +74,21 @@ public class TileEldritchConsumer extends TileMachineBase implements IAspectCont
 	public int cooldown = 0;
 	public int time = 0;
 	public float panelRotation = 0;
+	public int cost = Costs.consumerCost;
 
 	public TileEldritchConsumer() {
-		super(1000000);
+		super(Costs.consumerCost * 50);
 	}
 
 	@Override
 	public void updateEntity() {
 		if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
 			if(time<=0 && canFillList(list)){
-				if (getEnergyStored() > 20000) {
+				if (getEnergyStored() >= cost) {
 					Coords c = seekForBlock();
 					if(c!=null){
 						processFromCoords(c);
-						extractEnergy(20000, false);
+						extractEnergy(cost, false);
 						worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 						cooldown = 40;
 					}else{
