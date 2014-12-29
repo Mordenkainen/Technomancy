@@ -449,7 +449,7 @@ public class CraftingHandler {
 				//Normal Recipes
 				GameRegistry.addShapedRecipe(new ItemStack(TMBlocks.bloodFabricator), 
 						new Object[] {" T ", "IMI", "CAC",
-					'T', new ItemStack(Blocks.glass, 1, 3),
+					'T', new ItemStack(Blocks.glass, 1, 0),
 					'I', new ItemStack(TMItems.itemBM, 1, 0),
 					'M', new ItemStack(Blocks.redstone_block, 1, 0),
 					'C', new ItemStack(TMItems.itemBM, 1, 1),
