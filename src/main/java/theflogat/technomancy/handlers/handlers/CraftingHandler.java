@@ -261,7 +261,15 @@ public class CraftingHandler {
 						.add(Aspect.EARTH, 60).add(Aspect.FIRE, 60).add(Aspect.WATER, 60).add(Aspect.ENTROPY, 60), 
 						new Object[]{"  C", " R ", "C  ", 
 					Character.valueOf('C'), ((WandCap)WandCap.caps.get("thaumium")).getItem(), 
-					Character.valueOf('R'), ((WandRod)WandRod.rods.get("electric")).getItem()		});
+					Character.valueOf('R'), ((WandRod)WandRod.rods.get("electric")).getItem()});
+				electric = new ItemStack(Thaumcraft.itemWandCasting, 1, 72);
+				Thaumcraft.setCap.invoke(electric.getItem(), electric, (WandCap)WandCap.caps.get("void"));
+				Thaumcraft.setRod.invoke(electric.getItem(), electric, (WandRod)WandRod.rods.get("electric"));
+				ThaumcraftApi.addArcaneCraftingRecipe("ENERGIZEDWAND", electric, new AspectList().add(Aspect.AIR, 87).add(Aspect.ORDER, 87)
+						.add(Aspect.EARTH, 87).add(Aspect.FIRE, 87).add(Aspect.WATER, 87).add(Aspect.ENTROPY, 87), 
+						new Object[]{"  C", " R ", "C  ", 
+					Character.valueOf('C'), ((WandCap)WandCap.caps.get("void")).getItem(), 
+					Character.valueOf('R'), ((WandRod)WandRod.rods.get("electric")).getItem()});
 			}else{
 				//Infusion Recipes
 				ResearchHandler.recipes.put("NodeGenerator", ThaumcraftApi.addInfusionCraftingRecipe("NODEGENERATOR",
@@ -393,6 +401,14 @@ public class CraftingHandler {
 						.add(Aspect.EARTH, 60).add(Aspect.FIRE, 60).add(Aspect.WATER, 60).add(Aspect.ENTROPY, 60), 
 						new Object[]{"  C", " R ", "C  ", 
 					Character.valueOf('C'), ((WandCap)WandCap.caps.get("thaumium")).getItem(), 
+					Character.valueOf('R'), ((WandRod)WandRod.rods.get("electric")).getItem()});
+				electric = new ItemStack(Thaumcraft.itemWandCasting, 1, 72);
+				Thaumcraft.setCap.invoke(electric.getItem(), electric, (WandCap)WandCap.caps.get("void"));
+				Thaumcraft.setRod.invoke(electric.getItem(), electric, (WandRod)WandRod.rods.get("electric"));
+				ThaumcraftApi.addArcaneCraftingRecipe("ENERGIZEDWAND", electric, new AspectList().add(Aspect.AIR, 87).add(Aspect.ORDER, 87)
+						.add(Aspect.EARTH, 87).add(Aspect.FIRE, 87).add(Aspect.WATER, 87).add(Aspect.ENTROPY, 87), 
+						new Object[]{"  C", " R ", "C  ", 
+					Character.valueOf('C'), ((WandCap)WandCap.caps.get("void")).getItem(), 
 					Character.valueOf('R'), ((WandRod)WandRod.rods.get("electric")).getItem()});
 			}
 		}catch(Exception e){e.printStackTrace();}
