@@ -38,7 +38,6 @@ import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTeslaCoil;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileCreativeJar;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaContainer;
 import theflogat.technomancy.handlers.compat.CoFH;
-import theflogat.technomancy.handlers.compat.ThermalExpansion;
 import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.Names;
 import net.minecraft.block.Block;
@@ -135,9 +134,9 @@ public class TMBlocks {
 		processorBM = Ids.processorBM ? new BlockProcessor.BlockBMProcessor() : null;
 
 		//Registry
-		GameRegistry.registerBlock(bloodDynamo, Names.bloodDynamo);
-		GameRegistry.registerBlock(bloodFabricator, Names.bloodFabricator);
-		GameRegistry.registerBlock(processorBM, Names.processor + "BM");
+		registerBlock(bloodDynamo, Names.bloodDynamo);
+		registerBlock(bloodFabricator, Names.bloodFabricator);
+		registerBlock(processorBM, Names.processor + "BM");
 
 		//Tiles registry
 		GameRegistry.registerTileEntity(TileBloodDynamo.class, "TileBloodDynamo");
@@ -153,9 +152,9 @@ public class TMBlocks {
 		processorBO = Ids.processorBO ? new BlockProcessor.BlockBOProcessor() : null;
 		
 		//Block Registry
-		GameRegistry.registerBlock(flowerDynamo, Names.flowerDynamo);
-		GameRegistry.registerBlock(manaFabricator, Names.manaFabricator);
-		GameRegistry.registerBlock(processorBO, Names.processor + "BO");
+		registerBlock(flowerDynamo, Names.flowerDynamo);
+		registerBlock(manaFabricator, Names.manaFabricator);
+		registerBlock(processorBO, Names.processor + "BO");
 
 		//Tile Registry
 		GameRegistry.registerTileEntity(TileFlowerDynamo.class, "TileFlowerDynamo");
