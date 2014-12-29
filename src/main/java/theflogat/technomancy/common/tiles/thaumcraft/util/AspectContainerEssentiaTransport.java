@@ -16,7 +16,13 @@ public class AspectContainerEssentiaTransport implements IAspectContainer{
 
 	@Override
 	public AspectList getAspects() {
-		return null;
+		AspectList as = new AspectList();
+		for(ForgeDirection dir: ForgeDirection.VALID_DIRECTIONS){
+			if(trans.getEssentiaType(dir)!=null){
+				as.add(trans.getEssentiaType(dir), trans.getEssentiaAmount(dir));
+			}
+		}
+		return as;
 	}
 
 	@Override
@@ -35,42 +41,55 @@ public class AspectContainerEssentiaTransport implements IAspectContainer{
 
 	@Override
 	public int addToContainer(Aspect tag, int amount) {
+		int amountSent = 0;
+		int amountToSend = amount;
 		for(ForgeDirection dir: ForgeDirection.VALID_DIRECTIONS){
-			int i = trans.addEssentia(tag, amount, dir);
-			if(i!=0){
-				return i;
-			}
+			int i = trans.addEssentia(tag, amountToSend, dir);
+			amountToSend -= i;
+			amountSent += i;
+			if (amountToSend <= 0) break;
 		}
-		return 0;
+		return amount - amountSent;
 	}
 
 	@Override
 	public boolean takeFromContainer(Aspect tag, int amount) {
-		// TODO Auto-generated method stub
+		for(ForgeDirection dir: ForgeDirection.VALID_DIRECTIONS){
+			if (trans.getEssentiaType(dir) == tag && trans.getEssentiaAmount(dir) >= amount) {
+				trans.takeEssentia(tag, amount, dir);
+				return true;
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public boolean takeFromContainer(AspectList ot) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean doesContainerContainAmount(Aspect tag, int amount) {
-		// TODO Auto-generated method stub
+		for(ForgeDirection dir: ForgeDirection.VALID_DIRECTIONS){
+			if (trans.getEssentiaType(dir) == tag && trans.getEssentiaAmount(dir) >= amount) {
+				return true;
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public boolean doesContainerContain(AspectList ot) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public int containerContains(Aspect tag) {
-		// TODO Auto-generated method stub
+		for(ForgeDirection dir: ForgeDirection.VALID_DIRECTIONS){
+			if (trans.getEssentiaType(dir) == tag) {
+				return trans.getEssentiaAmount(dir);
+			}
+		}
 		return 0;
 	}
 }
