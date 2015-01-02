@@ -7,7 +7,7 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectSource;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
-import theflogat.technomancy.lib.Costs;
+import theflogat.technomancy.lib.Rate;
 
 public class TileCondenser extends TileMachineBase implements IEssentiaTransport, IAspectSource {
 
@@ -15,10 +15,10 @@ public class TileCondenser extends TileMachineBase implements IEssentiaTransport
 	
 	public int amount = 0;
 	public int maxAmount = 64;
-	public static int cost = Costs.condenserCost;
+	public static int cost = Rate.condenserCost;
 
 	public TileCondenser() {
-		super(Costs.condenserCost * 5);
+		super(Rate.condenserCost * 5);
 	}
 	
 	@Override

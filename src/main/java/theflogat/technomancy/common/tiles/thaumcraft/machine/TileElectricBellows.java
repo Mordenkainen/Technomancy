@@ -6,7 +6,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.AspectList;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
 import theflogat.technomancy.handlers.compat.Thaumcraft;
-import theflogat.technomancy.lib.Costs;
+import theflogat.technomancy.lib.Rate;
 
 public class TileElectricBellows extends TileMachineBase {
 
@@ -14,10 +14,10 @@ public class TileElectricBellows extends TileMachineBase {
 	public float inflation = 1.0F;
 	boolean firstrun = false;;
 	boolean direction = false;
-	public int baseCost = Costs.bellowsCost;
+	public int baseCost = Rate.bellowsCost;
 
 	public TileElectricBellows() {
-		super(Costs.bellowsCost * 40);
+		super(Rate.bellowsCost * 40);
 	}
 	@Override
 	public void writeCustomNBT(NBTTagCompound compound) {

@@ -3,7 +3,7 @@ package theflogat.technomancy.common.tiles.thaumcraft.machine;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
 import theflogat.technomancy.handlers.compat.BloodMagic;
 import theflogat.technomancy.handlers.util.WorldHelper;
-import theflogat.technomancy.lib.Costs;
+import theflogat.technomancy.lib.Rate;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
@@ -16,11 +16,11 @@ import net.minecraftforge.fluids.IFluidHandler;
 public class TileBloodFabricator extends TileMachineBase implements IFluidHandler {
 	
 	public FluidTank tank = new FluidTank(10000);
-	public static int cost = Costs.bloodFabCost;
+	public static int cost = Rate.bloodFabCost;
 	int count = 0;
 	
 	public TileBloodFabricator() {
-		super(Costs.bloodFabCost * 50);
+		super(Rate.bloodFabCost * 50);
 	}
 	@Override
 	public void updateEntity() {

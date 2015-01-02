@@ -16,7 +16,7 @@ import thaumcraft.api.aspects.IEssentiaTransport;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
 import theflogat.technomancy.handlers.compat.Thaumcraft;
 import theflogat.technomancy.handlers.util.Coords;
-import theflogat.technomancy.lib.Costs;
+import theflogat.technomancy.lib.Rate;
 
 public class TileEldritchConsumer extends TileMachineBase implements IAspectContainer, IEssentiaTransport{
 	
@@ -74,10 +74,10 @@ public class TileEldritchConsumer extends TileMachineBase implements IAspectCont
 	public int cooldown = 0;
 	public int time = 0;
 	public float panelRotation = 0;
-	public int cost = Costs.consumerCost;
+	public int cost = Rate.consumerCost;
 
 	public TileEldritchConsumer() {
-		super(Costs.consumerCost * 50);
+		super(Rate.consumerCost * 50);
 	}
 
 	@Override

@@ -28,12 +28,13 @@ public class Ref {
 	public static final String MODEL_BLOOD_FABRICATOR_TEXTURE = MODEL_PREFIX + "bloodFabricator.png";
 	public static final String MODEL_MANA_FABRICATOR_TEXTURE = MODEL_PREFIX + "manaFabricator.png";
 	public static final String MODEL_FLOWER_DYANMO_TEXTURE = MODEL_PREFIX + "flowerDynamo.png";
+	public static final String MODEL_CRYSTAL_TEXTURE = MODEL_PREFIX + "blockCrystal.png";
 	
 	public static String getAsset(String str) {
 		return MOD_ID.toLowerCase() + ":" + str;
 	}
 	
 	public static String getId(String str) {
-		return MOD_ID.toLowerCase() + ":" + str;
+		return MOD_PREFIX.toLowerCase() + ":" + str;
 	}
 }

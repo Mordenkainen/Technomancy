@@ -12,16 +12,16 @@ import thaumcraft.api.nodes.NodeModifier;
 import thaumcraft.api.nodes.NodeType;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
 import theflogat.technomancy.handlers.compat.Thaumcraft;
-import theflogat.technomancy.lib.Costs;
+import theflogat.technomancy.lib.Rate;
 
 public class TileBiomeMorpher extends TileMachineBase implements INode{	
 	
 	private AspectList aspects = new AspectList();
 	//private int amount = 35;
-	public static int cost = Costs.biomeMorpherCost;
+	public static int cost = Rate.biomeMorpherCost;
 	
 	public TileBiomeMorpher() {
-		super(Costs.biomeMorpherCost * 40);
+		super(Rate.biomeMorpherCost * 40);
 	}
 	
 	@Override

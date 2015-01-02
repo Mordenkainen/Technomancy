@@ -7,7 +7,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
 import theflogat.technomancy.handlers.compat.Botania;
-import theflogat.technomancy.lib.Costs;
+import theflogat.technomancy.lib.Rate;
 import vazkii.botania.api.mana.IManaPool;
 
 public class TileManaFabricator extends TileMachineBase implements IManaPool {
@@ -15,10 +15,10 @@ public class TileManaFabricator extends TileMachineBase implements IManaPool {
 	public int maxMana = 100000;
 	public int mana;
 	public int facing;
-	public static int cost = Costs.manaFabCost;
+	public static int cost = Rate.manaFabCost;
 
 	public TileManaFabricator() {
-		super(Costs.manaFabCost * 2);
+		super(Rate.manaFabCost * 2);
 	}
 	@Override
 	public void updateEntity() {

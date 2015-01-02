@@ -45,7 +45,8 @@ tile.techno:manaFabricator.name=Mana Fabricator
 tile.techno:processorTC.name=Ignis Incinerator
 tile.techno:processorBM.name=Sanguine Infuser
 tile.techno:processorBO.name=Botanical Purifier
-tile.technom:eldritchConsumer.name=Eldritch Consumer
+tile.techno:eldritchConsumer.name=Eldritch Consumer
+tile.techno:crystalBlock.name=Crystal Block
 
 #Information
 info.techno:purity=Purity

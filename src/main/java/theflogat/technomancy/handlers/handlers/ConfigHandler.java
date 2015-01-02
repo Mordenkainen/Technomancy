@@ -3,7 +3,7 @@ package theflogat.technomancy.handlers.handlers;
 import java.io.File;
 
 import theflogat.technomancy.lib.Conf;
-import theflogat.technomancy.lib.Costs;
+import theflogat.technomancy.lib.Rate;
 import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.Names;
 import net.minecraftforge.common.config.Configuration;
@@ -69,12 +69,7 @@ public class ConfigHandler {
        	Conf.debug = config.get("Misc", "DebugFunction", Conf.debug).getBoolean(Conf.debug);
 
        	//RF Costs
-       	Costs.manaFabCost = config.get("Costs", "ManaFabricator", Costs.manaFabCost).getInt(Costs.manaFabCost);
-       	Costs.bloodFabCost = config.get("Costs", "BloodFabricator", Costs.bloodFabCost).getInt(Costs.bloodFabCost);
-       	Costs.condenserCost = config.get("Costs", "Condenser", Costs.condenserCost).getInt(Costs.condenserCost);
-       	Costs.biomeMorpherCost = config.get("Costs", "BiomeMorpher", Costs.biomeMorpherCost).getInt(Costs.biomeMorpherCost);
-       	Costs.consumerCost = config.get("Costs", "EldritchConsumer", Costs.consumerCost).getInt(Costs.consumerCost);
-       	Costs.bellowsCost = config.get("Costs", "ElectricBellows", Costs.bellowsCost).getInt(Costs.bellowsCost);
+       	Rate.modifyRate(config);
        	
         config.save();
 
