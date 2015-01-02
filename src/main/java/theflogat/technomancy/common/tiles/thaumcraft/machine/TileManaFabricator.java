@@ -7,22 +7,22 @@ import net.minecraftforge.common.util.ForgeDirection;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
 import theflogat.technomancy.handlers.compat.Botania;
+import theflogat.technomancy.lib.Costs;
 import vazkii.botania.api.mana.IManaPool;
-import cofh.api.energy.EnergyStorage;
 
 public class TileManaFabricator extends TileMachineBase implements IManaPool {
 	
 	public int maxMana = 100000;
 	public int mana;
 	public int facing;
-	public static int cost = 20000;
+	public static int cost = Costs.manaFabCost;
 
 	public TileManaFabricator() {
-		super(30000);
+		super(Costs.manaFabCost * 2);
 	}
 	@Override
 	public void updateEntity() {
-		if(getEnergyStored()>cost && mana+100<maxMana) {
+		if(getEnergyStored()>=cost && mana+100<=maxMana) {
 			mana += 100;
 			extractEnergy(cost, false);
 			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
@@ -48,7 +48,7 @@ public class TileManaFabricator extends TileMachineBase implements IManaPool {
 
 	@Override
 	public void recieveMana(int mana) {
-		mana += mana;		
+		this.mana += mana;		
 	}
 
 	@Override

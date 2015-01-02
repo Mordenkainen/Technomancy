@@ -1,15 +1,13 @@
 package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectSource;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
-import theflogat.technomancy.handlers.compat.Thaumcraft;
-import cofh.api.energy.EnergyStorage;
+import theflogat.technomancy.lib.Costs;
 
 public class TileCondenser extends TileMachineBase implements IEssentiaTransport, IAspectSource {
 
@@ -17,10 +15,10 @@ public class TileCondenser extends TileMachineBase implements IEssentiaTransport
 	
 	public int amount = 0;
 	public int maxAmount = 64;
-	public static int cost = 200000;// 200 000
+	public static int cost = Costs.condenserCost;
 
 	public TileCondenser() {
-		super(1000000);// 1 000 000
+		super(Costs.condenserCost * 5);
 	}
 	
 	@Override

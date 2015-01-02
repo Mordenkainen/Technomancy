@@ -12,21 +12,22 @@ import thaumcraft.api.nodes.NodeModifier;
 import thaumcraft.api.nodes.NodeType;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
 import theflogat.technomancy.handlers.compat.Thaumcraft;
+import theflogat.technomancy.lib.Costs;
 
 public class TileBiomeMorpher extends TileMachineBase implements INode{	
 	
 	private AspectList aspects = new AspectList();
-	private int amount = 35;
-	public static int cost = 20000;
+	//private int amount = 35;
+	public static int cost = Costs.biomeMorpherCost;
 	
 	public TileBiomeMorpher() {
-		super(800000);
+		super(Costs.biomeMorpherCost * 40);
 	}
 	
 	@Override
 	public void updateEntity() {
 		if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
-			if (getEnergyStored() > cost) {
+			if (getEnergyStored() >= cost) {
 				alterBiome();
 				alterBiome();
 				extractEnergy(cost, false);
@@ -45,7 +46,7 @@ public class TileBiomeMorpher extends TileMachineBase implements INode{
 		BiomeGenBase bg = worldObj.getBiomeGenForCoords(xx, zz);
 		if (bg.biomeID != bm.biomeID) {
 			try {
-				Class Utils = Class.forName("thaumcraft.common.lib.utils.Utils");
+				Class<?> Utils = Class.forName("thaumcraft.common.lib.utils.Utils");
 				for(Method method : Utils.getMethods()){
 					if(method.getName().equalsIgnoreCase("setBiomeAt")){
 						method.invoke(null, worldObj, xx, zz, bm);
@@ -69,7 +70,7 @@ public class TileBiomeMorpher extends TileMachineBase implements INode{
 		BiomeGenBase bg = this.worldObj.getBiomeGenForCoords(xx, zz);
 		if (bg.biomeID != bm.biomeID) {
 			try {
-				Class Utils = Class.forName("thaumcraft.common.lib.utils.Utils");
+				Class<?> Utils = Class.forName("thaumcraft.common.lib.utils.Utils");
 				for(Method method : Utils.getMethods()){
 					if(method.getName().equalsIgnoreCase("setBiomeAt")){
 						method.invoke(null, worldObj, xx, zz, bm);

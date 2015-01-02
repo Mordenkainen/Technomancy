@@ -6,8 +6,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.AspectList;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
 import theflogat.technomancy.handlers.compat.Thaumcraft;
-import cofh.api.energy.EnergyStorage;
-
+import theflogat.technomancy.lib.Costs;
 
 public class TileElectricBellows extends TileMachineBase {
 
@@ -15,9 +14,10 @@ public class TileElectricBellows extends TileMachineBase {
 	public float inflation = 1.0F;
 	boolean firstrun = false;;
 	boolean direction = false;
+	public int baseCost = Costs.bellowsCost;
 
 	public TileElectricBellows() {
-		super(20000);
+		super(Costs.bellowsCost * 40);
 	}
 	@Override
 	public void writeCustomNBT(NBTTagCompound compound) {
@@ -41,7 +41,7 @@ public class TileElectricBellows extends TileMachineBase {
 			}			
 			if(furnace != null) {
 				if(Thaumcraft.TileAlchemyFurnace.isInstance(furnace)) {
-					if(extractEnergy(3000, true) == 3000) {
+					if(extractEnergy(baseCost * 6, true) == baseCost * 6) {
 						if(((ISidedInventory)furnace).getStackInSlot(0) == null || ((ISidedInventory)furnace).getStackInSlot(1) != null) {
 							return;
 						}
@@ -53,16 +53,16 @@ public class TileElectricBellows extends TileMachineBase {
 						if(((int)Thaumcraft.TileAlchemyFurnace.getField("furnaceBurnTime").getInt(furnace)) <= 2 &&
 								((AspectList)Thaumcraft.TileAlchemyFurnace.getField("aspects").get(furnace)).visSize() + al.visSize() < 50) {
 							Thaumcraft.TileAlchemyFurnace.getField("furnaceBurnTime").set(furnace, 80);
-							extractEnergy(3000, false);
+							extractEnergy(baseCost * 6, false);
 						}					
 					}
 				}
 				if(Thaumcraft.TileArcaneFurnace.isInstance(furnace)) {
-					if(extractEnergy(500, true) == 500) {
+					if(extractEnergy(baseCost, true) == baseCost) {
 						if(((int)Thaumcraft.TileArcaneFurnace.getField("furnaceCookTime").getInt(furnace)) > 6) {
 							Thaumcraft.TileAlchemyFurnace.getField("furnaceBurnTime").set(furnace, 
 									((int)Thaumcraft.TileAlchemyFurnace.getField("furnaceBurnTime").getInt(furnace))-6);
-							extractEnergy(500, false);
+							extractEnergy(baseCost, false);
 						}
 					}
 				}
