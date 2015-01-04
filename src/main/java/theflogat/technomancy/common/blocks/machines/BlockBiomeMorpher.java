@@ -9,7 +9,6 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -80,8 +79,8 @@ public class BlockBiomeMorpher extends BlockBase {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public void RegisterIcons(IIconRegister icon) {
-		blockIcon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.condenserBlock);
+	@Override
+	public void registerBlockIcons(IIconRegister icon) {
+		this.icon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.biomeMorpher);
 	}
-
 }

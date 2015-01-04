@@ -1,7 +1,10 @@
 package theflogat.technomancy.common.blocks.dynamos;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -22,6 +25,12 @@ public class BlockFlowerDynamo extends BlockBase implements IWandHUD {
 		setBlockName(Ref.MOD_PREFIX + Names.flowerDynamo);
 	}
 
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void registerBlockIcons(IIconRegister icon) {
+		this.icon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.flowerDynamo);
+	}
+	
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float vecX, float vecY, float vecZ) {
 		if (!world.isRemote) {

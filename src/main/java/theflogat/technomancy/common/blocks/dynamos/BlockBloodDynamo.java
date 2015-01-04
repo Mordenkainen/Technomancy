@@ -5,33 +5,35 @@ import theflogat.technomancy.common.items.api.ToolWrench;
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
 import theflogat.technomancy.common.tiles.dynamos.TileBloodDynamo;
 import theflogat.technomancy.handlers.compat.BloodMagic;
+import theflogat.technomancy.lib.Names;
+import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.RenderIds;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidStack;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockBloodDynamo extends BlockBase {
 
 	public BlockBloodDynamo() {
-		setBlockName("techno:bloodDynamo");
+		setBlockName(Ref.MOD_PREFIX + Names.bloodDynamo);
 	}
+	
+	@Override
 	public TileEntity createNewTileEntity(World w, int meta) {
 		return new TileBloodDynamo();
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void RegisterIcons(IIconRegister icon) {
-		blockIcon = icon.registerIcon(Blocks.stone.getItemIconName());
+	@Override
+	public void registerBlockIcons(IIconRegister icon) {
+		this.icon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.bloodDynamo);
 	}
 
 	@Override
@@ -64,14 +66,17 @@ public class BlockBloodDynamo extends BlockBase {
 		super.onBlockPlacedBy(world, x, y, z, entity, stack);
 	}  
 
+	@Override
 	public boolean isOpaqueCube(){
 		return false;
 	}
 
+	@Override
 	public boolean renderAsNormalBlock() {
 		return false;
 	}
 
+	@Override
 	public int getRenderType() {
 		return RenderIds.idBloodDynamo;
 	}

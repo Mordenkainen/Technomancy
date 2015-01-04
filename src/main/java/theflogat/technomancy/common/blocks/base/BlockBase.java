@@ -22,8 +22,15 @@ public abstract class BlockBase extends BlockContainer {
 	public IIcon icon;
 	
 	@SideOnly(Side.CLIENT)
-	public void RegisterIcons(IIconRegister icon) {
+	@Override
+	public void registerBlockIcons(IIconRegister icon) {
 		this.icon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.condenserBlock);
 	}
+	
+	@SideOnly(Side.CLIENT)
+    @Override
+    public IIcon getIcon(int side, int meta) {
+    	return icon;
+    }
 
 }

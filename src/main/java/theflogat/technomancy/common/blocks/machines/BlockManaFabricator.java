@@ -6,7 +6,6 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -82,11 +81,9 @@ public class BlockManaFabricator extends BlockBase implements IWandHUD {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public IIcon iconMana;
-	
-	@SideOnly(Side.CLIENT)
-	public void RegisterIcons(IIconRegister icon) {
-		this.iconMana = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.condenserBlock);
+	@Override
+	public void registerBlockIcons(IIconRegister icon) {
+		this.icon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.manaFabricator);
 	}
 	
 	@Override
