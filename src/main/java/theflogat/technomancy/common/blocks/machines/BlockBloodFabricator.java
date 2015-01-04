@@ -1,8 +1,6 @@
 package theflogat.technomancy.common.blocks.machines;
 
 import theflogat.technomancy.common.blocks.base.BlockBase;
-import theflogat.technomancy.common.items.api.ToolWrench;
-import theflogat.technomancy.common.tiles.dynamos.TileBloodDynamo;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBloodFabricator;
 import theflogat.technomancy.handlers.compat.BloodMagic;
 import theflogat.technomancy.lib.Names;
@@ -14,8 +12,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
@@ -59,12 +55,9 @@ public class BlockBloodFabricator extends BlockBase {
     }
 	
 	@SideOnly(Side.CLIENT)
-	public IIcon fabricator;
-	
-	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister icon) {
-		fabricator = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.bloodFabricator);
+		this.icon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.bloodFabricator);
 	}
 
 	@Override

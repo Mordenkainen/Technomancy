@@ -1,11 +1,12 @@
 package theflogat.technomancy.common.blocks.storage;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -159,17 +160,17 @@ public class BlockEssentiaContainer extends BlockBase {
 	    aspects.writeToNBT(itemstack.getTagCompound());
 	}	
 	
+	@SideOnly(Side.CLIENT)
 	public static IIcon iconLiquid;
+	
+	@SideOnly(Side.CLIENT)
 	public static IIcon iconJar;
 	
-	public void RegisterIcons(IIconRegister icon) {
-		iconJar = icon.registerIcon("technom:models/essentiaContainer");
-		iconLiquid = icon.registerIcon("technom:animatedglow");
-		blockIcon = Blocks.stone.getIcon(0, 0);
-	}
-	
-	public IIcon getIcon(int side, int meta) {
-		return iconJar;
-		
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void registerBlockIcons(IIconRegister icon) {
+		iconJar = icon.registerIcon(Ref.TEXTURE_PREFIX + "models/" + Names.essentiaContainer);
+		iconLiquid = icon.registerIcon(Ref.TEXTURE_PREFIX + "animatedglow");
+		this.icon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.essentiaContainer);
 	}
 }

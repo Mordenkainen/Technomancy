@@ -61,12 +61,12 @@ public class BlockEldritchConsumer extends BlockBase{
 	
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
-		blockIcon = reg.registerIcon(Ref.getAsset("eldCons"));
+		icon = reg.registerIcon(Ref.getAsset("eldCons"));
 	}
 	
 	@Override
 	public IIcon getIcon(int par1, int par2) {
-		return blockIcon;
+		return icon;
 	}
 	
 	@Override

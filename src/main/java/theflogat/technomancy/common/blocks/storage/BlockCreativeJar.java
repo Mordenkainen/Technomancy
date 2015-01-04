@@ -1,5 +1,7 @@
 package theflogat.technomancy.common.blocks.storage;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -155,17 +157,17 @@ public class BlockCreativeJar extends BlockBase {
 	    aspects.writeToNBT(itemstack.getTagCompound());
 	}
 
-	public IIcon iconJar;
-	public IIcon iconLiquid;
+	@SideOnly(Side.CLIENT)
+	public static IIcon iconLiquid;
 	
-	public void RegisterIcons(IIconRegister icon) {
-		iconJar = icon.registerIcon("technom:models/essentiaContainer");
-		iconLiquid = icon.registerIcon("technom:animatedglow");
-		blockIcon = Blocks.stone.getIcon(0, 0);
-	}
+	@SideOnly(Side.CLIENT)
+	public static IIcon iconJar;
 	
-	public IIcon getIcon(int side, int meta) {
-		return iconJar;
-		
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void registerBlockIcons(IIconRegister icon) {
+		iconJar = icon.registerIcon(Ref.TEXTURE_PREFIX + "models/" + Names.essentiaContainer);
+		iconLiquid = icon.registerIcon(Ref.TEXTURE_PREFIX + "animatedglow");
+		this.icon = Blocks.stained_glass.getIcon(0, 2);
 	}
 }
