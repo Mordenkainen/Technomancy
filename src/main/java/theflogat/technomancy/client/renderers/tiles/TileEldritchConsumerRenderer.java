@@ -12,7 +12,7 @@ import net.minecraft.util.ResourceLocation;
 public class TileEldritchConsumerRenderer extends TileEntitySpecialRenderer{
 	
 	public static final ModelEldritchConsumer model = new ModelEldritchConsumer();
-	public static final ResourceLocation texture = new ResourceLocation(Ref.MOD_ID.toLowerCase(), "textures/models/eldCons.png");
+	public static final ResourceLocation texture = new ResourceLocation(Ref.MODEL_ELDRITCH_CONSUMER_TEXTURE);
 
 	@Override
 	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float f) {

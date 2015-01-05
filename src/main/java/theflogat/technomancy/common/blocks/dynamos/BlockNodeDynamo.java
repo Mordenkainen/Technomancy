@@ -2,6 +2,8 @@ package theflogat.technomancy.common.blocks.dynamos;
 
 import theflogat.technomancy.common.blocks.base.BlockBase;
 import theflogat.technomancy.common.tiles.dynamos.TileNodeDynamo;
+import theflogat.technomancy.lib.Names;
+import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.RenderIds;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
@@ -14,7 +16,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockNodeDynamo extends BlockBase {
 	
 	public BlockNodeDynamo() {
-		setBlockName("techno:nodeDynamo");
+		setBlockName(Ref.MOD_PREFIX + Names.nodeDynamo);
 	}
 	
 	@Override

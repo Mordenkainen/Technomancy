@@ -11,6 +11,7 @@ public class Ref {
     public static final String proxy_loc = "theflogat.technomancy.handlers.proxies.";
     
     //Locations
+    public static final String GUI_PREFIX = MOD_ID + ":textures/gui/";
     public static final String MODEL_PREFIX = MOD_ID + ":textures/models/";
     public static final String TEXTURE_PREFIX = MOD_ID + ":";
     
@@ -29,12 +30,19 @@ public class Ref {
 	public static final String MODEL_MANA_FABRICATOR_TEXTURE = MODEL_PREFIX + "manaFabricator.png";
 	public static final String MODEL_FLOWER_DYANMO_TEXTURE = MODEL_PREFIX + "flowerDynamo.png";
 	public static final String MODEL_CRYSTAL_TEXTURE = MODEL_PREFIX + "blockCrystal.png";
+	public static final String MODEL_ELDRITCH_CONSUMER_TEXTURE = MODEL_PREFIX + "eldCons.png";
+	
+	//GUI Textures
+	public static final String GUI_BM_PROCESSOR_TEXTURE = GUI_PREFIX + "processorBM.png";
+	public static final String GUI_BO_PROCESSOR_TEXTURE = GUI_PREFIX + "processorBO.png";
+	public static final String GUI_TC_PROCESSOR_TEXTURE = GUI_PREFIX + "processorTC.png";
+	
 	
 	public static String getAsset(String str) {
 		return MOD_ID.toLowerCase() + ":" + str;
 	}
 	
 	public static String getId(String str) {
-		return MOD_PREFIX.toLowerCase() + ":" + str;
+		return MOD_PREFIX.toLowerCase() + str;
 	}
 }

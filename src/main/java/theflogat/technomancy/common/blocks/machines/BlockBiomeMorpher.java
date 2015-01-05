@@ -81,6 +81,6 @@ public class BlockBiomeMorpher extends BlockBase {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister icon) {
-		this.icon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.biomeMorpher);
+		this.icon = icon.registerIcon(Ref.getAsset(Names.biomeMorpher));
 	}
 }

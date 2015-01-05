@@ -28,7 +28,7 @@ public class BlockFlowerDynamo extends BlockBase implements IWandHUD {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister icon) {
-		this.icon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.flowerDynamo);
+		this.icon = icon.registerIcon(Ref.getAsset(Names.flowerDynamo));
 	}
 	
 	@Override

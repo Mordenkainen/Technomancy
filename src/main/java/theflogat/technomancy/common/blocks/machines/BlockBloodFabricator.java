@@ -57,7 +57,7 @@ public class BlockBloodFabricator extends BlockBase {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister icon) {
-		this.icon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.bloodFabricator);
+		this.icon = icon.registerIcon(Ref.getAsset(Names.bloodFabricator));
 	}
 
 	@Override

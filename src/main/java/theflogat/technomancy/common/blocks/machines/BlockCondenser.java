@@ -41,7 +41,7 @@ public class BlockCondenser extends BlockBase {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister icon) {
-		this.icon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.condenserBlock);
+		this.icon = icon.registerIcon(Ref.getAsset(Names.condenserBlock));
 	}
 
 	@SideOnly(Side.CLIENT)
