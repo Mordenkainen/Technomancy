@@ -1,7 +1,6 @@
 package theflogat.technomancy.client.renderers.gui.container;
 
 import theflogat.technomancy.common.tiles.base.TileProcessorBase;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBMProcessor;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTCProcessor;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

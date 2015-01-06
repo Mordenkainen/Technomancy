@@ -1,14 +1,9 @@
 package theflogat.technomancy.common.items;
 
-import java.lang.reflect.InvocationTargetException;
-
 import cofh.api.energy.IEnergyContainerItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
-import thaumcraft.api.aspects.IEssentiaContainerItem;
 import thaumcraft.api.wands.IWandRodOnUpdate;
 import theflogat.technomancy.handlers.compat.Thaumcraft;
 

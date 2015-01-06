@@ -7,7 +7,6 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import theflogat.technomancy.client.renderers.models.ModelFlowerDynamo;
-import theflogat.technomancy.client.renderers.models.ModelManaFabricator;
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
 import theflogat.technomancy.lib.Ref;
 

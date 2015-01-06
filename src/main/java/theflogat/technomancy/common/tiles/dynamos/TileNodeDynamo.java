@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
-import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.nodes.INode;
-import theflogat.technomancy.common.tiles.base.EnergyStorage;
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
 
 public class TileNodeDynamo extends TileDynamoBase{

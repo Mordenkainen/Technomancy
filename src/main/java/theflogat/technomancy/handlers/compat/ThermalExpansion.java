@@ -1,10 +1,7 @@
 package theflogat.technomancy.handlers.compat;
 
-import java.lang.reflect.Method;
-
 import theflogat.technomancy.lib.Conf;
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class ThermalExpansion {

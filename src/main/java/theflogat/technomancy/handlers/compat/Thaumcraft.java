@@ -21,7 +21,6 @@ import net.minecraftforge.fluids.Fluid;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
-import thaumcraft.api.aspects.IAspectSource;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import theflogat.technomancy.lib.Conf;
 

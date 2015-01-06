@@ -7,8 +7,6 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import theflogat.technomancy.client.renderers.models.ModelBiomeMorpher;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBiomeMorpher;
-import theflogat.technomancy.handlers.compat.Thaumcraft;
 import theflogat.technomancy.lib.Ref;
 
 public class TileBiomeMorpherRenderer extends TileEntitySpecialRenderer{
