@@ -70,11 +70,13 @@ public class TileNodeDynamo extends TileDynamoBase{
 		return l;
 	}
 
+	@Override
 	public void readCustomNBT(NBTTagCompound comp) {
 		super.readCustomNBT(comp);
 		this.amount = comp.getShort("Amount");
 	}
 
+	@Override
 	public void writeCustomNBT(NBTTagCompound comp) {
 		super.writeCustomNBT(comp);
 		comp.setShort("Amount", (short)amount);

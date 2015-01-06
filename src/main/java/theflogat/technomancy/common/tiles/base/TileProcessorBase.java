@@ -176,6 +176,7 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
 		compound.setBoolean("Active", isActive);		 
 	}
 	
+	@Override
 	public void writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		
@@ -196,6 +197,7 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
 		compound.setTag("ItemsTile", list);
 	}
 
+	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		

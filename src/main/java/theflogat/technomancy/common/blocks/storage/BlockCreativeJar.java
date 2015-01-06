@@ -52,6 +52,7 @@ public class BlockCreativeJar extends BlockBase {
 		}
 	}
 	
+	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float vecX, float vecY, float vecZ)  {
 		if (world.getTileEntity(x, y, z) instanceof TileCreativeJar ) {
 			TileCreativeJar container = (TileCreativeJar)world.getTileEntity(x, y, z);	  
@@ -131,6 +132,7 @@ public class BlockCreativeJar extends BlockBase {
 		return true;
 	}	
 
+	@Override
 	public TileEntity createNewTileEntity(World w, int meta) {
 		return new TileCreativeJar();
 	}

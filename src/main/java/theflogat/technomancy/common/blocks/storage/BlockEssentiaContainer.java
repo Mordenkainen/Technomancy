@@ -54,6 +54,7 @@ public class BlockEssentiaContainer extends BlockBase {
 		}
 	}
 	
+	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float vecX, float vecY, float vecZ)  {
 		if (world.getTileEntity(x, y, z) instanceof TileEssentiaContainer ) {
 			TileEssentiaContainer container = (TileEssentiaContainer)world.getTileEntity(x, y, z);	  
@@ -134,6 +135,7 @@ public class BlockEssentiaContainer extends BlockBase {
 		return true;
 	}	
 
+	@Override
 	public TileEntity createNewTileEntity(World w, int meta) {
 		return new TileEssentiaContainer();
 	}

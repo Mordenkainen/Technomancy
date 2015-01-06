@@ -249,6 +249,7 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 		return -1;
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public AxisAlignedBB getRenderBoundingBox() {
 		if (this.facing == 1 || this.facing == 3) {

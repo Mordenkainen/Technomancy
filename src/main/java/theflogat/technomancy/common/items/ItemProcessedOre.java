@@ -34,6 +34,7 @@ public class ItemProcessedOre extends ItemBase {
 
 	public IIcon[] itemIcon = new IIcon[6];
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister icon) {
 		for(int i = 0; i<itemIcon.length; i++){
@@ -41,6 +42,7 @@ public class ItemProcessedOre extends ItemBase {
 		}
 	}
 	
+	@Override
 	public void getSubItems(Item id, CreativeTabs tab, List list) {
 		for (int i = 0; i < itemIcon.length; i++) {
 			ItemStack stack  = new ItemStack(id, 1, i);

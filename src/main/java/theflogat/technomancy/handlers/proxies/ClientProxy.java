@@ -154,7 +154,8 @@ public class ClientProxy extends CommonProxy implements IGuiHandler{
     }
     
     
-    public void essentiaTrail(World world, double x, double y, double z, double tx, double ty, double tz, int color) {
+    @Override
+	public void essentiaTrail(World world, double x, double y, double z, double tx, double ty, double tz, int color) {
     	if(Minecraft.getMinecraft().renderViewEntity == null) {
     	      return;
     	}

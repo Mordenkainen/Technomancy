@@ -23,20 +23,24 @@ public class ItemWandCores extends ItemBase{
 
 	public IIcon[] coresIcon = new IIcon[1];
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister icon) {
 		coresIcon[0] = icon.registerIcon(Ref.TEXTURE_PREFIX + "electricWandCore");
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamage(int icon) {
 		return this.coresIcon[icon];
 	}
 
+	@Override
 	public String getUnlocalizedName(ItemStack stack) {
 		return Ref.MOD_PREFIX + Names.wandCores + "." + stack.getItemDamage();
 	}
 	
+	@Override
 	public void getSubItems(Item id, CreativeTabs tab, List list) {
 		try{
 			for (int i = 0; i < coresIcon.length; i++) {

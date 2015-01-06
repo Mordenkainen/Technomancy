@@ -32,6 +32,7 @@ public class TileReconstructorRenderer extends TileEntitySpecialRenderer{
 
 	private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_RECONSTRUCTOR_TEXTURE);
 
+	@Override
 	public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float f) {
 
 		GL11.glPushMatrix();

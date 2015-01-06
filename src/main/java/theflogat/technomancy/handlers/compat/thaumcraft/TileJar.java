@@ -18,10 +18,12 @@ public class TileJar extends TileThaumcraft{
 	protected int spazattack = 0;
 	protected boolean canSpaz = false;
 
+	@Override
 	public boolean canUpdate(){
 		return true;
 	}
 
+	@Override
 	public void updateEntity(){
 		super.updateEntity();
 

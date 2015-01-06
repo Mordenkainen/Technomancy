@@ -49,6 +49,7 @@ public class BlockBloodFabricator extends BlockBase {
 		return false;
 	}
 	
+	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack)    {
         int rotation = MathHelper.floor_double((double)(entity.rotationYaw * 4.0F / 360.0F) + 2.5D) & 3;
         world.setBlockMetadataWithNotify(x, y, z, rotation, 2);

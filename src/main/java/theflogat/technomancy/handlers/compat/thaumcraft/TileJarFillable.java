@@ -28,12 +28,14 @@ public class TileJarFillable extends TileJar implements IAspectSource, IEssentia
 	public boolean forgeLiquid = false;
 	public int lid = 0;
 
+	@Override
 	public boolean canUpdate()
 	{
 		return true;
 	}
 
 
+	@Override
 	public void readCustomNBT(NBTTagCompound nbttagcompound)
 	{
 		aspect = Aspect.getAspect(nbttagcompound.getString("Aspect"));
@@ -43,6 +45,7 @@ public class TileJarFillable extends TileJar implements IAspectSource, IEssentia
 	}
 
 
+	@Override
 	public void writeCustomNBT(NBTTagCompound nbttagcompound)
 	{
 		if (aspect != null) nbttagcompound.setString("Aspect", aspect.getTag());
@@ -53,6 +56,7 @@ public class TileJarFillable extends TileJar implements IAspectSource, IEssentia
 
 
 
+	@Override
 	public AspectList getAspects()
 	{
 		AspectList al = new AspectList();
@@ -62,9 +66,11 @@ public class TileJarFillable extends TileJar implements IAspectSource, IEssentia
 
 
 
+	@Override
 	public void setAspects(AspectList aspects) {}
 
 
+	@Override
 	public int addToContainer(Aspect tt, int am)
 	{
 		if (am == 0) return am;
@@ -79,6 +85,7 @@ public class TileJarFillable extends TileJar implements IAspectSource, IEssentia
 		return am;
 	}
 
+	@Override
 	public boolean takeFromContainer(Aspect tt, int am)
 	{
 		if ((amount >= am) && (tt == aspect)) {
@@ -93,18 +100,21 @@ public class TileJarFillable extends TileJar implements IAspectSource, IEssentia
 		return false;
 	}
 
+	@Override
 	public boolean takeFromContainer(AspectList ot)
 	{
 		return false;
 	}
 
 
+	@Override
 	public boolean doesContainerContainAmount(Aspect tag, int amt)
 	{
 		if ((amount >= amt) && (tag == aspect)) return true;
 		return false;
 	}
 
+	@Override
 	public boolean doesContainerContain(AspectList ot)
 	{
 		for (Aspect tt : ot.getAspects()) {
@@ -113,11 +123,13 @@ public class TileJarFillable extends TileJar implements IAspectSource, IEssentia
 		return false;
 	}
 
+	@Override
 	public int containerContains(Aspect tag)
 	{
 		return 0;
 	}
 
+	@Override
 	public boolean doesContainerAccept(Aspect tag)
 	{
 		return aspectFilter != null ? tag.equals(aspectFilter) : true;
@@ -126,39 +138,47 @@ public class TileJarFillable extends TileJar implements IAspectSource, IEssentia
 
 
 
+	@Override
 	public boolean isConnectable(ForgeDirection face)
 	{
 		return face == ForgeDirection.UP;
 	}
 
+	@Override
 	public boolean canInputFrom(ForgeDirection face)
 	{
 		return face == ForgeDirection.UP;
 	}
 
+	@Override
 	public boolean canOutputTo(ForgeDirection face)
 	{
 		return face == ForgeDirection.UP;
 	}
 
 
+	@Override
 	public void setSuction(Aspect aspect, int amount) {}
 
+	@Override
 	public boolean renderExtendedTube()
 	{
 		return true;
 	}
 
+	@Override
 	public int getMinimumSuction()
 	{
 		return aspectFilter != null ? 64 : 32;
 	}
 
+	@Override
 	public Aspect getSuctionType(ForgeDirection loc)
 	{
 		return aspectFilter != null ? aspectFilter : aspect;
 	}
 
+	@Override
 	public int getSuctionAmount(ForgeDirection loc)
 	{
 		if (amount < maxAmount) {
@@ -172,21 +192,25 @@ public class TileJarFillable extends TileJar implements IAspectSource, IEssentia
 	}
 
 
+	@Override
 	public Aspect getEssentiaType(ForgeDirection loc)
 	{
 		return aspect;
 	}
 
+	@Override
 	public int getEssentiaAmount(ForgeDirection loc)
 	{
 		return amount;
 	}
 
+	@Override
 	public int takeEssentia(Aspect aspect, int amount, ForgeDirection dir)
 	{
 		return takeFromContainer(aspect, amount) ? amount : 0;
 	}
 
+	@Override
 	public int addEssentia(Aspect aspect, int amount, ForgeDirection dir)
 	{
 		return amount - addToContainer(aspect, amount);
@@ -194,6 +218,7 @@ public class TileJarFillable extends TileJar implements IAspectSource, IEssentia
 
 	int count = 0;
 
+	@Override
 	public void updateEntity()
 	{
 		super.updateEntity();
