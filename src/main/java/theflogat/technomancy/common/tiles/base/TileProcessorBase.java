@@ -204,7 +204,7 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
 		NBTTagList list = compound.getTagList("ItemsTile", 10);
 
 		for(int i = 0; i < list.tagCount(); i++) {
-			NBTTagCompound item = (NBTTagCompound) list.getCompoundTagAt(i);
+			NBTTagCompound item = list.getCompoundTagAt(i);
 			int slot = item.getByte("SlotsTile");
 
 			if(slot >= 0 && slot < getSizeInventory()) {

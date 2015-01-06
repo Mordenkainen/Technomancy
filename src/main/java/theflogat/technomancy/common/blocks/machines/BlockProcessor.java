@@ -129,10 +129,10 @@ public class BlockProcessor extends BlockBase {
 	    		f += 0.1F;
 	    		f1 += 0.1F;
 	    		f2 += 0.1F;
-		    	Botania.sparkle(world, (double)f - f3, (double)f1, f2 + f4, r);
-		    	Botania.sparkle(world, (double)f + f3, (double)f1, f2 + f4, r);
-		    	Botania.sparkle(world, (double)f + f4, (double)f1, f2 - f3, r);
-		    	Botania.sparkle(world, (double)f + f4, (double)f1, f2 + f3, r);
+		    	Botania.sparkle(world, (double)f - f3, f1, f2 + f4, r);
+		    	Botania.sparkle(world, (double)f + f3, f1, f2 + f4, r);
+		    	Botania.sparkle(world, (double)f + f4, f1, f2 - f3, r);
+		    	Botania.sparkle(world, (double)f + f4, f1, f2 + f3, r);
 		    }
 	    }
 	    

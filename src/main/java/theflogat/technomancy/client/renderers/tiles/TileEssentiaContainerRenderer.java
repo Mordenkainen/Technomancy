@@ -61,7 +61,7 @@ public class TileEssentiaContainerRenderer extends TileEntitySpecialRenderer{
 		        if (Thaumcraft.crooked) GL11.glRotatef(rot, 0.0F, 0.0F, 1.0F);
 		        GL11.glRotatef(180F, 0F, 1F, 0F);
 		        GL11.glDisable(GL11.GL_LIGHTING);
-		        Thaumcraft.renderQuadCenteredFromTexture.invoke(null, "textures/models/label.png", 0.5F, 1.0F, 1.0F, 1.0F, (int)-99, (int)771, 1.0F);
+		        Thaumcraft.renderQuadCenteredFromTexture.invoke(null, "textures/models/label.png", 0.5F, 1.0F, 1.0F, 1.0F, -99, 771, 1.0F);
 		        GL11.glEnable(GL11.GL_LIGHTING);
 		        GL11.glRotatef(180F, 0F, 1F, 0F);
 		        GL11.glPopMatrix();

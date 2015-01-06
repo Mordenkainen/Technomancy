@@ -103,7 +103,7 @@ public class BlockEssentiaContainer extends BlockBase {
 				}				
 				//Adds Essentia from Phials
 				if (item.getItem() == Thaumcraft.itemEssence && item.getItemDamage() == 1 && container.amount <= (container.maxAmount - 8)) {
-						if(container.addToContainer(((IEssentiaContainerItem)(IEssentiaContainerItem)player.getHeldItem().getItem())
+						if(container.addToContainer(((IEssentiaContainerItem)player.getHeldItem().getItem())
 								.getAspects(player.getHeldItem()).getAspects()[0], 8) == 0) {
 							item.stackSize -= 1;
 							ItemStack phial = new ItemStack(Thaumcraft.itemEssence, 1, 0);

@@ -48,8 +48,8 @@ public class ItemWandCores extends ItemBase{
 				list.add(stack);
 			}
 			ItemStack electric = new ItemStack(Thaumcraft.itemWandCasting, 1, 72);
-			Thaumcraft.setCap.invoke(electric.getItem(), electric, (WandCap)WandCap.caps.get("thaumium"));
-			Thaumcraft.setRod.invoke(electric.getItem(), electric, (WandRod)WandRod.rods.get("electric"));
+			Thaumcraft.setCap.invoke(electric.getItem(), electric, WandCap.caps.get("thaumium"));
+			Thaumcraft.setRod.invoke(electric.getItem(), electric, WandRod.rods.get("electric"));
 			list.add(electric);
 		}catch(Exception e){}
 	}

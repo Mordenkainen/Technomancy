@@ -257,7 +257,7 @@ public class Thaumcraft {
 //			ResearchPageIInfRecipe = ResearchPage.getConstructor(InfusionRecipe);
 
 			Class Conf = Class.forName("thaumcraft.common.config.Config");
-			crooked = (boolean)Conf.getField("crooked").getBoolean(Conf);
+			crooked = Conf.getField("crooked").getBoolean(Conf);
 			
 			Class BlockJar = Class.forName("thaumcraft.common.blocks.BlockJar");
 			iconLiquid = (IIcon)BlockJar.getField("iconLiquid").get(Thaumcraft.blockJar);

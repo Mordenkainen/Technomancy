@@ -19,7 +19,7 @@ public class TileNodeDynamo extends TileDynamoBase{
 
 	@Override
 	public int extractFuel(int ener) {
-		float ratio = ((float) ener) / 80F;
+		float ratio = (ener) / 80F;
 		if(((int)ratio)>amount)
 			return 0;
 		amount -= ((int)ratio);
