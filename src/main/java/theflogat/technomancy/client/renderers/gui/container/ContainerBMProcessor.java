@@ -39,7 +39,7 @@ public class ContainerBMProcessor extends Container {
 	public void addCraftingToCrafters(ICrafting craft) {
 		super.addCraftingToCrafters(craft);
 		craft.sendProgressBarUpdate(this, 0, this.processor.progress);
-		craft.sendProgressBarUpdate(this, 1, this.processor.maxTime);		
+		craft.sendProgressBarUpdate(this, 1, TileProcessorBase.maxTime);		
 	}
 	
 	@Override
@@ -50,12 +50,12 @@ public class ContainerBMProcessor extends Container {
 			if(this.lastTime != this.processor.progress) {
 				craft.sendProgressBarUpdate(this, 0, this.processor.progress);
 		    }
-			if(this.lastMax != this.processor.maxTime) {
-				craft.sendProgressBarUpdate(this, 1, this.processor.maxTime);
+			if(this.lastMax != TileProcessorBase.maxTime) {
+				craft.sendProgressBarUpdate(this, 1, TileProcessorBase.maxTime);
 			}
 		}
 		this.lastTime = this.processor.progress;
-		this.lastMax = this.processor.maxTime;
+		this.lastMax = TileProcessorBase.maxTime;
 	}
 	
 	@Override

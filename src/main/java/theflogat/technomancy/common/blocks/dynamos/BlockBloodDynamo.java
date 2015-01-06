@@ -47,7 +47,7 @@ public class BlockBloodDynamo extends BlockBase {
 					}else if(player.getHeldItem().getItem()==BloodMagic.divinationSigil){
 						player.addChatComponentMessage(new ChatComponentText("Energy: " + ((TileBloodDynamo)entity).getEnergyStored(null) + "/" +
 								((TileBloodDynamo)entity).getMaxEnergyStored(null)));
-						player.addChatComponentMessage(new ChatComponentText("Blood: " + ((TileBloodDynamo)entity).liquid + "/" + ((TileBloodDynamo)entity).capacity));
+						player.addChatComponentMessage(new ChatComponentText("Blood: " + ((TileBloodDynamo)entity).liquid + "/" + TileBloodDynamo.capacity));
 					}else if(player.getHeldItem().getItem()==BloodMagic.bucketLife){
 						if(((TileBloodDynamo)entity).emptyBucket())
 							player.inventory.mainInventory[player.inventory.currentItem] = new ItemStack(Items.bucket);
