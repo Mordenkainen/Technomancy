@@ -88,7 +88,6 @@ public class BlockProcessor extends BlockBase {
 	
 	@Override
 	public IIcon getIcon(IBlockAccess access, int x, int y, int z, int side) {
-		int meta = access.getBlockMetadata(x, y, z);
 		TileEntity tile = access.getTileEntity(x, y, z);
 		if(side == 1) {
 			return icons[3];

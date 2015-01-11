@@ -24,11 +24,6 @@ public class BlockCondenser extends BlockBase {
 	
 	@Override
 	public boolean onBlockActivated(World w, int x,	int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-		TileEntity te = w.getTileEntity(x, y, z);
-//		if(!w.isRemote && te!=null && te instanceof TileCondenser){
-//			player.addChatComponentMessage(new ChatComponentText(((TileCondenser)te).getEnergyStored() + "/" + ((TileCondenser)te).getMaxEnergyStored()));
-//			player.addChatComponentMessage(new ChatComponentText(((TileCondenser)te).amount + "/" + ((TileCondenser)te).maxAmount));
-//		}
 		return true;
 	}
 

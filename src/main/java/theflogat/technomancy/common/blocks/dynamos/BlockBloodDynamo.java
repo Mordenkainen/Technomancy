@@ -62,7 +62,6 @@ public class BlockBloodDynamo extends BlockBase {
 
 	@Override   
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
-		TileDynamoBase tile = (TileDynamoBase)world.getTileEntity(x, y, z);
 		super.onBlockPlacedBy(world, x, y, z, entity, stack);
 	}  
 

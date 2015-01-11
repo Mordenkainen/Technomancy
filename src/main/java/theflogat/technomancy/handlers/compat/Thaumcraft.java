@@ -317,7 +317,6 @@ public class Thaumcraft {
 
 	public static void dropItems(World world, int x, int y, int z) {
 		Random rand = new Random();
-		int md = world.getBlockMetadata(x, y, z);
 		TileEntity tileEntity = world.getTileEntity(x, y, z);
 		if (!(tileEntity instanceof IInventory)) {
 			return;

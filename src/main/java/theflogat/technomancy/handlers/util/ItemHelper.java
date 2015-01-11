@@ -12,7 +12,7 @@ public class ItemHelper {
 	
 	public static ItemStack getFirstItemStack(CompareItemStack comp) {
 		Iterator it = Item.itemRegistry.iterator();
-		for(int i=0; it.hasNext(); i++){
+		while(it.hasNext()) {
 			Item item = (Item) it.next();
 			if(item.getHasSubtypes()){
 				ArrayList<ItemStack> l = new ArrayList<ItemStack>();
@@ -35,7 +35,7 @@ public class ItemHelper {
 		}
 		
 		Iterator bl = Block.blockRegistry.iterator();
-		for(int i=0; bl.hasNext(); i++){
+		while(bl.hasNext()) {
 			ItemStack items = new ItemStack((Block)bl.next());
 			if(comp.isCorrectItemStack(items))
 				return items;

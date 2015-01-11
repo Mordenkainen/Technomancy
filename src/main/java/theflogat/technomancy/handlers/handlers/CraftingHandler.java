@@ -471,7 +471,7 @@ public class CraftingHandler {
 		try{
 			if(ThermalExpansion.te){
 				//ManaInfusion
-				RecipeManaInfusion manaCoilRecipe = BotaniaAPI.registerManaInfusionRecipe(new ItemStack(TMItems.itemBO, 1, 0), ThermalExpansion.powerCoilSilver, 3000);		
+				BotaniaAPI.registerManaInfusionRecipe(new ItemStack(TMItems.itemBO, 1, 0), ThermalExpansion.powerCoilSilver, 3000);		
 
 				//Normal Recipes
 				oreDictRecipe(new ItemStack(TMItems.itemBO, 1, 1),
@@ -499,8 +499,7 @@ public class CraftingHandler {
 					'A', new ItemStack(Items.redstone)				});
 			}else{
 				//ManaInfusion
-				RecipeManaInfusion manaCoilRecipe = BotaniaAPI.registerManaInfusionRecipe(new ItemStack(TMItems.itemBO, 1, 0),
-						new ItemStack(Items.redstone), 3000);		
+				BotaniaAPI.registerManaInfusionRecipe(new ItemStack(TMItems.itemBO, 1, 0), new ItemStack(Items.redstone), 3000);		
 
 				//Normal Recipes
 				oreDictRecipe(new ItemStack(TMItems.itemBO, 1, 1),

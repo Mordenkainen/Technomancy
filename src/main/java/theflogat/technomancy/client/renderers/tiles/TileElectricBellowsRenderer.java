@@ -44,8 +44,6 @@ public class TileElectricBellowsRenderer extends TileEntitySpecialRenderer{
 		}
 		float tscale = 0.125F + scale * 0.875F;
 
-		Minecraft mc = FMLClientHandler.instance().getClient();
-
 		bindTexture(modelTexture);
 		GL11.glPushMatrix();
 		GL11.glEnable(2977);

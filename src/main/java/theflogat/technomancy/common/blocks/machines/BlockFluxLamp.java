@@ -47,8 +47,6 @@ public class BlockFluxLamp extends BlockBase {
 	
 	@Override
 	public int onBlockPlaced(World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int meta){
-		TileEntity tile = world.getTileEntity(x, y, z);
-		
 		return side + meta;
 	}
 	
