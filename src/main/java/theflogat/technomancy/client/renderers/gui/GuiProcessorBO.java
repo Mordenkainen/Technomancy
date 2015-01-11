@@ -9,6 +9,7 @@ import org.lwjgl.opengl.GL11;
 
 import theflogat.technomancy.client.renderers.gui.container.ContainerBOProcessor;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBOProcessor;
+import theflogat.technomancy.lib.Ref;
 
 public class GuiProcessorBO extends GuiContainer {
 
@@ -22,7 +23,7 @@ public class GuiProcessorBO extends GuiContainer {
 		ySize = 137;
 	}
 
-	private static final ResourceLocation texture = new ResourceLocation("technom", "textures/gui/processorBO.png");
+	private static final ResourceLocation texture = new ResourceLocation(Ref.GUI_BO_PROCESSOR_TEXTURE);
 	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {

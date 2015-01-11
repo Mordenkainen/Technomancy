@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import cpw.mods.fml.relauncher.Side;
@@ -80,8 +79,8 @@ public class BlockElectricBellows extends BlockBase{
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public void RegisterIcons(IIconRegister icon) {
-		blockIcon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.condenserBlock);
+	@Override
+	public void registerBlockIcons(IIconRegister icon) {
+		this.icon = icon.registerIcon(Ref.getAsset(Names.electricBellows));
 	}
-
 }

@@ -3,6 +3,8 @@ package theflogat.technomancy.common.blocks.technom;
 import java.util.List;
 import java.util.Random;
 
+import org.lwjgl.opengl.GL11;
+
 import theflogat.technomancy.common.blocks.base.BlockBase;
 import theflogat.technomancy.common.tiles.technom.TileCrystal;
 import theflogat.technomancy.lib.Names;
@@ -12,6 +14,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -77,4 +80,23 @@ public class BlockCrystal extends BlockBase {
 	public TileEntity createNewTileEntity(World w, int meta) {
 		return new TileCrystal();
 	}
+	
+	@SideOnly(Side.CLIENT)
+    @Override
+    public IIcon getIcon(int side, int meta) {
+		switch(meta){
+			case 0:
+				return Blocks.stained_glass.getIcon(0, 15);
+			case 1:
+				return Blocks.stained_glass.getIcon(0, 0);
+			case 2:
+				return Blocks.stained_glass.getIcon(0, 14);
+			case 3:
+				return Blocks.stained_glass.getIcon(0, 5);
+			case 4:
+				return Blocks.stained_glass.getIcon(0, 11);
+			default:
+				return Blocks.stained_glass.getIcon(0, 0);	
+		}
+    }
 }

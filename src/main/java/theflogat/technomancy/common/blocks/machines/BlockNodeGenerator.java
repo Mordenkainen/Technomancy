@@ -3,7 +3,6 @@ package theflogat.technomancy.common.blocks.machines;
 import thaumcraft.api.wands.IWandable;
 import theflogat.technomancy.common.blocks.base.BlockBase;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
-import theflogat.technomancy.handlers.compat.Thaumcraft;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.RenderIds;
@@ -15,7 +14,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -49,8 +47,9 @@ public class BlockNodeGenerator extends BlockBase implements IWandable{
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public void RegisterIcons(IIconRegister icon) {
-		blockIcon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.condenserBlock);
+	@Override
+	public void registerBlockIcons(IIconRegister icon) {
+		this.icon = icon.registerIcon(Ref.getAsset(Names.nodeGenerator));
 	}
 	
 	@Override

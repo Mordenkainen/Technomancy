@@ -83,7 +83,7 @@ public class BlockProcessor extends BlockBase {
 		if(side > 1) {
 			return icons[2];
 		}
-		return icons[1];
+		return icons[0];
 	}
 	
 	@Override
@@ -99,7 +99,7 @@ public class BlockProcessor extends BlockBase {
 			}
 			return icons[2];
 		}		
-		return icons[1];		
+		return icons[0];		
 	}
 	
 	@Override
