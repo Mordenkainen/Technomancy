@@ -12,7 +12,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import theflogat.technomancy.common.blocks.base.BlockBase;
 import theflogat.technomancy.common.items.api.ToolWrench;
-import theflogat.technomancy.common.tiles.base.TileDynamoBase;
 import theflogat.technomancy.common.tiles.dynamos.TileFlowerDynamo;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;

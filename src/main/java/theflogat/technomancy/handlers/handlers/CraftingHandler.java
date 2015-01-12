@@ -22,7 +22,6 @@ import theflogat.technomancy.handlers.compat.ThermalExpansion;
 import theflogat.technomancy.handlers.util.CompareItemStack;
 import theflogat.technomancy.handlers.util.ItemHelper;
 import vazkii.botania.api.BotaniaAPI;
-import vazkii.botania.api.recipe.RecipeManaInfusion;
 import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipeRegistry;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.registry.GameRegistry;

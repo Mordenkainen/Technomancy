@@ -2,7 +2,6 @@ package theflogat.technomancy.common.blocks.dynamos;
 
 import theflogat.technomancy.common.blocks.base.BlockBase;
 import theflogat.technomancy.common.items.api.ToolWrench;
-import theflogat.technomancy.common.tiles.base.TileDynamoBase;
 import theflogat.technomancy.common.tiles.dynamos.TileEssentiaDynamo;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
