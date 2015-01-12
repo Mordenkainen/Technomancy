@@ -133,21 +133,21 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
 	}
 
 	protected boolean isOreDictName(ItemStack items) {
-		if(ores.contains(OreDictionary.getOreName(OreDictionary.getOreID(items)))){
-			return true;
+		int[] ids = OreDictionary.getOreIDs(items);
+		for (int id : ids) {
+			if(ores.contains(OreDictionary.getOreName(id))) return true;
 		}
 		return false;
 	}
 
 	protected Item itemFormOreDictName(ItemStack items) {
-		//for(int i : OreDictionary.getOreIDs(items)){
-		int i = OreDictionary.getOreID(items);
-		for(int j = 0; j<associatedObj.length; j++){
-			if(associatedObj[j][0] == OreDictionary.getOreName(i)){
-				return (Item) associatedObj[j][1];
+		for(int i : OreDictionary.getOreIDs(items)){
+			for(int j = 0; j<associatedObj.length; j++){
+				if(associatedObj[j][0] == OreDictionary.getOreName(i)){
+					return (Item) associatedObj[j][1];
+				}
 			}
 		}
-		//}
 		return null;
 	}
 
