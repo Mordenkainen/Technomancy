@@ -40,6 +40,7 @@ public class ItemBOMaterial extends ItemBase {
 		return Ref.MOD_PREFIX + Names.itemBO + "." + stack.getItemDamage();
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void getSubItems(Item id, CreativeTabs tab, List list) {
 		for (int i = 0; i < itemIcon.length; i++) {

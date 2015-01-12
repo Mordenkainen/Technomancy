@@ -78,6 +78,7 @@ public class ItemPen extends ItemBase implements IScribeTools {
 		return Ref.MOD_PREFIX + Names.pen;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer player, List info, boolean useExtraInformation) {
 		info.add("It's the 21st century,");

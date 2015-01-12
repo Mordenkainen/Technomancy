@@ -44,15 +44,15 @@ public class Thaumcraft {
 //	public static Constructor<?> ResearchPageIArcRecipe;
 //	public static Constructor<?> ResearchPageIInfRecipe;
 
-	public static Class TileAlchemyFurnace;
-	public static Class TileArcaneFurnace;
-	public static Class TileInfusionMatrix;
-	public static Class TileNode;
-	public static Class TileMirrorEssentia;
-	public static Class TileTube;
-	public static Class TileTable;
-	public static Class TileResearchTable;
-	public static Class ItemWandCasting;
+	public static Class<?> TileAlchemyFurnace;
+	public static Class<?> TileArcaneFurnace;
+	public static Class<?> TileInfusionMatrix;
+	public static Class<?> TileNode;
+	public static Class<?> TileMirrorEssentia;
+	public static Class<?> TileTube;
+	public static Class<?> TileTable;
+	public static Class<?> TileResearchTable;
+	public static Class<?> ItemWandCasting;
 //	public static Class ResearchPage;
 //	public static Class ResearchPageArr;
 //	public static Class CrucibleRecipe;
@@ -133,12 +133,12 @@ public class Thaumcraft {
 
 	public static void init() {
 		try{
-			Class THW = Class.forName("thaumcraft.common.lib.world.ThaumcraftWorldGenerator");
+			Class<?> THW = Class.forName("thaumcraft.common.lib.world.ThaumcraftWorldGenerator");
 			biomeMagicalForest = (BiomeGenBase) THW.getField("biomeMagicalForest").get(THW);
 			biomeTaint = (BiomeGenBase) THW.getField("biomeTaint").get(THW);
 			biomeEerie = (BiomeGenBase) THW.getField("biomeEerie").get(THW);
 
-			Class TCB = Class.forName("thaumcraft.common.config.ConfigBlocks");
+			Class<?> TCB = Class.forName("thaumcraft.common.config.ConfigBlocks");
 			FLUXGOO = (Fluid)TCB.getField("FLUXGOO").get(TCB);
 			blockCosmeticSolid = (Block)TCB.getField("blockCosmeticSolid").get(TCB);
 			blockMetalDevice = (Block)TCB.getField("blockMetalDevice").get(TCB);
@@ -148,7 +148,7 @@ public class Thaumcraft {
 			blockCustomPlant = (Block)TCB.getField("blockCustomPlant").get(TCB);
 			blockWoodenDevice = (Block)TCB.getField("blockWoodenDevice").get(TCB);
 
-			Class TCI = Class.forName("thaumcraft.common.config.ConfigItems");
+			Class<?> TCI = Class.forName("thaumcraft.common.config.ConfigItems");
 			itemResource = (Item)TCI.getField("itemResource").get(TCI);
 			itemEssence = (Item)TCI.getField("itemEssence").get(TCI);
 			itemNugget = (Item)TCI.getField("itemNugget").get(TCI);
@@ -174,23 +174,23 @@ public class Thaumcraft {
 				}
 			}
 
-			Class TCH = Class.forName("thaumcraft.common.lib.crafting.ThaumcraftCraftingManager");
+			Class<?> TCH = Class.forName("thaumcraft.common.lib.crafting.ThaumcraftCraftingManager");
 			for(Method method : TCH.getMethods()){
 				if(method.getName().equalsIgnoreCase("getObjectTags")){getObjectTags = method;
 				} else if(method.getName().equalsIgnoreCase("getBonusTags")){getBonusTags = method;}
 			}
 
-			Class TBH = Class.forName("thaumcraft.common.lib.world.biomes.BiomeHandler");
+			Class<?> TBH = Class.forName("thaumcraft.common.lib.world.biomes.BiomeHandler");
 			for(Method method : TBH.getMethods()){
 				if(method.getName().equalsIgnoreCase("getRandomBiomeTag")){getRandomBiomeTag = method;}
 			}
 
-			Class TWG = Class.forName("thaumcraft.common.lib.world.ThaumcraftWorldGenerator");
+			Class<?> TWG = Class.forName("thaumcraft.common.lib.world.ThaumcraftWorldGenerator");
 			for(Method method : TWG.getMethods()){
 				if(method.getName().equalsIgnoreCase("createNodeAt")){createNodeAt = method;}
 			}
 
-			Class TEH = Class.forName("thaumcraft.common.lib.events.EssentiaHandler");
+			Class<?> TEH = Class.forName("thaumcraft.common.lib.events.EssentiaHandler");
 			for(Method method : TEH.getMethods()){
 				if(method.getName().equalsIgnoreCase("drainEssentia")){drainEssentia = method;}
 			}
@@ -255,29 +255,30 @@ public class Thaumcraft {
 //			ResearchPageIArcRecipe = ResearchPage.getConstructor(ArcaneRecipe);
 //			ResearchPageIInfRecipe = ResearchPage.getConstructor(InfusionRecipe);
 
-			Class Conf = Class.forName("thaumcraft.common.config.Config");
+			Class<?> Conf = Class.forName("thaumcraft.common.config.Config");
 			crooked = Conf.getField("crooked").getBoolean(Conf);
 			
-			Class BlockJar = Class.forName("thaumcraft.common.blocks.BlockJar");
+			Class<?> BlockJar = Class.forName("thaumcraft.common.blocks.BlockJar");
 			iconLiquid = (IIcon)BlockJar.getField("iconLiquid").get(Thaumcraft.blockJar);
 
 			System.out.println("Technomancy: Thaumcraft Module Activated");
 		}catch(Exception e){th = false;System.out.println("Technomancy: Failed to load Thaumcraft Module");Conf.ex(e);}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static void client() {
 		try{
-			Class TPR = Class.forName("thaumcraft.client.ClientProxy");
+			Class<?> TPR = Class.forName("thaumcraft.client.ClientProxy");
 			for(Method method : TPR.getMethods()){
 				if(method.getName().equalsIgnoreCase("wispFX3")){wispFX3 = method;}
 			}
 
-			Class FXEssentiaTrail = Class.forName("thaumcraft.client.fx.particles.FXEssentiaTrail");
-			FXEssentiaTrailConst = FXEssentiaTrail.getConstructor(World.class, double.class, double.class, double.class, double.class,
+			Class<?> FXEssentiaTrail = Class.forName("thaumcraft.client.fx.particles.FXEssentiaTrail");
+			FXEssentiaTrailConst = (Constructor<? extends EntityFX>)FXEssentiaTrail.getConstructor(World.class, double.class, double.class, double.class, double.class,
 					double.class, double.class, int.class, int.class, float.class);
 
-			Class FXLightningBolt = Class.forName("thaumcraft.client.fx.bolt.FXLightningBolt");
-			FXLightningBoltConst = FXLightningBolt.getConstructor(World.class, double.class, double.class, double.class, double.class,
+			Class<?> FXLightningBolt = Class.forName("thaumcraft.client.fx.bolt.FXLightningBolt");
+			FXLightningBoltConst = (Constructor<? extends EntityFX>)FXLightningBolt.getConstructor(World.class, double.class, double.class, double.class, double.class,
 					double.class, double.class, long.class, int.class, float.class);
 			for(Method method : FXLightningBolt.getMethods()){
 				if(method.getName().equalsIgnoreCase("defaultFractal")){defaultFractal = method;
@@ -287,7 +288,7 @@ public class Thaumcraft {
 				}
 			}
 			
-			Class UtilsFX = Class.forName("thaumcraft.client.lib.UtilsFX");
+			Class<?> UtilsFX = Class.forName("thaumcraft.client.lib.UtilsFX");
 
 			for(Method method : UtilsFX.getMethods()){
 				if(method.getName().equalsIgnoreCase("renderQuadCenteredFromTexture") && method.getParameterTypes()[0]==String.class){
@@ -296,13 +297,13 @@ public class Thaumcraft {
 				}
 			}
 			
-			Class JR = Class.forName("thaumcraft.client.renderers.tile.TileJarRenderer");
+			Class<?> JR = Class.forName("thaumcraft.client.renderers.tile.TileJarRenderer");
 			for(Method method : JR.getMethods()){
 				if(method.getName().equalsIgnoreCase("renderLiquid")){renderLiquid = method;
 				//}else if(method.getName().equalsIgnoreCase("drawTag")){drawTag = method;
 				}
 			}
-			JarRenderConst = JR.getConstructor();
+			JarRenderConst = (Constructor<? extends TileEntitySpecialRenderer>)JR.getConstructor();
 			System.out.println("Technomancy: Thaumcraft Client-Side Module loaded");
 		}catch(Exception e){th = false;System.out.println("Technomancy: Failed to load Thaumcraft Client-Side Module");Conf.ex(e);}
 	}
@@ -310,7 +311,7 @@ public class Thaumcraft {
 	public static void wispFX3(World worldObj, double posX, double posY, double posZ, double posX2, double posY2, double posZ2,
 			float size, int type, boolean shrink, float gravity) {
 		try{
-			Class TH = Class.forName("thaumcraft.common.Thaumcraft");
+			Class<?> TH = Class.forName("thaumcraft.common.Thaumcraft");
 			wispFX3.invoke(TH.getField("proxy").get(TH), worldObj, posX, posY, posZ, posX2, posY2, posZ2, size, type, shrink, gravity);
 		}catch(Exception e){e.printStackTrace();}
 	}
@@ -368,7 +369,7 @@ public class Thaumcraft {
 		AspectList ot = null;
 		try {
 			if (getObjectTags == null) {
-				Class fake = Class.forName("thaumcraft.common.lib.crafting.ThaumcraftCraftingManager");
+				Class<?> fake = Class.forName("thaumcraft.common.lib.crafting.ThaumcraftCraftingManager");
 				getObjectTags = fake.getMethod("getObjectTags", new Class[] { ItemStack.class });
 			}
 			ot = (AspectList)getObjectTags.invoke(null, is);

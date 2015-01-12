@@ -42,6 +42,7 @@ public class ItemProcessedOre extends ItemBase {
 		}
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void getSubItems(Item id, CreativeTabs tab, List list) {
 		for (int i = 0; i < itemIcon.length; i++) {
@@ -73,6 +74,7 @@ public class ItemProcessedOre extends ItemBase {
 		return items;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
 		if(!(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))) {

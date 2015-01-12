@@ -40,6 +40,7 @@ public class ItemWandCores extends ItemBase{
 		return Ref.MOD_PREFIX + Names.wandCores + "." + stack.getItemDamage();
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void getSubItems(Item id, CreativeTabs tab, List list) {
 		try{

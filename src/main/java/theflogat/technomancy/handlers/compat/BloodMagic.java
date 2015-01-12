@@ -14,9 +14,9 @@ public class BloodMagic {
 
 	public static void init() {
 		try{
-			Class BMM = Class.forName("WayofTime.alchemicalWizardry.AlchemicalWizardry");
+			Class<?> BMM = Class.forName("WayofTime.alchemicalWizardry.AlchemicalWizardry");
 			lifeEssenceFluid = (Fluid) BMM.getField("lifeEssenceFluid").get(BMM);
-			Class BMI = Class.forName("WayofTime.alchemicalWizardry.ModItems");
+			Class<?> BMI = Class.forName("WayofTime.alchemicalWizardry.ModItems");
 			divinationSigil = (Item) BMI.getField("divinationSigil").get(BMI);
 			bucketLife = (Item) BMI.getField("bucketLife").get(BMI);
 			System.out.println("Technomancy: Blood Magic Module Activated");

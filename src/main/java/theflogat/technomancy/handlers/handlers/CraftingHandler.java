@@ -529,6 +529,7 @@ public class CraftingHandler {
 		}catch(Exception e){e.printStackTrace();}
 	}
 
+	@SuppressWarnings("unchecked")
 	static IRecipe oreDictRecipe(ItemStack res, Object[] params) {
 		IRecipe rec = new ShapedOreRecipe(res, params);
 		CraftingManager.getInstance().getRecipeList().add(rec);

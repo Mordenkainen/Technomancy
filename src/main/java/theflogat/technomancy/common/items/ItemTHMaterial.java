@@ -40,6 +40,7 @@ public class ItemTHMaterial extends ItemBase {
 		itemIcon[4] = icon.registerIcon(Ref.TEXTURE_PREFIX + "coilCoupler");
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void addInformation(ItemStack items, EntityPlayer player, List list, boolean moreInfo) {
 		if(items.getItemDamage()==4){
@@ -79,6 +80,7 @@ public class ItemTHMaterial extends ItemBase {
 		return Ref.MOD_PREFIX + Names.itemMaterial + "." + stack.getItemDamage();
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void getSubItems(Item id, CreativeTabs tab, List list) {
 		for (int i = 0; i < itemIcon.length; i++) {

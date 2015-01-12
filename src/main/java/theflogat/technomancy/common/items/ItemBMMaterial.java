@@ -40,6 +40,7 @@ public class ItemBMMaterial extends ItemBase {
 		return Ref.MOD_PREFIX + Names.itemBM + "." + stack.getItemDamage();
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item id, CreativeTabs tab, List list) {
