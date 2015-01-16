@@ -49,9 +49,9 @@ public class TileEssentiaContainerRenderer extends TileEntitySpecialRenderer{
 		        GL11.glPushMatrix();
 		        GL11.glTranslated(0, 1.5, 0);
 		        switch (((TileEssentiaContainer)tile).facing) {
-		        case 3:  GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F); break;
-		        case 5:  GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F); break;
-		        case 4:  GL11.glRotatef(270.0F, 0.0F, 1.0F, 0.0F);
+		        case 2:  GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F); break;
+		        case 4:  GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F); break;
+		        case 5:  GL11.glRotatef(270.0F, 0.0F, 1.0F, 0.0F);
 		        }
 		        
 		        float rot = (((TileEssentiaContainer)tile).aspectFilter.getTag().hashCode() + ((TileEssentiaContainer)tile).xCoord + ((TileEssentiaContainer)tile).facing) % 4 - 2;
