@@ -40,8 +40,7 @@ public class TileNodeDynamo extends TileDynamoBase{
 					Aspect[] as = node.getAspects().getAspects();
 					for (int i = 0; i < as.length; i++) {
 						Aspect aspect = as[i];
-						int nodeAmount = node.containerContains(aspect);
-						if(nodeAmount!= 1 && amount < 16){
+						if(node.getAspects().getAmount(aspect) > 1 && amount < 16){
 							if(node.takeFromContainer(aspect, 1) ) {
 								amount += 1;
 							}
