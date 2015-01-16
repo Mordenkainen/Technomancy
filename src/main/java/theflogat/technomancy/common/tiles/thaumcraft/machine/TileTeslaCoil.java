@@ -79,9 +79,9 @@ public class TileTeslaCoil extends TileTechnomancy {
 								if(source.takeFromContainer(aspect, 1)) {
 									if(Conf.fancy) {
 										if(this!=null && tile!=null && color>0 && source!=null) {
-											Technomancy.proxy.essentiaTrail(worldObj, (double)xCoord + 0.5D, (double)yCoord + 0.5D,
-													(double)zCoord + 0.5D, (double)(tile.xCoord) + 0.5D, (double)(tile.yCoord) + 0.5D,
-													(double)(tile.zCoord) + 0.5D, color);
+											Technomancy.proxy.essentiaTrail(worldObj, xCoord + 0.5D, yCoord + 0.5D,
+													zCoord + 0.5D, (tile.xCoord) + 0.5D, (tile.yCoord) + 0.5D,
+													(tile.zCoord) + 0.5D, color);
 										}
 									}
 								} else {

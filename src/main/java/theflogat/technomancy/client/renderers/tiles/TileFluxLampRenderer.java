@@ -37,7 +37,7 @@ public class TileFluxLampRenderer extends TileEntitySpecialRenderer {
 			
 		GL11.glPushMatrix();		
 		if(((TileFluxLamp)entity).tank.getFluidAmount() > 0) {
-			GL11.glColor3f((float)((TileFluxLamp)entity).tank.getFluidAmount(), 0.0F, (float)((TileFluxLamp)entity).tank.getFluidAmount());
+			GL11.glColor3f(((TileFluxLamp)entity).tank.getFluidAmount(), 0.0F, ((TileFluxLamp)entity).tank.getFluidAmount());
 		}
 		model.renderCore();	
 		GL11.glPopMatrix();

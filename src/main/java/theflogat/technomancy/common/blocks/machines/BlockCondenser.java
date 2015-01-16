@@ -10,7 +10,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -25,16 +24,12 @@ public class BlockCondenser extends BlockBase {
 	
 	@Override
 	public boolean onBlockActivated(World w, int x,	int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-		TileEntity te = w.getTileEntity(x, y, z);
-//		if(!w.isRemote && te!=null && te instanceof TileCondenser){
-//			player.addChatComponentMessage(new ChatComponentText(((TileCondenser)te).getEnergyStored() + "/" + ((TileCondenser)te).getMaxEnergyStored()));
-//			player.addChatComponentMessage(new ChatComponentText(((TileCondenser)te).amount + "/" + ((TileCondenser)te).maxAmount));
-//		}
 		return true;
 	}
 
+	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack)    {
-		int rotation = MathHelper.floor_double((double)(entity.rotationYaw * 4.0F / 360.0F) + 2.5D) & 3;
+		int rotation = MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 2.5D) & 3;
 		world.setBlockMetadataWithNotify(x, y, z, rotation, 2);
 	}
 

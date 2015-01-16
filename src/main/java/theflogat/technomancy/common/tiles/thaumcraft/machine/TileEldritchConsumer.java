@@ -37,6 +37,7 @@ public class TileEldritchConsumer extends TileMachineBase implements IAspectCont
 		public int id;
 		public String chat;
 		
+		@Override
 		public String toString() {return chat;};
 		
 		Range(int range, int height, int id, String chat){

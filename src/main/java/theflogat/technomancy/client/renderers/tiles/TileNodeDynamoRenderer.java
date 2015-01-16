@@ -1,8 +1,6 @@
 package theflogat.technomancy.client.renderers.tiles;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
 import theflogat.technomancy.client.renderers.models.ModelNodeDynamo;
 import theflogat.technomancy.lib.Ref;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;

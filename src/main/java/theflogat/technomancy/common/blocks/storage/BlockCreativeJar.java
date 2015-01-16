@@ -52,6 +52,7 @@ public class BlockCreativeJar extends BlockBase {
 		}
 	}
 	
+	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float vecX, float vecY, float vecZ)  {
 		if (world.getTileEntity(x, y, z) instanceof TileCreativeJar ) {
 			TileCreativeJar container = (TileCreativeJar)world.getTileEntity(x, y, z);	  
@@ -99,7 +100,7 @@ public class BlockCreativeJar extends BlockBase {
 //				}
 				//Adds Essentia from Phials
 				if (item.getItem() == Thaumcraft.itemEssence && item.getItemDamage() == 1 && container.amount <= (container.maxAmount - 8)) {
-						if(container.addToContainer(((IEssentiaContainerItem)(IEssentiaContainerItem)player.getHeldItem().getItem())
+						if(container.addToContainer(((IEssentiaContainerItem)player.getHeldItem().getItem())
 								.getAspects(player.getHeldItem()).getAspects()[0], 8) == 0) {
 							item.stackSize -= 1;
 							ItemStack phial = new ItemStack(Thaumcraft.itemEssence, 1, 0);
@@ -131,6 +132,7 @@ public class BlockCreativeJar extends BlockBase {
 		return true;
 	}	
 
+	@Override
 	public TileEntity createNewTileEntity(World w, int meta) {
 		return new TileCreativeJar();
 	}

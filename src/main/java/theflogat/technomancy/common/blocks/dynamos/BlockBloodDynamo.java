@@ -2,7 +2,6 @@ package theflogat.technomancy.common.blocks.dynamos;
 
 import theflogat.technomancy.common.blocks.base.BlockBase;
 import theflogat.technomancy.common.items.api.ToolWrench;
-import theflogat.technomancy.common.tiles.base.TileDynamoBase;
 import theflogat.technomancy.common.tiles.dynamos.TileBloodDynamo;
 import theflogat.technomancy.handlers.compat.BloodMagic;
 import theflogat.technomancy.lib.Names;
@@ -47,7 +46,7 @@ public class BlockBloodDynamo extends BlockBase {
 					}else if(player.getHeldItem().getItem()==BloodMagic.divinationSigil){
 						player.addChatComponentMessage(new ChatComponentText("Energy: " + ((TileBloodDynamo)entity).getEnergyStored(null) + "/" +
 								((TileBloodDynamo)entity).getMaxEnergyStored(null)));
-						player.addChatComponentMessage(new ChatComponentText("Blood: " + ((TileBloodDynamo)entity).liquid + "/" + ((TileBloodDynamo)entity).capacity));
+						player.addChatComponentMessage(new ChatComponentText("Blood: " + ((TileBloodDynamo)entity).liquid + "/" + TileBloodDynamo.capacity));
 					}else if(player.getHeldItem().getItem()==BloodMagic.bucketLife){
 						if(((TileBloodDynamo)entity).emptyBucket())
 							player.inventory.mainInventory[player.inventory.currentItem] = new ItemStack(Items.bucket);
@@ -62,7 +61,6 @@ public class BlockBloodDynamo extends BlockBase {
 
 	@Override   
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
-		TileDynamoBase tile = (TileDynamoBase)world.getTileEntity(x, y, z);
 		super.onBlockPlacedBy(world, x, y, z, entity, stack);
 	}  
 

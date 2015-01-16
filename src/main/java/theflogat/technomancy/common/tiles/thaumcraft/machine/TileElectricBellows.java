@@ -50,7 +50,7 @@ public class TileElectricBellows extends TileMachineBase {
 						if(al == null || al.size() == 0) {
 							return;
 						}
-						if(((int)Thaumcraft.TileAlchemyFurnace.getField("furnaceBurnTime").getInt(furnace)) <= 2 &&
+						if((Thaumcraft.TileAlchemyFurnace.getField("furnaceBurnTime").getInt(furnace)) <= 2 &&
 								((AspectList)Thaumcraft.TileAlchemyFurnace.getField("aspects").get(furnace)).visSize() + al.visSize() < 50) {
 							Thaumcraft.TileAlchemyFurnace.getField("furnaceBurnTime").set(furnace, 80);
 							extractEnergy(baseCost * 6, false);
@@ -59,9 +59,9 @@ public class TileElectricBellows extends TileMachineBase {
 				}
 				if(Thaumcraft.TileArcaneFurnace.isInstance(furnace)) {
 					if(extractEnergy(baseCost, true) == baseCost) {
-						if(((int)Thaumcraft.TileArcaneFurnace.getField("furnaceCookTime").getInt(furnace)) > 6) {
+						if((Thaumcraft.TileArcaneFurnace.getField("furnaceCookTime").getInt(furnace)) > 6) {
 							Thaumcraft.TileAlchemyFurnace.getField("furnaceBurnTime").set(furnace, 
-									((int)Thaumcraft.TileAlchemyFurnace.getField("furnaceBurnTime").getInt(furnace))-6);
+									(Thaumcraft.TileAlchemyFurnace.getField("furnaceBurnTime").getInt(furnace))-6);
 							extractEnergy(baseCost, false);
 						}
 					}

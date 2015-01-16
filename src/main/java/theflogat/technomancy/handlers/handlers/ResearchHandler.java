@@ -20,7 +20,7 @@ import theflogat.technomancy.lib.Ids;
 
 public class ResearchHandler {
 	
-	public static HashMap<String, Object> recipes = new HashMap();
+	public static HashMap<String, Object> recipes = new HashMap<String, Object>();
 	
 	public static void init() {
 		try{

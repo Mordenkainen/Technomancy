@@ -31,14 +31,17 @@ public class BlockCosmeticPane extends BlockBase {
 	public void registerBlockIcons(IIconRegister icon) {
 		glassIcon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.cosmeticOpaque);
 	}
+	@Override
 	public IIcon getIcon(int side, int meta) {
 		return glassIcon;
 	}
 
+	@Override
 	public boolean isOpaqueCube() {
 		return false;
 	}
 	
+	@Override
 	public boolean renderAsNormalBlock() {
 		return false;
 	}
@@ -48,15 +51,18 @@ public class BlockCosmeticPane extends BlockBase {
 		return 1;
 	}
 	
+	@Override
 	public int getRenderType() {
 		return 1;
 	}
     
-    public boolean shouldSideBeRendered(IBlockAccess w, int x, int y, int z, int meta)    {
+    @Override
+	public boolean shouldSideBeRendered(IBlockAccess w, int x, int y, int z, int meta)    {
         return w.getBlock(x, y, z)==this ? false : super.shouldSideBeRendered(w, x, y, z, meta);
     }
     
-    public void addCollisionBoxesToList(World par1World, int par2, int par3, int par4, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity)    {
+    @Override
+	public void addCollisionBoxesToList(World par1World, int par2, int par3, int par4, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity)    {
         boolean flag = this.canPaneConnectTo(par1World,par2, par3, par4,ForgeDirection.NORTH);
         boolean flag1 = this.canPaneConnectTo(par1World,par2, par3, par4,ForgeDirection.SOUTH);
         boolean flag2 = this.canPaneConnectTo(par1World,par2, par3, par4,ForgeDirection.WEST);
@@ -87,7 +93,8 @@ public class BlockCosmeticPane extends BlockBase {
         }
     }
     
-    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)    {
+    @Override
+	public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)    {
         float f = 0.4375F;
         float f1 = 0.5625F;
         float f2 = 0.4375F;

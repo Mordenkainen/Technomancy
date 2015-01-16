@@ -3,8 +3,6 @@ package theflogat.technomancy.client.renderers.tiles;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 
@@ -32,6 +30,7 @@ public class TileReconstructorRenderer extends TileEntitySpecialRenderer{
 
 	private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_RECONSTRUCTOR_TEXTURE);
 
+	@Override
 	public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float f) {
 
 		GL11.glPushMatrix();

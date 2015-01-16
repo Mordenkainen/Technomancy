@@ -1,10 +1,7 @@
 package theflogat.technomancy.handlers.compat;
 
-import java.lang.reflect.Method;
-
 import theflogat.technomancy.lib.Conf;
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class ThermalExpansion {
@@ -46,13 +43,13 @@ public class ThermalExpansion {
 
 	public static void init(){
 		try{
-			Class TEI = Class.forName("thermalexpansion.item.TEItems");
+			Class<?> TEI = Class.forName("thermalexpansion.item.TEItems");
 			powerCoilElectrum = (ItemStack) TEI.getField("powerCoilElectrum").get(TEI);
 			capacitorResonant = (ItemStack) TEI.getField("capacitorResonant").get(TEI);
 			powerCoilSilver = (ItemStack) TEI.getField("powerCoilSilver").get(TEI);
 			powerCoilGold = (ItemStack) TEI.getField("powerCoilGold").get(TEI);
 			
-			Class TFI = Class.forName("thermalfoundation.item.TFItems");
+			Class<?> TFI = Class.forName("thermalfoundation.item.TFItems");
 			ingotSilver = (ItemStack) TFI.getField("ingotSilver").get(TFI);
 			ingotLead = (ItemStack) TFI.getField("ingotLead").get(TFI);
 			ingotNickel = (ItemStack) TFI.getField("ingotNickel").get(TFI);
@@ -60,12 +57,12 @@ public class ThermalExpansion {
 			ingotCopper = (ItemStack) TFI.getField("ingotCopper").get(TFI);
 			ingotTin = (ItemStack) TFI.getField("ingotTin").get(TFI);
 			
-			Class TEB = Class.forName("thermalexpansion.block.TEBlocks");
+			Class<?> TEB = Class.forName("thermalexpansion.block.TEBlocks");
 			blockCell = (Block) TEB.getField("blockCell").get(TEB);
 			blockDynamo = (Block) TEB.getField("blockDynamo").get(TEB);
 			blockTank = (Block) TEB.getField("blockTank").get(TEB);
 			
-			Class TBM = Class.forName("thermalexpansion.block.machine.BlockMachine");
+			Class<?> TBM = Class.forName("thermalexpansion.block.machine.BlockMachine");
 			pulverizer = (ItemStack) TBM.getField("pulverizer").get(TBM);
 			sawmill = (ItemStack) TBM.getField("sawmill").get(TBM);
 			smelter = (ItemStack) TBM.getField("smelter").get(TBM);
@@ -77,7 +74,7 @@ public class ThermalExpansion {
 			assembler = (ItemStack) TBM.getField("assembler").get(TBM);
 			charger = (ItemStack) TBM.getField("charger").get(TBM);
 			
-			Class TBF = Class.forName("thermalexpansion.block.simple.BlockFrame");
+			Class<?> TBF = Class.forName("thermalexpansion.block.simple.BlockFrame");
 			frameMachineBasic = (ItemStack) TBF.getField("frameMachineBasic").get(TBF);
 			frameTesseractFull = (ItemStack) TBF.getField("frameTesseractFull").get(TBF);
 			frameCellBasic = (ItemStack) TBF.getField("frameCellBasic").get(TBF);

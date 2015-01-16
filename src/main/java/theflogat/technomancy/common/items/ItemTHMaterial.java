@@ -30,6 +30,7 @@ public class ItemTHMaterial extends ItemBase {
 
 	public IIcon[] itemIcon = new IIcon[5];
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister icon) {
 		itemIcon[0] = icon.registerIcon(Ref.TEXTURE_PREFIX + "neutronizedMetal");
@@ -39,6 +40,7 @@ public class ItemTHMaterial extends ItemBase {
 		itemIcon[4] = icon.registerIcon(Ref.TEXTURE_PREFIX + "coilCoupler");
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void addInformation(ItemStack items, EntityPlayer player, List list, boolean moreInfo) {
 		if(items.getItemDamage()==4){
@@ -67,6 +69,7 @@ public class ItemTHMaterial extends ItemBase {
 		}
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamage(int dmg) {
 		return this.itemIcon[dmg];
@@ -77,6 +80,8 @@ public class ItemTHMaterial extends ItemBase {
 		return Ref.MOD_PREFIX + Names.itemMaterial + "." + stack.getItemDamage();
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
 	public void getSubItems(Item id, CreativeTabs tab, List list) {
 		for (int i = 0; i < itemIcon.length; i++) {
 			ItemStack stack  = new ItemStack(id, 1, i);

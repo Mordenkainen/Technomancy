@@ -133,21 +133,21 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
 	}
 
 	protected boolean isOreDictName(ItemStack items) {
-		if(ores.contains(OreDictionary.getOreName(OreDictionary.getOreID(items)))){
-			return true;
+		int[] ids = OreDictionary.getOreIDs(items);
+		for (int id : ids) {
+			if(ores.contains(OreDictionary.getOreName(id))) return true;
 		}
 		return false;
 	}
 
 	protected Item itemFormOreDictName(ItemStack items) {
-		//for(int i : OreDictionary.getOreIDs(items)){
-		int i = OreDictionary.getOreID(items);
-		for(int j = 0; j<associatedObj.length; j++){
-			if(associatedObj[j][0] == OreDictionary.getOreName(i)){
-				return (Item) associatedObj[j][1];
+		for(int i : OreDictionary.getOreIDs(items)){
+			for(int j = 0; j<associatedObj.length; j++){
+				if(associatedObj[j][0] == OreDictionary.getOreName(i)){
+					return (Item) associatedObj[j][1];
+				}
 			}
 		}
-		//}
 		return null;
 	}
 
@@ -176,6 +176,7 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
 		compound.setBoolean("Active", isActive);		 
 	}
 	
+	@Override
 	public void writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		
@@ -196,13 +197,14 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
 		compound.setTag("ItemsTile", list);
 	}
 
+	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		
 		NBTTagList list = compound.getTagList("ItemsTile", 10);
 
 		for(int i = 0; i < list.tagCount(); i++) {
-			NBTTagCompound item = (NBTTagCompound) list.getCompoundTagAt(i);
+			NBTTagCompound item = list.getCompoundTagAt(i);
 			int slot = item.getByte("SlotsTile");
 
 			if(slot >= 0 && slot < getSizeInventory()) {

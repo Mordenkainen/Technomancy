@@ -21,7 +21,6 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
 
 	int amount = 0;
 	int maxAmount = 32;
-	Aspect aspect;
 	public FluidTank tank = new FluidTank(1000);	
 	Aspect aspectSuction;
 	boolean stabilize = true;
@@ -29,19 +28,15 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound compound) {
-		compound.setInteger("Amount", amount);
+		compound.setInteger("AspectAmount", amount);
 		compound.setBoolean("Stabilize", stabilize);
-		if (aspect != null) {
-			compound.setString("Aspect", aspect.getTag());
-		}	
 		compound.setBoolean("Placed", placed);
 		tank.writeToNBT(compound);
 	}
 
 	@Override
 	public void readCustomNBT(NBTTagCompound compound) {
-		amount = compound.getInteger("Amount");
-		aspect = Aspect.getAspect(compound.getString("Aspect"));
+		amount = compound.getInteger("AspectAmount");
 		stabilize = compound.getBoolean("Stabilize");
 		placed = compound.getBoolean("Placed");
 		tank = new FluidTank(1000);
@@ -54,7 +49,7 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
 		try{
 			if(!worldObj.isRemote) {
 				TileEntity tile = null;
-				if ((!worldObj.isRemote) && (++count % 10 == 0)) {
+				if (!worldObj.isRemote && ++count % 10 == 0) {
 					if(amount < maxAmount) {
 						fill();
 					}
@@ -63,15 +58,15 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
 				if(tile == null) {
 					return;
 				}
-				if(!((boolean)Thaumcraft.TileInfusionMatrix.getField("crafting").getBoolean(tile))) {
+				if(!Thaumcraft.TileInfusionMatrix.getField("crafting").getBoolean(tile)) {
 					this.stabilize = true;
 				}	
-				if(((int)Thaumcraft.TileInfusionMatrix.getField("instability").getInt(tile)) > 0 && stabilize) {
+				if(Thaumcraft.TileInfusionMatrix.getField("instability").getInt(tile) > 0 && stabilize) {
 					for(int i = 0; i < 5; i++) {					
 						if(amount >= 5 && (tank.getCapacity() - tank.getFluidAmount()) >= 200 && stabilize) {
-							takeFromContainer(aspect, 5);
+							takeFromContainer(Aspect.ORDER, 5);
 							Thaumcraft.TileInfusionMatrix.getField("instability").set(tile,
-									((int)Thaumcraft.TileInfusionMatrix.getField("instability").getInt(tile)) - 1);
+									(Thaumcraft.TileInfusionMatrix.getField("instability").getInt(tile)) - 1);
 							tank.fill(FluidRegistry.getFluidStack(Thaumcraft.FLUXGOO.getName(), 200), true);
 						}else{
 							break;
@@ -106,15 +101,9 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
 			if (!ic.canOutputTo(ForgeDirection.DOWN)) {
 				return;
 			}
-			Aspect ta = null;
-			if ((this.aspect != null) && (this.amount > 0)) {
-				ta = this.aspect;
-			} else if ((ic.getEssentiaAmount(ForgeDirection.DOWN) > 0) && 
-					(ic.getSuctionAmount(ForgeDirection.DOWN) < getSuctionAmount(ForgeDirection.UP)) && (getSuctionAmount(ForgeDirection.UP) >= ic.getMinimumSuction())) {
-				ta = ic.getEssentiaType(ForgeDirection.DOWN);
-			}
-			if ((ta != null) && (ic.getSuctionAmount(ForgeDirection.DOWN) < getSuctionAmount(ForgeDirection.UP))) {
-				addToContainer(ta, ic.takeEssentia(ta, 1, ForgeDirection.DOWN));
+			if (ic.getEssentiaAmount(ForgeDirection.DOWN) > 0 && ic.getEssentiaType(ForgeDirection.DOWN) == Aspect.ORDER &&
+					ic.getSuctionAmount(ForgeDirection.DOWN) < getSuctionAmount(ForgeDirection.UP) && getSuctionAmount(ForgeDirection.UP) >= ic.getMinimumSuction()) {
+				addToContainer(Aspect.ORDER, ic.takeEssentia(Aspect.ORDER, 1, ForgeDirection.DOWN));
 			}
 		}
 	}
@@ -122,19 +111,18 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
 	@Override
 	public AspectList getAspects()  {
 		AspectList al = new AspectList();
-		if ((this.aspect != null) && (this.amount > 0)) {
-			al.add(this.aspect, this.amount);
+		if (this.amount > 0) {
+			al.add(Aspect.ORDER, this.amount);
 		}
 		return al;
-	}	  
-
+	}
+	
 	@Override
 	public int addToContainer(Aspect tag, int amount)  {
 		if (amount == 0) {
 			return amount;
 		}
-		if (((this.amount < this.maxAmount) && (tag == this.aspect)) || (this.amount == 0)) {
-			this.aspect = tag;
+		if (this.amount < this.maxAmount && tag == Aspect.ORDER) {
 			int added = Math.min(amount, this.maxAmount - this.amount);
 			this.amount += added;
 			amount -= added;
@@ -145,12 +133,8 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
 
 	@Override
 	public boolean takeFromContainer(Aspect tag, int amount)  {
-		if ((this.amount >= amount) && (tag == this.aspect)) {
+		if (this.amount >= amount && tag == Aspect.ORDER) {
 			this.amount -= amount;
-			if (this.amount <= 0) {
-				this.aspect = null;
-				this.amount = 0;
-			}
 			this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
 			return true;
 		}
@@ -159,7 +143,7 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
 
 	@Override
 	public boolean doesContainerContainAmount(Aspect tag, int amt) {
-		if ((this.amount >= amt) && (tag == this.aspect)) {
+		if (amount >= amt && tag == Aspect.ORDER) {
 			return true;
 		}
 		return false;
@@ -167,10 +151,11 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
 
 	@Override
 	public boolean doesContainerContain(AspectList ot)  {
-		for (Aspect tt : ot.getAspects()) {
-			if ((this.amount > 0) && (tt == this.aspect)) {
-				return true;
-			}
+		if (ot.size() > 1) {
+			return false;
+		}
+		if (ot.getAspects()[1] == Aspect.ORDER && this.amount >= ot.getAmount(Aspect.ORDER)) {
+			return true;
 		}
 		return false;
 	}
@@ -231,9 +216,9 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
 	@Override
 	public Aspect getSuctionType(ForgeDirection face) {
 		if(this.amount < this.maxAmount) {
-			this.aspectSuction = Aspect.ORDER;
+			return Aspect.ORDER;
 		}
-		return this.aspectSuction;
+		return null;
 	}
 
 	@Override
@@ -251,7 +236,7 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
 
 	@Override
 	public Aspect getEssentiaType(ForgeDirection face) {
-		return this.aspect;
+		return amount > 0 ? Aspect.ORDER : null;
 	}
 
 	@Override

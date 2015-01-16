@@ -67,15 +67,19 @@ public class ItemPen extends ItemBase implements IScribeTools {
 		return false;
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister icon) {
 		itemIcon = icon.registerIcon(Ref.TEXTURE_PREFIX + "penItem");
 	}
 
+	@Override
 	public String getUnlocalizedName(ItemStack stack) {
 		return Ref.MOD_PREFIX + Names.pen;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer player, List info, boolean useExtraInformation) {
 		info.add("It's the 21st century,");
 		info.add("why are we using quills and ink?");

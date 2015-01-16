@@ -9,7 +9,6 @@
 package theflogat.technomancy.handlers.compat.thaumcraft;
 
 import java.util.Random;
-import net.minecraft.world.World;
 
 public class TileJar extends TileThaumcraft{
 	public float wobblex = 0.0F;
@@ -18,10 +17,12 @@ public class TileJar extends TileThaumcraft{
 	protected int spazattack = 0;
 	protected boolean canSpaz = false;
 
+	@Override
 	public boolean canUpdate(){
 		return true;
 	}
 
+	@Override
 	public void updateEntity(){
 		super.updateEntity();
 
