@@ -7,8 +7,6 @@ import thaumcraft.api.wands.WandRod;
 import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.Names;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class TMItems {
 

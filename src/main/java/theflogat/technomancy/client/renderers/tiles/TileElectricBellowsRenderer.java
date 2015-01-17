@@ -12,7 +12,6 @@ import org.lwjgl.opengl.GL11;
 import theflogat.technomancy.client.renderers.models.ModelElectricBellows;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileElectricBellows;
 import theflogat.technomancy.lib.Ref;
-import cpw.mods.fml.client.FMLClientHandler;
 
 public class TileElectricBellowsRenderer extends TileEntitySpecialRenderer{
 	
@@ -43,8 +42,6 @@ public class TileElectricBellowsRenderer extends TileEntitySpecialRenderer{
 			scale = bellows.inflation;
 		}
 		float tscale = 0.125F + scale * 0.875F;
-
-		Minecraft mc = FMLClientHandler.instance().getClient();
 
 		bindTexture(modelTexture);
 		GL11.glPushMatrix();

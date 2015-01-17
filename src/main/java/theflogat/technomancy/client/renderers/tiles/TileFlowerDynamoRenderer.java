@@ -7,7 +7,6 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import theflogat.technomancy.client.renderers.models.ModelFlowerDynamo;
-import theflogat.technomancy.client.renderers.models.ModelManaFabricator;
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
 import theflogat.technomancy.lib.Ref;
 
@@ -17,6 +16,7 @@ public class TileFlowerDynamoRenderer extends TileEntitySpecialRenderer{
 	
 	private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_FLOWER_DYANMO_TEXTURE);
 
+	@Override
 	public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float f) {
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float)x, (float)y, (float)z);

@@ -4,7 +4,6 @@ import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import theflogat.technomancy.common.tiles.technom.TileCrystal;
 
 public class ModelCrystal extends ModelBase{
 	

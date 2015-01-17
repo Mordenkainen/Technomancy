@@ -3,14 +3,12 @@ package theflogat.technomancy.client.renderers.blocks;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import theflogat.technomancy.common.tiles.technom.TileCrystal;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEldritchConsumer;
 import theflogat.technomancy.lib.RenderIds;
 
 public class BlockCrystalRenderer implements ISimpleBlockRenderingHandler{

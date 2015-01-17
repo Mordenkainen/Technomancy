@@ -12,7 +12,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import theflogat.technomancy.common.blocks.base.BlockBase;
 import theflogat.technomancy.common.items.api.ToolWrench;
-import theflogat.technomancy.common.tiles.base.TileDynamoBase;
 import theflogat.technomancy.common.tiles.dynamos.TileFlowerDynamo;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
@@ -50,7 +49,6 @@ public class BlockFlowerDynamo extends BlockBase implements IWandHUD {
 
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
-		TileDynamoBase tile = (TileDynamoBase)world.getTileEntity(x, y, z);
 		super.onBlockPlacedBy(world, x, y, z, entity, stack);
 	}   
 

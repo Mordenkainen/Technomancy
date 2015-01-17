@@ -25,7 +25,7 @@ public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContain
 		if(amount<=0 || aspect==null){
 			return 0;
 		}
-		float ratio = ((float) ener) / 80F;
+		float ratio = (ener) / 80F;
 		int val = getAspectFuel(aspect);amount -= Math.ceil(ratio);
 		if(amount<=0) {
 			amount = 0;

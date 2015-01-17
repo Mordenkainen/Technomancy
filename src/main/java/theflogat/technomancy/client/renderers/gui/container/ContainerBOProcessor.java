@@ -1,5 +1,6 @@
 package theflogat.technomancy.client.renderers.gui.container;
 
+import theflogat.technomancy.common.tiles.base.TileProcessorBase;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBOProcessor;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -37,7 +38,7 @@ public class ContainerBOProcessor extends Container {
 	public void addCraftingToCrafters(ICrafting craft) {
 		super.addCraftingToCrafters(craft);
 		craft.sendProgressBarUpdate(this, 0, this.processor.progress);
-		craft.sendProgressBarUpdate(this, 1, this.processor.maxTime);		
+		craft.sendProgressBarUpdate(this, 1, TileProcessorBase.maxTime);		
 	}
 	
 	@Override
@@ -48,12 +49,12 @@ public class ContainerBOProcessor extends Container {
 			if(this.lastTime != this.processor.progress) {
 				craft.sendProgressBarUpdate(this, 0, this.processor.progress);
 		    }
-			if(this.lastMax != this.processor.maxTime) {
-				craft.sendProgressBarUpdate(this, 1, this.processor.maxTime);
+			if(this.lastMax != TileProcessorBase.maxTime) {
+				craft.sendProgressBarUpdate(this, 1, TileProcessorBase.maxTime);
 			}
 		}
 		this.lastTime = this.processor.progress;
-		this.lastMax = this.processor.maxTime;
+		this.lastMax = TileProcessorBase.maxTime;
 	}
 	
 	@Override

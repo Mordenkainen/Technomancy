@@ -22,21 +22,26 @@ public class ItemBOMaterial extends ItemBase {
 	
 	public IIcon[] itemIcon = new IIcon[2];
 	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister icon) {
 		itemIcon[0] = icon.registerIcon(Ref.TEXTURE_PREFIX + "manaCoil");
 		itemIcon[1] = icon.registerIcon(Ref.TEXTURE_PREFIX + "manaGear");
 	}
 	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamage(int meta) {
 		return itemIcon[meta];
 	}
 	
+	@Override
 	public String getUnlocalizedName(ItemStack stack) {
 		return Ref.MOD_PREFIX + Names.itemBO + "." + stack.getItemDamage();
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
 	public void getSubItems(Item id, CreativeTabs tab, List list) {
 		for (int i = 0; i < itemIcon.length; i++) {
 			ItemStack stack  = new ItemStack(id, 1, i);

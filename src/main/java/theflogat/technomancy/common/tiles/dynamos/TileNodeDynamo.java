@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
-import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.nodes.INode;
-import theflogat.technomancy.common.tiles.base.EnergyStorage;
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
 
 public class TileNodeDynamo extends TileDynamoBase{
@@ -19,7 +16,7 @@ public class TileNodeDynamo extends TileDynamoBase{
 
 	@Override
 	public int extractFuel(int ener) {
-		float ratio = ((float) ener) / 80F;
+		float ratio = (ener) / 80F;
 		if(((int)ratio)>amount)
 			return 0;
 		amount -= ((int)ratio);
@@ -70,11 +67,13 @@ public class TileNodeDynamo extends TileDynamoBase{
 		return l;
 	}
 
+	@Override
 	public void readCustomNBT(NBTTagCompound comp) {
 		super.readCustomNBT(comp);
 		this.amount = comp.getShort("Amount");
 	}
 
+	@Override
 	public void writeCustomNBT(NBTTagCompound comp) {
 		super.writeCustomNBT(comp);
 		comp.setShort("Amount", (short)amount);

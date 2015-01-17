@@ -15,11 +15,9 @@ import thaumcraft.api.aspects.IEssentiaTransport;
 import thaumcraft.api.nodes.INode;
 import thaumcraft.api.nodes.NodeModifier;
 import thaumcraft.api.nodes.NodeType;
-import thaumcraft.api.wands.IWandable;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
 import theflogat.technomancy.handlers.compat.Thaumcraft;
 import theflogat.technomancy.handlers.util.MathHelper;
-import cofh.api.energy.EnergyStorage;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -249,6 +247,7 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 		return -1;
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public AxisAlignedBB getRenderBoundingBox() {
 		if (this.facing == 1 || this.facing == 3) {

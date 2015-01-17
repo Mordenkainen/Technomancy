@@ -63,15 +63,15 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
 				if(tile == null) {
 					return;
 				}
-				if(!((boolean)Thaumcraft.TileInfusionMatrix.getField("crafting").getBoolean(tile))) {
+				if(!Thaumcraft.TileInfusionMatrix.getField("crafting").getBoolean(tile)) {
 					this.stabilize = true;
 				}	
-				if(((int)Thaumcraft.TileInfusionMatrix.getField("instability").getInt(tile)) > 0 && stabilize) {
+				if((Thaumcraft.TileInfusionMatrix.getField("instability").getInt(tile)) > 0 && stabilize) {
 					for(int i = 0; i < 5; i++) {					
 						if(amount >= 5 && (tank.getCapacity() - tank.getFluidAmount()) >= 200 && stabilize) {
 							takeFromContainer(aspect, 5);
 							Thaumcraft.TileInfusionMatrix.getField("instability").set(tile,
-									((int)Thaumcraft.TileInfusionMatrix.getField("instability").getInt(tile)) - 1);
+									(Thaumcraft.TileInfusionMatrix.getField("instability").getInt(tile)) - 1);
 							tank.fill(FluidRegistry.getFluidStack(Thaumcraft.FLUXGOO.getName(), 200), true);
 						}else{
 							break;

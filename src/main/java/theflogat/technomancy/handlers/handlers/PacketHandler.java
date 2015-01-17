@@ -1,10 +1,5 @@
 package theflogat.technomancy.handlers.handlers;
 
-import net.minecraft.network.NetworkManager;
-
-import com.google.common.io.ByteArrayDataInput;
-import com.google.common.io.ByteStreams;
-
 public class PacketHandler /*implements IPacketHandler*/{
 
 //	@Override

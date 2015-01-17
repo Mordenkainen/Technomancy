@@ -9,7 +9,6 @@ import org.lwjgl.opengl.GL11;
 import theflogat.technomancy.client.renderers.models.ModelBloodDynamo;
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
 import theflogat.technomancy.common.tiles.dynamos.TileBloodDynamo;
-import theflogat.technomancy.handlers.util.Java;
 import theflogat.technomancy.lib.Ref;
 
 public class TileBloodDynamoRenderer extends TileEntitySpecialRenderer {

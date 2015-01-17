@@ -19,6 +19,7 @@ public class ItemEssentiaCannon extends ItemBase {
 		setUnlocalizedName(Ref.MOD_PREFIX + Names.essentiaCannon);
 	}	
 	
+	@Override
 	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer player){
 	  	if (!world.isRemote) {
 	  	    if(!player.isSneaking()) {
@@ -36,10 +37,12 @@ public class ItemEssentiaCannon extends ItemBase {
 		return damage >= 2;
 	}
 	
+	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer player, List info, boolean useExtraInformation) {
 		info.add("Charge: " + (itemstack.getItemDamage() + 1));
 	}
 	
+	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int sideHit, float hitVecX, float hitVecY, float hitVecZ) {
 	    if (world.isRemote) {
 	            if(player.isSneaking()){

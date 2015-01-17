@@ -38,17 +38,21 @@ public class BlockCosmeticOpaque extends Block {
 		
 	}
 	
+	@Override
 	public int quantityDropped(Random par1Random) {
 	       return 1;
 	   }
+	@Override
 	@SideOnly(Side.CLIENT)
     public int getRenderBlockPass() {
 		return 1;
 	}
 	
+	@Override
 	public boolean isOpaqueCube() {
 		return false;
 	}
+	@Override
 	public boolean renderAsNormalBlock() {
 		return false;
 	}

@@ -88,7 +88,6 @@ public class BlockProcessor extends BlockBase {
 	
 	@Override
 	public IIcon getIcon(IBlockAccess access, int x, int y, int z, int side) {
-		int meta = access.getBlockMetadata(x, y, z);
 		TileEntity tile = access.getTileEntity(x, y, z);
 		if(side == 1) {
 			return icons[3];
@@ -129,10 +128,10 @@ public class BlockProcessor extends BlockBase {
 	    		f += 0.1F;
 	    		f1 += 0.1F;
 	    		f2 += 0.1F;
-		    	Botania.sparkle(world, (double)f - f3, (double)f1, f2 + f4, r);
-		    	Botania.sparkle(world, (double)f + f3, (double)f1, f2 + f4, r);
-		    	Botania.sparkle(world, (double)f + f4, (double)f1, f2 - f3, r);
-		    	Botania.sparkle(world, (double)f + f4, (double)f1, f2 + f3, r);
+		    	Botania.sparkle(world, (double)f - f3, f1, f2 + f4, r);
+		    	Botania.sparkle(world, (double)f + f3, f1, f2 + f4, r);
+		    	Botania.sparkle(world, (double)f + f4, f1, f2 - f3, r);
+		    	Botania.sparkle(world, (double)f + f4, f1, f2 + f3, r);
 		    }
 	    }
 	    
