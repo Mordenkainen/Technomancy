@@ -99,6 +99,7 @@ public class BlockEssentiaContainer extends BlockBase {
 						}
 						player.inventoryContainer.detectAndSendChanges();
 					}
+					onBlockPlacedBy(world, x, y, z, player, null);
 					return true;
 				}				
 				//Adds Essentia from Phials
