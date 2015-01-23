@@ -1,9 +1,9 @@
 package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
-import theflogat.technomancy.handlers.compat.BloodMagic;
-import theflogat.technomancy.handlers.util.WorldHelper;
 import theflogat.technomancy.lib.Rate;
+import theflogat.technomancy.lib.compat.BloodMagic;
+import theflogat.technomancy.util.WorldHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;

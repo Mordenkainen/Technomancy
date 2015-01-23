@@ -15,14 +15,15 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.common.blocks.base.BlockBase;
+import theflogat.technomancy.common.tiles.TileBMProcessor;
+import theflogat.technomancy.common.tiles.TileBOProcessor;
 import theflogat.technomancy.common.tiles.base.TileProcessorBase;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBMProcessor;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBOProcessor;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTCProcessor;
-import theflogat.technomancy.handlers.compat.Botania;
-import theflogat.technomancy.handlers.compat.Thaumcraft;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.compat.Botania;
+import theflogat.technomancy.lib.compat.Thaumcraft;
+import theflogat.technomancy.util.InvHelper;
 import vazkii.botania.api.wand.IWandHUD;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -149,7 +150,7 @@ public class BlockProcessor extends BlockBase {
 	
 	@Override
 	public void breakBlock(World world, int x, int y, int z, Block id, int meta)	  {
-	    Thaumcraft.dropItems(world, x, y, z);
+	    InvHelper.dropItemsFromTile(world, x, y, z);
 	    super.breakBlock(world, x, y, z, id, meta);
 	}
 	

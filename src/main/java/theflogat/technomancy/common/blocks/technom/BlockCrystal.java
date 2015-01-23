@@ -29,6 +29,7 @@ public class BlockCrystal extends BlockBase {
 
 	public BlockCrystal() {
 		setBlockName(Ref.MOD_PREFIX + Names.crystalBlock);
+		setLightLevel(1);
 	}
 	
 	@Override

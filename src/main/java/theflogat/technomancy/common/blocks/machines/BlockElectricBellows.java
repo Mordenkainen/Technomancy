@@ -2,10 +2,10 @@ package theflogat.technomancy.common.blocks.machines;
 
 import theflogat.technomancy.common.blocks.base.BlockBase;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileElectricBellows;
-import theflogat.technomancy.handlers.compat.Thaumcraft;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.RenderIds;
+import theflogat.technomancy.lib.compat.Thaumcraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;

@@ -2,9 +2,9 @@ package theflogat.technomancy.common.blocks.machines;
 
 import theflogat.technomancy.common.blocks.base.BlockBase;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileCondenser;
-import theflogat.technomancy.handlers.compat.CoFH;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.compat.CoFH;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;

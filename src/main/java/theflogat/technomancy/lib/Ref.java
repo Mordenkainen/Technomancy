@@ -8,7 +8,7 @@ public class Ref {
     public static final String MOD_NAME = "Technomancy";
     public static final String MOD_VERSION = "0.9.0";
     public static final String CHANNEL_NAME = MOD_NAME;
-    public static final String proxy_loc = "theflogat.technomancy.handlers.proxies.";
+    public static final String proxy_loc = "theflogat.technomancy.proxies.";
     
     //Locations
     public static final String GUI_PREFIX = MOD_ID + ":textures/gui/";
@@ -37,12 +37,11 @@ public class Ref {
 	public static final String GUI_BO_PROCESSOR_TEXTURE = GUI_PREFIX + "processorBO.png";
 	public static final String GUI_TC_PROCESSOR_TEXTURE = GUI_PREFIX + "processorTC.png";
 	
-	
-	public static String getAsset(String str) {
-		return MOD_ID.toLowerCase() + ":" + str;
-	}
-	
 	public static String getId(String str) {
 		return MOD_PREFIX.toLowerCase() + str;
+	}
+
+	public static String getAsset(String str) {
+		return TEXTURE_PREFIX + str;
 	}
 }

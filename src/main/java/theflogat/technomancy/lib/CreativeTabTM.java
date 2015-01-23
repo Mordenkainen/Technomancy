@@ -1,6 +1,6 @@
 package theflogat.technomancy.lib;
 
-import theflogat.technomancy.common.items.TMItems;
+import theflogat.technomancy.common.items.base.TMItems;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;

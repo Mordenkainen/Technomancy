@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import theflogat.technomancy.client.renderers.gui.container.ContainerBMProcessor;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBMProcessor;
+import theflogat.technomancy.common.tiles.TileBMProcessor;
 import theflogat.technomancy.lib.Ref;
 
 public class GuiProcessorBM extends GuiContainer {

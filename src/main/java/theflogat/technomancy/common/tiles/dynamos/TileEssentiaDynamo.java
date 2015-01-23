@@ -11,7 +11,7 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
-import theflogat.technomancy.handlers.compat.Thaumcraft;
+import theflogat.technomancy.lib.compat.Thaumcraft;
 
 public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContainer, IEssentiaTransport{
 

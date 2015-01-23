@@ -15,8 +15,8 @@ import org.lwjgl.opengl.GL11;
 import theflogat.technomancy.client.renderers.models.ModelBloodFabricator;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBloodFabricator;
-import theflogat.technomancy.handlers.compat.BloodMagic;
 import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.compat.BloodMagic;
 
 public class TileBloodFabricatorRenderer extends TileEntitySpecialRenderer {
 	

@@ -2,6 +2,7 @@ package theflogat.technomancy.common.items;
 
 import java.util.List;
 
+import theflogat.technomancy.common.items.base.ItemBase;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import net.minecraft.client.renderer.texture.IIconRegister;

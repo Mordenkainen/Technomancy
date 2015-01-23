@@ -13,8 +13,8 @@ import thaumcraft.api.aspects.IEssentiaTransport;
 import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.common.tiles.base.TileTechnomancy;
 import theflogat.technomancy.common.tiles.thaumcraft.util.AspectContainerEssentiaTransport;
-import theflogat.technomancy.handlers.compat.Thaumcraft;
 import theflogat.technomancy.lib.Conf;
+import theflogat.technomancy.lib.compat.Thaumcraft;
 
 public class TileTeslaCoil extends TileTechnomancy {
 

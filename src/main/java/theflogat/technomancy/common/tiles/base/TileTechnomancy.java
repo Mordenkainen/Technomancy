@@ -1,6 +1,6 @@
 package theflogat.technomancy.common.tiles.base;
 
-import theflogat.technomancy.handlers.util.Coords;
+import theflogat.technomancy.util.Coords;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;

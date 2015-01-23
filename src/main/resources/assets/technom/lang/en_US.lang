@@ -20,6 +20,7 @@ techno:pureTin.name=Purified Tin
 techno:pureSilver.name=Purified Silver
 techno:pureLead.name=Purified Lead
 techno:pureNickel.name=Purified Nickel
+item.techno:itemBoost.name=Potency Gem
 
 #Block Names
 tile.techno:cosmeticOpaque.name=Quantized Glass

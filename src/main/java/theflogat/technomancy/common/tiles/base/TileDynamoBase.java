@@ -1,7 +1,7 @@
 package theflogat.technomancy.common.tiles.base;
 
-import theflogat.technomancy.handlers.util.RedstoneSet;
-import theflogat.technomancy.handlers.util.WorldHelper;
+import theflogat.technomancy.util.RedstoneSet;
+import theflogat.technomancy.util.WorldHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;

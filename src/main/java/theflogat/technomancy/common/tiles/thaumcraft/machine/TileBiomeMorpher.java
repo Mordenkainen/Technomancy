@@ -11,8 +11,8 @@ import thaumcraft.api.nodes.INode;
 import thaumcraft.api.nodes.NodeModifier;
 import thaumcraft.api.nodes.NodeType;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
-import theflogat.technomancy.handlers.compat.Thaumcraft;
 import theflogat.technomancy.lib.Rate;
+import theflogat.technomancy.lib.compat.Thaumcraft;
 
 public class TileBiomeMorpher extends TileMachineBase implements INode{	
 	

@@ -2,7 +2,7 @@ package theflogat.technomancy.common.tiles.base;
 
 import java.util.ArrayList;
 
-import theflogat.technomancy.common.items.TMItems;
+import theflogat.technomancy.common.items.base.TMItems;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;

@@ -14,8 +14,8 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import theflogat.technomancy.common.tiles.base.TileTechnomancy;
-import theflogat.technomancy.handlers.compat.Thaumcraft;
-import theflogat.technomancy.handlers.util.WorldHelper;
+import theflogat.technomancy.lib.compat.Thaumcraft;
+import theflogat.technomancy.util.WorldHelper;
 
 public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, IEssentiaTransport, IFluidHandler{
 

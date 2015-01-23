@@ -6,8 +6,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
-import theflogat.technomancy.handlers.compat.Botania;
 import theflogat.technomancy.lib.Rate;
+import theflogat.technomancy.lib.compat.Botania;
 import vazkii.botania.api.mana.IManaPool;
 
 public class TileManaFabricator extends TileMachineBase implements IManaPool {

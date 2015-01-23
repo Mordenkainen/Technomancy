@@ -1,7 +1,7 @@
 package theflogat.technomancy.common.tiles.dynamos;
 
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
-import theflogat.technomancy.handlers.compat.BloodMagic;
+import theflogat.technomancy.lib.compat.BloodMagic;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;

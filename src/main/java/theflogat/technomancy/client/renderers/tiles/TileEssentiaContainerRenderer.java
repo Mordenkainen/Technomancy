@@ -15,8 +15,8 @@ import org.lwjgl.opengl.GL11;
 import theflogat.technomancy.client.renderers.models.ModelEssentiaContainer;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaContainer;
-import theflogat.technomancy.handlers.compat.Thaumcraft;
 import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.compat.Thaumcraft;
 
 public class TileEssentiaContainerRenderer extends TileEntitySpecialRenderer{
 

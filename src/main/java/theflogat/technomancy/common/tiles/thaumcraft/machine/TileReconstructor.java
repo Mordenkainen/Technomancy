@@ -11,9 +11,9 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectSource;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
-import theflogat.technomancy.handlers.compat.Thaumcraft;
-import theflogat.technomancy.handlers.util.Coords;
-import theflogat.technomancy.handlers.util.InventoryHelper;
+import theflogat.technomancy.lib.compat.Thaumcraft;
+import theflogat.technomancy.util.Coords;
+import theflogat.technomancy.util.InvHelper;
 import cofh.api.energy.EnergyStorage;
 
 public class TileReconstructor extends TileMachineBase /*implements IAspectSource, IEssentiaTransport, IInventory*/ {

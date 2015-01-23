@@ -9,9 +9,9 @@ import org.lwjgl.opengl.GL11;
 
 import theflogat.technomancy.client.renderers.models.ModelFluxLamp;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileFluxLamp;
-import theflogat.technomancy.handlers.compat.Thaumcraft;
-import theflogat.technomancy.handlers.util.WorldHelper;
 import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.compat.Thaumcraft;
+import theflogat.technomancy.util.WorldHelper;
 
 public class TileFluxLampRenderer extends TileEntitySpecialRenderer {
 	

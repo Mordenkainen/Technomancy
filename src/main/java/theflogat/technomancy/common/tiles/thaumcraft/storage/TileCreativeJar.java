@@ -3,7 +3,7 @@ package theflogat.technomancy.common.tiles.thaumcraft.storage;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.IAspectSource;
 import thaumcraft.api.aspects.IEssentiaTransport;
-import theflogat.technomancy.handlers.compat.thaumcraft.TileJarFillable;
+import theflogat.technomancy.lib.compat.thaumcraft.TileJarFillable;
 
 public class TileCreativeJar extends TileJarFillable implements IAspectSource, IEssentiaTransport{
 

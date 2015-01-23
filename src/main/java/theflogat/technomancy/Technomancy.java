@@ -3,20 +3,20 @@ package theflogat.technomancy;
 import java.io.File;
 
 import theflogat.technomancy.common.blocks.base.TMBlocks;
-import theflogat.technomancy.common.items.TMItems;
-import theflogat.technomancy.handlers.compat.BloodMagic;
-import theflogat.technomancy.handlers.compat.Botania;
-import theflogat.technomancy.handlers.compat.CoFH;
-import theflogat.technomancy.handlers.compat.Thaumcraft;
-import theflogat.technomancy.handlers.compat.ThermalExpansion;
-import theflogat.technomancy.handlers.handlers.CompatibilityHandler;
-import theflogat.technomancy.handlers.handlers.ConfigHandler;
-import theflogat.technomancy.handlers.handlers.CraftingHandler;
-import theflogat.technomancy.handlers.handlers.ResearchHandler;
-import theflogat.technomancy.handlers.proxies.CommonProxy;
-import theflogat.technomancy.handlers.util.Loc;
+import theflogat.technomancy.common.items.base.TMItems;
 import theflogat.technomancy.lib.CreativeTabTM;
 import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.compat.BloodMagic;
+import theflogat.technomancy.lib.compat.Botania;
+import theflogat.technomancy.lib.compat.CoFH;
+import theflogat.technomancy.lib.compat.Thaumcraft;
+import theflogat.technomancy.lib.compat.ThermalExpansion;
+import theflogat.technomancy.lib.handlers.CompatibilityHandler;
+import theflogat.technomancy.lib.handlers.ConfigHandler;
+import theflogat.technomancy.lib.handlers.CraftingHandler;
+import theflogat.technomancy.lib.handlers.ResearchHandler;
+import theflogat.technomancy.proxies.CommonProxy;
+import theflogat.technomancy.util.Loc;
 import net.minecraft.creativetab.CreativeTabs;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -88,6 +88,8 @@ public class Technomancy {
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
+    	CraftingHandler.initTechnomancyRecipes();
+    	
         if(BloodMagic.bm) {
         	CraftingHandler.initBloodMagicRecipes();
         }

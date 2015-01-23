@@ -1,10 +1,15 @@
 package theflogat.technomancy.common.blocks.base;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.ItemBlock;
 import theflogat.technomancy.common.blocks.dynamos.BlockBloodDynamo;
 import theflogat.technomancy.common.blocks.dynamos.BlockEssentiaDynamo;
 import theflogat.technomancy.common.blocks.dynamos.BlockFlowerDynamo;
 import theflogat.technomancy.common.blocks.dynamos.BlockNodeDynamo;
+import theflogat.technomancy.common.blocks.dynamos.ItemBloodDynamo;
+import theflogat.technomancy.common.blocks.dynamos.ItemEssentiaDynamo;
+import theflogat.technomancy.common.blocks.dynamos.ItemFlowerDynamo;
+import theflogat.technomancy.common.blocks.dynamos.ItemNodeDynamo;
 import theflogat.technomancy.common.blocks.machines.BlockBiomeMorpher;
 import theflogat.technomancy.common.blocks.machines.BlockBloodFabricator;
 import theflogat.technomancy.common.blocks.machines.BlockCondenser;
@@ -19,13 +24,13 @@ import theflogat.technomancy.common.blocks.machines.BlockTeslaCoil;
 import theflogat.technomancy.common.blocks.storage.BlockCreativeJar;
 import theflogat.technomancy.common.blocks.storage.BlockEssentiaContainer;
 import theflogat.technomancy.common.blocks.technom.BlockCrystal;
+import theflogat.technomancy.common.tiles.TileBMProcessor;
+import theflogat.technomancy.common.tiles.TileBOProcessor;
 import theflogat.technomancy.common.tiles.dynamos.TileBloodDynamo;
 import theflogat.technomancy.common.tiles.dynamos.TileEssentiaDynamo;
 import theflogat.technomancy.common.tiles.dynamos.TileFlowerDynamo;
 import theflogat.technomancy.common.tiles.dynamos.TileNodeDynamo;
 import theflogat.technomancy.common.tiles.technom.TileCrystal;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBMProcessor;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBOProcessor;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBiomeMorpher;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBloodFabricator;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileCondenser;
@@ -39,10 +44,10 @@ import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTCProcessor;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTeslaCoil;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileCreativeJar;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaContainer;
-import theflogat.technomancy.handlers.compat.CoFH;
 import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.compat.CoFH;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class TMBlocks {
@@ -98,10 +103,10 @@ public class TMBlocks {
 		eldritchConsumer = Ids.eldrichConsumer ? new BlockEldritchConsumer() : null;
 		
 		//Registry
-		registerBlock(nodeDynamo, Names.nodeDynamo);
+		registerBlock(nodeDynamo, Names.nodeDynamo, ItemNodeDynamo.class);
 		registerBlock(essentiaContainer, Names.essentiaContainer);
 		registerBlock(cosmeticOpaque, Names.cosmeticOpaque);
-		registerBlock(essentiaDynamo, Names.essentiaDynamo);
+		registerBlock(essentiaDynamo, Names.essentiaDynamo, ItemEssentiaDynamo.class);
 		registerBlock(biomeMorpher, Names.biomeMorpher);
 		registerBlock(nodeGenerator, Names.nodeGenerator);
 		registerBlock(fluxLamp, Names.fluxLamp);
@@ -137,7 +142,7 @@ public class TMBlocks {
 		processorBM = Ids.processorBM ? new BlockProcessor.BlockBMProcessor() : null;
 
 		//Registry
-		registerBlock(bloodDynamo, Names.bloodDynamo);
+		registerBlock(bloodDynamo, Names.bloodDynamo, ItemBloodDynamo.class);
 		registerBlock(bloodFabricator, Names.bloodFabricator);
 		registerBlock(processorBM, Names.processor + "BM");
 
@@ -155,7 +160,7 @@ public class TMBlocks {
 		processorBO = Ids.processorBO ? new BlockProcessor.BlockBOProcessor() : null;
 		
 		//Block Registry
-		registerBlock(flowerDynamo, Names.flowerDynamo);
+		registerBlock(flowerDynamo, Names.flowerDynamo, ItemFlowerDynamo.class);
 		registerBlock(manaFabricator, Names.manaFabricator);
 		registerBlock(processorBO, Names.processor + "BO");
 
@@ -170,5 +175,9 @@ public class TMBlocks {
 		if(block!=null)
 			GameRegistry.registerBlock(block, name);
 	}
-
+	
+	private static void registerBlock(Block block, String name, Class<? extends ItemBlock> itemclass) {
+		if(block!=null)
+			GameRegistry.registerBlock(block, itemclass, name);
+	}
 }

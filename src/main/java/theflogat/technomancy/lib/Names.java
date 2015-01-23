@@ -18,6 +18,7 @@ public class Names {
 	public static final String pureSilver = "pureSilver";
 	public static final String pureLead = "pureLead";
 	public static final String pureNickel = "pureNickel";
+	public static final String itemBoost = "itemBoost";
     /*
      * Blocks
      */
