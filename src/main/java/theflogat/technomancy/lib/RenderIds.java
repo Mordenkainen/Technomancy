@@ -18,6 +18,7 @@ public class RenderIds {
 	public static int idFlowerDynamo;
 	public static int idEldrichConsumer;
 	public static int idCrystal;
+	public static int idCatalyst;
 	
 
 }

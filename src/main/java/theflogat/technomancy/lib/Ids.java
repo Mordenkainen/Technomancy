@@ -45,4 +45,5 @@ public class Ids {
 		public static boolean procLead;
 		public static boolean procNickel;
 		public static boolean itemBoost;
+		public static boolean catalyst;
 }

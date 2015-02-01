@@ -43,6 +43,8 @@ public class Names {
 	public static final String manaFabricator = "manaFabricator";
 	public static final String processor = "processor";
 	public static final String eldritchConsumer = "eldritchConsumer";
+	public static final String catalyst = "catalyst";
+	public static final String fakeAir = "fakeAir";
 	
 
 }

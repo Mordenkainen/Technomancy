@@ -7,6 +7,7 @@ import net.minecraft.world.World;
 import theflogat.technomancy.client.renderers.blocks.BlockBiomeMorpherRenderer;
 import theflogat.technomancy.client.renderers.blocks.BlockBloodDynamoRenderer;
 import theflogat.technomancy.client.renderers.blocks.BlockBloodFabricatorRenderer;
+import theflogat.technomancy.client.renderers.blocks.BlockCatalystRenderer;
 import theflogat.technomancy.client.renderers.blocks.BlockCreativeJarRenderer;
 import theflogat.technomancy.client.renderers.blocks.BlockCrystalRenderer;
 import theflogat.technomancy.client.renderers.blocks.BlockEldritchConsumerRenderer;
@@ -26,6 +27,7 @@ import theflogat.technomancy.client.renderers.gui.GuiProcessorTC;
 import theflogat.technomancy.client.renderers.tiles.TileBiomeMorpherRenderer;
 import theflogat.technomancy.client.renderers.tiles.TileBloodDynamoRenderer;
 import theflogat.technomancy.client.renderers.tiles.TileBloodFabricatorRenderer;
+import theflogat.technomancy.client.renderers.tiles.TileCatalystRenderer;
 import theflogat.technomancy.client.renderers.tiles.TileCreativeJarRenderer;
 import theflogat.technomancy.client.renderers.tiles.TileCrystalRenderer;
 import theflogat.technomancy.client.renderers.tiles.TileEldritchConsumerRenderer;
@@ -45,6 +47,7 @@ import theflogat.technomancy.common.tiles.dynamos.TileBloodDynamo;
 import theflogat.technomancy.common.tiles.dynamos.TileEssentiaDynamo;
 import theflogat.technomancy.common.tiles.dynamos.TileFlowerDynamo;
 import theflogat.technomancy.common.tiles.dynamos.TileNodeDynamo;
+import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import theflogat.technomancy.common.tiles.technom.TileCrystal;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBiomeMorpher;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBloodFabricator;
@@ -78,9 +81,11 @@ public class ClientProxy extends CommonProxy implements IGuiHandler{
     	ClientRegistry.bindTileEntitySpecialRenderer(TileCrystal.class, new TileCrystalRenderer());
 		RenderIds.idCrystal = RenderingRegistry.getNextAvailableRenderId();
 		
-		
+		ClientRegistry.bindTileEntitySpecialRenderer(TileCatalyst.class, new TileCatalystRenderer());
+		RenderIds.idCatalyst = RenderingRegistry.getNextAvailableRenderId();
 		
 		RenderingRegistry.registerBlockHandler(new BlockCrystalRenderer());
+		RenderingRegistry.registerBlockHandler(new BlockCatalystRenderer());
     	
     	if(Thaumcraft.th) {
     		ClientRegistry.bindTileEntitySpecialRenderer(TileNodeDynamo.class, new TileNodeDynamoRenderer());

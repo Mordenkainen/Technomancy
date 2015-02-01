@@ -38,6 +38,7 @@ public class ConfigHandler {
         Ids.processorBM = config.get(blocks, Names.processor + "BM", true).getBoolean();
         Ids.processorBO = config.get(blocks, Names.processor + "BO", true).getBoolean();
         Ids.eldrichConsumer = config.get(blocks, Names.eldritchConsumer, true).getBoolean();
+        Ids.catalyst = config.get(blocks, Names.catalyst, true).getBoolean();
         
         String items = "Items";
         //Items        

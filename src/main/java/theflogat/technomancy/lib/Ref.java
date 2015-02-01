@@ -31,6 +31,8 @@ public class Ref {
 	public static final String MODEL_FLOWER_DYANMO_TEXTURE = MODEL_PREFIX + "flowerDynamo.png";
 	public static final String MODEL_CRYSTAL_TEXTURE = MODEL_PREFIX + "blockCrystal.png";
 	public static final String MODEL_ELDRITCH_CONSUMER_TEXTURE = MODEL_PREFIX + "eldCons.png";
+	public static final String MODEL_REF_TEXTURE = MODEL_PREFIX + "sphere.png";
+	public static final String MODEL_CATALYST_TEXTURE = MODEL_PREFIX + "catalyst.png";
 	
 	//GUI Textures
 	public static final String GUI_BM_PROCESSOR_TEXTURE = GUI_PREFIX + "processorBM.png";

@@ -6,6 +6,7 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
+import theflogat.technomancy.client.renderers.models.ModelBlackSphere;
 import theflogat.technomancy.client.renderers.models.ModelCrystal;
 import theflogat.technomancy.common.tiles.technom.TileCrystal;
 import theflogat.technomancy.lib.Ref;

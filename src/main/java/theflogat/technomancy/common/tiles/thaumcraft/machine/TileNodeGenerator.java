@@ -15,14 +15,19 @@ import thaumcraft.api.aspects.IEssentiaTransport;
 import thaumcraft.api.nodes.INode;
 import thaumcraft.api.nodes.NodeModifier;
 import thaumcraft.api.nodes.NodeType;
+import theflogat.technomancy.common.blocks.base.TMBlocks;
+import theflogat.technomancy.common.blocks.technom.BlockFakeAir;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
+import theflogat.technomancy.common.tiles.technom.TileFakeAir;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.util.MathHelper;
+import theflogat.technomancy.util.WorldHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class TileNodeGenerator extends TileMachineBase implements IEssentiaTransport, IAspectContainer{
 
+	private boolean firstAdded = true;
 	private Aspect aspect;
 	public int amount = 0;
 	private int maxAmount = 256;
@@ -39,6 +44,53 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 	}
 	@Override
 	public void updateEntity() {
+		if(firstAdded){
+			for(int i=0; i<=2; i++){
+				if(i!=0){
+					if(WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord+i, zCoord)){
+						worldObj.setBlock(xCoord, yCoord+i, zCoord, TMBlocks.fakeAir);
+						((TileFakeAir)worldObj.getTileEntity(xCoord, yCoord+i, zCoord)).addMain(xCoord, yCoord, zCoord);
+					}else{
+						WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord, zCoord);
+						return;
+					}
+				}
+				if(facing==2 || facing==3){
+					if(WorldHelper.destroyAndDrop(worldObj, xCoord-1, yCoord+i, zCoord)){
+						worldObj.setBlock(xCoord-1, yCoord+i, zCoord, TMBlocks.fakeAir);
+						((TileFakeAir)worldObj.getTileEntity(xCoord-1, yCoord+i, zCoord)).addMain(xCoord, yCoord, zCoord);
+					}else{
+						WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord, zCoord);
+						return;
+					}
+					if(WorldHelper.destroyAndDrop(worldObj, xCoord+1, yCoord+i, zCoord)){
+						worldObj.setBlock(xCoord+1, yCoord+i, zCoord, TMBlocks.fakeAir);
+						((TileFakeAir)worldObj.getTileEntity(xCoord+1, yCoord+i, zCoord)).addMain(xCoord, yCoord, zCoord);
+					}else{
+						WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord, zCoord);
+						return;
+					}
+				}
+				if(facing==5 || facing==4){
+					if(WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord+i, zCoord-1)){
+						worldObj.setBlock(xCoord, yCoord+i, zCoord-1, TMBlocks.fakeAir);
+						((TileFakeAir)worldObj.getTileEntity(xCoord, yCoord+i, zCoord-1)).addMain(xCoord, yCoord, zCoord);
+					}else{
+						WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord, zCoord);
+						return;
+					}
+					if(WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord+i, zCoord+1)){
+						worldObj.setBlock(xCoord, yCoord+i, zCoord+1, TMBlocks.fakeAir);
+						((TileFakeAir)worldObj.getTileEntity(xCoord, yCoord+i, zCoord+1)).addMain(xCoord, yCoord, zCoord);
+					}else{
+						WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord, zCoord);
+						return;
+					}
+				}
+			}
+			firstAdded = false;
+		}
+
 		if(!worldObj.isRemote) {
 			int xx = xCoord;
 			int zz = zCoord;
@@ -79,11 +131,16 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 					aspectSuction = null;
 					INode node = (INode)entity;
 					addNode = true;					
-					if(this.amount > 0 && this.aspect != null && this.getEnergyStored() > 1000) {	
-						extractEnergy(1000, false);
-						node.addToContainer(this.aspect, 1);
-						this.takeFromContainer(this.aspect, 1);
-						worldObj.markBlockForUpdate(xx, this.yCoord + 1, zz);
+					if(amount > 0 && aspect != null && getEnergyStored() > 1000) {	
+
+						AspectList al = node.getAspects();
+						if(al.getAmount(aspect)<2){
+							extractEnergy(1000, false);
+							al.add(aspect, 1);
+							node.setAspects(al);
+							takeFromContainer(aspect, 1);
+							worldObj.markBlockForUpdate(xx, yCoord + 1, zz);
+						}
 					}
 					canSpawn = false;
 				}							
@@ -144,16 +201,16 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-//		if (worldObj.isRemote) {
-//			for (int a = 0; a < 6; a++) {
-//				for (int b = 0; b < 6; b++) {
-//					float fx = (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.5F;
-//					float fy = (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.5F;
-//					float fz = (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.5F;
-//					Thaumcraft.wispFX3(worldObj, xx + fx, yCoord + 1 + fy, zz + fz, xx + fx * 10.0F, yCoord + 1 + fy * 10.0F, zz + fz * 10.0F, 0.4F, b, true, 0.05F);
-//				}
-//			}
-//		}		
+		//		if (worldObj.isRemote) {
+		//			for (int a = 0; a < 6; a++) {
+		//				for (int b = 0; b < 6; b++) {
+		//					float fx = (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.5F;
+		//					float fy = (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.5F;
+		//					float fz = (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.5F;
+		//					Thaumcraft.wispFX3(worldObj, xx + fx, yCoord + 1 + fy, zz + fz, xx + fx * 10.0F, yCoord + 1 + fy * 10.0F, zz + fz * 10.0F, 0.4F, b, true, 0.05F);
+		//				}
+		//			}
+		//		}		
 	}
 
 	void fill() {
@@ -206,7 +263,7 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 			Thaumcraft.finalizeBolt.invoke(bolt);
 		}catch (Exception e){e.printStackTrace();}
 	}
-	
+
 	public int onWandRightClick(World world, ItemStack wandstack, EntityPlayer player, int x, int y, int z, int side, int md) {
 		if(active && canSpawn) {
 			int xx = xCoord;
@@ -265,7 +322,7 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 		this.active = compound.getBoolean("Active");
 		this.canSpawn = compound.getBoolean("Spawn");
 		this.facing = compound.getByte("Facing");
-
+		firstAdded = false;
 	}
 
 	@Override

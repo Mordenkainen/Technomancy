@@ -17,6 +17,7 @@ import thaumcraft.api.wands.WandRod;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.items.base.TMItems;
 import theflogat.technomancy.common.items.technom.ItemProcessedOre;
+import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.lib.compat.ThermalExpansion;
 import theflogat.technomancy.util.CompareItemStack;
@@ -583,11 +584,73 @@ public class CraftingHandler {
 
 
 	public static void initTechnomancyRecipes() {
-		GameRegistry.addShapedRecipe(new ItemStack(TMItems.itemBoost), new Object[]{
-			" R ",
-			"RNR",
-			" G ",
-			'R', Items.redstone, 'N', Items.quartz, 'G', Items.gold_ingot
-		});
+		if(Ids.itemBoost)
+			GameRegistry.addShapedRecipe(new ItemStack(TMItems.itemBoost), new Object[]{
+				" R ",
+				"RNR",
+				" G ",
+				'R', Items.redstone, 'N', Items.quartz, 'G', Items.gold_ingot
+			});
+
+		if(Ids.crystalBlock){
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.crystalBlock, 1, 0), new Object[]{
+				"GR ",
+				"RG ",
+				'G', Items.glowstone_dust, 'R', "dyeBlack"
+			}));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.crystalBlock, 1, 1), new Object[]{
+				"GR ",
+				"RG ",
+				'G', Items.glowstone_dust, 'R', "dyeWhite"
+			}));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.crystalBlock, 1, 2), new Object[]{
+				"GR ",
+				"RG ",
+				'G', Items.glowstone_dust, 'R', "dyeRed"
+			}));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.crystalBlock, 1, 3), new Object[]{
+				"GR ",
+				"RG ",
+				'G', Items.glowstone_dust, 'R', "dyeGreen"
+			}));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.crystalBlock, 1, 4), new Object[]{
+				"GR ",
+				"RG ",
+				'G', Items.glowstone_dust, 'R', "dyeBlue"
+			}));
+		}
+
+		if(Ids.catalyst){
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.catalyst, 1, 0), new Object[]{
+				"BRA",
+				"RGR",
+				"ARB",
+				'G', Blocks.gold_block, 'R', "dyeBlack", 'B', Blocks.obsidian, 'A', Items.ender_pearl
+			}));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.catalyst, 1, 1), new Object[]{
+				"BRA",
+				"RGR",
+				"ARB",
+				'G', Blocks.gold_block, 'R', "dyeWhite", 'B', Items.golden_apple, 'A', Items.golden_carrot
+			}));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.catalyst, 1, 2), new Object[]{
+				"BRB",
+				"RGR",
+				"BRB",
+				'G', Blocks.gold_block, 'R', "dyeRed", 'B', Items.blaze_rod
+			}));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.catalyst, 1, 3), new Object[]{
+				"ARB",
+				"RGR",
+				"BRA",
+				'G', Blocks.gold_block, 'R', "dyeBlue", 'B', Blocks.clay, 'A', Items.fish
+			}));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.catalyst, 1, 4), new Object[]{
+				"BRB",
+				"RGR",
+				"BRB",
+				'G', Blocks.gold_block, 'R', "dyeGreen", 'B', Blocks.grass
+			}));
+		}
 	}
 }
