@@ -63,7 +63,6 @@ public class ConfigHandler {
         
         //Render effects
         Conf.fancy = config.get("Renderers", "CoilFX", Conf.fancy).getBoolean(Conf.fancy);
-        Conf.fancy = false;//Forced to be off
         
         //Reconstructor stuff
         Conf.blacklist = config.get("Machines", "Blacklisted materials for use in the Essentia Reconstructor", Conf.blacklist).getIntList();

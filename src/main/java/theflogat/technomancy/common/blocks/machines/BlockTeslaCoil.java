@@ -33,48 +33,47 @@ public class BlockTeslaCoil extends BlockBase {
 	
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float vecX, float vecY, float vecZ) {
-		TileEntity tile = world.getTileEntity(x, y, z);
-		ItemStack stack = player.getHeldItem();
-		if(tile != null && stack == null && player.isSneaking()) {
-			if(tile instanceof TileTeslaCoil) {
-				if (((TileTeslaCoil)tile).aspectFilter != null ) {
-					((TileTeslaCoil)tile).aspectFilter = null;
+		TileTeslaCoil tile = getTE(world, x, y, z);
+		if(tile != null) {
+			ItemStack stack = player.getHeldItem();
+			if(stack == null && player.isSneaking()) {
+				if (tile.aspectFilter != null ) {
+					tile.aspectFilter = null;
 					if (world.isRemote) {
 						world.playSound(x + 0.5F, y + 0.5F, z + 0.5F, "thaumcraft:page", 1.0F, 1.0F, false);
 					}else{
-						ForgeDirection fd = ForgeDirection.getOrientation(ForgeDirection.OPPOSITES[((TileTeslaCoil)tile).facing]);
-						if (!player.inventory.addItemStackToInventory(new ItemStack(Thaumcraft.itemResource, 1, 13))) {	
+						if (!player.inventory.addItemStackToInventory(new ItemStack(Thaumcraft.itemResource, 1, 13))) {
+							ForgeDirection fd = ForgeDirection.getOrientation(ForgeDirection.OPPOSITES[tile.facing]);
 							world.spawnEntityInWorld(new EntityItem(world, x + 0.5F + fd.offsetX / 3.0F, y + 0.5F, z + 0.5F + fd.offsetZ /
 									3.0F, new ItemStack(Thaumcraft.itemResource, 1, 13)));
 						}
 					}
 				}
 			}
-		}
-		if(stack != null) {
-			if (stack.getItemDamage() == 13 && stack.getItem() == Thaumcraft.itemResource && stack.getItem() instanceof IEssentiaContainerItem) {
-				if (((IEssentiaContainerItem)stack.getItem()).getAspects(stack) != null && ((TileTeslaCoil)tile).aspectFilter == null) {
-					((TileTeslaCoil)tile).aspectFilter = ((IEssentiaContainerItem)stack.getItem()).getAspects(stack).getAspects()[0];
-					System.out.println(((TileTeslaCoil)tile).aspectFilter);
-					System.out.println(((IEssentiaContainerItem)stack.getItem()).getAspects(stack).getAspects()[0]);
-					stack.stackSize -= 1;
-					world.markBlockForUpdate(x, y, z);
-					if(world.isRemote) {
-						world.playSound(x + 0.5F, y + 0.5F, z + 0.5F, "thaumcraft:page", 1.0F, 1.0F, false);
-					}						
-				}				
+			if(stack != null) {
+				if (stack.getItemDamage() == 13 && stack.getItem() == Thaumcraft.itemResource && stack.getItem() instanceof IEssentiaContainerItem) {
+					if (((IEssentiaContainerItem)stack.getItem()).getAspects(stack) != null && tile.aspectFilter == null) {
+						tile.aspectFilter = ((IEssentiaContainerItem)stack.getItem()).getAspects(stack).getAspects()[0];
+						stack.stackSize -= 1;
+						world.markBlockForUpdate(x, y, z);
+						if(world.isRemote) {
+							world.playSound(x + 0.5F, y + 0.5F, z + 0.5F, "thaumcraft:page", 1.0F, 1.0F, false);
+						}						
+					}				
+				}
 			}
-		}		
+		}
 		return false;
 	}
 	
+	//FIXME: This may be unstable since this class is a singleton!
 	private int facing;
 	
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack){
-		TileEntity tile = world.getTileEntity(x, y, z);
-		if(tile instanceof TileTeslaCoil) {
-			((TileTeslaCoil)tile).facing = this.facing;
+		TileTeslaCoil tile = getTE(world, x, y, z);
+		if(tile != null) {
+			tile.facing = this.facing;
 		}
 	}
 	
@@ -86,21 +85,27 @@ public class BlockTeslaCoil extends BlockBase {
 	
 	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
-		TileEntity tile = world.getTileEntity(x, y, z);
-		if(tile instanceof TileTeslaCoil) {
-			switch(((TileTeslaCoil)tile).facing) {
-			case 0:
-				setBlockBounds(0.1875F, 0.0F, 0.1875F, 0.8125F, 1.0F, 0.8125F);break;
-			case 1:
-				setBlockBounds(0.1875F, 0.0F, 0.1875F, 0.8125F, 1.0F, 0.8125F);break;
-			case 2:
-				setBlockBounds(0.1875F, 0.1875F, 0.0F, 0.8125F, 0.8125F, 1.0F);break;
-			case 3:
-				setBlockBounds(0.1875F, 0.1875F, 0.0F, 0.8125F, 0.8125F, 1.0F);break;
-			case 4:
-				setBlockBounds(0.0F, 0.1875F, 0.1875F, 1.0F, 0.8125F, 0.8125F);break;
-			case 5:
-				setBlockBounds(0.0F, 0.1875F, 0.1875F, 1.0F, 0.8125F, 0.8125F);
+		TileTeslaCoil tile = getTE(world, x, y, z);
+		if(tile != null) {
+			switch(tile.facing) {
+				case 0:
+					setBlockBounds(0.1875F, 0.0F, 0.1875F, 0.8125F, 1.0F, 0.8125F);
+					break;
+				case 1:
+					setBlockBounds(0.1875F, 0.0F, 0.1875F, 0.8125F, 1.0F, 0.8125F);
+					break;
+				case 2:
+					setBlockBounds(0.1875F, 0.1875F, 0.0F, 0.8125F, 0.8125F, 1.0F);
+					break;
+				case 3:
+					setBlockBounds(0.1875F, 0.1875F, 0.0F, 0.8125F, 0.8125F, 1.0F);
+					break;
+				case 4:
+					setBlockBounds(0.0F, 0.1875F, 0.1875F, 1.0F, 0.8125F, 0.8125F);
+					break;
+				case 5:
+					setBlockBounds(0.0F, 0.1875F, 0.1875F, 1.0F, 0.8125F, 0.8125F);
+					break;
 			}
 		}
 	}
@@ -126,4 +131,11 @@ public class BlockTeslaCoil extends BlockBase {
 		this.icon = icon.registerIcon(Ref.getAsset(Names.teslaCoil));
 	}
 
+	private TileTeslaCoil getTE(IBlockAccess world, int x, int y, int z) {
+		TileEntity tile = world.getTileEntity(x, y, z);
+		if (tile instanceof TileTeslaCoil) {
+			return (TileTeslaCoil)tile;
+		}
+		return null;
+	}
 }
