@@ -80,7 +80,7 @@ public class TileTeslaCoil extends TileTechnomancy {
 							if(source.takeFromContainer(aspect, 1)) {
 								if(Conf.fancy) {
 									try {
-										if (this.xCoord - tile.xCoord < 128 && this.yCoord - tile.yCoord < 128 && this.zCoord - tile.zCoord < 128) {
+										if (this.xCoord - tile.xCoord <= Byte.MAX_VALUE && this.yCoord - tile.yCoord <= Byte.MAX_VALUE && this.zCoord - tile.zCoord <= Byte.MAX_VALUE) {
 											Thaumcraft.PHInstance.sendToAllAround((IMessage)Thaumcraft.PacketFXEssentiaSourceConst.newInstance(
 												this.xCoord, this.yCoord+1, this.zCoord, (byte)(this.xCoord - tile.xCoord),
 												(byte)(this.yCoord - tile.yCoord), (byte)(this.zCoord - tile.zCoord), aspect.getColor()),
