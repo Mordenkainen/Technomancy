@@ -1,5 +1,6 @@
 package theflogat.technomancy.common.tiles.base;
 
+import theflogat.technomancy.common.tiles.IUpgradable;
 import theflogat.technomancy.util.RedstoneSet;
 import theflogat.technomancy.util.WorldHelper;
 import net.minecraft.nbt.NBTTagCompound;
@@ -11,8 +12,7 @@ import net.minecraft.world.EnumSkyBlock;
 import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.IEnergyHandler;
 
-public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyHandler {
-
+public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyHandler, IUpgradable {
 	public static final int maxEnergy = 40000;
 	public static final int maxExtract = 160;
 
@@ -90,17 +90,29 @@ public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyH
 		return set.id;
 	}
 
+	@Override
 	public boolean toggleBoost(){
 		boost = !boost;
 		return boost;
+	}
+	
+	@Override
+	public boolean getBoost() {
+		return boost;
+	}
+	
+	@Override
+	public void setBoost(boolean newBoost) {
+		boost = newBoost;
 	}
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound comp) {
 		set.save(comp);
-		comp.setInteger("energy", ener);;
+		comp.setInteger("energy", ener);
 		comp.setByte("face", facing);
 		comp.setInteger("fuel", fuel);
+		comp.setBoolean("Boost", boost);
 	}
 
 	@Override
@@ -109,6 +121,7 @@ public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyH
 		ener = comp.getInteger("energy");
 		facing = comp.getByte("face");
 		fuel = comp.getInteger("fuel");
+		boost = comp.getBoolean("Boost");
 	}
 
 	public abstract int extractFuel(int ener);
