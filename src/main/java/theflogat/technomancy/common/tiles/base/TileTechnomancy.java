@@ -33,14 +33,14 @@ public abstract class TileTechnomancy extends TileEntity {
 	@Override
 	public Packet getDescriptionPacket() {
 		NBTTagCompound nbttagcompound = new NBTTagCompound();
-		writeCustomNBT(nbttagcompound);
+		writeToNBT(nbttagcompound);
 		return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, -999, nbttagcompound);
 	}
 
 	@Override
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
 		super.onDataPacket(net, pkt);
-		readCustomNBT(pkt.func_148857_g());
+		readFromNBT(pkt.func_148857_g());
 	}
 
 	public void onNeighborBlockChange() {}

@@ -1,26 +1,25 @@
 package theflogat.technomancy.common.blocks.machines;
 
-import thaumcraft.api.wands.IWandable;
 import theflogat.technomancy.common.blocks.base.BlockBase;
+import theflogat.technomancy.common.items.base.TMItems;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.RenderIds;
+import theflogat.technomancy.util.InvHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockNodeGenerator extends BlockBase implements IWandable{
+public class BlockNodeGenerator extends BlockBase {
 
 	public BlockNodeGenerator() {
 		setBlockName(Ref.MOD_PREFIX + Names.nodeGenerator);
@@ -48,28 +47,24 @@ public class BlockNodeGenerator extends BlockBase implements IWandable{
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void registerBlockIcons(IIconRegister icon) {
-		this.icon = icon.registerIcon(Ref.getAsset(Names.nodeGenerator));
+	public void registerBlockIcons(IIconRegister iconRegister) {
+		icon = iconRegister.registerIcon(Ref.getAsset(Names.nodeGenerator));
 	}
 
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack){
 		int facing = MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 0.5D) & 0x3;
-		TileEntity tile = world.getTileEntity(x, y, z);
-		if ((tile instanceof TileNodeGenerator)) {
+		TileNodeGenerator tile = getTE(world, x, y, z);
+		if (tile != null) {
 			if (facing == 0) {
-				((TileNodeGenerator)tile).facing = 2;
+				tile.facing = 2;
+			} else if (facing == 1) {
+				tile.facing = 5;
+			} else if (facing == 2) {
+				tile.facing = 3;
+			} else if (facing == 3) {
+				tile.facing = 4;
 			}
-			if (facing == 1) {
-				((TileNodeGenerator)tile).facing = 5;
-			}
-			if (facing == 2) {
-				((TileNodeGenerator)tile).facing = 3;
-			}
-			if (facing == 3) {
-				((TileNodeGenerator)tile).facing = 4;
-			}
-//			((EntityPlayer)entity).addChatComponentMessage(new ChatComponentText(Integer.toString(((TileNodeGenerator)tile).facing)));
 		}
 	}
 
@@ -99,47 +94,18 @@ public class BlockNodeGenerator extends BlockBase implements IWandable{
 	}
 
 	@Override
-	public void breakBlock(World world, int x, int y, int z, Block id, int meta) {
-		TileEntity tile = world.getTileEntity(x, y, z);		
-		int xx = z;
-		int zz = x;	
-		if(((TileNodeGenerator)tile).active == true) {
-			switch (((TileNodeGenerator)tile).facing) {
-			case 2:
-				zz -= 6;break;
-			case 3: 
-				zz += 6;break;
-			case 4:
-				xx -= 6;break;
-			case 5:
-				xx += 6;break;
-			}
-			TileEntity entity = world.getTileEntity(xx, y, zz);
-			if( entity instanceof TileNodeGenerator) {
-				((TileNodeGenerator)entity).active = false;
-			}
-		}
-		super.breakBlock(world, x, y, z, id, meta);
+	public void breakBlock(World w, int x, int y, int z, Block block, int meta) {
+		TileNodeGenerator tile = getTE(w, x, y, z);
+		if(tile.boost)
+				InvHelper.spawnEntItem(w, x, y, z, new ItemStack(TMItems.itemBoost, 1));
+		super.breakBlock(w, x, y, z, block, meta);
 	}
-
-	@Override
-	public int onWandRightClick(World w, ItemStack items, EntityPlayer player, int x, int y, int z, int side, int md) {
-		if(player!=null && w!=null){
-			TileEntity te = w.getTileEntity(x, y, z);
-			if(te!=null && te instanceof TileNodeGenerator){
-				return ((TileNodeGenerator)te).onWandRightClick(w, items, player, x, y, z, side, md);
-			}
+	
+	private TileNodeGenerator getTE(IBlockAccess world, int x, int y, int z) {
+		TileEntity tile = world.getTileEntity(x, y, z);
+		if (tile instanceof TileNodeGenerator) {
+			return (TileNodeGenerator)tile;
 		}
-		return -1;
+		return null;
 	}
-
-	@Override
-	public ItemStack onWandRightClick(World world, ItemStack items, EntityPlayer player) {return items;}
-
-	@Override
-	public void onUsingWandTick(ItemStack wandstack, EntityPlayer player, int count) {}
-
-	@Override
-	public void onWandStoppedUsing(ItemStack wandstack, World world, EntityPlayer player, int count) {}
-
 }
