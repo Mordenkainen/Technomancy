@@ -3,7 +3,7 @@ package theflogat.technomancy.common.items.technom;
 import java.util.List;
 
 import theflogat.technomancy.Technomancy;
-import theflogat.technomancy.common.tiles.base.TileDynamoBase;
+import theflogat.technomancy.common.tiles.IUpgradable;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -19,18 +19,21 @@ public class ItemBoost extends Item{
 		setUnlocalizedName(Ref.getId(Names.itemBoost));
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void addInformation(ItemStack items, EntityPlayer player, List l, boolean moreInfo) {
 		l.add("Apply to a dynamo: multiply by");
 		l.add("4 the RF/t and the Fuel Cost");
+		l.add("Apply to a Node Fabricator:");
+		l.add("Allow Fabricator to add new aspects");
 	}
 	
 	@Override
 	public boolean onItemUse(ItemStack items, EntityPlayer player, World w, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
-		if(w.getTileEntity(x, y, z)instanceof TileDynamoBase){
-			TileDynamoBase tile = (TileDynamoBase)w.getTileEntity(x, y, z);
-			if(tile.boost == false){
-				tile.boost = true;
+		if(w.getTileEntity(x, y, z)instanceof IUpgradable){
+			IUpgradable tile = (IUpgradable)w.getTileEntity(x, y, z);
+			if(tile.getBoost() == false){
+				tile.setBoost(true);
 				if(items.stackSize==1){
 					items = null;
 				}else{

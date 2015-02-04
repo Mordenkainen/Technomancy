@@ -23,6 +23,7 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import theflogat.technomancy.lib.Conf;
+import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
 public class Thaumcraft {
 
@@ -103,6 +104,7 @@ public class Thaumcraft {
 	//UtilsFX
 	public static Method renderQuadCenteredFromTexture;
 	public static Method drawTag;
+	public static Method drawFloatyLine;
 	//JarRender
 	public static Method renderLiquid;
 
@@ -129,7 +131,9 @@ public class Thaumcraft {
 
 	public static IIcon iconLiquid;
 
-
+	public static SimpleNetworkWrapper PHInstance;
+	public static Class<?> PacketFXEssentiaSource;
+	public static Constructor<?> PacketFXEssentiaSourceConst;
 
 	public static void init() {
 		try{
@@ -261,6 +265,13 @@ public class Thaumcraft {
 			Class<?> BlockJar = Class.forName("thaumcraft.common.blocks.BlockJar");
 			iconLiquid = (IIcon)BlockJar.getField("iconLiquid").get(Thaumcraft.blockJar);
 
+			Class<?> TPH = Class.forName("thaumcraft.common.lib.network.PacketHandler");
+			PHInstance = (SimpleNetworkWrapper) TPH.getField("INSTANCE").get(TPH);
+			 
+			Class<?> TES = Class.forName("thaumcraft.common.lib.network.fx.PacketFXEssentiaSource");
+			// Constructor: public PacketFXEssentiaSource(int x, int y, int z, byte dx, byte dy, byte dz, int color)
+			PacketFXEssentiaSourceConst = TES.getDeclaredConstructor(int.class, int.class, int.class, byte.class, byte.class, byte.class, int.class);
+			
 			System.out.println("Technomancy: Thaumcraft Module Activated");
 		}catch(Exception e){th = false;System.out.println("Technomancy: Failed to load Thaumcraft Module");Conf.ex(e);}
 	}
@@ -293,7 +304,10 @@ public class Thaumcraft {
 			for(Method method : UtilsFX.getMethods()){
 				if(method.getName().equalsIgnoreCase("renderQuadCenteredFromTexture") && method.getParameterTypes()[0]==String.class){
 					renderQuadCenteredFromTexture = method;
-				}else if(method.getName().equalsIgnoreCase("drawTag") && method.getParameterTypes().length==3){drawTag = method;
+				}else if(method.getName().equalsIgnoreCase("drawTag") && method.getParameterTypes().length==3){
+					drawTag = method;
+				}else if(method.getName().equalsIgnoreCase("drawFloatyLine") && method.getParameterTypes().length==11){
+					drawFloatyLine = method;
 				}
 			}
 			

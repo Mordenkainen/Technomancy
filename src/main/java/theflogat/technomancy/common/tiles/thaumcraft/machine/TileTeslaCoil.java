@@ -1,7 +1,10 @@
 package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
+import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
@@ -10,33 +13,35 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
-import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.common.tiles.base.TileTechnomancy;
 import theflogat.technomancy.common.tiles.thaumcraft.util.AspectContainerEssentiaTransport;
 import theflogat.technomancy.lib.Conf;
 import theflogat.technomancy.lib.compat.Thaumcraft;
+import theflogat.technomancy.util.RedstoneSet;
 
 public class TileTeslaCoil extends TileTechnomancy {
 
 	public Aspect aspectFilter = null;
 	public ArrayList<ChunkCoordinates> sources = new ArrayList<ChunkCoordinates>();
 	public int facing = 0;
-
+	public RedstoneSet set = RedstoneSet.LOW;
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound compound) {
-		compound.setInteger("Size", sources.size());
 		if (aspectFilter != null) {
 			compound.setString("AspectFilter", aspectFilter.getTag());
 		}
 		compound.setByte("facing", (byte)facing);
+		int sourceCount = 0;
 		for(int i = 0; i < sources.size(); i++) {
 			if(sources.get(i) != null) {
-				compound.setInteger("xChoord" + i, sources.get(i).posX);
-				compound.setInteger("yChoord" + i, sources.get(i).posY);
-				compound.setInteger("zChoord" + i, sources.get(i).posZ);
-			}			
+				compound.setInteger("xChoord" + sourceCount, sources.get(i).posX);
+				compound.setInteger("yChoord" + sourceCount, sources.get(i).posY);
+				compound.setInteger("zChoord" + sourceCount, sources.get(i).posZ);
+				sourceCount++;
+			}		
 		}
+		compound.setInteger("Size", sourceCount);
 	}
 
 	@Override
@@ -49,52 +54,52 @@ public class TileTeslaCoil extends TileTechnomancy {
 			int yy = compound.getInteger("yChoord" + i);		
 			int zz = compound.getInteger("zChoord" + i);
 			this.sources.add(new ChunkCoordinates(xx, yy, zz));
-		}		
-
+		}
 	}
-
 
 	@Override
 	public void updateEntity() {
 		TileEntity te = Thaumcraft.getConnectableAsContainer(worldObj, xCoord, yCoord, zCoord, ForgeDirection.getOrientation(facing));
-		if (te != null && !sources.isEmpty()) {
-			//ForgeDirection opp = ForgeDirection.VALID_DIRECTIONS[facing].getOpposite();
+		if (set.canRun(this) && te != null && !sources.isEmpty()) {
 			IAspectContainer cont;
 			if(te instanceof IAspectContainer){
 				cont = (IAspectContainer)te;
 			}else{
 				cont = new AspectContainerEssentiaTransport((IEssentiaTransport) te);
 			}
-			for(int i = 0; i < sources.size(); i++) {
-				ChunkCoordinates coords = sources.get(i);
+			Iterator<ChunkCoordinates> sourceIter = sources.iterator();
+			while (sourceIter.hasNext()) {
+				ChunkCoordinates coords = sourceIter.next();
 				TileEntity tile = worldObj.getTileEntity(coords.posX, coords.posY, coords.posZ);
-				if(tile != null && tile instanceof IAspectContainer) {
+				if(tile instanceof IAspectContainer) {
 					IAspectContainer source = (IAspectContainer)tile;
-					AspectList al = source.getAspects();				
-					for(int ii = 0; ii < al.size(); ii++) {
-						Aspect aspect = al.getAspects()[ii];
-						if(aspect != null && (aspectFilter == null || aspect == aspectFilter) && cont.doesContainerAccept(aspect)) {
-							int color = aspect.getColor();
-							if(cont.addToContainer(aspect, 1) == 0) {
-								if(source.takeFromContainer(aspect, 1)) {
-									if(Conf.fancy) {
-										if(this!=null && tile!=null && color>0 && source!=null) {
-											Technomancy.proxy.essentiaTrail(worldObj, xCoord + 0.5D, yCoord + 0.5D,
-													zCoord + 0.5D, (tile.xCoord) + 0.5D, (tile.yCoord) + 0.5D,
-													(tile.zCoord) + 0.5D, color);
+					AspectList al = source.getAspects();			
+					for(int i = 0; i < al.size(); i++) {
+						Aspect aspect = al.getAspects()[i];
+						if(aspect != null && (aspectFilter == null || aspect == aspectFilter) && cont.doesContainerAccept(aspect) && cont.addToContainer(aspect, 1) == 0) {
+							if(source.takeFromContainer(aspect, 1)) {
+								if(Conf.fancy) {
+									try {
+										if (this.xCoord - tile.xCoord <= Byte.MAX_VALUE && this.yCoord - tile.yCoord <= Byte.MAX_VALUE && this.zCoord - tile.zCoord <= Byte.MAX_VALUE) {
+											Thaumcraft.PHInstance.sendToAllAround((IMessage)Thaumcraft.PacketFXEssentiaSourceConst.newInstance(
+												this.xCoord, this.yCoord+1, this.zCoord, (byte)(this.xCoord - tile.xCoord),
+												(byte)(this.yCoord - tile.yCoord), (byte)(this.zCoord - tile.zCoord), aspect.getColor()),
+												new NetworkRegistry.TargetPoint(tile.getWorldObj().provider.dimensionId, tile.xCoord,
+												tile.yCoord, tile.zCoord, 32.0D));
 										}
+									} catch (Exception e) {
+										e.printStackTrace();
 									}
-								} else {
-									cont.takeFromContainer(aspect, 1);
 								}
+							} else {
+								cont.takeFromContainer(aspect, 1);
 							}
-						}						
+						}
 					}
 				}else{
-					sources.remove(i);
+					sourceIter.remove();
 				}
 			}
 		}
-		//		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 	}
 }
