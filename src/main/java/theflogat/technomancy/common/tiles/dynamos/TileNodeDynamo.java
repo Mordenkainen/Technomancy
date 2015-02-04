@@ -13,6 +13,10 @@ public class TileNodeDynamo extends TileDynamoBase{
 	public static final int maxAmount = 32;
 	
 	public int amount = 0;
+	public boolean draining = false;
+	public int sourceX, sourceY, sourceZ;
+	public int color;
+	private int counter = 0;
 
 	@Override
 	public int extractFuel(int ener) {
@@ -26,8 +30,13 @@ public class TileNodeDynamo extends TileDynamoBase{
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
-		if(amount<maxAmount){
-			takeAspectsFromNodes();
+		counter += 1;
+		if (counter == 20) {
+			draining = false;
+			if(amount<maxAmount){
+				takeAspectsFromNodes();
+			}
+			counter = 0;
 		}
 	}
 
@@ -43,6 +52,12 @@ public class TileNodeDynamo extends TileDynamoBase{
 						if(node.getAspects().getAmount(aspect) > 1 && amount < 16){
 							if(node.takeFromContainer(aspect, 1) ) {
 								amount += 1;
+								draining = true;
+								sourceX = te.xCoord;
+								sourceY = te.yCoord;
+								sourceZ = te.zCoord;
+								color = aspect.getColor();
+								return;
 							}
 						}
 					}

@@ -104,6 +104,7 @@ public class Thaumcraft {
 	//UtilsFX
 	public static Method renderQuadCenteredFromTexture;
 	public static Method drawTag;
+	public static Method drawFloatyLine;
 	//JarRender
 	public static Method renderLiquid;
 
@@ -303,7 +304,10 @@ public class Thaumcraft {
 			for(Method method : UtilsFX.getMethods()){
 				if(method.getName().equalsIgnoreCase("renderQuadCenteredFromTexture") && method.getParameterTypes()[0]==String.class){
 					renderQuadCenteredFromTexture = method;
-				}else if(method.getName().equalsIgnoreCase("drawTag") && method.getParameterTypes().length==3){drawTag = method;
+				}else if(method.getName().equalsIgnoreCase("drawTag") && method.getParameterTypes().length==3){
+					drawTag = method;
+				}else if(method.getName().equalsIgnoreCase("drawFloatyLine") && method.getParameterTypes().length==11){
+					drawFloatyLine = method;
 				}
 			}
 			
