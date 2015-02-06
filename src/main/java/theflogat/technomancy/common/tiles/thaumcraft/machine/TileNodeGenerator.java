@@ -216,6 +216,7 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 							yCoord + 1.5 + fy * 10.0F, zz + .5 + fz * 10.0F, 0.4F, b, true, 0.05F);
 				}
 			}
+		    worldObj.playSound(xx + 0.5F, yCoord + 1.5, zz + 0.5F, "thaumcraft:craftstart", 1.0F, 1.0F, false);	
 		} else {
 			try {
 				Thaumcraft.createNodeAt.invoke(null, worldObj, xx, yCoord + 1, zz, type, mod, new AspectList().add(ra, (aurum + taint)/ 2));
@@ -242,16 +243,20 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 	}
 
 	void shootLightning() {
-		double [] boltdata = lightning.get(facing)[worldObj.rand.nextInt(4)];
-		try {
-			EntityFX bolt = Thaumcraft.FXLightningBoltConst.newInstance(worldObj, xCoord + boltdata[0], yCoord + boltdata[1],
-					zCoord + boltdata[2], xCoord + boltdata[3], yCoord + boltdata[4], zCoord + boltdata[5], worldObj.rand.nextLong(), 6, 0.5F);
-			Thaumcraft.defaultFractal.invoke(bolt);
-			Thaumcraft.setType.invoke(bolt, (int)boltdata[6]);
-			Thaumcraft.setWidth.invoke(bolt, 0.02F);
-			Thaumcraft.finalizeBolt.invoke(bolt);
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (worldObj.isRemote) {
+			double [] boltdata = lightning.get(facing)[worldObj.rand.nextInt(4)];
+			try {
+				EntityFX bolt = Thaumcraft.FXLightningBoltConst.newInstance(worldObj, xCoord + boltdata[0], yCoord + boltdata[1],
+						zCoord + boltdata[2], xCoord + boltdata[3], yCoord + boltdata[4], zCoord + boltdata[5], worldObj.rand.nextLong(), 6, 0.5F);
+				Thaumcraft.defaultFractal.invoke(bolt);
+				Thaumcraft.setType.invoke(bolt, (int)boltdata[6]);
+				Thaumcraft.setWidth.invoke(bolt, 0.02F);
+				Thaumcraft.finalizeBolt.invoke(bolt);
+			    worldObj.playSound(xCoord + 0.5F, yCoord + 0.5F, zCoord + 0.5F, "thaumcraft:zap", 1.0F,worldObj.rand.nextFloat(), false);	
+			        
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -268,6 +273,7 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 					partner.step = step = 0;
 					if (world.isRemote) {
 			          player.swingItem();
+			          world.playSound(x, y, z, "thaumcraft:wand", 1.0F, 1.0F, false);	
 			        }
 					return 0;
 				}
