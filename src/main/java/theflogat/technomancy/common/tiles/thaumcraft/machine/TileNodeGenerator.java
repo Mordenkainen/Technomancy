@@ -356,15 +356,6 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 
 	@Override
 	public boolean takeFromContainer(Aspect tag, int amt) {
-		if(amount >= amt && aspect == tag) {
-			amount -= amt;
-			if(amount <= 0) {
-				aspect = null;
-				amount = 0;					
-			}
-			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-			return true;			
-		}
 		return false;
 	}
 
@@ -385,12 +376,12 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 
 	@Override
 	public boolean isConnectable(ForgeDirection face) {
-		return face != ForgeDirection.getOrientation(facing);
+		return true;
 	}
 
 	@Override
 	public boolean canInputFrom(ForgeDirection face) {
-		return face != ForgeDirection.getOrientation(facing);
+		return true;
 	}
 
 	@Override

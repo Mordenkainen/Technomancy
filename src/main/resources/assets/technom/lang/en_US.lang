@@ -48,6 +48,7 @@ tile.techno:processorBM.name=Sanguine Infuser
 tile.techno:processorBO.name=Botanical Purifier
 tile.techno:eldritchConsumer.name=Eldritch Consumer
 tile.techno:crystalBlock.name=Crystal Block
+tile.techno:catalyst.name=Catalyst
 
 #Information
 info.techno:purity=Purity

@@ -5,6 +5,7 @@ import cofh.api.energy.IEnergyStorage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.Aspect;
@@ -16,6 +17,7 @@ import theflogat.technomancy.common.blocks.machines.BlockNodeGenerator;
 import theflogat.technomancy.common.tiles.IUpgradable;
 import theflogat.technomancy.common.tiles.base.TileTechnomancy;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
+import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.util.Coords;
 
 public class TileFakeAir extends TileTechnomancy implements IEnergyHandler, IEnergyStorage, IEssentiaTransport, IAspectContainer, IWandable, IUpgradable {
@@ -28,6 +30,25 @@ public class TileFakeAir extends TileTechnomancy implements IEnergyHandler, IEne
 	public void updateEntity() {
 		if(!(worldObj.getBlock(x, y, z) instanceof BlockNodeGenerator)){
 			worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+		}else{
+			TileNodeGenerator tile = (TileNodeGenerator) worldObj.getTileEntity(x, y, z);
+			fill(tile);
+		}
+	}
+	
+	public void fill(TileNodeGenerator tile){
+		for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
+			if (dir != ForgeDirection.getOrientation(tile.facing) && dir != ForgeDirection.DOWN) {
+				TileEntity te = Thaumcraft.getConnectableTile(worldObj, xCoord, yCoord, zCoord, dir);
+				if (te != null) {
+					IEssentiaTransport ic = (IEssentiaTransport)te;
+					Aspect ta = ic.getEssentiaType(dir.getOpposite());
+					if (ic.getEssentiaAmount(dir.getOpposite()) > 0 && ic.getSuctionAmount(dir.getOpposite()) < getSuctionAmount(null) &&
+							getSuctionAmount(null) >= ic.getMinimumSuction()) {
+						addToContainer(ta, ic.takeEssentia(ta, 1, dir.getOpposite()));
+					}
+				}
+			}
 		}
 	}
 	
@@ -82,22 +103,22 @@ public class TileFakeAir extends TileTechnomancy implements IEnergyHandler, IEne
 
 	@Override
 	public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).receiveEnergy(from, maxReceive, simulate);
+		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).receiveEnergy(maxReceive, simulate);
 	}
 
 	@Override
 	public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).extractEnergy(from, maxExtract, simulate);
+		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).extractEnergy(maxExtract, simulate);
 	}
 
 	@Override
 	public int getEnergyStored(ForgeDirection from) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).getEnergyStored(from);
+		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).getEnergyStored();
 	}
 
 	@Override
 	public int getMaxEnergyStored(ForgeDirection from) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).getMaxEnergyStored(from);
+		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).getMaxEnergyStored();
 	}
 
 	@Override
@@ -117,7 +138,7 @@ public class TileFakeAir extends TileTechnomancy implements IEnergyHandler, IEne
 
 	@Override
 	public int onWandRightClick(World world, ItemStack wandstack, EntityPlayer player, int x, int y, int z, int side, int md) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).onWandRightClick(world, wandstack, player, x, y, z, side, md);
+		return ((TileNodeGenerator)worldObj.getTileEntity(this.x, this.y, this.z)).onWandRightClick(world, wandstack, player, this.x, this.y, this.z, side, md);
 	}
 
 	@Override
@@ -192,7 +213,7 @@ public class TileFakeAir extends TileTechnomancy implements IEnergyHandler, IEne
 
 	@Override
 	public boolean canOutputTo(ForgeDirection face) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).canOutputTo(face);
+		return false;
 	}
 
 	@Override
