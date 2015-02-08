@@ -15,9 +15,9 @@ import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.util.Loc;
 import theflogat.technomancy.util.RitualHelper;
 
-public class RitualBlackHoleT1 extends Ritual{
-
-	ModelBlackSphere specialRender = new ModelBlackSphere(3F, -1F, 0, 1F);
+public class RitualBlackHoleT2 extends Ritual{
+	
+	ModelBlackSphere specialRender = new ModelBlackSphere(4.7F, -1F, 0, 1F);
 	private static final ResourceLocation textLoc = new ResourceLocation(Ref.MODEL_REF_TEXTURE);
 
 	@Override
@@ -27,14 +27,14 @@ public class RitualBlackHoleT1 extends Ritual{
 
 	@Override
 	public boolean isFrameComplete(World w, int x, int y, int z) {
-		return RitualHelper.checkForT1(w, x, y, z, black);
+		return RitualHelper.checkForT1(w, x, y, z, black) && RitualHelper.checkForT2(w, x, y, z, black);
 	}
 
 	@Override
 	public boolean applyEffect(World w, int x, int y, int z) {
-		for(int i=-3; i<=3; i++){
-			for(int j=-3; j<=3; j++){
-				for(int k=-3; k<=3; k++){
+		for(int i=-5; i<=5; i++){
+			for(int j=-5; j<=5; j++){
+				for(int k=-5; k<=5; k++){
 					int xx = x + i;
 					int yy = y + j;
 					int zz = z + k;
@@ -46,7 +46,6 @@ public class RitualBlackHoleT1 extends Ritual{
 				}
 			}
 		}
-		RitualHelper.removeT1(w, x, y, z);
 
 		ArrayList<Entity> e = (ArrayList<Entity>) w.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(x-2, y-2, z-2, x+2, y+2, z+2));
 

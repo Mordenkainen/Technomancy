@@ -20,6 +20,10 @@ public class Coords {
 		return w.getTileEntity(x, y, z);
 	}
 	
+	public void setAirAndDrop(){
+		WorldHelper.destroyAndDrop(w, x, y, z);
+	}
+	
 	public void print(){
 		System.out.println("X:" + x + " Y:" + y + " Z:" + z);
 	}

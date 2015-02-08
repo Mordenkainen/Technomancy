@@ -14,6 +14,7 @@ import theflogat.technomancy.lib.compat.ThermalExpansion;
 import theflogat.technomancy.lib.handlers.CompatibilityHandler;
 import theflogat.technomancy.lib.handlers.ConfigHandler;
 import theflogat.technomancy.lib.handlers.CraftingHandler;
+import theflogat.technomancy.lib.handlers.EventRegister;
 import theflogat.technomancy.lib.handlers.ResearchHandler;
 import theflogat.technomancy.proxies.CommonProxy;
 import theflogat.technomancy.util.Loc;
@@ -50,6 +51,8 @@ public class Technomancy {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
     	ConfigHandler.init(new File(event.getModConfigurationDirectory(), Ref.MOD_NAME + ".cfg"));
+    	
+    	new EventRegister();
     }
 
     @EventHandler
