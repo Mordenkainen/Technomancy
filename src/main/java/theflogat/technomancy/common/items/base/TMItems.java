@@ -16,6 +16,7 @@ import theflogat.technomancy.common.items.thaumcraft.ItemWandCores;
 import theflogat.technomancy.common.items.tome.ItemRitualTome;
 import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.Names;
+import theflogat.technomancy.util.Ore;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class TMItems {
@@ -26,42 +27,29 @@ public class TMItems {
     public static Item itemPen;
     public static Item itemWandCores;
     public static Item itemFusionFocus;
-    public static Item processedIron;
-    public static Item processedGold;
-    public static Item processedCopper;
-    public static Item processedTin;
-    public static Item processedSilver;
-    public static Item processedLead;
-    public static Item processedNickel;
     public static Item itemBoost;
     public static Item ritualTome;
     
     public static WandRod WAND_ROD_ELECTRIC;
     
     public static void initTechnomancy(){
-        processedIron = Ids.procIron ? new ItemProcessedOre(14211288, Names.pureIron) : null;
-        processedGold = Ids.procGold ? new ItemProcessedOre(14605824, Names.pureGold) : null;
-        processedCopper = Ids.procCopp ? new ItemProcessedOre(16758834, Names.pureCopper) : null;
-        processedTin = Ids.procTin ? new ItemProcessedOre(12243942, Names.pureTin) : null;
-        processedSilver = Ids.procSilver ? new ItemProcessedOre(13163770, Names.pureSilver) : null;
-        processedLead = Ids.procLead ? new ItemProcessedOre(8163006, Names.pureLead) : null;
-        processedNickel = Ids.procNickel ? new ItemProcessedOre(16053453, Names.pureNickel) : null;
         itemBoost = Ids.itemBoost ? new ItemBoost() : null;
         ritualTome = Ids.ritualTome ? new ItemRitualTome() : null;
         
-
-        registerItem(processedIron, Names.pureIron);
-        registerItem(processedGold, Names.pureGold);
-        registerItem(processedCopper, Names.pureCopper);
-        registerItem(processedTin, Names.pureTin);
-        registerItem(processedSilver, Names.pureSilver);
-        registerItem(processedLead, Names.pureLead);
-        registerItem(processedNickel, Names.pureNickel);
         registerItem(itemBoost, Names.itemBoost);
         registerItem(ritualTome, Names.ritualTome);
     }
     
-    public static void initThaumcraft() { 	
+    public static void initPureOres(){
+    	for (Ore ore : Ore.ores) {
+    		if (ore.getEnabled()) {
+				ore.setPure(new ItemProcessedOre(ore));
+				GameRegistry.registerItem(ore.getPure(), "pure" + ore.oreName().substring(3));
+    		}
+	}
+    }
+    
+    public static void initThaumcraft() {
 
         // Item Initializations
         //essentiaCannon = new ItemEssentiaCannon(ItemIds.idESSENTIA_CANNON);
@@ -75,7 +63,6 @@ public class TMItems {
         registerItem(itemMaterial, Names.itemMaterial);
         registerItem(itemPen, Names.pen);
         registerItem(itemFusionFocus, Names.fusionFocus);
-        
         
         registerItem(itemWandCores, Names.wandCores);
         if(Ids.wandCores){
@@ -106,9 +93,9 @@ public class TMItems {
     	registerItem(itemBO, Names.itemBO);
     }
 
-    
     private static void registerItem(Item item, String name) {
-		if(item!=null)
+		if(item!=null) {
 			GameRegistry.registerItem(item, name);
+		}
 	}
 }

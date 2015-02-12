@@ -1,17 +1,21 @@
 package theflogat.technomancy.lib.handlers;
 
+import java.awt.Color;
 import java.io.File;
 
 import theflogat.technomancy.lib.Conf;
 import theflogat.technomancy.lib.Rate;
 import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.Names;
+import theflogat.technomancy.util.Ore;
 import net.minecraftforge.common.config.Configuration;
 
 public class ConfigHandler {
-
+	public static Configuration config;
+	
     public static void init(File file) {
-        Configuration config = new Configuration(file);
+    	
+        config = new Configuration(file);
 
         config.load();
         String blocks = "Blocks";
@@ -50,13 +54,6 @@ public class ConfigHandler {
         Ids.focusFusion = config.get(items, Names.fusionFocus, true).getBoolean();
         Ids.matBM = config.get(items, Names.itemBM, true).getBoolean();
         Ids.matBO = config.get(items, Names.itemBO, true).getBoolean();
-        Ids.procIron = config.get(items, Names.pureIron, true).getBoolean();
-        Ids.procGold = config.get(items, Names.pureGold, true).getBoolean();
-        Ids.procCopp = config.get(items, Names.pureCopper, true).getBoolean();
-        Ids.procTin = config.get(items, Names.pureTin, true).getBoolean();
-        Ids.procSilver = config.get(items, Names.pureSilver, true).getBoolean();
-        Ids.procLead = config.get(items, Names.pureLead, true).getBoolean();
-        Ids.procNickel = config.get(items, Names.pureNickel, true).getBoolean();
         Ids.itemBoost = config.get(items, Names.itemBoost, true).getBoolean();
         Ids.ritualTome = config.get(items, Names.ritualTome, true).getBoolean();
 
@@ -74,8 +71,31 @@ public class ConfigHandler {
        	//RF Costs
        	Rate.modifyRate(config);
        	
-        config.save();
-
+       	if (config.hasChanged()) {
+       		config.save();
+       	}
     }
 
+    public static void initOreConfigs() {
+		for (Ore ore : Ore.ores) {
+			String name = "pure" + ore.oreName().substring(3);
+			ore.setEnabled(config.get("PureOres", name, true).getBoolean(true));
+			ore.setName(config.get("PureOres", name + "Name", ore.name()).getString());
+		}
+		
+		if (config.hasChanged()) {
+			config.save();
+		}
+	}
+    
+    public static void initColorConfigs() {
+		for (Ore ore : Ore.ores) {
+			String name = "pure" + ore.oreName().substring(3);
+			ore.setColor(Color.decode(config.get("PureOres", name + "Color", "0x" + Integer.toHexString(ore.color())).getString()));
+		}
+		
+		if (config.hasChanged()) {
+			config.save();
+		}
+	}
 }

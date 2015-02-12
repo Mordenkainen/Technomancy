@@ -41,7 +41,7 @@ public class TileTCProcessor extends TileProcessorBase implements IAspectContain
 		IEssentiaTransport ic = null;
 		for (int y = 0; y <= 1; y++) {
 			for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
-				if ((dir != ForgeDirection.getOrientation(this.facing)) && (dir != ForgeDirection.DOWN) && ((y != 0) || (dir != ForgeDirection.UP))) {
+				if ((dir != ForgeDirection.DOWN) && ((y != 0) || (dir != ForgeDirection.UP))) {
 					te = Thaumcraft.getConnectableTile(this.worldObj, this.xCoord, this.yCoord + y, this.zCoord, dir);
 					if (te != null) {
 						ic = (IEssentiaTransport)te;
@@ -128,12 +128,12 @@ public class TileTCProcessor extends TileProcessorBase implements IAspectContain
 
 	@Override
 	public boolean isConnectable(ForgeDirection face) {
-		return (face != ForgeDirection.getOrientation(facing));
+		return true;
 	}
 
 	@Override
 	public boolean canInputFrom(ForgeDirection face) {
-		return (face != ForgeDirection.getOrientation(facing));
+		return true;
 	}
 
 	@Override
