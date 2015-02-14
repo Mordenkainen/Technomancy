@@ -1,13 +1,16 @@
 package theflogat.technomancy.lib.handlers;
 
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
-import theflogat.technomancy.common.tiles.dynamos.TileBloodDynamo;
 import theflogat.technomancy.common.tiles.technom.TileFakeAir;
+import theflogat.technomancy.util.Ore;
 import theflogat.technomancy.util.RedstoneSet;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
@@ -41,6 +44,15 @@ public class EventRegister {
 			if(event.world.getTileEntity(event.x, event.y, event.z) instanceof TileFakeAir){
 				((TileFakeAir) event.world.getTileEntity(event.x, event.y, event.z)).getMain().setAirAndDrop();
 			}
+		}
+	}
+	
+	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
+	public void stitchEventPost(TextureStitchEvent.Post event) {
+		if (event.map.getTextureType() == 1) {
+			Ore.initColors();
+			ConfigHandler.initColorConfigs();
 		}
 	}
 }
