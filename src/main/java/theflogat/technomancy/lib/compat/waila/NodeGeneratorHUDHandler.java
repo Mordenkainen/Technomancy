@@ -2,8 +2,7 @@ package theflogat.technomancy.lib.compat.waila;
 
 import java.util.List;
 
-import theflogat.technomancy.common.tiles.dynamos.TileEssentiaDynamo;
-
+import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,14 +13,17 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.api.SpecialChars;
 
-public class EssentiaDynamoHUDHandler implements IWailaDataProvider {
+public class NodeGeneratorHUDHandler implements IWailaDataProvider {
 
 	@Override
 	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,	IWailaConfigHandler config) {
-		final TileEssentiaDynamo tileEntity = (TileEssentiaDynamo) accessor.getTileEntity();
-		currenttip.add(SpecialChars.GREEN + "Redstone Setting: " + tileEntity.set.id);
+		final TileNodeGenerator tileEntity = (TileNodeGenerator) accessor.getTileEntity();
+		currenttip.add(tileEntity.set.canRun(tileEntity) ? SpecialChars.GREEN + "Enabled" : SpecialChars.RED + "Disabled");
 		if (tileEntity.getBoost()) {
 			currenttip.add(SpecialChars.GREEN + "Boosted");
+		}
+		if (accessor.getNBTData().getBoolean("Active")) {
+			currenttip.add(accessor.getNBTData().getBoolean("Spawn") ? "Mode: Create Node" : "Mode: Recharge Node");
 		}
 		return currenttip;
 	}
@@ -43,8 +45,9 @@ public class EssentiaDynamoHUDHandler implements IWailaDataProvider {
 
 	@Override
 	public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x, int y, int z) {
-		if (te != null)
+		if (te != null) {
             te.writeToNBT(tag);
+		}
         return tag;
 	}
 }
