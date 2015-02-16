@@ -19,13 +19,13 @@ public class DynamoHUDHandler implements IWailaDataProvider {
 	@Override
 	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,	IWailaConfigHandler config) {
 		final TileDynamoBase tileEntity = (TileDynamoBase) accessor.getTileEntity();
-		currenttip.add(SpecialChars.GREEN + "Redstone Setting: " + tileEntity.set.id);
+		currenttip.add("Redstone Setting: " + formatSetting(tileEntity.set.id));
 		currenttip.add(tileEntity.set.canRun(tileEntity) ? SpecialChars.GREEN + "Enabled" : SpecialChars.RED + "Disabled");
 		if (tileEntity.getBoost()) {
-			currenttip.add(SpecialChars.GREEN + "Boosted");
+			currenttip.add(SpecialChars.GREEN + "Potency Gem Installed");
 		}
 		if (tileEntity instanceof TileBloodDynamo) {
-			currenttip.add("Blood: " + ((TileBloodDynamo)tileEntity).liquid + " / " + TileBloodDynamo.capacity);
+			currenttip.add(SpecialChars.DRED + "Blood: " + ((TileBloodDynamo)tileEntity).liquid + " / " + TileBloodDynamo.capacity);
 		}
 		
 		return currenttip;
@@ -50,4 +50,15 @@ public class DynamoHUDHandler implements IWailaDataProvider {
 	public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x, int y, int z) {
 		return null;
 	}
+	
+	private String formatSetting(String id) {
+		if (id.equals("High")) {
+			return SpecialChars.RED + "High";
+		} else if (id.equals("Low")) {
+			return SpecialChars.GREEN + "Low";
+		} else {
+			return SpecialChars.GRAY + "None";
+		}
+	}
+
 }

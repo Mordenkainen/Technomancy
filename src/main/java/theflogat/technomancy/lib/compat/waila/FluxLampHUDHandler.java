@@ -18,7 +18,7 @@ public class FluxLampHUDHandler implements IWailaDataProvider {
 	@Override
 	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,	IWailaConfigHandler config) {
 		final TileFluxLamp tileEntity = (TileFluxLamp) accessor.getTileEntity();
-		currenttip.add(SpecialChars.GREEN + "Flux: " + tileEntity.tank.getFluidAmount() + "/" + tileEntity.tank.getCapacity());
+		currenttip.add(SpecialChars.DPURPLE + "Flux: " + tileEntity.tank.getFluidAmount() + "/" + tileEntity.tank.getCapacity());
 		
 		return currenttip;
 	}

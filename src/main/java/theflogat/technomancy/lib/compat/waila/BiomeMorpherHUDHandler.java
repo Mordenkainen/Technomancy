@@ -16,7 +16,7 @@ public class BiomeMorpherHUDHandler implements IWailaDataProvider {
 
 	@Override
 	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,	IWailaConfigHandler config) {
-		currenttip.add(SpecialChars.GREEN + "Biome: " + biomeForMeta(accessor.getMetadata()));
+		currenttip.add("Biome: " + biomeForMeta(accessor.getMetadata()));
 		return currenttip;
 	}
 	
@@ -45,11 +45,11 @@ public class BiomeMorpherHUDHandler implements IWailaDataProvider {
 	
 	String biomeForMeta(int meta) {
 		if (meta == 0) {
-			return "Magical Forest";
+			return SpecialChars.GREEN + "Magical Forest";
 		}else if (meta == 1) {
-			return "Eerie";
+			return SpecialChars.DGRAY + "Eerie";
 		}else if (meta == 2) {
-			return "Tainted Land";
+			return SpecialChars.DPURPLE + "Tainted Land";
 		} else {
 			return "Unknown";
 		}

@@ -20,7 +20,7 @@ public class NodeGeneratorHUDHandler implements IWailaDataProvider {
 		final TileNodeGenerator tileEntity = (TileNodeGenerator) accessor.getTileEntity();
 		currenttip.add(tileEntity.set.canRun(tileEntity) ? SpecialChars.GREEN + "Enabled" : SpecialChars.RED + "Disabled");
 		if (tileEntity.getBoost()) {
-			currenttip.add(SpecialChars.GREEN + "Boosted");
+			currenttip.add(SpecialChars.GREEN + "Potency Gem Installed");
 		}
 		if (accessor.getNBTData().getBoolean("Active")) {
 			currenttip.add(accessor.getNBTData().getBoolean("Spawn") ? "Mode: Create Node" : "Mode: Recharge Node");

@@ -18,7 +18,7 @@ public class BloodFabricatorHUDHandler implements IWailaDataProvider {
 	@Override
 	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,	IWailaConfigHandler config) {
 		final TileBloodFabricator tileEntity = (TileBloodFabricator) accessor.getTileEntity();
-		currenttip.add(SpecialChars.GREEN + "Blood: " + tileEntity.tank.getFluidAmount() + "/" + tileEntity.tank.getCapacity());
+		currenttip.add(SpecialChars.DRED + "Blood: " + tileEntity.tank.getFluidAmount() + "/" + tileEntity.tank.getCapacity());
 		
 		return currenttip;
 	}
