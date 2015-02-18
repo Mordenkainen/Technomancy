@@ -140,20 +140,24 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
 
 	@Override
 	public void readCustomNBT(NBTTagCompound compound)  {
+		NBTTagList list = compound.getTagList("ItemsTile", 10);
+		inv = new ItemStack[2];
+		
+		for(int i = 0; i < list.tagCount(); i++) {
+			NBTTagCompound item = list.getCompoundTagAt(i);
+			int slot = item.getByte("SlotsTile");
+
+			if(slot >= 0 && slot < getSizeInventory()) {
+				inv[slot] = ItemStack.loadItemStackFromNBT(item);
+			}
+		}
+		
 		progress = compound.getInteger("Time");
-		isActive = compound.getBoolean("Active");	    
+		isActive = compound.getBoolean("Active");
 	}	
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound compound)  {
-		compound.setInteger("Time", progress);
-		compound.setBoolean("Active", isActive);		 
-	}
-	
-	@Override
-	public void writeToNBT(NBTTagCompound compound) {
-		super.writeToNBT(compound);
-		
 		NBTTagList list = new NBTTagList();
 
 		for(int i = 0; i < this.getSizeInventory(); i++) {
@@ -169,26 +173,10 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
 		}
 		
 		compound.setTag("ItemsTile", list);
+		compound.setInteger("Time", progress);
+		compound.setBoolean("Active", isActive);
 	}
-
-	@Override
-	public void readFromNBT(NBTTagCompound compound) {
-		super.readFromNBT(compound);
-		
-		NBTTagList list = compound.getTagList("ItemsTile", 10);
-		inv = new ItemStack[2];
-		
-		for(int i = 0; i < list.tagCount(); i++) {
-			NBTTagCompound item = list.getCompoundTagAt(i);
-			int slot = item.getByte("SlotsTile");
-
-			if(slot >= 0 && slot < getSizeInventory()) {
-				inv[slot] = ItemStack.loadItemStackFromNBT(item);
-			}
-		}
-	}
-
-
+	
 	@Override
 	public int getSizeInventory() {
 		return inv.length;
@@ -238,7 +226,7 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
 
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack items) {
-		return i==0 && canProcess(items);
+		return i == 0 && canProcess(items);
 	}
 
 	@Override
@@ -248,12 +236,11 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
 
 	@Override
 	public boolean canInsertItem(int i, ItemStack stack, int j) {
-		return i==0;
+		return i == 0;
 	}
 
 	@Override
 	public boolean canExtractItem(int i, ItemStack itemstack, int j) {
-		return i==1;
+		return i == 1;
 	}
-
 }

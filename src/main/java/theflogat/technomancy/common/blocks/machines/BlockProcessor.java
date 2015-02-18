@@ -22,20 +22,19 @@ import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTCProcessor;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.compat.Botania;
-import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.util.InvHelper;
 import vazkii.botania.api.wand.IWandHUD;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockProcessor extends BlockBase {
+public abstract class BlockProcessor extends BlockBase {
 
 	String name;
 	
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9) {
-		TileEntity tile = world.getTileEntity(x, y, z);
-		if(player != null && tile != null) {
+		if(player != null) {
+			TileEntity tile = world.getTileEntity(x, y, z);
 			if(tile instanceof TileTCProcessor) {		
 				player.openGui(Technomancy.instance, 0, world, x, y, z);
 			}
@@ -52,21 +51,20 @@ public class BlockProcessor extends BlockBase {
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
 		TileEntity tile = world.getTileEntity(x, y, z);
-		if(tile != null) {
-			if(tile instanceof TileBMProcessor && entity instanceof EntityPlayer) {
-				((TileBMProcessor)tile).owner = ((EntityPlayer)entity).getDisplayName();
-			}
+		if(tile instanceof TileBMProcessor && entity instanceof EntityPlayer) {
+			((TileBMProcessor)tile).owner = ((EntityPlayer)entity).getDisplayName();
 		}
 	}
 	
 	@Override
 	public String getUnlocalizedName() {
 		return "tile." + Ref.MOD_PREFIX + Names.processor + name;
-		
 	}
 	
+	@SideOnly(Side.CLIENT)
 	public IIcon[] icons = new IIcon[4];	
 	
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister icon) {
 		icons[0] = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.processor + name + "Side");
@@ -87,6 +85,7 @@ public class BlockProcessor extends BlockBase {
 		return icons[0];
 	}
 	
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(IBlockAccess access, int x, int y, int z, int side) {
 		TileEntity tile = access.getTileEntity(x, y, z);
@@ -94,7 +93,7 @@ public class BlockProcessor extends BlockBase {
 			return icons[3];
 		}
 		if(side > 1) {
-			if(((TileProcessorBase)tile).isActive) {
+			if(tile != null && ((TileProcessorBase)tile).isActive) {
 				return icons[1];
 			}
 			return icons[2];
@@ -102,8 +101,8 @@ public class BlockProcessor extends BlockBase {
 		return icons[0];		
 	}
 	
-	@Override
 	@SideOnly(Side.CLIENT)
+	@Override
 	public void randomDisplayTick(World world, int x, int y, int z, Random r)	  {
 		TileEntity te = world.getTileEntity(x, y, z);
 	    if ((te != null) && ((TileProcessorBase)te).isActive)	    {
@@ -135,13 +134,13 @@ public class BlockProcessor extends BlockBase {
 		    	Botania.sparkle(world, (double)f + f4, f1, f2 + f3, r);
 		    }
 	    }
-	    
 	}
 	
 	@Override
 	public int getLightValue(IBlockAccess world, int x, int y, int z) {
-		if(world.getTileEntity(x, y, z) instanceof TileProcessorBase) {
-			if(((TileProcessorBase)world.getTileEntity(x, y, z)).isActive) {
+		TileEntity tile = world.getTileEntity(x, y, z);
+		if(tile instanceof TileProcessorBase) {
+			if(((TileProcessorBase)tile).isActive) {
 				return 12;
 			}
 		}
@@ -153,12 +152,7 @@ public class BlockProcessor extends BlockBase {
 	    InvHelper.dropItemsFromTile(world, x, y, z);
 	    super.breakBlock(world, x, y, z, id, meta);
 	}
-	
-	@Override
-	public TileEntity createNewTileEntity(World w, int meta) {
-		return null;
-	}
-	
+
 	public static class BlockTCProcessor extends BlockProcessor {
 
 		public BlockTCProcessor() {
@@ -169,7 +163,6 @@ public class BlockProcessor extends BlockBase {
 		public TileEntity createNewTileEntity(World w, int meta) {
 			return new TileTCProcessor();
 		}
-		
 	}
 	
 	public static class BlockBMProcessor extends BlockProcessor {
@@ -180,9 +173,9 @@ public class BlockProcessor extends BlockBase {
 		
 		@Override
 		public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-			TileBMProcessor te = (TileBMProcessor) w.getTileEntity(x, y, z);
-			if(te.owner.equals("")){
-				te.owner = player.getDisplayName();
+			TileEntity te = w.getTileEntity(x, y, z);
+			if(te instanceof TileBMProcessor && ((TileBMProcessor)te).owner.equals("")){
+				((TileBMProcessor)te).owner = player.getDisplayName();
 				return true;
 			}
 			return super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ);
@@ -207,12 +200,10 @@ public class BlockProcessor extends BlockBase {
 
 		@Override
 		public void renderHUD(Minecraft minecraft, ScaledResolution res, World world, int x, int y, int z) {
-			if(world.getTileEntity(x, y, z) instanceof TileBOProcessor) {
-				((TileBOProcessor)world.getTileEntity(x, y, z)).renderHUD(minecraft, res);
+			TileEntity tile = world.getTileEntity(x, y, z);
+			if(tile instanceof TileBOProcessor) {
+				((TileBOProcessor)tile).renderHUD(minecraft, res);
 			}
 		}
 	}
-
-	
-
 }
