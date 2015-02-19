@@ -193,6 +193,7 @@ public class Ore {
 	private Item pureItem;
 	private Color color = Color.WHITE;
 	private boolean state;
+	private int ingotsPerStage;
 
 	protected Ore(String oreName, ItemStack ingot, String name) {
 		this.oreName = oreName;
@@ -229,6 +230,14 @@ public class Ore {
 		return pureItem;
 	}
 
+	public int getIngotsPerStage() {
+		return ingotsPerStage;
+	}
+	
+	public void setIngotsPerStage(int num) {
+		ingotsPerStage = num;
+	}
+	
 	@Override
 	public int hashCode() {
 		return oreName.hashCode();

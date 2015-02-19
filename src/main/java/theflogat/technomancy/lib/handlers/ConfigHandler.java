@@ -81,6 +81,7 @@ public class ConfigHandler {
 			String name = "pure" + ore.oreName().substring(3);
 			ore.setEnabled(config.get("PureOres", name, true).getBoolean(true));
 			ore.setName(config.get("PureOres", name + "Name", ore.name()).getString());
+			ore.setIngotsPerStage(config.get("PureOres", name + "Ingots", 1).getInt(1));
 		}
 		
 		if (config.hasChanged()) {

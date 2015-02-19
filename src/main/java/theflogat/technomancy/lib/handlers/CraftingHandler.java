@@ -32,7 +32,7 @@ public class CraftingHandler {
 		for (Ore ore : Ore.ores) {
 			if (ore.getEnabled()) {
 				for(int i = 0; i < ItemProcessedOre.MAXSTAGE; i++) {
-					FurnaceRecipes.smelting().func_151394_a(new ItemStack(ore.getPure(), 1, i), new ItemStack(ore.ingot().getItem(), 2 + i, ore.ingot().getItemDamage()), 100);
+					FurnaceRecipes.smelting().func_151394_a(new ItemStack(ore.getPure(), 1, i), new ItemStack(ore.ingot().getItem(), ((i + 1) * ore.getIngotsPerStage()) + 1, ore.ingot().getItemDamage()), 100);
 				}
 			}
 		}
