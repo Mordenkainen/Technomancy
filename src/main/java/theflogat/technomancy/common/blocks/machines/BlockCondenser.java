@@ -36,7 +36,7 @@ public class BlockCondenser extends BlockBase {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister icon) {
-		this.icon = icon.registerIcon(Ref.getAsset(Names.condenserBlock));
+		blockIcon = icon.registerIcon(Ref.getAsset(Names.condenserBlock));
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -50,12 +50,12 @@ public class BlockCondenser extends BlockBase {
 				return (IIcon) CoFH.getIcon.invoke(null, "MachineTop");
 			}
 			if((meta == 0 && side == 3) || (meta == 1 && side == 4) || (meta == 2 && side == 2) || (meta == 3 && side == 5)) {
-				return icon;
+				return blockIcon;
 			}
 			return (IIcon) CoFH.getIcon.invoke(null, "MachineSide");
 		}catch(Exception e){e.printStackTrace();}
 		
-		return icon;
+		return blockIcon;
 	}
 
 	@Override

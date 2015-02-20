@@ -100,6 +100,6 @@ public class BlockNodeDynamo extends BlockBase {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
-		icon = Blocks.stone.getIcon(0, 0);
+		blockIcon = Blocks.stone.getIcon(0, 0);
 	}
 }

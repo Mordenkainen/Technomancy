@@ -13,15 +13,6 @@ public abstract class BlockBase extends BlockContainer {
 		super(Material.iron);
 		setCreativeTab(Technomancy.tabsTM);
 		setHardness(2F);
-	}	
-	
-	@SideOnly(Side.CLIENT)
-	public IIcon icon;
-	
-	@SideOnly(Side.CLIENT)
-    @Override
-    public IIcon getIcon(int side, int meta) {
-    	return icon;
-    }
+	}
 
 }

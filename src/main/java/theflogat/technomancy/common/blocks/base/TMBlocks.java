@@ -25,6 +25,7 @@ import theflogat.technomancy.common.blocks.machines.BlockReconstructor;
 import theflogat.technomancy.common.blocks.machines.BlockTeslaCoil;
 import theflogat.technomancy.common.blocks.storage.BlockCreativeJar;
 import theflogat.technomancy.common.blocks.storage.BlockEssentiaContainer;
+import theflogat.technomancy.common.blocks.storage.BlockReservoir;
 import theflogat.technomancy.common.blocks.technom.BlockCatalyst;
 import theflogat.technomancy.common.blocks.technom.BlockCrystal;
 import theflogat.technomancy.common.blocks.technom.BlockFakeAir;
@@ -39,8 +40,8 @@ import theflogat.technomancy.common.rituals.RitualCaveInT3;
 import theflogat.technomancy.common.rituals.RitualWaterT1;
 import theflogat.technomancy.common.rituals.RitualWaterT2;
 import theflogat.technomancy.common.rituals.RitualWaterT3;
-import theflogat.technomancy.common.tiles.TileBMProcessor;
 import theflogat.technomancy.common.tiles.TileBOProcessor;
+import theflogat.technomancy.common.tiles.bm.TileBMProcessor;
 import theflogat.technomancy.common.tiles.dynamos.TileBloodDynamo;
 import theflogat.technomancy.common.tiles.dynamos.TileEssentiaDynamo;
 import theflogat.technomancy.common.tiles.dynamos.TileFlowerDynamo;
@@ -61,6 +62,7 @@ import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTCProcessor;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTeslaCoil;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileCreativeJar;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaContainer;
+import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaReservoir;
 import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
@@ -95,6 +97,7 @@ public class TMBlocks {
 	public static Block eldritchConsumer;
 	public static Block catalyst;
 	public static Block fakeAir;
+	public static Block reservoir;
 	
 	public static void initTechnomancy(){
 		crystalBlock = Ids.crystalBlock ? new BlockCrystal() : null;
@@ -137,6 +140,7 @@ public class TMBlocks {
 		condenserBlock = Ids.condenser && CoFH.co ? new BlockCondenser() : null;
 		processorTC = Ids.processorTC ? new BlockProcessor.BlockTCProcessor() : null;
 		eldritchConsumer = Ids.eldrichConsumer ? new BlockEldritchConsumer() : null;
+		reservoir = Ids.reservoir ? new BlockReservoir() : null;
 		
 		//Registry
 		registerBlock(nodeDynamo, Names.nodeDynamo, ItemNodeDynamo.class);
@@ -154,6 +158,7 @@ public class TMBlocks {
 		registerBlock(condenserBlock, Names.condenserBlock);
 		registerBlock(processorTC, Names.processor + "TC");
 		registerBlock(eldritchConsumer, Names.eldritchConsumer);
+		registerBlock(reservoir, Names.reservoir);
 
 		
 		//Tiles registry
@@ -171,6 +176,7 @@ public class TMBlocks {
 		GameRegistry.registerTileEntity(TileCondenser.class, "TileCondenser");
 		GameRegistry.registerTileEntity(TileTCProcessor.class, "TileProcessorTC");
 		GameRegistry.registerTileEntity(TileEldritchConsumer.class, "TileEldrichConsumer");
+		GameRegistry.registerTileEntity(TileEssentiaReservoir.class, Ref.MOD_PREFIX + "TileEssentiaReservoir");
 	}
 	
 	public static void initBloodMagic() {

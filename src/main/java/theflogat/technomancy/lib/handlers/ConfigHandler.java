@@ -39,6 +39,7 @@ public class ConfigHandler {
         Ids.processorBO = config.get(blocks, Names.processor + "BO", true).getBoolean();
         Ids.eldrichConsumer = config.get(blocks, Names.eldritchConsumer, true).getBoolean();
         Ids.catalyst = config.get(blocks, Names.catalyst, true).getBoolean();
+        Ids.reservoir = config.get(blocks, Names.reservoir, true).getBoolean();
         
         String items = "Items";
         //Items        
@@ -57,6 +58,7 @@ public class ConfigHandler {
         Ids.procLead = config.get(items, Names.pureLead, true).getBoolean();
         Ids.procNickel = config.get(items, Names.pureNickel, true).getBoolean();
         Ids.itemBoost = config.get(items, Names.itemBoost, true).getBoolean();
+        Ids.ritualTome = config.get(items, Names.ritualTome, true).getBoolean();
 
         //Recipe Whatnots
         Conf.bonus = config.get("Recipes", "Add/Increase Smelting bonus to dusts/ore", Conf.bonus).getBoolean(Conf.bonus);

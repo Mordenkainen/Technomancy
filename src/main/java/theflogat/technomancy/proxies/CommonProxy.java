@@ -1,10 +1,11 @@
 package theflogat.technomancy.proxies;
 
+import theflogat.technomancy.client.renderers.gui.GuiRitualTome;
 import theflogat.technomancy.client.renderers.gui.container.ContainerBMProcessor;
 import theflogat.technomancy.client.renderers.gui.container.ContainerBOProcessor;
 import theflogat.technomancy.client.renderers.gui.container.ContainerTCProcessor;
-import theflogat.technomancy.common.tiles.TileBMProcessor;
 import theflogat.technomancy.common.tiles.TileBOProcessor;
+import theflogat.technomancy.common.tiles.bm.TileBMProcessor;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTCProcessor;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -38,6 +39,10 @@ public class CommonProxy implements IGuiHandler{
 
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+		switch(ID){
+			case 3:
+				return new GuiRitualTome();
+		}
 		return null;
 	}
 

@@ -83,7 +83,7 @@ public class BlockManaFabricator extends BlockBase implements IWandHUD {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister icon) {
-		this.icon = icon.registerIcon(Ref.getAsset(Names.manaFabricator));
+		blockIcon = icon.registerIcon(Ref.getAsset(Names.manaFabricator));
 	}
 	
 	@Override

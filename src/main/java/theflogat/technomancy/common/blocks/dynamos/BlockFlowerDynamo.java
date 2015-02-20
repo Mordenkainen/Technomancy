@@ -43,7 +43,7 @@ public class BlockFlowerDynamo extends BlockBase implements IWandHUD {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister icon) {
-		this.icon = icon.registerIcon(Ref.getAsset(Names.flowerDynamo));
+		blockIcon = icon.registerIcon(Ref.getAsset(Names.flowerDynamo));
 	}
 	
 	@Override
