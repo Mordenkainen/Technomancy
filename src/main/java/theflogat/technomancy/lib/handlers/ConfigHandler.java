@@ -2,6 +2,7 @@ package theflogat.technomancy.lib.handlers;
 
 import java.awt.Color;
 import java.io.File;
+import java.util.Arrays;
 
 import theflogat.technomancy.lib.Conf;
 import theflogat.technomancy.lib.Rate;
@@ -81,7 +82,7 @@ public class ConfigHandler {
 			String name = "pure" + ore.oreName().substring(3);
 			ore.setEnabled(config.get("PureOres", name, true).getBoolean(true));
 			ore.setName(config.get("PureOres", name + "Name", ore.name()).getString());
-			ore.setIngotsPerStage(config.get("PureOres", name + "Ingots", 1).getInt(1));
+			ore.setIngotsPerStage(Arrays.asList(config.get("PureOres", name + "Ingots", "2,3,4,5,6,7").getString().split("\\s*,\\s*")));
 		}
 		
 		if (config.hasChanged()) {

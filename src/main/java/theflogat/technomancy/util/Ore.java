@@ -193,7 +193,7 @@ public class Ore {
 	private Item pureItem;
 	private Color color = Color.WHITE;
 	private boolean state;
-	private int ingotsPerStage;
+	private int[] ingotsPerStage = {2,3,4,5,6,7};
 
 	protected Ore(String oreName, ItemStack ingot, String name) {
 		this.oreName = oreName;
@@ -230,12 +230,14 @@ public class Ore {
 		return pureItem;
 	}
 
-	public int getIngotsPerStage() {
-		return ingotsPerStage;
+	public int getIngotsPerStage(int stage) {
+		return ingotsPerStage[stage];
 	}
 	
-	public void setIngotsPerStage(int num) {
-		ingotsPerStage = num;
+	public void setIngotsPerStage(List<String> nums) {
+		for (int i = 0 ; i < ingotsPerStage.length ; i++ ) {
+			ingotsPerStage[i] = Integer.parseInt(nums.get(i).trim());
+		}
 	}
 	
 	@Override
