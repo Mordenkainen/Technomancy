@@ -1,3 +1,5 @@
+// Much of this code was taken from Another One Bites The Dust:
+// https://github.com/ganymedes01/Another-One-Bites-the-Dust
 package theflogat.technomancy.util;
 
 import java.awt.Color;
