@@ -42,7 +42,7 @@ public class BlockFluxLamp extends BlockBase {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister icon) {
-		this.icon = icon.registerIcon(Ref.getAsset(Names.fluxLamp));
+		blockIcon = icon.registerIcon(Ref.getAsset(Names.fluxLamp));
 	}
 	
 	@Override

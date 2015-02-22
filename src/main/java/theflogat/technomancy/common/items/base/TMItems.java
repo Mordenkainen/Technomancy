@@ -13,6 +13,7 @@ import theflogat.technomancy.common.items.thaumcraft.ItemFusionFocus;
 import theflogat.technomancy.common.items.thaumcraft.ItemPen;
 import theflogat.technomancy.common.items.thaumcraft.ItemTHMaterial;
 import theflogat.technomancy.common.items.thaumcraft.ItemWandCores;
+import theflogat.technomancy.common.items.tome.ItemRitualTome;
 import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.Names;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -33,6 +34,7 @@ public class TMItems {
     public static Item processedLead;
     public static Item processedNickel;
     public static Item itemBoost;
+    public static Item ritualTome;
     
     public static WandRod WAND_ROD_ELECTRIC;
     
@@ -45,6 +47,7 @@ public class TMItems {
         processedLead = Ids.procLead ? new ItemProcessedOre(8163006, Names.pureLead) : null;
         processedNickel = Ids.procNickel ? new ItemProcessedOre(16053453, Names.pureNickel) : null;
         itemBoost = Ids.itemBoost ? new ItemBoost() : null;
+        ritualTome = Ids.ritualTome ? new ItemRitualTome() : null;
         
 
         registerItem(processedIron, Names.pureIron);
@@ -55,6 +58,7 @@ public class TMItems {
         registerItem(processedLead, Names.pureLead);
         registerItem(processedNickel, Names.pureNickel);
         registerItem(itemBoost, Names.itemBoost);
+        registerItem(ritualTome, Names.ritualTome);
     }
     
     public static void initThaumcraft() { 	

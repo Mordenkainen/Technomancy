@@ -1,4 +1,4 @@
-package theflogat.technomancy.common.tiles;
+package theflogat.technomancy.common.tiles.bm;
 
 import theflogat.technomancy.common.tiles.base.TileProcessorBase;
 import net.minecraft.item.ItemStack;

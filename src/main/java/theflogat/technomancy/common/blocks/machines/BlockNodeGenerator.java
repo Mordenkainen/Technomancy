@@ -48,7 +48,7 @@ public class BlockNodeGenerator extends BlockBase {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconRegister) {
-		icon = iconRegister.registerIcon(Ref.getAsset(Names.nodeGenerator));
+		blockIcon = iconRegister.registerIcon(Ref.getAsset(Names.nodeGenerator));
 	}
 
 	@Override

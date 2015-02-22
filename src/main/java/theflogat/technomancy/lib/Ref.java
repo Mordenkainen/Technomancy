@@ -15,6 +15,7 @@ public class Ref {
     public static final String MODEL_PREFIX = MOD_ID + ":textures/models/";
     public static final String TEXTURE_PREFIX = MOD_ID + ":";
     
+    public static final String EXT = ".png";
     //Model Names
     public static final String MODEL_NODE_DYNAMO_TEXTURE = MODEL_PREFIX + "nodeDynamo.png";
 	public static final String MODEL_ESSENTIA_CONTAINER_TEXTURE = MODEL_PREFIX + "essentiaContainer.png";
@@ -45,5 +46,9 @@ public class Ref {
 
 	public static String getAsset(String str) {
 		return TEXTURE_PREFIX + str;
+	}
+	
+	public static String getGui(String str) {
+		return GUI_PREFIX + str;
 	}
 }

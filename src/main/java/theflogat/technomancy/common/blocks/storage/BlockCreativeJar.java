@@ -170,6 +170,6 @@ public class BlockCreativeJar extends BlockBase {
 	public void registerBlockIcons(IIconRegister icon) {
 		iconJar = icon.registerIcon(Ref.MODEL_PREFIX + Names.essentiaContainer);
 		iconLiquid = icon.registerIcon(Ref.TEXTURE_PREFIX + "animatedglow");
-		this.icon = Blocks.stained_glass.getIcon(0, 2);
+		blockIcon = Blocks.stained_glass.getIcon(0, 2);
 	}
 }

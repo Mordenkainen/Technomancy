@@ -174,6 +174,6 @@ public class BlockEssentiaContainer extends BlockBase {
 	public void registerBlockIcons(IIconRegister icon) {
 		iconJar = icon.registerIcon(Ref.MODEL_PREFIX + Names.essentiaContainer);
 		iconLiquid = icon.registerIcon(Ref.TEXTURE_PREFIX + "animatedglow");
-		this.icon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.essentiaContainer);
+		blockIcon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.essentiaContainer);
 	}
 }

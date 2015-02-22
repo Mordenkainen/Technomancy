@@ -52,7 +52,6 @@ public class Technomancy {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
     	ConfigHandler.init(new File(event.getModConfigurationDirectory(), Ref.MOD_NAME + ".cfg"));
-    	
     	new EventRegister();
     }
 
