@@ -39,10 +39,6 @@ public class CommonProxy implements IGuiHandler{
 
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		switch(ID){
-			case 3:
-				return new GuiRitualTome();
-		}
 		return null;
 	}
 

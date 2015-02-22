@@ -24,6 +24,7 @@ import theflogat.technomancy.client.renderers.blocks.BlockTeslaCoilRenderer;
 import theflogat.technomancy.client.renderers.gui.GuiProcessorBM;
 import theflogat.technomancy.client.renderers.gui.GuiProcessorBO;
 import theflogat.technomancy.client.renderers.gui.GuiProcessorTC;
+import theflogat.technomancy.client.renderers.gui.GuiRitualTome;
 import theflogat.technomancy.client.renderers.tiles.TileBiomeMorpherRenderer;
 import theflogat.technomancy.client.renderers.tiles.TileBloodDynamoRenderer;
 import theflogat.technomancy.client.renderers.tiles.TileBloodFabricatorRenderer;
@@ -185,6 +186,8 @@ public class ClientProxy extends CommonProxy implements IGuiHandler{
 					return new GuiProcessorBM(player.inventory, ((TileBMProcessor)world.getTileEntity(x, y, z)));
 				case 2:
 					return new GuiProcessorBO(player.inventory, ((TileBOProcessor)world.getTileEntity(x, y, z)));
+				case 3:
+					return new GuiRitualTome();
 			}
 		}
 		return null;

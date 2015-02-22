@@ -1,9 +1,12 @@
 package theflogat.technomancy.client.renderers.gui.tome.render.pages;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
 public class PageRecipeMult extends PageRecipe{
 	
+	int count = 0;
+	int pos = 0;
 	ItemStack[] outputs;
 	ItemStack[][] recipes;
 	
@@ -14,12 +17,23 @@ public class PageRecipeMult extends PageRecipe{
 
 	@Override
 	public ItemStack[] getRecipe() {
-		return recipes[(((int)System.currentTimeMillis())%(recipes.length*10))/10];
+		return recipes[getPos(recipes.length)];
 	}
 
 	@Override
 	public ItemStack getOutput() {
-		return outputs[(((int)System.currentTimeMillis())%(recipes.length*10))/10];
+		return outputs[getPos(outputs.length)];
+	}
+	
+	private int getPos(int length) {
+		if(System.currentTimeMillis()%length==0){
+			count++;
+		}
+		if(count==60){
+			count = 0;
+			pos += pos+1==length ? -pos : 1;
+		}
+		return pos;
 	}
 
 }

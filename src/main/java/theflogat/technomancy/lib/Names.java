@@ -19,7 +19,7 @@ public class Names {
 	public static final String pureLead = "pureLead";
 	public static final String pureNickel = "pureNickel";
 	public static final String itemBoost = "itemBoost";
-	public static final String ritualTome = "tome";
+	public static final String ritualTome = "ritualTome";
     /*
      * Blocks
      */
