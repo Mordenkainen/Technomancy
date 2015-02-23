@@ -1,7 +1,9 @@
 package theflogat.technomancy.client.renderers.gui.container;
 
+import theflogat.technomancy.common.items.technom.ItemProcessedOre;
 import theflogat.technomancy.common.tiles.TileBOProcessor;
 import theflogat.technomancy.common.tiles.base.TileProcessorBase;
+import theflogat.technomancy.util.Ore;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -21,8 +23,20 @@ public class ContainerBOProcessor extends Container {
 	public ContainerBOProcessor(InventoryPlayer inventory, TileBOProcessor processor) {
 		this.processor = processor;
 		
-	    addSlotToContainer(new Slot(processor, 0, 52, 27));
-	    addSlotToContainer(new Slot(processor, 1, 108, 27));
+	    addSlotToContainer(new Slot(processor, 0, 52, 27) {
+	    	@Override
+	    	public boolean isItemValid(ItemStack stack)
+	        {
+	            return stack.getItem() instanceof ItemProcessedOre || Ore.isProcessableOre(stack);
+	        }
+	    });
+	    addSlotToContainer(new Slot(processor, 1, 108, 27) {
+	    	@Override
+	    	public boolean isItemValid(ItemStack stack)
+	        {
+	            return false;
+	        }
+	    });
 	    
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 9; j++) {

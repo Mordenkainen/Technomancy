@@ -1,8 +1,7 @@
 package theflogat.technomancy.common.tiles.base;
 
-import java.util.ArrayList;
-
-import theflogat.technomancy.common.items.base.TMItems;
+import theflogat.technomancy.common.items.technom.ItemProcessedOre;
+import theflogat.technomancy.util.Ore;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
@@ -17,83 +16,65 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
 
 	public ItemStack[] inv = new ItemStack[2];
 	public boolean isActive;
-	public byte facing;
 	public int progress = 0;
 	public static final int maxTime = 60;
 	public String tagCompound;
-	public ArrayList<String> ores = new ArrayList<String>();
-	public ArrayList<Item> processed = new ArrayList<Item>();
-	public Object[][] associatedObj = {
-			{
-				"oreIron", TMItems.processedIron
-			},{
-				"oreGold", TMItems.processedGold
-			},{
-				"oreCopper", TMItems.processedCopper
-			},{
-				"oreTin", TMItems.processedTin
-			},{
-				"oreSilver", TMItems.processedSilver
-			},{
-				"oreLead", TMItems.processedLead
-			},{
-				"oreNickel", TMItems.processedNickel
-			}
-	};
-
+	
 	public TileProcessorBase(int tag) {
 		tagCompound = processors[tag];
-		ores.add("oreIron");processed.add(TMItems.processedIron);
-		ores.add("oreGold");processed.add(TMItems.processedGold);
-		ores.add("oreCopper");processed.add(TMItems.processedCopper);
-		ores.add("oreTin");processed.add(TMItems.processedTin);
-		ores.add("oreSilver");processed.add(TMItems.processedSilver);
-		ores.add("oreLead");processed.add(TMItems.processedLead);
-		ores.add("oreNickel");processed.add(TMItems.processedNickel);
 	}
 	protected String[] processors = {"Thaumcraft", "Botania", "Blood Magic", "Ars Magica", "Witchery", "Totemic" }; 
 
 	@Override
 	public void updateEntity() {
-		if(inv[0] == null) {
-			return;
-		}
-
-		if(canProcess(inv[0])){
-			if(isActive){
-				if(progress==0){
-					isActive = !process();
-				}else{
-					ItemStack stack = getOutput(inv[0]);
-					if(getFuel(stack, stack.getItemDamage(), stack.stackTagCompound.getInteger(tagCompound))){
-						progress--;
-					}
-				}
-			}else{
-				isActive = true;
-				progress = maxTime;
+		if (!worldObj.isRemote) {
+			if(inv[0] == null) {
+				progress = 0;
+				isActive = false;
+				markDirty();
+				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+				return;
 			}
-			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+	
+			if(canProcess(inv[0])) {
+				if(isActive) {
+					if(progress==0) {
+						isActive = !process();
+					} else {
+						ItemStack stack = getOutput(inv[0]);
+						if(getFuel(stack, stack.getItemDamage(), stack.stackTagCompound.getInteger(tagCompound))) {
+							progress--;
+						}
+					}
+				} else {
+					isActive = true;
+					progress = maxTime;
+				}
+				markDirty();
+				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+			}
 		}
 	}
 
 	protected boolean process() {
-		ItemStack out = getOutput(inv[0]);if(out==null)return false;
-		if(inv[1]==null){
+		ItemStack out = getOutput(inv[0]);
+		if(out == null) {
+			return false;
+		}
+		if(inv[1] == null) {
 			inv[1] = out;
 			inv[0].stackSize--;
-			if(inv[0].stackSize==0){
+			if(inv[0].stackSize==0) {
 				inv[0] = null;
 			}
 			return true;
-		}else{
-			boolean suc = inv[1].getItem()==out.getItem() && inv[1].getItemDamage()==out.getItemDamage()
+		} else {
+			boolean suc = inv[1].getItem() == out.getItem() && inv[1].getItemDamage() == out.getItemDamage()
 					&& ItemStack.areItemStackTagsEqual(out, inv[1]);
-			if(suc && inv[1].stackSize<64){
-				int ns = inv[1].stackSize;
-				inv[1] = out;inv[1].stackSize+=ns;
+			if(suc && inv[1].stackSize < 64) {
+				inv[1].stackSize++;
 				inv[0].stackSize--;
-				if(inv[0].stackSize==0){
+				if(inv[0].stackSize == 0) {
 					inv[0] = null;
 				}
 				return true;
@@ -103,21 +84,24 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
 	}
 
 	protected ItemStack getOutput(ItemStack items){
-		if(isOreDictName(items)){
-			return addTag(new ItemStack(itemFormOreDictName(items), 1));
-		}else if(isProcessed(items) && isProcessable(items.stackTagCompound)){
-			ItemStack it = items.copy();it.stackSize = 1;it.setItemDamage(it.getItemDamage()+1);
+		if(Ore.isProcessableOre(items)) {
+			return addTag(new ItemStack(itemFromOreDictName(items), 1));
+		} else if(isProcessed(items) && isProcessable(items.stackTagCompound)) {
+			ItemStack it = items.copy();
+			it.stackSize = 1;
+			it.setItemDamage(it.getItemDamage() + 1);
 			return addTag(it);
 		}
 		return null;
 	}
 
 	protected ItemStack addTag(ItemStack items) {
-		if(items==null)
+		if(items == null)
 			return null;
 		
-		if(items.stackTagCompound==null)
+		if(items.stackTagCompound == null) {
 			items.stackTagCompound = new NBTTagCompound();
+		}
 		
 		items.stackTagCompound.setInteger(tagCompound, items.stackTagCompound.getInteger(tagCompound) + 1);
 		
@@ -125,26 +109,18 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
 	}
 
 	protected boolean canProcess(ItemStack items) {
-		return isOreDictName(items) || (isProcessed(items) && isProcessable(items.stackTagCompound));
+		return Ore.isProcessableOre(items) || (isProcessed(items) && items.stackTagCompound!=null && isProcessable(items.stackTagCompound));
 	}
 
 	protected boolean isProcessable(NBTTagCompound comp) {
-		return comp.getInteger(tagCompound)<2;
+		return comp.getInteger(tagCompound) < 2;
 	}
 
-	protected boolean isOreDictName(ItemStack items) {
-		int[] ids = OreDictionary.getOreIDs(items);
-		for (int id : ids) {
-			if(ores.contains(OreDictionary.getOreName(id))) return true;
-		}
-		return false;
-	}
-
-	protected Item itemFormOreDictName(ItemStack items) {
-		for(int i : OreDictionary.getOreIDs(items)){
-			for(int j = 0; j<associatedObj.length; j++){
-				if(associatedObj[j][0] == OreDictionary.getOreName(i)){
-					return (Item) associatedObj[j][1];
+	protected Item itemFromOreDictName(ItemStack items) {
+		for(int i : OreDictionary.getOreIDs(items)) {			
+			for(int j = 0; j < Ore.ores.size(); j++) {
+				if(Ore.ores.get(j).oreName() == OreDictionary.getOreName(i)) {
+					return Ore.ores.get(j).getPure();
 				}
 			}
 		}
@@ -152,7 +128,7 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
 	}
 
 	protected boolean isProcessed(ItemStack items) {
-		return processed.contains(items.getItem());
+		return items.getItem() instanceof ItemProcessedOre;
 	}
 
 	protected abstract boolean getFuel(ItemStack items, int multiplier, int reprocess);
@@ -164,22 +140,24 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
 
 	@Override
 	public void readCustomNBT(NBTTagCompound compound)  {
-		facing = compound.getByte("Facing");
+		NBTTagList list = compound.getTagList("ItemsTile", 10);
+		inv = new ItemStack[2];
+		
+		for(int i = 0; i < list.tagCount(); i++) {
+			NBTTagCompound item = list.getCompoundTagAt(i);
+			int slot = item.getByte("SlotsTile");
+
+			if(slot >= 0 && slot < getSizeInventory()) {
+				inv[slot] = ItemStack.loadItemStackFromNBT(item);
+			}
+		}
+		
 		progress = compound.getInteger("Time");
-		isActive = compound.getBoolean("Active");	    
+		isActive = compound.getBoolean("Active");
 	}	
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound compound)  {
-		compound.setByte("Facing", facing);
-		compound.setInteger("Time", progress);
-		compound.setBoolean("Active", isActive);		 
-	}
-	
-	@Override
-	public void writeToNBT(NBTTagCompound compound) {
-		super.writeToNBT(compound);
-		
 		NBTTagList list = new NBTTagList();
 
 		for(int i = 0; i < this.getSizeInventory(); i++) {
@@ -195,25 +173,10 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
 		}
 		
 		compound.setTag("ItemsTile", list);
+		compound.setInteger("Time", progress);
+		compound.setBoolean("Active", isActive);
 	}
-
-	@Override
-	public void readFromNBT(NBTTagCompound compound) {
-		super.readFromNBT(compound);
-		
-		NBTTagList list = compound.getTagList("ItemsTile", 10);
-
-		for(int i = 0; i < list.tagCount(); i++) {
-			NBTTagCompound item = list.getCompoundTagAt(i);
-			int slot = item.getByte("SlotsTile");
-
-			if(slot >= 0 && slot < getSizeInventory()) {
-				setInventorySlotContents(slot, ItemStack.loadItemStackFromNBT(item));
-			}
-		}
-	}
-
-
+	
 	@Override
 	public int getSizeInventory() {
 		return inv.length;
@@ -243,10 +206,7 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
 
 	@Override
 	public ItemStack getStackInSlotOnClosing(int i) {
-		if(inv[i] != null) {
-			return inv[i];
-		}
-		return null;
+		return inv[i];
 	}
 
 	@Override
@@ -266,7 +226,7 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
 
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack items) {
-		return i==0 && (isOreDictName(items) || (isProcessed(items) && items.stackTagCompound!=null && isProcessable(items.stackTagCompound)));
+		return i == 0 && canProcess(items);
 	}
 
 	@Override
@@ -276,18 +236,11 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
 
 	@Override
 	public boolean canInsertItem(int i, ItemStack stack, int j) {
-		if(i==0) {
-			return true;
-		}
-		return false;
+		return i == 0;
 	}
 
 	@Override
 	public boolean canExtractItem(int i, ItemStack itemstack, int j) {
-		if(i==1) {
-			return true;
-		}
-		return false;
+		return i == 1;
 	}
-
 }

@@ -18,6 +18,7 @@ import theflogat.technomancy.lib.handlers.EventRegister;
 import theflogat.technomancy.lib.handlers.ResearchHandler;
 import theflogat.technomancy.proxies.CommonProxy;
 import theflogat.technomancy.util.Loc;
+import theflogat.technomancy.util.Ore;
 import net.minecraft.creativetab.CreativeTabs;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -32,7 +33,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 @Mod(modid = Ref.MOD_ID, 
 	name = Ref.MOD_NAME, 
 	version = Ref.MOD_VERSION, 
-	dependencies = "after:Thaumcraft;after:CoFHCore;after:AWWayofTime;after:Botania;after:ThermalExpansion;")
+	dependencies = "after:*")
 
 //@NetworkMod(channels = { Ref.CHANNEL_NAME }, 
 //	clientSideRequired = true, 
@@ -92,7 +93,14 @@ public class Technomancy {
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
+    	Ore.init();
+    	
+    	ConfigHandler.initOreConfigs();
+    	
+    	TMItems.initPureOres();
+    	
     	CraftingHandler.initTechnomancyRecipes();
+    	CraftingHandler.initFurnaceRecipes();
     	
         if(BloodMagic.bm) {
         	CraftingHandler.initBloodMagicRecipes();
@@ -104,7 +112,6 @@ public class Technomancy {
         	CraftingHandler.initThaumcraftRecipes();
         	ResearchHandler.init();
         	CompatibilityHandler.smeltify();
-            CraftingHandler.initFurnaceRecipe();
         }
     }
 }

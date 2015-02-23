@@ -20,8 +20,7 @@ import theflogat.technomancy.common.items.technom.ItemProcessedOre;
 import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.lib.compat.ThermalExpansion;
-import theflogat.technomancy.util.CompareItemStack;
-import theflogat.technomancy.util.ItemHelper;
+import theflogat.technomancy.util.Ore;
 import vazkii.botania.api.BotaniaAPI;
 import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipeRegistry;
 import cpw.mods.fml.common.FMLLog;
@@ -29,105 +28,15 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CraftingHandler {
 
-
-
-	public static void initFurnaceRecipe() {
-		try{
-			for(int i = 0; i < ((ItemProcessedOre)TMItems.processedIron).itemIcon.length; i++) {
-				FurnaceRecipes.smelting().func_151394_a(new ItemStack(TMItems.processedIron, 1, i), new ItemStack(Items.iron_ingot, 2 + i, 0), 100);
+	public static void initFurnaceRecipes() {
+		for (Ore ore : Ore.ores) {
+			if (ore.getEnabled()) {
+				for(int i = 0; i < ItemProcessedOre.MAXSTAGE; i++) {
+					FurnaceRecipes.smelting().func_151394_a(new ItemStack(ore.getPure(), 1, i), new ItemStack(ore.ingot().getItem(), ore.getIngotsPerStage(i), ore.ingot().getItemDamage()), 100);
+				}
 			}
-			for(int i = 0; i < ((ItemProcessedOre)TMItems.processedIron).itemIcon.length; i++) {
-				FurnaceRecipes.smelting().func_151394_a(new ItemStack(TMItems.processedGold, 1, i), new ItemStack(Items.gold_ingot, 2 + i, 0), 100);
-			}
-			try{
-				for(int i = 0; i < ((ItemProcessedOre)TMItems.processedIron).itemIcon.length; i++) {
-					FurnaceRecipes.smelting().func_151394_a(new ItemStack(TMItems.processedCopper, 1, i), new ItemStack(ThermalExpansion.ingotCopper.getItem(),
-							2 + i, ThermalExpansion.ingotCopper.getItemDamage()), 100);
-				}
-				for(int i = 0; i < ((ItemProcessedOre)TMItems.processedIron).itemIcon.length; i++) {
-					FurnaceRecipes.smelting().func_151394_a(new ItemStack(TMItems.processedTin, 1, i), new ItemStack(ThermalExpansion.ingotTin.getItem(),
-							2 + i, ThermalExpansion.ingotTin.getItemDamage()), 100);
-				}
-				for(int i = 0; i < ((ItemProcessedOre)TMItems.processedIron).itemIcon.length; i++) {
-					FurnaceRecipes.smelting().func_151394_a(new ItemStack(TMItems.processedSilver, 1, i), new ItemStack(ThermalExpansion.ingotSilver.getItem(),
-							2 + i, ThermalExpansion.ingotSilver.getItemDamage()), 100);
-				}
-				for(int i = 0; i < ((ItemProcessedOre)TMItems.processedIron).itemIcon.length; i++) {
-					FurnaceRecipes.smelting().func_151394_a(new ItemStack(TMItems.processedLead, 1, i), new ItemStack(ThermalExpansion.ingotLead.getItem(),
-							2 + i, ThermalExpansion.ingotLead.getItemDamage()), 100);
-				}
-				for(int i = 0; i < ((ItemProcessedOre)TMItems.processedIron).itemIcon.length; i++) {
-					FurnaceRecipes.smelting().func_151394_a(new ItemStack(TMItems.processedNickel, 1, i), new ItemStack(ThermalExpansion.ingotNickel.getItem(),
-							2 + i, ThermalExpansion.ingotNickel.getItemDamage()), 100);
-				}
-			}catch(Exception e){e.printStackTrace();
-			try{
-				ItemStack ingotCopper = ItemHelper.getFirstItemStack(new CompareItemStack() {
-					@Override
-					public boolean isCorrectItemStack(ItemStack items) {
-						return isOre("ingotCopper", items);
-					}
-				});
-
-				ItemStack ingotTin = ItemHelper.getFirstItemStack(new CompareItemStack() {
-					@Override
-					public boolean isCorrectItemStack(ItemStack items) {
-						return isOre("ingotTin", items);
-					}
-				});
-
-				ItemStack ingotSilver = ItemHelper.getFirstItemStack(new CompareItemStack() {
-					@Override
-					public boolean isCorrectItemStack(ItemStack items) {
-						return isOre("ingotSilver", items);
-					}
-				});
-
-				ItemStack ingotLead = ItemHelper.getFirstItemStack(new CompareItemStack() {
-					@Override
-					public boolean isCorrectItemStack(ItemStack items) {
-						return isOre("ingotLead", items);
-					}
-				});
-
-				ItemStack ingotNickel = ItemHelper.getFirstItemStack(new CompareItemStack() {
-					@Override
-					public boolean isCorrectItemStack(ItemStack items) {
-						return isOre("ingotNickel", items);
-					}
-				});
-				if(ingotCopper!=null){
-					for(int i = 0; i < ((ItemProcessedOre)TMItems.processedIron).itemIcon.length; i++) {
-						FurnaceRecipes.smelting().func_151394_a(new ItemStack(TMItems.processedCopper, 1, i), new ItemStack(ThermalExpansion.ingotCopper.getItem(),
-								2 + i, ThermalExpansion.ingotCopper.getItemDamage()), 100);
-					}
-				}if(ingotTin!=null){
-					for(int i = 0; i < ((ItemProcessedOre)TMItems.processedIron).itemIcon.length; i++) {
-						FurnaceRecipes.smelting().func_151394_a(new ItemStack(TMItems.processedTin, 1, i), new ItemStack(ThermalExpansion.ingotTin.getItem(),
-								2 + i, ThermalExpansion.ingotTin.getItemDamage()), 100);
-					}
-				}if(ingotSilver!=null){
-					for(int i = 0; i < ((ItemProcessedOre)TMItems.processedIron).itemIcon.length; i++) {
-						FurnaceRecipes.smelting().func_151394_a(new ItemStack(TMItems.processedSilver, 1, i), new ItemStack(ThermalExpansion.ingotSilver.getItem(),
-								2 + i, ThermalExpansion.ingotSilver.getItemDamage()), 100);
-					}
-				}if(ingotLead!=null){
-					for(int i = 0; i < ((ItemProcessedOre)TMItems.processedIron).itemIcon.length; i++) {
-						FurnaceRecipes.smelting().func_151394_a(new ItemStack(TMItems.processedLead, 1, i), new ItemStack(ThermalExpansion.ingotLead.getItem(),
-								2 + i, ThermalExpansion.ingotLead.getItemDamage()), 100);
-					}
-				}if(ingotNickel!=null){
-					for(int i = 0; i < ((ItemProcessedOre)TMItems.processedIron).itemIcon.length; i++) {
-						FurnaceRecipes.smelting().func_151394_a(new ItemStack(TMItems.processedNickel, 1, i), new ItemStack(ThermalExpansion.ingotNickel.getItem(),
-								2 + i, ThermalExpansion.ingotNickel.getItemDamage()), 100);
-					}
-				}
-			}catch(Exception ex){ex.printStackTrace();}
-			}
-		}catch(Exception e){e.printStackTrace();}
+		}
 	}
-
-
 
 	public static void initThaumcraftRecipes() {
 		try{
@@ -465,8 +374,6 @@ public class CraftingHandler {
 		}catch(Exception e){e.printStackTrace();}
 	}
 
-
-
 	public static void initBotaniaRecipes() {
 		try{
 			if(ThermalExpansion.te){
@@ -530,14 +437,13 @@ public class CraftingHandler {
 	}
 
 	@SuppressWarnings("unchecked")
-	static IRecipe oreDictRecipe(ItemStack res, Object[] params) {
+	private static IRecipe oreDictRecipe(ItemStack res, Object[] params) {
 		IRecipe rec = new ShapedOreRecipe(res, params);
 		CraftingManager.getInstance().getRecipeList().add(rec);
 		return rec;
 	}
-
-
-	static ItemStack getItem(int ID, String itemString, int meta) {
+	
+	private static ItemStack getItem(int ID, String itemString, int meta) {
 		ItemStack stack = null;
 		try {
 			String itemClass = null;
@@ -559,7 +465,7 @@ public class CraftingHandler {
 		return stack;
 	}
 
-	static ItemStack getBlock(int ID, String itemString, int meta) {
+	private static ItemStack getBlock(int ID, String itemString, int meta) {
 		ItemStack stack = null;
 		String itemClass = null;
 		try{
@@ -580,8 +486,6 @@ public class CraftingHandler {
 		}
 		return stack;
 	}
-
-
 
 	public static void initTechnomancyRecipes() {
 		if(Ids.itemBoost)

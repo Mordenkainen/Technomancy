@@ -17,36 +17,39 @@ import org.lwjgl.input.Keyboard;
 
 import theflogat.technomancy.common.items.base.ItemBase;
 import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.util.Ore;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemProcessedOre extends ItemBase {
 	
-	protected String[] processors = {"Thaumcraft", "Botania", "Blood Magic", "Ars Magica", "Witchery", "Totemic" };
-	protected String name;
-	protected final int color;
+	public static final int MAXSTAGE = 6;
 	
-	public ItemProcessedOre(int color, String name) {
-		this.color = color;
-		this.name = name;
+	protected String[] processors = {"Thaumcraft", "Botania", "Blood Magic", "Ars Magica", "Witchery", "Totemic" };
+	protected Ore ore;
+	
+	public ItemProcessedOre(Ore ore) {
+		this.ore = ore;
 		setMaxStackSize(64);
 		setHasSubtypes(true);
 	}
 
-	public IIcon[] itemIcon = new IIcon[6];
+	@SideOnly(Side.CLIENT)
+	public IIcon[] itemIcon = new IIcon[MAXSTAGE];
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister icon) {
-		for(int i = 0; i<itemIcon.length; i++){
+		for(int i = 0; i < MAXSTAGE; i++){
 			itemIcon[i] = icon.registerIcon(Ref.TEXTURE_PREFIX + "ore" + i);
 		}
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item id, CreativeTabs tab, List list) {
-		for (int i = 0; i < itemIcon.length; i++) {
+		for (int i = 0; i < MAXSTAGE; i++) {
 			ItemStack stack  = new ItemStack(id, 1, i);
 			list.add(stack);
 		}
@@ -60,7 +63,12 @@ public class ItemProcessedOre extends ItemBase {
 
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		return Ref.MOD_PREFIX + name;
+		return Ref.MOD_PREFIX + "pure" + ore.oreName().substring(3);
+	}
+	
+	@Override
+	public String getItemStackDisplayName(ItemStack stack) {
+		return String.format(StatCollector.translateToLocal("item.techno.pure.name") + ore.name());
 	}
 	
 	@Override
@@ -77,6 +85,7 @@ public class ItemProcessedOre extends ItemBase {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
 		if(!(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))) {
 			list.add(EnumChatFormatting.BLUE.toString() + EnumChatFormatting.ITALIC + 
@@ -100,7 +109,8 @@ public class ItemProcessedOre extends ItemBase {
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public int getColorFromItemStack(ItemStack par1ItemStack, int par2) {
-		return color;
+		return ore.color();
 	}
 }
