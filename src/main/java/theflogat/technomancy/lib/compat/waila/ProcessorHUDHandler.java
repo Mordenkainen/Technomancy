@@ -17,7 +17,9 @@ public class ProcessorHUDHandler implements IWailaDataProvider {
 	@Override
 	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,	IWailaConfigHandler config) {
 		final TileProcessorBase tileEntity = (TileProcessorBase) accessor.getTileEntity();
-		currenttip.add("Progress: " + (int)(((TileProcessorBase.maxTime - tileEntity.progress) * 100F)/TileProcessorBase.maxTime) +"%");
+		if (tileEntity.isActive) {
+			currenttip.add("Progress: " + (int)(((TileProcessorBase.maxTime - tileEntity.progress) * 100F)/TileProcessorBase.maxTime) +"%");
+		}
 		
 		return currenttip;
 	}
