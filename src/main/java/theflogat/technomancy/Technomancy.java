@@ -8,7 +8,6 @@ import theflogat.technomancy.lib.CreativeTabTM;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.compat.BloodMagic;
 import theflogat.technomancy.lib.compat.Botania;
-import theflogat.technomancy.lib.compat.CoFH;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.lib.compat.ThermalExpansion;
 import theflogat.technomancy.lib.handlers.CompatibilityHandler;
@@ -62,14 +61,12 @@ public class Technomancy {
          Thaumcraft.init();
          Botania.init();
          ThermalExpansion.init();
-         CoFH.init();
          
          TMItems.initTechnomancy();
          TMBlocks.initTechnomancy();
          
          if(Loc.isClient()){
         	 Botania.client();
-        	 CoFH.client();
         	 Thaumcraft.client();
          }
 
