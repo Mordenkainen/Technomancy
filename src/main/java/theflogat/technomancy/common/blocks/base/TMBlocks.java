@@ -66,7 +66,6 @@ import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaReservo
 import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
-import theflogat.technomancy.lib.compat.CoFH;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class TMBlocks {
@@ -137,7 +136,7 @@ public class TMBlocks {
 		electricBellows = Ids.electricBellows ? new BlockElectricBellows() : null;
 		creativeJar = Ids.creativeJar ? new BlockCreativeJar() : null;
 		reconstructorBlock = Ids.reconstructor ? new BlockReconstructor() : null;
-		condenserBlock = Ids.condenser && CoFH.co ? new BlockCondenser() : null;
+		condenserBlock = Ids.condenser ? new BlockCondenser() : null;
 		processorTC = Ids.processorTC ? new BlockProcessor.BlockTCProcessor() : null;
 		eldritchConsumer = Ids.eldrichConsumer ? new BlockEldritchConsumer() : null;
 		reservoir = Ids.reservoir ? new BlockReservoir() : null;
