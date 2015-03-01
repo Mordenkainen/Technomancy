@@ -4,7 +4,6 @@ import theflogat.technomancy.common.blocks.base.BlockBase;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileCondenser;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
-import theflogat.technomancy.lib.compat.CoFH;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,6 +17,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockCondenser extends BlockBase {
 
+	@SideOnly(Side.CLIENT)
+	IIcon icons[] = new IIcon[4];
+	
 	public BlockCondenser() {
 		setBlockName(Ref.MOD_PREFIX + Names.condenserBlock);
 	}
@@ -36,26 +38,25 @@ public class BlockCondenser extends BlockBase {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister icon) {
-		blockIcon = icon.registerIcon(Ref.getAsset(Names.condenserBlock));
+		icons[0] = icon.registerIcon(Ref.getAsset(Names.condenserBlock + "Front"));
+		icons[1] = icon.registerIcon(Ref.getAsset(Names.condenserBlock + "Side"));
+		icons[2] = icon.registerIcon(Ref.getAsset(Names.condenserBlock + "Top"));
+		icons[3] = icon.registerIcon(Ref.getAsset(Names.condenserBlock + "Bottom"));
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int side, int meta) {
-		try{
-			if(side == 0) {
-				return (IIcon) CoFH.getIcon.invoke(null, "MachineBottom");
-			}
-			if(side == 1) {
-				return (IIcon) CoFH.getIcon.invoke(null, "MachineTop");
-			}
-			if((meta == 0 && side == 3) || (meta == 1 && side == 4) || (meta == 2 && side == 2) || (meta == 3 && side == 5)) {
-				return blockIcon;
-			}
-			return (IIcon) CoFH.getIcon.invoke(null, "MachineSide");
-		}catch(Exception e){e.printStackTrace();}
-		
-		return blockIcon;
+		if(side == 0) {
+			return icons[2];
+		}
+		if(side == 1) {
+			return icons[3];
+		}
+		if((meta == 0 && side == 3) || (meta == 1 && side == 4) || (meta == 2 && side == 2) || (meta == 3 && side == 5)) {
+			return icons[0];
+		}
+		return icons[1];
 	}
 
 	@Override

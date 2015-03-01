@@ -9,6 +9,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.tiles.base.TileProcessorBase;
+import theflogat.technomancy.lib.Conf;
 import theflogat.technomancy.lib.compat.Botania;
 import vazkii.botania.api.mana.IManaPool;
 import vazkii.botania.api.mana.IManaReceiver;
@@ -25,34 +26,35 @@ public class TileBOProcessor extends TileProcessorBase implements IManaReceiver 
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
-		for(int x = -4; x < 5; x++) {
-			for(int z = -4; z < 5; z++) {
-				TileEntity tile = worldObj.getTileEntity(xCoord + x, yCoord, zCoord + z);
-				if(tile instanceof IManaPool) {
-					IManaPool pool = (IManaPool)tile;
-					if(pool.getCurrentMana() >= 5000 && mana <= maxMana - 5000) {
-						pool.recieveMana(-5000);
-						mana += 5000;
-					}else if(pool.getCurrentMana() >= 2000 && mana <= maxMana - 2000) {
-						pool.recieveMana(-2000);
-						mana += 2000;
-					}else if(pool.getCurrentMana() >= 500 && mana <= maxMana - 500) {
-						pool.recieveMana(-500);
-						mana += 500;
-					}
-				}
-			}
-		}	
+		perform();
 	}
 	
 	@Override
 	protected boolean getFuel(ItemStack items, int multiplier, int reprocess) {
 		int cost = multiplier * 150 + 1500 * reprocess;
-		if(!(mana >= cost)){
+		if(cost > mana) {
 			return false;
 		}
 		mana -= cost;
 		return true;
+	}
+	
+	protected void perform() {
+		if (!isFull()) {
+			for(int x = -4; x < 5; x++) {
+				for(int z = -4; z < 5; z++) {
+					TileEntity tile = worldObj.getTileEntity(xCoord + x, yCoord, zCoord + z);
+					if(tile instanceof IManaPool) {
+						IManaPool pool = (IManaPool)tile;
+						int toRecieve = Math.min(pool.getCurrentMana(), Math.min(maxMana - mana, 5000));
+						if (toRecieve > 0) {
+							pool.recieveMana(-toRecieve);
+							mana += toRecieve;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	@Override
@@ -92,7 +94,7 @@ public class TileBOProcessor extends TileProcessorBase implements IManaReceiver 
 		try {
 			Botania.drawHUD.invoke(null, color, mana, maxMana, TMBlocks.processorBO.getLocalizedName(), res);
 		} catch (Exception e) {
-			e.printStackTrace();
+			Conf.ex(e);
 		}
 	}
 
@@ -111,5 +113,4 @@ public class TileBOProcessor extends TileProcessorBase implements IManaReceiver 
 
 	@Override
 	public void closeInventory() {}
-
 }

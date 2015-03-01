@@ -1,6 +1,7 @@
 package theflogat.technomancy.lib;
 
 import theflogat.technomancy.common.items.base.TMItems;
+import theflogat.technomancy.util.Ore;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -25,8 +26,8 @@ public class CreativeTabTM extends CreativeTabs {
     public ItemStack getIconItemStack() {
     	if(TMItems.itemMaterial!=null){
 	    	  return new ItemStack(TMItems.itemMaterial);
-	      }else if(TMItems.processedIron!=null){
-	    	  return new ItemStack(TMItems.processedIron, 1, 5);
+	      }else if(Ore.ores.get(0) != null){
+	    	  return new ItemStack(Ore.ores.get(0).getPure(), 1, 5);
 	      }
 	      return super.getIconItemStack();
     }

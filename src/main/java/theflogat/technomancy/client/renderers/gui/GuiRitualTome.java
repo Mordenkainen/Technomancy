@@ -102,18 +102,29 @@ public class GuiRitualTome extends GuiTomeTemplate{
 					new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.BHT2))),
 					new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.BHT3)))
 				},{
-
+					new Page(Type.TEXT)
 				},{
-
+					new Page(Type.TEXT)
 				}
 
 		};
 		
 		pagesD[0][0].addLines(new String[]{
-				"Tier 1",
-				"Will destroy any blocks and kill every living thing in a 7x7x7 (11 19) area."
+				"Tier 1:",
+				"Will destroy every blocks and kill every living thing in a 7x7x7 area."
 		});
-
+		pagesD[0][1].setImageOffsets(64, 0);
+		pagesD[0][2].addLines(new String[]{
+				"Tier 2:",
+				"Will destroy every blocks and kill every living thing in a 11x11x11 area."
+		});
+		pagesD[0][3].setImageOffsets(64, 0);
+		pagesD[0][4].addLines(new String[]{
+				"Tier 3:",
+				"Will destroy every blocks and kill every living thing in a 19x19x19 area."
+		});
+		pagesD[0][5].setImageOffsets(64, 0);
+		
 		ButtonEntry but[][] = {
 				{
 					new ButtonEntry(30, 12, "Introduction", 0, pages101[0]),
@@ -127,9 +138,9 @@ public class GuiRitualTome extends GuiTomeTemplate{
 				},{
 					
 				},{
-					new ButtonEntry(30, 12, "Water", 1, pagesD[2])
+					new ButtonEntry(30, 12, "Water", 0, pagesD[0])
 				},{
-					new ButtonEntry(30, 12, "Cave In", 2, pagesD[2]),
+					new ButtonEntry(30, 12, "Cave In", 0, pagesD[0]),
 				}
 		};
 

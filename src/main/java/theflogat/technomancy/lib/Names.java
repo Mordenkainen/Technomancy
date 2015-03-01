@@ -11,15 +11,9 @@ public class Names {
 	public static final String wandCores = "wandCores";
 	public static final String itemBM = "itemBM";
 	public static final String itemBO = "itemBO";
-	public static final String pureIron = "pureIron";
-	public static final String pureGold = "pureGold";
-	public static final String pureCopper = "pureCopper";
-	public static final String pureTin = "pureTin";
-	public static final String pureSilver = "pureSilver";
-	public static final String pureLead = "pureLead";
-	public static final String pureNickel = "pureNickel";
 	public static final String itemBoost = "itemBoost";
 	public static final String ritualTome = "ritualTome";
+
     /*
      * Blocks
      */
