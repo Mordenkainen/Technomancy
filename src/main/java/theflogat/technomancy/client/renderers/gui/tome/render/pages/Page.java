@@ -26,6 +26,8 @@ public class Page {
 	PageRender pageRend;
 	int u;
 	int v;
+	int offsetX;
+	int offsetY;
 
 	public Page(Type type){
 		this.type = type;
@@ -46,13 +48,18 @@ public class Page {
 		this.v = v;
 	}
 	
+	public void setImageOffsets(int x, int y) {
+		offsetX = x;
+		offsetY = y;
+	}
+	
 	public void addText(String txt){
 		str = txt;
 	}
 
 	public void addLines(String[] txt){
 		for(String t : txt){
-			str += "|" + t;
+			str += "É " + t;
 		}
 		lines = true;
 	}
@@ -71,7 +78,7 @@ public class Page {
 
 			GL11.glDisable(GL11.GL_LIGHTING);
 			gui.getMinecraft().renderEngine.bindTexture(image);
-			gui.drawTexturedModalRect(left + 5, top, u, v, 256, 256);
+			gui.drawTexturedModalRect(left + 5 + offsetX, top + offsetY, u, v, 256, 256);
 
 			break;
 		case TEXT:
@@ -80,7 +87,7 @@ public class Page {
 			int actualLine = 0;
 			int actualInd = 0;
 			if(lines){
-				String[] sent = str.split("|");
+				String[] sent = str.split("É ");
 				for(String str : sent){
 					String[] words = str.split(" ");
 					for(String s : words){
