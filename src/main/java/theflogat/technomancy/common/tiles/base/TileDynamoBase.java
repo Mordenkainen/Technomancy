@@ -14,7 +14,7 @@ import cofh.api.energy.IEnergyHandler;
 
 public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyHandler, IUpgradable {
 	public static final int maxEnergy = 40000;
-	public static final int maxExtract = 160;
+	public static final int maxExtract = 320;
 
 	public RedstoneSet set = RedstoneSet.HIGH;
 	public int ener = 0;
