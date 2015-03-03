@@ -18,7 +18,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockCondenser extends BlockBase {
 
 	@SideOnly(Side.CLIENT)
-	IIcon icons[] = new IIcon[4];
+	IIcon[] icons;
 	
 	public BlockCondenser() {
 		setBlockName(Ref.MOD_PREFIX + Names.condenserBlock);
@@ -38,6 +38,7 @@ public class BlockCondenser extends BlockBase {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister icon) {
+		icons = new IIcon[4];
 		icons[0] = icon.registerIcon(Ref.getAsset(Names.condenserBlock + "Front"));
 		icons[1] = icon.registerIcon(Ref.getAsset(Names.condenserBlock + "Side"));
 		icons[2] = icon.registerIcon(Ref.getAsset(Names.condenserBlock + "Top"));
