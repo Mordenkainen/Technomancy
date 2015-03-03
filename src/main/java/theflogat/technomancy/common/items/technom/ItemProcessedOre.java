@@ -35,11 +35,12 @@ public class ItemProcessedOre extends ItemBase {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public IIcon[] itemIcon = new IIcon[MAXSTAGE];
+	public IIcon[] itemIcon;
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister icon) {
+		itemIcon = new IIcon[MAXSTAGE];
 		for(int i = 0; i < MAXSTAGE; i++){
 			itemIcon[i] = icon.registerIcon(Ref.TEXTURE_PREFIX + "ore" + i);
 		}
