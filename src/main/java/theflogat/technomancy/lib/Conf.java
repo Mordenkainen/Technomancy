@@ -10,4 +10,6 @@ public class Conf {
 		if(debug)
 			e.printStackTrace();
 	}
+	
+	
 }

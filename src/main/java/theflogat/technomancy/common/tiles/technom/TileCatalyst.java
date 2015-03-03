@@ -3,6 +3,7 @@ package theflogat.technomancy.common.tiles.technom;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import theflogat.technomancy.api.renderers.ModelCatalystSpecial;
+import theflogat.technomancy.api.rituals.IRitualEffectHandler;
 import theflogat.technomancy.api.rituals.Ritual;
 import theflogat.technomancy.api.rituals.RitualRegistry;
 import theflogat.technomancy.common.tiles.base.TileTechnomancy;
@@ -12,12 +13,15 @@ public class TileCatalyst extends TileTechnomancy {
 	public int remCount = -1;
 	public ModelCatalystSpecial specialRender = null;
 	public ResourceLocation textLoc = null;
+	public IRitualEffectHandler handler = null;
 	
 	@Override
 	public void updateEntity() {
-		if(worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
+		if(worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord))
 			activateRitual();
-		}
+		
+		if(handler!=null)
+			handler.applyEffect(this);
 		
 		if(remCount!=-1){
 			if(remCount==0){

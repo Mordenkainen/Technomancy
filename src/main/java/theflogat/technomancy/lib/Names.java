@@ -39,8 +39,9 @@ public class Names {
 	public static final String processor = "processor";
 	public static final String eldritchConsumer = "eldritchConsumer";
 	public static final String catalyst = "catalyst";
-	public static final String fakeAir = "fakeAir";
+	public static final String fakeAirNG = "fakeAir";
 	public static final String reservoir = "reservoir";
+	public static final String fakeAirLight = "fakeAirLight";
 	
 
 }

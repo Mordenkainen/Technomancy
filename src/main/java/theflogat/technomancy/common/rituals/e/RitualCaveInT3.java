@@ -1,4 +1,4 @@
-package theflogat.technomancy.common.rituals;
+package theflogat.technomancy.common.rituals.e;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;

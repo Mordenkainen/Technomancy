@@ -1,10 +1,9 @@
-package theflogat.technomancy.common.rituals;
+package theflogat.technomancy.common.rituals.b;
 
 import java.util.ArrayList;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -47,7 +46,7 @@ public class RitualBlackHoleT2 extends Ritual{
 			}
 		}
 
-		ArrayList<Entity> e = (ArrayList<Entity>) w.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(x-2, y-2, z-2, x+2, y+2, z+2));
+		ArrayList<Entity> e = (ArrayList<Entity>) w.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(x-2, y-2, z-2, x+2, y+2, z+2));
 
 		for(Entity ent : e){
 			if(ent.isEntityInvulnerable()){
