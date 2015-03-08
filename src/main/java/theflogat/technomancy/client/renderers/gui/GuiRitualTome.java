@@ -111,19 +111,46 @@ public class GuiRitualTome extends GuiTomeTemplate{
 		
 		pagesD[0][0].addLines(new String[]{
 				"Tier 1:",
-				"Will destroy every blocks and kill every living thing in a 7x7x7 area."
+				"Will destroy every blocks and kill every living thing in a 7x7x7 area.",
+				"Ritual is consumed."
 		});
 		pagesD[0][1].setImageOffsets(64, 0);
 		pagesD[0][2].addLines(new String[]{
 				"Tier 2:",
-				"Will destroy every blocks and kill every living thing in a 11x11x11 area."
+				"Will destroy every blocks and kill every living thing in a 11x11x11 area.",
+				"Ritual is consumed."
 		});
 		pagesD[0][3].setImageOffsets(64, 0);
 		pagesD[0][4].addLines(new String[]{
 				"Tier 3:",
-				"Will destroy every blocks and kill every living thing in a 19x19x19 area."
+				"Will destroy every blocks and kill every living thing in a 19x19x19 area.",
+				"Ritual is consumed."
 		});
 		pagesD[0][5].setImageOffsets(64, 0);
+		
+		Page[][] pagesL = {
+				{
+					new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.BHT1))),
+					new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.BHT1))),
+					new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.BHT1))),
+				}		
+		};
+		pagesL[0][0].addLines(new String[]{
+				"Tier 1:",
+				"Will kill every monster above the catalyst in a 1x1x3."
+		});
+		pagesL[0][1].setImageOffsets(64, 0);
+		pagesL[0][2].addLines(new String[]{
+				"Tier 2:",
+				"Will kill every monster above the catalyst in a 3x3x11 area."
+		});
+		pagesD[0][3].setImageOffsets(64, 0);
+		pagesL[0][4].addLines(new String[]{
+				"Tier 3:",
+				"Will kill every monster above the catalyst in a 7x7 area.",
+				"Range: World Max Height"
+		});
+		pagesL[0][5].setImageOffsets(64, 0);
 		
 		ButtonEntry but[][] = {
 				{
@@ -134,7 +161,7 @@ public class GuiRitualTome extends GuiTomeTemplate{
 				{
 					new ButtonEntry(30, 12, "Black Hole", 0, pagesD[0]),
 				},{
-					
+					new ButtonEntry(30, 12, "Purification", 0, pagesL[0]),
 				},{
 					
 				},{

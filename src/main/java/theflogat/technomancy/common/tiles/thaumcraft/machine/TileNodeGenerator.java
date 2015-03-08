@@ -20,8 +20,8 @@ import thaumcraft.api.nodes.NodeType;
 import thaumcraft.api.wands.IWandable;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.tiles.IUpgradable;
+import theflogat.technomancy.common.tiles.air.TileFakeAirNG;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
-import theflogat.technomancy.common.tiles.technom.TileFakeAir;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.util.MathHelper;
 import theflogat.technomancy.util.RedstoneSet;
@@ -65,8 +65,8 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 			for(int i=0; i<=2; i++){
 				if(i!=0){
 					if(WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord+i, zCoord)){
-						worldObj.setBlock(xCoord, yCoord+i, zCoord, TMBlocks.fakeAir);
-						((TileFakeAir)worldObj.getTileEntity(xCoord, yCoord+i, zCoord)).addMain(xCoord, yCoord, zCoord);
+						worldObj.setBlock(xCoord, yCoord+i, zCoord, TMBlocks.fakeAirNG);
+						((TileFakeAirNG)worldObj.getTileEntity(xCoord, yCoord+i, zCoord)).addMain(xCoord, yCoord, zCoord);
 					}else{
 						WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord, zCoord);
 						return;
@@ -74,15 +74,15 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 				}
 				if(facing==2 || facing==3){
 					if(WorldHelper.destroyAndDrop(worldObj, xCoord-1, yCoord+i, zCoord)){
-						worldObj.setBlock(xCoord-1, yCoord+i, zCoord, TMBlocks.fakeAir);
-						((TileFakeAir)worldObj.getTileEntity(xCoord-1, yCoord+i, zCoord)).addMain(xCoord, yCoord, zCoord);
+						worldObj.setBlock(xCoord-1, yCoord+i, zCoord, TMBlocks.fakeAirNG);
+						((TileFakeAirNG)worldObj.getTileEntity(xCoord-1, yCoord+i, zCoord)).addMain(xCoord, yCoord, zCoord);
 					}else{
 						WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord, zCoord);
 						return;
 					}
 					if(WorldHelper.destroyAndDrop(worldObj, xCoord+1, yCoord+i, zCoord)){
-						worldObj.setBlock(xCoord+1, yCoord+i, zCoord, TMBlocks.fakeAir);
-						((TileFakeAir)worldObj.getTileEntity(xCoord+1, yCoord+i, zCoord)).addMain(xCoord, yCoord, zCoord);
+						worldObj.setBlock(xCoord+1, yCoord+i, zCoord, TMBlocks.fakeAirNG);
+						((TileFakeAirNG)worldObj.getTileEntity(xCoord+1, yCoord+i, zCoord)).addMain(xCoord, yCoord, zCoord);
 					}else{
 						WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord, zCoord);
 						return;
@@ -90,15 +90,15 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 				}
 				if(facing==5 || facing==4){
 					if(WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord+i, zCoord-1)){
-						worldObj.setBlock(xCoord, yCoord+i, zCoord-1, TMBlocks.fakeAir);
-						((TileFakeAir)worldObj.getTileEntity(xCoord, yCoord+i, zCoord-1)).addMain(xCoord, yCoord, zCoord);
+						worldObj.setBlock(xCoord, yCoord+i, zCoord-1, TMBlocks.fakeAirNG);
+						((TileFakeAirNG)worldObj.getTileEntity(xCoord, yCoord+i, zCoord-1)).addMain(xCoord, yCoord, zCoord);
 					}else{
 						WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord, zCoord);
 						return;
 					}
 					if(WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord+i, zCoord+1)){
-						worldObj.setBlock(xCoord, yCoord+i, zCoord+1, TMBlocks.fakeAir);
-						((TileFakeAir)worldObj.getTileEntity(xCoord, yCoord+i, zCoord+1)).addMain(xCoord, yCoord, zCoord);
+						worldObj.setBlock(xCoord, yCoord+i, zCoord+1, TMBlocks.fakeAirNG);
+						((TileFakeAirNG)worldObj.getTileEntity(xCoord, yCoord+i, zCoord+1)).addMain(xCoord, yCoord, zCoord);
 					}else{
 						WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord, zCoord);
 						return;
@@ -230,7 +230,7 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 		for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
 			if (dir != ForgeDirection.getOrientation(facing) && dir != ForgeDirection.DOWN) {
 				TileEntity te = Thaumcraft.getConnectableTile(worldObj, xCoord, yCoord, zCoord, dir);
-				if (te != null) {
+				if (te != null && !(te instanceof TileFakeAirNG)) {
 					IEssentiaTransport ic = (IEssentiaTransport)te;
 					Aspect ta = ic.getEssentiaType(dir.getOpposite());
 					if (ic.getEssentiaAmount(dir.getOpposite()) > 0 && ic.getSuctionAmount(dir.getOpposite()) < getSuctionAmount(null) &&

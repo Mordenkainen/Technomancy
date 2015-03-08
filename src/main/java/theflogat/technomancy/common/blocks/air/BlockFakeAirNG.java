@@ -1,6 +1,6 @@
-package theflogat.technomancy.common.blocks.technom;
+package theflogat.technomancy.common.blocks.air;
 
-import theflogat.technomancy.common.tiles.technom.TileFakeAir;
+import theflogat.technomancy.common.tiles.air.TileFakeAirNG;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import net.minecraft.block.Block;
@@ -11,17 +11,17 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockFakeAir extends BlockContainer{
+public class BlockFakeAirNG extends BlockContainer{
 
-	public BlockFakeAir() {
+	public BlockFakeAirNG() {
 		super(Material.carpet);
 		setBlockUnbreakable();
-		setBlockName(Ref.getId(Names.fakeAir));
+		setBlockName(Ref.getId(Names.fakeAirNG));
 	}
 	
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
-		blockIcon = reg.registerIcon(Ref.getAsset(Names.fakeAir));
+		blockIcon = reg.registerIcon(Ref.getAsset(Names.fakeAirNG));
 	}
 	
 	@Override
@@ -31,7 +31,7 @@ public class BlockFakeAir extends BlockContainer{
 
 	@Override
 	public TileEntity createNewTileEntity(World w, int meta) {
-		return new TileFakeAir();
+		return new TileFakeAirNG();
 	}
 
 }

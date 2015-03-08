@@ -1,4 +1,4 @@
-package theflogat.technomancy.common.rituals;
+package theflogat.technomancy.common.rituals.w;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -19,8 +19,12 @@ public class RitualWaterT3 extends Ritual{
 	}
 
 	@Override
-	public boolean applyEffect(World w, int x, int y, int z) {
+	public boolean canApplyEffect(World w, int x, int y, int z) {
+		return true;
+	}
 
+	@Override
+	public void applyEffect(World w, int x, int y, int z){
 		w.setBlockToAir(x, y, z);
 		RitualHelper.removeT1(w, x, y, z);
 		RitualHelper.removeT2(w, x, y, z);
@@ -36,12 +40,5 @@ public class RitualWaterT3 extends Ritual{
 				}
 			}
 		}
-		return true;
 	}
-
-	@Override
-	public void afterEffect(World w, int x, int y, int z) {
-
-	}
-
 }

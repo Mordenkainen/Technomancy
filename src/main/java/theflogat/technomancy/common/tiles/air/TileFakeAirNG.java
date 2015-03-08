@@ -1,4 +1,4 @@
-package theflogat.technomancy.common.tiles.technom;
+package theflogat.technomancy.common.tiles.air;
 
 import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyStorage;
@@ -19,12 +19,9 @@ import theflogat.technomancy.common.tiles.base.TileTechnomancy;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.util.Coords;
+import theflogat.technomancy.util.Loc;
 
-public class TileFakeAir extends TileTechnomancy implements IEnergyHandler, IEnergyStorage, IEssentiaTransport, IAspectContainer, IWandable, IUpgradable {
-	
-	private int x;
-	private int y;
-	private int z;
+public class TileFakeAirNG extends TileFakeAirCore implements IEnergyHandler, IEssentiaTransport, IAspectContainer, IWandable, IUpgradable {
 	
 	@Override
 	public void updateEntity() {
@@ -40,7 +37,7 @@ public class TileFakeAir extends TileTechnomancy implements IEnergyHandler, IEne
 		for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
 			if (dir != ForgeDirection.getOrientation(tile.facing) && dir != ForgeDirection.DOWN) {
 				TileEntity te = Thaumcraft.getConnectableTile(worldObj, xCoord, yCoord, zCoord, dir);
-				if (te != null) {
+				if (te != null && !(te instanceof TileNodeGenerator) && !(te instanceof TileFakeAirNG)) {
 					IEssentiaTransport ic = (IEssentiaTransport)te;
 					Aspect ta = ic.getEssentiaType(dir.getOpposite());
 					if (ic.getEssentiaAmount(dir.getOpposite()) > 0 && ic.getSuctionAmount(dir.getOpposite()) < getSuctionAmount(null) &&
@@ -63,42 +60,8 @@ public class TileFakeAir extends TileTechnomancy implements IEnergyHandler, IEne
 	}
 
 	@Override
-	public void readCustomNBT(NBTTagCompound comp) {
-		x = comp.getInteger("mainx");
-		y = comp.getInteger("mainy");
-		z = comp.getInteger("mainz");
-	}
-
-	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {
-		comp.setInteger("mainx", x);
-		comp.setInteger("mainy", y);
-		comp.setInteger("mainz", z);
-	}
-
-	@Override
 	public boolean canConnectEnergy(ForgeDirection from) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).canConnectEnergy(from);
-	}
-
-	@Override
-	public int receiveEnergy(int maxReceive, boolean simulate) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).receiveEnergy(maxReceive, simulate);
-	}
-
-	@Override
-	public int extractEnergy(int maxExtract, boolean simulate) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).extractEnergy(maxExtract, simulate);
-	}
-
-	@Override
-	public int getEnergyStored() {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).getEnergyStored();
-	}
-
-	@Override
-	public int getMaxEnergyStored() {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).getMaxEnergyStored();
+		return true;
 	}
 
 	@Override

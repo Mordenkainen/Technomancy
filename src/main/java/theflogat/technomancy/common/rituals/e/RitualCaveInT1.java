@@ -1,4 +1,4 @@
-package theflogat.technomancy.common.rituals;
+package theflogat.technomancy.common.rituals.e;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
@@ -24,7 +24,7 @@ public class RitualCaveInT1 extends Ritual{
 	}
 
 	@Override
-	public boolean applyEffect(World w, int x, int y, int z) {
+	public boolean canApplyEffect(World w, int x, int y, int z) {
 		for(int yy = 0; yy<y; yy++){
 			for(int xx=-1; xx<=1; xx++){
 				for(int zz=-1; zz<=1; zz++){
@@ -39,6 +39,12 @@ public class RitualCaveInT1 extends Ritual{
 				}
 			}
 		}
+		return true;
+	}
+
+	@Override
+	public void applyEffect(World w, int x, int y, int z) {
+
 		
 		w.setBlockToAir(x, y, z);
 		RitualHelper.removeT1(w, x, y, z);
@@ -96,12 +102,5 @@ public class RitualCaveInT1 extends Ritual{
 				}
 			}
 		}
-		return true;
 	}
-
-	@Override
-	public void afterEffect(World w, int x, int y, int z) {
-		
-	}
-
 }

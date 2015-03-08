@@ -20,7 +20,7 @@ public abstract class Ritual {
 	
 	public abstract boolean isFrameComplete(World w, int x, int y, int z);
 
-	public abstract boolean applyEffect(World w, int x, int y, int z);
+	public abstract boolean canApplyEffect(World w, int x, int y, int z);
 
-	public abstract void afterEffect(World w, int x, int y, int z);
+	public abstract void applyEffect(World w, int x, int y, int z);
 }

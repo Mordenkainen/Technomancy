@@ -2,6 +2,7 @@ package theflogat.technomancy.lib.compat.waila;
 
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
 import theflogat.technomancy.common.tiles.base.TileProcessorBase;
+import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBiomeMorpher;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBloodFabricator;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEldritchConsumer;
@@ -28,6 +29,8 @@ public class WailaProvider {
 		registrar.registerBodyProvider(new BloodFabricatorHUDHandler(), TileBloodFabricator.class);
 		
 		registrar.registerBodyProvider(new FluxLampHUDHandler(), TileFluxLamp.class);
+		
+		registrar.registerBodyProvider(new CatalystHUDHandler(), TileCatalyst.class);
 		
 		IWailaDataProvider processor = new ProcessorHUDHandler();
 		registrar.registerBodyProvider(processor, TileProcessorBase.class);

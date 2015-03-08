@@ -22,6 +22,7 @@ import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
+import theflogat.technomancy.common.tiles.air.TileFakeAirNG;
 import theflogat.technomancy.lib.Conf;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
@@ -332,7 +333,7 @@ public class Thaumcraft {
 
 	public static TileEntity getConnectableTile(World world, int x, int y, int z, ForgeDirection face){
 		TileEntity te = world.getTileEntity(x + face.offsetX, y + face.offsetY, z + face.offsetZ);
-		if (((te instanceof IEssentiaTransport)) && (((IEssentiaTransport)te).isConnectable(face.getOpposite()))) {
+		if (!(te instanceof TileFakeAirNG) && ((te instanceof IEssentiaTransport)) && (((IEssentiaTransport)te).isConnectable(face.getOpposite()))) {
 			return te;
 		}
 		return null;
