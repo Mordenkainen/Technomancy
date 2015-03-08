@@ -230,7 +230,7 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 		for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
 			if (dir != ForgeDirection.getOrientation(facing) && dir != ForgeDirection.DOWN) {
 				TileEntity te = Thaumcraft.getConnectableTile(worldObj, xCoord, yCoord, zCoord, dir);
-				if (te != null) {
+				if (te != null && !(te instanceof TileFakeAirNG)) {
 					IEssentiaTransport ic = (IEssentiaTransport)te;
 					Aspect ta = ic.getEssentiaType(dir.getOpposite());
 					if (ic.getEssentiaAmount(dir.getOpposite()) > 0 && ic.getSuctionAmount(dir.getOpposite()) < getSuctionAmount(null) &&

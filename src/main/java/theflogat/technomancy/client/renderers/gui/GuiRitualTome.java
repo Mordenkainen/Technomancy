@@ -130,24 +130,27 @@ public class GuiRitualTome extends GuiTomeTemplate{
 		
 		Page[][] pagesL = {
 				{
-					new Page(Type.TEXT),
-					new Page(Type.TEXT),
-					new Page(Type.TEXT),
+					new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.BHT1))),
+					new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.BHT1))),
+					new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.BHT1))),
 				}		
 		};
 		pagesL[0][0].addLines(new String[]{
 				"Tier 1:",
 				"Will kill every monster above the catalyst in a 1x1x3."
 		});
-		pagesL[0][1].addLines(new String[]{
+		pagesL[0][1].setImageOffsets(64, 0);
+		pagesL[0][2].addLines(new String[]{
 				"Tier 2:",
 				"Will kill every monster above the catalyst in a 3x3x11 area."
 		});
-		pagesL[0][2].addLines(new String[]{
+		pagesD[0][3].setImageOffsets(64, 0);
+		pagesL[0][4].addLines(new String[]{
 				"Tier 3:",
 				"Will kill every monster above the catalyst in a 7x7 area.",
 				"Range: World Max Height"
 		});
+		pagesL[0][5].setImageOffsets(64, 0);
 		
 		ButtonEntry but[][] = {
 				{

@@ -29,6 +29,11 @@ public class BlockCatalyst extends BlockContainer{
 	}
 	
 	@Override
+	public float getBlockHardness(World w, int x, int y, int z) {
+		return ((TileCatalyst)w.getTileEntity(x, y, z)).remCount!=-1 ? -1 : blockHardness;
+	}
+	
+	@Override
 	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		if(player.isSneaking()){
 			((TileCatalyst)w.getTileEntity(x, y, z)).activateRitual();

@@ -19,7 +19,12 @@ public class RitualWaterT1 extends Ritual{
 	}
 
 	@Override
-	public boolean applyEffect(World w, int x, int y, int z) {
+	public boolean canApplyEffect(World w, int x, int y, int z) {
+		return true;
+	}
+
+	@Override
+	public void applyEffect(World w, int x, int y, int z) {
 		for(int i=-1; i<2; i++){
 			for(int j=-1; j<2; i++){
 				if(w.getBlock(x+i, y-1, z+j).isAir(w, x+i, y-1, z+j)||w.getBlock(x+i, y-1, z+j)
@@ -28,11 +33,6 @@ public class RitualWaterT1 extends Ritual{
 				}
 			}
 		}
-		return true;
-	}
-
-	@Override
-	public void afterEffect(World w, int x, int y, int z) {
 		
 	}
 

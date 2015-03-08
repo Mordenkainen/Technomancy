@@ -21,16 +21,16 @@ public class RitualPurificationT3 extends Ritual implements IRitualEffectHandler
 
 	@Override
 	public boolean isFrameComplete(World w, int x, int y, int z) {
-		return RitualHelper.checkForT1(w, x, y, z, white) && RitualHelper.checkForT2(w, x, y, z, white);
+		return RitualHelper.checkForT1(w, x, y, z, white) && RitualHelper.checkForT2(w, x, y, z, white) && RitualHelper.checkForT3(w, x, y, z, white);
 	}
 
 	@Override
-	public boolean applyEffect(World w, int x, int y, int z) {
+	public boolean canApplyEffect(World w, int x, int y, int z) {
 		return true;
 	}
 
 	@Override
-	public void afterEffect(World w, int x, int y, int z) {
+	public void applyEffect(World w, int x, int y, int z) {
 		((TileCatalyst)w.getTileEntity(x, y, z)).handler = this;
 		
 	}

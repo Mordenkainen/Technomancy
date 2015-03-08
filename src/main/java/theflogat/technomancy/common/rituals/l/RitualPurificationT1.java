@@ -25,12 +25,12 @@ public class RitualPurificationT1 extends Ritual implements IRitualEffectHandler
 	}
 
 	@Override
-	public boolean applyEffect(World w, int x, int y, int z) {
+	public boolean canApplyEffect(World w, int x, int y, int z) {
 		return true;
 	}
 
 	@Override
-	public void afterEffect(World w, int x, int y, int z) {
+	public void applyEffect(World w, int x, int y, int z) {
 		((TileCatalyst)w.getTileEntity(x, y, z)).handler = this;
 		
 	}

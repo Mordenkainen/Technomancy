@@ -24,7 +24,7 @@ public class RitualCaveInT3 extends Ritual{
 	}
 
 	@Override
-	public boolean applyEffect(World w, int x, int y, int z) {
+	public boolean canApplyEffect(World w, int x, int y, int z) {
 		for(int yy = 0; yy<y; yy++){
 			for(int xx=-5; xx<=5; xx++){
 				for(int zz=-5; zz<=5; zz++){
@@ -39,6 +39,11 @@ public class RitualCaveInT3 extends Ritual{
 				}
 			}
 		}
+		return true;
+	}
+
+	@Override
+	public void applyEffect(World w, int x, int y, int z) {
 		
 		w.setBlockToAir(x, y, z);
 		RitualHelper.removeT1(w, x, y, z);
@@ -98,11 +103,6 @@ public class RitualCaveInT3 extends Ritual{
 				}
 			}
 		}
-		return true;
-	}
-
-	@Override
-	public void afterEffect(World w, int x, int y, int z) {
 		
 	}
 

@@ -13,9 +13,9 @@ import theflogat.technomancy.util.Coords;
 
 public class TileFakeAirCore extends TileTechnomancy{
 
-	protected int x;
-	protected int y;
-	protected int z;
+	protected int x = 0;
+	protected int y = 0;
+	protected int z = 0;
 	protected Class core;
 
 	@Override
@@ -44,7 +44,7 @@ public class TileFakeAirCore extends TileTechnomancy{
 		try {
 			core = Class.forName(comp.getString("core"));
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			core = null;
 		}
 	}
 
@@ -53,6 +53,7 @@ public class TileFakeAirCore extends TileTechnomancy{
 		comp.setInteger("mainx", x);
 		comp.setInteger("mainy", y);
 		comp.setInteger("mainz", z);
-		comp.setString("core", core.getName());
+		if(core!=null)
+			comp.setString("core", core.getName());
 	}
 }

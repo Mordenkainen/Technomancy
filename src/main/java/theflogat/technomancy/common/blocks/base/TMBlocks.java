@@ -38,6 +38,9 @@ import theflogat.technomancy.common.rituals.b.RitualBlackHoleT3;
 import theflogat.technomancy.common.rituals.e.RitualCaveInT1;
 import theflogat.technomancy.common.rituals.e.RitualCaveInT2;
 import theflogat.technomancy.common.rituals.e.RitualCaveInT3;
+import theflogat.technomancy.common.rituals.f.RitualOfFireT1;
+import theflogat.technomancy.common.rituals.f.RitualOfFireT2;
+import theflogat.technomancy.common.rituals.f.RitualOfFireT3;
 import theflogat.technomancy.common.rituals.l.RitualPurificationT1;
 import theflogat.technomancy.common.rituals.l.RitualPurificationT2;
 import theflogat.technomancy.common.rituals.l.RitualPurificationT3;
@@ -131,16 +134,19 @@ public class TMBlocks {
 		RitualRegistry.add(new RitualBlackHoleT3());
 		RitualRegistry.add(new RitualWaterT3());
 		RitualRegistry.add(new RitualPurificationT3());
+		RitualRegistry.add(new RitualOfFireT3());
 		//Medium
 		RitualRegistry.add(new RitualCaveInT2());
 		RitualRegistry.add(new RitualBlackHoleT2());
 		RitualRegistry.add(new RitualWaterT2());
 		RitualRegistry.add(new RitualPurificationT2());
+		RitualRegistry.add(new RitualOfFireT2());
 		//Easy
 		RitualRegistry.add(new RitualCaveInT1());
 		RitualRegistry.add(new RitualBlackHoleT1());
 		RitualRegistry.add(new RitualWaterT1());;
 		RitualRegistry.add(new RitualPurificationT1());
+		RitualRegistry.add(new RitualOfFireT1());
 	}
 	
 	public static void initThaumcraft() {

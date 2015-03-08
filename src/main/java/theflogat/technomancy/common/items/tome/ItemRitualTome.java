@@ -37,6 +37,10 @@ public class ItemRitualTome extends Item{
 		public static final String CIT1 = "caveInT1"+E;
 		public static final String CIT2 = "caveInT2"+E;
 		public static final String CIT3 = "caveInT3"+E;
+		
+		public static final String PUT1 = "purificationT1"+E;
+		public static final String PUT2 = "purificationT2"+E;
+		public static final String PUT3 = "purificationT3"+E;
 	}
 	
 }
