@@ -26,13 +26,6 @@ public class CompatibilityHandler {
 		} else {
 			Technomancy.logger.info("Thermal Expansion not detected. Compatibility module will not be loaded.");
 		}
-//			if(Loader.isModLoaded("Botania")) {
-//				ConfigHandler.botania = true;
-//				System.out.println("Hippy scientists encountered");
-//			}
-//			if(Loader.isModLoaded("Thaumcraft")) {
-//				ConfigHandler.thaumcraft = true;
-//			}
 	}
 
 	public static void smeltify() {
