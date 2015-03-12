@@ -1,29 +1,38 @@
 package theflogat.technomancy.lib.handlers;
 
+import cpw.mods.fml.common.Loader;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import thaumcraft.api.ThaumcraftApi;
+import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.lib.Conf;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 
 public class CompatibilityHandler {
+	public static boolean te = false;
+	public static boolean bm = false;
 
-
-	public static void checkThisShit() {
-		//		if(ConfigHandler.compatiblity) {
-		//			if(Loader.isModLoaded("AWWayofTime")) {
-		//				ConfigHandler.bloodmagic = true;
-		//				System.out.println("Nazi super science activated");
-		//			}
-		//			if(Loader.isModLoaded("Botania")) {
-		//				ConfigHandler.botania = true;
-		//				System.out.println("Hippy scientists encountered");
-		//			}
-		//			if(Loader.isModLoaded("Thaumcraft")) {
-		//				ConfigHandler.thaumcraft = true;
-		//			}
-		//			ConfigHandler.compatiblity = false;
-		//		}
+	public static void init() {
+		if(Loader.isModLoaded("AWWayofTime")) {
+			bm = true;
+			Technomancy.logger.info("Blood Magic detected. Compatibility module will be loaded.");
+		} else {
+			Technomancy.logger.info("Blood Magic not detected. Compatibility module will not be loaded.");
+		}
+		
+		if(Loader.isModLoaded("ThermalExpansion")) {
+			te = true;
+			Technomancy.logger.info("Thermal Expansion detected. Compatibility module will be loaded.");
+		} else {
+			Technomancy.logger.info("Thermal Expansion not detected. Compatibility module will not be loaded.");
+		}
+//			if(Loader.isModLoaded("Botania")) {
+//				ConfigHandler.botania = true;
+//				System.out.println("Hippy scientists encountered");
+//			}
+//			if(Loader.isModLoaded("Thaumcraft")) {
+//				ConfigHandler.thaumcraft = true;
+//			}
 	}
 
 	public static void smeltify() {
