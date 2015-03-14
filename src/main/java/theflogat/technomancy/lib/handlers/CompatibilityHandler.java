@@ -11,8 +11,16 @@ import theflogat.technomancy.lib.compat.Thaumcraft;
 public class CompatibilityHandler {
 	public static boolean te = false;
 	public static boolean bm = false;
+	public static boolean bo = false;
 
 	public static void init() {
+		if(Loader.isModLoaded("Botania")) {
+			bo = true;
+			Technomancy.logger.info("Botania detected. Compatibility module will be loaded.");
+		} else {
+			Technomancy.logger.info("Botania not detected. Compatibility module will not be loaded.");
+		}
+		
 		if(Loader.isModLoaded("AWWayofTime")) {
 			bm = true;
 			Technomancy.logger.info("Blood Magic detected. Compatibility module will be loaded.");

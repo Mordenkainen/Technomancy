@@ -9,8 +9,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.tiles.base.TileProcessorBase;
-import theflogat.technomancy.lib.Conf;
-import theflogat.technomancy.lib.compat.Botania;
+import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.mana.IManaPool;
 import vazkii.botania.api.mana.IManaReceiver;
 
@@ -91,11 +90,7 @@ public class TileBOProcessor extends TileProcessorBase implements IManaReceiver 
 
 	public void renderHUD(Minecraft mc, ScaledResolution res) {
 		int color = Color.CYAN.getRGB();
-		try {
-			Botania.drawHUD.invoke(null, color, mana, maxMana, TMBlocks.processorBO.getLocalizedName(), res);
-		} catch (Exception e) {
-			Conf.ex(e);
-		}
+		BotaniaAPI.internalHandler.drawSimpleManaHUD(color, mana, maxMana, TMBlocks.processorBO.getLocalizedName(), res);
 	}
 
 	@Override

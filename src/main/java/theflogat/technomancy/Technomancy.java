@@ -68,7 +68,6 @@ public class Technomancy {
     		BloodMagic.init();
     	}
          Thaumcraft.init();
-         Botania.init();
         
         if (CompatibilityHandler.te) {
         	ThermalExpansion.init();
@@ -78,7 +77,6 @@ public class Technomancy {
          TMBlocks.initTechnomancy();
          
          if(Loc.isClient()){
-        	 Botania.client();
         	 Thaumcraft.client();
          }
 
@@ -92,7 +90,7 @@ public class Technomancy {
          	TMItems.initBloodMagic();
         }
         
-         if(Botania.bo) {
+         if(CompatibilityHandler.bo) {
          	TMBlocks.initBotania();
          	TMItems.initBotania();
          }
@@ -117,8 +115,8 @@ public class Technomancy {
         	BloodMagic.initBloodMagicRecipes();
         }
         
-        if(Botania.bo) {
-        	CraftingHandler.initBotaniaRecipes();
+        if(CompatibilityHandler.bo) {
+        	Botania.initBotaniaRecipes();
         }
         if(Thaumcraft.th) {
         	CraftingHandler.initThaumcraftRecipes();

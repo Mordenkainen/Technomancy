@@ -358,68 +358,6 @@ public class CraftingHandler {
 		}catch(Exception e){e.printStackTrace();}
 	}
 
-	public static void initBotaniaRecipes() {
-		try{
-			if(CompatibilityHandler.te){
-				//ManaInfusion
-				BotaniaAPI.registerManaInfusionRecipe(new ItemStack(TMItems.itemBO, 1, 0), ThermalExpansion.powerCoilSilver, 3000);		
-
-				//Normal Recipes
-				oreDictRecipe(new ItemStack(TMItems.itemBO, 1, 1),
-						new Object[] {" M ", "MIM", " M ",
-					'M', "ingotManasteel",
-					'I', "ingotIron"		});
-				oreDictRecipe(new ItemStack(TMBlocks.flowerDynamo), 
-						new Object[] {" C ", "GIG", "IWI",
-					'W', new ItemStack(Items.redstone),
-					'C', new ItemStack(TMItems.itemBO, 1, 0),
-					'G', new ItemStack(TMItems.itemBO, 1, 1),
-					'I', "ingotManasteel"				});
-				oreDictRecipe(new ItemStack(TMBlocks.manaFabricator), 
-						new Object[] {"CDC", "IDI", " P ",
-					'C', new ItemStack(TMItems.itemBO, 1, 1),
-					'I', "ingotManasteel",
-					'D', "manaDiamond",
-					'P', ThermalExpansion.frameTesseractFull			});
-				oreDictRecipe(new ItemStack(TMBlocks.processorBO),
-						new Object[] {" A ", "BMB", "ICI",
-					'M', ThermalExpansion.frameMachineBasic,
-					'I', "ingotManasteel",
-					'C', new ItemStack(TMItems.itemBO, 1, 0),
-					'B', "livingrock",
-					'A', new ItemStack(Items.redstone)				});
-			}else{
-				//ManaInfusion
-				BotaniaAPI.registerManaInfusionRecipe(new ItemStack(TMItems.itemBO, 1, 0), new ItemStack(Items.redstone), 3000);		
-
-				//Normal Recipes
-				oreDictRecipe(new ItemStack(TMItems.itemBO, 1, 1),
-						new Object[] {" M ", "MIM", " M ",
-					'M', "ingotManasteel",
-					'I', "ingotIron"		});
-				oreDictRecipe(new ItemStack(TMBlocks.flowerDynamo), 
-						new Object[] {" C ", "GIG", "IWI",
-					'W', new ItemStack(Items.redstone),
-					'C', new ItemStack(TMItems.itemBO, 1, 0),
-					'G', new ItemStack(TMItems.itemBO, 1, 1),
-					'I', "ingotManasteel"				});
-				oreDictRecipe(new ItemStack(TMBlocks.manaFabricator), 
-						new Object[] {"CDC", "IDI", " P ",
-					'C', new ItemStack(TMItems.itemBO, 1, 1),
-					'I', "ingotManasteel",
-					'D', "manaDiamond",
-					'P', new ItemStack(Items.ender_eye, 1, 0)			});
-				oreDictRecipe(new ItemStack(TMBlocks.processorBO),
-						new Object[] {" A ", "BMB", "ICI",
-					'M', new ItemStack(Items.redstone),
-					'I', "ingotManasteel",
-					'C', new ItemStack(TMItems.itemBO, 1, 0),
-					'B', "livingrock",
-					'A', new ItemStack(Items.redstone)				});
-			}
-		}catch(Exception e){e.printStackTrace();}
-	}
-
 	@SuppressWarnings("unchecked")
 	private static IRecipe oreDictRecipe(ItemStack res, Object[] params) {
 		IRecipe rec = new ShapedOreRecipe(res, params);

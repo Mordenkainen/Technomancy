@@ -64,8 +64,8 @@ import theflogat.technomancy.common.tiles.thaumcraft.storage.TileCreativeJar;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaContainer;
 import theflogat.technomancy.lib.RenderIds;
 import theflogat.technomancy.lib.compat.BloodMagic;
-import theflogat.technomancy.lib.compat.Botania;
 import theflogat.technomancy.lib.compat.Thaumcraft;
+import theflogat.technomancy.lib.handlers.CompatibilityHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.network.IGuiHandler;
@@ -146,7 +146,7 @@ public class ClientProxy extends CommonProxy implements IGuiHandler{
         	RenderingRegistry.registerBlockHandler(new BlockBloodFabricatorRenderer());
     	}
     	
-    	if(Botania.bo) {
+    	if(CompatibilityHandler.bo) {
     		ClientRegistry.bindTileEntitySpecialRenderer(TileManaFabricator.class, new TileManaFabricatorRenderer());
     		RenderIds.idManaFabricator = RenderingRegistry.getNextAvailableRenderId();
     	
