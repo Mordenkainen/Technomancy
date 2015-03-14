@@ -2,6 +2,8 @@ package theflogat.technomancy;
 
 import java.io.File;
 
+import org.apache.logging.log4j.Logger;
+
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.items.base.TMItems;
 import theflogat.technomancy.lib.CreativeTabTM;
@@ -49,24 +51,32 @@ public class Technomancy {
 
     public static CreativeTabs tabsTM = new CreativeTabTM(CreativeTabs.getNextID(), Ref.MOD_ID);
 
+    public static Logger logger;
+    
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+    	logger = event.getModLog();
     	ConfigHandler.init(new File(event.getModConfigurationDirectory(), Ref.MOD_NAME + ".cfg"));
     	new EventRegister();
     }
 
     @EventHandler
-    public void init(FMLInitializationEvent event) {    
-    	 BloodMagic.init();
+    public void init(FMLInitializationEvent event) {
+    	CompatibilityHandler.init();
+    	
+    	if (CompatibilityHandler.bm) {
+    		BloodMagic.init();
+    	}
          Thaumcraft.init();
-         Botania.init();
-         ThermalExpansion.init();
+        
+        if (CompatibilityHandler.te) {
+        	ThermalExpansion.init();
+        }
          
          TMItems.initTechnomancy();
          TMBlocks.initTechnomancy();
          
          if(Loc.isClient()){
-        	 Botania.client();
         	 Thaumcraft.client();
          }
 
@@ -74,11 +84,13 @@ public class Technomancy {
          	TMItems.initThaumcraft();
          	TMBlocks.initThaumcraft();
          }
-         if(BloodMagic.bm) {
-         	TMBlocks.initBloodMagic();
+         
+        if(CompatibilityHandler.bm) {
+        	TMBlocks.initBloodMagic();
          	TMItems.initBloodMagic();
-         }
-         if(Botania.bo) {
+        }
+        
+         if(CompatibilityHandler.bo) {
          	TMBlocks.initBotania();
          	TMItems.initBotania();
          }
@@ -99,11 +111,12 @@ public class Technomancy {
     	CraftingHandler.initTechnomancyRecipes();
     	CraftingHandler.initFurnaceRecipes();
     	
-        if(BloodMagic.bm) {
-        	CraftingHandler.initBloodMagicRecipes();
+        if(CompatibilityHandler.bm) {
+        	BloodMagic.initBloodMagicRecipes();
         }
-        if(Botania.bo) {
-        	CraftingHandler.initBotaniaRecipes();
+        
+        if(CompatibilityHandler.bo) {
+        	Botania.initBotaniaRecipes();
         }
         if(Thaumcraft.th) {
         	CraftingHandler.initThaumcraftRecipes();

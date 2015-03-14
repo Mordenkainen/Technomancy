@@ -14,6 +14,7 @@ import theflogat.technomancy.common.blocks.dynamos.ItemBloodDynamo;
 import theflogat.technomancy.common.blocks.dynamos.ItemEssentiaDynamo;
 import theflogat.technomancy.common.blocks.dynamos.ItemFlowerDynamo;
 import theflogat.technomancy.common.blocks.dynamos.ItemNodeDynamo;
+import theflogat.technomancy.common.blocks.machines.BlockBOProcessor;
 import theflogat.technomancy.common.blocks.machines.BlockBiomeMorpher;
 import theflogat.technomancy.common.blocks.machines.BlockBloodFabricator;
 import theflogat.technomancy.common.blocks.machines.BlockCondenser;
@@ -223,7 +224,7 @@ public class TMBlocks {
 	public static void initBotania() {
 		flowerDynamo = Ids.flowerDyn ? new BlockFlowerDynamo() : null;
 		manaFabricator = Ids.manaFab ? new BlockManaFabricator() : null;
-		processorBO = Ids.processorBO ? new BlockProcessor.BlockBOProcessor() : null;
+		processorBO = Ids.processorBO ? new BlockBOProcessor() : null;
 		
 		
 		registerBlock(flowerDynamo, Names.flowerDynamo, ItemFlowerDynamo.class);

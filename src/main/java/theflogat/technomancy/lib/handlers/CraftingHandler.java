@@ -1,9 +1,7 @@
 package theflogat.technomancy.lib.handlers;
 
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -22,8 +20,6 @@ import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.lib.compat.ThermalExpansion;
 import theflogat.technomancy.util.Ore;
 import vazkii.botania.api.BotaniaAPI;
-import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipeRegistry;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CraftingHandler {
@@ -40,7 +36,7 @@ public class CraftingHandler {
 
 	public static void initThaumcraftRecipes() {
 		try{
-			if(ThermalExpansion.te){
+			if(CompatibilityHandler.te){
 				//Infusion Recipes
 				if(Ids.nodeGen)
 					ResearchHandler.recipes.put("NodeGenerator", ThaumcraftApi.addInfusionCraftingRecipe("NODEGENERATOR",
@@ -362,173 +358,11 @@ public class CraftingHandler {
 		}catch(Exception e){e.printStackTrace();}
 	}
 
-	public static void initBloodMagicRecipes() {
-		try{
-			if(ThermalExpansion.te){
-				//Altar Recipes
-				if(Ids.bloodDynamo){
-					AltarRecipeRegistry.registerAltarRecipe(new ItemStack(TMBlocks.bloodDynamo), new ItemStack(ThermalExpansion.blockDynamo), 2,
-							10000, 100, 100, false);
-				}
-				if(Ids.matBM){
-					AltarRecipeRegistry.registerAltarRecipe(new ItemStack(TMItems.itemBM, 1, 0), new ItemStack(Items.iron_ingot), 1, 1000, 100, 100, false);
-					AltarRecipeRegistry.registerAltarRecipe(new ItemStack(TMItems.itemBM, 1, 1), ThermalExpansion.powerCoilGold, 1, 1000, 100, 100, false);
-				}
-
-				//Normal Recipes
-				GameRegistry.addShapedRecipe(new ItemStack(TMBlocks.bloodFabricator), 
-						new Object[] {" T ", "IMI", "CAC",
-					'T', new ItemStack(ThermalExpansion.blockTank, 1, 3),
-					'I', new ItemStack(TMItems.itemBM, 1, 0),
-					'M', ThermalExpansion.frameMachineBasic,
-					'C', new ItemStack(TMItems.itemBM, 1, 1),
-					'A', ThermalExpansion.frameTesseractFull});
-				GameRegistry.addShapedRecipe(new ItemStack(TMBlocks.processorBM),
-						new Object[] {" A ", "BMB", "ICI",
-					'M', ThermalExpansion.frameMachineBasic,
-					'I', new ItemStack(TMItems.itemBM, 1, 0),
-					'C', new ItemStack(TMItems.itemBM, 1, 1),
-					'B', getBlock(1, "bloodRune", 0),
-					'A', new ItemStack(Items.redstone)});
-			} else {
-				//Altar Recipes
-				if(Ids.bloodDynamo)
-					AltarRecipeRegistry.registerAltarRecipe(new ItemStack(TMBlocks.bloodDynamo), new ItemStack(Blocks.redstone_block, 1), 2, 10000, 100, 100, false);
-				if(Ids.matBM){
-					AltarRecipeRegistry.registerAltarRecipe(new ItemStack(TMItems.itemBM, 1, 0), new ItemStack(Items.iron_ingot, 1), 1, 1000, 100, 100, false);
-					AltarRecipeRegistry.registerAltarRecipe(new ItemStack(TMItems.itemBM, 1, 1), new ItemStack(Items.redstone, 1), 1, 1000, 100, 100, false);
-				}
-
-				//Normal Recipes
-				GameRegistry.addShapedRecipe(new ItemStack(TMBlocks.bloodFabricator), 
-						new Object[] {" T ", "IMI", "CAC",
-					'T', new ItemStack(Blocks.glass, 1, 0),
-					'I', new ItemStack(TMItems.itemBM, 1, 0),
-					'M', new ItemStack(Blocks.redstone_block, 1, 0),
-					'C', new ItemStack(TMItems.itemBM, 1, 1),
-					'A', new ItemStack(Items.ender_eye, 1, 0)});
-				GameRegistry.addShapedRecipe(new ItemStack(TMBlocks.processorBM),
-						new Object[] {" A ", "BMB", "ICI",
-					'M', new ItemStack(Blocks.redstone_block, 1, 0),
-					'I', new ItemStack(TMItems.itemBM, 1, 0),
-					'C', new ItemStack(TMItems.itemBM, 1, 1),
-					'B', getBlock(1, "bloodRune", 0),
-					'A', new ItemStack(Items.redstone)});
-			}
-		}catch(Exception e){e.printStackTrace();}
-	}
-
-	public static void initBotaniaRecipes() {
-		try{
-			if(ThermalExpansion.te){
-				//ManaInfusion
-				BotaniaAPI.registerManaInfusionRecipe(new ItemStack(TMItems.itemBO, 1, 0), ThermalExpansion.powerCoilSilver, 3000);		
-
-				//Normal Recipes
-				oreDictRecipe(new ItemStack(TMItems.itemBO, 1, 1),
-						new Object[] {" M ", "MIM", " M ",
-					'M', "ingotManasteel",
-					'I', "ingotIron"		});
-				oreDictRecipe(new ItemStack(TMBlocks.flowerDynamo), 
-						new Object[] {" C ", "GIG", "IWI",
-					'W', new ItemStack(Items.redstone),
-					'C', new ItemStack(TMItems.itemBO, 1, 0),
-					'G', new ItemStack(TMItems.itemBO, 1, 1),
-					'I', "ingotManasteel"				});
-				oreDictRecipe(new ItemStack(TMBlocks.manaFabricator), 
-						new Object[] {"CDC", "IDI", " P ",
-					'C', new ItemStack(TMItems.itemBO, 1, 1),
-					'I', "ingotManasteel",
-					'D', "manaDiamond",
-					'P', ThermalExpansion.frameTesseractFull			});
-				oreDictRecipe(new ItemStack(TMBlocks.processorBO),
-						new Object[] {" A ", "BMB", "ICI",
-					'M', ThermalExpansion.frameMachineBasic,
-					'I', "ingotManasteel",
-					'C', new ItemStack(TMItems.itemBO, 1, 0),
-					'B', "livingrock",
-					'A', new ItemStack(Items.redstone)				});
-			}else{
-				//ManaInfusion
-				BotaniaAPI.registerManaInfusionRecipe(new ItemStack(TMItems.itemBO, 1, 0), new ItemStack(Items.redstone), 3000);		
-
-				//Normal Recipes
-				oreDictRecipe(new ItemStack(TMItems.itemBO, 1, 1),
-						new Object[] {" M ", "MIM", " M ",
-					'M', "ingotManasteel",
-					'I', "ingotIron"		});
-				oreDictRecipe(new ItemStack(TMBlocks.flowerDynamo), 
-						new Object[] {" C ", "GIG", "IWI",
-					'W', new ItemStack(Items.redstone),
-					'C', new ItemStack(TMItems.itemBO, 1, 0),
-					'G', new ItemStack(TMItems.itemBO, 1, 1),
-					'I', "ingotManasteel"				});
-				oreDictRecipe(new ItemStack(TMBlocks.manaFabricator), 
-						new Object[] {"CDC", "IDI", " P ",
-					'C', new ItemStack(TMItems.itemBO, 1, 1),
-					'I', "ingotManasteel",
-					'D', "manaDiamond",
-					'P', new ItemStack(Items.ender_eye, 1, 0)			});
-				oreDictRecipe(new ItemStack(TMBlocks.processorBO),
-						new Object[] {" A ", "BMB", "ICI",
-					'M', new ItemStack(Items.redstone),
-					'I', "ingotManasteel",
-					'C', new ItemStack(TMItems.itemBO, 1, 0),
-					'B', "livingrock",
-					'A', new ItemStack(Items.redstone)				});
-			}
-		}catch(Exception e){e.printStackTrace();}
-	}
-
 	@SuppressWarnings("unchecked")
 	private static IRecipe oreDictRecipe(ItemStack res, Object[] params) {
 		IRecipe rec = new ShapedOreRecipe(res, params);
 		CraftingManager.getInstance().getRecipeList().add(rec);
 		return rec;
-	}
-
-	private static ItemStack getItem(int ID, String itemString, int meta) {
-		ItemStack stack = null;
-		try {
-			String itemClass = null;
-			switch(ID) {
-			case 0:
-				itemClass = "vazkii.botania.common.item.ModItems";
-			case 1:
-				itemClass = "WayofTime.alchemicalWizardry.ModItems";	    	
-			}
-			Object obj = Class.forName(itemClass).getField(itemString).get(null);
-			if ((obj instanceof Item)) {
-				stack = new ItemStack((Item)obj, 1, meta);
-			}else if ((obj instanceof ItemStack)) {
-				stack = (ItemStack)obj;
-			}
-		}catch (Exception e){
-			FMLLog.warning("[Technomancy] Could not retrieve item identified by: " + itemString, new Object[0]);
-		}
-		return stack;
-	}
-
-	private static ItemStack getBlock(int ID, String itemString, int meta) {
-		ItemStack stack = null;
-		String itemClass = null;
-		try{
-			switch(ID) {
-			case 0:
-				itemClass = "vazkii.botania.common.block.ModBlocks";
-			case 1:
-				itemClass = "WayofTime.alchemicalWizardry.ModBlocks";
-			}
-			Object obj = Class.forName(itemClass).getField(itemString).get(null);
-			if ((obj instanceof Block)) {
-				stack = new ItemStack((Block)obj, 1, meta);
-			}else if ((obj instanceof ItemStack)) {
-				stack = (ItemStack)obj;
-			}
-		}catch (Exception ex) {
-			FMLLog.warning("[Technomancy] Could not retrieve block identified by: " + itemString + " at: " + itemClass, new Object[0]);
-		}
-		return stack;
 	}
 
 	public static void initTechnomancyRecipes() {
