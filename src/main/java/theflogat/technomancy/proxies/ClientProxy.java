@@ -59,7 +59,7 @@ import theflogat.technomancy.common.tiles.thaumcraft.machine.TileManaFabricator;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileReconstructor;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTCProcessor;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTeslaCoil;
+import theflogat.technomancy.common.tiles.thaumcraft.machine.TileWirelessCoil;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileCreativeJar;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaContainer;
 import theflogat.technomancy.lib.RenderIds;
@@ -107,7 +107,7 @@ public class ClientProxy extends CommonProxy implements IGuiHandler{
     		ClientRegistry.bindTileEntitySpecialRenderer(TileFluxLamp.class, new TileFluxLampRenderer());
     		RenderIds.idFluxLamp = RenderingRegistry.getNextAvailableRenderId();
     	
-    		ClientRegistry.bindTileEntitySpecialRenderer(TileTeslaCoil.class, new TileTeslaCoilRenderer());
+    		ClientRegistry.bindTileEntitySpecialRenderer(TileWirelessCoil.class, new TileTeslaCoilRenderer());
     		RenderIds.idTeslaCoil = RenderingRegistry.getNextAvailableRenderId(); 
     	
     		ClientRegistry.bindTileEntitySpecialRenderer(TileElectricBellows.class, new TileElectricBellowsRenderer());

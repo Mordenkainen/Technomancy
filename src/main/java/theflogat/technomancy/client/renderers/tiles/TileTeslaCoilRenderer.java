@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import theflogat.technomancy.client.renderers.models.ModelTeslaCoil;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTeslaCoil;
+import theflogat.technomancy.common.tiles.thaumcraft.machine.TileWirelessCoil;
 import theflogat.technomancy.lib.Ref;
 
 public class TileTeslaCoilRenderer extends TileEntitySpecialRenderer {
@@ -35,8 +35,8 @@ public class TileTeslaCoilRenderer extends TileEntitySpecialRenderer {
 		model.render();
 		
 		GL11.glPushMatrix();
-		if(((TileTeslaCoil)entity).aspectFilter != null) {
-			Color color = new Color(((TileTeslaCoil)entity).aspectFilter.getColor());
+		if(((TileWirelessCoil)entity).aspectFilter != null) {
+			Color color = new Color(((TileWirelessCoil)entity).aspectFilter.getColor());
 			GL11.glColor3d(color.getRed() / 255.0F * 0.2F, color.getGreen() / 255.0F * 0.2F, color.getBlue() / 255.0F * 0.2F);
 		}
 		model.renderRings();
@@ -47,7 +47,7 @@ public class TileTeslaCoilRenderer extends TileEntitySpecialRenderer {
 	}
 	
 	public void renderFacing(TileEntity entity) {
-		switch (((TileTeslaCoil)entity).facing){
+		switch (((TileWirelessCoil)entity).facing){
 		case 0:
 			GL11.glTranslatef(0.0F, -2.0F, 0.0F);
 			GL11.glRotatef(180, 0.0F, 1.0F, 0.0F); break;

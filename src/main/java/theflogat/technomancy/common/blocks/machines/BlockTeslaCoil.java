@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.IEssentiaContainerItem;
 import theflogat.technomancy.common.blocks.base.BlockBase;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTeslaCoil;
+import theflogat.technomancy.common.tiles.thaumcraft.machine.TileWirelessCoil;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.RenderIds;
@@ -28,12 +28,12 @@ public class BlockTeslaCoil extends BlockBase {
 
 	@Override
 	public TileEntity createNewTileEntity(World w, int meta) {
-		return new TileTeslaCoil();
+		return new TileWirelessCoil();
 	}
 	
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float vecX, float vecY, float vecZ) {
-		TileTeslaCoil tile = getTE(world, x, y, z);
+		TileWirelessCoil tile = getTE(world, x, y, z);
 		if(tile != null) {
 			ItemStack stack = player.getHeldItem();
 			if(stack == null && player.isSneaking()) {
@@ -71,7 +71,7 @@ public class BlockTeslaCoil extends BlockBase {
 	
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack){
-		TileTeslaCoil tile = getTE(world, x, y, z);
+		TileWirelessCoil tile = getTE(world, x, y, z);
 		if(tile != null) {
 			tile.facing = this.facing;
 		}
@@ -85,7 +85,7 @@ public class BlockTeslaCoil extends BlockBase {
 	
 	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
-		TileTeslaCoil tile = getTE(world, x, y, z);
+		TileWirelessCoil tile = getTE(world, x, y, z);
 		if(tile != null) {
 			switch(tile.facing) {
 				case 0:
@@ -131,10 +131,10 @@ public class BlockTeslaCoil extends BlockBase {
 		blockIcon = icon.registerIcon(Ref.getAsset(Names.teslaCoil));
 	}
 
-	private TileTeslaCoil getTE(IBlockAccess world, int x, int y, int z) {
+	private TileWirelessCoil getTE(IBlockAccess world, int x, int y, int z) {
 		TileEntity tile = world.getTileEntity(x, y, z);
-		if (tile instanceof TileTeslaCoil) {
-			return (TileTeslaCoil)tile;
+		if (tile instanceof TileWirelessCoil) {
+			return (TileWirelessCoil)tile;
 		}
 		return null;
 	}
