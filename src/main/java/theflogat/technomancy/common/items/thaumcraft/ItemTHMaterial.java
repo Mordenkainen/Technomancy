@@ -15,7 +15,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import thaumcraft.api.aspects.IAspectContainer;
 import theflogat.technomancy.common.items.base.ItemBase;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTeslaCoil;
+import theflogat.technomancy.common.tiles.thaumcraft.machine.TileWirelessCoil;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import cpw.mods.fml.relauncher.Side;
@@ -104,12 +104,12 @@ public class ItemTHMaterial extends ItemBase {
 		if(!w.isRemote) {
 			TileEntity tile = w.getTileEntity(x, y, z);
 			if(tile != null && stack.getItemDamage() == 4) {			
-				if(tile instanceof IAspectContainer && !tile.getClass().getName().equals("TileMirrorEssentia") && !(tile instanceof TileTeslaCoil)) {
+				if(tile instanceof IAspectContainer && !tile.getClass().getName().equals("TileMirrorEssentia") && !(tile instanceof TileWirelessCoil)) {
 					if(stack.stackTagCompound.getBoolean("ent")) {
 						if(tile.getWorldObj().provider.dimensionId == stack.stackTagCompound.getInteger("dimId")){
 							if(!areCoordsEqual(stack.stackTagCompound, x, y, z)) {
 								int[] i = retrievePos(stack.stackTagCompound);
-								((TileTeslaCoil)w.getTileEntity(i[0], i[1], i[2])).sources.add(new ChunkCoordinates(x, y, z));
+								((TileWirelessCoil)w.getTileEntity(i[0], i[1], i[2])).sources.add(new ChunkCoordinates(x, y, z));
 								player.addChatComponentMessage(new ChatComponentText("Linked"));
 								stack.stackTagCompound.setBoolean("ent", false);
 								return true;
@@ -120,9 +120,9 @@ public class ItemTHMaterial extends ItemBase {
 					}else{
 						player.addChatComponentMessage(new ChatComponentText("No source to link from."));
 					}
-				}else if(tile instanceof TileTeslaCoil && (!stack.stackTagCompound.getBoolean("ent") || player.isSneaking())) {
+				}else if(tile instanceof TileWirelessCoil && (!stack.stackTagCompound.getBoolean("ent") || player.isSneaking())) {
 					if(player.isSneaking()) {
-						((TileTeslaCoil)tile).sources.clear();
+						((TileWirelessCoil)tile).sources.clear();
 						player.addChatComponentMessage(new ChatComponentText("Links Cleared"));
 						return false;
 					}else{

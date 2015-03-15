@@ -67,7 +67,7 @@ import theflogat.technomancy.common.tiles.thaumcraft.machine.TileManaFabricator;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileReconstructor;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTCProcessor;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTeslaCoil;
+import theflogat.technomancy.common.tiles.thaumcraft.machine.TileWirelessCoil;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileCreativeJar;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaContainer;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaReservoir;
@@ -193,7 +193,7 @@ public class TMBlocks {
 		GameRegistry.registerTileEntity(TileNodeGenerator.class, "TileNodeGenerator");
 		GameRegistry.registerTileEntity(TileFakeAirNG.class, Ref.MOD_PREFIX + "TileFakeAir");
 		GameRegistry.registerTileEntity(TileFluxLamp.class, "TileFluxLamp");
-		GameRegistry.registerTileEntity(TileTeslaCoil.class, "TileTeslaCoil");
+		GameRegistry.registerTileEntity(TileWirelessCoil.class, "TileTeslaCoil");
 		GameRegistry.registerTileEntity(TileElectricBellows.class, "TileElectricBellows");
 		GameRegistry.registerTileEntity(TileCreativeJar.class, "TileCreativeJar");
 		GameRegistry.registerTileEntity(TileReconstructor.class, "TileReconstructor");

@@ -29,6 +29,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public abstract class BlockProcessor extends BlockBase {
 
+	@SideOnly(Side.CLIENT)
+	public IIcon[] icons;
+	
 	String name;
 	
 	@Override
@@ -59,14 +62,12 @@ public abstract class BlockProcessor extends BlockBase {
 	@Override
 	public String getUnlocalizedName() {
 		return "tile." + Ref.MOD_PREFIX + Names.processor + name;
-	}
-	
-	@SideOnly(Side.CLIENT)
-	public IIcon[] icons = new IIcon[4];	
+	}	
 	
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister icon) {
+		icons = new IIcon[4];
 		icons[0] = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.processor + name + "Side");
 		icons[1] = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.processor + name + "Active");
 		icons[2] = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.processor + name + "Inactive");
