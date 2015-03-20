@@ -10,9 +10,9 @@ import theflogat.technomancy.util.InvHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -74,6 +74,21 @@ public class BlockNodeGenerator extends BlockBase {
 		if(tile.boost)
 				InvHelper.spawnEntItem(w, x, y, z, new ItemStack(TMItems.itemBoost, 1));
 		super.breakBlock(w, x, y, z, block, meta);
+	}
+	
+	@Override
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float vecX, float vecY, float vecZ) {
+		if (player.getHeldItem() == null && player.isSneaking()) {
+			TileNodeGenerator tile = (TileNodeGenerator)world.getTileEntity(x, y, z);
+			if(tile.boost) {
+				if(!world.isRemote) {
+					InvHelper.spawnEntItem(world, x, y, z, new ItemStack(TMItems.itemBoost, 1));
+				}
+				tile.setBoost(false);
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	private TileNodeGenerator getTE(IBlockAccess world, int x, int y, int z) {
