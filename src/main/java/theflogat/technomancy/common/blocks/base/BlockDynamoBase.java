@@ -1,38 +1,43 @@
-package theflogat.technomancy.common.blocks.dynamos;
+package theflogat.technomancy.common.blocks.base;
 
-import theflogat.technomancy.common.blocks.base.BlockDynamoBase;
-import theflogat.technomancy.common.items.api.ToolWrench;
-import theflogat.technomancy.common.items.base.TMItems;
-import theflogat.technomancy.common.tiles.base.TileDynamoBase;
-import theflogat.technomancy.common.tiles.dynamos.TileNodeDynamo;
-import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
-import theflogat.technomancy.lib.RenderIds;
-import theflogat.technomancy.util.InvHelper;
-import theflogat.technomancy.util.RedstoneSet;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import theflogat.technomancy.common.items.api.ToolWrench;
+import theflogat.technomancy.common.items.base.TMItems;
+import theflogat.technomancy.common.tiles.base.TileDynamoBase;
+import theflogat.technomancy.util.InvHelper;
+import theflogat.technomancy.util.RedstoneSet;
 
-public class BlockNodeDynamo extends BlockDynamoBase {
-
-	public BlockNodeDynamo() {
-		setBlockName(Ref.MOD_PREFIX + Names.nodeDynamo);
+public abstract class BlockDynamoBase extends BlockBase {
+		
+	public BlockDynamoBase() {
+		super();
 	}
-	
+
+	@Override
+	public void breakBlock(World w, int x, int y, int z, Block block, int meta) {
+		TileDynamoBase tile = (TileDynamoBase) w.getTileEntity(x, y, z);
+		if(tile.boost) {
+			InvHelper.spawnEntItem(w, x, y, z, new ItemStack(TMItems.itemBoost, 1));
+		}
+		dropCurrentModifier(tile, w, x, y, z);
+		super.breakBlock(w, x, y, z, block, meta);
+	}
+
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float vecX, float vecY, float vecZ) {
 		TileDynamoBase tile = (TileDynamoBase)world.getTileEntity(x, y, z);
 		if (player.getHeldItem() != null) {
-			if(player.getHeldItem().getItem()==Items.gunpowder && tile.set != RedstoneSet.NONE){
+			if (ToolWrench.isWrench(player.getHeldItem())) {
+				tile.rotateBlock();
+				return true;
+			}else if(player.getHeldItem().getItem()==Items.gunpowder && tile.set != RedstoneSet.NONE){
 				if(--player.inventory.mainInventory[player.inventory.currentItem].stackSize == 0) {
 					player.inventory.mainInventory[player.inventory.currentItem] = null;
 				}
@@ -86,27 +91,38 @@ public class BlockNodeDynamo extends BlockDynamoBase {
 		}
 		return false;
 	}
-	
+
+	protected void dropCurrentModifier(TileDynamoBase tile, World w, int x, int y, int z) {
+		if(tile.modified) {
+			ItemStack item = null;
+			switch (tile.set) {
+			case LOW:
+				item = new ItemStack(Item.getItemFromBlock(Blocks.redstone_torch), 1);
+				break;
+			case HIGH:
+				item = new ItemStack(Items.redstone, 1);
+				break;
+			case NONE:
+				item = new ItemStack(Items.gunpowder, 1);
+				break;
+			}
+			InvHelper.spawnEntItem(w, x, y, z, item);
+		}
+	}
+
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
-		TileNodeDynamo tile = (TileNodeDynamo)world.getTileEntity(x, y, z);
-		tile.facing = 0;
 		super.onBlockPlacedBy(world, x, y, z, entity, stack);
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void registerBlockIcons(IIconRegister reg) {
-		blockIcon = Blocks.stone.getIcon(0, 0);
-	}
-	
-	@Override
-	public TileEntity createNewTileEntity(World w, int meta) {
-		return new TileNodeDynamo();
+	public boolean isOpaqueCube() {
+		return false;
 	}
 
 	@Override
-	public int getRenderType() {
-		return RenderIds.idNodeDynamo;
+	public boolean renderAsNormalBlock() {
+		return false;
 	}
+
 }

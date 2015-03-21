@@ -5,6 +5,8 @@ import java.util.Iterator;
 
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
@@ -19,12 +21,13 @@ import theflogat.technomancy.lib.Conf;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.util.RedstoneSet;
 
-public class TileWirelessCoil extends TileTechnomancy {
+public class TileWirelessCoil extends TileTechnomancy implements IEssentiaTransport{
 
 	public Aspect aspectFilter = null;
 	public ArrayList<ChunkCoordinates> sources = new ArrayList<ChunkCoordinates>();
 	public int facing = 0;
 	public RedstoneSet set = RedstoneSet.LOW;
+	private boolean onSpecialBlock;
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound compound) {
@@ -59,6 +62,15 @@ public class TileWirelessCoil extends TileTechnomancy {
 
 	@Override
 	public void updateEntity() {
+		Block connectedBlock = worldObj.getBlock(xCoord + ForgeDirection.getOrientation(facing).offsetX, 
+				yCoord + ForgeDirection.getOrientation(facing).offsetY, zCoord + ForgeDirection.getOrientation(facing).offsetZ);
+		int blockMeta = worldObj.getBlockMetadata(xCoord + ForgeDirection.getOrientation(facing).offsetX, 
+				yCoord + ForgeDirection.getOrientation(facing).offsetY, zCoord + ForgeDirection.getOrientation(facing).offsetZ);
+		if(connectedBlock == GameRegistry.findBlock("Thaumcraft", "blockMetalDevice") && 
+				(blockMeta == 8 || blockMeta == 10 || blockMeta == 11 || blockMeta == 13)) {
+			onSpecialBlock = true;
+			return;
+		}
 		TileEntity te = Thaumcraft.getConnectableAsContainer(worldObj, xCoord, yCoord, zCoord, ForgeDirection.getOrientation(facing));
 		if (set.canRun(this) && te != null && !sources.isEmpty()) {
 			IAspectContainer cont;
@@ -102,5 +114,96 @@ public class TileWirelessCoil extends TileTechnomancy {
 				}
 			}
 		}
+	}
+	
+	@Override
+	public boolean isConnectable(ForgeDirection face) {
+		return onSpecialBlock && face == ForgeDirection.getOrientation(facing);
+	}
+
+	@Override
+	public boolean canInputFrom(ForgeDirection face) {
+		return false;
+	}
+
+	@Override
+	public boolean canOutputTo(ForgeDirection face) {
+		return onSpecialBlock && face == ForgeDirection.getOrientation(facing);
+	}
+
+	@Override
+	public void setSuction(Aspect aspect, int amount) {}
+
+	@Override
+	public Aspect getSuctionType(ForgeDirection face) {
+		return null;
+	}
+
+	@Override
+	public int getSuctionAmount(ForgeDirection face) {
+		return 0;
+	}
+
+	@Override
+	public int takeEssentia(Aspect aspect, int amount, ForgeDirection face) {
+		if (onSpecialBlock && set.canRun(this) && !sources.isEmpty()) {
+			Iterator<ChunkCoordinates> sourceIter = sources.iterator();
+			boolean gotEssentia = false;
+			while (sourceIter.hasNext() && !gotEssentia) {
+				ChunkCoordinates coords = sourceIter.next();
+				TileEntity tile = worldObj.getTileEntity(coords.posX, coords.posY, coords.posZ);
+				if(tile!=null && tile instanceof IAspectContainer) {
+					IAspectContainer source = (IAspectContainer)tile;
+					if(source.doesContainerContainAmount(aspect, amount)) {
+						gotEssentia = source.takeFromContainer(aspect, amount);
+						if(gotEssentia) {
+							if(Conf.fancy) {
+								try {
+									if (this.xCoord - tile.xCoord <= Byte.MAX_VALUE && this.yCoord - tile.yCoord <= Byte.MAX_VALUE && this.zCoord - tile.zCoord <= Byte.MAX_VALUE) {
+										Thaumcraft.PHInstance.sendToAllAround((IMessage)Thaumcraft.PacketFXEssentiaSourceConst.newInstance(
+												this.xCoord, this.yCoord+1, this.zCoord, (byte)(this.xCoord - tile.xCoord),
+												(byte)(this.yCoord - tile.yCoord), (byte)(this.zCoord - tile.zCoord), aspect.getColor()),
+												new NetworkRegistry.TargetPoint(tile.getWorldObj().provider.dimensionId, tile.xCoord,
+														tile.yCoord, tile.zCoord, 32.0D));
+									}
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+							}
+							return amount;
+						}
+					}
+				}else{
+					sourceIter.remove();
+				}
+				
+			}
+		}
+		return 0;
+	}
+
+	@Override
+	public int addEssentia(Aspect aspect, int amount, ForgeDirection face) {
+		return 0;
+	}
+
+	@Override
+	public Aspect getEssentiaType(ForgeDirection face) {
+		return null;
+	}
+
+	@Override
+	public int getEssentiaAmount(ForgeDirection face) {
+		return 1;
+	}
+
+	@Override
+	public int getMinimumSuction() {
+		return 0;
+	}
+
+	@Override
+	public boolean renderExtendedTube() {
+		return true;
 	}
 }

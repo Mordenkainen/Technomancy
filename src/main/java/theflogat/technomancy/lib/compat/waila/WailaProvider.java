@@ -1,5 +1,6 @@
 package theflogat.technomancy.lib.compat.waila;
 
+import theflogat.technomancy.common.tiles.air.TileFakeAirNG;
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
 import theflogat.technomancy.common.tiles.base.TileProcessorBase;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
@@ -23,6 +24,11 @@ public class WailaProvider {
 		IWailaDataProvider nodeGenerator = new NodeGeneratorHUDHandler();
 		registrar.registerBodyProvider(nodeGenerator, TileNodeGenerator.class);
 		registrar.registerNBTProvider(nodeGenerator, TileNodeGenerator.class);
+		
+		IWailaDataProvider nodeGeneratorAir = new FakeAirNGHUDHandler();
+		registrar.registerBodyProvider(nodeGeneratorAir, TileFakeAirNG.class);
+		registrar.registerNBTProvider(nodeGeneratorAir, TileFakeAirNG.class);
+		registrar.registerStackProvider(nodeGeneratorAir, TileFakeAirNG.class);
 		
 		registrar.registerBodyProvider(new EldritchConsumerHUDHandler(), TileEldritchConsumer.class);
 		

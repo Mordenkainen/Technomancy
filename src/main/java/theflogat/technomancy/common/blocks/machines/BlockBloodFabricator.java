@@ -6,6 +6,7 @@ import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.RenderIds;
 import theflogat.technomancy.lib.compat.BloodMagic;
+import theflogat.technomancy.util.InvHelper;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,11 +27,11 @@ public class BlockBloodFabricator extends BlockBase {
 	
 	@Override
 	public boolean onBlockActivated(World w, int x,	int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-		if (!w.isRemote) {
-			if (player.getHeldItem() != null) { 
+		if (player.getHeldItem() != null && player.getHeldItem().getItem()==Items.bucket) {
+			if (!w.isRemote) {
 				TileEntity entity = w.getTileEntity(x, y, z);
 				if (entity instanceof TileBloodFabricator) {
-					if(player.getHeldItem().getItem()==Items.bucket && ((TileBloodFabricator)entity).tank.getFluidAmount()>=1000){
+					if(((TileBloodFabricator)entity).tank.getFluidAmount()>=1000){
 						((TileBloodFabricator)entity).drain(null, new FluidStack(BloodMagic.lifeEssenceFluid, 1000), true);
 						if(player.getHeldItem().stackSize==1){
 							player.inventory.mainInventory[player.inventory.currentItem] = new ItemStack(BloodMagic.bucketLife);
@@ -38,11 +39,13 @@ public class BlockBloodFabricator extends BlockBase {
 							ItemStack items = player.inventory.mainInventory[player.inventory.currentItem].copy();
 							items.stackSize--;
 							player.inventory.mainInventory[player.inventory.currentItem] = items;
-							player.inventory.addItemStackToInventory(new ItemStack(BloodMagic.bucketLife));
+							if(!player.inventory.addItemStackToInventory(new ItemStack(BloodMagic.bucketLife))) {
+								InvHelper.spawnEntItem(w, (int)player.posX, (int)player.posY, (int)player.posZ, new ItemStack(BloodMagic.bucketLife));
+							}
 						}
 					}
 				}
-			}else{
+			} else {
 				return true;
 			}
 		}

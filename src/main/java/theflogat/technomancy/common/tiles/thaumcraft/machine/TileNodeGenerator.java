@@ -39,7 +39,6 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 	private boolean canSpawn = false;
 	private boolean addNode = false;
 	public byte facing = 2;
-	private Aspect aspectSuction;
 	public int rotation = 0;
 	private boolean initiator = false;
 	public boolean running = false;
@@ -62,69 +61,23 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 	@Override
 	public void updateEntity() {
 		if(firstAdded){
-			for(int i=0; i<=2; i++){
-				if(i!=0){
-					if(WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord+i, zCoord)){
-						worldObj.setBlock(xCoord, yCoord+i, zCoord, TMBlocks.fakeAirNG);
-						((TileFakeAirNG)worldObj.getTileEntity(xCoord, yCoord+i, zCoord)).addMain(xCoord, yCoord, zCoord);
-					}else{
-						WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord, zCoord);
-						return;
-					}
-				}
-				if(facing==2 || facing==3){
-					if(WorldHelper.destroyAndDrop(worldObj, xCoord-1, yCoord+i, zCoord)){
-						worldObj.setBlock(xCoord-1, yCoord+i, zCoord, TMBlocks.fakeAirNG);
-						((TileFakeAirNG)worldObj.getTileEntity(xCoord-1, yCoord+i, zCoord)).addMain(xCoord, yCoord, zCoord);
-					}else{
-						WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord, zCoord);
-						return;
-					}
-					if(WorldHelper.destroyAndDrop(worldObj, xCoord+1, yCoord+i, zCoord)){
-						worldObj.setBlock(xCoord+1, yCoord+i, zCoord, TMBlocks.fakeAirNG);
-						((TileFakeAirNG)worldObj.getTileEntity(xCoord+1, yCoord+i, zCoord)).addMain(xCoord, yCoord, zCoord);
-					}else{
-						WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord, zCoord);
-						return;
-					}
-				}
-				if(facing==5 || facing==4){
-					if(WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord+i, zCoord-1)){
-						worldObj.setBlock(xCoord, yCoord+i, zCoord-1, TMBlocks.fakeAirNG);
-						((TileFakeAirNG)worldObj.getTileEntity(xCoord, yCoord+i, zCoord-1)).addMain(xCoord, yCoord, zCoord);
-					}else{
-						WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord, zCoord);
-						return;
-					}
-					if(WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord+i, zCoord+1)){
-						worldObj.setBlock(xCoord, yCoord+i, zCoord+1, TMBlocks.fakeAirNG);
-						((TileFakeAirNG)worldObj.getTileEntity(xCoord, yCoord+i, zCoord+1)).addMain(xCoord, yCoord, zCoord);
-					}else{
-						WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord, zCoord);
-						return;
-					}
-				}
-			}
+			createDummyBlocks();
 			firstAdded = false;
 		}
 
-		int xx = xCoord + ForgeDirection.getOrientation(facing).offsetX * 6;
-		int zz = zCoord + ForgeDirection.getOrientation(facing).offsetZ * 6;
-		TileNodeGenerator partner = getTE(xx, yCoord, zz);
+		TileNodeGenerator partner = getTE(xCoord + ForgeDirection.getOrientation(facing).offsetX * 6, yCoord, zCoord + ForgeDirection.getOrientation(facing).offsetZ * 6);
 		active = partner != null ? true : false;
 		if(active) {
-			xx = xCoord + ForgeDirection.getOrientation(facing).offsetX * 3;
-			zz = zCoord + ForgeDirection.getOrientation(facing).offsetZ * 3;
+			int xx = xCoord + ForgeDirection.getOrientation(facing).offsetX * 3;
+			int zz = zCoord + ForgeDirection.getOrientation(facing).offsetZ * 3;
 			TileEntity entity = worldObj.getTileEntity(xx, yCoord + 1, zz);
 			if(entity == null && worldObj.isAirBlock(xx, yCoord + 1, zz)) {
 				canSpawn = true;
 				addNode = false;
-			}
-			if(entity instanceof INode) {
-				aspectSuction = null;
+			} else if(entity instanceof INode) {
 				INode node = (INode)entity;
 				addNode = true;			
-				if(set.canRun(this) && !worldObj.isRemote && amount > 0 && aspect != null) {
+				if(canRun() && !worldObj.isRemote && amount > 0 && aspect != null) {
 					if (getEnergyStored() >= 1000 && node.getAspects().aspects.containsKey(aspect) && node.getAspects().getAmount(aspect) < node.getAspectsBase().getAmount(aspect)) {
 						extractEnergy(1000, false);
 						node.addToContainer(aspect, 1);
@@ -170,6 +123,32 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 		
 		fill();
 	}	
+
+	private void createDummyBlocks() {
+		for (int h = 0; h < 3; h++){
+			for (int w = -1; w < 2; w++) {
+				if(!(h==0 && w == 0)) {
+					if(facing==2 || facing==3) {
+						if(WorldHelper.destroyAndDrop(worldObj, xCoord + w, yCoord + h, zCoord)){
+							worldObj.setBlock(xCoord + w, yCoord + h, zCoord, TMBlocks.fakeAirNG);
+							((TileFakeAirNG)worldObj.getTileEntity(xCoord + w, yCoord + h, zCoord)).addMain(xCoord, yCoord, zCoord);
+						}else{
+							WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord, zCoord);
+							return;
+						}
+					} else {
+						if(WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord + h, zCoord + w)){
+							worldObj.setBlock(xCoord, yCoord + h, zCoord + w, TMBlocks.fakeAirNG);
+							((TileFakeAirNG)worldObj.getTileEntity(xCoord, yCoord + h, zCoord + w)).addMain(xCoord, yCoord, zCoord);
+						}else{
+							WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord, zCoord);
+							return;
+						}
+					}
+				}
+			}
+		}
+	}
 
 	//Just using as a reference
 	//NORMAL, UNSTABLE, DARK, TAINTED, HUNGRY, PURE
@@ -228,7 +207,7 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 
 	void fill() {
 		for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
-			if (dir != ForgeDirection.getOrientation(facing) && dir != ForgeDirection.DOWN) {
+			if (dir != ForgeDirection.getOrientation(facing)) {
 				TileEntity te = Thaumcraft.getConnectableTile(worldObj, xCoord, yCoord, zCoord, dir);
 				if (te != null && !(te instanceof TileFakeAirNG)) {
 					IEssentiaTransport ic = (IEssentiaTransport)te;
@@ -262,7 +241,7 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 
 	@Override
 	public int onWandRightClick(World world, ItemStack wandstack, EntityPlayer player, int x, int y, int z, int side, int md) {
-		if(set.canRun(this) && player != null && world != null && active && canSpawn && !running) {
+		if(canRun() && player != null && world != null && active && canSpawn && !running) {
 			int xx = xCoord + ForgeDirection.getOrientation(facing).offsetX * 6;
 			int zz = zCoord + ForgeDirection.getOrientation(facing).offsetZ * 6;
 			TileNodeGenerator partner = getTE(xx, yCoord, zz);
@@ -356,6 +335,15 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 
 	@Override
 	public boolean takeFromContainer(Aspect tag, int amt) {
+		if(doesContainerContainAmount(tag, amt)) {
+			amount -= amt;
+			if(amount <= 0) {
+				aspect = null;
+				amount = 0;					
+			}
+			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+			return true;			
+		}
 		return false;
 	}
 
@@ -376,17 +364,17 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 
 	@Override
 	public boolean isConnectable(ForgeDirection face) {
-		return true;
+		return face != ForgeDirection.getOrientation(facing);
 	}
 
 	@Override
 	public boolean canInputFrom(ForgeDirection face) {
-		return true;
+		return face != ForgeDirection.getOrientation(facing);
 	}
 
 	@Override
 	public boolean canOutputTo(ForgeDirection face) {
-		return false;
+		return face != ForgeDirection.getOrientation(facing);
 	}
 
 	@Override
@@ -399,7 +387,7 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 
 	@Override
 	public int getMinimumSuction() {
-		return 128;
+		return 32;
 	}
 
 	@Override
@@ -426,19 +414,22 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 
 	@Override
 	public Aspect getSuctionType(ForgeDirection face) {
+		if (aspect != null) {
+			return aspect;
+		}
 		if (!addNode && active) { 
 			if((facing == 2 || facing == 4)) {
-				aspectSuction = Aspect.AURA;
+				return Aspect.AURA;
 			} else {
-				aspectSuction = Aspect.TAINT;
+				return Aspect.TAINT;
 			}		
 		}
-		return aspectSuction;
+		return null;
 	}
 
 	@Override
 	public int getSuctionAmount(ForgeDirection face) {
-		return amount < maxAmount ? 128 : 0;
+		return amount < maxAmount ? 48 : 0;
 	}
 
 	@Override
@@ -488,5 +479,19 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 			return (TileNodeGenerator)tile;
 		}
 		return null;
+	}
+	
+	public boolean canRun() {
+		boolean state = true;
+		for (int h = 0; h < 3 && state; h++){
+			for (int w = -1; w < 2 && state; w++) {
+				if(facing==2 || facing==3) {
+					state = set.canRun(worldObj.getTileEntity(xCoord + w, yCoord + h, zCoord));
+				} else {
+					state = set.canRun(worldObj.getTileEntity(xCoord, yCoord + h, zCoord + w));
+				}
+			}
+		}
+		return state;
 	}
 }

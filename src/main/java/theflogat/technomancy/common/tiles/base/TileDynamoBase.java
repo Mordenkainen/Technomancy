@@ -19,6 +19,7 @@ public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyH
 	public RedstoneSet set = RedstoneSet.HIGH;
 	public int ener = 0;
 	public boolean boost = false;
+	public boolean modified = false;
 	public byte facing = 1;
 	public int fuel = 0;
 
@@ -113,6 +114,7 @@ public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyH
 		comp.setByte("face", facing);
 		comp.setInteger("fuel", fuel);
 		comp.setBoolean("Boost", boost);
+		comp.setBoolean("Modified", modified);
 	}
 
 	@Override
@@ -122,6 +124,7 @@ public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyH
 		facing = comp.getByte("face");
 		fuel = comp.getInteger("fuel");
 		boost = comp.getBoolean("Boost");
+		modified = comp.getBoolean("Modified");
 	}
 
 	public abstract int extractFuel(int ener);

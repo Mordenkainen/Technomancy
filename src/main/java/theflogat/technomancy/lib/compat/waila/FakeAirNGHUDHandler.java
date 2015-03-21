@@ -2,8 +2,12 @@ package theflogat.technomancy.lib.compat.waila;
 
 import java.util.List;
 
+import theflogat.technomancy.common.blocks.base.TMBlocks;
+import theflogat.technomancy.common.tiles.air.TileFakeAirNG;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
+import theflogat.technomancy.util.Coords;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -13,11 +17,13 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.api.SpecialChars;
 
-public class NodeGeneratorHUDHandler implements IWailaDataProvider {
+public class FakeAirNGHUDHandler implements IWailaDataProvider {
 
 	@Override
 	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,	IWailaConfigHandler config) {
-		final TileNodeGenerator tileEntity = (TileNodeGenerator) accessor.getTileEntity();
+		final TileFakeAirNG tileAir = (TileFakeAirNG) accessor.getTileEntity();
+		Coords nodeGenerator = tileAir.getMain();
+		final TileNodeGenerator tileEntity = (TileNodeGenerator) nodeGenerator.w.getTileEntity(nodeGenerator.x, nodeGenerator.y, nodeGenerator.z);
 		currenttip.add(tileEntity.canRun() ? SpecialChars.GREEN + "Enabled" : SpecialChars.RED + "Disabled");
 		if (tileEntity.getBoost()) {
 			currenttip.add(SpecialChars.GREEN + "Potency Gem Installed");
@@ -30,7 +36,7 @@ public class NodeGeneratorHUDHandler implements IWailaDataProvider {
 	
 	@Override
 	public ItemStack getWailaStack(IWailaDataAccessor accessor,	IWailaConfigHandler config) {
-		return null;
+		return new ItemStack(Item.getItemFromBlock(TMBlocks.nodeGenerator),1);
 	}
 
 	@Override
@@ -46,8 +52,11 @@ public class NodeGeneratorHUDHandler implements IWailaDataProvider {
 	@Override
 	public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x, int y, int z) {
 		if (te != null) {
-            te.writeToNBT(tag);
+			Coords nodeGenerator = ((TileFakeAirNG)te).getMain();
+			TileNodeGenerator tileEntity = (TileNodeGenerator) nodeGenerator.w.getTileEntity(nodeGenerator.x, nodeGenerator.y, nodeGenerator.z);
+			tileEntity.writeToNBT(tag);
 		}
         return tag;
 	}
+
 }
