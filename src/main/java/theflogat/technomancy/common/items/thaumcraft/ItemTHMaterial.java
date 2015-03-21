@@ -111,7 +111,6 @@ public class ItemTHMaterial extends ItemBase {
 								int[] i = retrievePos(stack.stackTagCompound);
 								((TileWirelessCoil)w.getTileEntity(i[0], i[1], i[2])).sources.add(new ChunkCoordinates(x, y, z));
 								player.addChatComponentMessage(new ChatComponentText("Linked"));
-								stack.stackTagCompound.setBoolean("ent", false);
 								return true;
 							}
 						}else{
@@ -120,7 +119,7 @@ public class ItemTHMaterial extends ItemBase {
 					}else{
 						player.addChatComponentMessage(new ChatComponentText("No source to link from."));
 					}
-				}else if(tile instanceof TileWirelessCoil && (!stack.stackTagCompound.getBoolean("ent") || player.isSneaking())) {
+				}else if(tile instanceof TileWirelessCoil) {
 					if(player.isSneaking()) {
 						((TileWirelessCoil)tile).sources.clear();
 						player.addChatComponentMessage(new ChatComponentText("Links Cleared"));
