@@ -15,9 +15,11 @@ import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.RenderIds;
 import vazkii.botania.api.wand.IWandHUD;
+import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
+@Optional.Interface(iface = "vazkii.botania.api.wand.IWandHUD", modid = "Botania")
 public class BlockManaFabricator extends BlockBase implements IWandHUD {
 
 	public BlockManaFabricator() {

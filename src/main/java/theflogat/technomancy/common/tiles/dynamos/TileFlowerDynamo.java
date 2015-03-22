@@ -6,7 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
-import theflogat.technomancy.lib.compat.Botania;
+import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.mana.IManaPool;
 import vazkii.botania.api.mana.IManaReceiver;
 
@@ -82,9 +82,7 @@ public class TileFlowerDynamo extends TileDynamoBase implements IManaReceiver {
 
 	public void renderHUD(Minecraft mc, ScaledResolution res) {
 		int color = 0x660000FF;
-		try {
-			Botania.drawHUD.invoke(null, color, mana, maxMana, TMBlocks.flowerDynamo.getLocalizedName(), res);
-		}catch (Exception e){e.printStackTrace();}
+		BotaniaAPI.internalHandler.drawSimpleManaHUD(color, mana, maxMana, TMBlocks.flowerDynamo.getLocalizedName(), res);
 	}
 
 }

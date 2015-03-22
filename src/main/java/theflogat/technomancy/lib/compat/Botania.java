@@ -1,53 +1,88 @@
 package theflogat.technomancy.lib.compat;
 
-import java.lang.reflect.Method;
 import java.util.Random;
 
-import theflogat.technomancy.lib.Conf;
+import theflogat.technomancy.common.blocks.base.TMBlocks;
+import theflogat.technomancy.common.items.base.TMItems;
+import theflogat.technomancy.lib.handlers.CompatibilityHandler;
+import vazkii.botania.api.BotaniaAPI;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class Botania {
 
-	public static boolean bo = true;
-	public static Method drawHUD;
-	public static Method sparkle;
+	public static void initBotaniaRecipes() {
+		if(CompatibilityHandler.te){
+			//ManaInfusion
+			BotaniaAPI.registerManaInfusionRecipe(new ItemStack(TMItems.itemBO, 1, 0), ThermalExpansion.powerCoilSilver, 3000);		
 
+			//Normal Recipes
+			oreDictRecipe(new ItemStack(TMItems.itemBO, 1, 1),
+					new Object[] {" M ", "MIM", " M ",
+				'M', "ingotManasteel",
+				'I', "ingotIron"		});
+			oreDictRecipe(new ItemStack(TMBlocks.flowerDynamo), 
+					new Object[] {" C ", "GIG", "IWI",
+				'W', new ItemStack(Items.redstone),
+				'C', new ItemStack(TMItems.itemBO, 1, 0),
+				'G', new ItemStack(TMItems.itemBO, 1, 1),
+				'I', "ingotManasteel"				});
+			oreDictRecipe(new ItemStack(TMBlocks.manaFabricator), 
+					new Object[] {"CDC", "IDI", " P ",
+				'C', new ItemStack(TMItems.itemBO, 1, 1),
+				'I', "ingotManasteel",
+				'D', "manaDiamond",
+				'P', ThermalExpansion.frameTesseractFull			});
+			oreDictRecipe(new ItemStack(TMBlocks.processorBO),
+					new Object[] {" A ", "BMB", "ICI",
+				'M', ThermalExpansion.frameMachineBasic,
+				'I', "ingotManasteel",
+				'C', new ItemStack(TMItems.itemBO, 1, 0),
+				'B', "livingrock",
+				'A', new ItemStack(Items.redstone)				});
+		}else{
+			//ManaInfusion
+			BotaniaAPI.registerManaInfusionRecipe(new ItemStack(TMItems.itemBO, 1, 0), new ItemStack(Items.redstone), 3000);		
 
-	public static void init() {
-		try {
-			Class<?> CP = Class.forName("vazkii.botania.common.core.proxy.CommonProxy");
-			for(Method method : CP.getMethods()){
-				if(method.getName().equalsIgnoreCase("sparkleFX")){
-					sparkle = method;
-				}
-			}
-			System.out.println("Technomancy: Botania Module Activated");
-		} catch (Exception e) {bo=false;System.out.println("Technomancy: Failed to load Botania Module");;Conf.ex(e);}
+			//Normal Recipes
+			oreDictRecipe(new ItemStack(TMItems.itemBO, 1, 1),
+					new Object[] {" M ", "MIM", " M ",
+				'M', "ingotManasteel",
+				'I', "ingotIron"		});
+			oreDictRecipe(new ItemStack(TMBlocks.flowerDynamo), 
+					new Object[] {" C ", "GIG", "IWI",
+				'W', new ItemStack(Items.redstone),
+				'C', new ItemStack(TMItems.itemBO, 1, 0),
+				'G', new ItemStack(TMItems.itemBO, 1, 1),
+				'I', "ingotManasteel"				});
+			oreDictRecipe(new ItemStack(TMBlocks.manaFabricator), 
+					new Object[] {"CDC", "IDI", " P ",
+				'C', new ItemStack(TMItems.itemBO, 1, 1),
+				'I', "ingotManasteel",
+				'D', "manaDiamond",
+				'P', new ItemStack(Items.ender_eye, 1, 0)			});
+			oreDictRecipe(new ItemStack(TMBlocks.processorBO),
+					new Object[] {" A ", "BMB", "ICI",
+				'M', new ItemStack(Items.redstone),
+				'I', "ingotManasteel",
+				'C', new ItemStack(TMItems.itemBO, 1, 0),
+				'B', "livingrock",
+				'A', new ItemStack(Items.redstone)				});
+		}
 	}
-
-	public static void client(){
-		try{
-			Class<?> HUD = Class.forName("vazkii.botania.client.core.handler.HUDHandler");
-			for(Method method : HUD.getMethods()){
-				if(method.getName().equalsIgnoreCase("drawSimpleManaHUD")){
-					drawHUD = method;
-				}
-			}
-			
-//			Class CP = Class.forName("vazkii.botania.common.core.proxy.ClientProxy");
-//			for(Method method : CP.getMethods()){
-//				if(method.getName().equalsIgnoreCase("sparkleFX")){
-//					sparkle = method;
-//				}
-//			}
-		}catch(Exception e){bo=false;System.out.println("Technomancy: Failed to load Botania Client-Side Module");Conf.ex(e);}
+	
+	@SuppressWarnings("unchecked")
+	private static IRecipe oreDictRecipe(ItemStack res, Object[] params) {
+		IRecipe rec = new ShapedOreRecipe(res, params);
+		CraftingManager.getInstance().getRecipeList().add(rec);
+		return rec;
 	}
-
+	
 	public static void sparkle(World world, double d, double d1, double f, Random r){
-		try {
-			Class<?> BOM = Class.forName("vazkii.botania.common.Botania");
-			sparkle.invoke(BOM.getField("proxy").get(BOM), world, d, d1, f, r.nextFloat(), r.nextFloat(), 1.0F, r.nextFloat() * 4, 10);
-		} catch (Exception e) {Conf.ex(e);}
+		BotaniaAPI.internalHandler.sparkleFX( world, d, d1, f, r.nextFloat(), r.nextFloat(), 1.0F, r.nextFloat() * 4, 10);
 	}
-
 }

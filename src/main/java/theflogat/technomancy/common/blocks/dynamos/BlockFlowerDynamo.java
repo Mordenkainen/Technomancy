@@ -17,8 +17,6 @@ import net.minecraft.world.World;
 import theflogat.technomancy.common.blocks.base.BlockBase;
 import theflogat.technomancy.common.items.api.ToolWrench;
 import theflogat.technomancy.common.items.base.TMItems;
-import theflogat.technomancy.common.tiles.dynamos.TileBloodDynamo;
-import theflogat.technomancy.common.tiles.dynamos.TileEssentiaDynamo;
 import theflogat.technomancy.common.tiles.dynamos.TileFlowerDynamo;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
@@ -26,7 +24,9 @@ import theflogat.technomancy.lib.RenderIds;
 import theflogat.technomancy.util.InvHelper;
 import theflogat.technomancy.util.RedstoneSet;
 import vazkii.botania.api.wand.IWandHUD;
+import cpw.mods.fml.common.Optional;
 
+@Optional.Interface(iface = "vazkii.botania.api.wand.IWandHUD", modid = "Botania")
 public class BlockFlowerDynamo extends BlockBase implements IWandHUD {
 
 	public BlockFlowerDynamo() {

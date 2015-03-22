@@ -3,8 +3,6 @@ package theflogat.technomancy.common.blocks.machines;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,7 +21,6 @@ import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.compat.Botania;
 import theflogat.technomancy.util.InvHelper;
-import vazkii.botania.api.wand.IWandHUD;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -43,9 +40,6 @@ public abstract class BlockProcessor extends BlockBase {
 			}
 			if(tile instanceof TileBMProcessor) {
 				player.openGui(Technomancy.instance, 1, world, x, y, z);
-			}
-			if(tile instanceof TileBOProcessor) {
-				player.openGui(Technomancy.instance, 2, world, x, y, z);
 			}
 		}		
 		return true;
@@ -125,15 +119,6 @@ public abstract class BlockProcessor extends BlockBase {
 	    		world.spawnParticle("smoke", f + f4, f1, f2 + f3, 0.0D, 0.0D, 0.0D);
 	    		world.spawnParticle("flame", f + f4, f1, f2 + f3, 0.0D, 0.0D, 0.0D);
 	    	}
-	    	if(te instanceof TileBOProcessor) {
-	    		f += 0.1F;
-	    		f1 += 0.1F;
-	    		f2 += 0.1F;
-		    	Botania.sparkle(world, (double)f - f3, f1, f2 + f4, r);
-		    	Botania.sparkle(world, (double)f + f3, f1, f2 + f4, r);
-		    	Botania.sparkle(world, (double)f + f4, f1, f2 - f3, r);
-		    	Botania.sparkle(world, (double)f + f4, f1, f2 + f3, r);
-		    }
 	    }
 	}
 	
@@ -185,26 +170,6 @@ public abstract class BlockProcessor extends BlockBase {
 		@Override
 		public TileEntity createNewTileEntity(World w, int meta) {
 			return new TileBMProcessor();
-		}
-	}
-	
-	public static class BlockBOProcessor extends BlockProcessor implements IWandHUD {
-		
-		public BlockBOProcessor() {
-			this.name = "BO";
-		}
-		
-		@Override
-		public TileEntity createNewTileEntity(World w, int meta) {
-			return new TileBOProcessor();
-		}
-
-		@Override
-		public void renderHUD(Minecraft minecraft, ScaledResolution res, World world, int x, int y, int z) {
-			TileEntity tile = world.getTileEntity(x, y, z);
-			if(tile instanceof TileBOProcessor) {
-				((TileBOProcessor)tile).renderHUD(minecraft, res);
-			}
 		}
 	}
 }
