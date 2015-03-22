@@ -19,7 +19,6 @@ import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.lib.compat.ThermalExpansion;
 import theflogat.technomancy.util.Ore;
-import vazkii.botania.api.BotaniaAPI;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CraftingHandler {
@@ -55,7 +54,7 @@ public class CraftingHandler {
 						new ItemStack(Items.bucket), new ItemStack(Items.bucket), new ItemStack(Items.emerald), new ItemStack(Items.emerald)}));
 				if(Ids.wandCores)
 					ResearchHandler.recipes.put("EnergizedWandRod", ThaumcraftApi.addInfusionCraftingRecipe("ENERGIZEDWAND",
-							new ItemStack(TMItems.itemWandCores, 1, 0), 25,
+							new ItemStack(TMItems.itemWandCores, 1, 0), 8,
 							new AspectList().add(Aspect.ENERGY, 50).add(Aspect.TOOL, 50).add(Aspect.MAGIC, 50).add(Aspect.MECHANISM, 50).add(Aspect.EXCHANGE,
 									50),new ItemStack(Thaumcraft.itemWandRod, 1, 2),
 									new ItemStack[] { new ItemStack((ThermalExpansion.capacitorResonant).getItem(), 1, 4), new ItemStack((ThermalExpansion.powerCoilElectrum)
@@ -63,13 +62,13 @@ public class CraftingHandler {
 											new ItemStack((ThermalExpansion.powerCoilGold).getItem(), 1, 1), new ItemStack(TMItems.itemMaterial, 1, 1) }));
 				if(Ids.condenser)
 					ResearchHandler.recipes.put("Condenser", ThaumcraftApi.addInfusionCraftingRecipe("CONDENSER",
-							new ItemStack(TMBlocks.condenserBlock), 25,	new AspectList().add(Aspect.ENERGY, 100).add(Aspect.MECHANISM, 50)
+							new ItemStack(TMBlocks.condenserBlock), 8,	new AspectList().add(Aspect.ENERGY, 100).add(Aspect.MECHANISM, 50)
 							.add(Aspect.EXCHANGE, 25).add(Aspect.ORDER, 25), new ItemStack(Thaumcraft.blockStoneDevice, 1 , 2), 
 							new ItemStack[]{ThermalExpansion.frameMachineBasic,new ItemStack(TMItems.itemMaterial, 1, 1),new ItemStack(TMItems.itemMaterial,
 									1, 1), new ItemStack(Thaumcraft.blockCosmeticSolid, 1, 4), new ItemStack(Thaumcraft.blockCosmeticSolid, 1, 4)}));
 				if(Ids.eldrichConsumer)
 					ResearchHandler.recipes.put("EldritchConsumer", ThaumcraftApi.addInfusionCraftingRecipe("ELDRITCHCONSUMER",
-							new ItemStack(TMBlocks.eldritchConsumer, 1), 50,new AspectList().add(Aspect.EXCHANGE, 256).add(Aspect.MINE, 128)
+							new ItemStack(TMBlocks.eldritchConsumer, 1), 16,new AspectList().add(Aspect.EXCHANGE, 256).add(Aspect.MINE, 128)
 							.add(Aspect.ENERGY, 64).add(Aspect.MOTION, 32), new ItemStack(Thaumcraft.blockMetalDevice, 1 , 9), 
 							new ItemStack[]{new ItemStack(Items.diamond_pickaxe),ThermalExpansion.powerCoilGold,new ItemStack(Thaumcraft.blockJar),
 						new ItemStack(Thaumcraft.blockJar), new ItemStack(Thaumcraft.itemPickThaumium)}));
@@ -214,21 +213,21 @@ public class CraftingHandler {
 						new ItemStack(Items.bucket), new ItemStack(Items.bucket), new ItemStack(Items.emerald), new ItemStack(Items.emerald)}));
 				if(Ids.wandCores)
 					ResearchHandler.recipes.put("EnergizedWandRod", ThaumcraftApi.addInfusionCraftingRecipe("ENERGIZEDWAND",
-							new ItemStack(TMItems.itemWandCores, 1), 25,
+							new ItemStack(TMItems.itemWandCores, 1), 8,
 							new AspectList().add(Aspect.ENERGY, 50).add(Aspect.TOOL, 50).add(Aspect.MAGIC, 50).add(Aspect.MECHANISM, 50).add(Aspect.EXCHANGE,
 									50),new ItemStack(Thaumcraft.itemWandRod, 1, 2), new ItemStack[] { new ItemStack(Blocks.redstone_block, 1),
 						new ItemStack(Blocks.gold_block, 1, 193),new ItemStack(TMItems.itemMaterial, 1, 2),
 						new ItemStack(TMItems.itemMaterial, 1, 1), new ItemStack(TMItems.itemMaterial, 1, 1) }));
 				if(Ids.condenser)
 					ResearchHandler.recipes.put("Condenser", ThaumcraftApi.addInfusionCraftingRecipe("CONDENSER",
-							new ItemStack(TMBlocks.condenserBlock), 25,	new AspectList().add(Aspect.ENERGY, 100).add(Aspect.MECHANISM, 50)
+							new ItemStack(TMBlocks.condenserBlock), 8,	new AspectList().add(Aspect.ENERGY, 100).add(Aspect.MECHANISM, 50)
 							.add(Aspect.EXCHANGE, 25).add(Aspect.ORDER, 25), new ItemStack(Thaumcraft.blockStoneDevice, 1 , 2), 
 							new ItemStack[] { new ItemStack(TMItems.itemMaterial, 1, 2), new ItemStack(TMItems.itemMaterial, 1, 1),
 						new ItemStack(TMItems.itemMaterial,1, 1), new ItemStack(Thaumcraft.blockCosmeticSolid, 1, 4),
 						new ItemStack(Thaumcraft.blockCosmeticSolid, 1, 4)}));
 				if(Ids.eldrichConsumer)
 					ResearchHandler.recipes.put("EldritchConsumer", ThaumcraftApi.addInfusionCraftingRecipe("ELDRITCHCONSUMER",
-							new ItemStack(TMBlocks.eldritchConsumer, 1), 50,new AspectList().add(Aspect.EXCHANGE, 256).add(Aspect.MINE, 128)
+							new ItemStack(TMBlocks.eldritchConsumer, 1), 16,new AspectList().add(Aspect.EXCHANGE, 256).add(Aspect.MINE, 128)
 							.add(Aspect.ENERGY, 64).add(Aspect.MOTION, 32), new ItemStack(Thaumcraft.blockMetalDevice, 1 , 9), 
 							new ItemStack[]{new ItemStack(Items.diamond_pickaxe),new ItemStack(Items.redstone),new ItemStack(Thaumcraft.blockJar),
 						new ItemStack(Thaumcraft.blockJar), new ItemStack(Thaumcraft.itemPickThaumium)}));
