@@ -22,6 +22,7 @@ import theflogat.technomancy.util.Ore;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CraftingHandler {
+	public static IRecipe itemBoost;
 
 	public static void initFurnaceRecipes() {
 		for (Ore ore : Ore.ores) {
@@ -366,7 +367,7 @@ public class CraftingHandler {
 
 	public static void initTechnomancyRecipes() {
 		if(Ids.itemBoost)
-			GameRegistry.addShapedRecipe(new ItemStack(TMItems.itemBoost), new Object[]{
+			itemBoost = GameRegistry.addShapedRecipe(new ItemStack(TMItems.itemBoost), new Object[]{
 				" R ",
 				"RNR",
 				" G ",
