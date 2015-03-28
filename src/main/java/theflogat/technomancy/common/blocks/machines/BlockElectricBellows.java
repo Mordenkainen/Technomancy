@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import cpw.mods.fml.relauncher.Side;
@@ -52,7 +53,7 @@ public class BlockElectricBellows extends BlockBase{
 			offsetX += 1;
 		}
 		if(Thaumcraft.TileAlchemyFurnace.isInstance(world.getTileEntity(x + offsetX, y, z + offsetZ)) ||
-				Thaumcraft.TileArcaneFurnace.isInstance(world.getTileEntity(x + (offsetX*2), y, z + (offsetZ*2)))) {
+				Thaumcraft.TileArcaneFurnace.isInstance(world.getTileEntity(x + (offsetX*2), y, z + (offsetZ*2))) || TileEntityFurnace.class.isInstance(world.getTileEntity(x + offsetX, y, z + offsetZ))) {
 			return true;
 		}
 		return false;
