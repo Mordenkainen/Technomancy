@@ -107,31 +107,23 @@ public class Botania {
 	public static void initBotaniaLexicon() {
 		if(Ids.matBO) {
 			TechnoLexicon manaCoilLex = new TechnoLexicon("tc.research_name.TECHNOBASICS", BotaniaAPI.categoryDevices);
-			manaCoilLex.setLexiconPages(BotaniaAPI.internalHandler.textPage("techno.research_page.TECHNOBASICS.1"),
-					BotaniaAPI.internalHandler.manaInfusionRecipePage("Mana Coil", manaCoilRec),
-					BotaniaAPI.internalHandler.craftingRecipePage("Manasteel Gear", manaGear));
+			manaCoilLex.setLexiconPages(BotaniaAPI.internalHandler.textPage("techno.research_page.TECHNOBASICS.1"), BotaniaAPI.internalHandler.manaInfusionRecipePage("Mana Coil", manaCoilRec), BotaniaAPI.internalHandler.craftingRecipePage("Manasteel Gear", manaGear));
 		}
 		if(Ids.flowerDyn) {
 			TechnoLexicon flowerDynLex = new TechnoLexicon("tc.research_name.DYNAMO", BotaniaAPI.categoryDevices);
-			flowerDynLex.setLexiconPages(BotaniaAPI.internalHandler.textPage("techno.lexicon_page.FLOWERDYNAMO.1"),
-					BotaniaAPI.internalHandler.textPage("techno.lexicon_page.FLOWERDYNAMO.2"),
-					BotaniaAPI.internalHandler.textPage("techno.lexicon_page.FLOWERDYNAMO.3"),
-					BotaniaAPI.internalHandler.craftingRecipePage("Flower Dynamo", flowerDynamo));
+			flowerDynLex.setLexiconPages(BotaniaAPI.internalHandler.textPage("techno.lexicon_page.FLOWERDYNAMO.1"), BotaniaAPI.internalHandler.textPage("techno.lexicon_page.FLOWERDYNAMO.2"), BotaniaAPI.internalHandler.craftingRecipePage("Flower Dynamo", flowerDynamo));
 			if(Ids.itemBoost) {
-				flowerDynLex.addPage(BotaniaAPI.internalHandler.textPage("techno.lexicon_page.FLOWERDYNAMO.4"));
+				flowerDynLex.addPage(BotaniaAPI.internalHandler.textPage("techno.lexicon_page.FLOWERDYNAMO.3"));
 				flowerDynLex.addPage(BotaniaAPI.internalHandler.craftingRecipePage("Potency Gem", CraftingHandler.itemBoost));
 			}
 		}
 		if(Ids.manaFab) {
 			TechnoLexicon manaFabLex = new TechnoLexicon("techno.lexicon_name.MANAFAB", BotaniaAPI.categoryDevices);
-			manaFabLex.setLexiconPages(BotaniaAPI.internalHandler.textPage("techno.lexicon_page.MANAFAB.1"),
-					BotaniaAPI.internalHandler.craftingRecipePage("Mana Fabricator", manaFabricator));
+			manaFabLex.setLexiconPages(BotaniaAPI.internalHandler.textPage("techno.lexicon_page.MANAFAB.1"), BotaniaAPI.internalHandler.craftingRecipePage("Mana Fabricator", manaFabricator));
 		}
 		if(Ids.processorBO) {
 			TechnoLexicon processorBOLex = new TechnoLexicon("techno.lexicon_name.PROCESSORBO", BotaniaAPI.categoryDevices);
-			processorBOLex.setLexiconPages(BotaniaAPI.internalHandler.textPage("techno.lexicon_page.PROCESSORBO.1"),
-					BotaniaAPI.internalHandler.textPage("techno.lexicon_page.PROCESSORBO.2"),
-					BotaniaAPI.internalHandler.craftingRecipePage("Botanical Purifier", processorBO));
+			processorBOLex.setLexiconPages(BotaniaAPI.internalHandler.textPage("techno.lexicon_page.PROCESSORBO.1"), BotaniaAPI.internalHandler.textPage("techno.lexicon_page.PROCESSORBO.2"), BotaniaAPI.internalHandler.craftingRecipePage("Botanical Purifier", processorBO));
 		}
 	}
 	

@@ -211,17 +211,16 @@ public class ResearchHandler {
 			if(Ids.dynEssentia){
 				iconBlock = TMBlocks.essentiaDynamo;
 				pages.add(new ResearchPage("techno.research_page.DYNAMO.1"));
-				pages.add(new ResearchPage("techno.research_page.DYNAMO.2"));
 				pages.add(new ResearchPage((IArcaneRecipe)recipes.get("EssentiaDynamo")));
 			}
 			if(Ids.dynNode){
 				iconBlock = TMBlocks.nodeDynamo;
-				pages.add(new ResearchPage("techno.research_page.DYNAMO.3"));
+				pages.add(new ResearchPage("techno.research_page.DYNAMO.2"));
 				pages.add(new ResearchPage((IArcaneRecipe)recipes.get("NodeDynamo")));
 			}
 			if(Ids.dynEssentia || Ids.dynNode){
 				if(Ids.itemBoost) {
-					pages.add(new ResearchPage("techno.research_page.DYNAMO.4"));
+					pages.add(new ResearchPage("techno.research_page.DYNAMO.3"));
 					pages.add(new ResearchPage(CraftingHandler.itemBoost));
 				}
 				new ResearchItem("DYNAMO", "TECHNOMANCY", new AspectList().add(Aspect.MECHANISM, 5).add(Aspect.ENERGY, 5).add(Aspect.MAGIC, 5), 2, 2, 3,
