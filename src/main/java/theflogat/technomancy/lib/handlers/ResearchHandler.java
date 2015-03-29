@@ -1,7 +1,9 @@
 package theflogat.technomancy.lib.handlers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
@@ -204,22 +206,27 @@ public class ResearchHandler {
 		}
 		
 		if(Ids.itemMaterial){
-			if(Ids.dynEssentia && Ids.dynNode){
+			ArrayList<ResearchPage> pages = new ArrayList<ResearchPage>();
+			Block iconBlock = null;
+			if(Ids.dynEssentia){
+				iconBlock = TMBlocks.essentiaDynamo;
+				pages.add(new ResearchPage("techno.research_page.DYNAMO.1"));
+				pages.add(new ResearchPage("techno.research_page.DYNAMO.2"));
+				pages.add(new ResearchPage((IArcaneRecipe)recipes.get("EssentiaDynamo")));
+			}
+			if(Ids.dynNode){
+				iconBlock = TMBlocks.nodeDynamo;
+				pages.add(new ResearchPage("techno.research_page.DYNAMO.3"));
+				pages.add(new ResearchPage((IArcaneRecipe)recipes.get("NodeDynamo")));
+			}
+			if(Ids.dynEssentia || Ids.dynNode){
+				if(Ids.itemBoost) {
+					pages.add(new ResearchPage("techno.research_page.DYNAMO.4"));
+					pages.add(new ResearchPage(CraftingHandler.itemBoost));
+				}
 				new ResearchItem("DYNAMO", "TECHNOMANCY", new AspectList().add(Aspect.MECHANISM, 5).add(Aspect.ENERGY, 5).add(Aspect.MAGIC, 5), 2, 2, 3,
-					new ItemStack(TMBlocks.nodeDynamo)).setPages(new ResearchPage[] { new ResearchPage("techno.research_page.DYNAMO.1"),
-					new ResearchPage((IArcaneRecipe)recipes.get("EssentiaDynamo")), new ResearchPage("techno.research_page.DYNAMO.2"),
-					new ResearchPage((IArcaneRecipe)recipes.get("NodeDynamo")) }).setParents(new String[] { "TECHNOBASICS" }).setSecondary()
-					.registerResearchItem();
-			}else if(Ids.dynNode){
-				new ResearchItem("DYNAMO", "TECHNOMANCY", new AspectList().add(Aspect.MECHANISM, 5).add(Aspect.ENERGY, 5).add(Aspect.MAGIC, 5), 2, 2, 3,
-					new ItemStack(TMBlocks.nodeDynamo)).setPages(new ResearchPage[] {new ResearchPage("techno.research_page.DYNAMO.2"),
-					new ResearchPage((IArcaneRecipe)recipes.get("NodeDynamo")) }).setParents(new String[] { "TECHNOBASICS" }).setSecondary()
-					.registerResearchItem();
-			}else if(Ids.dynEssentia){
-				new ResearchItem("DYNAMO", "TECHNOMANCY", new AspectList().add(Aspect.MECHANISM, 5).add(Aspect.ENERGY, 5).add(Aspect.MAGIC, 5), 2, 2, 3,
-					new ItemStack(TMBlocks.nodeDynamo)).setPages(new ResearchPage[] { new ResearchPage("techno.research_page.DYNAMO.1"),
-					new ResearchPage((IArcaneRecipe)recipes.get("EssentiaDynamo"))}).setParents(new String[] { "TECHNOBASICS" }).setSecondary()
-					.registerResearchItem();
+						new ItemStack(iconBlock)).setPages(pages.toArray(new ResearchPage[pages.size()])).setParents(new String[] { "TECHNOBASICS" }).setSecondary()
+						.registerResearchItem();
 			}
 		}
 		
@@ -227,7 +234,8 @@ public class ResearchHandler {
 			new ResearchItem("NODEGENERATOR", "TECHNOMANCY", new AspectList().add(Aspect.MECHANISM, 5).add(Aspect.ENERGY, 5).add(Aspect.TAINT, 5)
 				.add(Aspect.AURA, 5), 4, 3, 3, new ItemStack(TMBlocks.nodeGenerator)).setPages(new ResearchPage[] {
 				new ResearchPage("techno.research_page.NODEGENERATOR.1"), new ResearchPage("techno.research_page.NODEGENERATOR.2"),
-				new ResearchPage((InfusionRecipe)recipes.get("NodeGenerator"))}).setParents(new String[] { "CONDENSER" }).setSpecial()
+				new ResearchPage("techno.research_page.NODEGENERATOR.3"), new ResearchPage((InfusionRecipe)recipes.get("NodeGenerator"))
+				}).setParents(new String[] { "CONDENSER" }).setSpecial()
 				.registerResearchItem();
 		}
 		
@@ -247,9 +255,9 @@ public class ResearchHandler {
 		if(Ids.itemMaterial && Ids.contEssentia && Ids.cosmeticOpaque && Ids.wirelessCoil){
 			new ResearchItem("TESLACOIL", "TECHNOMANCY", new AspectList().add(Aspect.EXCHANGE, 5).add(Aspect.ELDRITCH, 5).add(Aspect.MECHANISM, 5)
 				.add(Aspect.AURA, 5), 3, -3, 3, new ItemStack(TMBlocks.teslaCoil)).setPages(new ResearchPage[] {
-				new ResearchPage("techno.research_page.TESLACOIL.1"), new ResearchPage("techno.research_page.TESLACOIL.2"),
-				new ResearchPage((IArcaneRecipe)recipes.get("TeslaCoil")), new ResearchPage((IArcaneRecipe)recipes.get("CoilCoupler"))})
-				.setParents(new String[] { "QUANTUMJARS"}).setRound().registerResearchItem();
+				new ResearchPage("techno.research_page.TESLACOIL.1"), new ResearchPage((IArcaneRecipe)recipes.get("TeslaCoil")),
+				new ResearchPage((IArcaneRecipe)recipes.get("CoilCoupler"))}).setParents(new String[] { "QUANTUMJARS"}).setRound()
+				.registerResearchItem();
 		}
 		
 		if(Ids.itemMaterial && Ids.processorTC && Ids.fluxLamp){

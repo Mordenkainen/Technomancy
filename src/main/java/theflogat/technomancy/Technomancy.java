@@ -117,6 +117,7 @@ public class Technomancy {
         
         if(CompatibilityHandler.bo) {
         	Botania.initBotaniaRecipes();
+        	Botania.initBotaniaLexicon();
         }
         if(Thaumcraft.th) {
         	CraftingHandler.initThaumcraftRecipes();
