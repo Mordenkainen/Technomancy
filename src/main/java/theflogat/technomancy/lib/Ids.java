@@ -48,4 +48,5 @@ public class Ids {
 		public static boolean catalyst;
 		public static boolean reservoir;
 		public static boolean ritualTome;
+		public static boolean advDeconTable;
 }

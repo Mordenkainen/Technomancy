@@ -42,6 +42,7 @@ public class Names {
 	public static final String fakeAirNG = "fakeAir";
 	public static final String reservoir = "reservoir";
 	public static final String fakeAirLight = "fakeAirLight";
+	public static final String advDeconTable = "advDeconTable";
 	
 
 }

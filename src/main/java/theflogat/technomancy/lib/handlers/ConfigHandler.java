@@ -45,6 +45,7 @@ public class ConfigHandler {
         Ids.eldrichConsumer = config.get(blocks, Names.eldritchConsumer, true).getBoolean();
         Ids.catalyst = config.get(blocks, Names.catalyst, true).getBoolean();
         Ids.reservoir = config.get(blocks, Names.reservoir, true).getBoolean();
+        Ids.advDeconTable = config.get(blocks, Names.advDeconTable, true).getBoolean();
         
         String items = "Items";
         //Items        

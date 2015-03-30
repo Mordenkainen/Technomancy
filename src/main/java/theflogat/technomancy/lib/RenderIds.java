@@ -19,6 +19,7 @@ public class RenderIds {
 	public static int idEldrichConsumer;
 	public static int idCrystal;
 	public static int idCatalyst;
+	public static int idAdvDeconTable;
 	
 
 }

@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import theflogat.technomancy.client.renderers.blocks.BlockAdvDeconTableRenderer;
 import theflogat.technomancy.client.renderers.blocks.BlockBiomeMorpherRenderer;
 import theflogat.technomancy.client.renderers.blocks.BlockBloodDynamoRenderer;
 import theflogat.technomancy.client.renderers.blocks.BlockBloodFabricatorRenderer;
@@ -25,6 +26,7 @@ import theflogat.technomancy.client.renderers.gui.GuiProcessorBM;
 import theflogat.technomancy.client.renderers.gui.GuiProcessorBO;
 import theflogat.technomancy.client.renderers.gui.GuiProcessorTC;
 import theflogat.technomancy.client.renderers.gui.GuiRitualTome;
+import theflogat.technomancy.client.renderers.tiles.TileAdvDeconTableRenderer;
 import theflogat.technomancy.client.renderers.tiles.TileBiomeMorpherRenderer;
 import theflogat.technomancy.client.renderers.tiles.TileBloodDynamoRenderer;
 import theflogat.technomancy.client.renderers.tiles.TileBloodFabricatorRenderer;
@@ -50,6 +52,7 @@ import theflogat.technomancy.common.tiles.dynamos.TileFlowerDynamo;
 import theflogat.technomancy.common.tiles.dynamos.TileNodeDynamo;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import theflogat.technomancy.common.tiles.technom.TileCrystal;
+import theflogat.technomancy.common.tiles.thaumcraft.machine.TileAdvDeconTable;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBiomeMorpher;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBloodFabricator;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEldritchConsumer;
@@ -119,6 +122,9 @@ public class ClientProxy extends CommonProxy implements IGuiHandler{
     		ClientRegistry.bindTileEntitySpecialRenderer(TileReconstructor.class, new TileReconstructorRenderer());
     		RenderIds.idReconstructor = RenderingRegistry.getNextAvailableRenderId();
     		
+    		ClientRegistry.bindTileEntitySpecialRenderer(TileAdvDeconTable.class, new TileAdvDeconTableRenderer());
+    		RenderIds.idAdvDeconTable = RenderingRegistry.getNextAvailableRenderId();
+    		
     		ClientRegistry.bindTileEntitySpecialRenderer(TileEldritchConsumer.class, new TileEldritchConsumerRenderer());
     		RenderIds.idEldrichConsumer = RenderingRegistry.getNextAvailableRenderId();
     		
@@ -133,6 +139,7 @@ public class ClientProxy extends CommonProxy implements IGuiHandler{
         	RenderingRegistry.registerBlockHandler(new BlockCreativeJarRenderer());
         	RenderingRegistry.registerBlockHandler(new BlockReconstructorRenderer());
         	RenderingRegistry.registerBlockHandler(new BlockEldritchConsumerRenderer());
+        	RenderingRegistry.registerBlockHandler(new BlockAdvDeconTableRenderer());
     	}
     	
     	if(BloodMagic.bm) {

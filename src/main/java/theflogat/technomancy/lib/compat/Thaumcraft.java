@@ -19,6 +19,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import thaumcraft.api.ThaumcraftApi;
+import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
@@ -38,13 +39,6 @@ public class Thaumcraft {
 	public static Constructor<? extends EntityFX> FXEssentiaTrailConst;
 	public static Constructor<? extends EntityFX> FXLightningBoltConst;
 	public static Constructor<? extends TileEntitySpecialRenderer> JarRenderConst;
-//	public static Constructor<?> ResearchItemConst;
-//	public static Constructor<?> ResearchItemStConst;
-//	public static Constructor<?> ResearchPageString;
-//	public static Constructor<?> ResearchPageCrucible;
-//	public static Constructor<?> ResearchPageIRecipe;
-//	public static Constructor<?> ResearchPageIArcRecipe;
-//	public static Constructor<?> ResearchPageIInfRecipe;
 
 	public static Class<?> TileAlchemyFurnace;
 	public static Class<?> TileArcaneFurnace;
@@ -55,11 +49,9 @@ public class Thaumcraft {
 	public static Class<?> TileTable;
 	public static Class<?> TileResearchTable;
 	public static Class<?> ItemWandCasting;
-//	public static Class ResearchPage;
-//	public static Class ResearchPageArr;
-//	public static Class CrucibleRecipe;
-//	public static Class ArcaneRecipe;
-//	public static Class InfusionRecipe;
+	public static Class<?> ThaumcraftC;
+	public static Class<?> CommonProxy;
+	public static Class<?> PlayerKnowledge;
 
 	public static Method getObjectTags;
 	public static Method getBonusTags;
@@ -72,27 +64,9 @@ public class Thaumcraft {
 	public static Method setWidth;
 	public static Method finalizeBolt;
 	public static Method drainEssentia;
-	//ThaumcraftApi
-//	public static Method addSmeltingBonus;
-//	public static Method addInfusionCraftingRecipe;
-//	public static Method addArcaneCraftingRecipe;
-//	public static Method addCrucibleRecipe;
 
 	public static Method setCap;
 	public static Method setRod;
-	//ResearchCategory
-//	public static Method registerCategory;
-	//PageResearch
-//	public static Method setPages;
-//	public static Method setAutoUnlock;
-//	public static Method setRound;
-//	public static Method setStub;
-//	public static Method registerResearchItem;
-//	public static Method setParents;
-//	public static Method setSecondary;
-//	public static Method setSpecial;
-//	public static Method setHidden;
-//	public static Method setItemTriggers;
 	//WandCasting
 	public static Method getAspectsWithRoom;
 	public static Method getVis;
@@ -108,7 +82,12 @@ public class Thaumcraft {
 	public static Method drawFloatyLine;
 	//JarRender
 	public static Method renderLiquid;
-
+	//PlayerKnowledge
+	public static Method setAspectPool;
+	public static Method getAspectPoolFor;
+	//CommonProxy
+	public static Method getPlayerKnowledge;
+	
 	public static Fluid FLUXGOO;
 
 	public static Item itemResource;
@@ -127,6 +106,7 @@ public class Thaumcraft {
 	public static Block blockTube;
 	public static Block blockCustomPlant;
 	public static Block blockWoodenDevice;
+	public static Block blockTable;
 
 	public static int enchantFrugal;
 
@@ -152,6 +132,7 @@ public class Thaumcraft {
 			blockTube = (Block)TCB.getField("blockTube").get(TCB);
 			blockCustomPlant = (Block)TCB.getField("blockCustomPlant").get(TCB);
 			blockWoodenDevice = (Block)TCB.getField("blockWoodenDevice").get(TCB);
+			blockTable = (Block)TCB.getField("blockTable").get(TCB);
 
 			Class<?> TCI = Class.forName("thaumcraft.common.config.ConfigItems");
 			itemResource = (Item)TCI.getField("itemResource").get(TCI);
@@ -171,6 +152,7 @@ public class Thaumcraft {
 			TileTube = Class.forName("thaumcraft.common.tiles.TileTube");
 			TileTable = Class.forName("thaumcraft.common.tiles.TileTable");
 			TileResearchTable = Class.forName("thaumcraft.common.tiles.TileResearchTable");
+			ThaumcraftC = Class.forName("thaumcraft.common.Thaumcraft");
 
 			for(Method method : TileNode.getMethods()){
 				if(method.getName().equalsIgnoreCase("getAspects")){getAspects = method;
@@ -199,16 +181,7 @@ public class Thaumcraft {
 			for(Method method : TEH.getMethods()){
 				if(method.getName().equalsIgnoreCase("drainEssentia")){drainEssentia = method;}
 			}
-
-//			Class TAPI = Class.forName("thaumcraft.api.ThaumcraftApi");
-//			for(Method method : TAPI.getMethods()){
-//				if(method.getName().equalsIgnoreCase("addSmeltingBonus") && method.getParameterTypes()[0]!=ItemStack.class){
-//					addSmeltingBonus = method;
-//				}else if(method.getName().equalsIgnoreCase("addInfusionCraftingRecipe")){addInfusionCraftingRecipe = method;
-//				}else if(method.getName().equalsIgnoreCase("addArcaneCraftingRecipe")){addArcaneCraftingRecipe = method;
-//				}else if(method.getName().equalsIgnoreCase("addCrucibleRecipe")){addCrucibleRecipe = method;
-//				}
-//			}
+			
 			enchantFrugal = ThaumcraftApi.enchantFrugal;//(int)TAPI.getField("enchantFrugal").getInt(TAPI);
 
 			ItemWandCasting = Class.forName("thaumcraft.common.items.wands.ItemWandCasting");
@@ -221,54 +194,27 @@ public class Thaumcraft {
 				}else if(method.getName().equalsIgnoreCase("addVis")){addVis = method;
 				}
 			}
-
-//			Class RCat = Class.forName("thaumcraft.api.research.ResearchCategories");
-//			for(Method method : RCat.getMethods()){
-//				if(method.getName().equalsIgnoreCase("registerCategory")){registerCategory = method;
-//				}
-//			}
-//
-//			Class TRI = Class.forName("thaumcraft.api.research.ResearchItem");
-//			ResearchItemConst = TRI.getConstructor(String.class, String.class, AspectList.class, int.class, int.class, int.class,
-//					ResourceLocation.class);
-//			ResearchItemStConst = TRI.getConstructor(String.class, String.class, AspectList.class, int.class, int.class, int.class,
-//					ItemStack.class);
-//			for(Method method : TRI.getMethods()){
-//				if(method.getName().equalsIgnoreCase("setPages")){setPages = method;
-//				}else if(method.getName().equalsIgnoreCase("setAutoUnlock")){setAutoUnlock = method;
-//				}else if(method.getName().equalsIgnoreCase("setRound")){setRound = method;
-//				}else if(method.getName().equalsIgnoreCase("setStub")){setStub = method;
-//				}else if(method.getName().equalsIgnoreCase("registerResearchItem")){registerResearchItem = method;
-//				}else if(method.getName().equalsIgnoreCase("setParents")){setParents = method;
-//				}else if(method.getName().equalsIgnoreCase("setSecondary")){setSecondary = method;
-//				}else if(method.getName().equalsIgnoreCase("setSpecial")){setSpecial = method;
-//				}else if(method.getName().equalsIgnoreCase("setHidden")){setHidden = method;
-//				}else if(method.getName().equalsIgnoreCase("setItemTriggers")){setItemTriggers = method;
-//				}
-//			}
-//
-//			CrucibleRecipe = Class.forName("thaumcraft.api.crafting.CrucibleRecipe");
-//			ArcaneRecipe = Class.forName("thaumcraft.api.crafting.IArcaneRecipe");
-//			InfusionRecipe = Class.forName("thaumcraft.api.crafting.InfusionRecipe");
-//
-//			ResearchPage = Class.forName("thaumcraft.api.research.ResearchPage");
-//			ResearchPageArr = Class.forName("[Lthaumcraft.api.research.ResearchPage;");
-//
-//			ResearchPageString = ResearchPage.getConstructor(String.class);
-//			ResearchPageCrucible = ResearchPage.getConstructor(CrucibleRecipe);
-//			ResearchPageIRecipe = ResearchPage.getConstructor(IRecipe.class);
-//			ResearchPageIArcRecipe = ResearchPage.getConstructor(ArcaneRecipe);
-//			ResearchPageIInfRecipe = ResearchPage.getConstructor(InfusionRecipe);
+			
+			PlayerKnowledge = Class.forName("thaumcraft.common.lib.research.PlayerKnowledge");
+			for(Method method : PlayerKnowledge.getMethods()){
+				if(method.getName().equalsIgnoreCase("setAspectPool")){setAspectPool = method;}
+				else if(method.getName().equalsIgnoreCase("getAspectPoolFor")){getAspectPoolFor = method;}
+			}
+			
+			CommonProxy = Class.forName("thaumcraft.common.CommonProxy");
+			for(Method method : CommonProxy.getMethods()){
+				if(method.getName().equalsIgnoreCase("getPlayerKnowledge")){getPlayerKnowledge = method;}
+			}
 
 			Class<?> Conf = Class.forName("thaumcraft.common.config.Config");
 			crooked = Conf.getField("crooked").getBoolean(Conf);
 			
 			Class<?> BlockJar = Class.forName("thaumcraft.common.blocks.BlockJar");
 			iconLiquid = (IIcon)BlockJar.getField("iconLiquid").get(Thaumcraft.blockJar);
-
+			
 			Class<?> TPH = Class.forName("thaumcraft.common.lib.network.PacketHandler");
 			PHInstance = (SimpleNetworkWrapper) TPH.getField("INSTANCE").get(TPH);
-			 
+			
 			Class<?> TES = Class.forName("thaumcraft.common.lib.network.fx.PacketFXEssentiaSource");
 			// Constructor: public PacketFXEssentiaSource(int x, int y, int z, byte dx, byte dy, byte dz, int color)
 			PacketFXEssentiaSourceConst = TES.getDeclaredConstructor(int.class, int.class, int.class, byte.class, byte.class, byte.class, int.class);
@@ -360,5 +306,26 @@ public class Thaumcraft {
 					"getObjectTags", new Object[0]);
 		}
 		return ot;
+	}
+
+	public static AspectList getBonusTags(ItemStack itemStack, AspectList al) {
+		try{
+			return (AspectList) getBonusTags.invoke(null, itemStack, al); 
+		}catch(Exception e){e.printStackTrace();}
+		return null;
+	}
+
+	public static void addAspectsToPool(String owner, Aspect aspect, short i) {
+		try{
+			setAspectPool.invoke(PlayerKnowledge.cast(getPlayerKnowledge.invoke(CommonProxy.cast(ThaumcraftC.getField("proxy").get(null)))), owner, aspect, i); 
+		}catch(Exception e){e.printStackTrace();}
+	}
+
+	public static short getAspectPoolFor(String owner, Aspect aspect) {
+		try{
+			return (Short) getAspectPoolFor.invoke(PlayerKnowledge.cast(getPlayerKnowledge.invoke(CommonProxy.cast(ThaumcraftC.getField("proxy").get(null)))),
+					owner, aspect); 
+		}catch(Exception e){e.printStackTrace();}
+		return 0;
 	}
 }

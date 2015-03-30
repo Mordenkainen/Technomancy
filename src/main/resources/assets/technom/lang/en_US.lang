@@ -50,6 +50,7 @@ tile.techno:processorBO.name=Botanical Purifier
 tile.techno:eldritchConsumer.name=Eldritch Consumer
 tile.techno:crystalBlock.name=Crystal Block
 tile.techno:catalyst.name=Catalyst
+tile.techno:advDeconTable.name=Advanced Deconstruction Table
 
 #Information
 info.techno:purity=Purity
@@ -130,5 +131,8 @@ techno.lexicon_name.PROCESSORBO=Botanical Purifier
 techno.lexicon_page.PROCESSORBO.1=You've been hunting down a way to increase your ore output without using silly purification methods, and now you've found one. By placing blocks in the left slot and providing a nearby Mana source, you've successfully acquired ore doubling through purification. These new purified ores can be processed through other magical devices similar to this one to increase ore output further, but each
 techno.lexicon_page.PROCESSORBO.2=device can only purify an ore twice. To obtain the ingots after the ore has been processed as many times as desired, throw the purified ore into a furnace in order to cook it.
 
+tc.research_name.ADVDECONTABLE=Easy Research?
+tc.research_text.ADVDECONTABLE=Lies!
+techno.research_page.ADVDECONTABLE.1=After struggling for a while, you have found a way to automate the discovery of research point. No idling and right-clicking for hours anymore! Unfortunately, it is twice as slow as a normal Deconstruction Table but there might be a way to upgrade it.
 #Creative Tab
 itemGroup.Technomancy=Technomancy

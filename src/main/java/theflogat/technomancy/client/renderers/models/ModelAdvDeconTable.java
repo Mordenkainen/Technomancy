@@ -3,10 +3,8 @@ package theflogat.technomancy.client.renderers.models;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 
-
-
-public class ModelReconstructor extends ModelBase {
-	//fields
+public class ModelAdvDeconTable extends ModelBase{
+	
 	ModelRenderer Base;
 	ModelRenderer Base2;
 	ModelRenderer Post1;
@@ -17,7 +15,7 @@ public class ModelReconstructor extends ModelBase {
 	ModelRenderer TopBase2;
 	ModelRenderer TopBase3;
 
-	public ModelReconstructor()  {
+	public ModelAdvDeconTable()  {
 		textureWidth = 64;
 		textureHeight = 32;
 
@@ -97,5 +95,4 @@ public class ModelReconstructor extends ModelBase {
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
 	}
-
 }

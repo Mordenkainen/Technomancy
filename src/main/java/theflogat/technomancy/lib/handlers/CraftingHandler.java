@@ -355,6 +355,13 @@ public class CraftingHandler {
 						Character.valueOf('R'), WandRod.rods.get("electric").getItem()});
 				}
 			}
+			
+			if(Ids.advDeconTable){
+				ResearchHandler.recipes.put("AdvDeconTable", ThaumcraftApi.addInfusionCraftingRecipe("ADVDECONTABLE", new ItemStack(TMBlocks.advDeconTable),
+						10, new AspectList().add(Aspect.MAGIC, 32).add(Aspect.CRAFT, 8).add(Aspect.EXCHANGE, 16).add(Aspect.TOOL, 16),
+						new ItemStack(Thaumcraft.blockTable, 1, 14), new ItemStack[]{new ItemStack(Blocks.piston), new ItemStack(Blocks.piston),
+						new ItemStack(Blocks.piston), new ItemStack(Items.emerald)}));
+			}
 		}catch(Exception e){e.printStackTrace();}
 	}
 

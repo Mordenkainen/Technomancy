@@ -14,6 +14,7 @@ import theflogat.technomancy.common.blocks.dynamos.ItemBloodDynamo;
 import theflogat.technomancy.common.blocks.dynamos.ItemEssentiaDynamo;
 import theflogat.technomancy.common.blocks.dynamos.ItemFlowerDynamo;
 import theflogat.technomancy.common.blocks.dynamos.ItemNodeDynamo;
+import theflogat.technomancy.common.blocks.machines.BlockAdvDeconTable;
 import theflogat.technomancy.common.blocks.machines.BlockBOProcessor;
 import theflogat.technomancy.common.blocks.machines.BlockBiomeMorpher;
 import theflogat.technomancy.common.blocks.machines.BlockBloodFabricator;
@@ -58,6 +59,7 @@ import theflogat.technomancy.common.tiles.dynamos.TileFlowerDynamo;
 import theflogat.technomancy.common.tiles.dynamos.TileNodeDynamo;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import theflogat.technomancy.common.tiles.technom.TileCrystal;
+import theflogat.technomancy.common.tiles.thaumcraft.machine.TileAdvDeconTable;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBiomeMorpher;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBloodFabricator;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileCondenser;
@@ -107,6 +109,7 @@ public class TMBlocks {
 	public static Block fakeAirNG;
 	public static Block reservoir;
 	public static Block fakeAirLight;
+	public static Block advDeconTable;
 	
 	public static void initTechnomancy(){
 		crystalBlock = Ids.crystalBlock ? new BlockCrystal() : null;
@@ -167,6 +170,7 @@ public class TMBlocks {
 		processorTC = Ids.processorTC ? new BlockProcessor.BlockTCProcessor() : null;
 		eldritchConsumer = Ids.eldrichConsumer ? new BlockEldritchConsumer() : null;
 		reservoir = Ids.reservoir ? new BlockReservoir() : null;
+		advDeconTable = Ids.advDeconTable ? new BlockAdvDeconTable() : null;
 
 		
 		registerBlock(nodeDynamo, Names.nodeDynamo, ItemNodeDynamo.class);
@@ -185,7 +189,7 @@ public class TMBlocks {
 		registerBlock(processorTC, Names.processor + "TC");
 		registerBlock(eldritchConsumer, Names.eldritchConsumer);
 		registerBlock(reservoir, Names.reservoir);
-
+		registerBlock(advDeconTable, Names.advDeconTable);
 		
 		GameRegistry.registerTileEntity(TileEssentiaContainer.class, "TileEssentiacontainer");
 		GameRegistry.registerTileEntity(TileNodeDynamo.class, "TileNodeDynamo");
@@ -202,6 +206,7 @@ public class TMBlocks {
 		GameRegistry.registerTileEntity(TileTCProcessor.class, "TileProcessorTC");
 		GameRegistry.registerTileEntity(TileEldritchConsumer.class, "TileEldrichConsumer");
 		GameRegistry.registerTileEntity(TileEssentiaReservoir.class, Ref.MOD_PREFIX + "TileEssentiaReservoir");
+		GameRegistry.registerTileEntity(TileAdvDeconTable.class, Ref.MOD_PREFIX + "TileAdvDeconTable");
 	}
 	
 	public static void initBloodMagic() {
