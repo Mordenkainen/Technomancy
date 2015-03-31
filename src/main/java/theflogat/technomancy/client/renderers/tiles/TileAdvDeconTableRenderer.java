@@ -1,13 +1,14 @@
 package theflogat.technomancy.client.renderers.tiles;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
 
@@ -54,9 +55,12 @@ public class TileAdvDeconTableRenderer extends TileEntitySpecialRenderer{
 		
 		TileAdvDeconTable rec = (TileAdvDeconTable)entity;
 		if(rec.getWorldObj() != null && rec.getStackInSlot(0) != null) {
+			float ticks = Minecraft.getMinecraft().renderViewEntity.ticksExisted + f;
 			GL11.glPushMatrix();
-			EntityItem ghost = new EntityItem(rec.getWorldObj());
-			ghost.setEntityItemStack(rec.getStackInSlot(0));
+			ItemStack is = rec.getStackInSlot(0).copy();
+			
+			EntityItem ghost = new EntityItem(rec.getWorldObj(), 0.0D, 0.0D, 0.0D, is);
+			ghost.hoverStart = 0.0F;
 			float yOffset = 0.3F;
 			float scale = 0.7F;
 			if (ghost.getEntityItem().getItem() instanceof ItemBlock){
@@ -64,6 +68,7 @@ public class TileAdvDeconTableRenderer extends TileEntitySpecialRenderer{
 				scale = 0.9F;
 			}
 			GL11.glTranslatef((float) x + 0.5F, (float) y + yOffset, (float) z + 0.5F);
+			GL11.glRotatef(ticks % 360.0F, 0.0F, 1.0F, 0.0F);
 			GL11.glScalef(scale, scale, scale);
 			itemRenderer.doRender(ghost, 0, 0, 0, 0, 0);
 			GL11.glPopMatrix();
