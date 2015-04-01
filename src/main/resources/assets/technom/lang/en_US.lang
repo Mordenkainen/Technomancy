@@ -118,6 +118,10 @@ tc.research_name.ELDRITCHCONSUMER=Absorb Your Surroundings
 tc.research_text.ELDRITCHCONSUMER=Shenanigans!
 techno.research_page.ELDRITCHCONSUMER.1=You've been putting a lot of effort to find a way to extract raw essentia directly from those blocks that you see around. While experimenting you found a crossbreed in between a quarry and an alchemical furnace, which can mine the land beneath it and convert those blocks to essentia. Unfortunately you have found that this device is a huge power sink (20000 RF/block). If you have Goggles of Revealing, you can see what aspects the last block eaten had.
 
+tc.research_name.ADVDECONTABLE=Easy Research?
+tc.research_text.ADVDECONTABLE=Lies!
+techno.research_page.ADVDECONTABLE.1=After struggling for a while, you have found a way to automate the discovery of research points. No idling and right-clicking for hours anymore! Unfortunately, it is half the speed of a normal Deconstruction Table but there might be a way to upgrade it.
+
 #Lexicon Entries
 techno.lexicon_page.FLOWERDYNAMO.1=After studying the way the Mana Fluxfield converts Mana Bursts to Redstone Flux you have decided to try to improve this using some of the magical-mechanical components you have created. The result is the Flower Dynamo. By hooking the Flower Dynamo to a Redstone Flux conductor and placing it within a few blocks of a Mana Pool you can convert this Mana to Redstone Flux in a much more efficient way.
 techno.lexicon_page.FLOWERDYNAMO.2=By default the Flower Dynamo requires a redstone signal to run, but this can be changed. Right clicking on the Dynamo with a Redstone Torch will cause the Dynamo to run only when it is not getting a redstone signal, Gunpowder will make it ignore redstone, and Redstone Dust will return it to its original behavior. Shift Right clicking on the Dynamo with an empty hand removes any modifying item that has been used on it.
@@ -131,8 +135,5 @@ techno.lexicon_name.PROCESSORBO=Botanical Purifier
 techno.lexicon_page.PROCESSORBO.1=You've been hunting down a way to increase your ore output without using silly purification methods, and now you've found one. By placing blocks in the left slot and providing a nearby Mana source, you've successfully acquired ore doubling through purification. These new purified ores can be processed through other magical devices similar to this one to increase ore output further, but each
 techno.lexicon_page.PROCESSORBO.2=device can only purify an ore twice. To obtain the ingots after the ore has been processed as many times as desired, throw the purified ore into a furnace in order to cook it.
 
-tc.research_name.ADVDECONTABLE=Easy Research?
-tc.research_text.ADVDECONTABLE=Lies!
-techno.research_page.ADVDECONTABLE.1=After struggling for a while, you have found a way to automate the discovery of research point. No idling and right-clicking for hours anymore! Unfortunately, it is twice as slow as a normal Deconstruction Table but there might be a way to upgrade it.
 #Creative Tab
 itemGroup.Technomancy=Technomancy

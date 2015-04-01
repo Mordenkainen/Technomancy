@@ -1,11 +1,17 @@
 package theflogat.technomancy.common.blocks.machines;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import theflogat.technomancy.common.blocks.base.BlockBase;
+import theflogat.technomancy.common.items.base.TMItems;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileAdvDeconTable;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
@@ -19,26 +25,39 @@ public class BlockAdvDeconTable extends BlockBase{
 	}
 	
 	@Override
+	public void breakBlock(World w, int x, int y, int z, Block block, int meta) {
+		TileAdvDeconTable tile = getTE(w, x, y, z);
+		if(tile.getBoost()) {
+			InvHelper.spawnEntItem(w, x, y, z, new ItemStack(TMItems.itemBoost, 1));
+		}
+		if(tile.getStackInSlot(0) != null) {
+			InvHelper.spawnEntItem(w, x, y, z, tile.getStackInSlot(0));
+		}
+		super.breakBlock(w, x, y, z, block, meta);
+	}
+	
+	@Override
 	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase ent,	ItemStack items) {
-		TileEntity te = w.getTileEntity(x, y, z);
-		if(te!=null && te instanceof TileAdvDeconTable && ent instanceof EntityPlayer)
-			((TileAdvDeconTable)te).owner = ((EntityPlayer)ent).getDisplayName();
+		TileAdvDeconTable te = getTE(w, x, y, z);
+		if(te!=null && ent instanceof EntityPlayer)
+			te.owner = ((EntityPlayer)ent).getDisplayName();
 	}
 	
 	@Override
 	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-		TileEntity te = w.getTileEntity(x, y, z);
-		if(te!=null && te instanceof TileAdvDeconTable && !player.isSneaking()){
-			TileAdvDeconTable tile = (TileAdvDeconTable) te;
-			if(tile.getStackInSlot(0)==null){
+		TileAdvDeconTable te = getTE(w, x, y, z);
+		if(te!=null && !player.isSneaking()){
+			if(te.getStackInSlot(0)==null){
 				if(player.getHeldItem()!=null){
-					tile.setInventorySlotContents(0, player.getHeldItem());
+					te.setInventorySlotContents(0, player.getHeldItem());
 					player.inventory.mainInventory[player.inventory.currentItem] = null;
 					return true;
 				}
 			}else{
-				InvHelper.spawnEntItem(w, player.posX, player.posY, player.posZ, tile.getStackInSlot(0));
-				tile.setInventorySlotContents(0, null);
+				if(!w.isRemote) {
+					InvHelper.spawnEntItem(w, player.posX, player.posY, player.posZ, te.getStackInSlot(0));
+				}
+				te.setInventorySlotContents(0, null);
 				return true;
 			}
 		}
@@ -64,5 +83,18 @@ public class BlockAdvDeconTable extends BlockBase{
 	public TileEntity createNewTileEntity(World w, int meta) {
 		return new TileAdvDeconTable();
 	}
-
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void registerBlockIcons(IIconRegister iconRegister) {
+		blockIcon = iconRegister.registerIcon(Ref.getAsset(Names.advDeconTable));
+	}
+	
+	private TileAdvDeconTable getTE(IBlockAccess world, int x, int y, int z) {
+		TileEntity tile = world.getTileEntity(x, y, z);
+		if (tile instanceof TileAdvDeconTable) {
+			return (TileAdvDeconTable)tile;
+		}
+		return null;
+	}
 }

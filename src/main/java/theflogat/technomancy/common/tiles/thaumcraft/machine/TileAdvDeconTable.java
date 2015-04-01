@@ -10,8 +10,6 @@ import thaumcraft.api.aspects.AspectList;
 import theflogat.technomancy.common.tiles.IUpgradable;
 import theflogat.technomancy.common.tiles.base.TileTechnomancy;
 import theflogat.technomancy.lib.compat.Thaumcraft;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class TileAdvDeconTable extends TileTechnomancy implements IInventory, IUpgradable{
 	
@@ -188,6 +186,7 @@ public class TileAdvDeconTable extends TileTechnomancy implements IInventory, IU
 
 			AspectList primals = new AspectList();
 			getPrimals(al, primals);
+			
 			if (worldObj.rand.nextInt(80) < primals.visSize())
 				aspect = primals.getAspects()[worldObj.rand.nextInt(primals.getAspects().length)];
 			
