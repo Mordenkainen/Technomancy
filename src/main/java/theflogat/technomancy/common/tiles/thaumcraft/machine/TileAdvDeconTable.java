@@ -184,10 +184,9 @@ public class TileAdvDeconTable extends TileTechnomancy implements IInventory, IU
 			AspectList al = Thaumcraft.getObjectAspects(this.items[0]);
 			al = Thaumcraft.getBonusTags(items[0], al);
 
-			AspectList primals = new AspectList();
-			getPrimals(al, primals);
+			AspectList primals = reduceToPrimals(al);
 			
-			if (worldObj.rand.nextInt(80) < primals.visSize())
+			if (worldObj.rand.nextInt(80) < primals.visSize() && worldObj.rand.nextInt(8) == 0)
 				aspect = primals.getAspects()[worldObj.rand.nextInt(primals.getAspects().length)];
 			
 			items[0].stackSize -= 1;
@@ -196,25 +195,24 @@ public class TileAdvDeconTable extends TileTechnomancy implements IInventory, IU
 		}
 	}
 	
-	private AspectList getPrimals(AspectList al, AspectList primals) {
-		if(al!=null){
-			if(primals==null)
-				primals = new AspectList();
-			
-			for(Aspect as : al.getAspects()){
-				if(as.isPrimal()){
-					if(!primals.aspects.containsKey(as)){
-						primals.add(as, 1);
+	public static AspectList reduceToPrimals(AspectList al) {
+		AspectList out = new AspectList();
+		for (Aspect aspect : al.getAspects()) {
+			if (aspect != null) {
+				if (aspect.isPrimal()) {
+					out.add(aspect, al.getAmount(aspect));
+				} else {
+					AspectList send = new AspectList();
+					send.add(aspect.getComponents()[0], al.getAmount(aspect));
+					send.add(aspect.getComponents()[1], al.getAmount(aspect));
+					send = reduceToPrimals(send);
+					for (Aspect a : send.getAspects()) {
+						out.add(a, send.getAmount(a));
 					}
-				}else{
-					AspectList loop = new AspectList();
-					loop.add(as.getComponents()[0], 1);
-					loop.add(as.getComponents()[1], 1);
-					getPrimals(loop, primals);
 				}
 			}
 		}
-		return primals;
+		return out;
 	}
 
 	@Override
