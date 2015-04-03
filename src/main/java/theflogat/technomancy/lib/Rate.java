@@ -17,7 +17,7 @@ public final class Rate {
        	bellowsCost = config.get(category, "ElectricBellows", bellowsCost).getInt(Rate.bellowsCost);
 	}
 	
-	public static int manaFabCost = 20000;
+	public static int manaFabCost = 1000000;
 	public static int bloodFabCost = 1000000;
 	public static int condenserCost = 1000000;
 	public static int biomeMorpherCost = 20000;
