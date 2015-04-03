@@ -21,7 +21,7 @@ public class TileBloodDynamo extends TileDynamoBase implements IFluidHandler {
 			float val = 100F * ratio;
 			float fuelPerc = val / Math.min(liquid, val);
 			liquid -= Math.min(liquid, val);
-			float fuel = 12F * fuelPerc;
+			float fuel = 400F * fuelPerc;
 			return (int) fuel;
 		}
 		return 0;
