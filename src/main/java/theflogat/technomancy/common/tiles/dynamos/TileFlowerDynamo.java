@@ -21,7 +21,7 @@ public class TileFlowerDynamo extends TileDynamoBase implements IManaReceiver {
 		float ratio = (ener) / 80F;
 		int val = (int) (20 * ratio);
 		float fuel = (float) val / (float) Math.min(mana, val);mana -= Math.min(mana, val);
-		return (int) (((float)10*20)*fuel);
+		return (int) (((float)10*16)*fuel);
 	}
 	
 	@Override
