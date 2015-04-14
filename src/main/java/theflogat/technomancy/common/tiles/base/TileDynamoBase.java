@@ -1,6 +1,5 @@
 package theflogat.technomancy.common.tiles.base;
 
-import theflogat.technomancy.common.tiles.IUpgradable;
 import theflogat.technomancy.util.RedstoneSet;
 import theflogat.technomancy.util.WorldHelper;
 import net.minecraft.nbt.NBTTagCompound;

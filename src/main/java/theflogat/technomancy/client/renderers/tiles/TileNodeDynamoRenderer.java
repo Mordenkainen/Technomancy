@@ -3,7 +3,7 @@ package theflogat.technomancy.client.renderers.tiles;
 import org.lwjgl.opengl.GL11;
 
 import theflogat.technomancy.client.renderers.models.ModelNodeDynamo;
-import theflogat.technomancy.common.tiles.dynamos.TileNodeDynamo;
+import theflogat.technomancy.common.tiles.thaumcraft.dynamos.TileNodeDynamo;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import net.minecraft.client.Minecraft;

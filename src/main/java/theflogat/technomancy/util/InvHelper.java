@@ -1,7 +1,5 @@
 package theflogat.technomancy.util;
 
-import java.util.Random;
-
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;

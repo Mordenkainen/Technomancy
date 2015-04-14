@@ -7,7 +7,7 @@ import net.minecraft.world.IBlockAccess;
 
 import org.lwjgl.opengl.GL11;
 
-import theflogat.technomancy.common.tiles.dynamos.TileBloodDynamo;
+import theflogat.technomancy.common.tiles.bloodmagic.dynamos.TileBloodDynamo;
 import theflogat.technomancy.lib.RenderIds;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 

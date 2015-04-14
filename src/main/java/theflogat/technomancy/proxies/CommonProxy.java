@@ -1,11 +1,10 @@
 package theflogat.technomancy.proxies;
 
-import theflogat.technomancy.client.renderers.gui.GuiRitualTome;
 import theflogat.technomancy.client.renderers.gui.container.ContainerBMProcessor;
 import theflogat.technomancy.client.renderers.gui.container.ContainerBOProcessor;
 import theflogat.technomancy.client.renderers.gui.container.ContainerTCProcessor;
-import theflogat.technomancy.common.tiles.TileBOProcessor;
-import theflogat.technomancy.common.tiles.bm.TileBMProcessor;
+import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBMProcessor;
+import theflogat.technomancy.common.tiles.botania.machines.TileBOProcessor;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTCProcessor;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;

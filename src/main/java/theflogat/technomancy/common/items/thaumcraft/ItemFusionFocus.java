@@ -98,6 +98,7 @@ public class ItemFusionFocus extends ItemBase implements IWandFocus {
 	@Override
 	public void onUsingFocusTick(ItemStack itemstack, EntityPlayer player, int count) {}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public String getSortingHelper(ItemStack itemstack) {
 		Map<Integer,Integer> ench = EnchantmentHelper.getEnchantments(itemstack);
@@ -143,6 +144,7 @@ public class ItemFusionFocus extends ItemBase implements IWandFocus {
 			return false;
 		}
 
+		@SuppressWarnings({ "rawtypes", "unchecked" })
 		@Override
 		public void addInformation(ItemStack stack,EntityPlayer player, List list, boolean par4) {
 			AspectList al = this.getVisCost();

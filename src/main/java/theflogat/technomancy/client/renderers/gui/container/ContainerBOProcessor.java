@@ -1,8 +1,8 @@
 package theflogat.technomancy.client.renderers.gui.container;
 
 import theflogat.technomancy.common.items.technom.ItemProcessedOre;
-import theflogat.technomancy.common.tiles.TileBOProcessor;
 import theflogat.technomancy.common.tiles.base.TileProcessorBase;
+import theflogat.technomancy.common.tiles.botania.machines.TileBOProcessor;
 import theflogat.technomancy.util.Ore;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

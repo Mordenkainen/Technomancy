@@ -7,7 +7,7 @@ import net.minecraft.world.IBlockAccess;
 
 import org.lwjgl.opengl.GL11;
 
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBloodFabricator;
+import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBloodFabricator;
 import theflogat.technomancy.lib.RenderIds;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 

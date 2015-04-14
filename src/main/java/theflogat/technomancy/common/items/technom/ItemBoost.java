@@ -3,7 +3,7 @@ package theflogat.technomancy.common.items.technom;
 import java.util.List;
 
 import theflogat.technomancy.Technomancy;
-import theflogat.technomancy.common.tiles.IUpgradable;
+import theflogat.technomancy.common.tiles.base.IUpgradable;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import net.minecraft.client.renderer.texture.IIconRegister;

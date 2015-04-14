@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import theflogat.technomancy.client.renderers.models.ModelManaFabricator;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileManaFabricator;
+import theflogat.technomancy.common.tiles.botania.machines.TileManaFabricator;
 import theflogat.technomancy.lib.Ref;
 
 public class TileManaFabricatorRenderer extends TileEntitySpecialRenderer{

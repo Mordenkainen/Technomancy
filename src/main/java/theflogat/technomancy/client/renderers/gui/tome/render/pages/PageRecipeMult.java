@@ -1,6 +1,5 @@
 package theflogat.technomancy.client.renderers.gui.tome.render.pages;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
 public class PageRecipeMult extends PageRecipe{

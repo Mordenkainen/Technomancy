@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL11;
 
 import theflogat.technomancy.client.renderers.models.ModelEssentiaDynamo;
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
-import theflogat.technomancy.common.tiles.dynamos.TileEssentiaDynamo;
+import theflogat.technomancy.common.tiles.thaumcraft.dynamos.TileEssentiaDynamo;
 import theflogat.technomancy.lib.Ref;
 
 public class TileEssentiaDynamoRenderer extends TileEntitySpecialRenderer {

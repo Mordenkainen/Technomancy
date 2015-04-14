@@ -3,13 +3,11 @@ package theflogat.technomancy.client.renderers.blocks;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.world.IBlockAccess;
 
 import org.lwjgl.opengl.GL11;
 
 import theflogat.technomancy.client.renderers.tiles.TileCatalystRenderer;
-import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import theflogat.technomancy.lib.RenderIds;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 

@@ -9,7 +9,6 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import theflogat.technomancy.client.renderers.models.ModelReconstructor;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileReconstructor;
 import theflogat.technomancy.lib.Ref;
 
 public class TileReconstructorRenderer extends TileEntitySpecialRenderer{
@@ -48,7 +47,7 @@ public class TileReconstructorRenderer extends TileEntitySpecialRenderer{
 		GL11.glPushMatrix();
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glDisable(GL11.GL_CULL_FACE);
-		TileReconstructor rec = (TileReconstructor)entity;
+//		TileReconstructor rec = (TileReconstructor)entity;
 
 //		if(rec.getWorldObj() != null && rec.getStackInSlot(0) != null) {
 //			GL11.glPushMatrix();
