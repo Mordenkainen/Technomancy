@@ -6,8 +6,6 @@ import org.lwjgl.util.glu.Sphere;
 
 import theflogat.technomancy.api.renderers.ModelCatalystSpecial;
 import theflogat.technomancy.util.Loc;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ModelBlackSphere extends ModelCatalystSpecial{
 	

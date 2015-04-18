@@ -61,7 +61,8 @@ public class BlockCosmeticPane extends BlockBase {
         return w.getBlock(x, y, z)==this ? false : super.shouldSideBeRendered(w, x, y, z, meta);
     }
     
-    @Override
+    @SuppressWarnings("rawtypes")
+	@Override
 	public void addCollisionBoxesToList(World par1World, int par2, int par3, int par4, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity)    {
         boolean flag = this.canPaneConnectTo(par1World,par2, par3, par4,ForgeDirection.NORTH);
         boolean flag1 = this.canPaneConnectTo(par1World,par2, par3, par4,ForgeDirection.SOUTH);

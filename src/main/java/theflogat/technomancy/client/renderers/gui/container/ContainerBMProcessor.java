@@ -1,7 +1,7 @@
 package theflogat.technomancy.client.renderers.gui.container;
 
 import theflogat.technomancy.common.items.technom.ItemProcessedOre;
-import theflogat.technomancy.common.tiles.bm.TileBMProcessor;
+import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBMProcessor;
 import theflogat.technomancy.common.tiles.base.TileProcessorBase;
 import theflogat.technomancy.util.Ore;
 import net.minecraft.entity.player.EntityPlayer;

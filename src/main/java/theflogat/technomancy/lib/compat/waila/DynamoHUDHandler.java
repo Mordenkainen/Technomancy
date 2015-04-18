@@ -3,7 +3,7 @@ package theflogat.technomancy.lib.compat.waila;
 import java.util.List;
 
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
-import theflogat.technomancy.common.tiles.dynamos.TileBloodDynamo;
+import theflogat.technomancy.common.tiles.bloodmagic.dynamos.TileBloodDynamo;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

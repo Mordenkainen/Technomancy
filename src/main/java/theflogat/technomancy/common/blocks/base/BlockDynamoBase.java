@@ -8,11 +8,11 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import theflogat.technomancy.common.items.api.ToolWrench;
 import theflogat.technomancy.common.items.base.TMItems;
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
 import theflogat.technomancy.util.InvHelper;
 import theflogat.technomancy.util.RedstoneSet;
+import theflogat.technomancy.util.ToolWrench;
 
 public abstract class BlockDynamoBase extends BlockBase {
 		

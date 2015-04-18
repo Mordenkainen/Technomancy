@@ -3,7 +3,6 @@ package theflogat.technomancy.api.tiles;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-import thaumcraft.api.aspects.Aspect;
 import net.minecraft.tileentity.TileEntity;
 
 public class MovableTileRegistry {
