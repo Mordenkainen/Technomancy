@@ -2,6 +2,7 @@ package theflogat.technomancy.common.blocks.base;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
+import net.minecraftforge.fluids.Fluid;
 import theflogat.technomancy.api.rituals.RitualRegistry;
 import theflogat.technomancy.api.tiles.MovableTileRegistry;
 import theflogat.technomancy.common.blocks.air.BlockFakeAirLight;
@@ -9,8 +10,10 @@ import theflogat.technomancy.common.blocks.air.BlockFakeAirNG;
 import theflogat.technomancy.common.blocks.bloodmagic.dynamos.BlockBloodDynamo;
 import theflogat.technomancy.common.blocks.bloodmagic.machines.BlockBMProcessor;
 import theflogat.technomancy.common.blocks.bloodmagic.machines.BlockBloodFabricator;
+import theflogat.technomancy.common.blocks.botania.BlockManaFluid;
 import theflogat.technomancy.common.blocks.botania.dynamos.BlockFlowerDynamo;
 import theflogat.technomancy.common.blocks.botania.machines.BlockBOProcessor;
+import theflogat.technomancy.common.blocks.botania.machines.BlockManaExchanger;
 import theflogat.technomancy.common.blocks.botania.machines.BlockManaFabricator;
 import theflogat.technomancy.common.blocks.technom.BlockCatalyst;
 import theflogat.technomancy.common.blocks.technom.BlockCrystal;
@@ -31,6 +34,8 @@ import theflogat.technomancy.common.blocks.thaumcraft.storage.BlockEssentiaConta
 import theflogat.technomancy.common.blocks.thaumcraft.storage.BlockReservoir;
 import theflogat.technomancy.common.items.bloodmagic.ItemBloodDynamo;
 import theflogat.technomancy.common.items.botania.ItemFlowerDynamo;
+import theflogat.technomancy.common.items.botania.ItemManaExchanger;
+import theflogat.technomancy.common.items.botania.ManaFluid;
 import theflogat.technomancy.common.items.technom.ItemCatalyst;
 import theflogat.technomancy.common.items.technom.ItemCrystal;
 import theflogat.technomancy.common.items.thaumcraft.ItemEssentiaDynamo;
@@ -57,6 +62,7 @@ import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBMProcessor;
 import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBloodFabricator;
 import theflogat.technomancy.common.tiles.botania.dynamos.TileFlowerDynamo;
 import theflogat.technomancy.common.tiles.botania.machines.TileBOProcessor;
+import theflogat.technomancy.common.tiles.botania.machines.TileManaExchanger;
 import theflogat.technomancy.common.tiles.botania.machines.TileManaFabricator;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import theflogat.technomancy.common.tiles.technom.TileCrystal;
@@ -111,6 +117,10 @@ public class TMBlocks {
 	public static Block reservoir;
 	public static Block fakeAirLight;
 	public static Block advDeconTable;
+	public static Block manaFluidBlock;
+	public static Block manaExchanger;
+	
+	public static Fluid manaFluid;
 	
 	public static void initTechnomancy(){
 		crystalBlock = Ids.crystalBlock ? new BlockCrystal() : null;
@@ -228,20 +238,23 @@ public class TMBlocks {
 	}
 	
 	public static void initBotania() {
+		manaFluid = Ids.manaFluid ? new ManaFluid() : null;
+		manaFluidBlock = Ids.manaFluid ? new BlockManaFluid() : null;
 		flowerDynamo = Ids.flowerDyn ? new BlockFlowerDynamo() : null;
 		manaFabricator = Ids.manaFab ? new BlockManaFabricator() : null;
 		processorBO = Ids.processorBO ? new BlockBOProcessor() : null;
-		
+		manaExchanger = Ids.manaExchanger ? new BlockManaExchanger() : null;
 		
 		registerBlock(flowerDynamo, Names.flowerDynamo, ItemFlowerDynamo.class);
 		registerBlock(manaFabricator, Names.manaFabricator);
 		registerBlock(processorBO, Names.processor + "BO");
-		
+		registerBlock(manaFluidBlock, Names.manaFluidBlock);
+		registerBlock(manaExchanger, Names.manaExchanger, ItemManaExchanger.class);
 		
 		GameRegistry.registerTileEntity(TileFlowerDynamo.class, "TileFlowerDynamo");
 		GameRegistry.registerTileEntity(TileManaFabricator.class, "ManaFabricator");
 		GameRegistry.registerTileEntity(TileBOProcessor.class, "TileProcessorBO");
-
+		GameRegistry.registerTileEntity(TileManaExchanger.class, "TileManaExchanger");
 	}
 	
 	private static void registerBlock(Block block, String name) {

@@ -27,6 +27,7 @@ public class Ids {
 		public static boolean processorTC;
 		public static boolean processorBO;
 		public static boolean eldrichConsumer;
+		public static boolean manaFluid;
 		
 		// Defaults
 		
@@ -49,4 +50,5 @@ public class Ids {
 		public static boolean reservoir;
 		public static boolean ritualTome;
 		public static boolean advDeconTable;
+		public static boolean manaExchanger;
 }

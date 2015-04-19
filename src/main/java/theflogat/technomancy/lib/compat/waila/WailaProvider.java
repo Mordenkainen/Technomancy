@@ -4,6 +4,7 @@ import theflogat.technomancy.common.tiles.air.TileFakeAirNG;
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
 import theflogat.technomancy.common.tiles.base.TileProcessorBase;
 import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBloodFabricator;
+import theflogat.technomancy.common.tiles.botania.machines.TileManaExchanger;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBiomeMorpher;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEldritchConsumer;
@@ -40,5 +41,9 @@ public class WailaProvider {
 		
 		IWailaDataProvider processor = new ProcessorHUDHandler();
 		registrar.registerBodyProvider(processor, TileProcessorBase.class);
+		
+		IWailaDataProvider manaExchanger = new ManaExchangerHUDHandler();
+		registrar.registerBodyProvider(manaExchanger, TileManaExchanger.class);
+		registrar.registerNBTProvider(manaExchanger, TileManaExchanger.class);
     }
 }
