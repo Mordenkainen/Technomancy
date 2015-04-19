@@ -24,7 +24,7 @@ public class ManaExchangerHUDHandler implements IWailaDataProvider {
 		currenttip.add(tileEntity.mode ? "Exporting Mana" : "Importing Mana");
 		FluidTank tank = new FluidTank(1000);
 		tank.readFromNBT(accessor.getNBTData());
-		currenttip.add("Mana Condensate: " + tank.getFluidAmount());
+		currenttip.add("Mana Condensate: " + tank.getFluidAmount() + "mB");
 		return currenttip;
 	}
 	
