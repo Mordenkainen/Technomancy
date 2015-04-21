@@ -2,7 +2,6 @@ package theflogat.technomancy.common.blocks.botania.machines;
 
 import java.util.Random;
 
-import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
@@ -17,7 +16,6 @@ import theflogat.technomancy.common.tiles.botania.machines.TileBOProcessor;
 import theflogat.technomancy.lib.compat.Botania;
 import vazkii.botania.api.wand.IWandHUD;
 
-@Optional.Interface(iface = "vazkii.botania.api.wand.IWandHUD", modid = "Botania")
 public class BlockBOProcessor extends BlockProcessor implements IWandHUD {
 	
 	public BlockBOProcessor() {

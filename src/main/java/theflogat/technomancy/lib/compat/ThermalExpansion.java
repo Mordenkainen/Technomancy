@@ -6,8 +6,10 @@ import theflogat.technomancy.lib.handlers.CompatibilityHandler;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 
-public class ThermalExpansion {
+public class ThermalExpansion extends ModuleBase {
 
+	private static ThermalExpansion instance;
+	
 	public static ItemStack powerCoilElectrum;
 	public static ItemStack capacitorResonant;
 	public static ItemStack powerCoilSilver;
@@ -20,8 +22,18 @@ public class ThermalExpansion {
 	public static Block blockCell;
 	public static Block blockDynamo;
 	public static Block blockTank;
+	
+	private ThermalExpansion() {}
+	
+	public static ThermalExpansion getInstance() {
+		if(instance == null) {
+			instance = new ThermalExpansion();
+		}
+		return instance;
+	}
 
-	public static void init(){
+	@Override
+	public void Init() {
 		powerCoilElectrum = GameRegistry.findItemStack("ThermalExpansion", "powerCoilElectrum", 1);
 		capacitorResonant = GameRegistry.findItemStack("ThermalExpansion", "capacitorResonant", 1);
 		powerCoilSilver = GameRegistry.findItemStack("ThermalExpansion", "powerCoilSilver", 1);
@@ -35,7 +47,7 @@ public class ThermalExpansion {
 		frameTesseractFull = GameRegistry.findItemStack("ThermalExpansion", "frameTesseractFull", 1);
 		frameCellBasic = GameRegistry.findItemStack("ThermalExpansion", "frameCellBasic", 1);
 		
-		if (powerCoilElectrum != null && capacitorResonant != null && powerCoilSilver != null && blockCell != null &&
+		if(powerCoilElectrum != null && capacitorResonant != null && powerCoilSilver != null && blockCell != null &&
 				blockDynamo != null && blockTank != null && frameMachineBasic != null && frameTesseractFull != null &&
 				frameCellBasic != null) {
 			Technomancy.logger.info("Thermal Expansion compatibility module loaded.");
@@ -44,4 +56,16 @@ public class ThermalExpansion {
 			CompatibilityHandler.te = false;
 		}
 	}
+
+	@Override
+	public void PostInit() {}
+
+	@Override
+	public void RegisterItems() {}
+
+	@Override
+	public void RegisterBlocks() {}
+
+	@Override
+	public void RegisterRecipes() {}
 }

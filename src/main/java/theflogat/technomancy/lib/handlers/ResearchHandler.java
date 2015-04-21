@@ -34,18 +34,6 @@ public class ResearchHandler {
 	}
 	
 	private static void initThaumcraft(){
-//		Object pTECHNOBASICS = Array.newInstance(Thaumcraft.ResearchPage, 3);
-//		Array.set(pTECHNOBASICS, 0, Thaumcraft.ResearchPageString.newInstance("techno.research_page.TECHNOBASICS.1"));
-//		Array.set(pTECHNOBASICS, 1, Thaumcraft.ResearchPageCrucible.newInstance(Thaumcraft.CrucibleRecipe.cast(recipes.get("NeutronizedMetal"))));
-//		Array.set(pTECHNOBASICS, 2, Thaumcraft.ResearchPageIRecipe.newInstance((IRecipe)recipes.get("NeutronizedGear")));
-//		
-//		Object TECHNOBASICS = Thaumcraft.ResearchItemConst.newInstance("TECHNOBASICS", "TECHNOMANCY", new AspectList(), 0, 0, 0,
-//				new ResourceLocation("technom", "textures/misc/technomancyBasics.png"));
-//		TECHNOBASICS = Thaumcraft.setPages.invoke(TECHNOBASICS, Thaumcraft.ResearchPageArr.cast(pTECHNOBASICS));
-//		TECHNOBASICS = Thaumcraft.setRound.invoke(TECHNOBASICS);
-//		TECHNOBASICS = Thaumcraft.setStub.invoke(TECHNOBASICS);
-//		TECHNOBASICS = Thaumcraft.setAutoUnlock.invoke(TECHNOBASICS);TECHNOBASICS = Thaumcraft.registerResearchItem.invoke(TECHNOBASICS);
-		
 		if(Ids.itemMaterial){
 			new ResearchItem("TECHNOBASICS", "TECHNOMANCY", new AspectList(), 0, 0, 0,
 				new ResourceLocation("technom", "textures/misc/technomancyBasics.png")).setPages(new ResearchPage[] {

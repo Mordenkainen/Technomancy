@@ -6,40 +6,10 @@ import net.minecraftforge.fluids.Fluid;
 import theflogat.technomancy.api.rituals.RitualRegistry;
 import theflogat.technomancy.api.tiles.MovableTileRegistry;
 import theflogat.technomancy.common.blocks.air.BlockFakeAirLight;
-import theflogat.technomancy.common.blocks.air.BlockFakeAirNG;
-import theflogat.technomancy.common.blocks.bloodmagic.dynamos.BlockBloodDynamo;
-import theflogat.technomancy.common.blocks.bloodmagic.machines.BlockBMProcessor;
-import theflogat.technomancy.common.blocks.bloodmagic.machines.BlockBloodFabricator;
-import theflogat.technomancy.common.blocks.botania.BlockManaFluid;
-import theflogat.technomancy.common.blocks.botania.dynamos.BlockFlowerDynamo;
-import theflogat.technomancy.common.blocks.botania.machines.BlockBOProcessor;
-import theflogat.technomancy.common.blocks.botania.machines.BlockManaExchanger;
-import theflogat.technomancy.common.blocks.botania.machines.BlockManaFabricator;
 import theflogat.technomancy.common.blocks.technom.BlockCatalyst;
 import theflogat.technomancy.common.blocks.technom.BlockCrystal;
-import theflogat.technomancy.common.blocks.thaumcraft.dynamos.BlockEssentiaDynamo;
-import theflogat.technomancy.common.blocks.thaumcraft.dynamos.BlockNodeDynamo;
-import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockAdvDeconTable;
-import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockBiomeMorpher;
-import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockCondenser;
-import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockEldritchConsumer;
-import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockElectricBellows;
-import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockFluxLamp;
-import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockNodeGenerator;
-import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockReconstructor;
-import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockTCProcessor;
-import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockTeslaCoil;
-import theflogat.technomancy.common.blocks.thaumcraft.storage.BlockCreativeJar;
-import theflogat.technomancy.common.blocks.thaumcraft.storage.BlockEssentiaContainer;
-import theflogat.technomancy.common.blocks.thaumcraft.storage.BlockReservoir;
-import theflogat.technomancy.common.items.bloodmagic.ItemBloodDynamo;
-import theflogat.technomancy.common.items.botania.ItemFlowerDynamo;
-import theflogat.technomancy.common.items.botania.ItemManaExchanger;
-import theflogat.technomancy.common.items.botania.ManaFluid;
 import theflogat.technomancy.common.items.technom.ItemCatalyst;
 import theflogat.technomancy.common.items.technom.ItemCrystal;
-import theflogat.technomancy.common.items.thaumcraft.ItemEssentiaDynamo;
-import theflogat.technomancy.common.items.thaumcraft.ItemNodeDynamo;
 import theflogat.technomancy.common.rituals.b.RitualBlackHoleT1;
 import theflogat.technomancy.common.rituals.b.RitualBlackHoleT2;
 import theflogat.technomancy.common.rituals.b.RitualBlackHoleT3;
@@ -56,39 +26,14 @@ import theflogat.technomancy.common.rituals.w.RitualWaterT1;
 import theflogat.technomancy.common.rituals.w.RitualWaterT2;
 import theflogat.technomancy.common.rituals.w.RitualWaterT3;
 import theflogat.technomancy.common.tiles.air.TileFakeAirCore;
-import theflogat.technomancy.common.tiles.air.TileFakeAirNG;
-import theflogat.technomancy.common.tiles.bloodmagic.dynamos.TileBloodDynamo;
-import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBMProcessor;
-import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBloodFabricator;
-import theflogat.technomancy.common.tiles.botania.dynamos.TileFlowerDynamo;
-import theflogat.technomancy.common.tiles.botania.machines.TileBOProcessor;
-import theflogat.technomancy.common.tiles.botania.machines.TileManaExchanger;
-import theflogat.technomancy.common.tiles.botania.machines.TileManaFabricator;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import theflogat.technomancy.common.tiles.technom.TileCrystal;
-import theflogat.technomancy.common.tiles.thaumcraft.dynamos.TileEssentiaDynamo;
-import theflogat.technomancy.common.tiles.thaumcraft.dynamos.TileNodeDynamo;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileAdvDeconTable;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBiomeMorpher;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileCondenser;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEldritchConsumer;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileElectricBellows;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileFluxLamp;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileReconstructor;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTCProcessor;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileWirelessCoil;
-import theflogat.technomancy.common.tiles.thaumcraft.storage.TileCreativeJar;
-import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaContainer;
-import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaReservoir;
 import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class TMBlocks {
-	
-	
 	//Block Instances	
 	public static Block nodeDynamo;
 	public static Block essentiaContainer;
@@ -143,7 +88,6 @@ public class TMBlocks {
 		
 		
 		//Specials
-		
 		//Complex
 		RitualRegistry.add(new RitualCaveInT3());
 		RitualRegistry.add(new RitualBlackHoleT3());
@@ -162,99 +106,6 @@ public class TMBlocks {
 		RitualRegistry.add(new RitualWaterT1());;
 		RitualRegistry.add(new RitualPurificationT1());
 		RitualRegistry.add(new RitualOfFireT1());
-	}
-	
-	public static void initThaumcraft() {
-		nodeDynamo = Ids.dynNode ? new BlockNodeDynamo() : null;
-		essentiaContainer = Ids.contEssentia ? new BlockEssentiaContainer() : null;
-		cosmeticOpaque = Ids.cosmeticOpaque ? new BlockCosmeticOpaque() : null;
-		essentiaDynamo = Ids.dynEssentia ? new BlockEssentiaDynamo() : null;
-		biomeMorpher = Ids.biomeMorpher ? new BlockBiomeMorpher() : null;
-		nodeGenerator = Ids.nodeGen ? new BlockNodeGenerator() : null;
-		fakeAirNG = Ids.nodeGen ? new BlockFakeAirNG() : null;
-		fluxLamp = Ids.fluxLamp ? new BlockFluxLamp() : null;
-		teslaCoil = Ids.wirelessCoil ? new BlockTeslaCoil() : null;
-		electricBellows = Ids.electricBellows ? new BlockElectricBellows() : null;
-		creativeJar = Ids.creativeJar ? new BlockCreativeJar() : null;
-		reconstructorBlock = Ids.reconstructor ? new BlockReconstructor() : null;
-		condenserBlock = Ids.condenser ? new BlockCondenser() : null;
-		processorTC = Ids.processorTC ? new BlockTCProcessor() : null;
-		eldritchConsumer = Ids.eldrichConsumer ? new BlockEldritchConsumer() : null;
-		reservoir = Ids.reservoir ? new BlockReservoir() : null;
-		advDeconTable = Ids.advDeconTable ? new BlockAdvDeconTable() : null;
-
-		
-		registerBlock(nodeDynamo, Names.nodeDynamo, ItemNodeDynamo.class);
-		registerBlock(essentiaContainer, Names.essentiaContainer);
-		registerBlock(cosmeticOpaque, Names.cosmeticOpaque);
-		registerBlock(essentiaDynamo, Names.essentiaDynamo, ItemEssentiaDynamo.class);
-		registerBlock(biomeMorpher, Names.biomeMorpher);
-		registerBlock(nodeGenerator, Names.nodeGenerator);
-		registerBlock(fakeAirNG, Names.fakeAirNG);
-		registerBlock(fluxLamp, Names.fluxLamp);
-		registerBlock(teslaCoil, Names.teslaCoil);
-		registerBlock(electricBellows, Names.electricBellows);
-		registerBlock(creativeJar, Names.creativeJar);
-		registerBlock(reconstructorBlock, Names.reconstructor);
-		registerBlock(condenserBlock, Names.condenserBlock);
-		registerBlock(processorTC, Names.processor + "TC");
-		registerBlock(eldritchConsumer, Names.eldritchConsumer);
-		registerBlock(reservoir, Names.reservoir);
-		registerBlock(advDeconTable, Names.advDeconTable);
-		
-		GameRegistry.registerTileEntity(TileEssentiaContainer.class, "TileEssentiacontainer");
-		GameRegistry.registerTileEntity(TileNodeDynamo.class, "TileNodeDynamo");
-		GameRegistry.registerTileEntity(TileEssentiaDynamo.class, "TileEssentiaDynamo");
-		GameRegistry.registerTileEntity(TileBiomeMorpher.class, "TileBiomeMorpher");
-		GameRegistry.registerTileEntity(TileNodeGenerator.class, "TileNodeGenerator");
-		GameRegistry.registerTileEntity(TileFakeAirNG.class, Ref.MOD_PREFIX + "TileFakeAir");
-		GameRegistry.registerTileEntity(TileFluxLamp.class, "TileFluxLamp");
-		GameRegistry.registerTileEntity(TileWirelessCoil.class, "TileTeslaCoil");
-		GameRegistry.registerTileEntity(TileElectricBellows.class, "TileElectricBellows");
-		GameRegistry.registerTileEntity(TileCreativeJar.class, "TileCreativeJar");
-		GameRegistry.registerTileEntity(TileReconstructor.class, "TileReconstructor");
-		GameRegistry.registerTileEntity(TileCondenser.class, "TileCondenser");
-		GameRegistry.registerTileEntity(TileTCProcessor.class, "TileProcessorTC");
-		GameRegistry.registerTileEntity(TileEldritchConsumer.class, "TileEldrichConsumer");
-		GameRegistry.registerTileEntity(TileEssentiaReservoir.class, Ref.MOD_PREFIX + "TileEssentiaReservoir");
-		GameRegistry.registerTileEntity(TileAdvDeconTable.class, Ref.MOD_PREFIX + "TileAdvDeconTable");
-	}
-	
-	public static void initBloodMagic() {
-		bloodDynamo = Ids.bloodDynamo ? new BlockBloodDynamo() : null;	
-		bloodFabricator = Ids.bloodFabricator ? new BlockBloodFabricator() : null;
-		processorBM = Ids.processorBM ? new BlockBMProcessor() : null;
-		
-		
-		registerBlock(bloodDynamo, Names.bloodDynamo, ItemBloodDynamo.class);
-		registerBlock(bloodFabricator, Names.bloodFabricator);
-		registerBlock(processorBM, Names.processor + "BM");
-		
-		
-		GameRegistry.registerTileEntity(TileBloodDynamo.class, "TileBloodDynamo");
-		GameRegistry.registerTileEntity(TileBloodFabricator.class, "TileBloodFabricator");
-		GameRegistry.registerTileEntity(TileBMProcessor.class, "TileProcessorBM");
-
-	}
-	
-	public static void initBotania() {
-		manaFluid = Ids.manaFluid ? new ManaFluid() : null;
-		manaFluidBlock = Ids.manaFluid ? new BlockManaFluid() : null;
-		flowerDynamo = Ids.flowerDyn ? new BlockFlowerDynamo() : null;
-		manaFabricator = Ids.manaFab ? new BlockManaFabricator() : null;
-		processorBO = Ids.processorBO ? new BlockBOProcessor() : null;
-		manaExchanger = Ids.manaExchanger ? new BlockManaExchanger() : null;
-		
-		registerBlock(flowerDynamo, Names.flowerDynamo, ItemFlowerDynamo.class);
-		registerBlock(manaFabricator, Names.manaFabricator);
-		registerBlock(processorBO, Names.processor + "BO");
-		registerBlock(manaFluidBlock, Names.manaFluidBlock);
-		registerBlock(manaExchanger, Names.manaExchanger, ItemManaExchanger.class);
-		
-		GameRegistry.registerTileEntity(TileFlowerDynamo.class, "TileFlowerDynamo");
-		GameRegistry.registerTileEntity(TileManaFabricator.class, "ManaFabricator");
-		GameRegistry.registerTileEntity(TileBOProcessor.class, "TileProcessorBO");
-		GameRegistry.registerTileEntity(TileManaExchanger.class, "TileManaExchanger");
 	}
 	
 	private static void registerBlock(Block block, String name) {
