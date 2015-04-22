@@ -7,6 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
+import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
 import theflogat.technomancy.common.tiles.base.IUpgradable;
 import theflogat.technomancy.common.tiles.base.TileTechnomancy;
 import theflogat.technomancy.lib.compat.Thaumcraft;
@@ -171,8 +172,8 @@ public class TileAdvDeconTable extends TileTechnomancy implements IInventory, IU
 		if (items[0] == null || aspect != null) {
 			return false;
 		}
-		AspectList al = Thaumcraft.getObjectAspects(items[0]);
-		al = (AspectList) Thaumcraft.getBonusTags(items[0], al);
+		AspectList al = ThaumcraftCraftingManager.getObjectTags(items[0]);
+		al = ThaumcraftCraftingManager.getBonusTags(items[0], al);
 		if (al == null || al.size() == 0) {
 			return false;
 		}
@@ -181,8 +182,8 @@ public class TileAdvDeconTable extends TileTechnomancy implements IInventory, IU
 
 	private void breakItem(){
 		if (canBreak()){
-			AspectList al = Thaumcraft.getObjectAspects(this.items[0]);
-			al = Thaumcraft.getBonusTags(items[0], al);
+			AspectList al = ThaumcraftCraftingManager.getObjectTags(this.items[0]);
+			al = ThaumcraftCraftingManager.getBonusTags(items[0], al);
 
 			AspectList primals = reduceToPrimals(al);
 			

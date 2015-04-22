@@ -13,9 +13,9 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
+import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
 import theflogat.technomancy.lib.Rate;
-import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.util.Coords;
 
 public class TileEldritchConsumer extends TileMachineBase implements IAspectContainer, IEssentiaTransport{
@@ -177,8 +177,8 @@ public class TileEldritchConsumer extends TileMachineBase implements IAspectCont
 			
 			for(ItemStack items : drops){
 				//c.w.spawnEntityInWorld(new BlockTrail(c.w, c.x, c.y, c.z, xCoord, yCoord, zCoord, items));
-				AspectList al = (AspectList) Thaumcraft.getObjectTags.invoke(null, items);
-				al = (AspectList) Thaumcraft.getBonusTags.invoke(null, items, al);
+				AspectList al = ThaumcraftCraftingManager.getObjectTags(items);
+				al = (AspectList) ThaumcraftCraftingManager.getBonusTags(items, al);
 
 				for(Aspect as : al.getAspects()){
 					int amount = al.getAmount(as);

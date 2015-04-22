@@ -7,9 +7,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.AspectList;
+import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
+import thaumcraft.common.tiles.TileAlchemyFurnace;
+import thaumcraft.common.tiles.TileArcaneFurnace;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
 import theflogat.technomancy.lib.Rate;
-import theflogat.technomancy.lib.compat.Thaumcraft;
 
 public class TileElectricBellows extends TileMachineBase {
 
@@ -56,34 +58,30 @@ public class TileElectricBellows extends TileMachineBase {
 		try{
 			ForgeDirection dir = ForgeDirection.getOrientation(facing);
 			Object furnace = worldObj.getTileEntity(xCoord + dir.offsetX, yCoord, zCoord + dir.offsetZ);
-			if(Thaumcraft.TileAlchemyFurnace.isInstance(furnace)) {
-				furnace = Thaumcraft.TileAlchemyFurnace.cast(worldObj.getTileEntity(xCoord + dir.offsetX, yCoord, zCoord + dir.offsetZ));
-			}else if(Thaumcraft.TileArcaneFurnace.isInstance(worldObj.getTileEntity(xCoord + (dir.offsetX *2), yCoord, zCoord + (dir.offsetZ *2)))) {
-				furnace = Thaumcraft.TileArcaneFurnace.cast(worldObj.getTileEntity(xCoord + (dir.offsetX *2), yCoord, zCoord + (dir.offsetZ *2)));
+			if(worldObj.getTileEntity(xCoord + (dir.offsetX *2), yCoord, zCoord + (dir.offsetZ *2)) instanceof TileArcaneFurnace) {
+				furnace = worldObj.getTileEntity(xCoord + (dir.offsetX *2), yCoord, zCoord + (dir.offsetZ *2));
 			}			
 			if(furnace != null) {
-				if(Thaumcraft.TileAlchemyFurnace.isInstance(furnace)) {
+				if(furnace instanceof TileAlchemyFurnace) {
 					if(extractEnergy(baseCost * 6, true) == baseCost * 6) {
 						if(((ISidedInventory)furnace).getStackInSlot(0) == null || ((ISidedInventory)furnace).getStackInSlot(1) != null) {
 							return;
 						}
-						AspectList al = (AspectList) Thaumcraft.getObjectTags.invoke(null, ((ISidedInventory)furnace).getStackInSlot(0));
-						al = (AspectList) Thaumcraft.getBonusTags.invoke(null,((ISidedInventory)furnace).getStackInSlot(0), al);
+						AspectList al = ThaumcraftCraftingManager.getObjectTags(((ISidedInventory)furnace).getStackInSlot(0));
+						al = ThaumcraftCraftingManager.getBonusTags(((ISidedInventory)furnace).getStackInSlot(0), al);
 						if(al == null || al.size() == 0) {
 							return;
 						}
-						if((Thaumcraft.TileAlchemyFurnace.getField("furnaceBurnTime").getInt(furnace)) <= 2 &&
-								((AspectList)Thaumcraft.TileAlchemyFurnace.getField("aspects").get(furnace)).visSize() + al.visSize() < 50) {
-							Thaumcraft.TileAlchemyFurnace.getField("furnaceBurnTime").set(furnace, 80);
+						if(((TileAlchemyFurnace)furnace).furnaceBurnTime <= 2 && ((TileAlchemyFurnace)furnace).aspects.visSize() + al.visSize() < 50) {
+							((TileAlchemyFurnace)furnace).furnaceBurnTime = 80;
 							extractEnergy(baseCost * 6, false);
 						}					
 					}
 				}
-				if(Thaumcraft.TileArcaneFurnace.isInstance(furnace)) {
+				if(furnace instanceof TileArcaneFurnace) {
 					if(extractEnergy(baseCost, true) == baseCost) {
-						if((Thaumcraft.TileArcaneFurnace.getField("furnaceCookTime").getInt(furnace)) > 6) {
-							Thaumcraft.TileArcaneFurnace.getField("furnaceCookTime").setInt(furnace, 
-									(Thaumcraft.TileArcaneFurnace.getField("furnaceCookTime").getInt(furnace)) - 6);
+						if(((TileArcaneFurnace)furnace).furnaceCookTime > 6) {
+							((TileArcaneFurnace)furnace).furnaceCookTime -= 6;
 							extractEnergy(baseCost, false);
 						}
 					}

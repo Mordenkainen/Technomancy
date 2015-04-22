@@ -7,10 +7,10 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
+import thaumcraft.common.tiles.TileTube;
 import theflogat.technomancy.client.renderers.models.ModelFluxLamp;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileFluxLamp;
 import theflogat.technomancy.lib.Ref;
-import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.util.WorldHelper;
 
 public class TileFluxLampRenderer extends TileEntitySpecialRenderer {
@@ -46,7 +46,7 @@ public class TileFluxLampRenderer extends TileEntitySpecialRenderer {
 	}
 	
 	public void renderNozzles(TileEntity entity) {
-		if(Thaumcraft.TileTube.isInstance(entity.getWorldObj().getTileEntity(entity.xCoord, entity.yCoord + 1, entity.zCoord))) {
+		if(entity.getWorldObj().getTileEntity(entity.xCoord, entity.yCoord + 1, entity.zCoord) instanceof TileTube) {
 			model.renderTop();
 		}
 		for(int i = 0; i < ForgeDirection.VALID_DIRECTIONS.length; i++) {

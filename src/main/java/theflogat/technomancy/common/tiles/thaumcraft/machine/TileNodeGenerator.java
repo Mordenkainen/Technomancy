@@ -2,7 +2,6 @@ package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
 import java.util.HashMap;
 
-import net.minecraft.client.particle.EntityFX;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -28,6 +27,9 @@ import theflogat.technomancy.util.RedstoneSet;
 import theflogat.technomancy.util.WorldHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import thaumcraft.client.fx.bolt.FXLightningBolt;
+import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
+import thaumcraft.common.lib.world.biomes.BiomeHandler;
 
 public class TileNodeGenerator extends TileMachineBase implements IEssentiaTransport, IAspectContainer, IWandable, IUpgradable {
 
@@ -161,7 +163,7 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 		int xx = xCoord + ForgeDirection.getOrientation(facing).offsetX * 3;
 		int zz = zCoord + ForgeDirection.getOrientation(facing).offsetZ * 3;
 		try {
-			ra = (Aspect) Thaumcraft.getRandomBiomeTag.invoke(null, worldObj.getBiomeGenForCoords(xx, zz).biomeID, worldObj.rand);
+			ra = BiomeHandler.getRandomBiomeTag(worldObj.getBiomeGenForCoords(xx, zz).biomeID, worldObj.rand);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
@@ -198,7 +200,7 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 		    worldObj.playSound(xx + 0.5F, yCoord + 1.5, zz + 0.5F, "thaumcraft:craftstart", 1.0F, 1.0F, false);	
 		} else {
 			try {
-				Thaumcraft.createNodeAt.invoke(null, worldObj, xx, yCoord + 1, zz, type, mod, new AspectList().add(ra, (aurum + taint)/ 2));
+				ThaumcraftWorldGenerator.createNodeAt(worldObj, xx, yCoord + 1, zz, type, mod, new AspectList().add(ra, (aurum + taint)/ 2));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -225,12 +227,12 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 		if (worldObj.isRemote) {
 			double [] boltdata = lightning.get(facing)[worldObj.rand.nextInt(4)];
 			try {
-				EntityFX bolt = Thaumcraft.FXLightningBoltConst.newInstance(worldObj, xCoord + boltdata[0], yCoord + boltdata[1],
+				FXLightningBolt bolt = new FXLightningBolt(worldObj, xCoord + boltdata[0], yCoord + boltdata[1],
 						zCoord + boltdata[2], xCoord + boltdata[3], yCoord + boltdata[4], zCoord + boltdata[5], worldObj.rand.nextLong(), 6, 0.5F);
-				Thaumcraft.defaultFractal.invoke(bolt);
-				Thaumcraft.setType.invoke(bolt, (int)boltdata[6]);
-				Thaumcraft.setWidth.invoke(bolt, 0.02F);
-				Thaumcraft.finalizeBolt.invoke(bolt);
+				bolt.defaultFractal();
+				bolt.setType((int)boltdata[6]);
+				bolt.setWidth(0.02F);
+				bolt.finalizeBolt();
 			    worldObj.playSound(xCoord + 0.5F, yCoord + 0.5F, zCoord + 0.5F, "thaumcraft:zap", 1.0F,worldObj.rand.nextFloat(), false);	
 			        
 			} catch (Exception e) {

@@ -5,7 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.wands.IWandRodOnUpdate;
-import theflogat.technomancy.lib.compat.Thaumcraft;
+import thaumcraft.common.items.wands.ItemWandCasting;
 
 public class ElectricWandUpdate implements IWandRodOnUpdate{
 
@@ -35,9 +35,9 @@ public class ElectricWandUpdate implements IWandRodOnUpdate{
 						}
 
 						while(energy >= 10000) {
-							if(isSmaller(Thaumcraft.getVis.invoke(itemstack.getItem(), itemstack, al),
-									Thaumcraft.getMaxVis.invoke(itemstack.getItem(), itemstack))){
-								Thaumcraft.addVis.invoke(itemstack.getItem(), itemstack, al, 1, true);
+							if(isSmaller(((ItemWandCasting)itemstack.getItem()).getVis(itemstack, al),
+									((ItemWandCasting)itemstack.getItem()).getMaxVis(itemstack))){
+								((ItemWandCasting)itemstack.getItem()).addVis(itemstack, al, 1, true);
 								energy -= 10000;
 							}else{
 								break;
@@ -53,8 +53,8 @@ public class ElectricWandUpdate implements IWandRodOnUpdate{
 	
 	private boolean hasRoom(ItemStack itemstack) throws Exception {
 		for(Aspect al : primals){
-			if(isSmaller(Thaumcraft.getVis.invoke(itemstack.getItem(), itemstack, al),
-					Thaumcraft.getMaxVis.invoke(itemstack.getItem(), itemstack)))
+			if(isSmaller(((ItemWandCasting)itemstack.getItem()).getVis(itemstack, al),
+					((ItemWandCasting)itemstack.getItem()).getMaxVis(itemstack)))
 				return true;
 		}
 		

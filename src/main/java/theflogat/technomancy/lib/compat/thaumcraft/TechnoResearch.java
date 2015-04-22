@@ -1,4 +1,4 @@
-package theflogat.technomancy.lib.handlers;
+package theflogat.technomancy.lib.compat.thaumcraft;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,8 +19,9 @@ import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.items.base.TMItems;
 import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.compat.Thaumcraft;
+import theflogat.technomancy.lib.handlers.CraftingHandler;
 
-public class ResearchHandler {
+public class TechnoResearch {
 	
 	public static HashMap<String, Object> recipes = new HashMap<String, Object>();
 	

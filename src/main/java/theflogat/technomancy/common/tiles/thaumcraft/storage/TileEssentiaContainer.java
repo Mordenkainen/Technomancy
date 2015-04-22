@@ -3,7 +3,7 @@ package theflogat.technomancy.common.tiles.thaumcraft.storage;
 import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.IAspectSource;
 import thaumcraft.api.aspects.IEssentiaTransport;
-import theflogat.technomancy.lib.compat.thaumcraft.TileJarFillable;
+import thaumcraft.common.tiles.TileJarFillable;
 
 public class TileEssentiaContainer extends TileJarFillable implements IAspectSource, IEssentiaTransport{
 
@@ -28,6 +28,4 @@ public class TileEssentiaContainer extends TileJarFillable implements IAspectSou
 		}
 		return 0;
 	}
-
-	
 }

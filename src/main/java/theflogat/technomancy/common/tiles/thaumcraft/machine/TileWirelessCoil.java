@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,6 +19,8 @@ import theflogat.technomancy.common.tiles.thaumcraft.util.AspectContainerEssenti
 import theflogat.technomancy.lib.Conf;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.util.RedstoneSet;
+import thaumcraft.common.lib.network.PacketHandler;
+import thaumcraft.common.lib.network.fx.PacketFXEssentiaSource;
 
 public class TileWirelessCoil extends TileTechnomancy implements IEssentiaTransport{
 
@@ -94,11 +95,9 @@ public class TileWirelessCoil extends TileTechnomancy implements IEssentiaTransp
 									if(Conf.fancy) {
 										try {
 											if (this.xCoord - tile.xCoord <= Byte.MAX_VALUE && this.yCoord - tile.yCoord <= Byte.MAX_VALUE && this.zCoord - tile.zCoord <= Byte.MAX_VALUE) {
-												Thaumcraft.PHInstance.sendToAllAround((IMessage)Thaumcraft.PacketFXEssentiaSourceConst.newInstance(
-														this.xCoord, this.yCoord+1, this.zCoord, (byte)(this.xCoord - tile.xCoord),
-														(byte)(this.yCoord - tile.yCoord), (byte)(this.zCoord - tile.zCoord), aspect.getColor()),
-														new NetworkRegistry.TargetPoint(tile.getWorldObj().provider.dimensionId, tile.xCoord,
-																tile.yCoord, tile.zCoord, 32.0D));
+												PacketHandler.INSTANCE.sendToAllAround(new PacketFXEssentiaSource(this.xCoord, this.yCoord+1, this.zCoord, (byte)(this.xCoord - tile.xCoord),
+													(byte)(this.yCoord - tile.yCoord), (byte)(this.zCoord - tile.zCoord), aspect.getColor()), new NetworkRegistry.TargetPoint(
+													tile.getWorldObj().provider.dimensionId, tile.xCoord, tile.yCoord, tile.zCoord, 32.0D));
 											}
 										} catch (Exception e) {
 											e.printStackTrace();
@@ -160,11 +159,9 @@ public class TileWirelessCoil extends TileTechnomancy implements IEssentiaTransp
 							if(Conf.fancy) {
 								try {
 									if (this.xCoord - tile.xCoord <= Byte.MAX_VALUE && this.yCoord - tile.yCoord <= Byte.MAX_VALUE && this.zCoord - tile.zCoord <= Byte.MAX_VALUE) {
-										Thaumcraft.PHInstance.sendToAllAround((IMessage)Thaumcraft.PacketFXEssentiaSourceConst.newInstance(
-												this.xCoord, this.yCoord+1, this.zCoord, (byte)(this.xCoord - tile.xCoord),
-												(byte)(this.yCoord - tile.yCoord), (byte)(this.zCoord - tile.zCoord), aspect.getColor()),
-												new NetworkRegistry.TargetPoint(tile.getWorldObj().provider.dimensionId, tile.xCoord,
-														tile.yCoord, tile.zCoord, 32.0D));
+										PacketHandler.INSTANCE.sendToAllAround(new PacketFXEssentiaSource(this.xCoord, this.yCoord+1, this.zCoord, (byte)(this.xCoord - tile.xCoord),
+											(byte)(this.yCoord - tile.yCoord), (byte)(this.zCoord - tile.zCoord), aspect.getColor()), new NetworkRegistry.TargetPoint(
+											tile.getWorldObj().provider.dimensionId, tile.xCoord, tile.yCoord, tile.zCoord, 32.0D));
 									}
 								} catch (Exception e) {
 									e.printStackTrace();
