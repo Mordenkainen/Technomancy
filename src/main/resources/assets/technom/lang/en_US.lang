@@ -22,6 +22,7 @@ techno:pureLead.name=Purified Lead
 techno:pureNickel.name=Purified Nickel
 item.techno:itemBoost.name=Potency Gem
 item.techno.pure.name=Purified 
+item.techno:manaBucket.name=Mana Condensate Bucket
 
 #Block Names
 tile.techno:cosmeticOpaque.name=Quantized Glass
@@ -51,6 +52,11 @@ tile.techno:eldritchConsumer.name=Eldritch Consumer
 tile.techno:crystalBlock.name=Crystal Block
 tile.techno:catalyst.name=Catalyst
 tile.techno:advDeconTable.name=Advanced Deconstruction Table
+tile.techno:manaFluid.name=Mana Condensate
+tile.techno:manaExchanger.name=Mana Exchanger
+
+#Fluid Names
+fluid.techno:manaFluid=Mana Condensate
 
 #Information
 info.techno:purity=Purity
@@ -123,8 +129,8 @@ tc.research_text.ADVDECONTABLE=Lies!
 techno.research_page.ADVDECONTABLE.1=After struggling for a while, you have found a way to automate the discovery of research points. No idling and right-clicking for hours anymore! Unfortunately, it is half the speed of a normal Deconstruction Table but there might be a way to upgrade it.
 
 #Lexicon Entries
-techno.lexicon_page.FLOWERDYNAMO.1=After studying the way the Mana Fluxfield converts Mana Bursts to Redstone Flux you have decided to try to improve this using some of the magical-mechanical components you have created. The result is the Flower Dynamo. By hooking the Flower Dynamo to a Redstone Flux conductor and placing it within a few blocks of a Mana Pool you can convert this Mana to Redstone Flux in a much more efficient way.
-techno.lexicon_page.FLOWERDYNAMO.2=By default the Flower Dynamo requires a redstone signal to run, but this can be changed. Right clicking on the Dynamo with a Redstone Torch will cause the Dynamo to run only when it is not getting a redstone signal, Gunpowder will make it ignore redstone, and Redstone Dust will return it to its original behavior. Shift Right clicking on the Dynamo with an empty hand removes any modifying item that has been used on it.
+techno.lexicon_page.FLOWERDYNAMO.1=After studying the way the Mana Fluxfield converts Mana Bursts to Redstone Flux you have decided to try to improve this using some of the magical-mechanical components you have created. The result is the Hippie Dynamo. By hooking the Hippie Dynamo to a Redstone Flux conductor and placing it within a few blocks of a Mana Pool you can convert this Mana to Redstone Flux in a much more efficient way.
+techno.lexicon_page.FLOWERDYNAMO.2=By default the Hippie Dynamo requires a redstone signal to run, but this can be changed. Right clicking on the Dynamo with a Redstone Torch will cause the Dynamo to run only when it is not getting a redstone signal, Gunpowder will make it ignore redstone, and Redstone Dust will return it to its original behavior. Shift Right clicking on the Dynamo with an empty hand removes any modifying item that has been used on it.
 techno.lexicon_page.FLOWERDYNAMO.3=The dynamo can be rotated using most wrenches.
 techno.lexicon_page.FLOWERDYNAMO.4=You have also discovered that the Dynamo can have its power output increased at the cost of Mana consumption. By right clicking on the Dynamo with a Potency Gem, the Dynamo will output four times the power, but will also consume four times the Mana. Shift Right clicking on the Dynamo with an empty hand will remove the Potency Gem.
 
@@ -134,6 +140,11 @@ techno.lexicon_page.MANAFAB.1=You have finally figured out how to turn surplus p
 techno.lexicon_name.PROCESSORBO=Botanical Purifier
 techno.lexicon_page.PROCESSORBO.1=You've been hunting down a way to increase your ore output without using silly purification methods, and now you've found one. By placing blocks in the left slot and providing a nearby Mana source, you've successfully acquired ore doubling through purification. These new purified ores can be processed through other magical devices similar to this one to increase ore output further, but each
 techno.lexicon_page.PROCESSORBO.2=device can only purify an ore twice. To obtain the ingots after the ore has been processed as many times as desired, throw the purified ore into a furnace in order to cook it.
+
+techno.lexicon_name.MANAEXCHANGER=Mana Exchanger
+techno.lexicon_page.MANAEXCHANGER.1=The Mana Exchanger can condense Mana from a Mana Pool into a liquid that can be moved through pipes or stored in tanks. It must be placed directly below a Mana Pool and provided with RF. It has a small internal storage tank that can hold about a Mana Pools worth of Mana. In the default mode it will draw mana from the pool. To put the Mana Condensate back into a Mana Pool, Right-Click the Mana Exchanger with a wrench.
+techno.lexicon_page.MANAEXCHANGER.2=The Mana Condensate can be pumped out using any fluid transport. By default the Mana exchanger can be disabled by a redstone signal, but this behavior can be customized in a similar manner as the Hippie Dynamo.
+
 
 #Creative Tab
 itemGroup.Technomancy=Technomancy

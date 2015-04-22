@@ -46,6 +46,8 @@ public class ConfigHandler {
         Ids.catalyst = config.get(blocks, Names.catalyst, true).getBoolean();
         Ids.reservoir = config.get(blocks, Names.reservoir, true).getBoolean();
         Ids.advDeconTable = config.get(blocks, Names.advDeconTable, true).getBoolean();
+        Ids.manaFluid = config.get(blocks, Names.manaFluid, true).getBoolean();
+        Ids.manaExchanger = config.get(blocks, Names.manaExchanger, true).getBoolean();
         
         String items = "Items";
         //Items        

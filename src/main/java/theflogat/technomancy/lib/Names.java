@@ -13,6 +13,7 @@ public class Names {
 	public static final String itemBO = "itemBO";
 	public static final String itemBoost = "itemBoost";
 	public static final String ritualTome = "ritualTome";
+	public static final String manaBucket = "manaBucket";
 
     /*
      * Blocks
@@ -43,6 +44,11 @@ public class Names {
 	public static final String reservoir = "reservoir";
 	public static final String fakeAirLight = "fakeAirLight";
 	public static final String advDeconTable = "advDeconTable";
-	
+	public static final String manaFluidBlock = "manaFluidBlock";
+	public static final String manaExchanger = "manaExchanger";
 
+    /*
+     * Fluids
+     */
+	public static final String manaFluid = "manaFluid";
 }

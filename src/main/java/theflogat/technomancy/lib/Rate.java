@@ -15,6 +15,7 @@ public final class Rate {
        	biomeMorpherCost = config.get(category, "BiomeMorpher", biomeMorpherCost).getInt(Rate.biomeMorpherCost);
        	consumerCost = config.get(category, "EldritchConsumer", consumerCost).getInt(Rate.consumerCost);
        	bellowsCost = config.get(category, "ElectricBellows", bellowsCost).getInt(Rate.bellowsCost);
+       	exchangerCost = config.get(category, "ManaExchanger", exchangerCost).getInt(Rate.exchangerCost);
 	}
 	
 	public static int manaFabCost = 1000000;
@@ -23,4 +24,5 @@ public final class Rate {
 	public static int biomeMorpherCost = 20000;
 	public static int consumerCost = 20000;
 	public static int bellowsCost = 500;
+	public static int exchangerCost = 1000;
 }

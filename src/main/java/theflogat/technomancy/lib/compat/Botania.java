@@ -2,6 +2,7 @@ package theflogat.technomancy.lib.compat;
 
 import java.util.Random;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.items.base.TMItems;
 import theflogat.technomancy.lib.Ids;
@@ -10,7 +11,9 @@ import theflogat.technomancy.lib.handlers.CompatibilityHandler;
 import theflogat.technomancy.lib.handlers.CraftingHandler;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.recipe.RecipeManaInfusion;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
@@ -23,6 +26,7 @@ public class Botania {
 	private static IRecipe flowerDynamo;
 	private static IRecipe manaFabricator;
 	private static IRecipe processorBO;
+	private static IRecipe manaExchanger;
 	
 	public static void initBotaniaRecipes() {
 		if(CompatibilityHandler.te){
@@ -63,6 +67,15 @@ public class Botania {
 					'B', "livingrock",
 					'A', new ItemStack(Items.redstone)				});
 			}
+			if(Ids.manaExchanger) {
+				manaExchanger = oreDictRecipe(new ItemStack(TMBlocks.manaExchanger),
+						new Object[] {" A ", "BMB", "ICI",
+					'M', ThermalExpansion.frameMachineBasic,
+					'I', new ItemStack(ThermalExpansion.blockTank, 1, 3),
+					'C', new ItemStack(TMItems.itemBO, 1, 0),
+					'B', "livingrock",
+					'A', new ItemStack(GameRegistry.findItem("Botania", "pool"))				});
+			}
 		}else{
 			//ManaInfusion
 			if(Ids.matBO) {
@@ -101,6 +114,15 @@ public class Botania {
 					'B', "livingrock",
 					'A', new ItemStack(Items.redstone)				});
 			}
+			if(Ids.manaExchanger) {
+				manaExchanger = oreDictRecipe(new ItemStack(TMBlocks.manaExchanger),
+						new Object[] {"IAI", "BMB", "ICI",
+					'M', new ItemStack(Item.getItemFromBlock(Blocks.glass)),
+					'I', "ingotManasteel",
+					'C', new ItemStack(TMItems.itemBO, 1, 0),
+					'B', "livingrock",
+					'A', new ItemStack(GameRegistry.findItem("Botania", "pool"))				});
+			}
 		}
 	}
 	
@@ -116,7 +138,7 @@ public class Botania {
 			flowerDynLex.setLexiconPages(BotaniaAPI.internalHandler.textPage("techno.lexicon_page.FLOWERDYNAMO.1"),
 					BotaniaAPI.internalHandler.textPage("techno.lexicon_page.FLOWERDYNAMO.2"),
 					BotaniaAPI.internalHandler.textPage("techno.lexicon_page.FLOWERDYNAMO.3"),
-					BotaniaAPI.internalHandler.craftingRecipePage("Flower Dynamo", flowerDynamo));
+					BotaniaAPI.internalHandler.craftingRecipePage("Hippie Dynamo", flowerDynamo));
 			if(Ids.itemBoost) {
 				flowerDynLex.addPage(BotaniaAPI.internalHandler.textPage("techno.lexicon_page.FLOWERDYNAMO.4"));
 				flowerDynLex.addPage(BotaniaAPI.internalHandler.craftingRecipePage("Potency Gem", CraftingHandler.itemBoost));
@@ -132,6 +154,12 @@ public class Botania {
 			processorBOLex.setLexiconPages(BotaniaAPI.internalHandler.textPage("techno.lexicon_page.PROCESSORBO.1"),
 					BotaniaAPI.internalHandler.textPage("techno.lexicon_page.PROCESSORBO.2"),
 					BotaniaAPI.internalHandler.craftingRecipePage("Botanical Purifier", processorBO));
+		}
+		if(Ids.manaExchanger) {
+			TechnoLexicon manaExchangerLex = new TechnoLexicon("techno.lexicon_name.MANAEXCHANGER", BotaniaAPI.categoryDevices);
+			manaExchangerLex.setLexiconPages(BotaniaAPI.internalHandler.textPage("techno.lexicon_page.MANAEXCHANGER.1"),
+					BotaniaAPI.internalHandler.textPage("techno.lexicon_page.MANAEXCHANGER.2"),
+					BotaniaAPI.internalHandler.craftingRecipePage("Mana Exchanger", manaExchanger));
 		}
 	}
 	
