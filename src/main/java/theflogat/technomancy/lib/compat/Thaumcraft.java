@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.particle.EntityFX;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -17,6 +16,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -85,15 +85,12 @@ public class Thaumcraft extends ModuleBase {
 	public static BiomeGenBase biomeTaint;
 	public static BiomeGenBase biomeEerie;
 
-	public static Constructor<? extends EntityFX> FXEssentiaTrailConst;
 	public static Constructor<? extends EntityFX> FXLightningBoltConst;
-	public static Constructor<? extends TileEntitySpecialRenderer> JarRenderConst;
 
 	public static Class<?> TileAlchemyFurnace;
 	public static Class<?> TileArcaneFurnace;
 	public static Class<?> TileInfusionMatrix;
 	public static Class<?> TileNode;
-	public static Class<?> TileMirrorEssentia;
 	public static Class<?> TileTube;
 	public static Class<?> TileTable;
 	public static Class<?> TileResearchTable;
@@ -112,12 +109,10 @@ public class Thaumcraft extends ModuleBase {
 	public static Method setType;
 	public static Method setWidth;
 	public static Method finalizeBolt;
-	public static Method drainEssentia;
 
 	public static Method setCap;
 	public static Method setRod;
 	//WandCasting
-	public static Method getAspectsWithRoom;
 	public static Method getVis;
 	public static Method getMaxVis;
 	public static Method addVis;
@@ -129,8 +124,6 @@ public class Thaumcraft extends ModuleBase {
 	public static Method renderQuadCenteredFromTexture;
 	public static Method drawTag;
 	public static Method drawFloatyLine;
-	//JarRender
-	public static Method renderLiquid;
 	//PlayerKnowledge
 	public static Method setAspectPool;
 	public static Method getAspectPoolFor;
@@ -162,7 +155,6 @@ public class Thaumcraft extends ModuleBase {
 	public static IIcon iconLiquid;
 
 	public static SimpleNetworkWrapper PHInstance;
-	public static Class<?> PacketFXEssentiaSource;
 	public static Constructor<?> PacketFXEssentiaSourceConst;
 	
 	public static WandRod WAND_ROD_ELECTRIC;
@@ -184,10 +176,6 @@ public class Thaumcraft extends ModuleBase {
 				if(method.getName().equalsIgnoreCase("wispFX3")){wispFX3 = method;}
 			}
 
-			Class<?> FXEssentiaTrail = Class.forName("thaumcraft.client.fx.particles.FXEssentiaTrail");
-			FXEssentiaTrailConst = (Constructor<? extends EntityFX>)FXEssentiaTrail.getConstructor(World.class, double.class, double.class, double.class, double.class,
-					double.class, double.class, int.class, int.class, float.class);
-
 			Class<?> FXLightningBolt = Class.forName("thaumcraft.client.fx.bolt.FXLightningBolt");
 			FXLightningBoltConst = (Constructor<? extends EntityFX>)FXLightningBolt.getConstructor(World.class, double.class, double.class, double.class, double.class,
 					double.class, double.class, long.class, int.class, float.class);
@@ -200,7 +188,6 @@ public class Thaumcraft extends ModuleBase {
 			}
 			
 			Class<?> UtilsFX = Class.forName("thaumcraft.client.lib.UtilsFX");
-
 			for(Method method : UtilsFX.getMethods()){
 				if(method.getName().equalsIgnoreCase("renderQuadCenteredFromTexture") && method.getParameterTypes()[0]==String.class){
 					renderQuadCenteredFromTexture = method;
@@ -211,13 +198,6 @@ public class Thaumcraft extends ModuleBase {
 				}
 			}
 			
-			Class<?> JR = Class.forName("thaumcraft.client.renderers.tile.TileJarRenderer");
-			for(Method method : JR.getMethods()){
-				if(method.getName().equalsIgnoreCase("renderLiquid")){renderLiquid = method;
-				//}else if(method.getName().equalsIgnoreCase("drawTag")){drawTag = method;
-				}
-			}
-			JarRenderConst = (Constructor<? extends TileEntitySpecialRenderer>)JR.getConstructor();
 			System.out.println("Technomancy: Thaumcraft Client-Side Module loaded");
 		}catch(Exception e){CompatibilityHandler.th = false;System.out.println("Technomancy: Failed to load Thaumcraft Client-Side Module");Conf.ex(e);}
 	}
@@ -306,32 +286,29 @@ public class Thaumcraft extends ModuleBase {
 			biomeTaint = (BiomeGenBase) THW.getField("biomeTaint").get(THW);
 			biomeEerie = (BiomeGenBase) THW.getField("biomeEerie").get(THW);
 
-			Class<?> TCB = Class.forName("thaumcraft.common.config.ConfigBlocks");
-			FLUXGOO = (Fluid)TCB.getField("FLUXGOO").get(TCB);
-			blockCosmeticSolid = (Block)TCB.getField("blockCosmeticSolid").get(TCB);
-			blockMetalDevice = (Block)TCB.getField("blockMetalDevice").get(TCB);
-			blockStoneDevice = (Block)TCB.getField("blockStoneDevice").get(TCB);
-			blockJar = (Block)TCB.getField("blockJar").get(TCB);
-			blockTube = (Block)TCB.getField("blockTube").get(TCB);
-			blockCustomPlant = (Block)TCB.getField("blockCustomPlant").get(TCB);
-			blockWoodenDevice = (Block)TCB.getField("blockWoodenDevice").get(TCB);
-			blockTable = (Block)TCB.getField("blockTable").get(TCB);
+			FLUXGOO = FluidRegistry.getFluid("fluxgoo");
+			blockCosmeticSolid = GameRegistry.findBlock("Thaumcraft", "blockCosmeticSolid");
+			blockMetalDevice = GameRegistry.findBlock("Thaumcraft", "blockMetalDevice");
+			blockStoneDevice = GameRegistry.findBlock("Thaumcraft", "blockStoneDevice");
+			blockJar = GameRegistry.findBlock("Thaumcraft", "blockJar");
+			blockTube = GameRegistry.findBlock("Thaumcraft", "blockTube");
+			blockCustomPlant = GameRegistry.findBlock("Thaumcraft", "blockCustomPlant");
+			blockWoodenDevice = GameRegistry.findBlock("Thaumcraft", "blockWoodenDevice");
+			blockTable = GameRegistry.findBlock("Thaumcraft", "blockTable");
 
-			Class<?> TCI = Class.forName("thaumcraft.common.config.ConfigItems");
-			itemResource = (Item)TCI.getField("itemResource").get(TCI);
-			itemEssence = (Item)TCI.getField("itemEssence").get(TCI);
-			itemNugget = (Item)TCI.getField("itemNugget").get(TCI);
-			itemShard = (Item)TCI.getField("itemShard").get(TCI);
-			itemWandRod = (Item)TCI.getField("itemWandRod").get(TCI);
-			itemWandCap = (Item)TCI.getField("itemWandCap").get(TCI);
-			itemWandCasting = (Item)TCI.getField("itemWandCasting").get(TCI);
-			itemPickThaumium = (Item)TCI.getField("itemPickThaumium").get(TCI);
+			itemResource = GameRegistry.findItem("Thaumcraft", "ItemResource");
+			itemEssence = GameRegistry.findItem("Thaumcraft", "ItemEssence");
+			itemNugget = GameRegistry.findItem("Thaumcraft", "ItemNugget");
+			itemShard = GameRegistry.findItem("Thaumcraft", "ItemShard");
+			itemWandRod = GameRegistry.findItem("Thaumcraft", "WandRod");
+			itemWandCap =  GameRegistry.findItem("Thaumcraft", "WandCap");
+			itemWandCasting =  GameRegistry.findItem("Thaumcraft", "WandCasting");
+			itemPickThaumium = GameRegistry.findItem("Thaumcraft", "ItemPickThaumium");
 
 			TileAlchemyFurnace = Class.forName("thaumcraft.common.tiles.TileAlchemyFurnace");
 			TileArcaneFurnace = Class.forName("thaumcraft.common.tiles.TileArcaneFurnace");
 			TileInfusionMatrix = Class.forName("thaumcraft.common.tiles.TileInfusionMatrix");
 			TileNode = Class.forName("thaumcraft.common.tiles.TileNode");
-			TileMirrorEssentia = Class.forName("thaumcraft.common.tiles.TileMirrorEssentia");
 			TileTube = Class.forName("thaumcraft.common.tiles.TileTube");
 			TileTable = Class.forName("thaumcraft.common.tiles.TileTable");
 			TileResearchTable = Class.forName("thaumcraft.common.tiles.TileResearchTable");
@@ -360,18 +337,12 @@ public class Thaumcraft extends ModuleBase {
 				if(method.getName().equalsIgnoreCase("createNodeAt")){createNodeAt = method;}
 			}
 
-			Class<?> TEH = Class.forName("thaumcraft.common.lib.events.EssentiaHandler");
-			for(Method method : TEH.getMethods()){
-				if(method.getName().equalsIgnoreCase("drainEssentia")){drainEssentia = method;}
-			}
-			
 			enchantFrugal = ThaumcraftApi.enchantFrugal;//(int)TAPI.getField("enchantFrugal").getInt(TAPI);
 
 			ItemWandCasting = Class.forName("thaumcraft.common.items.wands.ItemWandCasting");
 			for(Method method : ItemWandCasting.getMethods()){
 				if(method.getName().equalsIgnoreCase("setRod")){setRod = method;
 				}else if(method.getName().equalsIgnoreCase("setCap")){setCap = method;
-				}else if(method.getName().equalsIgnoreCase("getAspectsWithRoom")){getAspectsWithRoom = method;
 				}else if(method.getName().equalsIgnoreCase("getVis")){getVis = method;
 				}else if(method.getName().equalsIgnoreCase("getMaxVis")){getMaxVis = method;
 				}else if(method.getName().equalsIgnoreCase("addVis")){addVis = method;
