@@ -21,11 +21,9 @@ import theflogat.technomancy.util.InvHelper;
 import theflogat.technomancy.util.RedstoneSet;
 import theflogat.technomancy.util.ToolWrench;
 import vazkii.botania.api.mana.IPoolOverlayProvider;
-import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Optional.Interface(iface = "vazkii.botania.api.mana.IPoolOverlayProvider", modid = "Botania")
 public class BlockManaExchanger extends BlockContainer implements IPoolOverlayProvider {
 	
 	@SideOnly(Side.CLIENT)
@@ -80,7 +78,6 @@ public class BlockManaExchanger extends BlockContainer implements IPoolOverlayPr
 		return icons[0];		
 	}
 
-	@Optional.Method(modid = "Botania")
 	@Override
 	public IIcon getIcon(World world, int x, int y, int z) {
 		TileManaExchanger tile = (TileManaExchanger) world.getTileEntity(x, y, z);

@@ -1,5 +1,7 @@
 package theflogat.technomancy.lib;
 
+import theflogat.technomancy.Technomancy;
+
 public class Conf {
 	public static boolean fancy = true;
 	public static int[] blacklist = {};
@@ -7,9 +9,8 @@ public class Conf {
 	public static boolean debug = false;
 	
 	public static void ex(Exception e) {
-		if(debug)
-			e.printStackTrace();
-	}
-	
-	
+		if(debug) {
+			Technomancy.logger.error("Exception:", e);
+		}
+	}	
 }

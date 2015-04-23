@@ -6,7 +6,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import theflogat.technomancy.api.rituals.Ritual;
-import theflogat.technomancy.lib.SIDE;
 import theflogat.technomancy.util.RitualHelper;
 
 public class RitualOfFireT1 extends Ritual{

@@ -66,7 +66,6 @@ import theflogat.technomancy.common.tiles.thaumcraft.machine.TileWirelessCoil;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileCreativeJar;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaContainer;
 import theflogat.technomancy.lib.RenderIds;
-import theflogat.technomancy.lib.compat.BloodMagic;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.lib.handlers.CompatibilityHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -91,7 +90,7 @@ public class ClientProxy extends CommonProxy implements IGuiHandler{
 		RenderingRegistry.registerBlockHandler(new BlockCrystalRenderer());
 		RenderingRegistry.registerBlockHandler(new BlockCatalystRenderer());
     	
-    	if(Thaumcraft.th) {
+    	if(CompatibilityHandler.th) {
     		ClientRegistry.bindTileEntitySpecialRenderer(TileNodeDynamo.class, new TileNodeDynamoRenderer());
     		RenderIds.idNodeDynamo = RenderingRegistry.getNextAvailableRenderId();
     	
@@ -142,7 +141,7 @@ public class ClientProxy extends CommonProxy implements IGuiHandler{
         	RenderingRegistry.registerBlockHandler(new BlockAdvDeconTableRenderer());
     	}
     	
-    	if(BloodMagic.bm) {
+    	if(CompatibilityHandler.bm) {
     		ClientRegistry.bindTileEntitySpecialRenderer(TileBloodDynamo.class, new TileBloodDynamoRenderer());
     		RenderIds.idBloodDynamo = RenderingRegistry.getNextAvailableRenderId();
     	
@@ -165,23 +164,6 @@ public class ClientProxy extends CommonProxy implements IGuiHandler{
     	}	    	
     	  	
     }
-    
-    
-    @Override
-	public void essentiaTrail(World world, double x, double y, double z, double tx, double ty, double tz, int color) {
-    	if(Minecraft.getMinecraft().renderViewEntity == null) {
-    	      return;
-    	}
-    	if(Minecraft.getMinecraft().renderViewEntity instanceof EntityPlayer == false) {
-    		return;
-    	}
-        try {
-			Minecraft.getMinecraft().effectRenderer.addEffect(Thaumcraft.FXEssentiaTrailConst.newInstance(world, tx, ty, tz, 
-					x, y, z, 25, color, 1.0F));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-    }
 
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world,	int x, int y, int z) {
@@ -199,5 +181,4 @@ public class ClientProxy extends CommonProxy implements IGuiHandler{
 		}
 		return null;
 	}
-
 }

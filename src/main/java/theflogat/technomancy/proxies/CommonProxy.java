@@ -20,9 +20,6 @@ public class CommonProxy implements IGuiHandler{
 
     }
     
-    public void essentiaTrail(World world, double x, double y, double z, double tx, double ty, double tz, int color) {
-    }
-
     @Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		switch(ID) {

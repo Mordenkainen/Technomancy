@@ -1,7 +1,6 @@
 package theflogat.technomancy.lib;
 
 public class RenderIds {
-
 	public static int idEssentiaContainer;
 	public static int idEssentiaDynamo;
 	public static int idNodeDynamo;
@@ -20,6 +19,4 @@ public class RenderIds {
 	public static int idCrystal;
 	public static int idCatalyst;
 	public static int idAdvDeconTable;
-	
-
 }
