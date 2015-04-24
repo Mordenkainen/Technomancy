@@ -93,14 +93,10 @@ public class TileWirelessCoil extends TileTechnomancy implements IEssentiaTransp
 							if(aspect != null && (aspectFilter == null || aspect == aspectFilter) && cont.doesContainerAccept(aspect) && cont.addToContainer(aspect, 1) == 0) {
 								if(source.takeFromContainer(aspect, 1)) {
 									if(Conf.fancy) {
-										try {
-											if (this.xCoord - tile.xCoord <= Byte.MAX_VALUE && this.yCoord - tile.yCoord <= Byte.MAX_VALUE && this.zCoord - tile.zCoord <= Byte.MAX_VALUE) {
-												PacketHandler.INSTANCE.sendToAllAround(new PacketFXEssentiaSource(this.xCoord, this.yCoord+1, this.zCoord, (byte)(this.xCoord - tile.xCoord),
-													(byte)(this.yCoord - tile.yCoord), (byte)(this.zCoord - tile.zCoord), aspect.getColor()), new NetworkRegistry.TargetPoint(
-													tile.getWorldObj().provider.dimensionId, tile.xCoord, tile.yCoord, tile.zCoord, 32.0D));
-											}
-										} catch (Exception e) {
-											e.printStackTrace();
+										if (this.xCoord - tile.xCoord <= Byte.MAX_VALUE && this.yCoord - tile.yCoord <= Byte.MAX_VALUE && this.zCoord - tile.zCoord <= Byte.MAX_VALUE) {
+											PacketHandler.INSTANCE.sendToAllAround(new PacketFXEssentiaSource(this.xCoord, this.yCoord+1, this.zCoord, (byte)(this.xCoord - tile.xCoord),
+												(byte)(this.yCoord - tile.yCoord), (byte)(this.zCoord - tile.zCoord), aspect.getColor()), new NetworkRegistry.TargetPoint(
+												tile.getWorldObj().provider.dimensionId, tile.xCoord, tile.yCoord, tile.zCoord, 32.0D));
 										}
 									}
 								} else {
@@ -157,14 +153,10 @@ public class TileWirelessCoil extends TileTechnomancy implements IEssentiaTransp
 						gotEssentia = source.takeFromContainer(aspect, amount);
 						if(gotEssentia) {
 							if(Conf.fancy) {
-								try {
-									if (this.xCoord - tile.xCoord <= Byte.MAX_VALUE && this.yCoord - tile.yCoord <= Byte.MAX_VALUE && this.zCoord - tile.zCoord <= Byte.MAX_VALUE) {
-										PacketHandler.INSTANCE.sendToAllAround(new PacketFXEssentiaSource(this.xCoord, this.yCoord+1, this.zCoord, (byte)(this.xCoord - tile.xCoord),
-											(byte)(this.yCoord - tile.yCoord), (byte)(this.zCoord - tile.zCoord), aspect.getColor()), new NetworkRegistry.TargetPoint(
-											tile.getWorldObj().provider.dimensionId, tile.xCoord, tile.yCoord, tile.zCoord, 32.0D));
-									}
-								} catch (Exception e) {
-									e.printStackTrace();
+								if (this.xCoord - tile.xCoord <= Byte.MAX_VALUE && this.yCoord - tile.yCoord <= Byte.MAX_VALUE && this.zCoord - tile.zCoord <= Byte.MAX_VALUE) {
+									PacketHandler.INSTANCE.sendToAllAround(new PacketFXEssentiaSource(this.xCoord, this.yCoord+1, this.zCoord, (byte)(this.xCoord - tile.xCoord),
+										(byte)(this.yCoord - tile.yCoord), (byte)(this.zCoord - tile.zCoord), aspect.getColor()), new NetworkRegistry.TargetPoint(
+										tile.getWorldObj().provider.dimensionId, tile.xCoord, tile.yCoord, tile.zCoord, 32.0D));
 								}
 							}
 							return amount;

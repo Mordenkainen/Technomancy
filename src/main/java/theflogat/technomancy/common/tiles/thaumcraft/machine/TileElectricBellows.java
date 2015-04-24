@@ -55,61 +55,57 @@ public class TileElectricBellows extends TileMachineBase {
 			worldObj.playSound(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, "mob.ghast.fireball", 0.01F, 0.5F + (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2F, false);
 		}
 		
-		try{
-			ForgeDirection dir = ForgeDirection.getOrientation(facing);
-			Object furnace = worldObj.getTileEntity(xCoord + dir.offsetX, yCoord, zCoord + dir.offsetZ);
-			if(worldObj.getTileEntity(xCoord + (dir.offsetX *2), yCoord, zCoord + (dir.offsetZ *2)) instanceof TileArcaneFurnace) {
-				furnace = worldObj.getTileEntity(xCoord + (dir.offsetX *2), yCoord, zCoord + (dir.offsetZ *2));
-			}			
-			if(furnace != null) {
-				if(furnace instanceof TileAlchemyFurnace) {
-					if(extractEnergy(baseCost * 6, true) == baseCost * 6) {
-						if(((ISidedInventory)furnace).getStackInSlot(0) == null || ((ISidedInventory)furnace).getStackInSlot(1) != null) {
-							return;
-						}
-						AspectList al = ThaumcraftCraftingManager.getObjectTags(((ISidedInventory)furnace).getStackInSlot(0));
-						al = ThaumcraftCraftingManager.getBonusTags(((ISidedInventory)furnace).getStackInSlot(0), al);
-						if(al == null || al.size() == 0) {
-							return;
-						}
-						if(((TileAlchemyFurnace)furnace).furnaceBurnTime <= 2 && ((TileAlchemyFurnace)furnace).aspects.visSize() + al.visSize() < 50) {
-							((TileAlchemyFurnace)furnace).furnaceBurnTime = 80;
-							extractEnergy(baseCost * 6, false);
-						}					
+		ForgeDirection dir = ForgeDirection.getOrientation(facing);
+		Object furnace = worldObj.getTileEntity(xCoord + dir.offsetX, yCoord, zCoord + dir.offsetZ);
+		if(worldObj.getTileEntity(xCoord + (dir.offsetX *2), yCoord, zCoord + (dir.offsetZ *2)) instanceof TileArcaneFurnace) {
+			furnace = worldObj.getTileEntity(xCoord + (dir.offsetX *2), yCoord, zCoord + (dir.offsetZ *2));
+		}			
+		if(furnace != null) {
+			if(furnace instanceof TileAlchemyFurnace) {
+				if(extractEnergy(baseCost * 6, true) == baseCost * 6) {
+					if(((ISidedInventory)furnace).getStackInSlot(0) == null || ((ISidedInventory)furnace).getStackInSlot(1) != null) {
+						return;
 					}
-				}
-				if(furnace instanceof TileArcaneFurnace) {
-					if(extractEnergy(baseCost, true) == baseCost) {
-						if(((TileArcaneFurnace)furnace).furnaceCookTime > 6) {
-							((TileArcaneFurnace)furnace).furnaceCookTime -= 6;
-							extractEnergy(baseCost, false);
-						}
+					AspectList al = ThaumcraftCraftingManager.getObjectTags(((ISidedInventory)furnace).getStackInSlot(0));
+					al = ThaumcraftCraftingManager.getBonusTags(((ISidedInventory)furnace).getStackInSlot(0), al);
+					if(al == null || al.size() == 0) {
+						return;
 					}
+					if(((TileAlchemyFurnace)furnace).furnaceBurnTime <= 2 && ((TileAlchemyFurnace)furnace).aspects.visSize() + al.visSize() < 50) {
+						((TileAlchemyFurnace)furnace).furnaceBurnTime = 80;
+						extractEnergy(baseCost * 6, false);
+					}					
 				}
-				if(furnace instanceof TileEntityFurnace) {
-					if(extractEnergy(baseCost * 6, true) == baseCost * 6) {
-						if(((ISidedInventory)furnace).getStackInSlot(0) == null) {
-							return;
-						}
-						if(FurnaceRecipes.smelting().getSmeltingResult(((ISidedInventory)furnace).getStackInSlot(0)) != null &&
-								((TileEntityFurnace)furnace).furnaceBurnTime <= 2) {
-							((TileEntityFurnace)furnace).furnaceBurnTime = 80;
-							BlockFurnace.updateFurnaceBlockState(true, this.worldObj, xCoord + dir.offsetX, yCoord, zCoord + dir.offsetZ);
-							extractEnergy(baseCost * 6, false);
-						}
-						delay++;
-						if(delay >= 2) {
-							delay = 0;
-							if (((TileEntityFurnace)furnace).furnaceCookTime > 0 && ((TileEntityFurnace)furnace).furnaceCookTime < 199) {
-								System.out.println(((TileEntityFurnace)furnace).furnaceCookTime);
-								((TileEntityFurnace)furnace).furnaceCookTime += 1;
-					        }
-						}
+			}
+			if(furnace instanceof TileArcaneFurnace) {
+				if(extractEnergy(baseCost, true) == baseCost) {
+					if(((TileArcaneFurnace)furnace).furnaceCookTime > 6) {
+						((TileArcaneFurnace)furnace).furnaceCookTime -= 6;
+						extractEnergy(baseCost, false);
 					}
 				}
 			}
-		}catch(Exception e){
-			e.printStackTrace();
+			if(furnace instanceof TileEntityFurnace) {
+				if(extractEnergy(baseCost * 6, true) == baseCost * 6) {
+					if(((ISidedInventory)furnace).getStackInSlot(0) == null) {
+						return;
+					}
+					if(FurnaceRecipes.smelting().getSmeltingResult(((ISidedInventory)furnace).getStackInSlot(0)) != null &&
+							((TileEntityFurnace)furnace).furnaceBurnTime <= 2) {
+						((TileEntityFurnace)furnace).furnaceBurnTime = 80;
+						BlockFurnace.updateFurnaceBlockState(true, this.worldObj, xCoord + dir.offsetX, yCoord, zCoord + dir.offsetZ);
+						extractEnergy(baseCost * 6, false);
+					}
+					delay++;
+					if(delay >= 2) {
+						delay = 0;
+						if (((TileEntityFurnace)furnace).furnaceCookTime > 0 && ((TileEntityFurnace)furnace).furnaceCookTime < 199) {
+							System.out.println(((TileEntityFurnace)furnace).furnaceCookTime);
+							((TileEntityFurnace)furnace).furnaceCookTime += 1;
+				        }
+					}
+				}
+			}
 		}
 	}
 

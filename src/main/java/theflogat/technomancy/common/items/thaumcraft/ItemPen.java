@@ -29,40 +29,38 @@ public class ItemPen extends ItemBase implements IScribeTools {
 	
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World w, int x, int y, int z, int side, float hitX, float hitY, float hitZ){
-		try{
-			TileEntity tile = w.getTileEntity(x, y, z);
-			int md = w.getBlockMetadata(x, y, z);
-			Block bi = w.getBlock(x, y, z);
-	
-			if (tile instanceof TileTable && md != 6) {
-				if (w.isRemote) {return false;}
-				for (int a = 2; a < 6; a++) {
-					ForgeDirection dir = ForgeDirection.VALID_DIRECTIONS[a];
-					TileEntity tile2 = w.getTileEntity(x + dir.offsetX , y + dir.offsetY, z + dir.offsetZ);
+		TileEntity tile = w.getTileEntity(x, y, z);
+		int md = w.getBlockMetadata(x, y, z);
+		Block bi = w.getBlock(x, y, z);
+
+		if (tile instanceof TileTable && md != 6) {
+			if (w.isRemote) {return false;}
+			for (int a = 2; a < 6; a++) {
+				ForgeDirection dir = ForgeDirection.VALID_DIRECTIONS[a];
+				TileEntity tile2 = w.getTileEntity(x + dir.offsetX , y + dir.offsetY, z + dir.offsetZ);
+				
+				int md2 = w.getBlockMetadata(x + dir.offsetX , y + dir.offsetY, z + dir.offsetZ);
+				
+				if (tile2 instanceof TileTable && md2 < 6) {
+					w.setBlock(x, y, z, bi, a, 0);
+					w.setTileEntity(x, y, z, new TileResearchTable());
+					w.setBlock(x + dir.offsetX , y + dir.offsetY, z + dir.offsetZ, bi, dir.getOpposite().ordinal() + 4, 0);
 					
-					int md2 = w.getBlockMetadata(x + dir.offsetX , y + dir.offsetY, z + dir.offsetZ);
+					w.markBlockForUpdate(x, y, z);
+					w.markBlockForUpdate(x + dir.offsetX , y + dir.offsetY, z + dir.offsetZ);
 					
-					if (tile2 instanceof TileTable && md2 < 6) {
-						w.setBlock(x, y, z, bi, a, 0);
-						w.setTileEntity(x, y, z, new TileResearchTable());
-						w.setBlock(x + dir.offsetX , y + dir.offsetY, z + dir.offsetZ, bi, dir.getOpposite().ordinal() + 4, 0);
-						
-						w.markBlockForUpdate(x, y, z);
-						w.markBlockForUpdate(x + dir.offsetX , y + dir.offsetY, z + dir.offsetZ);
-						
-						TileEntity tile3 = w.getTileEntity(x, y, z);
-						if (tile3 instanceof TileResearchTable) {
-							((IInventory)tile3).setInventorySlotContents(0, stack.copy());
-							if (!player.capabilities.isCreativeMode) {
-								player.inventory.decrStackSize(player.inventory.currentItem, 1);
-							}
-							w.markBlockForUpdate(x, y, z);
+					TileEntity tile3 = w.getTileEntity(x, y, z);
+					if (tile3 instanceof TileResearchTable) {
+						((IInventory)tile3).setInventorySlotContents(0, stack.copy());
+						if (!player.capabilities.isCreativeMode) {
+							player.inventory.decrStackSize(player.inventory.currentItem, 1);
 						}
-						return true;
+						w.markBlockForUpdate(x, y, z);
 					}
+					return true;
 				}
 			}
-		}catch(Exception e){e.printStackTrace();}
+		}
 		return false;
 	}
 

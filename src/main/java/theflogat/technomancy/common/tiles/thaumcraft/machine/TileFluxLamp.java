@@ -47,35 +47,33 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
 	int count;
 	@Override
 	public void updateEntity() {
-		try{
-			if(!worldObj.isRemote) {
-				TileEntity tile = null;
-				if (!worldObj.isRemote && ++count % 10 == 0) {
-					if(amount < maxAmount) {
-						fill();
-					}
-					tile = getMatrix();
+		if(!worldObj.isRemote) {
+			TileEntity tile = null;
+			if (!worldObj.isRemote && ++count % 10 == 0) {
+				if(amount < maxAmount) {
+					fill();
 				}
-				if(tile == null) {
-					return;
-				}
-				if(!((TileInfusionMatrix)tile).crafting) {
-					this.stabilize = true;
-				}	
-				if(((TileInfusionMatrix)tile).instability > 0 && stabilize) {
-					for(int i = 0; i < 5; i++) {					
-						if(amount >= 5 && (tank.getCapacity() - tank.getFluidAmount()) >= 200 && stabilize) {
-							takeFromContainer(Aspect.ORDER, 5);
-							((TileInfusionMatrix)tile).instability -= 1;
-							tank.fill(FluidRegistry.getFluidStack(Thaumcraft.FLUXGOO.getName(), 200), true);
-						}else{
-							break;
-						}						
-					}
-					this.stabilize = false;
-				}			
+				tile = getMatrix();
 			}
-		}catch(Exception e){e.printStackTrace();}
+			if(tile == null) {
+				return;
+			}
+			if(!((TileInfusionMatrix)tile).crafting) {
+				this.stabilize = true;
+			}	
+			if(((TileInfusionMatrix)tile).instability > 0 && stabilize) {
+				for(int i = 0; i < 5; i++) {					
+					if(amount >= 5 && (tank.getCapacity() - tank.getFluidAmount()) >= 200 && stabilize) {
+						takeFromContainer(Aspect.ORDER, 5);
+						((TileInfusionMatrix)tile).instability -= 1;
+						tank.fill(FluidRegistry.getFluidStack(Thaumcraft.FLUXGOO.getName(), 200), true);
+					}else{
+						break;
+					}						
+				}
+				this.stabilize = false;
+			}			
+		}
 	}
 
 	TileEntity getMatrix() {

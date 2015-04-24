@@ -88,11 +88,7 @@ public class ItemFusionFocus extends ItemBase implements IWandFocus {
 		if(mop != null && stack != null) {
 			if(this.type != null && this.mod != null && this.aspects != null) {
 				this.cost = false;
-				try {
-					ThaumcraftWorldGenerator.createNodeAt(world, mop.blockX, mop.blockY, mop.blockZ, type, mod, aspects);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}					
+				ThaumcraftWorldGenerator.createNodeAt(world, mop.blockX, mop.blockY, mop.blockZ, type, mod, aspects);				
 			}
 		}
 		return stack;
@@ -117,26 +113,24 @@ public class ItemFusionFocus extends ItemBase implements IWandFocus {
 
 	@Override
 	public boolean onFocusBlockStartBreak(ItemStack stack, int x, int y, int z, EntityPlayer player) {
-		try{
-			TileEntity entity = player.worldObj.getTileEntity(x, y, z);
-			if(stack != null && entity != null) {
-				if(entity instanceof TileNode && stack.getItem() instanceof ItemWandCasting) {
-					TileNode node = (TileNode)entity;
-					if(node.getAspects() != null) {
-						AspectList al = (AspectList) node.getAspects();
-						for(int i = 0; i < al.size(); i++) {
-							if((mod == null || this.mod == node.getNodeModifier()) &&
-									(type == null || type == node.getNodeType())){
-								aspects.add(al.getAspects()[i], al.getAmount(al.getAspects()[i]));
-								mod = node.getNodeModifier();
-								type =	node.getNodeType();
-							}
+		TileEntity entity = player.worldObj.getTileEntity(x, y, z);
+		if(stack != null && entity != null) {
+			if(entity instanceof TileNode && stack.getItem() instanceof ItemWandCasting) {
+				TileNode node = (TileNode)entity;
+				if(node.getAspects() != null) {
+					AspectList al = (AspectList) node.getAspects();
+					for(int i = 0; i < al.size(); i++) {
+						if((mod == null || this.mod == node.getNodeModifier()) &&
+								(type == null || type == node.getNodeType())){
+							aspects.add(al.getAspects()[i], al.getAmount(al.getAspects()[i]));
+							mod = node.getNodeModifier();
+							type =	node.getNodeType();
 						}
-						entity.blockType.breakBlock(player.worldObj, x, y, z, entity.blockType, entity.blockMetadata);
 					}
+					entity.blockType.breakBlock(player.worldObj, x, y, z, entity.blockType, entity.blockMetadata);
 				}
 			}
-		}catch(Exception e){e.printStackTrace();}
+		}
 		return false;
 	}
 

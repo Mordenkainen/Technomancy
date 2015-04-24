@@ -33,11 +33,7 @@ public class TileNodeDynamoRenderer extends TileEntitySpecialRenderer {
 		{
 			GL11.glPushMatrix();
 			float ticks = Minecraft.getMinecraft().renderViewEntity.ticksExisted + partialTicks;
-			try {
-				UtilsFX.drawFloatyLine(tileentity.xCoord + 0.5D, tileentity.yCoord + .9D, tileentity.zCoord + 0.5D, ((TileNodeDynamo)tileentity).sourceX + 0.5D, ((TileNodeDynamo)tileentity).sourceY + 0.5D, ((TileNodeDynamo)tileentity).sourceZ + 0.5D, partialTicks, ((TileNodeDynamo)tileentity).color, "textures/misc/wispy.png", -0.02F, Math.min(ticks, 10.0F) / 10.0F);
-			} catch (Exception e) {
-				e.printStackTrace();
-			} 
+			UtilsFX.drawFloatyLine(tileentity.xCoord + 0.5D, tileentity.yCoord + .9D, tileentity.zCoord + 0.5D, ((TileNodeDynamo)tileentity).sourceX + 0.5D, ((TileNodeDynamo)tileentity).sourceY + 0.5D, ((TileNodeDynamo)tileentity).sourceZ + 0.5D, partialTicks, ((TileNodeDynamo)tileentity).color, "textures/misc/wispy.png", -0.02F, Math.min(ticks, 10.0F) / 10.0F);
 			GL11.glPopMatrix();
 		}
 	}

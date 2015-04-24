@@ -14,44 +14,42 @@ public class ElectricWandUpdate implements IWandRodOnUpdate{
 	
 	@Override
 	public void onUpdate(ItemStack itemstack, EntityPlayer player) {
-		try{
-			if(itemstack != null) {
-				if(hasRoom(itemstack)) {
-					int energy = itemstack.stackTagCompound.getInteger("energy");
-					for(Aspect al : Aspect.getPrimalAspects()) {
-						int slot = checkInventory(player);
-						if(slot!=-1) {
-							IEnergyContainerItem capacitor = (IEnergyContainerItem)player.inventory.mainInventory[slot].getItem();
+		if(itemstack != null) {
+			if(hasRoom(itemstack)) {
+				int energy = itemstack.stackTagCompound.getInteger("energy");
+				for(Aspect al : Aspect.getPrimalAspects()) {
+					int slot = checkInventory(player);
+					if(slot!=-1) {
+						IEnergyContainerItem capacitor = (IEnergyContainerItem)player.inventory.mainInventory[slot].getItem();
 
-							while(energy<maxEner){
-								if(slot!=-1) {
-									if(capacitor.extractEnergy(player.inventory.mainInventory[slot], 1000, true)>0) {
-										energy += capacitor.extractEnergy(player.inventory.mainInventory[slot], 1000, false);
-									}else{
-										break;
-									}
+						while(energy<maxEner){
+							if(slot!=-1) {
+								if(capacitor.extractEnergy(player.inventory.mainInventory[slot], 1000, true)>0) {
+									energy += capacitor.extractEnergy(player.inventory.mainInventory[slot], 1000, false);
+								}else{
+									break;
 								}
-							}
-						}
-
-						while(energy >= 10000) {
-							if(isSmaller(((ItemWandCasting)itemstack.getItem()).getVis(itemstack, al),
-									((ItemWandCasting)itemstack.getItem()).getMaxVis(itemstack))){
-								((ItemWandCasting)itemstack.getItem()).addVis(itemstack, al, 1, true);
-								energy -= 10000;
-							}else{
-								break;
 							}
 						}
 					}
 
-					itemstack.stackTagCompound.setInteger("energy", energy);
+					while(energy >= 10000) {
+						if(isSmaller(((ItemWandCasting)itemstack.getItem()).getVis(itemstack, al),
+								((ItemWandCasting)itemstack.getItem()).getMaxVis(itemstack))){
+							((ItemWandCasting)itemstack.getItem()).addVis(itemstack, al, 1, true);
+							energy -= 10000;
+						}else{
+							break;
+						}
+					}
 				}
+
+				itemstack.stackTagCompound.setInteger("energy", energy);
 			}
-		}catch(Exception e){e.printStackTrace();}
+		}
 	}
 	
-	private boolean hasRoom(ItemStack itemstack) throws Exception {
+	private boolean hasRoom(ItemStack itemstack) {
 		for(Aspect al : primals){
 			if(isSmaller(((ItemWandCasting)itemstack.getItem()).getVis(itemstack, al),
 					((ItemWandCasting)itemstack.getItem()).getMaxVis(itemstack)))

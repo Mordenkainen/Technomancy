@@ -170,27 +170,25 @@ public class TileEldritchConsumer extends TileMachineBase implements IAspectCont
 	}
 
 	private void processFromCoords(Coords c) {
-		try{
-			ArrayList<ItemStack> drops = c.w.getBlock(c.x, c.y, c.z).getDrops(worldObj, c.x, c.y, c.z, c.w.getBlockMetadata(c.x, c.y, c.z), 0);
-			
-			boolean flag = true;
-			
-			for(ItemStack items : drops){
-				//c.w.spawnEntityInWorld(new BlockTrail(c.w, c.x, c.y, c.z, xCoord, yCoord, zCoord, items));
-				AspectList al = ThaumcraftCraftingManager.getObjectTags(items);
-				al = (AspectList) ThaumcraftCraftingManager.getBonusTags(items, al);
+		ArrayList<ItemStack> drops = c.w.getBlock(c.x, c.y, c.z).getDrops(worldObj, c.x, c.y, c.z, c.w.getBlockMetadata(c.x, c.y, c.z), 0);
+		
+		boolean flag = true;
+		
+		for(ItemStack items : drops){
+			//c.w.spawnEntityInWorld(new BlockTrail(c.w, c.x, c.y, c.z, xCoord, yCoord, zCoord, items));
+			AspectList al = ThaumcraftCraftingManager.getObjectTags(items);
+			al = (AspectList) ThaumcraftCraftingManager.getBonusTags(items, al);
 
-				for(Aspect as : al.getAspects()){
-					int amount = al.getAmount(as);
-					list.merge(as, amount);
-				}
+			for(Aspect as : al.getAspects()){
+				int amount = al.getAmount(as);
+				list.merge(as, amount);
 			}
-			
-			if(flag){
-				c.w.getBlock(c.x, c.y, c.z).breakBlock(c.w, c.x, c.y, c.z, c.w.getBlock(c.x, c.y, c.z), c.w.getBlockMetadata(c.x, c.y, c.z));
-				c.w.setBlockToAir(c.x, c.y, c.z);
-			}
-		}catch(Exception e){}
+		}
+		
+		if(flag){
+			c.w.getBlock(c.x, c.y, c.z).breakBlock(c.w, c.x, c.y, c.z, c.w.getBlock(c.x, c.y, c.z), c.w.getBlockMetadata(c.x, c.y, c.z));
+			c.w.setBlockToAir(c.x, c.y, c.z);
+		}
 	}
 
 	@Override
