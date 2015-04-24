@@ -17,6 +17,9 @@ import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileCreativeJar;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.compat.Thaumcraft;
+import thaumcraft.client.lib.UtilsFX;
+import thaumcraft.common.blocks.BlockJar;
+import thaumcraft.common.config.Config;
 
 public class TileCreativeJarRenderer extends TileEntitySpecialRenderer {
 
@@ -44,45 +47,43 @@ public class TileCreativeJarRenderer extends TileEntitySpecialRenderer {
 	}
 
 	public void renderLabel(TileEntity tile, double x, double y, double z, float f) {
-		try{
-			if (((TileCreativeJar)tile).aspectFilter != null) {
-				GL11.glPushMatrix();
-				switch (((TileCreativeJar)tile).facing) {
-				case 2:
-					GL11.glTranslatef(0.0F, 0.0F, -0.63F);break;	
-				case 3: 
-					GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F); 
-					GL11.glTranslatef(0.0F, 0.0F, -0.63F);break;					
-				case 5: 
-					GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F); 
-					GL11.glTranslatef(0.0F, 0.0F, -0.63F);break;
-				case 4: 
-					GL11.glRotatef(270.0F, 0.0F, 1.0F, 0.0F);
-					GL11.glTranslatef(0.0F, 0.0F, -0.63F);
-				}
-				GL11.glTranslatef(0.0F, 1.5F, 0.0F);
-				float rot = (((TileCreativeJar)tile).aspectFilter.getTag().hashCode() + tile.xCoord + ((TileCreativeJar)tile).facing) % 4 - 2;
+		if (((TileCreativeJar)tile).aspectFilter != null) {
+			GL11.glPushMatrix();
+			switch (((TileCreativeJar)tile).facing) {
+			case 2:
+				GL11.glTranslatef(0.0F, 0.0F, -0.63F);break;	
+			case 3: 
+				GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F); 
+				GL11.glTranslatef(0.0F, 0.0F, -0.63F);break;					
+			case 5: 
+				GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F); 
+				GL11.glTranslatef(0.0F, 0.0F, -0.63F);break;
+			case 4: 
+				GL11.glRotatef(270.0F, 0.0F, 1.0F, 0.0F);
+				GL11.glTranslatef(0.0F, 0.0F, -0.63F);
+			}
+			GL11.glTranslatef(0.0F, 1.5F, 0.0F);
+			float rot = (((TileCreativeJar)tile).aspectFilter.getTag().hashCode() + tile.xCoord + ((TileCreativeJar)tile).facing) % 4 - 2;
 
-				GL11.glPushMatrix();
-				GL11.glTranslatef(0.0F, -0.4F, 0.315F);
-				if (Thaumcraft.crooked) {
-					GL11.glRotatef(rot, 0.0F, 0.0F, 1.0F);
-				}
-				Thaumcraft.renderQuadCenteredFromTexture.invoke(null, "textures/models/label.png", 0.5F, 1.0F, 1.0F, 1.0F, -99, 771, 1.0F);
-				GL11.glPopMatrix();
+			GL11.glPushMatrix();
+			GL11.glTranslatef(0.0F, -0.4F, 0.315F);
+			if (Config.crooked) {
+				GL11.glRotatef(rot, 0.0F, 0.0F, 1.0F);
+			}
+			UtilsFX.renderQuadCenteredFromTexture("textures/models/label.png", 0.5F, 1.0F, 1.0F, 1.0F, -99, 771, 1.0F);
+			GL11.glPopMatrix();
 
-				GL11.glPushMatrix();
-				GL11.glTranslatef(0.0F, -0.4F, 0.31F);
-				if (Thaumcraft.crooked) {
-					GL11.glRotatef(rot, 0.0F, 0.0F, 1.0F);
-				}
-				GL11.glScaled(0.021D, 0.021D, 0.021D);
+			GL11.glPushMatrix();
+			GL11.glTranslatef(0.0F, -0.4F, 0.31F);
+			if (Config.crooked) {
+				GL11.glRotatef(rot, 0.0F, 0.0F, 1.0F);
+			}
+			GL11.glScaled(0.021D, 0.021D, 0.021D);
 
-				Thaumcraft.drawTag.invoke(null, -8, -8, ((TileCreativeJar)tile).aspectFilter);
-				GL11.glPopMatrix();
-				GL11.glPopMatrix();
-			}	
-		}catch(Exception e){e.printStackTrace();}
+			UtilsFX.drawTag(-8, -8, ((TileCreativeJar)tile).aspectFilter);
+			GL11.glPopMatrix();
+			GL11.glPopMatrix();
+		}	
 	}
 
 	public void renderLiquid(TileEntity tile, double x, double y, double z, float f) {	
@@ -116,7 +117,7 @@ public class TileCreativeJarRenderer extends TileEntitySpecialRenderer {
 		}
 		t.setBrightness(bright);
 
-		IIcon icon = Thaumcraft.iconLiquid;
+		IIcon icon = ((BlockJar)Thaumcraft.blockJar).iconLiquid;
 
 		bindTexture(TextureMap.locationBlocksTexture);
 

@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import thaumcraft.api.wands.WandCap;
 import thaumcraft.api.wands.WandRod;
+import thaumcraft.common.items.wands.ItemWandCasting;
 import theflogat.technomancy.common.items.base.ItemBase;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
@@ -44,15 +45,13 @@ public class ItemWandCores extends ItemBase{
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void getSubItems(Item id, CreativeTabs tab, List list) {
-		try{
-			for (int i = 0; i < coresIcon.length; i++) {
-				ItemStack stack  = new ItemStack(id, 1, i);
-				list.add(stack);
-			}
-			ItemStack electric = new ItemStack(Thaumcraft.itemWandCasting, 1, 72);
-			Thaumcraft.setCap.invoke(electric.getItem(), electric, WandCap.caps.get("thaumium"));
-			Thaumcraft.setRod.invoke(electric.getItem(), electric, WandRod.rods.get("electric"));
-			list.add(electric);
-		}catch(Exception e){}
+		for (int i = 0; i < coresIcon.length; i++) {
+			ItemStack stack  = new ItemStack(id, 1, i);
+			list.add(stack);
+		}
+		ItemStack electric = new ItemStack(Thaumcraft.itemWandCasting, 1, 72);
+		((ItemWandCasting)electric.getItem()).setCap(electric, WandCap.caps.get("thaumium"));
+		((ItemWandCasting)electric.getItem()).setRod(electric, WandRod.rods.get("electric"));
+		list.add(electric);
 	}
 }

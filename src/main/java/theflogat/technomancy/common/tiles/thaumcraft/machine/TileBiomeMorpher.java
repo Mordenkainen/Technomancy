@@ -1,7 +1,5 @@
 package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
-import java.lang.reflect.Method;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -12,7 +10,8 @@ import thaumcraft.api.nodes.NodeModifier;
 import thaumcraft.api.nodes.NodeType;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
 import theflogat.technomancy.lib.Rate;
-import theflogat.technomancy.lib.compat.Thaumcraft;
+import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
+import thaumcraft.common.lib.utils.Utils;
 
 public class TileBiomeMorpher extends TileMachineBase implements INode{	
 	
@@ -45,14 +44,7 @@ public class TileBiomeMorpher extends TileMachineBase implements INode{
 		int zz = zCoord + worldObj.rand.nextInt(100) - worldObj.rand.nextInt(100);
 		BiomeGenBase bg = worldObj.getBiomeGenForCoords(xx, zz);
 		if (bg.biomeID != bm.biomeID) {
-			try {
-				Class<?> Utils = Class.forName("thaumcraft.common.lib.utils.Utils");
-				for(Method method : Utils.getMethods()){
-					if(method.getName().equalsIgnoreCase("setBiomeAt")){
-						method.invoke(null, worldObj, xx, zz, bm);
-					}
-				}
-			} catch (Exception e) {e.printStackTrace();}		
+			Utils.setBiomeAt(worldObj, xx, zz, bm);		
 		} else {
 			alterBiome2();
 		}
@@ -69,14 +61,7 @@ public class TileBiomeMorpher extends TileMachineBase implements INode{
 		int zz = zCoord + worldObj.rand.nextInt(100) - worldObj.rand.nextInt(100);
 		BiomeGenBase bg = this.worldObj.getBiomeGenForCoords(xx, zz);
 		if (bg.biomeID != bm.biomeID) {
-			try {
-				Class<?> Utils = Class.forName("thaumcraft.common.lib.utils.Utils");
-				for(Method method : Utils.getMethods()){
-					if(method.getName().equalsIgnoreCase("setBiomeAt")){
-						method.invoke(null, worldObj, xx, zz, bm);
-					}
-				}
-			} catch (Exception e) {e.printStackTrace();}		
+			Utils.setBiomeAt(worldObj, xx, zz, bm);	
 		}
 		worldObj.markBlockRangeForRenderUpdate(xx - 1, xx + 1, 1, 256, zz - 1, zz + 1);
 	}
@@ -84,8 +69,8 @@ public class TileBiomeMorpher extends TileMachineBase implements INode{
 	BiomeGenBase checkBiome() {
 		if (!this.worldObj.isRemote) {
 			BiomeGenBase biome = this.worldObj.getBiomeGenForCoords(this.xCoord, this.yCoord);
-			if (biome.biomeID == Thaumcraft.biomeTaint.biomeID || biome.biomeID == Thaumcraft.biomeEerie.biomeID ||
-					biome.biomeID == Thaumcraft.biomeMagicalForest.biomeID) {
+			if (biome.biomeID == ThaumcraftWorldGenerator.biomeTaint.biomeID || biome.biomeID == ThaumcraftWorldGenerator.biomeEerie.biomeID ||
+					biome.biomeID == ThaumcraftWorldGenerator.biomeMagicalForest.biomeID) {
 				return biome;
 			}			
 		}
@@ -95,11 +80,11 @@ public class TileBiomeMorpher extends TileMachineBase implements INode{
 	BiomeGenBase biomeForMeta(int meta) {
 		BiomeGenBase biome = null;
 		if (meta == 0) {
-			biome = Thaumcraft.biomeMagicalForest;
+			biome = ThaumcraftWorldGenerator.biomeMagicalForest;
 		}else if (meta == 1) {
-			biome = Thaumcraft.biomeEerie;
+			biome = ThaumcraftWorldGenerator.biomeEerie;
 		}else if (meta == 2) {
-			biome = Thaumcraft.biomeTaint;
+			biome = ThaumcraftWorldGenerator.biomeTaint;
 		}
 		return biome;
 	}

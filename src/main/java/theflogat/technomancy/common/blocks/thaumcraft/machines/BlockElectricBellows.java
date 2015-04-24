@@ -5,7 +5,6 @@ import theflogat.technomancy.common.tiles.thaumcraft.machine.TileElectricBellows
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.RenderIds;
-import theflogat.technomancy.lib.compat.Thaumcraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -15,6 +14,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import thaumcraft.common.tiles.TileAlchemyFurnace;
+import thaumcraft.common.tiles.TileArcaneFurnace;
 
 public class BlockElectricBellows extends BlockBase{
 
@@ -52,8 +53,8 @@ public class BlockElectricBellows extends BlockBase{
 		case 5:
 			offsetX += 1;
 		}
-		if(Thaumcraft.TileAlchemyFurnace.isInstance(world.getTileEntity(x + offsetX, y, z + offsetZ)) ||
-				Thaumcraft.TileArcaneFurnace.isInstance(world.getTileEntity(x + (offsetX*2), y, z + (offsetZ*2))) || TileEntityFurnace.class.isInstance(world.getTileEntity(x + offsetX, y, z + offsetZ))) {
+		if(world.getTileEntity(x + offsetX, y, z + offsetZ) instanceof TileAlchemyFurnace ||
+				world.getTileEntity(x + (offsetX*2), y, z + (offsetZ*2)) instanceof TileArcaneFurnace || world.getTileEntity(x + offsetX, y, z + offsetZ) instanceof TileEntityFurnace) {
 			return true;
 		}
 		return false;

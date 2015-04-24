@@ -1,6 +1,5 @@
 package theflogat.technomancy.proxies;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -66,7 +65,6 @@ import theflogat.technomancy.common.tiles.thaumcraft.machine.TileWirelessCoil;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileCreativeJar;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaContainer;
 import theflogat.technomancy.lib.RenderIds;
-import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.lib.handlers.CompatibilityHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;

@@ -2,10 +2,10 @@ package theflogat.technomancy.client.renderers.tiles;
 
 import org.lwjgl.opengl.GL11;
 
+import thaumcraft.client.lib.UtilsFX;
 import theflogat.technomancy.client.renderers.models.ModelNodeDynamo;
 import theflogat.technomancy.common.tiles.thaumcraft.dynamos.TileNodeDynamo;
 import theflogat.technomancy.lib.Ref;
-import theflogat.technomancy.lib.compat.Thaumcraft;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
@@ -33,11 +33,7 @@ public class TileNodeDynamoRenderer extends TileEntitySpecialRenderer {
 		{
 			GL11.glPushMatrix();
 			float ticks = Minecraft.getMinecraft().renderViewEntity.ticksExisted + partialTicks;
-			try {
-				Thaumcraft.drawFloatyLine.invoke(null, tileentity.xCoord + 0.5D, tileentity.yCoord + .9D, tileentity.zCoord + 0.5D, ((TileNodeDynamo)tileentity).sourceX + 0.5D, ((TileNodeDynamo)tileentity).sourceY + 0.5D, ((TileNodeDynamo)tileentity).sourceZ + 0.5D, partialTicks, ((TileNodeDynamo)tileentity).color, "textures/misc/wispy.png", -0.02F, Math.min(ticks, 10.0F) / 10.0F);
-			} catch (Exception e) {
-				e.printStackTrace();
-			} 
+			UtilsFX.drawFloatyLine(tileentity.xCoord + 0.5D, tileentity.yCoord + .9D, tileentity.zCoord + 0.5D, ((TileNodeDynamo)tileentity).sourceX + 0.5D, ((TileNodeDynamo)tileentity).sourceY + 0.5D, ((TileNodeDynamo)tileentity).sourceZ + 0.5D, partialTicks, ((TileNodeDynamo)tileentity).color, "textures/misc/wispy.png", -0.02F, Math.min(ticks, 10.0F) / 10.0F);
 			GL11.glPopMatrix();
 		}
 	}

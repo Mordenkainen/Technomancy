@@ -12,6 +12,7 @@ import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
 import theflogat.technomancy.lib.compat.Thaumcraft;
+import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
 
 public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContainer, IEssentiaTransport{
 
@@ -64,7 +65,7 @@ public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContain
 			return 50;
 		}
 		if(aspect == Aspect.MAGIC  || aspect == Aspect.ELDRITCH ) {
-			if(worldObj.getBiomeGenForCoords(xCoord, yCoord) == BiomeGenBase.sky || worldObj.getBiomeGenForCoords(xCoord, yCoord) == Thaumcraft.biomeMagicalForest) {
+			if(worldObj.getBiomeGenForCoords(xCoord, yCoord) == BiomeGenBase.sky || worldObj.getBiomeGenForCoords(xCoord, yCoord) == ThaumcraftWorldGenerator.biomeMagicalForest) {
 				return 300;
 			}
 			return 75;
@@ -130,13 +131,13 @@ public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContain
 			return 50;
 		}
 		if(aspect == Aspect.AURA) {
-			if(worldObj.getBiomeGenForCoords(this.xCoord, this.yCoord) == Thaumcraft.biomeMagicalForest) {
+			if(worldObj.getBiomeGenForCoords(this.xCoord, this.yCoord) == ThaumcraftWorldGenerator.biomeMagicalForest) {
 				return 600;
 			}
 			return 100;
 		}
 		if(aspect == Aspect.TAINT) {
-			if(worldObj.getBiomeGenForCoords(this.xCoord, this.yCoord) == Thaumcraft.biomeTaint) {
+			if(worldObj.getBiomeGenForCoords(this.xCoord, this.yCoord) == ThaumcraftWorldGenerator.biomeTaint) {
 				return 600;
 			}
 			return 100;
