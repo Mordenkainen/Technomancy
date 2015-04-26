@@ -95,5 +95,21 @@ public class CraftingHandler {
 				'G', Blocks.gold_block, 'R', "dyeGreen", 'B', Blocks.grass
 			}));
 		}
+		if(Ids.coilCoupler){
+			GameRegistry.addShapedRecipe(new ItemStack(TMItems.coilCoupler, 1), new Object[]{
+				"IRG",
+				"SRR",
+				"S  ",
+				'G', Items.glowstone_dust, 'R', Items.redstone, 'S', Items.stick, 'I', Items.iron_ingot
+			});
+		}
+		if(Ids.itemTransmitter){
+			GameRegistry.addShapedRecipe(new ItemStack(TMBlocks.itemTransmitter, 1), new Object[]{
+				"III",
+				"ISI",
+				"IRI",
+				'R', Items.ender_pearl, 'S', Items.stick, 'I', Items.iron_ingot
+			});
+		}
 	}
 }

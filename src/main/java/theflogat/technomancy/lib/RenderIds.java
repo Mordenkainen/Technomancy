@@ -7,7 +7,7 @@ public class RenderIds {
 	public static int idBiomeMorpher;
 	public static int idNodeGenerator;
 	public static int idFluxLamp;
-	public static int idTeslaCoil;
+	public static int idEssentiaTransmitter;
 	public static int idElectricBellows;
 	public static int idCreativeJar;
 	public static int idReconstructor;
@@ -19,4 +19,5 @@ public class RenderIds {
 	public static int idCrystal;
 	public static int idCatalyst;
 	public static int idAdvDeconTable;
+	public static int idItemTransmitter;
 }

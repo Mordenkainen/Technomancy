@@ -8,6 +8,7 @@ import theflogat.technomancy.api.tiles.MovableTileRegistry;
 import theflogat.technomancy.common.blocks.air.BlockFakeAirLight;
 import theflogat.technomancy.common.blocks.technom.BlockCatalyst;
 import theflogat.technomancy.common.blocks.technom.BlockCrystal;
+import theflogat.technomancy.common.blocks.technom.BlockItemTransmitter;
 import theflogat.technomancy.common.items.technom.ItemCatalyst;
 import theflogat.technomancy.common.items.technom.ItemCrystal;
 import theflogat.technomancy.common.rituals.b.RitualBlackHoleT1;
@@ -28,6 +29,7 @@ import theflogat.technomancy.common.rituals.w.RitualWaterT3;
 import theflogat.technomancy.common.tiles.air.TileFakeAirCore;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import theflogat.technomancy.common.tiles.technom.TileCrystal;
+import theflogat.technomancy.common.tiles.technom.TileItemTransmitter;
 import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
@@ -64,6 +66,7 @@ public class TMBlocks {
 	public static Block advDeconTable;
 	public static Block manaFluidBlock;
 	public static Block manaExchanger;
+	public static Block itemTransmitter;
 	
 	public static Fluid manaFluid;
 	
@@ -71,16 +74,19 @@ public class TMBlocks {
 		crystalBlock = Ids.crystalBlock ? new BlockCrystal() : null;
 		catalyst = Ids.catalyst ? new BlockCatalyst() : null;
 		fakeAirLight = Ids.catalyst ? new BlockFakeAirLight() : null;
+		itemTransmitter = Ids.itemTransmitter ? new BlockItemTransmitter() : null;
 		
 		
 		registerBlock(crystalBlock, Names.crystalBlock, ItemCrystal.class);
 		registerBlock(catalyst, Names.catalyst, ItemCatalyst.class);
 		registerBlock(fakeAirLight, Names.fakeAirLight);
+		registerBlock(itemTransmitter, Names.itemTransmitter);
 		
 		
 		GameRegistry.registerTileEntity(TileCrystal.class, Ref.MOD_PREFIX + "TileCrystal");
 		GameRegistry.registerTileEntity(TileCatalyst.class, Ref.MOD_PREFIX + "TileCatalyst");
 		GameRegistry.registerTileEntity(TileFakeAirCore.class, Ref.MOD_PREFIX + "TileFakeAirCore");
+		GameRegistry.registerTileEntity(TileItemTransmitter.class, Ref.MOD_PREFIX + "TileItemTransmitter");
 		
 		
 		MovableTileRegistry.addAllowed(TileCrystal.class);

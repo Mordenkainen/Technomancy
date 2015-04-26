@@ -14,6 +14,7 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
+import theflogat.technomancy.common.tiles.base.ICouplable;
 import theflogat.technomancy.common.tiles.base.TileTechnomancy;
 import theflogat.technomancy.common.tiles.thaumcraft.util.AspectContainerEssentiaTransport;
 import theflogat.technomancy.lib.Conf;
@@ -22,7 +23,7 @@ import theflogat.technomancy.util.RedstoneSet;
 import thaumcraft.common.lib.network.PacketHandler;
 import thaumcraft.common.lib.network.fx.PacketFXEssentiaSource;
 
-public class TileWirelessCoil extends TileTechnomancy implements IEssentiaTransport{
+public class TileEssentiaTransmitter extends TileTechnomancy implements IEssentiaTransport, ICouplable{
 
 	public Aspect aspectFilter = null;
 	public ArrayList<ChunkCoordinates> sources = new ArrayList<ChunkCoordinates>();
@@ -39,24 +40,24 @@ public class TileWirelessCoil extends TileTechnomancy implements IEssentiaTransp
 		int sourceCount = 0;
 		for(int i = 0; i < sources.size(); i++) {
 			if(sources.get(i) != null) {
-				compound.setInteger("xChoord" + sourceCount, sources.get(i).posX);
-				compound.setInteger("yChoord" + sourceCount, sources.get(i).posY);
-				compound.setInteger("zChoord" + sourceCount, sources.get(i).posZ);
+				compound.setInteger("xcoord" + sourceCount, sources.get(i).posX);
+				compound.setInteger("ycoord" + sourceCount, sources.get(i).posY);
+				compound.setInteger("zcoord" + sourceCount, sources.get(i).posZ);
 				sourceCount++;
 			}		
 		}
-		compound.setInteger("Size", sourceCount);
+		compound.setInteger("size", sourceCount);
 	}
 
 	@Override
 	public void readCustomNBT(NBTTagCompound compound) {
 		aspectFilter = Aspect.getAspect(compound.getString("AspectFilter"));
 		facing = compound.getByte("facing");
-		int size = compound.getInteger("Size");
+		int size = compound.getInteger("size");
 		for(int i = 0; i < size; i ++) {
-			int xx = compound.getInteger("xChoord" + i);		
-			int yy = compound.getInteger("yChoord" + i);		
-			int zz = compound.getInteger("zChoord" + i);
+			int xx = compound.getInteger("xcoord" + i);		
+			int yy = compound.getInteger("ycoord" + i);		
+			int zz = compound.getInteger("zcoord" + i);
 			this.sources.add(new ChunkCoordinates(xx, yy, zz));
 		}
 	}
@@ -194,5 +195,20 @@ public class TileWirelessCoil extends TileTechnomancy implements IEssentiaTransp
 	@Override
 	public boolean renderExtendedTube() {
 		return true;
+	}
+
+	@Override
+	public Type getType() {
+		return Type.ESSENTIA;
+	}
+
+	@Override
+	public void addPos(ChunkCoordinates coords) {
+		sources.add(coords);
+	}
+
+	@Override
+	public void clear() {
+		sources.clear();
 	}
 }

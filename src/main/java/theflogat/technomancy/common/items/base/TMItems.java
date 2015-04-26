@@ -2,6 +2,7 @@ package theflogat.technomancy.common.items.base;
 
 import net.minecraft.item.Item;
 import theflogat.technomancy.common.items.technom.ItemBoost;
+import theflogat.technomancy.common.items.technom.ItemCoilCoupler;
 import theflogat.technomancy.common.items.technom.ItemProcessedOre;
 import theflogat.technomancy.common.items.tome.ItemRitualTome;
 import theflogat.technomancy.lib.Ids;
@@ -22,13 +23,16 @@ public class TMItems {
     public static Item itemBM;
     public static Item itemBO;
     public static Item manaBucket;
+    public static Item coilCoupler;
     
     public static void initTechnomancy() {
         itemBoost = Ids.itemBoost ? new ItemBoost() : null;
         ritualTome = Ids.ritualTome ? new ItemRitualTome() : null;
+        coilCoupler = Ids.coilCoupler ? new ItemCoilCoupler() : null;
         
         registerItem(itemBoost, Names.itemBoost);
         registerItem(ritualTome, Names.ritualTome);
+        registerItem(coilCoupler, Names.coilCoupler);
     }
     
     public static void initPureOres() {

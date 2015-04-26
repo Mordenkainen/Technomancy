@@ -6,7 +6,7 @@ techno:itemMaterial.0.name=Neutronized Metal
 techno:itemMaterial.1.name=Enchanted Coil
 techno:itemMaterial.2.name=Neutronized Gear
 techno:itemMaterial.3.name=Pen Core
-techno:itemMaterial.4.name=Coil Coupler
+item.techno:coilCoupler.name=Coil Coupler
 techno:pen.name=Pen
 techno:wandCores.0.name=Energized Wand Core
 techno:itemBM.0.name=Sacrificial Ingot
@@ -54,6 +54,7 @@ tile.techno:catalyst.name=Catalyst
 tile.techno:advDeconTable.name=Advanced Deconstruction Table
 tile.techno:manaFluid.name=Mana Condensate
 tile.techno:manaExchanger.name=Mana Exchanger
+tile.techno:itemTransmitter.name=Item Coil
 
 #Fluid Names
 fluid.techno:manaFluid=Mana Condensate

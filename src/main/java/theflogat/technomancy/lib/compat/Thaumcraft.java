@@ -33,7 +33,7 @@ import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockFluxLamp;
 import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockNodeGenerator;
 import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockReconstructor;
 import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockTCProcessor;
-import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockTeslaCoil;
+import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockEssentiaTransmitter;
 import theflogat.technomancy.common.blocks.thaumcraft.storage.BlockCreativeJar;
 import theflogat.technomancy.common.blocks.thaumcraft.storage.BlockEssentiaContainer;
 import theflogat.technomancy.common.blocks.thaumcraft.storage.BlockReservoir;
@@ -57,7 +57,7 @@ import theflogat.technomancy.common.tiles.thaumcraft.machine.TileFluxLamp;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileReconstructor;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTCProcessor;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileWirelessCoil;
+import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaTransmitter;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileCreativeJar;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaContainer;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaReservoir;
@@ -203,7 +203,7 @@ public class Thaumcraft extends ModuleBase {
 		TMBlocks.nodeGenerator = Ids.nodeGen ? new BlockNodeGenerator() : null;
 		TMBlocks.fakeAirNG = Ids.nodeGen ? new BlockFakeAirNG() : null;
 		TMBlocks.fluxLamp = Ids.fluxLamp ? new BlockFluxLamp() : null;
-		TMBlocks.teslaCoil = Ids.wirelessCoil ? new BlockTeslaCoil() : null;
+		TMBlocks.teslaCoil = Ids.wirelessCoil ? new BlockEssentiaTransmitter() : null;
 		TMBlocks.electricBellows = Ids.electricBellows ? new BlockElectricBellows() : null;
 		TMBlocks.creativeJar = Ids.creativeJar ? new BlockCreativeJar() : null;
 		TMBlocks.reconstructorBlock = Ids.reconstructor ? new BlockReconstructor() : null;
@@ -221,7 +221,7 @@ public class Thaumcraft extends ModuleBase {
 		registerBlock(TMBlocks.nodeGenerator, Names.nodeGenerator);
 		registerBlock(TMBlocks.fakeAirNG, Names.fakeAirNG);
 		registerBlock(TMBlocks.fluxLamp, Names.fluxLamp);
-		registerBlock(TMBlocks.teslaCoil, Names.teslaCoil);
+		registerBlock(TMBlocks.teslaCoil, Names.essentiaTransmitter);
 		registerBlock(TMBlocks.electricBellows, Names.electricBellows);
 		registerBlock(TMBlocks.creativeJar, Names.creativeJar);
 		registerBlock(TMBlocks.reconstructorBlock, Names.reconstructor);
@@ -238,7 +238,7 @@ public class Thaumcraft extends ModuleBase {
 		registerTileEntity(TMBlocks.nodeGenerator, TileNodeGenerator.class, "TileNodeGenerator");
 		registerTileEntity(TMBlocks.fakeAirNG, TileFakeAirNG.class, Ref.MOD_PREFIX + "TileFakeAir");
 		registerTileEntity(TMBlocks.fluxLamp, TileFluxLamp.class, "TileFluxLamp");
-		registerTileEntity(TMBlocks.teslaCoil, TileWirelessCoil.class, "TileTeslaCoil");
+		registerTileEntity(TMBlocks.teslaCoil, TileEssentiaTransmitter.class, "TileTeslaCoil");
 		registerTileEntity(TMBlocks.electricBellows, TileElectricBellows.class, "TileElectricBellows");
 		registerTileEntity(TMBlocks.creativeJar, TileCreativeJar.class, "TileCreativeJar");
 		registerTileEntity(TMBlocks.reconstructorBlock, TileReconstructor.class, "TileReconstructor");
@@ -520,14 +520,6 @@ public class Thaumcraft extends ModuleBase {
 					'C', new ItemStack(TMItems.itemMaterial, 1, 1),
 					'T', new ItemStack(Thaumcraft.itemResource, 1, 2),
 					'B', new ItemStack(Thaumcraft.blockTube, 1, 4)		}));
-			}
-			if(Ids.itemMaterial) {
-				TechnoResearch.recipes.put("CoilCoupler", ThaumcraftApi.addArcaneCraftingRecipe("TESLACOIL", new ItemStack(TMItems.itemMaterial, 1, 4),
-						new AspectList().add(Aspect.AIR, 10).add(Aspect.ORDER, 15),
-						new Object[] {" C ", " T ", " S ",
-					'C', new ItemStack(TMItems.itemMaterial, 1, 1),
-					'T', new ItemStack(Thaumcraft.itemResource, 1, 2),
-					'S', new ItemStack(Items.stick)	}));
 			}
 			if(Ids.electricBellows) {
 				TechnoResearch.recipes.put("ElectricBellows", ThaumcraftApi.addArcaneCraftingRecipe("ELECTRICBELLOWS",

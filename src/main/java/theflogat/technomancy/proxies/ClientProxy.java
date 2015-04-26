@@ -14,13 +14,14 @@ import theflogat.technomancy.client.renderers.blocks.BlockEldritchConsumerRender
 import theflogat.technomancy.client.renderers.blocks.BlockElectricBellowsRenderer;
 import theflogat.technomancy.client.renderers.blocks.BlockEssentiaContainerRenderer;
 import theflogat.technomancy.client.renderers.blocks.BlockEssentiaDynamoRenderer;
+import theflogat.technomancy.client.renderers.blocks.BlockEssentiaTransmitterRenderer;
 import theflogat.technomancy.client.renderers.blocks.BlockFlowerDynamoRenderer;
 import theflogat.technomancy.client.renderers.blocks.BlockFluxLampRenderer;
+import theflogat.technomancy.client.renderers.blocks.BlockItemTransmitterRenderer;
 import theflogat.technomancy.client.renderers.blocks.BlockManaFabricatorRenderer;
 import theflogat.technomancy.client.renderers.blocks.BlockNodeDynamoRenderer;
 import theflogat.technomancy.client.renderers.blocks.BlockNodeGeneratorRenderer;
 import theflogat.technomancy.client.renderers.blocks.BlockReconstructorRenderer;
-import theflogat.technomancy.client.renderers.blocks.BlockTeslaCoilRenderer;
 import theflogat.technomancy.client.renderers.gui.GuiProcessorBM;
 import theflogat.technomancy.client.renderers.gui.GuiProcessorBO;
 import theflogat.technomancy.client.renderers.gui.GuiProcessorTC;
@@ -36,13 +37,14 @@ import theflogat.technomancy.client.renderers.tiles.TileEldritchConsumerRenderer
 import theflogat.technomancy.client.renderers.tiles.TileElectricBellowsRenderer;
 import theflogat.technomancy.client.renderers.tiles.TileEssentiaContainerRenderer;
 import theflogat.technomancy.client.renderers.tiles.TileEssentiaDynamoRenderer;
+import theflogat.technomancy.client.renderers.tiles.TileEssentiaTransmitterRenderer;
 import theflogat.technomancy.client.renderers.tiles.TileFlowerDynamoRenderer;
 import theflogat.technomancy.client.renderers.tiles.TileFluxLampRenderer;
+import theflogat.technomancy.client.renderers.tiles.TileItemTransmitterRenderer;
 import theflogat.technomancy.client.renderers.tiles.TileManaFabricatorRenderer;
 import theflogat.technomancy.client.renderers.tiles.TileNodeDynamoRenderer;
 import theflogat.technomancy.client.renderers.tiles.TileNodeGeneratorRenderer;
 import theflogat.technomancy.client.renderers.tiles.TileReconstructorRenderer;
-import theflogat.technomancy.client.renderers.tiles.TileTeslaCoilRenderer;
 import theflogat.technomancy.common.tiles.bloodmagic.dynamos.TileBloodDynamo;
 import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBMProcessor;
 import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBloodFabricator;
@@ -51,17 +53,18 @@ import theflogat.technomancy.common.tiles.botania.machines.TileBOProcessor;
 import theflogat.technomancy.common.tiles.botania.machines.TileManaFabricator;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import theflogat.technomancy.common.tiles.technom.TileCrystal;
+import theflogat.technomancy.common.tiles.technom.TileItemTransmitter;
 import theflogat.technomancy.common.tiles.thaumcraft.dynamos.TileEssentiaDynamo;
 import theflogat.technomancy.common.tiles.thaumcraft.dynamos.TileNodeDynamo;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileAdvDeconTable;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBiomeMorpher;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEldritchConsumer;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileElectricBellows;
+import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaTransmitter;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileFluxLamp;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileReconstructor;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTCProcessor;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileWirelessCoil;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileCreativeJar;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaContainer;
 import theflogat.technomancy.lib.RenderIds;
@@ -107,8 +110,8 @@ public class ClientProxy extends CommonProxy implements IGuiHandler{
     		ClientRegistry.bindTileEntitySpecialRenderer(TileFluxLamp.class, new TileFluxLampRenderer());
     		RenderIds.idFluxLamp = RenderingRegistry.getNextAvailableRenderId();
     	
-    		ClientRegistry.bindTileEntitySpecialRenderer(TileWirelessCoil.class, new TileTeslaCoilRenderer());
-    		RenderIds.idTeslaCoil = RenderingRegistry.getNextAvailableRenderId(); 
+    		ClientRegistry.bindTileEntitySpecialRenderer(TileEssentiaTransmitter.class, new TileEssentiaTransmitterRenderer());
+    		RenderIds.idEssentiaTransmitter = RenderingRegistry.getNextAvailableRenderId(); 
     	
     		ClientRegistry.bindTileEntitySpecialRenderer(TileElectricBellows.class, new TileElectricBellowsRenderer());
     		RenderIds.idElectricBellows = RenderingRegistry.getNextAvailableRenderId();
@@ -125,18 +128,22 @@ public class ClientProxy extends CommonProxy implements IGuiHandler{
     		ClientRegistry.bindTileEntitySpecialRenderer(TileEldritchConsumer.class, new TileEldritchConsumerRenderer());
     		RenderIds.idEldrichConsumer = RenderingRegistry.getNextAvailableRenderId();
     		
+    		ClientRegistry.bindTileEntitySpecialRenderer(TileItemTransmitter.class, new TileItemTransmitterRenderer());
+    		RenderIds.idItemTransmitter = RenderingRegistry.getNextAvailableRenderId();
+    		
     		RenderingRegistry.registerBlockHandler(new BlockNodeDynamoRenderer());
         	RenderingRegistry.registerBlockHandler(new BlockEssentiaDynamoRenderer());
         	RenderingRegistry.registerBlockHandler(new BlockEssentiaContainerRenderer());  	
         	RenderingRegistry.registerBlockHandler(new BlockBiomeMorpherRenderer());
         	RenderingRegistry.registerBlockHandler(new BlockNodeGeneratorRenderer()); 
         	RenderingRegistry.registerBlockHandler(new BlockFluxLampRenderer());
-        	RenderingRegistry.registerBlockHandler(new BlockTeslaCoilRenderer());  
+        	RenderingRegistry.registerBlockHandler(new BlockEssentiaTransmitterRenderer());  
         	RenderingRegistry.registerBlockHandler(new BlockElectricBellowsRenderer());
         	RenderingRegistry.registerBlockHandler(new BlockCreativeJarRenderer());
         	RenderingRegistry.registerBlockHandler(new BlockReconstructorRenderer());
         	RenderingRegistry.registerBlockHandler(new BlockEldritchConsumerRenderer());
         	RenderingRegistry.registerBlockHandler(new BlockAdvDeconTableRenderer());
+        	RenderingRegistry.registerBlockHandler(new BlockItemTransmitterRenderer());
     	}
     	
     	if(CompatibilityHandler.bm) {

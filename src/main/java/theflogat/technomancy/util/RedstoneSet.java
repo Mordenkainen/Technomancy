@@ -47,15 +47,15 @@ public enum RedstoneSet{
 	}
 
 	public boolean canRun(TileEntity tile){
-		switch(this){
-		case HIGH:
-			return tile.getWorldObj().isBlockIndirectlyGettingPowered(tile.xCoord, tile.yCoord, tile.zCoord);
-		case LOW:
-			return !tile.getWorldObj().isBlockIndirectlyGettingPowered(tile.xCoord, tile.yCoord, tile.zCoord);
-		case NONE:
-			return true;
-		default:
-			return false;
-		}
+		if(tile!=null && tile.getWorldObj()!=null)
+			switch(this){
+			case HIGH:
+				return tile.getWorldObj().isBlockIndirectlyGettingPowered(tile.xCoord, tile.yCoord, tile.zCoord);
+			case LOW:
+				return !tile.getWorldObj().isBlockIndirectlyGettingPowered(tile.xCoord, tile.yCoord, tile.zCoord);
+			case NONE:
+				return true;
+			}
+		return false;
 	}
 }

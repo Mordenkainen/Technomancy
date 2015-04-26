@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.IEssentiaContainerItem;
 import theflogat.technomancy.common.blocks.base.BlockBase;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileWirelessCoil;
+import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaTransmitter;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.RenderIds;
@@ -19,21 +19,21 @@ import theflogat.technomancy.lib.compat.Thaumcraft;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockTeslaCoil extends BlockBase {
+public class BlockEssentiaTransmitter extends BlockBase {
 
-	public BlockTeslaCoil() {
-		setBlockName(Ref.MOD_PREFIX + Names.teslaCoil);
+	public BlockEssentiaTransmitter() {
+		setBlockName(Ref.MOD_PREFIX + Names.essentiaTransmitter);
 		setBlockBounds(0.1875F, 0.0F, 0.1875F, 0.8125F, 1.0F, 0.8125F);
 	}
 
 	@Override
 	public TileEntity createNewTileEntity(World w, int meta) {
-		return new TileWirelessCoil();
+		return new TileEssentiaTransmitter();
 	}
 	
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float vecX, float vecY, float vecZ) {
-		TileWirelessCoil tile = getTE(world, x, y, z);
+		TileEssentiaTransmitter tile = getTE(world, x, y, z);
 		if(tile != null) {
 			ItemStack stack = player.getHeldItem();
 			if(stack == null && player.isSneaking()) {
@@ -71,7 +71,7 @@ public class BlockTeslaCoil extends BlockBase {
 	
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack){
-		TileWirelessCoil tile = getTE(world, x, y, z);
+		TileEssentiaTransmitter tile = getTE(world, x, y, z);
 		if(tile != null) {
 			tile.facing = this.facing;
 		}
@@ -85,7 +85,7 @@ public class BlockTeslaCoil extends BlockBase {
 	
 	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
-		TileWirelessCoil tile = getTE(world, x, y, z);
+		TileEssentiaTransmitter tile = getTE(world, x, y, z);
 		if(tile != null) {
 			switch(tile.facing) {
 				case 0:
@@ -122,19 +122,19 @@ public class BlockTeslaCoil extends BlockBase {
 	
 	@Override
 	public int getRenderType() {
-		return RenderIds.idTeslaCoil;
+		return RenderIds.idEssentiaTransmitter;
 	}
 	
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister icon) {
-		blockIcon = icon.registerIcon(Ref.getAsset(Names.teslaCoil));
+		blockIcon = icon.registerIcon(Ref.getAsset(Names.essentiaTransmitter));
 	}
 
-	private TileWirelessCoil getTE(IBlockAccess world, int x, int y, int z) {
+	private TileEssentiaTransmitter getTE(IBlockAccess world, int x, int y, int z) {
 		TileEntity tile = world.getTileEntity(x, y, z);
-		if (tile instanceof TileWirelessCoil) {
-			return (TileWirelessCoil)tile;
+		if (tile instanceof TileEssentiaTransmitter) {
+			return (TileEssentiaTransmitter)tile;
 		}
 		return null;
 	}

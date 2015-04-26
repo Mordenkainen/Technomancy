@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
+import theflogat.technomancy.common.items.base.TMItems;
 import cofh.api.energy.IEnergyHandler;
 
 public class WorldHelper {
@@ -45,5 +46,9 @@ public class WorldHelper {
 
 	public static boolean isAdjacentFluidHandler(TileEntity entity, byte i) {
 		return getAdjacentTileEntity(entity, i)!=null && getAdjacentTileEntity(entity, i) instanceof IFluidHandler;
+	}
+	
+	public static void dropBoost(World w, int x, int y, int z){
+		InvHelper.spawnEntItem(w, x, y, z, new ItemStack(TMItems.itemBoost));
 	}
 }

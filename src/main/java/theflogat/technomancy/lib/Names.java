@@ -14,6 +14,7 @@ public class Names {
 	public static final String itemBoost = "itemBoost";
 	public static final String ritualTome = "ritualTome";
 	public static final String manaBucket = "manaBucket";
+	public static final String coilCoupler = "coilCoupler";
 
     /*
      * Blocks
@@ -26,7 +27,7 @@ public class Names {
 	public static final String cosmeticPane = "cosmeticPane";
 	public static final String nodeGenerator = "nodeGenerator";
 	public static final String fluxLamp = "fluxLamp";
-	public static final String teslaCoil = "teslaCoil";
+	public static final String essentiaTransmitter = "teslaCoil";
 	public static final String electricBellows = "electricBellows";
 	public static final String fusionFocus = "fusionFocus";
 	public static final String crystalBlock = "crystalBlock";
@@ -46,6 +47,7 @@ public class Names {
 	public static final String advDeconTable = "advDeconTable";
 	public static final String manaFluidBlock = "manaFluidBlock";
 	public static final String manaExchanger = "manaExchanger";
+	public static final String itemTransmitter = "itemTransmitter";
 
     /*
      * Fluids

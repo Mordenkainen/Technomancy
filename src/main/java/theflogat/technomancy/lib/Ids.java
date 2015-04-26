@@ -37,4 +37,6 @@ public class Ids {
 	public static boolean ritualTome;
 	public static boolean advDeconTable;
 	public static boolean manaExchanger;
+	public static boolean itemTransmitter;
+	public static boolean coilCoupler;
 }

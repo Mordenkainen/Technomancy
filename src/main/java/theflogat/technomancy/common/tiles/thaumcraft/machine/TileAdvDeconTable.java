@@ -125,12 +125,16 @@ public class TileAdvDeconTable extends TileTechnomancy implements IInventory, IU
 
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack j) {
-		return false;
+		AspectList al = ThaumcraftCraftingManager.getObjectTags(j);
+		al = ThaumcraftCraftingManager.getBonusTags(j, al);
+		if (al == null || al.size() == 0) {
+			return false;
+		}
+		return true;
 	}
 	
 	@Override
-	public boolean canUpdate()
-	{
+	public boolean canUpdate(){
 		return true;
 	}
 	
