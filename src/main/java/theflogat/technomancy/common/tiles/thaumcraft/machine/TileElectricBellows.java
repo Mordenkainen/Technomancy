@@ -11,7 +11,7 @@ import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
 import thaumcraft.common.tiles.TileAlchemyFurnace;
 import thaumcraft.common.tiles.TileArcaneFurnace;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
-import theflogat.technomancy.lib.Rate;
+import theflogat.technomancy.lib.handlers.Rate;
 
 public class TileElectricBellows extends TileMachineBase {
 

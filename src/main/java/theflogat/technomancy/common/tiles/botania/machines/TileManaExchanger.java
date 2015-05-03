@@ -1,12 +1,5 @@
 package theflogat.technomancy.common.tiles.botania.machines;
 
-import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyReceiver;
-import theflogat.technomancy.common.blocks.base.TMBlocks;
-import theflogat.technomancy.common.tiles.base.TileTechnomancy;
-import theflogat.technomancy.lib.Rate;
-import theflogat.technomancy.util.RedstoneSet;
-import vazkii.botania.common.block.tile.mana.TilePool;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -15,12 +8,19 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
+import theflogat.technomancy.common.blocks.base.TMBlocks;
+import theflogat.technomancy.common.tiles.base.IRedstoneSensitive;
+import theflogat.technomancy.common.tiles.base.IWrenchable;
+import theflogat.technomancy.common.tiles.base.TileTechnomancy;
+import theflogat.technomancy.lib.handlers.Rate;
+import vazkii.botania.common.block.tile.mana.TilePool;
+import cofh.api.energy.EnergyStorage;
+import cofh.api.energy.IEnergyReceiver;
 
-public class TileManaExchanger extends TileTechnomancy implements IFluidHandler, IEnergyReceiver {
+public class TileManaExchanger extends TileTechnomancy implements IFluidHandler, IEnergyReceiver, IRedstoneSensitive, IWrenchable{
 	public FluidTank tank = new FluidTank(1000);
 	public RedstoneSet set = RedstoneSet.LOW;
 	public boolean mode;
-	public boolean modified;
 	public boolean active;
 	public EnergyStorage storage = new EnergyStorage(Rate.exchangerCost * 10);
 
@@ -30,7 +30,6 @@ public class TileManaExchanger extends TileTechnomancy implements IFluidHandler,
 		tank.readFromNBT(comp);
 		set = RedstoneSet.load(comp);
 		mode = comp.getBoolean("Mode");
-		modified = comp.getBoolean("Modified");
 		storage.readFromNBT(comp);
 	}
 
@@ -39,7 +38,6 @@ public class TileManaExchanger extends TileTechnomancy implements IFluidHandler,
 		tank.writeToNBT(comp);
 		set.save(comp);
 		comp.setBoolean("Mode", mode);
-		comp.setBoolean("Modified", modified);
 		storage.writeToNBT(comp);
 	}
 	
@@ -128,5 +126,21 @@ public class TileManaExchanger extends TileTechnomancy implements IFluidHandler,
 	@Override
 	public int getMaxEnergyStored(ForgeDirection from) {
 		return storage.getMaxEnergyStored();
+	}
+
+	@Override
+	public RedstoneSet getCurrentSetting() {
+		return set;
+	}
+
+	@Override
+	public void setNewSetting(RedstoneSet newSet) {
+		set = newSet;
+	}
+
+	@Override
+	public boolean onWrenched() {
+		mode = !mode;
+		return true;
 	}
 }

@@ -1,6 +1,9 @@
 package theflogat.technomancy.common.blocks.base;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fluids.Fluid;
 import theflogat.technomancy.api.rituals.RitualRegistry;
@@ -27,6 +30,8 @@ import theflogat.technomancy.common.rituals.w.RitualWaterT1;
 import theflogat.technomancy.common.rituals.w.RitualWaterT2;
 import theflogat.technomancy.common.rituals.w.RitualWaterT3;
 import theflogat.technomancy.common.tiles.air.TileFakeAirCore;
+import theflogat.technomancy.common.tiles.base.IRedstoneSensitive;
+import theflogat.technomancy.common.tiles.base.IRedstoneSensitive.RedstoneSet;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import theflogat.technomancy.common.tiles.technom.TileCrystal;
 import theflogat.technomancy.common.tiles.technom.TileItemTransmitter;

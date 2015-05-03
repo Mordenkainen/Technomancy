@@ -9,7 +9,7 @@ import thaumcraft.api.nodes.INode;
 import thaumcraft.api.nodes.NodeModifier;
 import thaumcraft.api.nodes.NodeType;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
-import theflogat.technomancy.lib.Rate;
+import theflogat.technomancy.lib.handlers.Rate;
 import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
 import thaumcraft.common.lib.utils.Utils;
 

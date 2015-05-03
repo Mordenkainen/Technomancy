@@ -1,7 +1,5 @@
 package theflogat.technomancy.common.tiles.base;
 
-import theflogat.technomancy.util.RedstoneSet;
-import theflogat.technomancy.util.WorldHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -9,16 +7,16 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraftforge.common.util.ForgeDirection;
+import theflogat.technomancy.util.WorldHelper;
 import cofh.api.energy.IEnergyHandler;
 
-public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyHandler, IUpgradable {
+public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyHandler, IUpgradable, IWrenchable, IRedstoneSensitive {
 	public static final int maxEnergy = 40000;
 	public static final int maxExtract = 320;
 
 	public RedstoneSet set = RedstoneSet.HIGH;
 	public int ener = 0;
 	public boolean boost = false;
-	public boolean modified = false;
 	public byte facing = 1;
 	public int fuel = 0;
 
@@ -64,27 +62,6 @@ public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyH
 //		}
 	}
 
-	public boolean rotateBlock() {
-		for (int i = facing + 1; i < facing + 6; i++){
-			TileEntity tile = WorldHelper.getAdjacentTileEntity(this, (byte) (i % 6));
-			if ((tile instanceof IEnergyHandler)) {
-				facing = (byte) (i % 6);
-				worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord));
-				updateAdjacentHandlers();
-				return true;
-			}
-		}
-		for (int i = facing + 1; i < facing + 6; i++) {
-			if (WorldHelper.isEnergyHandlerFromOppFacing(this, (byte) (i % 6))) {
-				facing = (byte) (i % 6);
-				worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord));
-				updateAdjacentHandlers();
-				return true;
-			}
-		}
-		return false;
-	}
-
 	public String nextRedstoneSet() {
 		set = set.cycle();
 		return set.id;
@@ -113,7 +90,6 @@ public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyH
 		comp.setByte("face", facing);
 		comp.setInteger("fuel", fuel);
 		comp.setBoolean("Boost", boost);
-		comp.setBoolean("Modified", modified);
 	}
 
 	@Override
@@ -123,7 +99,6 @@ public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyH
 		facing = comp.getByte("face");
 		fuel = comp.getInteger("fuel");
 		boost = comp.getBoolean("Boost");
-		modified = comp.getBoolean("Modified");
 	}
 
 	public abstract int extractFuel(int ener);
@@ -186,11 +161,35 @@ public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyH
 		return maxEnergy;
 	}
 	
-	public ForgeDirection getDirFromFacing(){
-		for(ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS){
-			if(dir.ordinal()==facing)
-				return dir;
+	@Override
+	public boolean onWrenched() {
+		for (int i = facing + 1; i < facing + 6; i++){
+			TileEntity tile = WorldHelper.getAdjacentTileEntity(this, (byte) (i % 6));
+			if ((tile instanceof IEnergyHandler)) {
+				facing = (byte) (i % 6);
+				worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord));
+				updateAdjacentHandlers();
+				return true;
+			}
 		}
-		return ForgeDirection.UNKNOWN;
+		for (int i = facing + 1; i < facing + 6; i++) {
+			if (WorldHelper.isEnergyHandlerFromOppFacing(this, (byte) (i % 6))) {
+				facing = (byte) (i % 6);
+				worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord));
+				updateAdjacentHandlers();
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Override
+	public RedstoneSet getCurrentSetting() {
+		return set;
+	}
+	
+	@Override
+	public void setNewSetting(RedstoneSet newSet) {
+		set = newSet;
 	}
 }

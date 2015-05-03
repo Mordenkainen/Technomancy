@@ -6,12 +6,12 @@ import org.apache.logging.log4j.Logger;
 
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.items.base.TMItems;
-import theflogat.technomancy.lib.CreativeTabTM;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.compat.IModModule;
 import theflogat.technomancy.lib.handlers.CompatibilityHandler;
 import theflogat.technomancy.lib.handlers.ConfigHandler;
 import theflogat.technomancy.lib.handlers.CraftingHandler;
+import theflogat.technomancy.lib.handlers.CreativeTabTM;
 import theflogat.technomancy.lib.handlers.EventRegister;
 import theflogat.technomancy.proxies.CommonProxy;
 import theflogat.technomancy.util.Ore;

@@ -5,7 +5,6 @@ import java.io.File;
 import java.util.Arrays;
 
 import theflogat.technomancy.lib.Conf;
-import theflogat.technomancy.lib.Rate;
 import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.util.Ore;

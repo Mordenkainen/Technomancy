@@ -3,8 +3,7 @@ package theflogat.technomancy.common.tiles.thaumcraft.machine;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
+import cofh.api.energy.IEnergyHandler;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -14,16 +13,20 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
+import thaumcraft.common.lib.network.PacketHandler;
+import thaumcraft.common.lib.network.fx.PacketFXEssentiaSource;
 import theflogat.technomancy.common.tiles.base.ICouplable;
+import theflogat.technomancy.common.tiles.base.IRedstoneSensitive;
+import theflogat.technomancy.common.tiles.base.IWrenchable;
 import theflogat.technomancy.common.tiles.base.TileTechnomancy;
 import theflogat.technomancy.common.tiles.thaumcraft.util.AspectContainerEssentiaTransport;
 import theflogat.technomancy.lib.Conf;
 import theflogat.technomancy.lib.compat.Thaumcraft;
-import theflogat.technomancy.util.RedstoneSet;
-import thaumcraft.common.lib.network.PacketHandler;
-import thaumcraft.common.lib.network.fx.PacketFXEssentiaSource;
+import theflogat.technomancy.util.WorldHelper;
+import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 
-public class TileEssentiaTransmitter extends TileTechnomancy implements IEssentiaTransport, ICouplable{
+public class TileEssentiaTransmitter extends TileTechnomancy implements IEssentiaTransport, ICouplable, IRedstoneSensitive, IWrenchable{
 
 	public Aspect aspectFilter = null;
 	public ArrayList<ChunkCoordinates> sources = new ArrayList<ChunkCoordinates>();
@@ -210,5 +213,28 @@ public class TileEssentiaTransmitter extends TileTechnomancy implements IEssenti
 	@Override
 	public void clear() {
 		sources.clear();
+	}
+
+	@Override
+	public RedstoneSet getCurrentSetting() {
+		return set;
+	}
+
+	@Override
+	public void setNewSetting(RedstoneSet newSet) {
+		set = newSet;
+	}
+	
+	@Override
+	public boolean onWrenched() {
+		for (int i = facing + 1; i < facing + 6; i++){
+			TileEntity tile = WorldHelper.getAdjacentTileEntity(this, (byte) (i % 6));
+			if (tile instanceof IAspectContainer) {
+				facing = (byte) (i % 6);
+				worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord));
+				return true;
+			}
+		}
+		return false;
 	}
 }

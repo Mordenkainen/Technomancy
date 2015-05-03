@@ -8,6 +8,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -40,23 +41,6 @@ public class BlockItemTransmitter extends BlockBase{
 		if(tile.boost)
 			WorldHelper.dropBoost(w, x, y, z);
 		super.breakBlock(w, x, y, z, b, flag);
-	}
-
-	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float vecX, float vecY, float vecZ) {
-		TileItemTransmitter tile = getTE(world, x, y, z);
-		if(tile!=null) {
-			ItemStack stack = player.getHeldItem();
-//			if(stack!=null && tile.boost) {
-//				if (tile.filter == null) {
-//					tile.filter = stack.copy();
-//					tile.filter.stackSize = 1;
-//					world.markBlockForUpdate(x, y, z);
-//					return true;
-//				}
-//			}
-		}
-		return false;
 	}
 
 	//FIXME: This may be unstable since this class is a singleton!

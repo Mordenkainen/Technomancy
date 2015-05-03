@@ -3,23 +3,22 @@ package theflogat.technomancy.common.tiles.technom;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import cofh.api.energy.IEnergyHandler;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraftforge.common.util.ForgeDirection;
-import thaumcraft.api.aspects.IAspectContainer;
-import thaumcraft.api.aspects.IEssentiaTransport;
 import theflogat.technomancy.common.tiles.base.ICouplable;
+import theflogat.technomancy.common.tiles.base.IRedstoneSensitive;
+import theflogat.technomancy.common.tiles.base.IWrenchable;
 import theflogat.technomancy.common.tiles.base.IUpgradable;
 import theflogat.technomancy.common.tiles.base.TileTechnomancy;
-import theflogat.technomancy.common.tiles.thaumcraft.util.AspectContainerEssentiaTransport;
 import theflogat.technomancy.util.InvHelper;
-import theflogat.technomancy.util.RedstoneSet;
 import theflogat.technomancy.util.WorldHelper;
 
-public class TileItemTransmitter extends TileTechnomancy implements IUpgradable, ICouplable{
+public class TileItemTransmitter extends TileTechnomancy implements IUpgradable, ICouplable, IRedstoneSensitive, IWrenchable{
 
 	public ItemStack filter = null;
 	public ArrayList<ChunkCoordinates> sources = new ArrayList<ChunkCoordinates>();
@@ -29,6 +28,8 @@ public class TileItemTransmitter extends TileTechnomancy implements IUpgradable,
 
 	@Override
 	public void updateEntity() {
+		if(set==null)
+			set = RedstoneSet.LOW;
 		TileEntity te = WorldHelper.getAdjacentTileEntity(this, facing);
 		if (set.canRun(this) && te != null && te instanceof IInventory && !sources.isEmpty()) {
 			IInventory inv = (IInventory) te;
@@ -64,7 +65,8 @@ public class TileItemTransmitter extends TileTechnomancy implements IUpgradable,
 	public void readCustomNBT(NBTTagCompound comp) {
 		if(comp.hasKey("filter")){
 			NBTTagCompound item = comp.getCompoundTag("filter");
-			filter = ItemStack.loadItemStackFromNBT(comp);
+			filter = ItemStack.loadItemStackFromNBT(item);
+			filter.readFromNBT(item);
 		}
 		facing = comp.getByte("facing");
 		int size = comp.getInteger("size");
@@ -75,6 +77,7 @@ public class TileItemTransmitter extends TileTechnomancy implements IUpgradable,
 			this.sources.add(new ChunkCoordinates(xx, yy, zz));
 		}
 		boost = comp.getBoolean("boost");
+		set = RedstoneSet.load(comp);
 	}
 
 	@Override
@@ -96,6 +99,7 @@ public class TileItemTransmitter extends TileTechnomancy implements IUpgradable,
 		}
 		comp.setInteger("size", sourceCount);
 		comp.setBoolean("boost", boost);
+		set.save(comp);
 	}
 
 	@Override
@@ -129,4 +133,30 @@ public class TileItemTransmitter extends TileTechnomancy implements IUpgradable,
 		sources.clear();
 	}
 
+	@Override
+	public RedstoneSet getCurrentSetting() {
+		return set;
+	}
+
+	@Override
+	public void setNewSetting(RedstoneSet newSet) {
+		set = newSet;
+	}
+	
+	@Override
+	public boolean onWrenched() {
+		for (int i = facing + 1; i < facing + 6; i++){
+			TileEntity tile = WorldHelper.getAdjacentTileEntity(this, (byte) (i % 6));
+			if (tile instanceof IInventory) {
+				facing = (byte) (i % 6);
+				worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord));
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void addFilter(ItemStack newFilter) {
+		filter = newFilter;
+	}
 }

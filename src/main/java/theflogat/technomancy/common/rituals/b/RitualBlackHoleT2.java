@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import theflogat.technomancy.api.rituals.IRitualEffectHandler;
 import theflogat.technomancy.api.rituals.Ritual;
-import theflogat.technomancy.client.renderers.models.ModelBlackSphere;
+import theflogat.technomancy.client.models.ModelBlackSphere;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.util.Loc;

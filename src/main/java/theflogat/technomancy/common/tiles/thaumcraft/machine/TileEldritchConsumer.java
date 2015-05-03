@@ -15,7 +15,7 @@ import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
-import theflogat.technomancy.lib.Rate;
+import theflogat.technomancy.lib.handlers.Rate;
 import theflogat.technomancy.util.Coords;
 
 public class TileEldritchConsumer extends TileMachineBase implements IAspectContainer, IEssentiaTransport{

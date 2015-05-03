@@ -2,6 +2,7 @@ package theflogat.technomancy.lib.compat.waila;
 
 import java.util.List;
 
+import theflogat.technomancy.common.tiles.base.IRedstoneSensitive.RedstoneSet;
 import theflogat.technomancy.common.tiles.botania.machines.TileManaExchanger;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;

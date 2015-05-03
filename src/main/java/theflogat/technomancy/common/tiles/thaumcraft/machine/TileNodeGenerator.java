@@ -2,6 +2,7 @@ package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
 import java.util.HashMap;
 
+import cofh.api.energy.IEnergyHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,21 +18,22 @@ import thaumcraft.api.nodes.INode;
 import thaumcraft.api.nodes.NodeModifier;
 import thaumcraft.api.nodes.NodeType;
 import thaumcraft.api.wands.IWandable;
+import thaumcraft.client.fx.bolt.FXLightningBolt;
+import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
+import thaumcraft.common.lib.world.biomes.BiomeHandler;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.tiles.air.TileFakeAirNG;
+import theflogat.technomancy.common.tiles.base.IRedstoneSensitive;
+import theflogat.technomancy.common.tiles.base.IWrenchable;
 import theflogat.technomancy.common.tiles.base.IUpgradable;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.util.MathHelper;
-import theflogat.technomancy.util.RedstoneSet;
 import theflogat.technomancy.util.WorldHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import thaumcraft.client.fx.bolt.FXLightningBolt;
-import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
-import thaumcraft.common.lib.world.biomes.BiomeHandler;
 
-public class TileNodeGenerator extends TileMachineBase implements IEssentiaTransport, IAspectContainer, IWandable, IUpgradable {
+public class TileNodeGenerator extends TileMachineBase implements IEssentiaTransport, IAspectContainer, IWandable, IUpgradable, IRedstoneSensitive, IWrenchable {
 
 	private boolean firstAdded = true;
 	private Aspect aspect;
@@ -48,83 +50,97 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 	public RedstoneSet set = RedstoneSet.LOW;
 	public boolean boost = false;
 	private static HashMap<Byte,double[][]> lightning = new HashMap<Byte,double[][]>();
-	
+
 	static {
 		lightning.put((byte)2, new double[][] {{1.5, 2.5, -.5, -.5, .5, -4.5, 0}, {-.5, 2.5, -.5, 1.5, .5, -4.5, 0}, {1.5, .5, -.5, -.5, 2.5, -4.5, 0}, {-.5, .5, -.5, 1.5, 2.5, -4.5, 0}});
 		lightning.put((byte)3, new double[][] {{-.5, 2.5, 1.5, 1.5, .5, 5.5, 5}, {1.5, 2.5, 1.5, -.5, .5, 5.5, 5}, {1.5, .5, 1.5, -.5, 2.5, 5.5, 5}, {-.5, .5, 1.5, 1.5, 2.5, 5.5, 5}});
 		lightning.put((byte)4, new double[][] {{-.5, 2.5, 1.5, -4.5, .5, -.5, 0}, {-.5, 2.5, -.5, -4.5, .5, 1.5, 0}, {-.5, .5, 1.5, -4.5, 2.5, -.5, 0}, {-.5, .5, -.5, -4.5, 2.5, 1.5, 0}});
 		lightning.put((byte)5, new double[][] {{1.5, 2.5, -.5, 5.5, .5, 1.5, 5}, {1.5, 2.5, 1.5, 5.5, .5, -.5, 5}, {1.5, .5, 1.5, 5.5, 2.5, -.5, 5}, {1.5, .5, -.5, 5.5, 2.5, 1.5, 5}});
 	}
-	
+
 	public TileNodeGenerator() {
 		super(50000000);
 	}
-	
+
 	@Override
 	public void updateEntity() {
-		if(firstAdded){
-			createDummyBlocks();
-			firstAdded = false;
-		}
+		if(isWholeTileLoaded()){
+			if(firstAdded){
+				createDummyBlocks();
+				firstAdded = false;
+			}
 
-		TileNodeGenerator partner = getTE(xCoord + ForgeDirection.getOrientation(facing).offsetX * 6, yCoord, zCoord + ForgeDirection.getOrientation(facing).offsetZ * 6);
-		active = partner != null ? true : false;
-		if(active) {
-			int xx = xCoord + ForgeDirection.getOrientation(facing).offsetX * 3;
-			int zz = zCoord + ForgeDirection.getOrientation(facing).offsetZ * 3;
-			TileEntity entity = worldObj.getTileEntity(xx, yCoord + 1, zz);
-			if(entity == null && worldObj.isAirBlock(xx, yCoord + 1, zz)) {
-				canSpawn = true;
-				addNode = false;
-			} else if(entity instanceof INode) {
-				INode node = (INode)entity;
-				addNode = true;			
-				if(canRun() && !worldObj.isRemote && amount > 0 && aspect != null) {
-					if (getEnergyStored() >= 1000 && node.getAspects().aspects.containsKey(aspect) && node.getAspects().getAmount(aspect) < node.getAspectsBase().getAmount(aspect)) {
-						extractEnergy(1000, false);
-						node.addToContainer(aspect, 1);
-						takeFromContainer(aspect, 1);
-						worldObj.markBlockForUpdate(xx, yCoord + 1, zz);
-					} else if (boost && getEnergyStored() >= 10000 && amount >= 10) {
-						if (node.getNodeVisBase(aspect) < Short.MAX_VALUE) {
-							extractEnergy(10000, false);
-						 	node.setNodeVisBase(aspect, (short)(node.getNodeVisBase(aspect) + 1));
-						 	node.addToContainer(aspect, 1);
-						 	takeFromContainer(aspect, 10);
-						 	worldObj.markBlockForUpdate(xx, yCoord + 1, zz);
+			TileNodeGenerator partner = getTE(xCoord + ForgeDirection.getOrientation(facing).offsetX * 6, yCoord, zCoord + ForgeDirection.getOrientation(facing).offsetZ * 6);
+			active = partner!=null ? partner.isWholeTileLoaded() : false;
+			if(active) {
+				int xx = xCoord + ForgeDirection.getOrientation(facing).offsetX * 3;
+				int zz = zCoord + ForgeDirection.getOrientation(facing).offsetZ * 3;
+				TileEntity entity = worldObj.getTileEntity(xx, yCoord + 1, zz);
+				if(entity == null && worldObj.isAirBlock(xx, yCoord + 1, zz)) {
+					canSpawn = true;
+					addNode = false;
+				} else if(entity instanceof INode) {
+					INode node = (INode)entity;
+					addNode = true;			
+					if(canRun() && !worldObj.isRemote && amount > 0 && aspect != null) {
+						if (getEnergyStored() >= 1000 && node.getAspects().aspects.containsKey(aspect) && node.getAspects().getAmount(aspect) < node.getAspectsBase().getAmount(aspect)) {
+							extractEnergy(1000, false);
+							node.addToContainer(aspect, 1);
+							takeFromContainer(aspect, 1);
+							worldObj.markBlockForUpdate(xx, yCoord + 1, zz);
+						} else if (boost && getEnergyStored() >= 10000 && amount >= 10) {
+							if (node.getNodeVisBase(aspect) < Short.MAX_VALUE) {
+								extractEnergy(10000, false);
+								node.setNodeVisBase(aspect, (short)(node.getNodeVisBase(aspect) + 1));
+								node.addToContainer(aspect, 1);
+								takeFromContainer(aspect, 10);
+								worldObj.markBlockForUpdate(xx, yCoord + 1, zz);
+							}
 						}
 					}
+					canSpawn = running = initiator = false;
+					step = 0;
 				}
-				canSpawn = running = initiator = false;
+				if (running) {
+					step++;
+				}
+				rotation += 1 + step / 5;
+				if (rotation >= 360) {
+					rotation -= 360;
+				}
+				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+				if (worldObj.rand.nextInt(60 - step / 4) == 0) {
+					shootLightning();
+				}
+				if (step == 200 && initiator) {
+					AspectList al = new AspectList();
+					al.add(aspect, amount);
+					al.add(partner.aspect, partner.amount);
+					generateNode(al);
+					takeFromContainer(aspect, amount);
+					partner.takeFromContainer(partner.aspect, partner.amount);
+					extractEnergy(MathHelper.round(Math.pow((amount + partner.amount)/2, 2) * 762.939453125), false);
+				}		
+			} else {
+				canSpawn = addNode = running = initiator = false;
 				step = 0;
 			}
-			if (running) {
-				step++;
-			}
-			rotation += 1 + step / 5;
-			if (rotation >= 360) {
-				rotation -= 360;
-			}
-			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-			if (worldObj.rand.nextInt(60 - step / 4) == 0) {
-				shootLightning();
-			}
-			if (step == 200 && initiator) {
-				AspectList al = new AspectList();
-				al.add(aspect, amount);
-				al.add(partner.aspect, partner.amount);
-				generateNode(al);
-				takeFromContainer(aspect, amount);
-				partner.takeFromContainer(partner.aspect, partner.amount);
-				extractEnergy(MathHelper.round(Math.pow((amount + partner.amount)/2, 2) * 762.939453125), false);
-			}		
-		} else {
-			canSpawn = addNode = running = initiator = false;
-			step = 0;
+
+			fill();
 		}
-		
-		fill();
 	}	
+
+	private boolean isWholeTileLoaded() {
+		for (int w = -1; w < 2; w++) {
+			if(facing==2 || facing==3)
+				if(!WorldHelper.isChunkLoaded(worldObj, xCoord + w, zCoord))
+					return false;
+				else
+					if(!WorldHelper.isChunkLoaded(worldObj, xCoord, zCoord + w))
+						return false;
+		}
+		return true;
+	}
 
 	private void createDummyBlocks() {
 		for (int h = 0; h < 3; h++){
@@ -146,6 +162,20 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 							WorldHelper.destroyAndDrop(worldObj, xCoord, yCoord, zCoord);
 							return;
 						}
+					}
+				}
+			}
+		}
+	}
+
+	private void destroyDummyBlocks(){
+		for (int h = 0; h < 3; h++){
+			for (int w = -1; w < 2; w++) {
+				if(!(h==0 && w == 0)) {
+					if(facing==2 || facing==3) {
+						worldObj.setBlockToAir(xCoord + w, yCoord + h, zCoord);
+					} else {
+						worldObj.setBlockToAir(xCoord, yCoord + h, zCoord + w);
 					}
 				}
 			}
@@ -193,7 +223,7 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 							yCoord + 1.5 + fy * 10.0F, zz + .5 + fz * 10.0F, 0.4F, b, true, 0.05F);
 				}
 			}
-		    worldObj.playSound(xx + 0.5F, yCoord + 1.5, zz + 0.5F, "thaumcraft:craftstart", 1.0F, 1.0F, false);	
+			worldObj.playSound(xx + 0.5F, yCoord + 1.5, zz + 0.5F, "thaumcraft:craftstart", 1.0F, 1.0F, false);	
 		} else {
 			ThaumcraftWorldGenerator.createNodeAt(worldObj, xx, yCoord + 1, zz, type, mod, new AspectList().add(ra, (aurum + taint)/ 2));
 		}	
@@ -224,7 +254,7 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 			bolt.setType((int)boltdata[6]);
 			bolt.setWidth(0.02F);
 			bolt.finalizeBolt();
-		    worldObj.playSound(xCoord + 0.5F, yCoord + 0.5F, zCoord + 0.5F, "thaumcraft:zap", 1.0F,worldObj.rand.nextFloat(), false);
+			worldObj.playSound(xCoord + 0.5F, yCoord + 0.5F, zCoord + 0.5F, "thaumcraft:zap", 1.0F,worldObj.rand.nextFloat(), false);
 		}
 	}
 
@@ -240,9 +270,9 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 					partner.running = running = true;
 					partner.step = step = 0;
 					if (world.isRemote) {
-			          player.swingItem();
-			          world.playSound(x, y, z, "thaumcraft:wand", 1.0F, 1.0F, false);	
-			        }
+						player.swingItem();
+						world.playSound(x, y, z, "thaumcraft:wand", 1.0F, 1.0F, false);	
+					}
 					return 0;
 				}
 			}
@@ -445,23 +475,23 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean toggleBoost(){
 		boost = !boost;
 		return boost;
 	}
-	
+
 	@Override
 	public boolean getBoost() {
 		return boost;
 	}
-	
+
 	@Override
 	public void setBoost(boolean newBoost) {
 		boost = newBoost;
 	}
-	
+
 	private TileNodeGenerator getTE(int x, int y, int z) {
 		TileEntity tile = worldObj.getTileEntity(x, y, z);
 		if(tile instanceof TileNodeGenerator) {
@@ -469,7 +499,7 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 		}
 		return null;
 	}
-	
+
 	public boolean canRun() {
 		boolean state = true;
 		for (int h = 0; h < 3 && state; h++){
@@ -482,5 +512,24 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 			}
 		}
 		return state;
+	}
+
+	@Override
+	public RedstoneSet getCurrentSetting() {
+		return set;
+	}
+
+	@Override
+	public void setNewSetting(RedstoneSet newSet) {
+		set = newSet;
+	}
+
+	@Override
+	public boolean onWrenched() {
+		destroyDummyBlocks();
+		facing = (byte) (facing==5 ? 2 : facing + 1);
+		
+		createDummyBlocks();
+		return false;
 	}
 }

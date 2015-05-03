@@ -6,7 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
-import theflogat.technomancy.lib.Rate;
+import theflogat.technomancy.lib.handlers.Rate;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.mana.IManaPool;
 
