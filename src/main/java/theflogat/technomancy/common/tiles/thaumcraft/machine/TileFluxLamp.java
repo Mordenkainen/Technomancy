@@ -13,6 +13,7 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
+import thaumcraft.common.tiles.TileInfusionMatrix;
 import theflogat.technomancy.common.tiles.base.TileTechnomancy;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.util.WorldHelper;
@@ -46,36 +47,33 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
 	int count;
 	@Override
 	public void updateEntity() {
-		try{
-			if(!worldObj.isRemote) {
-				TileEntity tile = null;
-				if (!worldObj.isRemote && ++count % 10 == 0) {
-					if(amount < maxAmount) {
-						fill();
-					}
-					tile = getMatrix();
+		if(!worldObj.isRemote) {
+			TileEntity tile = null;
+			if (!worldObj.isRemote && ++count % 10 == 0) {
+				if(amount < maxAmount) {
+					fill();
 				}
-				if(tile == null) {
-					return;
-				}
-				if(!Thaumcraft.TileInfusionMatrix.getField("crafting").getBoolean(tile)) {
-					this.stabilize = true;
-				}	
-				if(Thaumcraft.TileInfusionMatrix.getField("instability").getInt(tile) > 0 && stabilize) {
-					for(int i = 0; i < 5; i++) {					
-						if(amount >= 5 && (tank.getCapacity() - tank.getFluidAmount()) >= 200 && stabilize) {
-							takeFromContainer(Aspect.ORDER, 5);
-							Thaumcraft.TileInfusionMatrix.getField("instability").set(tile,
-									(Thaumcraft.TileInfusionMatrix.getField("instability").getInt(tile)) - 1);
-							tank.fill(FluidRegistry.getFluidStack(Thaumcraft.FLUXGOO.getName(), 200), true);
-						}else{
-							break;
-						}						
-					}
-					this.stabilize = false;
-				}			
+				tile = getMatrix();
 			}
-		}catch(Exception e){e.printStackTrace();}
+			if(tile == null) {
+				return;
+			}
+			if(!((TileInfusionMatrix)tile).crafting) {
+				this.stabilize = true;
+			}	
+			if(((TileInfusionMatrix)tile).instability > 0 && stabilize) {
+				for(int i = 0; i < 5; i++) {					
+					if(amount >= 5 && (tank.getCapacity() - tank.getFluidAmount()) >= 200 && stabilize) {
+						takeFromContainer(Aspect.ORDER, 5);
+						((TileInfusionMatrix)tile).instability -= 1;
+						tank.fill(FluidRegistry.getFluidStack(Thaumcraft.FLUXGOO.getName(), 200), true);
+					}else{
+						break;
+					}						
+				}
+				this.stabilize = false;
+			}			
+		}
 	}
 
 	TileEntity getMatrix() {
@@ -84,7 +82,7 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
 				for(int zz = -10; zz < 10; zz++) {
 					if(xx != 0 && zz != 0 && yy != 0) {
 						TileEntity te = this.worldObj.getTileEntity(this.xCoord + xx, this.yCoord + yy, this.zCoord + zz);
-						if(Thaumcraft.TileInfusionMatrix.isInstance(te)) {
+						if(te instanceof TileInfusionMatrix) {
 							return te;
 						}
 					}

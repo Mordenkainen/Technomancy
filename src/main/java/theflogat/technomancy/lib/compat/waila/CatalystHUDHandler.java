@@ -3,7 +3,6 @@ package theflogat.technomancy.lib.compat.waila;
 import java.util.List;
 
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEldritchConsumer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

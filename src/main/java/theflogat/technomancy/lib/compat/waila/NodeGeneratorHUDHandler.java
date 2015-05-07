@@ -18,7 +18,7 @@ public class NodeGeneratorHUDHandler implements IWailaDataProvider {
 	@Override
 	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,	IWailaConfigHandler config) {
 		final TileNodeGenerator tileEntity = (TileNodeGenerator) accessor.getTileEntity();
-		currenttip.add(tileEntity.set.canRun(tileEntity) ? SpecialChars.GREEN + "Enabled" : SpecialChars.RED + "Disabled");
+		currenttip.add(tileEntity.canRun() ? SpecialChars.GREEN + "Enabled" : SpecialChars.RED + "Disabled");
 		if (tileEntity.getBoost()) {
 			currenttip.add(SpecialChars.GREEN + "Potency Gem Installed");
 		}

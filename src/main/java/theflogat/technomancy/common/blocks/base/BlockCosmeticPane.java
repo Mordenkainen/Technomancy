@@ -2,16 +2,15 @@ package theflogat.technomancy.common.blocks.base;
 
 import java.util.List;
 
-import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import theflogat.technomancy.lib.Names;
+import theflogat.technomancy.lib.Ref;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -22,18 +21,10 @@ public class BlockCosmeticPane extends BlockBase {
 		this.setBlockName(Ref.MOD_PREFIX + Names.cosmeticPane);		
 	}
 	
-	
-	@SideOnly(Side.CLIENT)
-	private IIcon glassIcon;
-	
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister icon) {
-		glassIcon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.cosmeticOpaque);
-	}
-	@Override
-	public IIcon getIcon(int side, int meta) {
-		return glassIcon;
+		blockIcon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.cosmeticOpaque);
 	}
 
 	@Override
@@ -61,7 +52,8 @@ public class BlockCosmeticPane extends BlockBase {
         return w.getBlock(x, y, z)==this ? false : super.shouldSideBeRendered(w, x, y, z, meta);
     }
     
-    @Override
+    @SuppressWarnings("rawtypes")
+	@Override
 	public void addCollisionBoxesToList(World par1World, int par2, int par3, int par4, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity)    {
         boolean flag = this.canPaneConnectTo(par1World,par2, par3, par4,ForgeDirection.NORTH);
         boolean flag1 = this.canPaneConnectTo(par1World,par2, par3, par4,ForgeDirection.SOUTH);
@@ -132,10 +124,5 @@ public class BlockCosmeticPane extends BlockBase {
     {
         return access.getBlock(x+dir.offsetX, y+dir.offsetY, z+dir.offsetZ).isBlockSolid(access, x, y, z, dir.ordinal());
     }
-	
-	@Override
-	public TileEntity createNewTileEntity(World w, int meta) {
-		return null;
-	}
 
 }

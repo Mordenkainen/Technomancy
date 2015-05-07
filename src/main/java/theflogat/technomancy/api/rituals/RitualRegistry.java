@@ -6,10 +6,10 @@ public class RitualRegistry {
 	private static Ritual[] rituals = new Ritual[64];
 	private static int current = 0;
 	
-	public static void add(Ritual rit) {
+	public static int add(Ritual rit) {
 		rituals[current] = rit;
 		rit.setId(current);
-		current++;
+		return current++;
 	}
 	
 	public static Ritual getRitual(int id){

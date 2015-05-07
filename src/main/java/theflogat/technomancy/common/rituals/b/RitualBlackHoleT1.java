@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import theflogat.technomancy.api.rituals.IRitualEffectHandler;
 import theflogat.technomancy.api.rituals.Ritual;
-import theflogat.technomancy.client.renderers.models.ModelBlackSphere;
+import theflogat.technomancy.client.models.ModelBlackSphere;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.util.Loc;
@@ -18,28 +18,15 @@ import theflogat.technomancy.util.RitualHelper;
 
 public class RitualBlackHoleT1 extends Ritual implements IRitualEffectHandler{
 
+	public RitualBlackHoleT1() {
+		super(new Type[]{Type.DARK}, Type.DARK);
+	}
+
 	ModelBlackSphere specialRender = new ModelBlackSphere(3F, -1F, 0, 1F);
 	private static final ResourceLocation textLoc = new ResourceLocation(Ref.MODEL_REF_TEXTURE);
 
 	@Override
-	public boolean isCoreComplete(World w, int x, int y, int z) {
-		return w.getBlockMetadata(x, y, z)==black;
-	}
-
-	@Override
-	public boolean isFrameComplete(World w, int x, int y, int z) {
-		return RitualHelper.checkForT1(w, x, y, z, black);
-	}
-
-	@Override
 	public boolean canApplyEffect(World w, int x, int y, int z) {
-		return true;
-	}
-
-	private boolean canDestroy(World w, int x, int y, int z, int i, int j, int k) {
-		if(w.getBlock(x+i, y+j, z+k).getBlockHardness(w, x+i, y+j, z+k)<0)
-			return false;
-		
 		return true;
 	}
 
@@ -59,7 +46,7 @@ public class RitualBlackHoleT1 extends Ritual implements IRitualEffectHandler{
 				}
 			}
 		}
-		RitualHelper.removeT1(w, x, y, z);
+		removeFrame(w, x, y, z);
 
 		ArrayList<EntityLivingBase> e = (ArrayList<EntityLivingBase>) w.getEntitiesWithinAABB(EntityLivingBase.class,
 				AxisAlignedBB.getBoundingBox(x-2, y-2, z-2, x+2, y+2, z+2));
@@ -77,6 +64,13 @@ public class RitualBlackHoleT1 extends Ritual implements IRitualEffectHandler{
 			((TileCatalyst)w.getTileEntity(x, y, z)).specialRender = specialRender;
 			((TileCatalyst)w.getTileEntity(x, y, z)).textLoc = textLoc;
 		}
+	}
+
+	private boolean canDestroy(World w, int x, int y, int z, int i, int j, int k) {
+		if(w.getBlock(x+i, y+j, z+k).getBlockHardness(w, x+i, y+j, z+k)<0)
+			return false;
+		
+		return true;
 	}
 
 	@Override

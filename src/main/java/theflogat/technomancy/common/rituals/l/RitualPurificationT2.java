@@ -9,19 +9,14 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import theflogat.technomancy.api.rituals.IRitualEffectHandler;
 import theflogat.technomancy.api.rituals.Ritual;
+import theflogat.technomancy.api.rituals.Ritual.Type;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import theflogat.technomancy.util.RitualHelper;
 
 public class RitualPurificationT2 extends Ritual implements IRitualEffectHandler{
 	
-	@Override
-	public boolean isCoreComplete(World w, int x, int y, int z) {
-		return w.getBlockMetadata(x, y, z)==white;
-	}
-
-	@Override
-	public boolean isFrameComplete(World w, int x, int y, int z) {
-		return RitualHelper.checkForT1(w, x, y, z, white) && RitualHelper.checkForT2(w, x, y, z, white);
+	public RitualPurificationT2() {
+		super(new Type[]{Type.LIGHT,Type.LIGHT},Type.LIGHT);
 	}
 
 	@Override
@@ -32,7 +27,6 @@ public class RitualPurificationT2 extends Ritual implements IRitualEffectHandler
 	@Override
 	public void applyEffect(World w, int x, int y, int z) {
 		((TileCatalyst)w.getTileEntity(x, y, z)).handler = this;
-		
 	}
 
 	@Override

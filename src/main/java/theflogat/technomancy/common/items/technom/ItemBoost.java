@@ -3,7 +3,7 @@ package theflogat.technomancy.common.items.technom;
 import java.util.List;
 
 import theflogat.technomancy.Technomancy;
-import theflogat.technomancy.common.tiles.IUpgradable;
+import theflogat.technomancy.common.tiles.base.IUpgradable;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -30,14 +30,12 @@ public class ItemBoost extends Item{
 	
 	@Override
 	public boolean onItemUse(ItemStack items, EntityPlayer player, World w, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
-		if(w.getTileEntity(x, y, z)instanceof IUpgradable){
+		if(w.getTileEntity(x, y, z) instanceof IUpgradable){
 			IUpgradable tile = (IUpgradable)w.getTileEntity(x, y, z);
 			if(tile.getBoost() == false){
 				tile.setBoost(true);
-				if(items.stackSize==1){
-					items = null;
-				}else{
-					items.stackSize--;
+				if(--player.inventory.mainInventory[player.inventory.currentItem].stackSize == 0) {
+					player.inventory.mainInventory[player.inventory.currentItem] = null;
 				}
 				return true;
 			}

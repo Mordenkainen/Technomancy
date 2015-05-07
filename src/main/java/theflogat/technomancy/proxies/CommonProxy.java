@@ -1,11 +1,10 @@
 package theflogat.technomancy.proxies;
 
-import theflogat.technomancy.client.renderers.gui.GuiRitualTome;
-import theflogat.technomancy.client.renderers.gui.container.ContainerBMProcessor;
-import theflogat.technomancy.client.renderers.gui.container.ContainerBOProcessor;
-import theflogat.technomancy.client.renderers.gui.container.ContainerTCProcessor;
-import theflogat.technomancy.common.tiles.TileBOProcessor;
-import theflogat.technomancy.common.tiles.bm.TileBMProcessor;
+import theflogat.technomancy.client.gui.container.ContainerBMProcessor;
+import theflogat.technomancy.client.gui.container.ContainerBOProcessor;
+import theflogat.technomancy.client.gui.container.ContainerTCProcessor;
+import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBMProcessor;
+import theflogat.technomancy.common.tiles.botania.machines.TileBOProcessor;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTCProcessor;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -21,9 +20,6 @@ public class CommonProxy implements IGuiHandler{
 
     }
     
-    public void essentiaTrail(World world, double x, double y, double z, double tx, double ty, double tz, int color) {
-    }
-
     @Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		switch(ID) {

@@ -2,14 +2,11 @@ package theflogat.technomancy.common.items.thaumcraft;
 
 import java.util.List;
 
-import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.common.items.base.ItemBase;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 
@@ -38,6 +35,7 @@ public class ItemEssentiaCannon extends ItemBase {
 		return damage >= 2;
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer player, List info, boolean useExtraInformation) {
 		info.add("Charge: " + (itemstack.getItemDamage() + 1));

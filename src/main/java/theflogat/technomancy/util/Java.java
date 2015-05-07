@@ -17,7 +17,7 @@ public class Java {
 	
 	public static Object getInstanceFromNBT(NBTTagCompound comp, String key) throws Exception{
 		if(comp.hasKey(key)){
-			Class c = Class.forName(comp.getString(key));
+			Class<?> c = Class.forName(comp.getString(key));
 			Object o = c.newInstance();
 			return o;
 		}

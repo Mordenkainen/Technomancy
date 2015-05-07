@@ -2,7 +2,7 @@ package theflogat.technomancy.lib.compat.waila;
 
 import java.util.List;
 
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBloodFabricator;
+import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBloodFabricator;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

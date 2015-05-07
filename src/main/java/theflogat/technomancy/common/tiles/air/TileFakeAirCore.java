@@ -1,14 +1,7 @@
 package theflogat.technomancy.common.tiles.air;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.IEssentiaTransport;
-import theflogat.technomancy.common.blocks.machines.BlockNodeGenerator;
 import theflogat.technomancy.common.tiles.base.TileTechnomancy;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
-import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.util.Coords;
 
 public class TileFakeAirCore extends TileTechnomancy{

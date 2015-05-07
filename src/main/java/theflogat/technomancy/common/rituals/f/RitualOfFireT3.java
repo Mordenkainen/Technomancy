@@ -1,45 +1,57 @@
 package theflogat.technomancy.common.rituals.f;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.world.BlockEvent.BreakEvent;
+import theflogat.technomancy.api.rituals.IRitualEffectHandler;
 import theflogat.technomancy.api.rituals.Ritual;
-import theflogat.technomancy.util.RitualHelper;
+import theflogat.technomancy.common.blocks.base.TMBlocks;
+import theflogat.technomancy.common.tiles.technom.TileCatalyst;
+import theflogat.technomancy.util.MathHelper;
 
-public class RitualOfFireT3 extends Ritual{
+public class RitualOfFireT3 extends Ritual implements IRitualEffectHandler{
 
-	@Override
-	public boolean isCoreComplete(World w, int x, int y, int z) {
-		return w.getBlockMetadata(x, y, z)==red;
-	}
+	static final int top = 90;
 
-	@Override
-	public boolean isFrameComplete(World w, int x, int y, int z) {
-		return RitualHelper.checkForT1(w, x, y, z, red) && RitualHelper.checkForT2(w, x, y, z, red) && RitualHelper.checkForT3(w, x, y, z, red);
+	public RitualOfFireT3() {
+		super(new Type[]{Type.FIRE,Type.FIRE,Type.FIRE},Type.FIRE);
 	}
 
 	@Override
 	public boolean canApplyEffect(World w, int x, int y, int z) {
-		RitualHelper.removeT1(w, x, y, z);
-		RitualHelper.removeT2(w, x, y, z);
-		RitualHelper.removeT3(w, x, y, z);
-		w.setBlockToAir(x, y, z);
-			
-		for(int i=-9; i<=9; i++){
-			for(int j=-9; j<=9; j++){
-				for(int k=-19; k<0; k++){
-					if(w.getBlock(x+i, y+k, z+j)==null||w.getBlock(x+i, y+k, z+j).isAir(w, x+i, y+k, z+j)){
-						w.setBlock(x+i, y+k, z+j, Blocks.lava);
-					}
-				}
-			}
-		}
-		
 		return true;
 	}
 
 	@Override
-	public void applyEffect(World w, int x, int y, int z) {}
+	public void applyEffect(World w, int x, int y, int z) {
+		((TileCatalyst)w.getTileEntity(x, y, z)).remCount = Math.max(top, y);
+		((TileCatalyst)w.getTileEntity(x, y, z)).handler = this;
+	}
+
+	public static void appe(World w, int x, int y, int z, int count){
+		double coeff = Math.pow(Math.max(top, y)/(Math.max(top, y)-count+1),6);
+		coeff = MathHelper.round(coeff);
+		if(coeff==1){
+			coeff = 0;
+		}
+		for(int xx=(int) -coeff;xx<=coeff;xx++){
+			for(int zz=(int) -coeff;zz<=coeff;zz++){
+				if(!(xx==0 && count==y && zz==0)){
+					if(((TileCatalyst)w.getTileEntity(x, y, z)).user!=null){
+						if(MinecraftForge.EVENT_BUS.post(new BreakEvent(x+xx, count, z+zz, w, w.getBlock(x+xx, count, z+zz),
+								w.getBlockMetadata(x+xx, count, z+zz), ((TileCatalyst)w.getTileEntity(x, y, z)).user)))
+							w.setBlock(x+xx, count, z+zz, TMBlocks.basalt);
+					}else{
+						w.setBlock(x+xx, count, z+zz, TMBlocks.basalt);
+					}
+				}
+			}
+		}
+	}
+
+	@Override
+	public void applyEffect(TileCatalyst te) {
+		appe(te.getWorldObj(), te.xCoord, te.yCoord, te.zCoord, te.remCount);
+	}
 
 }

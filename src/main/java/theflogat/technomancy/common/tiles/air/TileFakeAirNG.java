@@ -1,10 +1,8 @@
 package theflogat.technomancy.common.tiles.air;
 
 import cofh.api.energy.IEnergyHandler;
-import cofh.api.energy.IEnergyStorage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -13,13 +11,11 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import thaumcraft.api.wands.IWandable;
-import theflogat.technomancy.common.blocks.machines.BlockNodeGenerator;
-import theflogat.technomancy.common.tiles.IUpgradable;
-import theflogat.technomancy.common.tiles.base.TileTechnomancy;
+import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockNodeGenerator;
+import theflogat.technomancy.common.tiles.base.IUpgradable;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.util.Coords;
-import theflogat.technomancy.util.Loc;
 
 public class TileFakeAirNG extends TileFakeAirCore implements IEnergyHandler, IEssentiaTransport, IAspectContainer, IWandable, IUpgradable {
 	
@@ -35,7 +31,7 @@ public class TileFakeAirNG extends TileFakeAirCore implements IEnergyHandler, IE
 	
 	public void fill(TileNodeGenerator tile){
 		for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
-			if (dir != ForgeDirection.getOrientation(tile.facing) && dir != ForgeDirection.DOWN) {
+			if (dir != ForgeDirection.getOrientation(tile.facing)) {
 				TileEntity te = Thaumcraft.getConnectableTile(worldObj, xCoord, yCoord, zCoord, dir);
 				if (te != null && !(te instanceof TileNodeGenerator) && !(te instanceof TileFakeAirNG)) {
 					IEssentiaTransport ic = (IEssentiaTransport)te;
@@ -176,7 +172,7 @@ public class TileFakeAirNG extends TileFakeAirCore implements IEnergyHandler, IE
 
 	@Override
 	public boolean canOutputTo(ForgeDirection face) {
-		return false;
+		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).canOutputTo(face);
 	}
 
 	@Override
@@ -223,5 +219,4 @@ public class TileFakeAirNG extends TileFakeAirCore implements IEnergyHandler, IE
 	public boolean renderExtendedTube() {
 		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).renderExtendedTube();
 	}
-
 }

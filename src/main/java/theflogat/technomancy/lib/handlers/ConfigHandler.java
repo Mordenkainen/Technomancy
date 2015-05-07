@@ -5,7 +5,6 @@ import java.io.File;
 import java.util.Arrays;
 
 import theflogat.technomancy.lib.Conf;
-import theflogat.technomancy.lib.Rate;
 import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.util.Ore;
@@ -29,7 +28,7 @@ public class ConfigHandler {
         Ids.biomeMorpher = config.get(blocks, Names.biomeMorpher, true).getBoolean();
         Ids.nodeGen = config.get(blocks, Names.nodeGenerator, true).getBoolean();
         Ids.fluxLamp = config.get(blocks, Names.fluxLamp, true).getBoolean();
-        Ids.wirelessCoil = config.get(blocks, Names.teslaCoil, true).getBoolean();
+        Ids.wirelessCoil = config.get(blocks, Names.essentiaTransmitter, true).getBoolean();
         Ids.electricBellows = config.get(blocks, Names.electricBellows, true).getBoolean();
         Ids.creativeJar = config.get(blocks, Names.creativeJar, true).getBoolean();
         Ids.crystalBlock = config.get(blocks, Names.crystalBlock, true).getBoolean();
@@ -45,6 +44,11 @@ public class ConfigHandler {
         Ids.eldrichConsumer = config.get(blocks, Names.eldritchConsumer, true).getBoolean();
         Ids.catalyst = config.get(blocks, Names.catalyst, true).getBoolean();
         Ids.reservoir = config.get(blocks, Names.reservoir, true).getBoolean();
+        Ids.advDeconTable = config.get(blocks, Names.advDeconTable, true).getBoolean();
+        Ids.manaFluid = config.get(blocks, Names.manaFluid, true).getBoolean();
+        Ids.manaExchanger = config.get(blocks, Names.manaExchanger, true).getBoolean();
+        Ids.itemTransmitter = config.get(blocks, Names.itemTransmitter, true).getBoolean();
+        Ids.basalt = config.get(blocks, Names.basalt, true).getBoolean();
         
         String items = "Items";
         //Items        
@@ -57,6 +61,7 @@ public class ConfigHandler {
         Ids.matBO = config.get(items, Names.itemBO, true).getBoolean();
         Ids.itemBoost = config.get(items, Names.itemBoost, true).getBoolean();
         Ids.ritualTome = config.get(items, Names.ritualTome, true).getBoolean();
+        Ids.coilCoupler = config.get(items, Names.coilCoupler, true).getBoolean();
 
         //Recipe Whatnots
         Conf.bonus = config.get("Recipes", "Add/Increase Smelting bonus to dusts/ore", Conf.bonus).getBoolean(Conf.bonus);

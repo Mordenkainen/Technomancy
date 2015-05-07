@@ -7,7 +7,7 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectSource;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
-import theflogat.technomancy.lib.Rate;
+import theflogat.technomancy.lib.handlers.Rate;
 
 public class TileCondenser extends TileMachineBase implements IEssentiaTransport, IAspectSource {
 

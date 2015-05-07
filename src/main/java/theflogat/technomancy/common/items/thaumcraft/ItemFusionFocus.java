@@ -14,15 +14,18 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.nodes.NodeModifier;
 import thaumcraft.api.nodes.NodeType;
 import thaumcraft.api.wands.IWandFocus;
+import thaumcraft.common.items.wands.ItemWandCasting;
+import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
+import thaumcraft.common.tiles.TileNode;
 import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.common.items.base.ItemBase;
 import theflogat.technomancy.lib.Ref;
-import theflogat.technomancy.lib.compat.Thaumcraft;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -85,11 +88,7 @@ public class ItemFusionFocus extends ItemBase implements IWandFocus {
 		if(mop != null && stack != null) {
 			if(this.type != null && this.mod != null && this.aspects != null) {
 				this.cost = false;
-				try {
-					Thaumcraft.createNodeAt.invoke(null, world, mop.blockX, mop.blockY, mop.blockZ, type, mod, aspects);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}					
+				ThaumcraftWorldGenerator.createNodeAt(world, mop.blockX, mop.blockY, mop.blockZ, type, mod, aspects);				
 			}
 		}
 		return stack;
@@ -98,6 +97,7 @@ public class ItemFusionFocus extends ItemBase implements IWandFocus {
 	@Override
 	public void onUsingFocusTick(ItemStack itemstack, EntityPlayer player, int count) {}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public String getSortingHelper(ItemStack itemstack) {
 		Map<Integer,Integer> ench = EnchantmentHelper.getEnchantments(itemstack);
@@ -113,36 +113,36 @@ public class ItemFusionFocus extends ItemBase implements IWandFocus {
 
 	@Override
 	public boolean onFocusBlockStartBreak(ItemStack stack, int x, int y, int z, EntityPlayer player) {
-		try{
-			TileEntity entity = player.worldObj.getTileEntity(x, y, z);
-			if(stack != null && entity != null) {
-				if(Thaumcraft.TileNode.isInstance(entity) && Thaumcraft.ItemWandCasting.isInstance(stack.getItem())) {
-					if(Thaumcraft.getAspects.invoke(entity) != null) {
-						AspectList al = (AspectList) Thaumcraft.getAspects.invoke(entity);
-						for(int i = 0; i < al.size(); i++) {
-							if((mod == null || this.mod == Thaumcraft.getNodeModifier.invoke(entity)) &&
-									(type == null || type == Thaumcraft.getNodeType.invoke(entity))){
-								aspects.add(al.getAspects()[i], al.getAmount(al.getAspects()[i]));
-								mod = (NodeModifier) Thaumcraft.getNodeModifier.invoke(entity);
-								type =	(NodeType) Thaumcraft.getNodeType.invoke(entity);
-							}
+		TileEntity entity = player.worldObj.getTileEntity(x, y, z);
+		if(stack != null && entity != null) {
+			if(entity instanceof TileNode && stack.getItem() instanceof ItemWandCasting) {
+				TileNode node = (TileNode)entity;
+				if(node.getAspects() != null) {
+					AspectList al = (AspectList) node.getAspects();
+					for(int i = 0; i < al.size(); i++) {
+						if((mod == null || this.mod == node.getNodeModifier()) &&
+								(type == null || type == node.getNodeType())){
+							aspects.add(al.getAspects()[i], al.getAmount(al.getAspects()[i]));
+							mod = node.getNodeModifier();
+							type =	node.getNodeType();
 						}
-						entity.blockType.breakBlock(player.worldObj, x, y, z, entity.blockType, entity.blockMetadata);
 					}
+					entity.blockType.breakBlock(player.worldObj, x, y, z, entity.blockType, entity.blockMetadata);
 				}
 			}
-		}catch(Exception e){e.printStackTrace();}
+		}
 		return false;
 	}
 
 		@Override
 		public boolean acceptsEnchant(int id) {
-			if(id == Thaumcraft.enchantFrugal) {
+			if(id == ThaumcraftApi.enchantFrugal) {
 				return true;
 			}
 			return false;
 		}
 
+		@SuppressWarnings({ "rawtypes", "unchecked" })
 		@Override
 		public void addInformation(ItemStack stack,EntityPlayer player, List list, boolean par4) {
 			AspectList al = this.getVisCost();

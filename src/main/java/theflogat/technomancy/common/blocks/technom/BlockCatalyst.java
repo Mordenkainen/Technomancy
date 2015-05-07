@@ -2,7 +2,6 @@ package theflogat.technomancy.common.blocks.technom;
 
 import java.util.List;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -15,15 +14,15 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import theflogat.technomancy.Technomancy;
+import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.RenderIds;
 
-public class BlockCatalyst extends BlockContainer{
+public class BlockCatalyst extends BlockContainerAdvanced{
 
 	public BlockCatalyst() {
-		super(Material.cloth);
 		setBlockName(Ref.getId(Names.catalyst));
 		setCreativeTab(Technomancy.tabsTM);
 	}
@@ -35,8 +34,9 @@ public class BlockCatalyst extends BlockContainer{
 	
 	@Override
 	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+		super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ);
 		if(player.isSneaking()){
-			((TileCatalyst)w.getTileEntity(x, y, z)).activateRitual();
+			((TileCatalyst)w.getTileEntity(x, y, z)).activateRitual(player);
 			return true;
 		}
 		return false;
@@ -52,6 +52,7 @@ public class BlockCatalyst extends BlockContainer{
 		return meta;
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void getSubBlocks(Item id, CreativeTabs tab, List l) {
 		l.add(new ItemStack(id, 1, 0));
