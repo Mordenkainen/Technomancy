@@ -34,15 +34,11 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class EventRegister {
-
+	
 	public static Map<Block, Item> buckets = new HashMap<Block, Item>();
-	public static HashMap<Item, RedstoneSet> map = new HashMap<Item, RedstoneSet>();
-
+	
 	public EventRegister(){
 		MinecraftForge.EVENT_BUS.register(this);
-		map.put(Items.gunpowder, RedstoneSet.NONE);
-		map.put(Items.redstone, RedstoneSet.HIGH);
-		map.put(Item.getItemFromBlock(Blocks.redstone_torch), RedstoneSet.LOW);
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -50,41 +46,6 @@ public class EventRegister {
 		if(event.action==Action.LEFT_CLICK_BLOCK){
 			if(event.world.getTileEntity(event.x, event.y, event.z) instanceof TileFakeAirNG){
 				((TileFakeAirNG) event.world.getTileEntity(event.x, event.y, event.z)).getMain().setAirAndDrop();
-			}
-		}
-	}
-
-	@SubscribeEvent
-	public void rightClick(PlayerInteractEvent event){
-		if(event.action==Action.RIGHT_CLICK_BLOCK){
-			TileEntity te = event.world.getTileEntity(event.x, event.y, event.z);
-			if(te instanceof IWrenchable){
-				if (ToolWrench.isWrench(event.entityPlayer.getHeldItem()))
-					((IWrenchable)te).onWrenched();
-			}
-			if(te instanceof IRedstoneSensitive){
-				if(event.entityPlayer.getHeldItem()!=null && map.containsKey(event.entityPlayer.getHeldItem().getItem()))
-					if(map.get(event.entityPlayer.getHeldItem().getItem())!=((IRedstoneSensitive)te).getCurrentSetting()){
-						((IRedstoneSensitive)te).setNewSetting(map.get(event.entityPlayer.getHeldItem().getItem()));
-						InvHelper.decrItemStack(event.entityPlayer.inventory.mainInventory[event.entityPlayer.inventory.currentItem]);
-					}
-			}
-			if(te instanceof TileItemTransmitter){
-				TileItemTransmitter tile = (TileItemTransmitter)te;
-				if(!event.entityPlayer.isSneaking()){
-					if(event.entityPlayer.getHeldItem()!=null && !(event.entityPlayer.getHeldItem().getItem() instanceof ItemCoilCoupler) && tile.boost
-							&& tile.filter==null){
-						tile.addFilter(event.entityPlayer.getHeldItem());
-					}
-				}else{
-					if(tile.filter!=null)
-						tile.filter = null;
-					if(tile.boost){
-						tile.toggleBoost();
-						if(!event.world.isRemote)
-							WorldHelper.dropBoost(event.world, event.x, event.y, event.z);
-					}
-				}
 			}
 		}
 	}

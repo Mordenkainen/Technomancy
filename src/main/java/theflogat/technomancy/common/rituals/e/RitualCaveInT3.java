@@ -6,21 +6,16 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import theflogat.technomancy.api.rituals.Ritual;
+import theflogat.technomancy.api.rituals.Ritual.Type;
 import theflogat.technomancy.api.tiles.IMovingHandler;
 import theflogat.technomancy.api.tiles.MovableTileRegistry;
 import theflogat.technomancy.common.blocks.technom.BlockCrystal;
 import theflogat.technomancy.util.RitualHelper;
 
 public class RitualCaveInT3 extends Ritual{
-
-	@Override
-	public boolean isCoreComplete(World w, int x, int y, int z) {
-		return w.getBlockMetadata(x, y, z)==green;
-	}
-
-	@Override
-	public boolean isFrameComplete(World w, int x, int y, int z) {
-		return RitualHelper.checkForT1(w, x, y, z, green) && RitualHelper.checkForT2(w, x, y, z, green) && RitualHelper.checkForT3(w, x, y, z, green);
+	
+	public RitualCaveInT3() {
+		super(new Type[]{Type.EARTH,Type.EARTH,Type.EARTH}, Type.EARTH);
 	}
 
 	@Override
@@ -46,9 +41,7 @@ public class RitualCaveInT3 extends Ritual{
 	public void applyEffect(World w, int x, int y, int z) {
 		
 		w.setBlockToAir(x, y, z);
-		RitualHelper.removeT1(w, x, y, z);
-		RitualHelper.removeT2(w, x, y, z);
-		RitualHelper.removeT3(w, x, y, z);
+		removeFrame(w, x, y, z);
 		
 		for(int yy = 1; yy<y; yy++){
 			for(int xx=-5; xx<=5; xx++){
@@ -103,7 +96,5 @@ public class RitualCaveInT3 extends Ritual{
 				}
 			}
 		}
-		
 	}
-
 }

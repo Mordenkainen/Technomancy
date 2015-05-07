@@ -132,12 +132,13 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 
 	private boolean isWholeTileLoaded() {
 		for (int w = -1; w < 2; w++) {
-			if(facing==2 || facing==3)
+			if(facing==2 || facing==3){
 				if(!WorldHelper.isChunkLoaded(worldObj, xCoord + w, zCoord))
 					return false;
-				else
-					if(!WorldHelper.isChunkLoaded(worldObj, xCoord, zCoord + w))
-						return false;
+			}else{
+				if(!WorldHelper.isChunkLoaded(worldObj, xCoord, zCoord + w))
+					return false;
+			}
 		}
 		return true;
 	}
@@ -528,7 +529,7 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 	public boolean onWrenched() {
 		destroyDummyBlocks();
 		facing = (byte) (facing==5 ? 2 : facing + 1);
-		
+
 		createDummyBlocks();
 		return false;
 	}

@@ -3,7 +3,8 @@ package theflogat.technomancy.common.blocks.thaumcraft.machines;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import theflogat.technomancy.common.blocks.base.BlockBase;
+import theflogat.technomancy.common.blocks.base.BlockContainerBase;
+import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileReconstructor;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
@@ -11,7 +12,7 @@ import theflogat.technomancy.lib.RenderIds;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockReconstructor extends BlockBase {
+public class BlockReconstructor extends BlockContainerAdvanced {
 
 	public BlockReconstructor() {
 		setBlockName(Ref.MOD_PREFIX + Names.reconstructor);

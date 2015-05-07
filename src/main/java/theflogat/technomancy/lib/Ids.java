@@ -39,4 +39,5 @@ public class Ids {
 	public static boolean manaExchanger;
 	public static boolean itemTransmitter;
 	public static boolean coilCoupler;
+	public static boolean basalt;
 }

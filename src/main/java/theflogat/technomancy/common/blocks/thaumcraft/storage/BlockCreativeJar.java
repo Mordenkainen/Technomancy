@@ -17,14 +17,15 @@ import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IEssentiaContainerItem;
-import theflogat.technomancy.common.blocks.base.BlockBase;
+import theflogat.technomancy.common.blocks.base.BlockContainerBase;
+import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileCreativeJar;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.RenderIds;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 
-public class BlockCreativeJar extends BlockBase {
+public class BlockCreativeJar extends BlockContainerAdvanced {
 	
 	public BlockCreativeJar() {
 		this.setHardness(1F);
@@ -53,19 +54,19 @@ public class BlockCreativeJar extends BlockBase {
 	}
 	
 	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float vecX, float vecY, float vecZ)  {
-		if (world.getTileEntity(x, y, z) instanceof TileCreativeJar ) {
-			TileCreativeJar container = (TileCreativeJar)world.getTileEntity(x, y, z);	  
+	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ)  {
+		if (w.getTileEntity(x, y, z) instanceof TileCreativeJar ) {
+			TileCreativeJar container = (TileCreativeJar)w.getTileEntity(x, y, z);	  
 			ItemStack item = player.getHeldItem();		
 			//Removes labels
 			if (container.aspectFilter != null && item == null  && player.isSneaking() && side == container.facing) {
 				container.aspectFilter = null;
-				if (world.isRemote) {
-			        world.playSound(x + 0.5F, y + 0.5F, z + 0.5F, "thaumcraft:page", 1.0F, 1.0F, false);
+				if (w.isRemote) {
+			        w.playSound(x + 0.5F, y + 0.5F, z + 0.5F, "thaumcraft:page", 1.0F, 1.0F, false);
 			    }
 			    ForgeDirection fd = ForgeDirection.getOrientation(side);
 			    if (!player.inventory.addItemStackToInventory(new ItemStack(Thaumcraft.itemResource, 1, 13))) {	
-			    	world.spawnEntityInWorld(new EntityItem(world, x + 0.5F + fd.offsetX / 3.0F, y + 0.5F, z + 0.5F + fd.offsetZ /
+			    	w.spawnEntityInWorld(new EntityItem(w, x + 0.5F + fd.offsetX / 3.0F, y + 0.5F, z + 0.5F + fd.offsetZ /
 			    			3.0F, new ItemStack(Thaumcraft.itemResource, 1, 13)));
 			    }			    
 				return true;
@@ -73,8 +74,8 @@ public class BlockCreativeJar extends BlockBase {
 			//Empties Jars
 			if ((player.isSneaking()) && (container.amount >= 0) && item == null && container.aspectFilter == null) {
 				container.amount = 0;
-				if (world.isRemote) {
-					world.playSound(x + 0.5F, y + 0.5F, z + 0.5F, "thaumcraft:jar", 1.0F, 1.0F, false);
+				if (w.isRemote) {
+					w.playSound(x + 0.5F, y + 0.5F, z + 0.5F, "thaumcraft:jar", 1.0F, 1.0F, false);
 				}				
 				return true;
 			}
@@ -105,9 +106,9 @@ public class BlockCreativeJar extends BlockBase {
 							item.stackSize -= 1;
 							ItemStack phial = new ItemStack(Thaumcraft.itemEssence, 1, 0);
 							if (!player.inventory.addItemStackToInventory(phial)) {		       
-								world.spawnEntityInWorld(new EntityItem(world, x + 0.5F, y + 0.5F, z + 0.5F, phial));
+								w.spawnEntityInWorld(new EntityItem(w, x + 0.5F, y + 0.5F, z + 0.5F, phial));
 							}
-							world.playSoundAtEntity(player, "liquid.swim", 0.25F, 1.0F);
+							w.playSoundAtEntity(player, "liquid.swim", 0.25F, 1.0F);
 							player.inventoryContainer.detectAndSendChanges();
 							return true;	
 						}
@@ -117,11 +118,11 @@ public class BlockCreativeJar extends BlockBase {
 					Aspect asp = Aspect.getAspect(container.aspect.getTag());
 					if (container.takeFromContainer(container.aspect, 8) == true) {
 						item.stackSize -= 1;
-						world.playSoundAtEntity(player, "liquid.swim", 0.25F, 1.0F);						
+						w.playSoundAtEntity(player, "liquid.swim", 0.25F, 1.0F);						
 						ItemStack phial = new ItemStack(Thaumcraft.itemEssence, 1, 1);
 						setAspects(phial, new AspectList().add(asp, 8));
 						if (!player.inventory.addItemStackToInventory(phial)) {
-							world.spawnEntityInWorld(new EntityItem(world,  x + 0.5F, y + 0.5F, z + 0.5F, phial));
+							w.spawnEntityInWorld(new EntityItem(w,  x + 0.5F, y + 0.5F, z + 0.5F, phial));
 						}	
 						player.inventoryContainer.detectAndSendChanges();
 						return true;
@@ -129,7 +130,7 @@ public class BlockCreativeJar extends BlockBase {
 				}			
 			}			 
 		}
-		return true;
+		return super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ);
 	}	
 
 	@Override

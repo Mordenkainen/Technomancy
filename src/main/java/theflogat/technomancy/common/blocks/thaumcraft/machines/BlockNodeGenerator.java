@@ -1,12 +1,5 @@
 package theflogat.technomancy.common.blocks.thaumcraft.machines;
 
-import theflogat.technomancy.common.blocks.base.BlockBase;
-import theflogat.technomancy.common.items.base.TMItems;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
-import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
-import theflogat.technomancy.lib.RenderIds;
-import theflogat.technomancy.util.InvHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,10 +9,17 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
+import theflogat.technomancy.common.items.base.TMItems;
+import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
+import theflogat.technomancy.lib.Names;
+import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.RenderIds;
+import theflogat.technomancy.util.InvHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockNodeGenerator extends BlockBase {
+public class BlockNodeGenerator extends BlockContainerAdvanced {
 
 	public BlockNodeGenerator() {
 		setBlockName(Ref.MOD_PREFIX + Names.nodeGenerator);
@@ -77,18 +77,18 @@ public class BlockNodeGenerator extends BlockBase {
 	}
 	
 	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float vecX, float vecY, float vecZ) {
+	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		if (player.getHeldItem() == null && player.isSneaking()) {
-			TileNodeGenerator tile = (TileNodeGenerator)world.getTileEntity(x, y, z);
+			TileNodeGenerator tile = (TileNodeGenerator)w.getTileEntity(x, y, z);
 			if(tile.boost) {
-				if(!world.isRemote) {
-					InvHelper.spawnEntItem(world, x, y, z, new ItemStack(TMItems.itemBoost, 1));
+				if(!w.isRemote) {
+					InvHelper.spawnEntItem(w, x, y, z, new ItemStack(TMItems.itemBoost, 1));
 				}
 				tile.setBoost(false);
 				return true;
 			}
 		}
-		return false;
+		return super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ);
 	}
 	
 	private TileNodeGenerator getTE(IBlockAccess world, int x, int y, int z) {

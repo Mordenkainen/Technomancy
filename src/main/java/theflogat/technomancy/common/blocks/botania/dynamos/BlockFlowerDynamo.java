@@ -1,7 +1,5 @@
 package theflogat.technomancy.common.blocks.botania.dynamos;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -13,6 +11,8 @@ import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.RenderIds;
 import vazkii.botania.api.wand.IWandHUD;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockFlowerDynamo extends BlockDynamoBase implements IWandHUD {
 

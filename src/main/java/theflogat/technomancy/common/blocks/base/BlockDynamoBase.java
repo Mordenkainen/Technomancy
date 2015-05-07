@@ -13,7 +13,7 @@ import theflogat.technomancy.common.tiles.base.IRedstoneSensitive.RedstoneSet;
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
 import theflogat.technomancy.util.InvHelper;
 
-public abstract class BlockDynamoBase extends BlockBase {
+public abstract class BlockDynamoBase extends BlockContainerAdvanced {
 
 	public BlockDynamoBase() {
 		super();

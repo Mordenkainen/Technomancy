@@ -48,6 +48,7 @@ public class Names {
 	public static final String manaFluidBlock = "manaFluidBlock";
 	public static final String manaExchanger = "manaExchanger";
 	public static final String itemTransmitter = "itemTransmitter";
+	public static final String basalt = "basalt";
 
     /*
      * Fluids

@@ -9,7 +9,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import theflogat.technomancy.common.blocks.base.BlockBase;
+import theflogat.technomancy.common.blocks.base.BlockContainerBase;
+import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.tiles.botania.machines.TileManaFabricator;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
@@ -18,7 +19,7 @@ import vazkii.botania.api.wand.IWandHUD;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockManaFabricator extends BlockBase implements IWandHUD {
+public class BlockManaFabricator extends BlockContainerAdvanced implements IWandHUD {
 
 	public BlockManaFabricator() {
 		setBlockName(Ref.MOD_PREFIX + Names.manaFabricator);

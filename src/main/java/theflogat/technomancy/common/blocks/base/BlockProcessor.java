@@ -15,7 +15,7 @@ import theflogat.technomancy.util.InvHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public abstract class BlockProcessor extends BlockBase {
+public abstract class BlockProcessor extends BlockContainerAdvanced {
 
 	@SideOnly(Side.CLIENT)
 	public IIcon[] icons;

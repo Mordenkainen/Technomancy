@@ -19,18 +19,18 @@ import vazkii.botania.api.wand.IWandHUD;
 public class BlockBOProcessor extends BlockProcessor implements IWandHUD {
 	
 	public BlockBOProcessor() {
-		this.name = "BO";
+		name = "BO";
 	}
 	
 	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9) {
+	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		if(player != null) {
-			TileEntity tile = world.getTileEntity(x, y, z);
+			TileEntity tile = w.getTileEntity(x, y, z);
 			if(tile instanceof TileBOProcessor) {
-				player.openGui(Technomancy.instance, 2, world, x, y, z);
+				player.openGui(Technomancy.instance, 2, w, x, y, z);
 			}
 		}		
-		return true;
+		return super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ);
 	}
 	
 	@Override
