@@ -101,7 +101,7 @@ public class TechnoResearch {
 			new ResearchItem("TESLACOIL", "TECHNOMANCY", new AspectList().add(Aspect.EXCHANGE, 5).add(Aspect.ELDRITCH, 5).add(Aspect.MECHANISM, 5)
 				.add(Aspect.AURA, 5), 3, -3, 3, new ItemStack(TMBlocks.teslaCoil)).setPages(new ResearchPage[] {
 				new ResearchPage("techno.research_page.TESLACOIL.1"), new ResearchPage((IArcaneRecipe)recipes.get("TeslaCoil")),
-				new ResearchPage((IArcaneRecipe)recipes.get("CoilCoupler"))}).setParents(new String[] { "QUANTUMJARS"}).setRound()
+				new ResearchPage(CraftingHandler.coilCoupler)}).setParents(new String[] { "QUANTUMJARS"}).setRound()
 				.registerResearchItem();
 		}
 		

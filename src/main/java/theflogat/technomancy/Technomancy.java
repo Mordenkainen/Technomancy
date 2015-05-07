@@ -67,8 +67,8 @@ public class Technomancy {
 		TMBlocks.initTechnomancy();
 
 		for(IModModule mod : CompatibilityHandler.mods) {
-			mod.RegisterItems();
 			mod.RegisterBlocks();
+			mod.RegisterItems();
 		}
 
 		proxy.initRenderers();
