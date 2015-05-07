@@ -6,11 +6,14 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagByte;
 import net.minecraft.util.IIcon;
 import thaumcraft.api.wands.WandCap;
 import thaumcraft.api.wands.WandRod;
 import thaumcraft.common.items.wands.ItemWandCasting;
 import theflogat.technomancy.common.items.base.ItemBase;
+import theflogat.technomancy.common.items.base.TMItems;
+import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.compat.Thaumcraft;
@@ -34,7 +37,7 @@ public class ItemWandCores extends ItemBase{
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamage(int icon) {
-		return this.coresIcon[icon];
+		return this.coresIcon[0];
 	}
 
 	@Override
@@ -45,7 +48,7 @@ public class ItemWandCores extends ItemBase{
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void getSubItems(Item id, CreativeTabs tab, List list) {
-		for (int i = 0; i < coresIcon.length; i++) {
+		for (int i = 0; i < 2; i++) {
 			ItemStack stack  = new ItemStack(id, 1, i);
 			list.add(stack);
 		}
@@ -53,5 +56,18 @@ public class ItemWandCores extends ItemBase{
 		((ItemWandCasting)electric.getItem()).setCap(electric, WandCap.caps.get("thaumium"));
 		((ItemWandCasting)electric.getItem()).setRod(electric, WandRod.rods.get("electric"));
 		list.add(electric);
+		if(Ids.scepter) {
+			ItemStack scepter = new ItemStack(TMItems.itemTechnoturgeScepter, 1, 73);
+			scepter.setTagInfo("sceptre", new NBTTagByte((byte)1));
+			((ItemWandCasting)scepter.getItem()).setCap(scepter, WandCap.caps.get("thaumium"));
+			((ItemWandCasting)scepter.getItem()).setRod(scepter, WandRod.rods.get("technoturge"));
+			list.add(scepter);
+		}
 	}
+	
+	@SideOnly(Side.CLIENT)
+    public boolean hasEffect(ItemStack stack)
+    {
+		return stack.getItemDamage() == 1;
+    }
 }
