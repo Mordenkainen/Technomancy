@@ -3,6 +3,8 @@ package theflogat.technomancy.proxies;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import net.minecraftforge.client.MinecraftForgeClient;
+import thaumcraft.client.renderers.item.ItemWandRenderer;
 import theflogat.technomancy.client.blocks.BlockAdvDeconTableRenderer;
 import theflogat.technomancy.client.blocks.BlockBiomeMorpherRenderer;
 import theflogat.technomancy.client.blocks.BlockBloodDynamoRenderer;
@@ -45,6 +47,7 @@ import theflogat.technomancy.client.tiles.TileManaFabricatorRenderer;
 import theflogat.technomancy.client.tiles.TileNodeDynamoRenderer;
 import theflogat.technomancy.client.tiles.TileNodeGeneratorRenderer;
 import theflogat.technomancy.client.tiles.TileReconstructorRenderer;
+import theflogat.technomancy.common.items.base.TMItems;
 import theflogat.technomancy.common.tiles.bloodmagic.dynamos.TileBloodDynamo;
 import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBMProcessor;
 import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBloodFabricator;
@@ -144,6 +147,8 @@ public class ClientProxy extends CommonProxy implements IGuiHandler{
         	RenderingRegistry.registerBlockHandler(new BlockEldritchConsumerRenderer());
         	RenderingRegistry.registerBlockHandler(new BlockAdvDeconTableRenderer());
         	RenderingRegistry.registerBlockHandler(new BlockItemTransmitterRenderer());
+        	
+        	MinecraftForgeClient.registerItemRenderer(TMItems.itemTechnoturgeScepter, new ItemWandRenderer());
     	}
     	
     	if(CompatibilityHandler.bm) {
