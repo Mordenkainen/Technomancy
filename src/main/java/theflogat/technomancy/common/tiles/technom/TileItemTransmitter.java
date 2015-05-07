@@ -157,6 +157,8 @@ public class TileItemTransmitter extends TileTechnomancy implements IUpgradable,
 	}
 
 	public void addFilter(ItemStack newFilter) {
-		filter = newFilter;
+		filter = new ItemStack(newFilter.getItem(), 1, newFilter.getItemDamage());
+		if(newFilter.stackTagCompound!=null)
+			filter.stackTagCompound = newFilter.stackTagCompound;
 	}
 }

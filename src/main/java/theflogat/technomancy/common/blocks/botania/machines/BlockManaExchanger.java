@@ -14,6 +14,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import theflogat.technomancy.Technomancy;
+import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.tiles.base.IRedstoneSensitive.RedstoneSet;
 import theflogat.technomancy.common.tiles.botania.machines.TileManaExchanger;
 import theflogat.technomancy.lib.Names;
@@ -24,13 +25,12 @@ import vazkii.botania.api.mana.IPoolOverlayProvider;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockManaExchanger extends BlockContainer implements IPoolOverlayProvider {
+public class BlockManaExchanger extends BlockContainerAdvanced implements IPoolOverlayProvider {
 	
 	@SideOnly(Side.CLIENT)
 	public IIcon[] icons;
 	
 	public BlockManaExchanger() {
-		super(Material.rock);
 		setHardness(2.0F);
 		setResistance(10.0F);
 		setStepSound(Block.soundTypeStone);

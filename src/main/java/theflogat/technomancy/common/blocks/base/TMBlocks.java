@@ -1,14 +1,14 @@
 package theflogat.technomancy.common.blocks.base;
 
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.oredict.OreDictionary;
 import theflogat.technomancy.api.rituals.RitualRegistry;
 import theflogat.technomancy.api.tiles.MovableTileRegistry;
 import theflogat.technomancy.common.blocks.air.BlockFakeAirLight;
+import theflogat.technomancy.common.blocks.technom.BlockBasalt;
 import theflogat.technomancy.common.blocks.technom.BlockCatalyst;
 import theflogat.technomancy.common.blocks.technom.BlockCrystal;
 import theflogat.technomancy.common.blocks.technom.BlockItemTransmitter;
@@ -30,8 +30,6 @@ import theflogat.technomancy.common.rituals.w.RitualWaterT1;
 import theflogat.technomancy.common.rituals.w.RitualWaterT2;
 import theflogat.technomancy.common.rituals.w.RitualWaterT3;
 import theflogat.technomancy.common.tiles.air.TileFakeAirCore;
-import theflogat.technomancy.common.tiles.base.IRedstoneSensitive;
-import theflogat.technomancy.common.tiles.base.IRedstoneSensitive.RedstoneSet;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import theflogat.technomancy.common.tiles.technom.TileCrystal;
 import theflogat.technomancy.common.tiles.technom.TileItemTransmitter;
@@ -72,6 +70,7 @@ public class TMBlocks {
 	public static Block manaFluidBlock;
 	public static Block manaExchanger;
 	public static Block itemTransmitter;
+	public static Block basalt;
 	
 	public static Fluid manaFluid;
 	
@@ -80,13 +79,16 @@ public class TMBlocks {
 		catalyst = Ids.catalyst ? new BlockCatalyst() : null;
 		fakeAirLight = Ids.catalyst ? new BlockFakeAirLight() : null;
 		itemTransmitter = Ids.itemTransmitter ? new BlockItemTransmitter() : null;
+		basalt = Ids.basalt ? new BlockBasalt() : null;
 		
 		
 		registerBlock(crystalBlock, Names.crystalBlock, ItemCrystal.class);
 		registerBlock(catalyst, Names.catalyst, ItemCatalyst.class);
 		registerBlock(fakeAirLight, Names.fakeAirLight);
 		registerBlock(itemTransmitter, Names.itemTransmitter);
+		registerBlock(basalt, Names.basalt);
 		
+		OreDictionary.registerOre("basalt", basalt);
 		
 		GameRegistry.registerTileEntity(TileCrystal.class, Ref.MOD_PREFIX + "TileCrystal");
 		GameRegistry.registerTileEntity(TileCatalyst.class, Ref.MOD_PREFIX + "TileCatalyst");
@@ -98,24 +100,20 @@ public class TMBlocks {
 		MovableTileRegistry.addAllowed(TileCatalyst.class);
 		
 		
-		//Specials
-		//Complex
 		RitualRegistry.add(new RitualCaveInT3());
-		RitualRegistry.add(new RitualBlackHoleT3());
-		RitualRegistry.add(new RitualWaterT3());
-		RitualRegistry.add(new RitualPurificationT3());
-		RitualRegistry.add(new RitualOfFireT3());
-		//Medium
 		RitualRegistry.add(new RitualCaveInT2());
-		RitualRegistry.add(new RitualBlackHoleT2());
-		RitualRegistry.add(new RitualWaterT2());
-		RitualRegistry.add(new RitualPurificationT2());
-		RitualRegistry.add(new RitualOfFireT2());
-		//Easy
 		RitualRegistry.add(new RitualCaveInT1());
+		RitualRegistry.add(new RitualBlackHoleT3());
+		RitualRegistry.add(new RitualBlackHoleT2());
 		RitualRegistry.add(new RitualBlackHoleT1());
-		RitualRegistry.add(new RitualWaterT1());;
+		RitualRegistry.add(new RitualWaterT3());
+		RitualRegistry.add(new RitualWaterT2());
+		RitualRegistry.add(new RitualWaterT1());
+		RitualRegistry.add(new RitualPurificationT3());
+		RitualRegistry.add(new RitualPurificationT2());
 		RitualRegistry.add(new RitualPurificationT1());
+		RitualRegistry.add(new RitualOfFireT3());
+		RitualRegistry.add(new RitualOfFireT2());
 		RitualRegistry.add(new RitualOfFireT1());
 	}
 	

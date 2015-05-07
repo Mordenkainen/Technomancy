@@ -4,18 +4,13 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import theflogat.technomancy.api.rituals.Ritual;
+import theflogat.technomancy.api.rituals.Ritual.Type;
 import theflogat.technomancy.util.RitualHelper;
 
 public class RitualWaterT3 extends Ritual{
 
-	@Override
-	public boolean isCoreComplete(World w, int x, int y, int z) {
-		return w.getBlockMetadata(x, y, z)==blue;
-	}
-
-	@Override
-	public boolean isFrameComplete(World w, int x, int y, int z) {
-		return RitualHelper.checkForT1(w, x, y, z, blue) && RitualHelper.checkForT2(w, x, y, z, blue) && RitualHelper.checkForT3(w, x, y, z, blue);
+	public RitualWaterT3() {
+		super(new Type[]{Type.WATER,Type.WATER,Type.WATER},Type.WATER);
 	}
 
 	@Override
@@ -26,9 +21,7 @@ public class RitualWaterT3 extends Ritual{
 	@Override
 	public void applyEffect(World w, int x, int y, int z){
 		w.setBlockToAir(x, y, z);
-		RitualHelper.removeT1(w, x, y, z);
-		RitualHelper.removeT2(w, x, y, z);
-		RitualHelper.removeT3(w, x, y, z);
+		removeFrame(w, x, y, z);
 		
 		for(int k=0; k<y; k++){
 			for(int i=-9; i<=9; i++){

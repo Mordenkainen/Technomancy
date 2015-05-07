@@ -1,18 +1,18 @@
 package theflogat.technomancy.common.blocks.thaumcraft.machines;
 
-import theflogat.technomancy.common.blocks.base.BlockBase;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEldritchConsumer;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEldritchConsumer.Range;
-import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
-import theflogat.technomancy.lib.RenderIds;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
+import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
+import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEldritchConsumer;
+import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEldritchConsumer.Range;
+import theflogat.technomancy.lib.Names;
+import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.RenderIds;
 
-public class BlockEldritchConsumer extends BlockBase{
+public class BlockEldritchConsumer extends BlockContainerAdvanced{
 
 	public BlockEldritchConsumer() {
 		setBlockName(Ref.getId(Names.eldritchConsumer));
@@ -40,7 +40,7 @@ public class BlockEldritchConsumer extends BlockBase{
 				return true;
 			}
 		}
-		return true;
+		return super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ);
 	}
 	
 	@Override

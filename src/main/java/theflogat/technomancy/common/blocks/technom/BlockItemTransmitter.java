@@ -14,8 +14,10 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.IEssentiaContainerItem;
-import theflogat.technomancy.common.blocks.base.BlockBase;
+import theflogat.technomancy.common.blocks.base.BlockContainerBase;
+import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.items.base.TMItems;
+import theflogat.technomancy.common.items.technom.ItemCoilCoupler;
 import theflogat.technomancy.common.tiles.technom.TileItemTransmitter;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
@@ -24,7 +26,7 @@ import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.util.InvHelper;
 import theflogat.technomancy.util.WorldHelper;
 
-public class BlockItemTransmitter extends BlockBase{
+public class BlockItemTransmitter extends BlockContainerAdvanced{
 
 	public BlockItemTransmitter() {
 		setBlockName(Ref.getId(Names.itemTransmitter));
@@ -34,7 +36,33 @@ public class BlockItemTransmitter extends BlockBase{
 	public TileEntity createNewTileEntity(World w, int meta) {
 		return new TileItemTransmitter();
 	}
-	
+
+	@Override
+	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+		if(!w.isRemote && w.getTileEntity(x, y, z) instanceof TileItemTransmitter){
+			TileItemTransmitter tile = (TileItemTransmitter)w.getTileEntity(x, y, z);
+			if(player.isSneaking()){
+				if(tile.filter!=null){
+					tile.filter = null;
+					w.markBlockForUpdate(x, y, z);
+					return true;
+				}else if(tile.boost){
+					tile.toggleBoost();
+					WorldHelper.dropBoost(w, x, y, z);
+					w.markBlockForUpdate(x, y, z);
+					return true;
+				}
+			}else if(player.inventory.mainInventory[player.inventory.currentItem]!=null && tile.boost && tile.filter==null){
+				if(!(player.inventory.mainInventory[player.inventory.currentItem].getItem() instanceof ItemCoilCoupler)){
+					tile.addFilter(player.inventory.mainInventory[player.inventory.currentItem]);
+					w.markBlockForUpdate(x, y, z);
+					return true;
+				}
+			}
+		}
+		return super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ);
+	}
+
 	@Override
 	public void breakBlock(World w, int x, int y, int z, Block b, int flag) {
 		TileItemTransmitter tile = getTE(w, x, y, z);

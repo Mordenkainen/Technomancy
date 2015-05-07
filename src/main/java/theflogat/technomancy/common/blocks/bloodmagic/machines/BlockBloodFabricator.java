@@ -1,12 +1,5 @@
 package theflogat.technomancy.common.blocks.bloodmagic.machines;
 
-import theflogat.technomancy.common.blocks.base.BlockBase;
-import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBloodFabricator;
-import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
-import theflogat.technomancy.lib.RenderIds;
-import theflogat.technomancy.lib.compat.BloodMagic;
-import theflogat.technomancy.util.InvHelper;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,10 +9,18 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
+import theflogat.technomancy.common.blocks.base.BlockContainerBase;
+import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
+import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBloodFabricator;
+import theflogat.technomancy.lib.Names;
+import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.RenderIds;
+import theflogat.technomancy.lib.compat.BloodMagic;
+import theflogat.technomancy.util.InvHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockBloodFabricator extends BlockBase {
+public class BlockBloodFabricator extends BlockContainerAdvanced {
 
 	public BlockBloodFabricator() {
 		setBlockName(Ref.MOD_PREFIX + Names.bloodFabricator);
@@ -49,7 +50,7 @@ public class BlockBloodFabricator extends BlockBase {
 				return true;
 			}
 		}
-		return false;
+		return super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ);
 	}
 	
 	@Override

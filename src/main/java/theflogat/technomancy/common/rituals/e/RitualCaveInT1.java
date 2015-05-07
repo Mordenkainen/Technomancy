@@ -13,14 +13,8 @@ import theflogat.technomancy.util.RitualHelper;
 
 public class RitualCaveInT1 extends Ritual{
 
-	@Override
-	public boolean isCoreComplete(World w, int x, int y, int z) {
-		return w.getBlockMetadata(x, y, z)==green;
-	}
-
-	@Override
-	public boolean isFrameComplete(World w, int x, int y, int z) {
-		return RitualHelper.checkForT1(w, x, y, z, green);
+	public RitualCaveInT1() {
+		super(new Type[]{Type.EARTH}, Type.EARTH);
 	}
 
 	@Override
@@ -44,10 +38,8 @@ public class RitualCaveInT1 extends Ritual{
 
 	@Override
 	public void applyEffect(World w, int x, int y, int z) {
-
-		
 		w.setBlockToAir(x, y, z);
-		RitualHelper.removeT1(w, x, y, z);
+		removeFrame(w, x, y, z);
 
 		for(int yy = 1; yy<y; yy++){
 			for(int xx=-1; xx<=1; xx++){

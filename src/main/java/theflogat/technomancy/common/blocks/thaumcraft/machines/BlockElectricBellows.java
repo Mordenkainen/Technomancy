@@ -1,10 +1,5 @@
 package theflogat.technomancy.common.blocks.thaumcraft.machines;
 
-import theflogat.technomancy.common.blocks.base.BlockBase;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileElectricBellows;
-import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
-import theflogat.technomancy.lib.RenderIds;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -12,12 +7,17 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import thaumcraft.common.tiles.TileAlchemyFurnace;
 import thaumcraft.common.tiles.TileArcaneFurnace;
+import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
+import theflogat.technomancy.common.tiles.thaumcraft.machine.TileElectricBellows;
+import theflogat.technomancy.lib.Names;
+import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.RenderIds;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockElectricBellows extends BlockBase{
+public class BlockElectricBellows extends BlockContainerAdvanced{
 
 	public BlockElectricBellows() {
 		setBlockName(Ref.MOD_PREFIX + Names.electricBellows);

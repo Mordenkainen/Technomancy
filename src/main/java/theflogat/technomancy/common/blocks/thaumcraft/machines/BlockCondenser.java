@@ -1,9 +1,5 @@
 package theflogat.technomancy.common.blocks.thaumcraft.machines;
 
-import theflogat.technomancy.common.blocks.base.BlockBase;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileCondenser;
-import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,21 +8,20 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
+import theflogat.technomancy.common.tiles.thaumcraft.machine.TileCondenser;
+import theflogat.technomancy.lib.Names;
+import theflogat.technomancy.lib.Ref;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockCondenser extends BlockBase {
+public class BlockCondenser extends BlockContainerAdvanced {
 
 	@SideOnly(Side.CLIENT)
 	IIcon[] icons;
 	
 	public BlockCondenser() {
 		setBlockName(Ref.MOD_PREFIX + Names.condenserBlock);
-	}
-	
-	@Override
-	public boolean onBlockActivated(World w, int x,	int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-		return true;
 	}
 
 	@Override

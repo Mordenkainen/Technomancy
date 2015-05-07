@@ -1,7 +1,5 @@
 package theflogat.technomancy.common.blocks.thaumcraft.machines;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
@@ -10,15 +8,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import theflogat.technomancy.common.blocks.base.BlockBase;
+import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.items.base.TMItems;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileAdvDeconTable;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.RenderIds;
 import theflogat.technomancy.util.InvHelper;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockAdvDeconTable extends BlockBase{
+public class BlockAdvDeconTable extends BlockContainerAdvanced{
 	
 	public BlockAdvDeconTable() {
 		setBlockName(Ref.getId(Names.advDeconTable));
@@ -61,7 +61,7 @@ public class BlockAdvDeconTable extends BlockBase{
 				return true;
 			}
 		}
-		return false;
+		return super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ);
 	}
 	
 	@Override

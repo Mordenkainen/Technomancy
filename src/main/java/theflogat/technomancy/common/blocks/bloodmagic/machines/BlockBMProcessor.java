@@ -12,11 +12,13 @@ import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBMProcessor;
 public class BlockBMProcessor extends BlockProcessor {
 	
 	public BlockBMProcessor() {
-		this.name = "BM";
+		name = "BM";
 	}
 	
 	@Override
 	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+		if(super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ))
+			return true;
 		if(player != null) {
 			TileEntity te = w.getTileEntity(x, y, z);
 			if(te instanceof TileBMProcessor) {

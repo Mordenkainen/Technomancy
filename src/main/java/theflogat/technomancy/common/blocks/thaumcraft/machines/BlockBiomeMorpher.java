@@ -1,19 +1,19 @@
 package theflogat.technomancy.common.blocks.thaumcraft.machines;
 
-import theflogat.technomancy.common.blocks.base.BlockBase;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBiomeMorpher;
-import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
-import theflogat.technomancy.lib.RenderIds;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
+import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
+import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBiomeMorpher;
+import theflogat.technomancy.lib.Names;
+import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.RenderIds;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockBiomeMorpher extends BlockBase {
+public class BlockBiomeMorpher extends BlockContainerAdvanced {
 
 	public BlockBiomeMorpher() {
 		setBlockName(Ref.MOD_PREFIX + Names.biomeMorpher);
@@ -25,16 +25,16 @@ public class BlockBiomeMorpher extends BlockBase {
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9) {
-		if (!world.isRemote) {
+	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+		if (!w.isRemote) {
 			if(player.isSneaking()){
-				if (world.getBlockMetadata(x, y, z) != 2) {
-					world.setBlockMetadataWithNotify(x, y, z, ((world.getBlockMetadata(x, y, z)) + 1), 3);
+				if (w.getBlockMetadata(x, y, z) != 2) {
+					w.setBlockMetadataWithNotify(x, y, z, ((w.getBlockMetadata(x, y, z)) + 1), 3);
 				}else{
-					world.setBlockMetadataWithNotify(x, y, z, 0, 3);
+					w.setBlockMetadataWithNotify(x, y, z, 0, 3);
 				}
 				String text = null;
-				switch (world.getBlockMetadata(x, y, z)) {
+				switch (w.getBlockMetadata(x, y, z)) {
 				case 0:
 					text = "Magical Forest"; break;
 				case 1:
@@ -47,7 +47,7 @@ public class BlockBiomeMorpher extends BlockBase {
 				}
 			}else{
 				String text = null;
-				switch (world.getBlockMetadata(x, y, z)) {
+				switch (w.getBlockMetadata(x, y, z)) {
 				case 0:
 					text = "Magical Forest"; break;
 				case 1:
@@ -60,7 +60,7 @@ public class BlockBiomeMorpher extends BlockBase {
 				}
 			}
 		}
-		return true;
+		return super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ);
 	}	
 
 	@Override

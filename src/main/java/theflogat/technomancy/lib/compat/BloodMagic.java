@@ -1,6 +1,11 @@
 package theflogat.technomancy.lib.compat;
 
-import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipeRegistry;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.blocks.bloodmagic.dynamos.BlockBloodDynamo;
@@ -15,13 +20,8 @@ import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBloodFabricato
 import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.handlers.CompatibilityHandler;
+import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipeRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 
 public class BloodMagic extends ModuleBase{
 	

@@ -24,7 +24,7 @@ public class Ids {
 	public static boolean processorBO;
 	public static boolean eldrichConsumer;
 	public static boolean manaFluid;
-    public static boolean essentiaCannon;
+        public static boolean essentiaCannon;
 	public static boolean itemMaterial;
 	public static boolean pen;
 	public static boolean wandCores;
@@ -39,5 +39,6 @@ public class Ids {
 	public static boolean manaExchanger;
 	public static boolean itemTransmitter;
 	public static boolean coilCoupler;
+	public static boolean basalt;
 	public static boolean scepter;
 }

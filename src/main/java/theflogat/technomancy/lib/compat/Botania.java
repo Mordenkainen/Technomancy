@@ -2,7 +2,12 @@ package theflogat.technomancy.lib.compat;
 
 import java.util.Random;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.world.World;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.blocks.botania.BlockManaFluid;
 import theflogat.technomancy.common.blocks.botania.dynamos.BlockFlowerDynamo;
@@ -26,12 +31,7 @@ import theflogat.technomancy.lib.handlers.CompatibilityHandler;
 import theflogat.technomancy.lib.handlers.CraftingHandler;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.recipe.RecipeManaInfusion;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.world.World;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class Botania extends ModuleBase {
 	private static Botania instance;

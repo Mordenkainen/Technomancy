@@ -25,6 +25,7 @@ techno:pureNickel.name=Purified Nickel
 item.techno:itemBoost.name=Potency Gem
 item.techno.pure.name=Purified 
 item.techno:manaBucket.name=Mana Condensate Bucket
+item.techno:ritualTome.name=Ritual Tome
 
 #Block Names
 tile.techno:cosmeticOpaque.name=Quantized Glass
@@ -57,6 +58,7 @@ tile.techno:advDeconTable.name=Advanced Deconstruction Table
 tile.techno:manaFluid.name=Mana Condensate
 tile.techno:manaExchanger.name=Mana Exchanger
 tile.techno:itemTransmitter.name=Item Coil
+tile.techno:basalt.name=Basalt
 
 #Fluid Names
 fluid.techno:manaFluid=Mana Condensate

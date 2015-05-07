@@ -112,5 +112,13 @@ public class CraftingHandler {
 				'R', Items.ender_pearl, 'S', Items.stick, 'I', Items.iron_ingot
 			});
 		}
+		if(Ids.ritualTome){
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMItems.ritualTome, 1), new Object[]{
+				"RI ",
+				"IS ",
+				"   ",
+				'R', Items.book, 'S', "dyeBlack", 'I', Items.glowstone_dust
+			}));
+		}
 	}
 }
