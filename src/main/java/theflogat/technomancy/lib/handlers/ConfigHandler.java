@@ -62,6 +62,7 @@ public class ConfigHandler {
         Ids.itemBoost = config.get(items, Names.itemBoost, true).getBoolean();
         Ids.ritualTome = config.get(items, Names.ritualTome, true).getBoolean();
         Ids.coilCoupler = config.get(items, Names.coilCoupler, true).getBoolean();
+        Ids.scepter = config.get(items, Names.scepter, true).getBoolean();
 
         //Recipe Whatnots
         Conf.bonus = config.get("Recipes", "Add/Increase Smelting bonus to dusts/ore", Conf.bonus).getBoolean(Conf.bonus);

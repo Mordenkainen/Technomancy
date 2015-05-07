@@ -49,6 +49,7 @@ public class Names {
 	public static final String manaExchanger = "manaExchanger";
 	public static final String itemTransmitter = "itemTransmitter";
 	public static final String basalt = "basalt";
+	public static final String scepter = "itemScepter";
 
     /*
      * Fluids

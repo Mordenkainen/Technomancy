@@ -6,6 +6,7 @@ import java.util.HashMap;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.nbt.NBTTagByte;
 import net.minecraft.util.ResourceLocation;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -15,6 +16,9 @@ import thaumcraft.api.crafting.InfusionRecipe;
 import thaumcraft.api.research.ResearchCategories;
 import thaumcraft.api.research.ResearchItem;
 import thaumcraft.api.research.ResearchPage;
+import thaumcraft.api.wands.WandCap;
+import thaumcraft.api.wands.WandRod;
+import thaumcraft.common.items.wands.ItemWandCasting;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.items.base.TMItems;
 import theflogat.technomancy.lib.Ids;
@@ -101,7 +105,7 @@ public class TechnoResearch {
 			new ResearchItem("TESLACOIL", "TECHNOMANCY", new AspectList().add(Aspect.EXCHANGE, 5).add(Aspect.ELDRITCH, 5).add(Aspect.MECHANISM, 5)
 				.add(Aspect.AURA, 5), 3, -3, 3, new ItemStack(TMBlocks.teslaCoil)).setPages(new ResearchPage[] {
 				new ResearchPage("techno.research_page.TESLACOIL.1"), new ResearchPage((IArcaneRecipe)recipes.get("TeslaCoil")),
-				new ResearchPage((IArcaneRecipe)recipes.get("CoilCoupler"))}).setParents(new String[] { "QUANTUMJARS"}).setRound()
+				new ResearchPage(CraftingHandler.coilCoupler)}).setParents(new String[] { "QUANTUMJARS"}).setRound()
 				.registerResearchItem();
 		}
 		
@@ -118,6 +122,17 @@ public class TechnoResearch {
 				new ResearchPage("techno.research_page.ELECTRICWAND.1"), new ResearchPage((InfusionRecipe)recipes.get("EnergizedWandRod"))})
 				.setParents(new String[] { "TECHNOBASICS" }).setHidden().setItemTriggers(new ItemStack(Thaumcraft.itemWandRod, 1, 2))
 				.registerResearchItem();
+			if(Ids.scepter) {
+				ItemStack scepter = new ItemStack(TMItems.itemTechnoturgeScepter, 1, 73);
+				scepter.setTagInfo("sceptre", new NBTTagByte((byte)1));
+				((ItemWandCasting)scepter.getItem()).setCap(scepter, WandCap.caps.get("thaumium"));
+				((ItemWandCasting)scepter.getItem()).setRod(scepter, WandRod.rods.get("technoturge"));
+				new ResearchItem("TECHNOTURGESCEPTER", "TECHNOMANCY", new AspectList().add(Aspect.TOOL, 5).add(Aspect.MAGIC, 5).add(Aspect.ENERGY, 5)
+						.add(Aspect.EXCHANGE, 5), -1, 3, 3, scepter).setPages(new ResearchPage[] {
+						new ResearchPage("techno.research_page.TECHNOTURGESCEPTER.1"), new ResearchPage((InfusionRecipe)recipes.get("TechnoturgeScepterRod")),
+						new ResearchPage((IArcaneRecipe)recipes.get("TechnoturgeScepterRodT")), new ResearchPage((IArcaneRecipe)recipes.get("TechnoturgeScepterRodV"))})
+						.setParents(new String[] { "ENERGIZEDWAND" }).setConcealed().registerResearchItem();
+			}
 		}
 		
 		if(Ids.itemMaterial && Ids.processorTC && Ids.electricBellows){

@@ -2,6 +2,7 @@
 
 item.techno:essentiaCannon.name=Essentia Cannon
 item.Wand.electric.rod=Energized
+item.Wand.technoturge.rod=Technoturges
 techno:itemMaterial.0.name=Neutronized Metal
 techno:itemMaterial.1.name=Enchanted Coil
 techno:itemMaterial.2.name=Neutronized Gear
@@ -9,6 +10,7 @@ techno:itemMaterial.3.name=Pen Core
 item.techno:coilCoupler.name=Coil Coupler
 techno:pen.name=Pen
 techno:wandCores.0.name=Energized Wand Core
+techno:wandCores.1.name=Technoturges Scepter Core
 techno:itemBM.0.name=Sacrificial Ingot
 techno:itemBM.1.name=Life Coil
 techno:itemBO.0.name=Mana Coil
@@ -130,6 +132,10 @@ techno.research_page.ELDRITCHCONSUMER.1=You've been putting a lot of effort to f
 tc.research_name.ADVDECONTABLE=Easy Research?
 tc.research_text.ADVDECONTABLE=Lies!
 techno.research_page.ADVDECONTABLE.1=After struggling for a while, you have found a way to automate the discovery of research points. No idling and right-clicking for hours anymore! Unfortunately, it is half the speed of a normal Deconstruction Table but there might be a way to upgrade it.
+
+tc.research_name.TECHNOTURGESCEPTER=Technoturges Scepter
+tc.research_text.TECHNOTURGESCEPTER=The right tool for every job!
+techno.research_page.TECHNOTURGESCEPTER.1=After struggling with the low storage of the Energized Wand, you have started experimenting with ways to increase this capacity. No matter what you try, you always end up with a rod which is too big for normal use as a wand. But now that you have mastered scepters, you realize these "failed" experiments would make a perfect scepter core! The Technoturges Scepter can hold up to 150 vis of each type, and can be recharged in either a wand recharge station or any RF charger. In addition, the scepter can be used as a wrench for most things that require one!
 
 #Lexicon Entries
 techno.lexicon_page.FLOWERDYNAMO.1=After studying the way the Mana Fluxfield converts Mana Bursts to Redstone Flux you have decided to try to improve this using some of the magical-mechanical components you have created. The result is the Hippie Dynamo. By hooking the Hippie Dynamo to a Redstone Flux conductor and placing it within a few blocks of a Mana Pool you can convert this Mana to Redstone Flux in a much more efficient way.

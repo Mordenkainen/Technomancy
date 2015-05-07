@@ -15,6 +15,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CraftingHandler {
 	public static IRecipe itemBoost;
+	public static IRecipe coilCoupler;
 
 	public static void initFurnaceRecipes() {
 		for (Ore ore : Ore.ores) {
@@ -96,7 +97,7 @@ public class CraftingHandler {
 			}));
 		}
 		if(Ids.coilCoupler){
-			GameRegistry.addShapedRecipe(new ItemStack(TMItems.coilCoupler, 1), new Object[]{
+			coilCoupler = GameRegistry.addShapedRecipe(new ItemStack(TMItems.coilCoupler, 1), new Object[]{
 				"IRG",
 				"SRR",
 				"S  ",
