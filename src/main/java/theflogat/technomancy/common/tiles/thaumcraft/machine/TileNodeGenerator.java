@@ -1,8 +1,6 @@
 package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
 import java.util.HashMap;
-
-import cofh.api.energy.IEnergyHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -24,12 +22,12 @@ import thaumcraft.common.lib.world.biomes.BiomeHandler;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.tiles.air.TileFakeAirNG;
 import theflogat.technomancy.common.tiles.base.IRedstoneSensitive;
-import theflogat.technomancy.common.tiles.base.IWrenchable;
 import theflogat.technomancy.common.tiles.base.IUpgradable;
+import theflogat.technomancy.common.tiles.base.IWrenchable;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
 import theflogat.technomancy.lib.compat.Thaumcraft;
-import theflogat.technomancy.util.MathHelper;
 import theflogat.technomancy.util.WorldHelper;
+import theflogat.technomancy.util.helpers.MathHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -532,5 +530,10 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 
 		createDummyBlocks();
 		return false;
+	}
+
+	@Override
+	public String getInfo() {
+		return "Add Apsects And Increase Vis";
 	}
 }

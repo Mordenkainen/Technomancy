@@ -1,11 +1,9 @@
 package theflogat.technomancy.common.items.thaumcraft;
 
 import ic2.api.tile.IWrenchable;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import powercrystals.minefactoryreloaded.api.IMFRHammer;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.common.eventhandler.Event.Result;
@@ -32,7 +30,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.items.wands.ItemWandCasting;
-import theflogat.technomancy.util.BlockHelper;
+import theflogat.technomancy.util.helpers.BlockHelper;
 import appeng.api.implementations.items.IAEWrench;
 import buildcraft.api.tools.IToolWrench;
 import cofh.api.block.IDismantleable;
@@ -52,7 +50,7 @@ import crazypants.enderio.api.tool.ITool;
 })
 public class ItemTechnoturgeScepter extends ItemWandCasting implements
 		IToolCrowbar, IToolHammer,
-		IMFRHammer, IToolWrench, ITool,
+		IMFRHammer, IToolWrench, ITool, 
 		IAEWrench, IConduitControl,
 		IEnergyContainerItem {
 	

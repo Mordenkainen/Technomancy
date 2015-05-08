@@ -2,8 +2,6 @@ package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
-import cofh.api.energy.IEnergyHandler;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;

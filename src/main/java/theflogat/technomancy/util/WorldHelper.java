@@ -1,14 +1,13 @@
 package theflogat.technomancy.util;
 
 import java.util.ArrayList;
-
 import net.minecraft.block.Block;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
@@ -22,12 +21,32 @@ public class WorldHelper {
 		if(block!=null && block.getBlockHardness(w, x, y, z)>=0 && !w.isRemote){
 			ArrayList<ItemStack> d = block.getDrops(w, x, y, z, w.getBlockMetadata(x, y, z), 0);
 			for(ItemStack s : d){
-				InvHelper.spawnEntItem(w, x, y, z, s);
+				spawnEntItem(w, x, y, z, s);
 			}
 			w.setBlockToAir(x, y, z);
 			return true;
 		}
 		return false;
+	}
+	
+	public static void spawnEntItem(World w, double posX, double posY, double posZ, ItemStack items){
+		if (items!=null && items.stackSize>0) {
+			float rx = w.rand.nextFloat() * 0.8F + 0.1F;
+			float ry = w.rand.nextFloat() * 0.8F + 0.1F;
+			float rz = w.rand.nextFloat() * 0.8F + 0.1F;
+			
+			EntityItem entityItem = new EntityItem(w, posX + rx, posY + ry, posZ + rz, items.copy());
+			
+			if (items.stackTagCompound!=null) {
+				entityItem.getEntityItem().setTagCompound((NBTTagCompound)items.getTagCompound().copy());
+			}
+			
+			float factor = 0.05F;
+			entityItem.motionX = (w.rand.nextGaussian() * factor);
+			entityItem.motionY = (w.rand.nextGaussian() * factor + 0.2000000029802322D);
+			entityItem.motionZ = (w.rand.nextGaussian() * factor);
+			w.spawnEntityInWorld(entityItem);
+		}
 	}
 
 	public static TileEntity getAdjacentTileEntity(TileEntity tile, byte facing) {
@@ -51,8 +70,9 @@ public class WorldHelper {
 		return getAdjacentTileEntity(entity, i)!=null && getAdjacentTileEntity(entity, i) instanceof IFluidHandler;
 	}
 	
-	public static void dropBoost(World w, int x, int y, int z){
-		InvHelper.spawnEntItem(w, x, y, z, new ItemStack(TMItems.itemBoost));
+	public static void dropBoost(World w, int x, int y, int z, EntityPlayer player){
+		if(player==null || !player.inventory.addItemStackToInventory(new ItemStack(TMItems.itemBoost, 1)))
+			spawnEntItem(w, x, y, z, new ItemStack(TMItems.itemBoost));
 	}
 	
 	public static boolean isChunkLoaded(World w, int x, int z){

@@ -1,4 +1,4 @@
-package theflogat.technomancy.util;
+package theflogat.technomancy.util.helpers;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -272,36 +272,8 @@ public final class BlockHelper {
 		}
 		return blockA.equals(blockB) || blockA.isAssociatedBlock(blockB);
 	}
-
-	/* UNSAFE Tile Entity Retrieval */
-	// public static TileEntity getAdjacentTileEntityUnsafe(World world, int x, int y, int z, ForgeDirection dir) {
-	//
-	// if (world == null) {
-	// return null;
-	// }
-	// Chunk chunk = world.getChunkFromBlockCoords(x + dir.offsetX, z + dir.offsetZ);
-	// return chunk == null ? null : chunk.getChunkBlockTileEntityUnsafe((x + dir.offsetX) & 0xF, y + dir.offsetY, (z + dir.offsetZ) & 0xF);
-	// }
-	//
-	// public static TileEntity getAdjacentTileEntityUnsafe(World world, int x, int y, int z, int side) {
-	//
-	// return world == null ? null : getAdjacentTileEntityUnsafe(world, x, y, z, ForgeDirection.values()[side]);
-	// }
-	//
-	// public static TileEntity getAdjacentTileEntityUnsafe(TileEntity refTile, ForgeDirection dir) {
-	//
-	// return refTile == null ? null : getAdjacentTileEntityUnsafe(refTile.worldObj, refTile.xCoord, refTile.yCoord, refTile.zCoord, dir);
-	// }
-	//
-	// public static TileEntity getAdjacentTileEntityUnsafe(TileEntity refTile, int side) {
-	//
-	// return refTile == null ? null : getAdjacentTileEntityUnsafe(refTile.worldObj, refTile.xCoord, refTile.yCoord, refTile.zCoord,
-	// ForgeDirection.values()[side]);
-	// }
-
-	/* Safe Tile Entity Retrieval */
+	
 	public static TileEntity getAdjacentTileEntity(World world, int x, int y, int z, ForgeDirection dir) {
-
 		x += dir.offsetX;
 		y += dir.offsetY;
 		z += dir.offsetZ;
@@ -328,10 +300,8 @@ public final class BlockHelper {
 
 		return y > refTile.yCoord ? 1 : y < refTile.yCoord ? 0 : z > refTile.zCoord ? 3 : z < refTile.zCoord ? 2 : x > refTile.xCoord ? 5 : 4;
 	}
-
-	/* COORDINATE TRANSFORM */
+	
 	public static int[] getAdjacentCoordinatesForSide(MovingObjectPosition pos) {
-
 		return getAdjacentCoordinatesForSide(pos.blockX, pos.blockY, pos.blockZ, pos.sideHit);
 	}
 

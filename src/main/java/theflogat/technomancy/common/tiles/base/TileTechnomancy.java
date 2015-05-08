@@ -1,11 +1,11 @@
 package theflogat.technomancy.common.tiles.base;
 
-import theflogat.technomancy.util.Coords;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import theflogat.technomancy.util.Coords;
 
 public abstract class TileTechnomancy extends TileEntity {
 
@@ -44,7 +44,6 @@ public abstract class TileTechnomancy extends TileEntity {
 	}
 
 	public void onNeighborBlockChange() {}
-
 	public void onNeighborTileChange(int tileX, int tileY, int tileZ) {}
 
 }

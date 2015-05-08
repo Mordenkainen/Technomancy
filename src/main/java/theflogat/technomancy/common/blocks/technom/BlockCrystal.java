@@ -1,14 +1,6 @@
 package theflogat.technomancy.common.blocks.technom;
 
 import java.util.List;
-
-import theflogat.technomancy.Technomancy;
-import theflogat.technomancy.common.blocks.base.BlockBase;
-import theflogat.technomancy.common.blocks.base.BlockContainerBase;
-import theflogat.technomancy.common.tiles.technom.TileCrystal;
-import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
-import theflogat.technomancy.lib.RenderIds;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -18,6 +10,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import theflogat.technomancy.common.blocks.base.BlockContainerBase;
+import theflogat.technomancy.common.tiles.technom.TileCrystal;
+import theflogat.technomancy.lib.Names;
+import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.RenderIds;
 
 public class BlockCrystal extends BlockContainerBase{
 

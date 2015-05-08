@@ -8,8 +8,6 @@ import net.minecraft.world.World;
 import theflogat.technomancy.api.rituals.Ritual;
 import theflogat.technomancy.api.tiles.IMovingHandler;
 import theflogat.technomancy.api.tiles.MovableTileRegistry;
-import theflogat.technomancy.common.blocks.technom.BlockCrystal;
-import theflogat.technomancy.util.RitualHelper;
 
 public class RitualCaveInT1 extends Ritual{
 

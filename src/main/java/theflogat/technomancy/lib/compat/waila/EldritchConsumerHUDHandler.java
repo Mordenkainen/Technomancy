@@ -1,7 +1,6 @@
 package theflogat.technomancy.lib.compat.waila;
 
 import java.util.List;
-
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEldritchConsumer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -20,6 +19,7 @@ public class EldritchConsumerHUDHandler implements IWailaDataProvider {
 		currenttip.add("Size Setting: " + tileEntity.current.toString());
 		currenttip.add("Range: " + Integer.toString(tileEntity.current.r*2 + 1)+"x"+Integer.toString(tileEntity.current.r*2 + 1));
 		currenttip.add("Depth: " + (tileEntity.current.h==-1 ? "To BedRock" : tileEntity.current.h));
+		WailaHelper.drawDefault(currenttip, tileEntity);
 		return currenttip;
 	}
 	

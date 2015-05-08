@@ -66,6 +66,8 @@ fluid.techno:manaFluid=Mana Condensate
 #Information
 info.techno:purity=Purity
 info.techno:shift=-Hold shift for info-
+info.techno:ctrl=-Hold control for inv-
+info.techno:a=-Hold a for aspects-
 info.techno:process=Processed by
 
 #Research Tab

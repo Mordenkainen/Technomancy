@@ -1,11 +1,5 @@
 package theflogat.technomancy.common.blocks.bloodmagic.dynamos;
 
-import theflogat.technomancy.common.blocks.base.BlockDynamoBase;
-import theflogat.technomancy.common.tiles.bloodmagic.dynamos.TileBloodDynamo;
-import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
-import theflogat.technomancy.lib.RenderIds;
-import theflogat.technomancy.lib.compat.BloodMagic;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -13,6 +7,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
+import theflogat.technomancy.common.blocks.base.BlockDynamoBase;
+import theflogat.technomancy.common.tiles.bloodmagic.dynamos.TileBloodDynamo;
+import theflogat.technomancy.lib.Names;
+import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.RenderIds;
+import theflogat.technomancy.lib.compat.BloodMagic;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

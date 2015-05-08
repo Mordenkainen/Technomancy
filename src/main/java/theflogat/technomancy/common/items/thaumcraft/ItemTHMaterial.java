@@ -1,23 +1,16 @@
 package theflogat.technomancy.common.items.thaumcraft;
 
 import java.util.List;
-
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import thaumcraft.api.aspects.IAspectContainer;
 import theflogat.technomancy.common.items.base.ItemBase;
 import theflogat.technomancy.common.items.base.TMItems;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaTransmitter;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import cpw.mods.fml.relauncher.Side;

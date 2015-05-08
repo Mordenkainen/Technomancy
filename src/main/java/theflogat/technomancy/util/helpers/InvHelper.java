@@ -1,21 +1,19 @@
-package theflogat.technomancy.util;
+package theflogat.technomancy.util.helpers;
 
 import java.util.ArrayList;
-
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class InvHelper {
 
 	public static ItemStack insert(IInventory tile, ItemStack items, ForgeDirection dir) {
-		//TODO Fix this mess
+		//FIXME: Fix this mess
 		if(tile instanceof ISidedInventory){
 			ISidedInventory inv = (ISidedInventory) tile;
 			for(int i : inv.getAccessibleSlotsFromSide(dir.ordinal())){
@@ -119,46 +117,6 @@ public class InvHelper {
 				w.spawnEntityInWorld(entityItem);
 				inventory.setInventorySlotContents(i, null);
 			}
-		}
-	}
-
-	public static void spawnEntItem(World w, int x, int y, int z, ItemStack items){
-		if ((items != null) && (items.stackSize > 0)) {
-			float rx = w.rand.nextFloat() * 0.8F + 0.1F;
-			float ry = w.rand.nextFloat() * 0.8F + 0.1F;
-			float rz = w.rand.nextFloat() * 0.8F + 0.1F;
-
-			EntityItem entityItem = new EntityItem(w, x + rx, y + ry, z + rz, new ItemStack(items.getItem(), items.stackSize, items.getItemDamage()));
-
-			if (items.hasTagCompound()) {
-				entityItem.getEntityItem().setTagCompound((NBTTagCompound)items.getTagCompound().copy());
-			}
-
-			float factor = 0.05F;
-			entityItem.motionX = (w.rand.nextGaussian() * factor);
-			entityItem.motionY = (w.rand.nextGaussian() * factor + 0.2000000029802322D);
-			entityItem.motionZ = (w.rand.nextGaussian() * factor);
-			w.spawnEntityInWorld(entityItem);
-		}
-	}
-
-	public static void spawnEntItem(World w, double x, double y, double z, ItemStack items) {
-		if ((items != null) && (items.stackSize > 0)) {
-			float rx = w.rand.nextFloat() * 0.8F + 0.1F;
-			float ry = w.rand.nextFloat() * 0.8F + 0.1F;
-			float rz = w.rand.nextFloat() * 0.8F + 0.1F;
-
-			EntityItem entityItem = new EntityItem(w, x + rx, y + ry, z + rz, new ItemStack(items.getItem(), items.stackSize, items.getItemDamage()));
-
-			if (items.hasTagCompound()) {
-				entityItem.getEntityItem().setTagCompound((NBTTagCompound)items.getTagCompound().copy());
-			}
-
-			float factor = 0.05F;
-			entityItem.motionX = (w.rand.nextGaussian() * factor);
-			entityItem.motionY = (w.rand.nextGaussian() * factor + 0.2000000029802322D);
-			entityItem.motionZ = (w.rand.nextGaussian() * factor);
-			w.spawnEntityInWorld(entityItem);
 		}
 	}
 

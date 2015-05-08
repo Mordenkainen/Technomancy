@@ -9,14 +9,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
-import theflogat.technomancy.common.blocks.base.BlockContainerBase;
 import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBloodFabricator;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.RenderIds;
 import theflogat.technomancy.lib.compat.BloodMagic;
-import theflogat.technomancy.util.InvHelper;
+import theflogat.technomancy.util.WorldHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -41,7 +40,7 @@ public class BlockBloodFabricator extends BlockContainerAdvanced {
 							items.stackSize--;
 							player.inventory.mainInventory[player.inventory.currentItem] = items;
 							if(!player.inventory.addItemStackToInventory(new ItemStack(BloodMagic.bucketLife))) {
-								InvHelper.spawnEntItem(w, (int)player.posX, (int)player.posY, (int)player.posZ, new ItemStack(BloodMagic.bucketLife));
+								WorldHelper.spawnEntItem(w, player.posX, player.posY, player.posZ, new ItemStack(BloodMagic.bucketLife));
 							}
 						}
 					}
@@ -54,9 +53,10 @@ public class BlockBloodFabricator extends BlockContainerAdvanced {
 	}
 	
 	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack)    {
+	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase entity, ItemStack items)    {
+		super.onBlockPlacedBy(w, x, y, z, entity, items);
         int rotation = MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 2.5D) & 3;
-        world.setBlockMetadataWithNotify(x, y, z, rotation, 2);
+        w.setBlockMetadataWithNotify(x, y, z, rotation, 2);
     }
 	
 	@SideOnly(Side.CLIENT)

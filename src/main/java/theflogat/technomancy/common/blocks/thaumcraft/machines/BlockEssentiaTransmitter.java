@@ -1,16 +1,20 @@
 package theflogat.technomancy.common.blocks.thaumcraft.machines;
 
+import java.util.ArrayList;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.IEssentiaContainerItem;
 import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
+import theflogat.technomancy.common.items.technom.ItemCoilCoupler;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaTransmitter;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
@@ -34,8 +38,8 @@ public class BlockEssentiaTransmitter extends BlockContainerAdvanced {
 	@Override
 	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		TileEssentiaTransmitter tile = getTE(w, x, y, z);
+		ItemStack stack = player.getHeldItem();
 		if(tile != null) {
-			ItemStack stack = player.getHeldItem();
 			if(stack == null && player.isSneaking()) {
 				if (tile.aspectFilter != null ) {
 					tile.aspectFilter = null;
@@ -48,6 +52,7 @@ public class BlockEssentiaTransmitter extends BlockContainerAdvanced {
 									3.0F, new ItemStack(Thaumcraft.itemResource, 1, 13)));
 						}
 					}
+					return true;
 				}
 			}
 			if(stack != null) {
@@ -58,21 +63,26 @@ public class BlockEssentiaTransmitter extends BlockContainerAdvanced {
 						w.markBlockForUpdate(x, y, z);
 						if(w.isRemote) {
 							w.playSound(x + 0.5F, y + 0.5F, z + 0.5F, "thaumcraft:page", 1.0F, 1.0F, false);
-						}						
+						}
+						return true;
 					}				
 				}
 			}
 		}
+		if(stack!=null && stack.getItem() instanceof ItemCoilCoupler)
+			return false;
 		return super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ);
 	}
 	
-	//FIXME: This may be unstable since this class is a singleton!
+	//FIXME: This may be unstable since this class is a singleton! It Shouldn't be Because the methods are called one after the other.
 	private int facing;
 	
 	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack){
-		TileEssentiaTransmitter tile = getTE(world, x, y, z);
-		if(tile != null) {
+	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase entity, ItemStack items){
+		super.onBlockPlacedBy(w, x, y, z, entity, items);
+		TileEssentiaTransmitter tile = getTE(w, x, y, z);
+		if(tile!=null) {
+			tile.clear();
 			tile.facing = this.facing;
 		}
 	}
@@ -131,11 +141,20 @@ public class BlockEssentiaTransmitter extends BlockContainerAdvanced {
 		blockIcon = icon.registerIcon(Ref.getAsset(Names.essentiaTransmitter));
 	}
 
-	private TileEssentiaTransmitter getTE(IBlockAccess world, int x, int y, int z) {
+	private static TileEssentiaTransmitter getTE(IBlockAccess world, int x, int y, int z) {
 		TileEntity tile = world.getTileEntity(x, y, z);
 		if (tile instanceof TileEssentiaTransmitter) {
 			return (TileEssentiaTransmitter)tile;
 		}
 		return null;
+	}
+	
+	@Override
+	public void getNBTInfo(NBTTagCompound comp, ArrayList<String> l, int meta) {
+		super.getNBTInfo(comp, l, meta);
+		Aspect filter = Aspect.getAspect(comp.getString("AspectFilter"));
+		if(filter!=null){
+			l.add("Filter" + filter.getChatcolor() + filter.getName());
+		}
 	}
 }

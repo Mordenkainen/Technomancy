@@ -21,10 +21,10 @@ public class BlockNodeDynamo extends BlockDynamoBase {
 	}
 	
 	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
-		TileNodeDynamo tile = (TileNodeDynamo)world.getTileEntity(x, y, z);
+	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase entity, ItemStack items) {
+		super.onBlockPlacedBy(w, x, y, z, entity, items);
+		TileNodeDynamo tile = (TileNodeDynamo)w.getTileEntity(x, y, z);
 		tile.facing = 0;
-		super.onBlockPlacedBy(world, x, y, z, entity, stack);
 	}
 
 	@SideOnly(Side.CLIENT)

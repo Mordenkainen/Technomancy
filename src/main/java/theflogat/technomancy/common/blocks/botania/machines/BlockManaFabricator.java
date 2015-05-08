@@ -9,7 +9,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import theflogat.technomancy.common.blocks.base.BlockContainerBase;
 import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.tiles.botania.machines.TileManaFabricator;
 import theflogat.technomancy.lib.Names;
@@ -32,8 +31,9 @@ public class BlockManaFabricator extends BlockContainerAdvanced implements IWand
 	
 	private int facing;	
 	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack){
-		TileEntity tile = world.getTileEntity(x, y, z);
+	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase entity, ItemStack items){
+		super.onBlockPlacedBy(w, x, y, z, entity, items);
+		TileEntity tile = w.getTileEntity(x, y, z);
 		if(tile instanceof TileManaFabricator) {
 			((TileManaFabricator)tile).facing = this.facing;
 		}

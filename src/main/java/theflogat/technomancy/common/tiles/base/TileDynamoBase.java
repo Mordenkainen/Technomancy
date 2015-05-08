@@ -85,7 +85,8 @@ public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyH
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound comp) {
-		set.save(comp);
+		if(set!=null)
+			set.save(comp);
 		comp.setInteger("energy", ener);
 		comp.setByte("face", facing);
 		comp.setInteger("fuel", fuel);
@@ -95,6 +96,8 @@ public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyH
 	@Override
 	public void readCustomNBT(NBTTagCompound comp) {
 		set = RedstoneSet.load(comp);
+		if(set==null)
+			set = RedstoneSet.HIGH;
 		ener = comp.getInteger("energy");
 		facing = comp.getByte("face");
 		fuel = comp.getInteger("fuel");
@@ -191,5 +194,10 @@ public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyH
 	@Override
 	public void setNewSetting(RedstoneSet newSet) {
 		set = newSet;
+	}
+	
+	@Override
+	public String getInfo() {
+		return "360 RF/t For Four Times The Fuel";
 	}
 }

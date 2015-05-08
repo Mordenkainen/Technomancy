@@ -7,11 +7,29 @@ import theflogat.technomancy.api.rituals.IRitualEffectHandler;
 import theflogat.technomancy.api.rituals.Ritual;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
-import theflogat.technomancy.util.MathHelper;
+import theflogat.technomancy.util.Area;
+import theflogat.technomancy.util.Coords;
+import theflogat.technomancy.util.helpers.MathHelper;
 
 public class RitualOfFireT3 extends Ritual implements IRitualEffectHandler{
 
 	static final int top = 90;
+	static final Area area = new Area(null, 50, top, 50) {
+		
+		@Override
+		public boolean isPosValid(Coords c) {
+			if(c.y==lengthY){
+				if(c.x==lengthX/2 && c.z==lengthZ/2){
+					
+					return true;
+				}
+				return false;
+			}
+			
+			
+			return false;
+		}
+	};
 
 	public RitualOfFireT3() {
 		super(new Type[]{Type.FIRE,Type.FIRE,Type.FIRE},Type.FIRE);
@@ -51,7 +69,7 @@ public class RitualOfFireT3 extends Ritual implements IRitualEffectHandler{
 
 	@Override
 	public void applyEffect(TileCatalyst te) {
-		appe(te.getWorldObj(), te.xCoord, te.yCoord, te.zCoord, te.remCount);
+//		appe(te.getWorldObj(), te.xCoord, te.yCoord, te.zCoord, te.remCount);
 	}
 
 }

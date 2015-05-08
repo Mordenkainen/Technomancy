@@ -1,7 +1,6 @@
 package theflogat.technomancy.common.rituals.l;
 
 import java.util.ArrayList;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
@@ -9,9 +8,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import theflogat.technomancy.api.rituals.IRitualEffectHandler;
 import theflogat.technomancy.api.rituals.Ritual;
-import theflogat.technomancy.api.rituals.Ritual.Type;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
-import theflogat.technomancy.util.RitualHelper;
 
 public class RitualPurificationT2 extends Ritual implements IRitualEffectHandler{
 	

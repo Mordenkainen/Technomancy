@@ -92,13 +92,13 @@ public class Page {
 					String[] words = str.split(" ");
 					for(String s : words){
 						if(actualInd + gui.getFont().getStringWidth(s)<=maxLength){
-							gui.getFont().drawString(s, (int) ((page2 ? left + 136: left + gui.startText) + actualInd),
+							gui.getFont().drawString(s, (page2 ? left + 136: left + gui.startText) + actualInd,
 									top + gui.startTextY + actualLine*(gui.getFont().FONT_HEIGHT+1), color.getRGB());
 							actualInd += gui.getFont().getStringWidth(s) + spaceW;
 						} else {
 							actualLine++;
 							actualInd = 0;
-							gui.getFont().drawString(s, (int) ((page2 ? left + 136: left + gui.startText) + actualInd),
+							gui.getFont().drawString(s, (page2 ? left + 136: left + gui.startText) + actualInd,
 									top + gui.startTextY + actualLine*(gui.getFont().FONT_HEIGHT+1), color.getRGB());
 							actualInd += gui.getFont().getStringWidth(s) + spaceW;
 						}
@@ -110,13 +110,13 @@ public class Page {
 				String[] words = str.split(" ");
 				for(String s : words){
 					if(actualInd + gui.getFont().getStringWidth(s)<=maxLength){
-						gui.getFont().drawString(s, (int) ((page2 ? left + 136: left + gui.startText) + actualInd),
+						gui.getFont().drawString(s, (page2 ? left + 136: left + gui.startText) + actualInd,
 								top + gui.startTextY + actualLine*(gui.getFont().FONT_HEIGHT+1), color.getRGB());
 						actualInd += gui.getFont().getStringWidth(s) + spaceW;
 					} else {
 						actualLine++;
 						actualInd = 0;
-						gui.getFont().drawString(s, (int) ((page2 ? left + 136: left + gui.startText) + actualInd),
+						gui.getFont().drawString(s, (page2 ? left + 136: left + gui.startText) + actualInd,
 								top + gui.startTextY + actualLine*(gui.getFont().FONT_HEIGHT+1), color.getRGB());
 						actualInd += gui.getFont().getStringWidth(s) + spaceW;
 					}

@@ -1,18 +1,20 @@
 package theflogat.technomancy.common.items.technom;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import theflogat.technomancy.Technomancy;
-import theflogat.technomancy.common.tiles.base.IUpgradable;
-import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import theflogat.technomancy.Technomancy;
+import theflogat.technomancy.common.tiles.base.IUpgradable;
+import theflogat.technomancy.lib.Names;
+import theflogat.technomancy.lib.Ref;
 
 public class ItemBoost extends Item{
+	
+	public static ArrayList<String> upgradeable = new ArrayList<String>();
 	
 	public ItemBoost() {
 		setCreativeTab(Technomancy.tabsTM);
@@ -22,10 +24,10 @@ public class ItemBoost extends Item{
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void addInformation(ItemStack items, EntityPlayer player, List l, boolean moreInfo) {
-		l.add("Apply to a dynamo: multiply by");
-		l.add("4 the RF/t and the Fuel Cost");
-		l.add("Apply to a Node Fabricator:");
-		l.add("Allow Fabricator to add new aspects");
+		l.add("Apply to:");
+		for(String s:upgradeable){
+			l.add(s);
+		}
 	}
 	
 	@Override

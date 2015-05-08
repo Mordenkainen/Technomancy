@@ -2,8 +2,6 @@ package theflogat.technomancy.common.tiles.technom;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
-import cofh.api.energy.IEnergyHandler;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,11 +10,11 @@ import net.minecraft.util.ChunkCoordinates;
 import net.minecraftforge.common.util.ForgeDirection;
 import theflogat.technomancy.common.tiles.base.ICouplable;
 import theflogat.technomancy.common.tiles.base.IRedstoneSensitive;
-import theflogat.technomancy.common.tiles.base.IWrenchable;
 import theflogat.technomancy.common.tiles.base.IUpgradable;
+import theflogat.technomancy.common.tiles.base.IWrenchable;
 import theflogat.technomancy.common.tiles.base.TileTechnomancy;
-import theflogat.technomancy.util.InvHelper;
 import theflogat.technomancy.util.WorldHelper;
+import theflogat.technomancy.util.helpers.InvHelper;
 
 public class TileItemTransmitter extends TileTechnomancy implements IUpgradable, ICouplable, IRedstoneSensitive, IWrenchable{
 
@@ -55,7 +53,7 @@ public class TileItemTransmitter extends TileTechnomancy implements IUpgradable,
 		}
 	}
 	
-    private boolean areItemStacksEqual(ItemStack toMove, ItemStack filter){
+    private static boolean areItemStacksEqual(ItemStack toMove, ItemStack filter){
         return toMove.getItem() != filter.getItem() ? false : (toMove.getItemDamage() != filter.getItemDamage()
         		? false : (toMove.stackTagCompound == null && filter.stackTagCompound != null ? false : toMove.stackTagCompound == null ||
         		toMove.stackTagCompound.equals(filter.stackTagCompound)));
@@ -87,7 +85,7 @@ public class TileItemTransmitter extends TileTechnomancy implements IUpgradable,
 			filter.writeToNBT(item);
 			comp.setTag("filter", item);
 		}
-		comp.setByte("facing", (byte)facing);
+		comp.setByte("facing", facing);
 		int sourceCount = 0;
 		for(int i = 0; i < sources.size(); i++) {
 			if(sources.get(i) != null) {
@@ -160,5 +158,10 @@ public class TileItemTransmitter extends TileTechnomancy implements IUpgradable,
 		filter = new ItemStack(newFilter.getItem(), 1, newFilter.getItemDamage());
 		if(newFilter.stackTagCompound!=null)
 			filter.stackTagCompound = newFilter.stackTagCompound;
+	}
+
+	@Override
+	public String getInfo() {
+		return "Allows For A Filter";
 	}
 }

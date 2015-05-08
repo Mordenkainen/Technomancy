@@ -1,7 +1,6 @@
 package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
 import java.util.ArrayList;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,12 +13,13 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
+import theflogat.technomancy.common.tiles.base.IRedstoneSensitive;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
 import theflogat.technomancy.lib.handlers.Rate;
 import theflogat.technomancy.util.Coords;
 
-public class TileEldritchConsumer extends TileMachineBase implements IAspectContainer, IEssentiaTransport{
-	
+public class TileEldritchConsumer extends TileMachineBase implements IAspectContainer, IEssentiaTransport, IRedstoneSensitive{
+
 	public enum Range{
 		LARGE(9, -1, 0, "Large"),
 		SMALL(1, 1, 1, "Small"),
@@ -27,30 +27,30 @@ public class TileEldritchConsumer extends TileMachineBase implements IAspectCont
 		MEDIUM(5, -1, 3, "Medium"),
 		AVERAGE(4, 9, 4, "Average"),
 		GIGANTIC(16, -1, 5, "Gigantic");
-		
+
 		static Range[] ValidRanges = {LARGE, SMALL, TINY, MEDIUM, AVERAGE, GIGANTIC};
-		
+
 		private static final String loc = "RangeIdentificator";
-		
+
 		public int r;
 		public int h;
 		public int id;
 		public String chat;
-		
+
 		@Override
-		public String toString() {return chat;};
-		
+		public String toString() {return chat;}
+
 		Range(int range, int height, int id, String chat){
 			r = range;
 			h = height;
 			this.id = id;
 			this.chat = chat;
 		}
-		
+
 		public void writeToNbt(NBTTagCompound comp) {
 			comp.setInteger(loc, id);
 		}
-		
+
 		public Range getNext() {
 			if(this==ValidRanges[ValidRanges.length-1]){
 				return ValidRanges[0];
@@ -58,7 +58,7 @@ public class TileEldritchConsumer extends TileMachineBase implements IAspectCont
 				return ValidRanges[id+1];
 			}
 		}
-		
+
 		public static Range readFromNbt(NBTTagCompound comp){
 			int i = comp.getInteger(loc);
 			for(Range r : ValidRanges){
@@ -69,13 +69,14 @@ public class TileEldritchConsumer extends TileMachineBase implements IAspectCont
 			return LARGE;
 		}
 	}
-	
+
 	public Range current = Range.LARGE;
 	AspectList list = new AspectList();
 	public int cooldown = 0;
 	public int time = 0;
 	public float panelRotation = 0;
 	public int cost = Rate.consumerCost;
+	public RedstoneSet set = RedstoneSet.HIGH;
 
 	public TileEldritchConsumer() {
 		super(Rate.consumerCost * 50);
@@ -83,46 +84,52 @@ public class TileEldritchConsumer extends TileMachineBase implements IAspectCont
 
 	@Override
 	public void updateEntity() {
-		if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
-			if(time<=0 && canFillList(list)){
-				if (getEnergyStored() >= cost) {
-					Coords c = seekForBlock();
-					if(c!=null){
-						processFromCoords(c);
-						extractEnergy(cost, false);
-						worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-						cooldown = 40;
-					}else{
-						time = 80;
+		if(!worldObj.isRemote){
+			if(set.canRun(this)) {
+				if(time<=0 && canFillList(list)){
+					if (getEnergyStored() >= cost) {
+						Coords c = seekForBlock();
+						if(c!=null){
+							processFromCoords(c);
+							extractEnergy(cost, false);
+							cooldown = 40;
+							worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+						}else{
+							time = 80;
+						}
 					}
+				}else{
+					time--;
 				}
-			}else{
-				time--;
 			}
-		}
-		
-		if(cooldown>0){
-			panelRotation = Math.min((float) -Math.PI/4, panelRotation -= 0.02F);
-			cooldown--;
-		} else {
-			if(panelRotation>0){
-				panelRotation = Math.min(0, panelRotation -= 0.02F);
-			}else {
-				panelRotation = Math.max(0, panelRotation += 0.02F);
+			
+			if(cooldown>0){
+				cooldown--;
+				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+			}
+		}else{
+			if(cooldown>0){
+				panelRotation = Math.min((float) -Math.PI/4, panelRotation -= 0.02F);
+			} else {
+				if(panelRotation>0){
+					panelRotation = Math.min(0, panelRotation -= 0.02F);
+				}else {
+					panelRotation = Math.max(0, panelRotation += 0.02F);
+				}
 			}
 		}
 	}
 
-	private boolean canFillList(AspectList list) {
+	private static boolean canFillList(AspectList list) {
 		if(list.getAspects().length>=4)
 			return false;
-		
+
 		boolean flag = false;
-		
+
 		for(Aspect as : list.getAspects())
 			if(list.getAmount(as)<4)
 				flag = true;
-		
+
 		return flag;
 	}
 
@@ -152,39 +159,39 @@ public class TileEldritchConsumer extends TileMachineBase implements IAspectCont
 		}
 		return null;
 	}
-	
+
 	private boolean isBlockOk(TileEntity tile, Block block, int x, int y, int z) {
 		if(tile instanceof TileEldritchConsumer)
 			return false;
-		
+
 		if(block.getBlockHardness(worldObj, xCoord, yCoord, zCoord)==-1)
 			return false;
-		
+
 		if(block instanceof BlockFluidClassic || block instanceof BlockFluidBase)
 			return false;
-		
+
 		if(block.isAir(worldObj, x, y, z))
 			return false;
-		
+
 		return true;
 	}
 
 	private void processFromCoords(Coords c) {
 		ArrayList<ItemStack> drops = c.w.getBlock(c.x, c.y, c.z).getDrops(worldObj, c.x, c.y, c.z, c.w.getBlockMetadata(c.x, c.y, c.z), 0);
-		
+
 		boolean flag = true;
-		
+
 		for(ItemStack items : drops){
 			//c.w.spawnEntityInWorld(new BlockTrail(c.w, c.x, c.y, c.z, xCoord, yCoord, zCoord, items));
 			AspectList al = ThaumcraftCraftingManager.getObjectTags(items);
-			al = (AspectList) ThaumcraftCraftingManager.getBonusTags(items, al);
+			al = ThaumcraftCraftingManager.getBonusTags(items, al);
 
 			for(Aspect as : al.getAspects()){
 				int amount = al.getAmount(as);
 				list.merge(as, amount);
 			}
 		}
-		
+
 		if(flag){
 			c.w.getBlock(c.x, c.y, c.z).breakBlock(c.w, c.x, c.y, c.z, c.w.getBlock(c.x, c.y, c.z), c.w.getBlockMetadata(c.x, c.y, c.z));
 			c.w.setBlockToAir(c.x, c.y, c.z);
@@ -328,5 +335,15 @@ public class TileEldritchConsumer extends TileMachineBase implements IAspectCont
 	@Override
 	public boolean renderExtendedTube() {
 		return true;
+	}
+
+	@Override
+	public RedstoneSet getCurrentSetting() {
+		return set;
+	}
+
+	@Override
+	public void setNewSetting(RedstoneSet newSet) {
+		set = newSet;
 	}
 }

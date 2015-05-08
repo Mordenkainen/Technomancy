@@ -1,30 +1,22 @@
 package theflogat.technomancy.common.blocks.technom;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import thaumcraft.api.aspects.IEssentiaContainerItem;
-import theflogat.technomancy.common.blocks.base.BlockContainerBase;
 import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
-import theflogat.technomancy.common.items.base.TMItems;
 import theflogat.technomancy.common.items.technom.ItemCoilCoupler;
 import theflogat.technomancy.common.tiles.technom.TileItemTransmitter;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.RenderIds;
-import theflogat.technomancy.lib.compat.Thaumcraft;
-import theflogat.technomancy.util.InvHelper;
 import theflogat.technomancy.util.WorldHelper;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockItemTransmitter extends BlockContainerAdvanced{
 
@@ -39,6 +31,7 @@ public class BlockItemTransmitter extends BlockContainerAdvanced{
 
 	@Override
 	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+		ItemStack items = player.inventory.mainInventory[player.inventory.currentItem];
 		if(!w.isRemote && w.getTileEntity(x, y, z) instanceof TileItemTransmitter){
 			TileItemTransmitter tile = (TileItemTransmitter)w.getTileEntity(x, y, z);
 			if(player.isSneaking()){
@@ -48,27 +41,21 @@ public class BlockItemTransmitter extends BlockContainerAdvanced{
 					return true;
 				}else if(tile.boost){
 					tile.toggleBoost();
-					WorldHelper.dropBoost(w, x, y, z);
+					WorldHelper.dropBoost(w, x, y, z, player);
 					w.markBlockForUpdate(x, y, z);
 					return true;
 				}
-			}else if(player.inventory.mainInventory[player.inventory.currentItem]!=null && tile.boost && tile.filter==null){
-				if(!(player.inventory.mainInventory[player.inventory.currentItem].getItem() instanceof ItemCoilCoupler)){
+			}else if(items!=null && tile.boost && tile.filter==null){
+				if(!(items.getItem() instanceof ItemCoilCoupler)){
 					tile.addFilter(player.inventory.mainInventory[player.inventory.currentItem]);
 					w.markBlockForUpdate(x, y, z);
 					return true;
 				}
 			}
 		}
+		if(items!=null && items.getItem() instanceof ItemCoilCoupler)
+			return false;
 		return super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ);
-	}
-
-	@Override
-	public void breakBlock(World w, int x, int y, int z, Block b, int flag) {
-		TileItemTransmitter tile = getTE(w, x, y, z);
-		if(tile.boost)
-			WorldHelper.dropBoost(w, x, y, z);
-		super.breakBlock(w, x, y, z, b, flag);
 	}
 
 	//FIXME: This may be unstable since this class is a singleton!
@@ -136,7 +123,7 @@ public class BlockItemTransmitter extends BlockContainerAdvanced{
 		blockIcon = icon.registerIcon(Ref.getAsset(Names.essentiaTransmitter));
 	}
 
-	private TileItemTransmitter getTE(IBlockAccess world, int x, int y, int z) {
+	private static TileItemTransmitter getTE(IBlockAccess world, int x, int y, int z) {
 		TileEntity tile = world.getTileEntity(x, y, z);
 		if (tile instanceof TileItemTransmitter) {
 			return (TileItemTransmitter)tile;

@@ -1,7 +1,9 @@
 package theflogat.technomancy.common.blocks.thaumcraft.machines;
 
+import java.util.ArrayList;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
@@ -16,11 +18,12 @@ public class BlockEldritchConsumer extends BlockContainerAdvanced{
 
 	public BlockEldritchConsumer() {
 		setBlockName(Ref.getId(Names.eldritchConsumer));
-		
 	}
 	
 	@Override
 	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+		if(super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ))
+			return true;
 		TileEntity te = w.getTileEntity(x, y, z);
 		if(te==null || !(te instanceof TileEldritchConsumer)){
 			return false;
@@ -40,7 +43,7 @@ public class BlockEldritchConsumer extends BlockContainerAdvanced{
 				return true;
 			}
 		}
-		return super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ);
+		return false;
 	}
 	
 	@Override
@@ -66,5 +69,14 @@ public class BlockEldritchConsumer extends BlockContainerAdvanced{
 	@Override
 	public boolean isNormalCube() {
 		return false;
+	}
+	
+	@Override
+	public void getNBTInfo(NBTTagCompound comp, ArrayList<String> l, int meta) {
+		super.getNBTInfo(comp, l, meta);
+		Range c = Range.readFromNbt(comp);
+		l.add("Processing as: " + c.toString());
+		l.add("Range: "+Integer.toString(c.r*2 + 1)+"x"+Integer.toString(c.r*2 + 1));
+		l.add("Depth: " + (c.h==-1 ? "To BedRock" : c.h));
 	}
 }

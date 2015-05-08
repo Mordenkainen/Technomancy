@@ -4,8 +4,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import theflogat.technomancy.api.rituals.Ritual;
-import theflogat.technomancy.api.rituals.Ritual.Type;
-import theflogat.technomancy.util.RitualHelper;
 
 public class RitualWaterT3 extends Ritual{
 

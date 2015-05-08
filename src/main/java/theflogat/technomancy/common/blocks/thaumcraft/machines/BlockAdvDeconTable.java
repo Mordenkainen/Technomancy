@@ -1,20 +1,20 @@
 package theflogat.technomancy.common.blocks.thaumcraft.machines;
 
-import net.minecraft.block.Block;
+import java.util.ArrayList;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
-import theflogat.technomancy.common.items.base.TMItems;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileAdvDeconTable;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.RenderIds;
-import theflogat.technomancy.util.InvHelper;
+import theflogat.technomancy.util.WorldHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -25,19 +25,8 @@ public class BlockAdvDeconTable extends BlockContainerAdvanced{
 	}
 	
 	@Override
-	public void breakBlock(World w, int x, int y, int z, Block block, int meta) {
-		TileAdvDeconTable tile = getTE(w, x, y, z);
-		if(tile.getBoost()) {
-			InvHelper.spawnEntItem(w, x, y, z, new ItemStack(TMItems.itemBoost, 1));
-		}
-		if(tile.getStackInSlot(0) != null) {
-			InvHelper.spawnEntItem(w, x, y, z, tile.getStackInSlot(0));
-		}
-		super.breakBlock(w, x, y, z, block, meta);
-	}
-	
-	@Override
 	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase ent,	ItemStack items) {
+		super.onBlockPlacedBy(w, x, y, z, ent, items);
 		TileAdvDeconTable te = getTE(w, x, y, z);
 		if(te!=null && ent instanceof EntityPlayer)
 			te.owner = ((EntityPlayer)ent).getDisplayName();
@@ -55,7 +44,7 @@ public class BlockAdvDeconTable extends BlockContainerAdvanced{
 				}
 			}else{
 				if(!w.isRemote) {
-					InvHelper.spawnEntItem(w, player.posX, player.posY, player.posZ, te.getStackInSlot(0));
+					WorldHelper.spawnEntItem(w, player.posX, player.posY, player.posZ, te.getStackInSlot(0));
 				}
 				te.setInventorySlotContents(0, null);
 				return true;
@@ -90,11 +79,17 @@ public class BlockAdvDeconTable extends BlockContainerAdvanced{
 		blockIcon = iconRegister.registerIcon(Ref.getAsset(Names.advDeconTable));
 	}
 	
-	private TileAdvDeconTable getTE(IBlockAccess world, int x, int y, int z) {
+	private static TileAdvDeconTable getTE(IBlockAccess world, int x, int y, int z) {
 		TileEntity tile = world.getTileEntity(x, y, z);
 		if (tile instanceof TileAdvDeconTable) {
 			return (TileAdvDeconTable)tile;
 		}
 		return null;
+	}
+	
+	@Override
+	public void getNBTInfo(NBTTagCompound comp, ArrayList<String> l, int meta) {
+		super.getNBTInfo(comp, l, meta);
+		l.add("Owner:" + comp.getString("owner"));
 	}
 }

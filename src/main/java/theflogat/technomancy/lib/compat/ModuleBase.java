@@ -1,5 +1,7 @@
 package theflogat.technomancy.lib.compat;
 
+import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
+import theflogat.technomancy.common.items.base.ItemAdvancedBase;
 import theflogat.technomancy.lib.handlers.EventRegister;
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
@@ -22,10 +24,13 @@ public abstract class ModuleBase implements IModModule {
 		}
 	}
 	
-	protected void registerBlock(Block block, String name) {
-		if(block!=null) {
-			GameRegistry.registerBlock(block, name);
+	public static void registerBlock(Block block, String name) {
+		if(block instanceof BlockContainerAdvanced){
+			GameRegistry.registerBlock(block, ItemAdvancedBase.class, name);
+			return;
 		}
+		if(block!=null)
+			GameRegistry.registerBlock(block, name);
 	}
 	
 	protected void registerBlock(Block block, String name, Class<? extends ItemBlock> itemclass) {

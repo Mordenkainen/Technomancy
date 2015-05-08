@@ -57,7 +57,7 @@ public class ItemWandCores extends ItemBase{
 		((ItemWandCasting)electric.getItem()).setRod(electric, WandRod.rods.get("electric"));
 		list.add(electric);
 		if(Ids.scepter) {
-			ItemStack scepter = new ItemStack(TMItems.itemTechnoturgeScepter, 1, 73);
+			ItemStack scepter = new ItemStack(TMItems.itemTechnoturgeScepter, 1);
 			scepter.setTagInfo("sceptre", new NBTTagByte((byte)1));
 			((ItemWandCasting)scepter.getItem()).setCap(scepter, WandCap.caps.get("thaumium"));
 			((ItemWandCasting)scepter.getItem()).setRod(scepter, WandRod.rods.get("technoturge"));
@@ -66,8 +66,7 @@ public class ItemWandCores extends ItemBase{
 	}
 	
 	@SideOnly(Side.CLIENT)
-    public boolean hasEffect(ItemStack stack)
-    {
+    public boolean hasEffect(ItemStack stack){
 		return stack.getItemDamage() == 1;
     }
 }

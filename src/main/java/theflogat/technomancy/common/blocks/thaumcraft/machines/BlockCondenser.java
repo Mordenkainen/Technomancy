@@ -2,7 +2,6 @@ package theflogat.technomancy.common.blocks.thaumcraft.machines;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
@@ -25,9 +24,10 @@ public class BlockCondenser extends BlockContainerAdvanced {
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack)    {
+	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase entity, ItemStack items)    {
+		super.onBlockPlacedBy(w, x, y, z, entity, items);
 		int rotation = MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 2.5D) & 3;
-		world.setBlockMetadataWithNotify(x, y, z, rotation, 2);
+		w.setBlockMetadataWithNotify(x, y, z, rotation, 2);
 	}
 
 	@SideOnly(Side.CLIENT)
