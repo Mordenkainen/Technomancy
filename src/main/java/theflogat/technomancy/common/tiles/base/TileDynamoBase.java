@@ -56,10 +56,6 @@ public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyH
 			ener -= ((IEnergyHandler)tile).receiveEnergy(ForgeDirection.VALID_DIRECTIONS[facing].getOpposite(), Math.min(maxExtract, ener), false);		
 		}
 		update();
-//		if(worldObj.getTotalWorldTime() % 4L == 0L) {
-//			onNeighborTileChange(xCoord + ForgeDirection.VALID_DIRECTIONS[facing].offsetX, yCoord +
-//					ForgeDirection.VALID_DIRECTIONS[facing].offsetY, zCoord + ForgeDirection.VALID_DIRECTIONS[facing].offsetZ);
-//		}
 	}
 
 	public String nextRedstoneSet() {

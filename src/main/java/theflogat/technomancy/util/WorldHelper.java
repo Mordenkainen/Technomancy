@@ -29,18 +29,18 @@ public class WorldHelper {
 		return false;
 	}
 	
-	public static void spawnEntItem(World w, double posX, double posY, double posZ, ItemStack items){
-		if (items!=null && items.stackSize>0) {
+	public static void spawnEntItem(World w, double x, double y, double z, ItemStack items){
+		if ((items != null) && (items.stackSize > 0)) {
 			float rx = w.rand.nextFloat() * 0.8F + 0.1F;
 			float ry = w.rand.nextFloat() * 0.8F + 0.1F;
 			float rz = w.rand.nextFloat() * 0.8F + 0.1F;
-			
-			EntityItem entityItem = new EntityItem(w, posX + rx, posY + ry, posZ + rz, items.copy());
-			
-			if (items.stackTagCompound!=null) {
+
+			EntityItem entityItem = new EntityItem(w, x + rx, y + ry, z + rz, new ItemStack(items.getItem(), items.stackSize, items.getItemDamage()));
+
+			if (items.hasTagCompound()) {
 				entityItem.getEntityItem().setTagCompound((NBTTagCompound)items.getTagCompound().copy());
 			}
-			
+
 			float factor = 0.05F;
 			entityItem.motionX = (w.rand.nextGaussian() * factor);
 			entityItem.motionY = (w.rand.nextGaussian() * factor + 0.2000000029802322D);
@@ -71,8 +71,7 @@ public class WorldHelper {
 	}
 	
 	public static void dropBoost(World w, int x, int y, int z, EntityPlayer player){
-		if(player==null || !player.inventory.addItemStackToInventory(new ItemStack(TMItems.itemBoost, 1)))
-			spawnEntItem(w, x, y, z, new ItemStack(TMItems.itemBoost));
+		spawnEntItem(w, x, y, z, new ItemStack(TMItems.itemBoost, 1));
 	}
 	
 	public static boolean isChunkLoaded(World w, int x, int z){

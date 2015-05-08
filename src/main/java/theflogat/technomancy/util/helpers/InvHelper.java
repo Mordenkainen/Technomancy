@@ -121,10 +121,11 @@ public class InvHelper {
 	}
 
 	public static void decrItemStack(ItemStack items){
-		if(items.stackSize==1)
+		if(items.stackSize==1){
 			items = null;
-		else
+		}else{
 			items.stackSize--;
+		}
 	}
 
 	public static boolean isEmpty(IInventory te) {

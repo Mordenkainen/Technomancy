@@ -24,11 +24,11 @@ import theflogat.technomancy.common.tiles.base.IRedstoneSensitive;
 import theflogat.technomancy.common.tiles.base.IRedstoneSensitive.RedstoneSet;
 import theflogat.technomancy.common.tiles.base.IUpgradable;
 import theflogat.technomancy.common.tiles.base.IWrenchable;
-import theflogat.technomancy.common.tiles.base.TileMachineBase;
 import theflogat.technomancy.lib.handlers.CompatibilityHandler;
 import theflogat.technomancy.util.ToolWrench;
 import theflogat.technomancy.util.WorldHelper;
 import theflogat.technomancy.util.helpers.InvHelper;
+import cofh.api.energy.IEnergyHandler;
 
 public abstract class BlockContainerAdvanced extends BlockContainerBase{
 
@@ -52,17 +52,19 @@ public abstract class BlockContainerAdvanced extends BlockContainerBase{
 		}
 		return null;
 	}
+	
+	NBTTagCompound comp = new NBTTagCompound();
 
 	@Override
 	public void breakBlock(World w, int x, int y, int z, Block b, int meta) {
+		w.getTileEntity(x, y, z).writeToNBT(comp);
 		super.breakBlock(w, x, y, z, b, meta);
 	}
 
 	@Override
 	public ArrayList<ItemStack> getDrops(World w, int x, int y, int z, int metadata, int fortune) {
-		ItemStack drop = new ItemStack(w.getBlock(x, y, z), 1, w.getBlockMetadata(x, y, z));
-		drop.stackTagCompound = new NBTTagCompound();
-		w.getTileEntity(x, y, z).writeToNBT(drop.stackTagCompound);
+		ItemStack drop = new ItemStack(this, 1, metadata);
+		drop.stackTagCompound = (NBTTagCompound) comp.copy();
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		drops.add(drop);
 		return drops;
@@ -83,18 +85,21 @@ public abstract class BlockContainerAdvanced extends BlockContainerBase{
 		TileEntity te = w.getTileEntity(x, y, z);
 		ItemStack items = player.inventory.mainInventory[player.inventory.currentItem];
 		if(te instanceof IWrenchable){
-			if (ToolWrench.isWrench(items))
+			if (ToolWrench.isWrench(items)){
 				((IWrenchable)te).onWrenched();
-			return true;
+				return true;
+			}
 		}
 		if(te instanceof IRedstoneSensitive){
-			if(items!=null && map.containsKey(items)){
-				if(map.get(items)!=((IRedstoneSensitive)te).getCurrentSetting()){
-					if(!player.inventory.addItemStackToInventory(new ItemStack(getItem(((IRedstoneSensitive)te).getCurrentSetting()), 1))){
-						WorldHelper.spawnEntItem(w, x, y, z, new ItemStack(getItem(((IRedstoneSensitive)te).getCurrentSetting()), 1));
-					}
-					((IRedstoneSensitive)te).setNewSetting(map.get(items));
-					InvHelper.decrItemStack(items);
+			if(items!=null && map.containsKey(items.getItem())){
+				if(map.get(items.getItem())!=((IRedstoneSensitive)te).getCurrentSetting()){
+					Item it = getItem(((IRedstoneSensitive)te).getCurrentSetting());
+					if(!w.isRemote)
+						WorldHelper.spawnEntItem(w, x, y, z, new ItemStack(it, 1));
+					((IRedstoneSensitive)te).setNewSetting(map.get(items.getItem()));
+					player.inventory.mainInventory[player.inventory.currentItem].stackSize--;
+					player.inventory.mainInventory[player.inventory.currentItem] = player.inventory.mainInventory[player.inventory.currentItem].stackSize==0 ? null:
+						player.inventory.mainInventory[player.inventory.currentItem];
 					return true;
 				}
 			}
@@ -114,8 +119,8 @@ public abstract class BlockContainerAdvanced extends BlockContainerBase{
 
 	public void getNBTInfo(NBTTagCompound comp, ArrayList<String> l, int meta){
 		dummy.readFromNBT(comp);
-		if(dummy instanceof TileMachineBase){
-			l.add("Energy:" + comp.getInteger("energy") + "/" + ((TileMachineBase)dummy).capacity);
+		if(dummy instanceof IEnergyHandler){
+			l.add("Energy:" + ((IEnergyHandler)dummy).getEnergyStored(null) + "/" + ((IEnergyHandler)dummy).getMaxEnergyStored(null));
 		}
 		if(CompatibilityHandler.th && dummy instanceof thaumcraft.api.aspects.IAspectContainer){
 			if(Keyboard.isKeyDown(Keyboard.KEY_A)){

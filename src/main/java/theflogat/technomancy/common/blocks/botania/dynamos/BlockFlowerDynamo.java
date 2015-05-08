@@ -24,7 +24,7 @@ public class BlockFlowerDynamo extends BlockDynamoBase implements IWandHUD {
 	@Override
 	public void registerBlockIcons(IIconRegister icon) {
 		blockIcon = icon.registerIcon(Ref.getAsset(Names.flowerDynamo));
-	} 
+	}
 
 	@Override
 	public TileEntity createNewTileEntity(World w, int meta) {
