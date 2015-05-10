@@ -26,8 +26,7 @@ import theflogat.technomancy.common.tiles.base.IUpgradable;
 import theflogat.technomancy.common.tiles.base.IWrenchable;
 import theflogat.technomancy.lib.handlers.CompatibilityHandler;
 import theflogat.technomancy.util.ToolWrench;
-import theflogat.technomancy.util.WorldHelper;
-import theflogat.technomancy.util.helpers.InvHelper;
+import theflogat.technomancy.util.helpers.WorldHelper;
 import cofh.api.energy.IEnergyHandler;
 
 public abstract class BlockContainerAdvanced extends BlockContainerBase{
@@ -109,7 +108,7 @@ public abstract class BlockContainerAdvanced extends BlockContainerBase{
 				if(((IUpgradable)te).getBoost()){
 					((IUpgradable)te).toggleBoost();
 					if(!w.isRemote)
-						WorldHelper.dropBoost(w, x, y, z, player);
+						WorldHelper.dropBoost(w, x, y, z);
 					return true;
 				}
 			}

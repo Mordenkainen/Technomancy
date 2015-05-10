@@ -32,7 +32,7 @@ public interface IRedstoneSensitive {
 				if(set.id.equalsIgnoreCase(oldId))
 					return set;
 
-			return null;
+			return HIGH;
 		}
 
 		public RedstoneSet cycle(){

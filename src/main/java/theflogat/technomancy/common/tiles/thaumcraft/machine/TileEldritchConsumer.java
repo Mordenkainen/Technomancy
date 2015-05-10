@@ -203,6 +203,7 @@ public class TileEldritchConsumer extends TileMachineBase implements IAspectCont
 		list.readFromNBT(comp);
 		cooldown = comp.getInteger("cooldown");
 		current = Range.readFromNbt(comp);
+		set = RedstoneSet.load(comp);
 	}
 
 	@Override
@@ -210,6 +211,7 @@ public class TileEldritchConsumer extends TileMachineBase implements IAspectCont
 		list.writeToNBT(comp);
 		comp.setInteger("cooldown", cooldown);
 		current.writeToNbt(comp);
+		set.save(comp);
 	}
 
 	@Override

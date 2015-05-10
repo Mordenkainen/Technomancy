@@ -1,5 +1,6 @@
 package theflogat.technomancy.util;
 
+import theflogat.technomancy.util.helpers.WorldHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 

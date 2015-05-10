@@ -11,7 +11,7 @@ import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.util.Coords;
-import theflogat.technomancy.util.WorldHelper;
+import theflogat.technomancy.util.helpers.WorldHelper;
 
 public class BlockFakeAirNG extends BlockContainer{
 
@@ -44,7 +44,7 @@ public class BlockFakeAirNG extends BlockContainer{
 			TileNodeGenerator tile = (TileNodeGenerator)nodeGen.w.getTileEntity(nodeGen.x, nodeGen.y, nodeGen.z);
 			if(tile.boost) {
 				if(!w.isRemote) {
-					WorldHelper.dropBoost(w, x, y, z, player);
+					WorldHelper.dropBoost(w, x, y, z);
 				}
 				tile.setBoost(false);
 				return true;

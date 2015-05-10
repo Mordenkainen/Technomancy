@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagByte;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
@@ -45,6 +46,7 @@ import theflogat.technomancy.common.items.thaumcraft.ItemTHMaterial;
 import theflogat.technomancy.common.items.thaumcraft.ItemTechnoturgeScepter;
 import theflogat.technomancy.common.items.thaumcraft.ItemWandCores;
 import theflogat.technomancy.common.tiles.air.TileFakeAirNG;
+import theflogat.technomancy.common.tiles.base.TileCoilTransmitter;
 import theflogat.technomancy.common.tiles.thaumcraft.dynamos.TileEssentiaDynamo;
 import theflogat.technomancy.common.tiles.thaumcraft.dynamos.TileNodeDynamo;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileAdvDeconTable;
@@ -52,7 +54,6 @@ import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBiomeMorpher;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileCondenser;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEldritchConsumer;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileElectricBellows;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaTransmitter;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileFluxLamp;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTCProcessor;
@@ -115,8 +116,8 @@ public class Thaumcraft extends ModuleBase {
 		return null;
 	}
 	
-	public static TileEntity getConnectableAsContainer(World world, int x, int y, int z, ForgeDirection face){
-		TileEntity te = world.getTileEntity(x + face.offsetX, y + face.offsetY, z + face.offsetZ);
+	public static TileEntity getConnectableAsContainer(IBlockAccess w, int x, int y, int z, ForgeDirection face){
+		TileEntity te = w.getTileEntity(x + face.offsetX, y + face.offsetY, z + face.offsetZ);
 		if (te instanceof IAspectContainer || (te instanceof IEssentiaTransport && ((IEssentiaTransport)te).isConnectable(face.getOpposite()))) {
 			return te;
 		}
@@ -240,7 +241,7 @@ public class Thaumcraft extends ModuleBase {
 		registerTileEntity(TMBlocks.nodeGenerator, TileNodeGenerator.class, "TileNodeGenerator");
 		registerTileEntity(TMBlocks.fakeAirNG, TileFakeAirNG.class, Ref.MOD_PREFIX + "TileFakeAir");
 		registerTileEntity(TMBlocks.fluxLamp, TileFluxLamp.class, "TileFluxLamp");
-		registerTileEntity(TMBlocks.teslaCoil, TileEssentiaTransmitter.class, "TileTeslaCoil");
+		registerTileEntity(TMBlocks.teslaCoil, TileCoilTransmitter.class, "TileTeslaCoil");
 		registerTileEntity(TMBlocks.electricBellows, TileElectricBellows.class, "TileElectricBellows");
 		registerTileEntity(TMBlocks.creativeJar, TileCreativeJar.class, "TileCreativeJar");
 //		registerTileEntity(TMBlocks.reconstructorBlock, TileReconstructor.class, "TileReconstructor");

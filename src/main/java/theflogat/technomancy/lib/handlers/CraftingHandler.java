@@ -108,8 +108,8 @@ public class CraftingHandler {
 			GameRegistry.addShapedRecipe(new ItemStack(TMBlocks.itemTransmitter, 1), new Object[]{
 				"III",
 				"ISI",
-				"IRI",
-				'R', Items.ender_pearl, 'S', Items.stick, 'I', Items.iron_ingot
+				"ERE",
+				'R', Items.ender_pearl, 'S', Items.stick, 'I', Items.iron_ingot, 'E', Items.redstone
 			});
 		}
 		if(Ids.ritualTome){

@@ -26,8 +26,8 @@ import theflogat.technomancy.common.tiles.base.IUpgradable;
 import theflogat.technomancy.common.tiles.base.IWrenchable;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
 import theflogat.technomancy.lib.compat.Thaumcraft;
-import theflogat.technomancy.util.WorldHelper;
 import theflogat.technomancy.util.helpers.MathHelper;
+import theflogat.technomancy.util.helpers.WorldHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

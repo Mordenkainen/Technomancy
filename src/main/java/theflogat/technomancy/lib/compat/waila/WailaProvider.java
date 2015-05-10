@@ -1,6 +1,7 @@
 package theflogat.technomancy.lib.compat.waila;
 
 import theflogat.technomancy.common.tiles.air.TileFakeAirNG;
+import theflogat.technomancy.common.tiles.base.TileCoilTransmitter;
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
 import theflogat.technomancy.common.tiles.base.TileProcessorBase;
 import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBloodFabricator;
@@ -45,5 +46,7 @@ public class WailaProvider {
 		IWailaDataProvider manaExchanger = new ManaExchangerHUDHandler();
 		registrar.registerBodyProvider(manaExchanger, TileManaExchanger.class);
 		registrar.registerNBTProvider(manaExchanger, TileManaExchanger.class);
+		
+		registrar.registerBodyProvider(new CoilTransmitterHUDHandler(), TileCoilTransmitter.class);
     }
 }

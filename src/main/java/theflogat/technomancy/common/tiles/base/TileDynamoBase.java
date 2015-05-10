@@ -7,7 +7,7 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraftforge.common.util.ForgeDirection;
-import theflogat.technomancy.util.WorldHelper;
+import theflogat.technomancy.util.helpers.WorldHelper;
 import cofh.api.energy.IEnergyHandler;
 
 public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyHandler, IUpgradable, IWrenchable, IRedstoneSensitive {
@@ -81,8 +81,7 @@ public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyH
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound comp) {
-		if(set!=null)
-			set.save(comp);
+		set.save(comp);
 		comp.setInteger("energy", ener);
 		comp.setByte("face", facing);
 		comp.setInteger("fuel", fuel);
@@ -92,8 +91,6 @@ public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyH
 	@Override
 	public void readCustomNBT(NBTTagCompound comp) {
 		set = RedstoneSet.load(comp);
-		if(set==null)
-			set = RedstoneSet.HIGH;
 		ener = comp.getInteger("energy");
 		facing = comp.getByte("face");
 		fuel = comp.getInteger("fuel");

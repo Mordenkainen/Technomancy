@@ -1,9 +1,8 @@
-package theflogat.technomancy.util;
+package theflogat.technomancy.util.helpers;
 
 import java.util.ArrayList;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -11,6 +10,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.aspects.IAspectContainer;
 import theflogat.technomancy.common.items.base.TMItems;
 import cofh.api.energy.IEnergyHandler;
 
@@ -70,11 +71,25 @@ public class WorldHelper {
 		return getAdjacentTileEntity(entity, i)!=null && getAdjacentTileEntity(entity, i) instanceof IFluidHandler;
 	}
 	
-	public static void dropBoost(World w, int x, int y, int z, EntityPlayer player){
+	public static void dropBoost(World w, int x, int y, int z){
 		spawnEntItem(w, x, y, z, new ItemStack(TMItems.itemBoost, 1));
 	}
 	
 	public static boolean isChunkLoaded(World w, int x, int z){
 		return w.getChunkFromBlockCoords(x, z).isChunkLoaded;
+	}
+	
+	public static boolean isFull(IAspectContainer cont) {
+		ArrayList<Aspect> al = Aspect.getPrimalAspects();
+		al.addAll(Aspect.getCompoundAspects());
+		for(Aspect as : al){
+			if(cont.doesContainerAccept(as)){
+				if(cont.addToContainer(as, 1)==0){
+					cont.takeFromContainer(as, 1);
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 }

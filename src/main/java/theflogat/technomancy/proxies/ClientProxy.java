@@ -47,6 +47,7 @@ import theflogat.technomancy.client.tiles.TileManaFabricatorRenderer;
 import theflogat.technomancy.client.tiles.TileNodeDynamoRenderer;
 import theflogat.technomancy.client.tiles.TileNodeGeneratorRenderer;
 import theflogat.technomancy.common.items.base.TMItems;
+import theflogat.technomancy.common.tiles.base.TileCoilTransmitter;
 import theflogat.technomancy.common.tiles.bloodmagic.dynamos.TileBloodDynamo;
 import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBMProcessor;
 import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBloodFabricator;
@@ -62,7 +63,6 @@ import theflogat.technomancy.common.tiles.thaumcraft.machine.TileAdvDeconTable;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBiomeMorpher;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEldritchConsumer;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileElectricBellows;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaTransmitter;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileFluxLamp;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTCProcessor;
@@ -111,7 +111,7 @@ public class ClientProxy extends CommonProxy implements IGuiHandler{
     		ClientRegistry.bindTileEntitySpecialRenderer(TileFluxLamp.class, new TileFluxLampRenderer());
     		RenderIds.idFluxLamp = RenderingRegistry.getNextAvailableRenderId();
     	
-    		ClientRegistry.bindTileEntitySpecialRenderer(TileEssentiaTransmitter.class, new TileEssentiaTransmitterRenderer());
+    		ClientRegistry.bindTileEntitySpecialRenderer(TileCoilTransmitter.class, new TileEssentiaTransmitterRenderer());
     		RenderIds.idEssentiaTransmitter = RenderingRegistry.getNextAvailableRenderId(); 
     	
     		ClientRegistry.bindTileEntitySpecialRenderer(TileElectricBellows.class, new TileElectricBellowsRenderer());
