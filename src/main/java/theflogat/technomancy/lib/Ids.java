@@ -13,7 +13,7 @@ public class Ids {
 	public static boolean electricBellows;
 	public static boolean creativeJar;
 	public static boolean crystalBlock;
-	public static boolean reconstructor;
+//	public static boolean reconstructor;
 	public static boolean bloodDynamo;
 	public static boolean condenser;
 	public static boolean bloodFabricator;
@@ -24,7 +24,7 @@ public class Ids {
 	public static boolean processorBO;
 	public static boolean eldrichConsumer;
 	public static boolean manaFluid;
-        public static boolean essentiaCannon;
+	public static boolean essentiaCannon;
 	public static boolean itemMaterial;
 	public static boolean pen;
 	public static boolean wandCores;

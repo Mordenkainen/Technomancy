@@ -4,7 +4,7 @@ import theflogat.technomancy.Technomancy;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
-public class BlockBase extends Block{
+public abstract class BlockBase extends Block{
 
 	protected BlockBase() {
 		super(Material.rock);

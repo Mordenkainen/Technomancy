@@ -31,7 +31,7 @@ public class ItemEssentiaCannon extends ItemBase {
 	return itemstack;
 	}
 	
-	private boolean isCharged(int damage) {
+	private static boolean isCharged(int damage) {
 		return damage >= 2;
 	}
 	

@@ -1,23 +1,20 @@
 package theflogat.technomancy.common.blocks.technom;
 
 import java.util.List;
-
-import theflogat.technomancy.Technomancy;
-import theflogat.technomancy.common.blocks.base.BlockBase;
-import theflogat.technomancy.common.blocks.base.BlockContainerBase;
-import theflogat.technomancy.common.tiles.technom.TileCrystal;
-import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
-import theflogat.technomancy.lib.RenderIds;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import theflogat.technomancy.common.blocks.base.BlockContainerBase;
+import theflogat.technomancy.common.tiles.technom.TileCrystal;
+import theflogat.technomancy.lib.Names;
+import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.RenderIds;
 
 public class BlockCrystal extends BlockContainerBase{
 
@@ -27,14 +24,18 @@ public class BlockCrystal extends BlockContainerBase{
 	}
 
 	@Override
-	public AxisAlignedBB getCollisionBoundingBoxFromPool(World w, int x, int y, int z) {
-//				if(w != null && w.getBlock(x, y-1, z) instanceof BlockCrystal){
-//					if(w.getBlock(x, y-2, z) instanceof BlockCrystal){
-//						return AxisAlignedBB.getBoundingBox(0.375, 0, 0.375, 0.625, 1, 0.625);
-//					}
-//					return AxisAlignedBB.getBoundingBox(0.25, 0, 0.25, 0.75, 1, 0.75);
-//				}
-		return super.getCollisionBoundingBoxFromPool(w, x, y, z);
+	public void setBlockBoundsBasedOnState(IBlockAccess w, int x, int y, int z) {
+		switch(getStage(w, x, y, z)) {
+		case 0:
+			setBlockBounds(0F, 0F, 0F, 1F, 1F, 1F);
+			break;
+		case 1:
+			setBlockBounds(0.25F, 0F, 0.25F, 0.75F, 1F, 0.75F);
+			break;
+		case 2:
+			setBlockBounds(0.375F, 0F, 0.375F, 0.625F, 1F, 0.625F);
+			break;
+		}
 	}
 
 	@Override
@@ -88,5 +89,16 @@ public class BlockCrystal extends BlockContainerBase{
 	@Override
 	public IIcon getIcon(int side, int meta) {
 		return icons[meta];
+	}
+
+	public static int getStage(IBlockAccess w, int x, int y, int z) {
+		int i = 0;
+		if(w.getBlock(x, y-1, z) instanceof BlockCrystal){
+			i++;
+			if(w.getBlock(x, y-2, z) instanceof BlockCrystal){
+				i++;
+			}
+		}
+		return i;
 	}
 }

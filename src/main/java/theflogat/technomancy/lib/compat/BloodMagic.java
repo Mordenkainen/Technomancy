@@ -13,7 +13,6 @@ import theflogat.technomancy.common.blocks.bloodmagic.machines.BlockBMProcessor;
 import theflogat.technomancy.common.blocks.bloodmagic.machines.BlockBloodFabricator;
 import theflogat.technomancy.common.items.base.TMItems;
 import theflogat.technomancy.common.items.bloodmagic.ItemBMMaterial;
-import theflogat.technomancy.common.items.bloodmagic.ItemBloodDynamo;
 import theflogat.technomancy.common.tiles.bloodmagic.dynamos.TileBloodDynamo;
 import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBMProcessor;
 import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBloodFabricator;
@@ -73,7 +72,7 @@ public class BloodMagic extends ModuleBase{
 		TMBlocks.bloodFabricator = Ids.bloodFabricator ? new BlockBloodFabricator() : null;
 		TMBlocks.processorBM = Ids.processorBM ? new BlockBMProcessor() : null;
 		
-		registerBlock(TMBlocks.bloodDynamo, Names.bloodDynamo, ItemBloodDynamo.class);
+		registerBlock(TMBlocks.bloodDynamo, Names.bloodDynamo);
 		registerBlock(TMBlocks.bloodFabricator, Names.bloodFabricator);
 		registerBlock(TMBlocks.processorBM, Names.processor + "BM");
 		

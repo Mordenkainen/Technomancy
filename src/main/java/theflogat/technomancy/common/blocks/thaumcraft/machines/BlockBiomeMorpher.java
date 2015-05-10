@@ -1,7 +1,11 @@
 package theflogat.technomancy.common.blocks.thaumcraft.machines;
 
+import java.util.ArrayList;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
@@ -22,6 +26,12 @@ public class BlockBiomeMorpher extends BlockContainerAdvanced {
 	@Override
 	public TileEntity createNewTileEntity(World w, int meta) {
 		return new TileBiomeMorpher();
+	}
+	
+	@Override
+	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase player, ItemStack items) {
+		super.onBlockPlacedBy(w, x, y, z, player, items);
+		w.setBlockMetadataWithNotify(x, y, z, items.getItemDamage(), 2);
 	}
 
 	@Override
@@ -82,5 +92,18 @@ public class BlockBiomeMorpher extends BlockContainerAdvanced {
 	@Override
 	public void registerBlockIcons(IIconRegister icon) {
 		blockIcon = icon.registerIcon(Ref.getAsset(Names.biomeMorpher));
+	}
+	
+	@Override
+	public void getNBTInfo(NBTTagCompound comp, ArrayList<String> l, int meta) {
+		super.getNBTInfo(comp, l, meta);
+		switch (meta) {
+		case 0:
+			l.add("Magical Forest"); break;
+		case 1:
+			l.add("Eerie"); break;
+		case 2:
+			l.add("Tainted Land");
+		}
 	}
 }

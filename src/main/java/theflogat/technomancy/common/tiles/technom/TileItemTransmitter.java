@@ -1,9 +1,6 @@
 package theflogat.technomancy.common.tiles.technom;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-
-import cofh.api.energy.IEnergyHandler;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,26 +9,37 @@ import net.minecraft.util.ChunkCoordinates;
 import net.minecraftforge.common.util.ForgeDirection;
 import theflogat.technomancy.common.tiles.base.ICouplable;
 import theflogat.technomancy.common.tiles.base.IRedstoneSensitive;
-import theflogat.technomancy.common.tiles.base.IWrenchable;
 import theflogat.technomancy.common.tiles.base.IUpgradable;
-import theflogat.technomancy.common.tiles.base.TileTechnomancy;
-import theflogat.technomancy.util.InvHelper;
-import theflogat.technomancy.util.WorldHelper;
+import theflogat.technomancy.common.tiles.base.IWrenchable;
+import theflogat.technomancy.common.tiles.base.TileCoilTransmitter;
+import theflogat.technomancy.util.helpers.InvHelper;
+import theflogat.technomancy.util.helpers.WorldHelper;
 
-public class TileItemTransmitter extends TileTechnomancy implements IUpgradable, ICouplable, IRedstoneSensitive, IWrenchable{
+public class TileItemTransmitter extends TileCoilTransmitter implements IUpgradable, ICouplable, IRedstoneSensitive, IWrenchable{
 
 	public ItemStack filter = null;
-	public ArrayList<ChunkCoordinates> sources = new ArrayList<ChunkCoordinates>();
-	public byte facing = 0;
-	public RedstoneSet set = RedstoneSet.LOW;
-	public boolean boost = false;
 
 	@Override
 	public void updateEntity() {
 		if(set==null)
 			set = RedstoneSet.LOW;
-		TileEntity te = WorldHelper.getAdjacentTileEntity(this, facing);
-		if (set.canRun(this) && te != null && te instanceof IInventory && !sources.isEmpty()) {
+		TileEntity te = WorldHelper.getAdjacentTileEntity(this, (byte) facing);
+		if(te==null || !(te instanceof IInventory)){
+			return;
+		}
+		
+		if(getBlockMetadata()==0){
+			if(boost && !InvHelper.isFull((IInventory)te)){
+				worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 3);
+			}
+		}else{
+			if(!(boost && !InvHelper.isFull((IInventory)te))){
+				worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3);
+			}
+		}
+		
+		
+		if (set.canRun(this) &&  !sources.isEmpty()) {
 			IInventory inv = (IInventory) te;
 			if(!InvHelper.isFull(inv)){
 				Iterator<ChunkCoordinates> sourceIter = sources.iterator();
@@ -55,7 +63,7 @@ public class TileItemTransmitter extends TileTechnomancy implements IUpgradable,
 		}
 	}
 	
-    private boolean areItemStacksEqual(ItemStack toMove, ItemStack filter){
+    private static boolean areItemStacksEqual(ItemStack toMove, ItemStack filter){
         return toMove.getItem() != filter.getItem() ? false : (toMove.getItemDamage() != filter.getItemDamage()
         		? false : (toMove.stackTagCompound == null && filter.stackTagCompound != null ? false : toMove.stackTagCompound == null ||
         		toMove.stackTagCompound.equals(filter.stackTagCompound)));
@@ -68,16 +76,7 @@ public class TileItemTransmitter extends TileTechnomancy implements IUpgradable,
 			filter = ItemStack.loadItemStackFromNBT(item);
 			filter.readFromNBT(item);
 		}
-		facing = comp.getByte("facing");
-		int size = comp.getInteger("size");
-		for(int i = 0; i < size; i ++) {
-			int xx = comp.getInteger("xcoord" + i);		
-			int yy = comp.getInteger("ycoord" + i);		
-			int zz = comp.getInteger("zcoord" + i);
-			this.sources.add(new ChunkCoordinates(xx, yy, zz));
-		}
-		boost = comp.getBoolean("boost");
-		set = RedstoneSet.load(comp);
+		super.readCustomNBT(comp);
 	}
 
 	@Override
@@ -87,35 +86,7 @@ public class TileItemTransmitter extends TileTechnomancy implements IUpgradable,
 			filter.writeToNBT(item);
 			comp.setTag("filter", item);
 		}
-		comp.setByte("facing", (byte)facing);
-		int sourceCount = 0;
-		for(int i = 0; i < sources.size(); i++) {
-			if(sources.get(i) != null) {
-				comp.setInteger("xcoord" + sourceCount, sources.get(i).posX);
-				comp.setInteger("ycoord" + sourceCount, sources.get(i).posY);
-				comp.setInteger("zcoord" + sourceCount, sources.get(i).posZ);
-				sourceCount++;
-			}		
-		}
-		comp.setInteger("size", sourceCount);
-		comp.setBoolean("boost", boost);
-		set.save(comp);
-	}
-
-	@Override
-	public boolean toggleBoost() {
-		boost = !boost;
-		return boost;
-	}
-
-	@Override
-	public boolean getBoost() {
-		return boost;
-	}
-
-	@Override
-	public void setBoost(boolean newBoost) {
-		boost = newBoost;
+		super.writeCustomNBT(comp);
 	}
 
 	@Override

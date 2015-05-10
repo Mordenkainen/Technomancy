@@ -1,7 +1,6 @@
 package theflogat.technomancy.lib.compat;
 
 import java.util.Random;
-
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -16,7 +15,6 @@ import theflogat.technomancy.common.blocks.botania.machines.BlockManaExchanger;
 import theflogat.technomancy.common.blocks.botania.machines.BlockManaFabricator;
 import theflogat.technomancy.common.items.base.TMItems;
 import theflogat.technomancy.common.items.botania.ItemBOMaterial;
-import theflogat.technomancy.common.items.botania.ItemFlowerDynamo;
 import theflogat.technomancy.common.items.botania.ItemManaBucket;
 import theflogat.technomancy.common.items.botania.ItemManaExchanger;
 import theflogat.technomancy.common.items.botania.ManaFluid;
@@ -121,7 +119,7 @@ public class Botania extends ModuleBase {
 		TMBlocks.processorBO = Ids.processorBO ? new BlockBOProcessor() : null;
 		TMBlocks.manaExchanger = Ids.manaExchanger ? new BlockManaExchanger() : null;
 		
-		registerBlock(TMBlocks.flowerDynamo, Names.flowerDynamo, ItemFlowerDynamo.class);
+		registerBlock(TMBlocks.flowerDynamo, Names.flowerDynamo);
 		registerBlock(TMBlocks.manaFabricator, Names.manaFabricator);
 		registerBlock(TMBlocks.processorBO, Names.processor + "BO");
 		registerBlock(TMBlocks.manaFluidBlock, Names.manaFluidBlock);

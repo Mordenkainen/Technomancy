@@ -16,6 +16,7 @@ public class ToolWrench {
 		wrenchInterfaces.add("IToolCrowbar");
 		
 		wrenchClasses.add("ItemWandCasting");
+		wrenchClasses.add("ItemTechnoturgeScepter");
 	}
 
 	public static boolean isWrench(ItemStack items) {

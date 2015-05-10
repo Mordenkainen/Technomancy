@@ -13,12 +13,12 @@ import theflogat.technomancy.common.tiles.base.TileTechnomancy;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 
 public class TileAdvDeconTable extends TileTechnomancy implements IInventory, IUpgradable{
-	
+
 	public int breakSpeed = 80;
 	public Aspect aspect;
 	public int breaktime;
 	private ItemStack[] items = new ItemStack[1];
-	public String owner;
+	public String owner = "";
 
 	@Override
 	public void readCustomNBT(NBTTagCompound comp) {
@@ -38,7 +38,8 @@ public class TileAdvDeconTable extends TileTechnomancy implements IInventory, IU
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound comp) {
-		comp.setString("owner", owner);
+		if(!owner.equals(""))
+			comp.setString("owner", owner);
 		if (aspect != null) {
 			comp.setString("Aspect", aspect.getTag());
 		}
@@ -132,12 +133,12 @@ public class TileAdvDeconTable extends TileTechnomancy implements IInventory, IU
 		}
 		return true;
 	}
-	
+
 	@Override
 	public boolean canUpdate(){
 		return true;
 	}
-	
+
 	@Override
 	public void updateEntity() {
 		boolean update = false;
@@ -157,7 +158,7 @@ public class TileAdvDeconTable extends TileTechnomancy implements IInventory, IU
 				breaktime = 0;
 			}
 		}
-		
+
 		if(worldObj.getWorldTime() % 20 == 0 && aspect!=null){
 			short curr = Thaumcraft.getAspectPoolFor(owner, aspect);
 			if(curr<Short.MAX_VALUE){
@@ -166,7 +167,7 @@ public class TileAdvDeconTable extends TileTechnomancy implements IInventory, IU
 				aspect = null;
 			}
 		}
-		
+
 		if (update){
 			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		}
@@ -190,16 +191,16 @@ public class TileAdvDeconTable extends TileTechnomancy implements IInventory, IU
 			al = ThaumcraftCraftingManager.getBonusTags(items[0], al);
 
 			AspectList primals = reduceToPrimals(al);
-			
+
 			if (worldObj.rand.nextInt(80) < primals.visSize() && worldObj.rand.nextInt(8) == 0)
 				aspect = primals.getAspects()[worldObj.rand.nextInt(primals.getAspects().length)];
-			
+
 			items[0].stackSize -= 1;
 			if (items[0].stackSize <= 0)
 				items[0] = null;
 		}
 	}
-	
+
 	public static AspectList reduceToPrimals(AspectList al) {
 		AspectList out = new AspectList();
 		for (Aspect aspect : al.getAspects()) {
@@ -243,6 +244,10 @@ public class TileAdvDeconTable extends TileTechnomancy implements IInventory, IU
 			breakSpeed = 80;
 		}
 	}
-	
-}
 
+	@Override
+	public String getInfo() {
+		return "Twice the fastness";
+	}
+
+}

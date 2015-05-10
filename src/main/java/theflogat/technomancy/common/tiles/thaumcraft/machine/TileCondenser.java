@@ -6,6 +6,7 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectSource;
 import thaumcraft.api.aspects.IEssentiaTransport;
+import theflogat.technomancy.common.tiles.base.IRedstoneSensitive.RedstoneSet;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
 import theflogat.technomancy.lib.handlers.Rate;
 
@@ -16,6 +17,7 @@ public class TileCondenser extends TileMachineBase implements IEssentiaTransport
 	public int amount = 0;
 	public int maxAmount = 64;
 	public static int cost = Rate.condenserCost;
+	public RedstoneSet set = RedstoneSet.LOW;
 
 	public TileCondenser() {
 		super(Rate.condenserCost * 5);
@@ -23,20 +25,22 @@ public class TileCondenser extends TileMachineBase implements IEssentiaTransport
 	
 	@Override
 	public void updateEntity() {
-		if(energy >= cost && amount < maxAmount) {
+		if(set.canRun(this) && energy >= cost && amount < maxAmount) {
 			extractEnergy(cost, false);
 			amount++;
 		}
 	}
 
 	@Override
-	public void readCustomNBT(NBTTagCompound compound)  {
-		amount = compound.getShort("Amount");
+	public void readCustomNBT(NBTTagCompound comp)  {
+		amount = comp.getShort("Amount");
+		set = RedstoneSet.load(comp);
 	}
 
 	@Override
-	public void writeCustomNBT(NBTTagCompound compound)  {
-		compound.setShort("Amount", (short)amount);
+	public void writeCustomNBT(NBTTagCompound comp)  {
+		comp.setShort("Amount", (short)amount);
+		set.save(comp);
 	}
 
 	@Override

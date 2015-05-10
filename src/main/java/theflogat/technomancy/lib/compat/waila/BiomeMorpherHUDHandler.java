@@ -1,7 +1,6 @@
 package theflogat.technomancy.lib.compat.waila;
 
 import java.util.List;
-
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,6 +16,7 @@ public class BiomeMorpherHUDHandler implements IWailaDataProvider {
 	@Override
 	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,	IWailaConfigHandler config) {
 		currenttip.add("Biome: " + biomeForMeta(accessor.getMetadata()));
+		WailaHelper.drawDefault(currenttip, accessor.getTileEntity());
 		return currenttip;
 	}
 	
@@ -43,7 +43,7 @@ public class BiomeMorpherHUDHandler implements IWailaDataProvider {
         return tag;
 	}
 	
-	String biomeForMeta(int meta) {
+	private static String biomeForMeta(int meta) {
 		if (meta == 0) {
 			return SpecialChars.GREEN + "Magical Forest";
 		}else if (meta == 1) {

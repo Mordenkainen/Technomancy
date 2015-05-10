@@ -82,13 +82,13 @@ public class ItemCoilCoupler extends Item{
 		return false;
 	}
 	
-	private boolean areCoordsEqual(NBTTagCompound comp, int x, int y, int z) {
+	private static boolean areCoordsEqual(NBTTagCompound comp, int x, int y, int z) {
 		int nx = comp.getInteger("x");int ny = comp.getInteger("y");int nz = comp.getInteger("z");
 
 		return nx==x && ny==y && nz==z;
 	}
 
-	private int[] retrievePos(NBTTagCompound comp) {
+	private static int[] retrievePos(NBTTagCompound comp) {
 		return new int[]{comp.getInteger("x"),comp.getInteger("y"),comp.getInteger("z")};
 	}
 

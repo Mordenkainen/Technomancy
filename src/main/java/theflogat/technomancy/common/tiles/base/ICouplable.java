@@ -1,14 +1,12 @@
 package theflogat.technomancy.common.tiles.base;
 
 import java.util.ArrayList;
-
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.fluids.IFluidTank;
 import thaumcraft.api.aspects.IAspectContainer;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaTransmitter;
 import cofh.api.energy.IEnergyHandler;
 
 public interface ICouplable {
@@ -22,7 +20,7 @@ public interface ICouplable {
 		
 		static{
 			forbidAC.add("TileMirrorEssentia");
-			forbidAC.add(TileEssentiaTransmitter.class.getName());
+			forbidAC.add(TileCoilTransmitter.class.getName());
 		}
 		
 		public static Type getType(TileEntity te) {

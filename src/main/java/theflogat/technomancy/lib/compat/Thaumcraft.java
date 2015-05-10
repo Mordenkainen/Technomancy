@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagByte;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
@@ -33,21 +34,19 @@ import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockElectricBell
 import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockEssentiaTransmitter;
 import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockFluxLamp;
 import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockNodeGenerator;
-import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockReconstructor;
 import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockTCProcessor;
 import theflogat.technomancy.common.blocks.thaumcraft.storage.BlockCreativeJar;
 import theflogat.technomancy.common.blocks.thaumcraft.storage.BlockEssentiaContainer;
 import theflogat.technomancy.common.blocks.thaumcraft.storage.BlockReservoir;
 import theflogat.technomancy.common.items.base.TMItems;
 import theflogat.technomancy.common.items.thaumcraft.ElectricWandUpdate;
-import theflogat.technomancy.common.items.thaumcraft.ItemEssentiaDynamo;
 import theflogat.technomancy.common.items.thaumcraft.ItemFusionFocus;
-import theflogat.technomancy.common.items.thaumcraft.ItemNodeDynamo;
 import theflogat.technomancy.common.items.thaumcraft.ItemPen;
 import theflogat.technomancy.common.items.thaumcraft.ItemTHMaterial;
 import theflogat.technomancy.common.items.thaumcraft.ItemTechnoturgeScepter;
 import theflogat.technomancy.common.items.thaumcraft.ItemWandCores;
 import theflogat.technomancy.common.tiles.air.TileFakeAirNG;
+import theflogat.technomancy.common.tiles.base.TileCoilTransmitter;
 import theflogat.technomancy.common.tiles.thaumcraft.dynamos.TileEssentiaDynamo;
 import theflogat.technomancy.common.tiles.thaumcraft.dynamos.TileNodeDynamo;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileAdvDeconTable;
@@ -55,10 +54,8 @@ import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBiomeMorpher;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileCondenser;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEldritchConsumer;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileElectricBellows;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaTransmitter;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileFluxLamp;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileReconstructor;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTCProcessor;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileCreativeJar;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaContainer;
@@ -119,8 +116,8 @@ public class Thaumcraft extends ModuleBase {
 		return null;
 	}
 	
-	public static TileEntity getConnectableAsContainer(World world, int x, int y, int z, ForgeDirection face){
-		TileEntity te = world.getTileEntity(x + face.offsetX, y + face.offsetY, z + face.offsetZ);
+	public static TileEntity getConnectableAsContainer(IBlockAccess w, int x, int y, int z, ForgeDirection face){
+		TileEntity te = w.getTileEntity(x + face.offsetX, y + face.offsetY, z + face.offsetZ);
 		if (te instanceof IAspectContainer || (te instanceof IEssentiaTransport && ((IEssentiaTransport)te).isConnectable(face.getOpposite()))) {
 			return te;
 		}
@@ -212,17 +209,17 @@ public class Thaumcraft extends ModuleBase {
 		TMBlocks.teslaCoil = Ids.wirelessCoil ? new BlockEssentiaTransmitter() : null;
 		TMBlocks.electricBellows = Ids.electricBellows ? new BlockElectricBellows() : null;
 		TMBlocks.creativeJar = Ids.creativeJar ? new BlockCreativeJar() : null;
-		TMBlocks.reconstructorBlock = Ids.reconstructor ? new BlockReconstructor() : null;
+//		TMBlocks.reconstructorBlock = Ids.reconstructor ? new BlockReconstructor() : null;
 		TMBlocks.condenserBlock = Ids.condenser ? new BlockCondenser() : null;
 		TMBlocks.processorTC = Ids.processorTC ? new BlockTCProcessor() : null;
 		TMBlocks.eldritchConsumer = Ids.eldrichConsumer ? new BlockEldritchConsumer() : null;
 		TMBlocks.reservoir = Ids.reservoir ? new BlockReservoir() : null;
 		TMBlocks.advDeconTable = Ids.advDeconTable ? new BlockAdvDeconTable() : null;
 		
-		registerBlock(TMBlocks.nodeDynamo, Names.nodeDynamo, ItemNodeDynamo.class);
+		registerBlock(TMBlocks.nodeDynamo, Names.nodeDynamo);
 		registerBlock(TMBlocks.essentiaContainer, Names.essentiaContainer);
 		registerBlock(TMBlocks.cosmeticOpaque, Names.cosmeticOpaque);
-		registerBlock(TMBlocks.essentiaDynamo, Names.essentiaDynamo, ItemEssentiaDynamo.class);
+		registerBlock(TMBlocks.essentiaDynamo, Names.essentiaDynamo);
 		registerBlock(TMBlocks.biomeMorpher, Names.biomeMorpher);
 		registerBlock(TMBlocks.nodeGenerator, Names.nodeGenerator);
 		registerBlock(TMBlocks.fakeAirNG, Names.fakeAirNG);
@@ -230,7 +227,7 @@ public class Thaumcraft extends ModuleBase {
 		registerBlock(TMBlocks.teslaCoil, Names.essentiaTransmitter);
 		registerBlock(TMBlocks.electricBellows, Names.electricBellows);
 		registerBlock(TMBlocks.creativeJar, Names.creativeJar);
-		registerBlock(TMBlocks.reconstructorBlock, Names.reconstructor);
+//		registerBlock(TMBlocks.reconstructorBlock, Names.reconstructor);
 		registerBlock(TMBlocks.condenserBlock, Names.condenserBlock);
 		registerBlock(TMBlocks.processorTC, Names.processor + "TC");
 		registerBlock(TMBlocks.eldritchConsumer, Names.eldritchConsumer);
@@ -244,10 +241,10 @@ public class Thaumcraft extends ModuleBase {
 		registerTileEntity(TMBlocks.nodeGenerator, TileNodeGenerator.class, "TileNodeGenerator");
 		registerTileEntity(TMBlocks.fakeAirNG, TileFakeAirNG.class, Ref.MOD_PREFIX + "TileFakeAir");
 		registerTileEntity(TMBlocks.fluxLamp, TileFluxLamp.class, "TileFluxLamp");
-		registerTileEntity(TMBlocks.teslaCoil, TileEssentiaTransmitter.class, "TileTeslaCoil");
+		registerTileEntity(TMBlocks.teslaCoil, TileCoilTransmitter.class, "TileTeslaCoil");
 		registerTileEntity(TMBlocks.electricBellows, TileElectricBellows.class, "TileElectricBellows");
 		registerTileEntity(TMBlocks.creativeJar, TileCreativeJar.class, "TileCreativeJar");
-		registerTileEntity(TMBlocks.reconstructorBlock, TileReconstructor.class, "TileReconstructor");
+//		registerTileEntity(TMBlocks.reconstructorBlock, TileReconstructor.class, "TileReconstructor");
 		registerTileEntity(TMBlocks.condenserBlock, TileCondenser.class, "TileCondenser");
 		registerTileEntity(TMBlocks.processorTC, TileTCProcessor.class, "TileProcessorTC");
 		registerTileEntity(TMBlocks.eldritchConsumer, TileEldritchConsumer.class, "TileEldrichConsumer");

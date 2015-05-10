@@ -6,9 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
-
 import org.lwjgl.opengl.GL11;
-
 import theflogat.technomancy.client.models.ModelElectricBellows;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileElectricBellows;
 import theflogat.technomancy.lib.Ref;
@@ -18,7 +16,7 @@ public class TileElectricBellowsRenderer extends TileEntitySpecialRenderer{
 	ModelElectricBellows model = new ModelElectricBellows();
 	private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_ELECTRIC_BELLOWS_TEXTURE);
 
-	private void translateFromOrientation(double x, double y, double z, int facing) {
+	private static void translateFromOrientation(double x, double y, double z, int facing) {
 		GL11.glTranslatef((float)x + 0.5F, (float)y - 0.5F, (float)z + 0.5F);
 		if (facing == 2) {
 			GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);

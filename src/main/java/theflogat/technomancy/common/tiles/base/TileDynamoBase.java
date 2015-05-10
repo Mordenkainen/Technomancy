@@ -7,7 +7,7 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraftforge.common.util.ForgeDirection;
-import theflogat.technomancy.util.WorldHelper;
+import theflogat.technomancy.util.helpers.WorldHelper;
 import cofh.api.energy.IEnergyHandler;
 
 public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyHandler, IUpgradable, IWrenchable, IRedstoneSensitive {
@@ -56,10 +56,6 @@ public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyH
 			ener -= ((IEnergyHandler)tile).receiveEnergy(ForgeDirection.VALID_DIRECTIONS[facing].getOpposite(), Math.min(maxExtract, ener), false);		
 		}
 		update();
-//		if(worldObj.getTotalWorldTime() % 4L == 0L) {
-//			onNeighborTileChange(xCoord + ForgeDirection.VALID_DIRECTIONS[facing].offsetX, yCoord +
-//					ForgeDirection.VALID_DIRECTIONS[facing].offsetY, zCoord + ForgeDirection.VALID_DIRECTIONS[facing].offsetZ);
-//		}
 	}
 
 	public String nextRedstoneSet() {
@@ -191,5 +187,10 @@ public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyH
 	@Override
 	public void setNewSetting(RedstoneSet newSet) {
 		set = newSet;
+	}
+	
+	@Override
+	public String getInfo() {
+		return "360 RF/t For Four Times The Fuel";
 	}
 }

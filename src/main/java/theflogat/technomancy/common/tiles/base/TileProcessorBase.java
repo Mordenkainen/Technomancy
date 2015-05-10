@@ -1,7 +1,5 @@
 package theflogat.technomancy.common.tiles.base;
 
-import theflogat.technomancy.common.items.technom.ItemProcessedOre;
-import theflogat.technomancy.util.Ore;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
@@ -9,6 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.oredict.OreDictionary;
+import theflogat.technomancy.common.items.technom.ItemProcessedOre;
+import theflogat.technomancy.util.Ore;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

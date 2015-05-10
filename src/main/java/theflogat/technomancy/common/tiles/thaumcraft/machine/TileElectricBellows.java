@@ -17,7 +17,7 @@ public class TileElectricBellows extends TileMachineBase {
 
 	public byte facing = 2;	
 	public float inflation = 1.0F;
-	boolean firstrun = false;;
+	boolean firstrun = false;
 	boolean direction = false;
 	public int baseCost = Rate.bellowsCost;
 	private int delay = 0;

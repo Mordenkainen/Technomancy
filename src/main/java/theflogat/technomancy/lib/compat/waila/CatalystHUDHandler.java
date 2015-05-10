@@ -1,7 +1,6 @@
 package theflogat.technomancy.lib.compat.waila;
 
 import java.util.List;
-
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -23,6 +22,7 @@ public class CatalystHUDHandler implements IWailaDataProvider {
 	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,	IWailaConfigHandler config) {
 		final TileCatalyst te = (TileCatalyst) accessor.getTileEntity();
 		currenttip.add("Is active: " + (te.handler!=null));
+		WailaHelper.drawDefault(currenttip, te);
 		return currenttip;
 	}
 

@@ -1,9 +1,6 @@
 package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-
-import cofh.api.energy.IEnergyHandler;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -15,56 +12,33 @@ import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import thaumcraft.common.lib.network.PacketHandler;
 import thaumcraft.common.lib.network.fx.PacketFXEssentiaSource;
-import theflogat.technomancy.common.tiles.base.ICouplable;
-import theflogat.technomancy.common.tiles.base.IRedstoneSensitive;
-import theflogat.technomancy.common.tiles.base.IWrenchable;
-import theflogat.technomancy.common.tiles.base.TileTechnomancy;
+import theflogat.technomancy.common.tiles.base.TileCoilTransmitter;
 import theflogat.technomancy.common.tiles.thaumcraft.util.AspectContainerEssentiaTransport;
 import theflogat.technomancy.lib.Conf;
 import theflogat.technomancy.lib.compat.Thaumcraft;
-import theflogat.technomancy.util.WorldHelper;
+import theflogat.technomancy.util.helpers.WorldHelper;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-public class TileEssentiaTransmitter extends TileTechnomancy implements IEssentiaTransport, ICouplable, IRedstoneSensitive, IWrenchable{
+public class TileEssentiaTransmitter extends TileCoilTransmitter implements IEssentiaTransport{
 
 	public Aspect aspectFilter = null;
-	public ArrayList<ChunkCoordinates> sources = new ArrayList<ChunkCoordinates>();
-	public int facing = 0;
-	public RedstoneSet set = RedstoneSet.LOW;
 	private boolean onSpecialBlock;
-
+	
 	@Override
-	public void writeCustomNBT(NBTTagCompound compound) {
+	public void writeCustomNBT(NBTTagCompound comp) {
 		if (aspectFilter != null) {
-			compound.setString("AspectFilter", aspectFilter.getTag());
+			comp.setString("AspectFilter", aspectFilter.getTag());
 		}
-		compound.setByte("facing", (byte)facing);
-		int sourceCount = 0;
-		for(int i = 0; i < sources.size(); i++) {
-			if(sources.get(i) != null) {
-				compound.setInteger("xcoord" + sourceCount, sources.get(i).posX);
-				compound.setInteger("ycoord" + sourceCount, sources.get(i).posY);
-				compound.setInteger("zcoord" + sourceCount, sources.get(i).posZ);
-				sourceCount++;
-			}		
-		}
-		compound.setInteger("size", sourceCount);
+		super.writeCustomNBT(comp);
 	}
-
+	
 	@Override
-	public void readCustomNBT(NBTTagCompound compound) {
-		aspectFilter = Aspect.getAspect(compound.getString("AspectFilter"));
-		facing = compound.getByte("facing");
-		int size = compound.getInteger("size");
-		for(int i = 0; i < size; i ++) {
-			int xx = compound.getInteger("xcoord" + i);		
-			int yy = compound.getInteger("ycoord" + i);		
-			int zz = compound.getInteger("zcoord" + i);
-			this.sources.add(new ChunkCoordinates(xx, yy, zz));
-		}
+	public void readCustomNBT(NBTTagCompound comp) {
+		aspectFilter = Aspect.getAspect(comp.getString("AspectFilter"));
+		super.readCustomNBT(comp);
 	}
-
+	
 	@Override
 	public void updateEntity() {
 		Block connectedBlock = worldObj.getBlock(xCoord + ForgeDirection.getOrientation(facing).offsetX, 
@@ -77,13 +51,28 @@ public class TileEssentiaTransmitter extends TileTechnomancy implements IEssenti
 			return;
 		}
 		TileEntity te = Thaumcraft.getConnectableAsContainer(worldObj, xCoord, yCoord, zCoord, ForgeDirection.getOrientation(facing));
-		if (set.canRun(this) && te != null && !sources.isEmpty()) {
-			IAspectContainer cont;
-			if(te instanceof IAspectContainer){
-				cont = (IAspectContainer)te;
-			}else{
-				cont = new AspectContainerEssentiaTransport((IEssentiaTransport) te);
+		if(te==null){
+			return;
+		}
+		
+		IAspectContainer cont;
+		if(te instanceof IAspectContainer){
+			cont = (IAspectContainer)te;
+		}else{
+			cont = new AspectContainerEssentiaTransport((IEssentiaTransport) te);
+		}
+		
+		if(getBlockMetadata()==0){
+			if(boost && !WorldHelper.isFull(cont)){
+				worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 3);
 			}
+		}else{
+			if(!(boost && !WorldHelper.isFull(cont))){
+				worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3);
+			}
+		}
+		
+		if (set.canRun(this) && !sources.isEmpty()) {
 			Iterator<ChunkCoordinates> sourceIter = sources.iterator();
 			while (sourceIter.hasNext()) {
 				ChunkCoordinates coords = sourceIter.next();
@@ -174,6 +163,11 @@ public class TileEssentiaTransmitter extends TileTechnomancy implements IEssenti
 		}
 		return 0;
 	}
+	
+	@Override
+	public Type getType() {
+		return Type.ESSENTIA;
+	}
 
 	@Override
 	public int addEssentia(Aspect aspect, int amount, ForgeDirection face) {
@@ -198,31 +192,6 @@ public class TileEssentiaTransmitter extends TileTechnomancy implements IEssenti
 	@Override
 	public boolean renderExtendedTube() {
 		return true;
-	}
-
-	@Override
-	public Type getType() {
-		return Type.ESSENTIA;
-	}
-
-	@Override
-	public void addPos(ChunkCoordinates coords) {
-		sources.add(coords);
-	}
-
-	@Override
-	public void clear() {
-		sources.clear();
-	}
-
-	@Override
-	public RedstoneSet getCurrentSetting() {
-		return set;
-	}
-
-	@Override
-	public void setNewSetting(RedstoneSet newSet) {
-		set = newSet;
 	}
 	
 	@Override

@@ -1,24 +1,25 @@
 package theflogat.technomancy.lib.compat.waila;
 
 import java.util.List;
-import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBloodFabricator;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
+import mcp.mobius.waila.api.IWailaDataProvider;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import mcp.mobius.waila.api.IWailaConfigHandler;
-import mcp.mobius.waila.api.IWailaDataAccessor;
-import mcp.mobius.waila.api.IWailaDataProvider;
-import mcp.mobius.waila.api.SpecialChars;
+import theflogat.technomancy.common.tiles.base.TileCoilTransmitter;
 
-public class BloodFabricatorHUDHandler implements IWailaDataProvider {
+public class CoilTransmitterHUDHandler implements IWailaDataProvider {
 
 	@Override
 	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,	IWailaConfigHandler config) {
-		final TileBloodFabricator tileEntity = (TileBloodFabricator) accessor.getTileEntity();
-		currenttip.add(SpecialChars.DRED + "Blood: " + tileEntity.tank.getFluidAmount() + "/" + tileEntity.tank.getCapacity());
-		WailaHelper.drawDefault(currenttip, tileEntity);
+		final TileCoilTransmitter te = (TileCoilTransmitter) accessor.getTileEntity();
+		if(te.getBlockMetadata()==1){
+			currenttip.add("Currently Emitting a Signal");
+		}
+		WailaHelper.drawDefault(currenttip, te);
 		return currenttip;
 	}
 	
@@ -39,6 +40,6 @@ public class BloodFabricatorHUDHandler implements IWailaDataProvider {
 
 	@Override
 	public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x, int y, int z) {
-        return null;
+		return null;
 	}
 }

@@ -5,9 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import theflogat.technomancy.api.rituals.IRitualEffectHandler;
 import theflogat.technomancy.api.rituals.Ritual;
-import theflogat.technomancy.api.rituals.Ritual.Type;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
-import theflogat.technomancy.util.RitualHelper;
 
 public class RitualWaterT2 extends Ritual implements IRitualEffectHandler{
 

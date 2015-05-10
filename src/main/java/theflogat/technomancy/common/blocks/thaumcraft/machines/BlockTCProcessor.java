@@ -15,13 +15,15 @@ public class BlockTCProcessor extends BlockProcessor {
 	
 	@Override
 	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+		if(super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ))
+			return true;
 		if(player != null) {
 			TileEntity tile = w.getTileEntity(x, y, z);
 			if(tile instanceof TileTCProcessor) {		
 				player.openGui(Technomancy.instance, 0, w, x, y, z);
 			}
 		}
-		return super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ);
+		return true;
 	}
 	
 	@Override

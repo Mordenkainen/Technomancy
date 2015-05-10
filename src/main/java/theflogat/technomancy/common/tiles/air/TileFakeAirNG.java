@@ -219,4 +219,9 @@ public class TileFakeAirNG extends TileFakeAirCore implements IEnergyHandler, IE
 	public boolean renderExtendedTube() {
 		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).renderExtendedTube();
 	}
+
+	@Override
+	public String getInfo() {
+		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).getInfo();
+	}
 }

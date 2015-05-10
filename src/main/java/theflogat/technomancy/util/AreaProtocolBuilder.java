@@ -1,19 +1,25 @@
 package theflogat.technomancy.util;
 
+import net.minecraft.block.Block;
+
 public class AreaProtocolBuilder {
 	
-	public class Area{
-		
-		int startX;int startY;int startZ;
-		int endX;int endY;int endZ;
-		
-		public Area(int startX, int startY, int startZ, int endX, int endY, int endZ) {
-			this.startX = startX;this.startY = startY;this.startZ = startZ;
-			this.endX = endX;this.endY = endY;this.endZ = endZ;
-		}
+	Coords start;
+	Area area;
+	
+	public AreaProtocolBuilder(Coords start, Area area) {
+		this.start = start;
+		this.area = area;
 	}
 	
-	public AreaProtocolBuilder() {
-		
+	public void buildNext(Block b) {
+		boolean flag = true;
+		while(area.hasNext() && flag){
+			Coords c = area.next();
+			flag = c==null;
+			if(!flag){
+				c.w.setBlock(start.x + c.x, start.y + c.y, start.z + c.z, b);
+			}
+		}
 	}
 }

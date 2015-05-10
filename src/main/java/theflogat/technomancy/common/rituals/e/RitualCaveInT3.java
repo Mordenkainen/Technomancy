@@ -6,11 +6,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import theflogat.technomancy.api.rituals.Ritual;
-import theflogat.technomancy.api.rituals.Ritual.Type;
 import theflogat.technomancy.api.tiles.IMovingHandler;
 import theflogat.technomancy.api.tiles.MovableTileRegistry;
-import theflogat.technomancy.common.blocks.technom.BlockCrystal;
-import theflogat.technomancy.util.RitualHelper;
 
 public class RitualCaveInT3 extends Ritual{
 	

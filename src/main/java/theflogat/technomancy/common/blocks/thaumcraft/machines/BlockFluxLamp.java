@@ -1,16 +1,15 @@
 package theflogat.technomancy.common.blocks.thaumcraft.machines;
 
-import theflogat.technomancy.common.blocks.base.BlockContainerBase;
-import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileFluxLamp;
-import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
-import theflogat.technomancy.lib.RenderIds;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
+import theflogat.technomancy.common.tiles.thaumcraft.machine.TileFluxLamp;
+import theflogat.technomancy.lib.Names;
+import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.RenderIds;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -52,11 +51,11 @@ public class BlockFluxLamp extends BlockContainerAdvanced {
 	}
 	
 	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack){
-		TileEntity tile = world.getTileEntity(x, y, z);
+	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase entity, ItemStack items){
+		super.onBlockPlacedBy(w, x, y, z, entity, items);
+		TileEntity tile = w.getTileEntity(x, y, z);
 		if(tile instanceof TileFluxLamp) {
 			((TileFluxLamp)tile).placed = true;
 		}
 	}
-	
 }

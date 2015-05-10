@@ -1,7 +1,6 @@
 package theflogat.technomancy.common.tiles.botania.machines;
 
 import java.awt.Color;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.item.ItemStack;

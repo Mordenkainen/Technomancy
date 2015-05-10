@@ -8,16 +8,17 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.nodes.INode;
 import thaumcraft.api.nodes.NodeModifier;
 import thaumcraft.api.nodes.NodeType;
+import thaumcraft.common.lib.utils.Utils;
+import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
+import theflogat.technomancy.common.tiles.base.IRedstoneSensitive;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
 import theflogat.technomancy.lib.handlers.Rate;
-import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
-import thaumcraft.common.lib.utils.Utils;
 
-public class TileBiomeMorpher extends TileMachineBase implements INode{	
+public class TileBiomeMorpher extends TileMachineBase implements INode, IRedstoneSensitive{	
 	
 	private AspectList aspects = new AspectList();
-	//private int amount = 35;
 	public static int cost = Rate.biomeMorpherCost;
+	public RedstoneSet set = RedstoneSet.LOW;
 	
 	public TileBiomeMorpher() {
 		super(Rate.biomeMorpherCost * 40);
@@ -25,7 +26,7 @@ public class TileBiomeMorpher extends TileMachineBase implements INode{
 	
 	@Override
 	public void updateEntity() {
-		if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
+		if(set.canRun(this)) {
 			if (getEnergyStored() >= cost) {
 				alterBiome();
 				alterBiome();
@@ -174,10 +175,14 @@ public class TileBiomeMorpher extends TileMachineBase implements INode{
 	}
 	
 	@Override
-	public void readCustomNBT(NBTTagCompound nbttagcompound) {}
+	public void readCustomNBT(NBTTagCompound comp) {
+		set = RedstoneSet.load(comp);
+	}
 	
 	@Override
-	public void writeCustomNBT(NBTTagCompound nbttagcompound) {}
+	public void writeCustomNBT(NBTTagCompound comp) {
+		set.save(comp);
+	}
 	
 	@Override
 	public boolean canConnectEnergy(ForgeDirection from) {
@@ -193,5 +198,15 @@ public class TileBiomeMorpher extends TileMachineBase implements INode{
 	}
 	@Override
 	public void setNodeVisBase(Aspect aspect, short nodeVisBase) {}
+
+	@Override
+	public RedstoneSet getCurrentSetting() {
+		return set;
+	}
+
+	@Override
+	public void setNewSetting(RedstoneSet newSet) {
+		set = newSet;
+	}
 
 }

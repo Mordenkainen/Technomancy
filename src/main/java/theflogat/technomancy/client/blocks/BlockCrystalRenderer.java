@@ -4,12 +4,10 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.world.IBlockAccess;
-
 import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import theflogat.technomancy.common.tiles.technom.TileCrystal;
 import theflogat.technomancy.lib.RenderIds;
+import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class BlockCrystalRenderer implements ISimpleBlockRenderingHandler{
 	

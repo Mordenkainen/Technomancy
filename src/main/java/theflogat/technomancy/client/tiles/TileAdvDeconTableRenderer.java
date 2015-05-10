@@ -9,9 +9,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-
 import org.lwjgl.opengl.GL11;
-
 import theflogat.technomancy.client.models.ModelAdvDeconTable;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileAdvDeconTable;
 import theflogat.technomancy.lib.Ref;

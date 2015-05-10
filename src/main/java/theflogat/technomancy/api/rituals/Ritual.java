@@ -1,6 +1,6 @@
 package theflogat.technomancy.api.rituals;
 
-import theflogat.technomancy.util.RitualHelper;
+import theflogat.technomancy.util.helpers.RitualHelper;
 import net.minecraft.world.World;
 
 public abstract class Ritual {

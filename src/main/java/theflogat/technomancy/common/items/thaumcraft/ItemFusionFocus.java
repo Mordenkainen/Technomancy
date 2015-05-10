@@ -118,7 +118,7 @@ public class ItemFusionFocus extends ItemBase implements IWandFocus {
 			if(entity instanceof TileNode && stack.getItem() instanceof ItemWandCasting) {
 				TileNode node = (TileNode)entity;
 				if(node.getAspects() != null) {
-					AspectList al = (AspectList) node.getAspects();
+					AspectList al = node.getAspects();
 					for(int i = 0; i < al.size(); i++) {
 						if((mod == null || this.mod == node.getNodeModifier()) &&
 								(type == null || type == node.getNodeType())){

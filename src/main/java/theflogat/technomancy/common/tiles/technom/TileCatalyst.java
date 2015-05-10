@@ -1,12 +1,7 @@
 package theflogat.technomancy.common.tiles.technom;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChunkCoordinates;
-import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ResourceLocation;
 import theflogat.technomancy.api.renderers.ModelCatalystSpecial;
 import theflogat.technomancy.api.rituals.IRitualEffectHandler;

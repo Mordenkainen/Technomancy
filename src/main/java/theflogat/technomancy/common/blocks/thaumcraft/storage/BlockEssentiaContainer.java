@@ -1,7 +1,6 @@
 package theflogat.technomancy.common.blocks.thaumcraft.storage;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.ArrayList;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
@@ -17,13 +16,14 @@ import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IEssentiaContainerItem;
-import theflogat.technomancy.common.blocks.base.BlockContainerBase;
 import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaContainer;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.RenderIds;
 import theflogat.technomancy.lib.compat.Thaumcraft;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockEssentiaContainer extends BlockContainerAdvanced {
 	
@@ -36,9 +36,10 @@ public class BlockEssentiaContainer extends BlockContainerAdvanced {
 	}
 	
 	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack){
+	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase entity, ItemStack items){
+		super.onBlockPlacedBy(w, x, y, z, entity, items);
 		int face = MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 0.5D) & 0x3;
-		TileEntity tile = world.getTileEntity(x, y, z);
+		TileEntity tile = w.getTileEntity(x, y, z);
 		if ((tile instanceof TileEssentiaContainer)) {
 			if (face == 0) {
 				((TileEssentiaContainer)tile).facing = 2;
@@ -176,5 +177,14 @@ public class BlockEssentiaContainer extends BlockContainerAdvanced {
 		iconJar = icon.registerIcon(Ref.MODEL_PREFIX + Names.essentiaContainer);
 		iconLiquid = icon.registerIcon(Ref.TEXTURE_PREFIX + "animatedglow");
 		blockIcon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.essentiaContainer);
+	}
+	
+	@Override
+	public void getNBTInfo(NBTTagCompound comp, ArrayList<String> l, int meta) {
+		super.getNBTInfo(comp, l, meta);
+		if(comp.hasKey("AspectFilter")){
+			Aspect as = Aspect.getAspect(comp.getString("AspectFilter"));
+			l.add("Filter:" + as.getChatcolor() + as.getName());
+		}
 	}
 }

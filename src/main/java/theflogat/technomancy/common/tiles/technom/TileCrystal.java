@@ -8,7 +8,7 @@ public class TileCrystal extends TileTechnomancy{
 	
 	public int getStage() {
 		int i = 0;
-		if(worldObj != null && worldObj.getBlock(xCoord, yCoord-1, zCoord) instanceof BlockCrystal){
+		if(worldObj!=null && worldObj.getBlock(xCoord, yCoord-1, zCoord) instanceof BlockCrystal){
 			i++;
 			if(worldObj.getBlock(xCoord, yCoord-2, zCoord) instanceof BlockCrystal){
 				i++;

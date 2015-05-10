@@ -26,8 +26,9 @@ public class BlockElectricBellows extends BlockContainerAdvanced{
 	private byte facing;
 	
 	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack){
-		TileEntity tile = world.getTileEntity(x, y, z);
+	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase entity, ItemStack items){
+		super.onBlockPlacedBy(w, x, y, z, entity, items);
+		TileEntity tile = w.getTileEntity(x, y, z);
 		if(tile instanceof TileElectricBellows) {
 			((TileElectricBellows)tile).facing = this.facing;
 		}
@@ -54,7 +55,8 @@ public class BlockElectricBellows extends BlockContainerAdvanced{
 			offsetX += 1;
 		}
 		if(world.getTileEntity(x + offsetX, y, z + offsetZ) instanceof TileAlchemyFurnace ||
-				world.getTileEntity(x + (offsetX*2), y, z + (offsetZ*2)) instanceof TileArcaneFurnace || world.getTileEntity(x + offsetX, y, z + offsetZ) instanceof TileEntityFurnace) {
+				world.getTileEntity(x + (offsetX*2), y, z + (offsetZ*2)) instanceof TileArcaneFurnace ||
+				world.getTileEntity(x + offsetX, y, z + offsetZ) instanceof TileEntityFurnace) {
 			return true;
 		}
 		return false;

@@ -1,10 +1,5 @@
 package theflogat.technomancy.common.tiles.base;
 
-import java.util.HashMap;
-
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
@@ -37,7 +32,7 @@ public interface IRedstoneSensitive {
 				if(set.id.equalsIgnoreCase(oldId))
 					return set;
 
-			return null;
+			return HIGH;
 		}
 
 		public RedstoneSet cycle(){

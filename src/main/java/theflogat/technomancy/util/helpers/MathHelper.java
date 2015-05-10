@@ -1,4 +1,4 @@
-package theflogat.technomancy.util;
+package theflogat.technomancy.util.helpers;
 
 public class MathHelper {
 	

@@ -1,16 +1,15 @@
 package theflogat.technomancy.lib.compat.waila;
 
 import java.util.List;
-
-import theflogat.technomancy.common.tiles.base.TileProcessorBase;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
+import mcp.mobius.waila.api.IWailaDataProvider;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import mcp.mobius.waila.api.IWailaConfigHandler;
-import mcp.mobius.waila.api.IWailaDataAccessor;
-import mcp.mobius.waila.api.IWailaDataProvider;
+import theflogat.technomancy.common.tiles.base.TileProcessorBase;
 
 public class ProcessorHUDHandler implements IWailaDataProvider {
 
@@ -20,7 +19,7 @@ public class ProcessorHUDHandler implements IWailaDataProvider {
 		if (tileEntity.isActive) {
 			currenttip.add("Progress: " + (int)(((TileProcessorBase.maxTime - tileEntity.progress) * 100F)/TileProcessorBase.maxTime) +"%");
 		}
-		
+		WailaHelper.drawDefault(currenttip, tileEntity);
 		return currenttip;
 	}
 	

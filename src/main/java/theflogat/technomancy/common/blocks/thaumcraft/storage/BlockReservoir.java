@@ -4,7 +4,6 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
-import theflogat.technomancy.common.blocks.base.BlockContainerBase;
 import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaReservoir;
 import theflogat.technomancy.lib.Names;

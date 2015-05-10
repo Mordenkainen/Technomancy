@@ -1,8 +1,6 @@
 package theflogat.technomancy.common.rituals.b;
 
 import java.util.ArrayList;
-
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
@@ -10,12 +8,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import theflogat.technomancy.api.rituals.IRitualEffectHandler;
 import theflogat.technomancy.api.rituals.Ritual;
-import theflogat.technomancy.api.rituals.Ritual.Type;
 import theflogat.technomancy.client.models.ModelBlackSphere;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.util.Loc;
-import theflogat.technomancy.util.RitualHelper;
 
 public class RitualBlackHoleT3 extends Ritual implements IRitualEffectHandler{
 	
@@ -31,7 +27,7 @@ public class RitualBlackHoleT3 extends Ritual implements IRitualEffectHandler{
 		return true;
 	}
 
-	private boolean canDestroy(World w, int x, int y, int z, int i, int j, int k) {
+	private static boolean canDestroy(World w, int x, int y, int z, int i, int j, int k) {
 		if(w.getBlock(x+i, y+j, z+k).getBlockHardness(w, x+i, y+j, z+k)<0)
 			return false;
 		

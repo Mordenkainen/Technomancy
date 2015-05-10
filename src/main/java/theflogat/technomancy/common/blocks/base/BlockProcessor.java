@@ -1,7 +1,6 @@
 package theflogat.technomancy.common.blocks.base;
 
 import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.tileentity.TileEntity;
@@ -11,7 +10,7 @@ import net.minecraft.world.World;
 import theflogat.technomancy.common.tiles.base.TileProcessorBase;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
-import theflogat.technomancy.util.InvHelper;
+import theflogat.technomancy.util.helpers.InvHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

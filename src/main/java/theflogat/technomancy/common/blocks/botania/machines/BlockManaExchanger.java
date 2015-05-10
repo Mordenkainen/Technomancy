@@ -1,26 +1,16 @@
 package theflogat.technomancy.common.blocks.botania.machines;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
-import theflogat.technomancy.common.tiles.base.IRedstoneSensitive.RedstoneSet;
 import theflogat.technomancy.common.tiles.botania.machines.TileManaExchanger;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
-import theflogat.technomancy.util.InvHelper;
-import theflogat.technomancy.util.ToolWrench;
 import vazkii.botania.api.mana.IPoolOverlayProvider;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

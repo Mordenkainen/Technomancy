@@ -1,9 +1,6 @@
 package theflogat.technomancy.common.blocks.botania.machines;
 
 import java.util.Random;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,6 +12,8 @@ import theflogat.technomancy.common.tiles.base.TileProcessorBase;
 import theflogat.technomancy.common.tiles.botania.machines.TileBOProcessor;
 import theflogat.technomancy.lib.compat.Botania;
 import vazkii.botania.api.wand.IWandHUD;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockBOProcessor extends BlockProcessor implements IWandHUD {
 	
@@ -24,13 +23,15 @@ public class BlockBOProcessor extends BlockProcessor implements IWandHUD {
 	
 	@Override
 	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-		if(player != null) {
+		if(super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ))
+			return true;
+		if(player!=null) {
 			TileEntity tile = w.getTileEntity(x, y, z);
 			if(tile instanceof TileBOProcessor) {
 				player.openGui(Technomancy.instance, 2, w, x, y, z);
 			}
 		}		
-		return super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ);
+		return true;
 	}
 	
 	@Override

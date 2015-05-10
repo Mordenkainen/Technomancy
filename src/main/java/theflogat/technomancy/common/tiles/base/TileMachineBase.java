@@ -76,5 +76,4 @@ public abstract class TileMachineBase extends TileTechnomancy implements IEnergy
 	public int getMaxEnergyStored() {
 		return capacity;
 	}
-
 }

@@ -1,17 +1,17 @@
-package theflogat.technomancy.util;
+package theflogat.technomancy.util.helpers;
 
 import java.util.ArrayList;
-
 import net.minecraft.block.Block;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.aspects.IAspectContainer;
 import theflogat.technomancy.common.items.base.TMItems;
 import cofh.api.energy.IEnergyHandler;
 
@@ -22,12 +22,32 @@ public class WorldHelper {
 		if(block!=null && block.getBlockHardness(w, x, y, z)>=0 && !w.isRemote){
 			ArrayList<ItemStack> d = block.getDrops(w, x, y, z, w.getBlockMetadata(x, y, z), 0);
 			for(ItemStack s : d){
-				InvHelper.spawnEntItem(w, x, y, z, s);
+				spawnEntItem(w, x, y, z, s);
 			}
 			w.setBlockToAir(x, y, z);
 			return true;
 		}
 		return false;
+	}
+	
+	public static void spawnEntItem(World w, double x, double y, double z, ItemStack items){
+		if ((items != null) && (items.stackSize > 0)) {
+			float rx = w.rand.nextFloat() * 0.8F + 0.1F;
+			float ry = w.rand.nextFloat() * 0.8F + 0.1F;
+			float rz = w.rand.nextFloat() * 0.8F + 0.1F;
+
+			EntityItem entityItem = new EntityItem(w, x + rx, y + ry, z + rz, new ItemStack(items.getItem(), items.stackSize, items.getItemDamage()));
+
+			if (items.hasTagCompound()) {
+				entityItem.getEntityItem().setTagCompound((NBTTagCompound)items.getTagCompound().copy());
+			}
+
+			float factor = 0.05F;
+			entityItem.motionX = (w.rand.nextGaussian() * factor);
+			entityItem.motionY = (w.rand.nextGaussian() * factor + 0.2000000029802322D);
+			entityItem.motionZ = (w.rand.nextGaussian() * factor);
+			w.spawnEntityInWorld(entityItem);
+		}
 	}
 
 	public static TileEntity getAdjacentTileEntity(TileEntity tile, byte facing) {
@@ -52,10 +72,24 @@ public class WorldHelper {
 	}
 	
 	public static void dropBoost(World w, int x, int y, int z){
-		InvHelper.spawnEntItem(w, x, y, z, new ItemStack(TMItems.itemBoost));
+		spawnEntItem(w, x, y, z, new ItemStack(TMItems.itemBoost, 1));
 	}
 	
 	public static boolean isChunkLoaded(World w, int x, int z){
 		return w.getChunkFromBlockCoords(x, z).isChunkLoaded;
+	}
+	
+	public static boolean isFull(IAspectContainer cont) {
+		ArrayList<Aspect> al = Aspect.getPrimalAspects();
+		al.addAll(Aspect.getCompoundAspects());
+		for(Aspect as : al){
+			if(cont.doesContainerAccept(as)){
+				if(cont.addToContainer(as, 1)==0){
+					cont.takeFromContainer(as, 1);
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 }

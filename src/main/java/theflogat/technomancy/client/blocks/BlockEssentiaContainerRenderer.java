@@ -13,11 +13,13 @@ import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class BlockEssentiaContainerRenderer implements ISimpleBlockRenderingHandler{
 	
+	//TODO: Render liquid in inventory
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
 		GL11.glPushMatrix();
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-		TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileEssentiaContainer(), 0.0D, 0.0D, 0.0D, 0.0F);
+		TileEssentiaContainer te = new TileEssentiaContainer();
+		TileEntityRendererDispatcher.instance.renderTileEntityAt(te, 0.0D, 0.0D, 0.0D, 0.0F);
 		GL11.glPopMatrix();
 	}
 

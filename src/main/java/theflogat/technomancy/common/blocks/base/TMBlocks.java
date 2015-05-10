@@ -2,7 +2,6 @@ package theflogat.technomancy.common.blocks.base;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
-import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.oredict.OreDictionary;
 import theflogat.technomancy.api.rituals.RitualRegistry;
@@ -12,6 +11,7 @@ import theflogat.technomancy.common.blocks.technom.BlockBasalt;
 import theflogat.technomancy.common.blocks.technom.BlockCatalyst;
 import theflogat.technomancy.common.blocks.technom.BlockCrystal;
 import theflogat.technomancy.common.blocks.technom.BlockItemTransmitter;
+import theflogat.technomancy.common.items.base.ItemAdvancedBase;
 import theflogat.technomancy.common.items.technom.ItemCatalyst;
 import theflogat.technomancy.common.items.technom.ItemCrystal;
 import theflogat.technomancy.common.rituals.b.RitualBlackHoleT1;
@@ -52,7 +52,7 @@ public class TMBlocks {
 	public static Block electricBellows;
 	public static Block creativeJar;
 	public static Block crystalBlock;	
-	public static Block reconstructorBlock;
+//	public static Block reconstructorBlock;
 	public static Block bloodDynamo;
 	public static Block condenserBlock;
 	public static Block bloodFabricator;
@@ -117,12 +117,16 @@ public class TMBlocks {
 		RitualRegistry.add(new RitualOfFireT1());
 	}
 	
-	private static void registerBlock(Block block, String name) {
+	public static void registerBlock(Block block, String name) {
+		if(block instanceof BlockContainerAdvanced){
+			GameRegistry.registerBlock(block, ItemAdvancedBase.class, name);
+			return;
+		}
 		if(block!=null)
 			GameRegistry.registerBlock(block, name);
 	}
 	
-	private static void registerBlock(Block block, String name, Class<? extends ItemBlock> itemclass) {
+	public static void registerBlock(Block block, String name, Class<? extends ItemBlock> itemclass) {
 		if(block!=null)
 			GameRegistry.registerBlock(block, itemclass, name);
 	}
