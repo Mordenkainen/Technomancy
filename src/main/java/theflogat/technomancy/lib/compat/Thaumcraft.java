@@ -1,5 +1,6 @@
 package theflogat.technomancy.lib.compat;
 
+import java.util.ArrayList;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -46,7 +47,6 @@ import theflogat.technomancy.common.items.thaumcraft.ItemTHMaterial;
 import theflogat.technomancy.common.items.thaumcraft.ItemTechnoturgeScepter;
 import theflogat.technomancy.common.items.thaumcraft.ItemWandCores;
 import theflogat.technomancy.common.tiles.air.TileFakeAirNG;
-import theflogat.technomancy.common.tiles.base.TileCoilTransmitter;
 import theflogat.technomancy.common.tiles.thaumcraft.dynamos.TileEssentiaDynamo;
 import theflogat.technomancy.common.tiles.thaumcraft.dynamos.TileNodeDynamo;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileAdvDeconTable;
@@ -54,6 +54,7 @@ import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBiomeMorpher;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileCondenser;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEldritchConsumer;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileElectricBellows;
+import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaTransmitter;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileFluxLamp;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTCProcessor;
@@ -241,7 +242,7 @@ public class Thaumcraft extends ModuleBase {
 		registerTileEntity(TMBlocks.nodeGenerator, TileNodeGenerator.class, "TileNodeGenerator");
 		registerTileEntity(TMBlocks.fakeAirNG, TileFakeAirNG.class, Ref.MOD_PREFIX + "TileFakeAir");
 		registerTileEntity(TMBlocks.fluxLamp, TileFluxLamp.class, "TileFluxLamp");
-		registerTileEntity(TMBlocks.teslaCoil, TileCoilTransmitter.class, "TileTeslaCoil");
+		registerTileEntity(TMBlocks.teslaCoil, TileEssentiaTransmitter.class, "TileTeslaCoil");
 		registerTileEntity(TMBlocks.electricBellows, TileElectricBellows.class, "TileElectricBellows");
 		registerTileEntity(TMBlocks.creativeJar, TileCreativeJar.class, "TileCreativeJar");
 //		registerTileEntity(TMBlocks.reconstructorBlock, TileReconstructor.class, "TileReconstructor");
@@ -671,5 +672,21 @@ public class Thaumcraft extends ModuleBase {
 					new ItemStack(Thaumcraft.blockTable, 1, 14), new ItemStack[]{new ItemStack(Blocks.piston), new ItemStack(Blocks.piston),
 					new ItemStack(Blocks.piston), new ItemStack(Items.emerald)}));
 		}
+	}
+	
+	public static boolean isFull(IAspectContainer cont) {
+		ArrayList<Aspect> al = Aspect.getPrimalAspects();
+		al.addAll(Aspect.getCompoundAspects());
+		for(Aspect as : al){
+			if(cont.doesContainerAccept(as)){
+				AspectList base = new AspectList();
+				base = cont.getAspects();
+				if(cont.addToContainer(as, 1)==0){
+					cont.takeFromContainer(as, 1);
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 }

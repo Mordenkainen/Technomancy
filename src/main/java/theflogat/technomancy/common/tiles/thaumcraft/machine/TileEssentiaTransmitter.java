@@ -63,11 +63,11 @@ public class TileEssentiaTransmitter extends TileCoilTransmitter implements IEss
 		}
 		
 		if(getBlockMetadata()==0){
-			if(boost && !WorldHelper.isFull(cont)){
+			if(boost && !Thaumcraft.isFull(cont)){
 				worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 3);
 			}
 		}else{
-			if(!(boost && !WorldHelper.isFull(cont))){
+			if(!(boost && !Thaumcraft.isFull(cont))){
 				worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3);
 			}
 		}

@@ -6,7 +6,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import theflogat.technomancy.client.models.ModelTeslaCoil;
-import theflogat.technomancy.common.tiles.base.TileCoilTransmitter;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaTransmitter;
 import theflogat.technomancy.lib.Ref;
 
@@ -45,7 +44,7 @@ public class TileEssentiaTransmitterRenderer extends TileEntitySpecialRenderer {
 	}
 	
 	public void renderFacing(TileEntity entity) {
-		switch (((TileCoilTransmitter)entity).facing){
+		switch (((TileEssentiaTransmitter)entity).facing){
 		case 0:
 			GL11.glTranslatef(0.0F, -2.0F, 0.0F);
 			GL11.glRotatef(180, 0.0F, 1.0F, 0.0F); break;
