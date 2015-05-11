@@ -41,4 +41,5 @@ public class Ids {
 	public static boolean coilCoupler;
 	public static boolean basalt;
 	public static boolean scepter;
+	public static boolean fusor;
 }

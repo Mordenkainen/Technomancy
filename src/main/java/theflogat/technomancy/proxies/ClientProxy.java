@@ -16,6 +16,7 @@ import theflogat.technomancy.client.blocks.BlockEldritchConsumerRenderer;
 import theflogat.technomancy.client.blocks.BlockElectricBellowsRenderer;
 import theflogat.technomancy.client.blocks.BlockEssentiaContainerRenderer;
 import theflogat.technomancy.client.blocks.BlockEssentiaDynamoRenderer;
+import theflogat.technomancy.client.blocks.BlockEssentiaFusorRenderer;
 import theflogat.technomancy.client.blocks.BlockEssentiaTransmitterRenderer;
 import theflogat.technomancy.client.blocks.BlockFlowerDynamoRenderer;
 import theflogat.technomancy.client.blocks.BlockFluxLampRenderer;
@@ -38,6 +39,7 @@ import theflogat.technomancy.client.tiles.TileEldritchConsumerRenderer;
 import theflogat.technomancy.client.tiles.TileElectricBellowsRenderer;
 import theflogat.technomancy.client.tiles.TileEssentiaContainerRenderer;
 import theflogat.technomancy.client.tiles.TileEssentiaDynamoRenderer;
+import theflogat.technomancy.client.tiles.TileEssentiaFusorRenderer;
 import theflogat.technomancy.client.tiles.TileEssentiaTransmitterRenderer;
 import theflogat.technomancy.client.tiles.TileFlowerDynamoRenderer;
 import theflogat.technomancy.client.tiles.TileFluxLampRenderer;
@@ -61,6 +63,7 @@ import theflogat.technomancy.common.tiles.thaumcraft.machine.TileAdvDeconTable;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBiomeMorpher;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEldritchConsumer;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileElectricBellows;
+import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaFusor;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaTransmitter;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileFluxLamp;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
@@ -131,6 +134,9 @@ public class ClientProxy extends CommonProxy implements IGuiHandler{
     		ClientRegistry.bindTileEntitySpecialRenderer(TileItemTransmitter.class, new TileItemTransmitterRenderer());
     		RenderIds.idItemTransmitter = RenderingRegistry.getNextAvailableRenderId();
     		
+    		ClientRegistry.bindTileEntitySpecialRenderer(TileEssentiaFusor.class, new TileEssentiaFusorRenderer());
+    		RenderIds.idEssentiaFusor = RenderingRegistry.getNextAvailableRenderId();
+    		
     		RenderingRegistry.registerBlockHandler(new BlockNodeDynamoRenderer());
         	RenderingRegistry.registerBlockHandler(new BlockEssentiaDynamoRenderer());
         	RenderingRegistry.registerBlockHandler(new BlockEssentiaContainerRenderer());  	
@@ -144,6 +150,7 @@ public class ClientProxy extends CommonProxy implements IGuiHandler{
         	RenderingRegistry.registerBlockHandler(new BlockEldritchConsumerRenderer());
         	RenderingRegistry.registerBlockHandler(new BlockAdvDeconTableRenderer());
         	RenderingRegistry.registerBlockHandler(new BlockItemTransmitterRenderer());
+        	RenderingRegistry.registerBlockHandler(new BlockEssentiaFusorRenderer());
         	
         	MinecraftForgeClient.registerItemRenderer(TMItems.itemTechnoturgeScepter, new ItemWandRenderer());
     	}

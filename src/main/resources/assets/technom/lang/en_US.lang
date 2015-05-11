@@ -59,6 +59,7 @@ tile.techno:manaFluid.name=Mana Condensate
 tile.techno:manaExchanger.name=Mana Exchanger
 tile.techno:itemTransmitter.name=Item Coil
 tile.techno:basalt.name=Basalt
+tile.techno:fusor.name=Essentia Fusor
 
 #Fluid Names
 fluid.techno:manaFluid=Mana Condensate

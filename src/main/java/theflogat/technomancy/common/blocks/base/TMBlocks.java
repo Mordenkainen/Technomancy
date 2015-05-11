@@ -70,6 +70,7 @@ public class TMBlocks {
 	public static Block manaExchanger;
 	public static Block itemTransmitter;
 	public static Block basalt;
+	public static Block essentiaFusor;
 	
 	public static Fluid manaFluid;
 	
