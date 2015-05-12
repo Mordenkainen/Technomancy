@@ -11,5 +11,4 @@ public abstract class BlockContainerBase extends BlockContainer {
 		setCreativeTab(Technomancy.tabsTM);
 		setHardness(2F);
 	}
-	
 }

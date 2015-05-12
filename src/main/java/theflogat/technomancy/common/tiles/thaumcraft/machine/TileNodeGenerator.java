@@ -1,11 +1,13 @@
 package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
 import java.util.HashMap;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.Aspect;
@@ -68,7 +70,7 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 				firstAdded = false;
 			}
 
-			TileNodeGenerator partner = getTE(xCoord + ForgeDirection.getOrientation(facing).offsetX * 6, yCoord, zCoord + ForgeDirection.getOrientation(facing).offsetZ * 6);
+			TileNodeGenerator partner = getTE(worldObj, xCoord + ForgeDirection.getOrientation(facing).offsetX * 6, yCoord, zCoord + ForgeDirection.getOrientation(facing).offsetZ * 6);
 			active = partner!=null ? partner.isWholeTileLoaded() : false;
 			if(active) {
 				int xx = xCoord + ForgeDirection.getOrientation(facing).offsetX * 3;
@@ -262,7 +264,7 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 		if(canRun() && player != null && world != null && active && canSpawn && !running) {
 			int xx = xCoord + ForgeDirection.getOrientation(facing).offsetX * 6;
 			int zz = zCoord + ForgeDirection.getOrientation(facing).offsetZ * 6;
-			TileNodeGenerator partner = getTE(xx, yCoord, zz);
+			TileNodeGenerator partner = getTE(worldObj, xx, yCoord, zz);
 			if(partner != null && amount + partner.amount > 64) {
 				if(getEnergyStored() >= MathHelper.round(Math.pow((amount + partner.amount)/2, 2) * 762.939453125)) {
 					initiator = true;
@@ -491,12 +493,9 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 		boost = newBoost;
 	}
 
-	private TileNodeGenerator getTE(int x, int y, int z) {
+	private TileNodeGenerator getTE(IBlockAccess world, int x, int y, int z) {
 		TileEntity tile = worldObj.getTileEntity(x, y, z);
-		if(tile instanceof TileNodeGenerator) {
-			return (TileNodeGenerator)tile;
-		}
-		return null;
+		return tile instanceof TileNodeGenerator ? (TileNodeGenerator)tile : null;
 	}
 
 	public boolean canRun() {

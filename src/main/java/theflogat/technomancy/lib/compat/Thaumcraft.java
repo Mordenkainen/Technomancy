@@ -1,6 +1,5 @@
 package theflogat.technomancy.lib.compat;
 
-import java.util.ArrayList;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -443,23 +442,23 @@ public class Thaumcraft extends ModuleBase {
 					scepter.setTagInfo("sceptre", new NBTTagByte((byte)1));
 					((ItemWandCasting)scepter.getItem()).setCap(scepter, WandCap.caps.get("thaumium"));
 					((ItemWandCasting)scepter.getItem()).setRod(scepter, WandRod.rods.get("technoturge"));
-					ThaumcraftApi.addArcaneCraftingRecipe("TECHNOTURGESCEPTER", scepter, new AspectList().add(Aspect.AIR, 100).add(Aspect.ORDER, 100)
+					TechnoResearch.recipes.put("TechnoturgeScepterRodT", ThaumcraftApi.addArcaneCraftingRecipe("TECHNOTURGESCEPTER", scepter, new AspectList().add(Aspect.AIR, 100).add(Aspect.ORDER, 100)
 							.add(Aspect.EARTH, 100).add(Aspect.FIRE, 100).add(Aspect.WATER, 100).add(Aspect.ENTROPY, 100), 
 							new Object[]{" CP", " RC", "C  ", 
 						Character.valueOf('C'), WandCap.caps.get("thaumium").getItem(), 
 						Character.valueOf('P'), new ItemStack(Thaumcraft.itemResource, 1, 15), 
-						Character.valueOf('R'), WandRod.rods.get("technoturge").getItem()});
+						Character.valueOf('R'), WandRod.rods.get("technoturge").getItem()}));
 					
 					scepter = new ItemStack(TMItems.itemTechnoturgeScepter, 1, 73);
 					scepter.setTagInfo("sceptre", new NBTTagByte((byte)1));
 					((ItemWandCasting)scepter.getItem()).setCap(scepter, WandCap.caps.get("void"));
 					((ItemWandCasting)scepter.getItem()).setRod(scepter, WandRod.rods.get("technoturge"));
-					ThaumcraftApi.addArcaneCraftingRecipe("TECHNOTURGESCEPTER", scepter, new AspectList().add(Aspect.AIR, 100).add(Aspect.ORDER, 100)
+					TechnoResearch.recipes.put("TechnoturgeScepterRodV", ThaumcraftApi.addArcaneCraftingRecipe("TECHNOTURGESCEPTER", scepter, new AspectList().add(Aspect.AIR, 100).add(Aspect.ORDER, 100)
 							.add(Aspect.EARTH, 100).add(Aspect.FIRE, 100).add(Aspect.WATER, 100).add(Aspect.ENTROPY, 100), 
 							new Object[]{" CP", " RC", "C  ", 
 						Character.valueOf('C'), WandCap.caps.get("void").getItem(), 
 						Character.valueOf('P'), new ItemStack(Thaumcraft.itemResource, 1, 15), 
-						Character.valueOf('R'), WandRod.rods.get("technoturge").getItem()});
+						Character.valueOf('R'), WandRod.rods.get("technoturge").getItem()}));
 				}
 			}
 		} else {
@@ -675,12 +674,8 @@ public class Thaumcraft extends ModuleBase {
 	}
 	
 	public static boolean isFull(IAspectContainer cont) {
-		ArrayList<Aspect> al = Aspect.getPrimalAspects();
-		al.addAll(Aspect.getCompoundAspects());
-		for(Aspect as : al){
+		for(Aspect as : Aspect.aspects.values()){
 			if(cont.doesContainerAccept(as)){
-				AspectList base = new AspectList();
-				base = cont.getAspects();
 				if(cont.addToContainer(as, 1)==0){
 					cont.takeFromContainer(as, 1);
 					return false;

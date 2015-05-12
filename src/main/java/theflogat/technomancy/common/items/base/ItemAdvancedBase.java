@@ -2,6 +2,7 @@ package theflogat.technomancy.common.items.base;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,7 +12,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
 import org.lwjgl.input.Keyboard;
+
 import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.items.technom.ItemBoost;
 import theflogat.technomancy.common.tiles.base.IUpgradable;
@@ -42,6 +45,7 @@ public class ItemAdvancedBase extends ItemBlock{
 		}
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void addInformation(ItemStack items, EntityPlayer player, List l, boolean moreInfo) {
 		if(items.stackTagCompound==null){

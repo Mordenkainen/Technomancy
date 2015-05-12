@@ -9,7 +9,7 @@ public class TileFakeAirCore extends TileTechnomancy{
 	protected int x = 0;
 	protected int y = 0;
 	protected int z = 0;
-	protected Class core;
+	protected Class<?> core;
 
 	@Override
 	public void updateEntity() {
@@ -22,7 +22,7 @@ public class TileFakeAirCore extends TileTechnomancy{
 		return new Coords(x, y, z, worldObj);
 	}
 
-	public void addMain(int x, int y, int z, Class core) {
+	public void addMain(int x, int y, int z, Class<?> core) {
 		this.x = x;
 		this.y = y;
 		this.z = z;

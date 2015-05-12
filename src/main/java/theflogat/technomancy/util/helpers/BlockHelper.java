@@ -475,6 +475,7 @@ public final class BlockHelper {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public static List<ItemStack> breakBlock(World worldObj, int x, int y, int z, Block block, int fortune, boolean doBreak, boolean silkTouch) {
 
 		if (block.getBlockHardness(worldObj, x, y, z) == -1) {

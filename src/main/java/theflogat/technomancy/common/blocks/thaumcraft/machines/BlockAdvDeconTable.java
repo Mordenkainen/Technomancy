@@ -1,6 +1,7 @@
 package theflogat.technomancy.common.blocks.thaumcraft.machines;
 
 import java.util.ArrayList;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -81,10 +82,7 @@ public class BlockAdvDeconTable extends BlockContainerAdvanced{
 	
 	private static TileAdvDeconTable getTE(IBlockAccess world, int x, int y, int z) {
 		TileEntity tile = world.getTileEntity(x, y, z);
-		if (tile instanceof TileAdvDeconTable) {
-			return (TileAdvDeconTable)tile;
-		}
-		return null;
+		return tile instanceof TileAdvDeconTable ? (TileAdvDeconTable)tile : null;
 	}
 	
 	@Override

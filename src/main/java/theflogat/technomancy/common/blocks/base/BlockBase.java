@@ -11,7 +11,4 @@ public abstract class BlockBase extends Block{
 		setCreativeTab(Technomancy.tabsTM);
 		setHardness(2F);
 	}
-	
-	
-
 }

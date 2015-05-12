@@ -13,50 +13,32 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class InvHelper {
 
 	public static ItemStack insert(IInventory tile, ItemStack items, ForgeDirection dir) {
-		//FIXME: Fix this mess
+		int[] slots;
 		if(tile instanceof ISidedInventory){
-			ISidedInventory inv = (ISidedInventory) tile;
-			for(int i : inv.getAccessibleSlotsFromSide(dir.ordinal())){
-				if(inv.canInsertItem(i, items, dir.ordinal())){
-					if(tile.getStackInSlot(i)==null){
-						tile.setInventorySlotContents(i, items);
-					}else if(tile.getStackInSlot(i).getItem()==items.getItem()){
-						int maxSize = Math.min(tile.getInventoryStackLimit(), tile.getStackInSlot(i).getItem().getItemStackLimit(tile.getStackInSlot(i)));
-						if(maxSize>tile.getStackInSlot(i).stackSize){
-							int toAdd =  Math.min(maxSize - tile.getStackInSlot(i).stackSize, items.stackSize);
-							int returnAm = items.stackSize - toAdd;
-							items.stackSize = tile.getStackInSlot(i).stackSize + toAdd;
-							tile.setInventorySlotContents(i, items);
-							
-							if(returnAm==0){
-								return null;
-							}else{
-								items.stackSize = returnAm;
-								return items;
-							}
-						}
-					}
-				}
+			slots = ((ISidedInventory)tile).getAccessibleSlotsFromSide(dir.ordinal());
+		} else {
+			slots = new int[tile.getSizeInventory()];
+			for(int i = 0 ; i < slots.length; i++) {
+				slots[i] = i;
 			}
-		}else{		
-			for(int i = 0; i<tile.getSizeInventory(); i++){
-				if(tile.isItemValidForSlot(i, items)){
-					if(tile.getStackInSlot(i)==null){
+		}
+		for(int i : slots){
+			if(tile instanceof ISidedInventory ? ((ISidedInventory)tile).canInsertItem(i, items, dir.ordinal()) : tile.isItemValidForSlot(i, items)) {
+				if(tile.getStackInSlot(i)==null){
+					tile.setInventorySlotContents(i, items);
+				}else if(tile.getStackInSlot(i).getItem()==items.getItem()){
+					int maxSize = Math.min(tile.getInventoryStackLimit(), tile.getStackInSlot(i).getItem().getItemStackLimit(tile.getStackInSlot(i)));	
+					if(maxSize>tile.getStackInSlot(i).stackSize){
+						int toAdd =  Math.min(maxSize - tile.getStackInSlot(i).stackSize, items.stackSize);
+						int returnAm = items.stackSize - toAdd;
+						items.stackSize = tile.getStackInSlot(i).stackSize + toAdd;
 						tile.setInventorySlotContents(i, items);
-					}else if(tile.getStackInSlot(i).getItem()==items.getItem()){
-						int maxSize = Math.min(tile.getInventoryStackLimit(), tile.getStackInSlot(i).getItem().getItemStackLimit(tile.getStackInSlot(i)));	
-						if(maxSize>tile.getStackInSlot(i).stackSize){
-							int toAdd =  Math.min(maxSize - tile.getStackInSlot(i).stackSize, items.stackSize);
-							int returnAm = items.stackSize - toAdd;
-							items.stackSize = tile.getStackInSlot(i).stackSize + toAdd;
-							tile.setInventorySlotContents(i, items);
-							
-							if(returnAm==0){
-								return null;
-							}else{
-								items.stackSize = returnAm;
-								return items;
-							}
+						
+						if(returnAm==0){
+							return null;
+						}else{
+							items.stackSize = returnAm;
+							return items;
 						}
 					}
 				}

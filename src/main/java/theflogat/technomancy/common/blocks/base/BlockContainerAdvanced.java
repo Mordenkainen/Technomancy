@@ -96,8 +96,7 @@ public abstract class BlockContainerAdvanced extends BlockContainerBase{
 					if(!w.isRemote)
 						WorldHelper.spawnEntItem(w, x, y, z, new ItemStack(it, 1));
 					((IRedstoneSensitive)te).setNewSetting(map.get(items.getItem()));
-					player.inventory.mainInventory[player.inventory.currentItem].stackSize--;
-					player.inventory.mainInventory[player.inventory.currentItem] = player.inventory.mainInventory[player.inventory.currentItem].stackSize==0 ? null:
+					player.inventory.mainInventory[player.inventory.currentItem] = --player.inventory.mainInventory[player.inventory.currentItem].stackSize==0 ? null:
 						player.inventory.mainInventory[player.inventory.currentItem];
 					return true;
 				}
