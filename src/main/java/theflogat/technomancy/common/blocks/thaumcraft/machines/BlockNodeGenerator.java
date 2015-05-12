@@ -67,9 +67,6 @@ public class BlockNodeGenerator extends BlockContainerAdvanced {
 	
 	private static TileNodeGenerator getTE(IBlockAccess world, int x, int y, int z) {
 		TileEntity tile = world.getTileEntity(x, y, z);
-		if (tile instanceof TileNodeGenerator) {
-			return (TileNodeGenerator)tile;
-		}
-		return null;
+		return tile instanceof TileNodeGenerator ? (TileNodeGenerator)tile : null;
 	}
 }

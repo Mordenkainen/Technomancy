@@ -33,7 +33,6 @@ public abstract class BlockCoilTransmitter extends BlockContainerAdvanced {
 		return w.getBlockMetadata(x, y, z)==1 ? 15:0;
 	}
 	
-	//FIXME: This may be unstable since this class is a singleton! It Shouldn't be Because the methods are called one after the other.
 	private int facing;
 	
 	@Override
@@ -97,10 +96,7 @@ public abstract class BlockCoilTransmitter extends BlockContainerAdvanced {
 
 	protected static TileCoilTransmitter getTE(IBlockAccess world, int x, int y, int z) {
 		TileEntity tile = world.getTileEntity(x, y, z);
-		if (tile instanceof TileCoilTransmitter) {
-			return (TileCoilTransmitter)tile;
-		}
-		return null;
+		return tile instanceof TileCoilTransmitter ? (TileCoilTransmitter)tile : null;
 	}
 	
 	@Override

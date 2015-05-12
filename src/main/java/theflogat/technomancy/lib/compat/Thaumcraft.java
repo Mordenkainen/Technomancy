@@ -1,6 +1,5 @@
 package theflogat.technomancy.lib.compat;
 
-import java.util.ArrayList;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -675,9 +674,7 @@ public class Thaumcraft extends ModuleBase {
 	}
 	
 	public static boolean isFull(IAspectContainer cont) {
-		ArrayList<Aspect> al = Aspect.getPrimalAspects();
-		al.addAll(Aspect.getCompoundAspects());
-		for(Aspect as : al){
+		for(Aspect as : Aspect.aspects.values()){
 			if(cont.doesContainerAccept(as)){
 				if(cont.addToContainer(as, 1)==0){
 					cont.takeFromContainer(as, 1);
