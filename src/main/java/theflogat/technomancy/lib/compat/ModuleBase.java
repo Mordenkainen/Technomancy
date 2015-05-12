@@ -28,9 +28,11 @@ public abstract class ModuleBase implements IModModule {
 		if(block instanceof BlockContainerAdvanced){
 			GameRegistry.registerBlock(block, ItemAdvancedBase.class, name);
 			return;
+		} else {
+			if(block!=null) {
+				GameRegistry.registerBlock(block, name);
+			}
 		}
-		if(block!=null)
-			GameRegistry.registerBlock(block, name);
 	}
 	
 	protected void registerBlock(Block block, String name, Class<? extends ItemBlock> itemclass) {
