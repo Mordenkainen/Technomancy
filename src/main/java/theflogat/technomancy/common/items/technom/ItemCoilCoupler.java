@@ -1,5 +1,8 @@
 package theflogat.technomancy.common.items.technom;
 
+import java.util.ArrayList;
+import java.util.EnumSet;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -59,8 +62,8 @@ public class ItemCoilCoupler extends Item{
 						return true;
 					}
 				}else{
-					Type t = Couple.getType(te);
-					if(t!=null && t.id==stack.stackTagCompound.getString("type")){
+					ArrayList<String> t = Couple.getType(te);
+					if(t.contains(stack.stackTagCompound.getString("type"))){
 						if(stack.stackTagCompound.getBoolean("ent")) {
 							if(te.getWorldObj().provider.dimensionId==stack.stackTagCompound.getInteger("dimId")){
 								if(!areCoordsEqual(stack.stackTagCompound, x, y, z)) {

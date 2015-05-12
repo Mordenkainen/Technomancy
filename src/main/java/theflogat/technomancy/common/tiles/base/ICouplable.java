@@ -26,21 +26,22 @@ public interface ICouplable {
 			forbidInv.add(TileItemTransmitter.class.getName());
 		}
 		
-		public static Type getType(TileEntity te) {
-			if(te==null)
-				return null;
+		public static ArrayList<String> getType(TileEntity te) {
+			ArrayList<String> interfaceTypes = new ArrayList<String>();
 			if(te instanceof IInventory && !forbidInv.contains(te.getClass().getName())){
-				return Type.ITEM;
-			}else if((te instanceof IFluidHandler || te instanceof IFluidTank) && !forbidFl.contains(te.getClass().getName())){
-				return Type.FLUID;
-			}else if(te instanceof IAspectContainer && !forbidAC.contains(te.getClass().getName())){
-				return Type.ESSENTIA;
-			}else if(te instanceof IEnergyHandler && !forbidRF.contains(te.getClass().getName())){
-				return Type.ENERGYRF;
+				interfaceTypes.add(Type.ITEM.id);
+			}
+			if((te instanceof IFluidHandler || te instanceof IFluidTank) && !forbidFl.contains(te.getClass().getName())){
+				interfaceTypes.add(Type.FLUID.id);
+			}
+			if(te instanceof IAspectContainer && !forbidAC.contains(te.getClass().getName())){
+				interfaceTypes.add(Type.ESSENTIA.id);
+			}
+			if(te instanceof IEnergyHandler && !forbidRF.contains(te.getClass().getName())){
+				interfaceTypes.add(Type.ENERGYRF.id);
 			}
 			
-			
-			return null;
+			return interfaceTypes;
 		}
 	}
 	
