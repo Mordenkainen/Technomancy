@@ -23,19 +23,9 @@ public class BlockCosmeticOpaque extends Block {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	private IIcon glassIcon;
-	
-	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister icon) {
-		glassIcon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.cosmeticOpaque);
-	}
-	
-	@SideOnly(Side.CLIENT)
-	@Override
-	public IIcon getIcon(int side, int meta) {
-		return glassIcon;
-		
+		blockIcon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.cosmeticOpaque);
 	}
 	
 	@Override
