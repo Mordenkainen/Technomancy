@@ -1,8 +1,6 @@
 package theflogat.technomancy.common.items.technom;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
-
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -15,7 +13,6 @@ import net.minecraft.world.World;
 import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.common.tiles.base.ICouplable;
 import theflogat.technomancy.common.tiles.base.ICouplable.Couple;
-import theflogat.technomancy.common.tiles.base.ICouplable.Type;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 
