@@ -1,35 +1,19 @@
 package theflogat.technomancy.common.rituals.f;
 
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import theflogat.technomancy.api.rituals.IRitualEffectHandler;
 import theflogat.technomancy.api.rituals.Ritual;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import theflogat.technomancy.util.Area;
+import theflogat.technomancy.util.AreaProtocolBuilder;
 import theflogat.technomancy.util.Coords;
 import theflogat.technomancy.util.helpers.MathHelper;
 
 public class RitualOfFireT3 extends Ritual implements IRitualEffectHandler{
 
 	static final int top = 90;
-	static final Area area = new Area(null, 50, top, 50) {
-		
-		@Override
-		public boolean isPosValid(Coords c) {
-			if(c.y==lengthY){
-				if(c.x==lengthX/2 && c.z==lengthZ/2){
-					
-					return true;
-				}
-				return false;
-			}
-			
-			
-			return false;
-		}
-	};
+	static final Area area = new Area(50, top, 50);
 
 	public RitualOfFireT3() {
 		super(new Type[]{Type.FIRE,Type.FIRE,Type.FIRE},Type.FIRE);
@@ -42,34 +26,57 @@ public class RitualOfFireT3 extends Ritual implements IRitualEffectHandler{
 
 	@Override
 	public void applyEffect(World w, int x, int y, int z) {
-		((TileCatalyst)w.getTileEntity(x, y, z)).remCount = Math.max(top, y);
-		((TileCatalyst)w.getTileEntity(x, y, z)).handler = this;
-	}
-
-	public static void appe(World w, int x, int y, int z, int count){
-		double coeff = Math.pow(Math.max(top, y)/(Math.max(top, y)-count+1),6);
-		coeff = MathHelper.round(coeff);
-		if(coeff==1){
-			coeff = 0;
-		}
-		for(int xx=(int) -coeff;xx<=coeff;xx++){
-			for(int zz=(int) -coeff;zz<=coeff;zz++){
-				if(!(xx==0 && count==y && zz==0)){
-					if(((TileCatalyst)w.getTileEntity(x, y, z)).user!=null){
-						if(MinecraftForge.EVENT_BUS.post(new BreakEvent(x+xx, count, z+zz, w, w.getBlock(x+xx, count, z+zz),
-								w.getBlockMetadata(x+xx, count, z+zz), ((TileCatalyst)w.getTileEntity(x, y, z)).user)))
-							w.setBlock(x+xx, count, z+zz, TMBlocks.basalt);
-					}else{
-						w.setBlock(x+xx, count, z+zz, TMBlocks.basalt);
-					}
+		TileCatalyst te = ((TileCatalyst)w.getTileEntity(x, y, z));
+		te.data = new Object[1];
+		te.data[0] = new AreaProtocolBuilder(new Coords(x-area.lengthX/2, 0, z-area.lengthZ/2, w), area){
+			int[] tempC = {0,-1,-1,-1,-1};
+			
+			@Override
+			public boolean isPosValid(Coords c) {
+				if(tempC[0]!=c.y){
+					tempC[0] = c.y;
+					tempC[1] = rand.nextInt(getScale(c.y));
+					tempC[2] = rand.nextInt(getScale(c.y));
+					tempC[3] = rand.nextInt(getScale(c.y));
+					tempC[4] = rand.nextInt(getScale(c.y));
 				}
+				return MathHelper.within(area.lengthX-tempC[1], area.lengthX+tempC[2], c.x) && MathHelper.within(area.lengthZ-tempC[3], area.lengthZ+tempC[4], c.z);
 			}
-		}
+			
+			private int getScale(int y) {
+				if(y==area.lengthY){
+					return 1;
+				}
+				if(y==area.lengthY-1){
+					return 3;
+				}
+				if(MathHelper.withinStrict(area.lengthY-1, area.lengthY-5, y)){
+					return 5;
+				}
+				if(MathHelper.withinStrict(area.lengthY-5, area.lengthY-15, y)){
+					return 9;
+				}
+				if(MathHelper.withinStrict(area.lengthY-15, area.lengthY-35, y)){
+					return 15;
+				}
+				if(MathHelper.withinStrict(area.lengthY-35, area.lengthY-65, y)){
+					return 21;
+				}
+				return 25;
+			}
+		};
+		te.remCount = 20;
+		te.handler = this;
+		removeFrame(w, x, y, z);
 	}
 
 	@Override
 	public void applyEffect(TileCatalyst te) {
-//		appe(te.getWorldObj(), te.xCoord, te.yCoord, te.zCoord, te.remCount);
+		if(te.data!=null && ((AreaProtocolBuilder)te.data[0]).buildNext(te.getWorldObj(), TMBlocks.basalt, new Coords(te))){
+			te.remCount = 20;
+			return;
+		}
+		te.remCount = 0;
 	}
 
 }

@@ -1,30 +1,27 @@
 package theflogat.technomancy.util;
 
-import net.minecraft.world.World;
 
-public abstract class Area{
+public class Area{
 	public int lengthX;
 	public int lengthY;
 	public int lengthZ;
-	public World w;
 	public int currX = 0;
 	public int currY = 0;
 	public int currZ = 0;
 	public boolean end;
 	
-	public Area(World w, int lengthX, int lengthY, int lengthZ) {
+	public Area(int lengthX, int lengthY, int lengthZ) {
 		this.lengthX = lengthX;
 		this.lengthY = lengthY;
 		this.lengthZ = lengthZ;
-		this.w = w;
 	}
 	
 	public boolean hasNext(){
 		return !end;
 	}
 	
-	public Coords next(){
-		Coords c = new Coords(currX, currY, currZ, w);
+	public Coords next(Coords core){
+		Coords c = new Coords(currX, currY, currZ, null);
 		if(currX==lengthX){
 			if(currZ==lengthZ){
 				if(currY==lengthY){
@@ -44,7 +41,7 @@ public abstract class Area{
 		}else{
 			currX++;
 		}
-		if(isPosValid(c))
+		if(!core.equals(c))
 			return c;
 		return null;
 	}
@@ -56,5 +53,7 @@ public abstract class Area{
 		end = false;
 	}
 	
-	public abstract boolean isPosValid(Coords c);
+	public int getIterationsLeft(){
+		return (lengthX-currX)*(lengthY-currY)*(lengthZ-currZ);
+	}
 }
