@@ -7,6 +7,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -36,6 +37,12 @@ public class BlockCrystal extends BlockContainerBase{
 			setBlockBounds(0.375F, 0F, 0.375F, 0.625F, 1F, 0.625F);
 			break;
 		}
+	}
+	
+	@Override
+	public AxisAlignedBB getCollisionBoundingBoxFromPool(World w, int x, int y, int z) {
+		setBlockBoundsBasedOnState(w, x, y, z);
+		return super.getCollisionBoundingBoxFromPool(w, x, y, z);
 	}
 
 	@Override

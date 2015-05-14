@@ -52,7 +52,7 @@ public class ThermalExpansion extends ModuleBase {
 				frameCellBasic != null) {
 			Technomancy.logger.info("Thermal Expansion compatibility module loaded.");
 		} else {
-			Technomancy.logger.warn("Thermal Expansion compatibility module failed to load. Vanilla recipies will be used.");
+			Technomancy.logger.warn("Thermal Expansion compatibility module failed to load.");
 			CompatibilityHandler.te = false;
 		}
 	}

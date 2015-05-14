@@ -32,7 +32,7 @@ public class ConfigHandler {
         Ids.electricBellows = config.get(blocks, Names.electricBellows, true).getBoolean();
         Ids.creativeJar = config.get(blocks, Names.creativeJar, true).getBoolean();
         Ids.crystalBlock = config.get(blocks, Names.crystalBlock, true).getBoolean();
-//        Ids.reconstructor = config.get(blocks, Names.reconstructor, true).getBoolean();
+//      Ids.reconstructor = config.get(blocks, Names.reconstructor, true).getBoolean();
         Ids.bloodDynamo = config.get(blocks, Names.bloodDynamo, true).getBoolean();
         Ids.condenser = config.get(blocks, Names.condenserBlock, true).getBoolean();
         Ids.bloodFabricator = config.get(blocks, Names.bloodFabricator, true).getBoolean();
@@ -74,7 +74,8 @@ public class ConfigHandler {
         Conf.blacklist = config.get("Machines", "Blacklisted materials for use in the Essentia Reconstructor", Conf.blacklist).getIntList();
         
        	Conf.debug = config.get("Misc", "DebugFunction", Conf.debug).getBoolean(Conf.debug);
-
+       	Conf.mkfirst = config.get("Misc", "Mekanism Recipes Will Override TE Ones", Conf.mkfirst).getBoolean();
+       	
        	//RF Costs
        	Rate.modifyRate(config);
        	

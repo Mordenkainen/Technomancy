@@ -15,8 +15,9 @@ public class TileCatalyst extends TileTechnomancy {
 	public int remCount = -1;
 	public ModelCatalystSpecial specialRender = null;
 	public ResourceLocation textLoc = null;
-	public EntityPlayer user = null;
+	public String userName;
 	public IRitualEffectHandler handler = null;
+	public Object[] data;
 
 	@Override
 	public void updateEntity() {
@@ -36,7 +37,7 @@ public class TileCatalyst extends TileTechnomancy {
 	}
 
 	public void activateRitual(EntityPlayer player) {
-		user = player;
+		userName = player.getDisplayName();
 		for(Ritual r : RitualRegistry.getRituals()){
 			if(r!=null){
 				if(r.isCoreComplete(worldObj, xCoord, yCoord, zCoord)){
@@ -59,8 +60,17 @@ public class TileCatalyst extends TileTechnomancy {
 			specialRender = (ModelCatalystSpecial) Java.getInstanceFromNBT(comp, "specialrender");
 			handler = (IRitualEffectHandler) Java.getInstanceFromNBT(comp, "handler");
 		}catch(Exception e){e.printStackTrace();}
-		if(comp.hasKey("user"))
-			user = worldObj.getPlayerEntityByName(comp.getString("user"));
+		if(comp.hasKey("user")){
+			userName = comp.getString("user");
+		}
+	}
+	
+	public EntityPlayer getOwner(){
+		try{
+			return worldObj.getPlayerEntityByName(userName);
+		}catch(Exception e){
+			return null;
+		}
 	}
 
 	@Override
@@ -70,7 +80,7 @@ public class TileCatalyst extends TileTechnomancy {
 		if(textLoc!=null)
 			comp.setString("textloc", textLoc.getResourcePath());
 		Java.saveClassToNBT(comp, "handler", handler);
-		if(user!=null)
-			comp.setString("user", user.getDisplayName());
+		if(userName!=null)
+			comp.setString("user", userName);
 	}
 }

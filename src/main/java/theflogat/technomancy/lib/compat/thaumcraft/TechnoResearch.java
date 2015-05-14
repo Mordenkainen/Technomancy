@@ -74,8 +74,8 @@ public class TechnoResearch {
 					pages.add(new ResearchPage(CraftingHandler.itemBoost));
 				}
 				new ResearchItem("DYNAMO", "TECHNOMANCY", new AspectList().add(Aspect.MECHANISM, 5).add(Aspect.ENERGY, 5).add(Aspect.MAGIC, 5), 2, 2, 3,
-						new ItemStack(iconBlock)).setPages(pages.toArray(new ResearchPage[pages.size()])).setParents(new String[] { "TECHNOBASICS" }).setSecondary()
-						.registerResearchItem();
+					new ItemStack(iconBlock)).setPages(pages.toArray(new ResearchPage[pages.size()])).setParents(new String[] { "TECHNOBASICS" }).setSecondary()
+					.registerResearchItem();
 			}
 		}
 		
@@ -128,10 +128,10 @@ public class TechnoResearch {
 				((ItemWandCasting)scepter.getItem()).setCap(scepter, WandCap.caps.get("thaumium"));
 				((ItemWandCasting)scepter.getItem()).setRod(scepter, WandRod.rods.get("technoturge"));
 				new ResearchItem("TECHNOTURGESCEPTER", "TECHNOMANCY", new AspectList().add(Aspect.TOOL, 5).add(Aspect.MAGIC, 5).add(Aspect.ENERGY, 5)
-						.add(Aspect.EXCHANGE, 5), -1, 3, 3, scepter).setPages(new ResearchPage[] {
-						new ResearchPage("techno.research_page.TECHNOTURGESCEPTER.1"), new ResearchPage((InfusionRecipe)recipes.get("TechnoturgeScepterRod")),
-						new ResearchPage((IArcaneRecipe)recipes.get("TechnoturgeScepterRodT")), new ResearchPage((IArcaneRecipe)recipes.get("TechnoturgeScepterRodV"))})
-						.setParents(new String[] { "ENERGIZEDWAND" }).setConcealed().registerResearchItem();
+					.add(Aspect.EXCHANGE, 5), -1, 3, 3, scepter).setPages(new ResearchPage[] {
+					new ResearchPage("techno.research_page.TECHNOTURGESCEPTER.1"), new ResearchPage((InfusionRecipe)recipes.get("TechnoturgeScepterRod")),
+					new ResearchPage((IArcaneRecipe)recipes.get("TechnoturgeScepterRodT")), new ResearchPage((IArcaneRecipe)recipes.get("TechnoturgeScepterRodV"))})
+					.setParents(new String[] { "ENERGIZEDWAND" }).setConcealed().registerResearchItem();
 			}
 		}
 		
