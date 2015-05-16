@@ -33,21 +33,20 @@ public abstract class BlockCoilTransmitter extends BlockContainerAdvanced {
 		return w.getBlockMetadata(x, y, z)==1 ? 15:0;
 	}
 	
-	private int facing;
-	
 	@Override
 	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase entity, ItemStack items){
 		super.onBlockPlacedBy(w, x, y, z, entity, items);
 		TileCoilTransmitter tile = getTE(w, x, y, z);
 		if(tile!=null) {
 			tile.clear();
-			tile.facing = this.facing;
+			tile.facing = w.getBlockMetadata(x, y, z);
+			w.setBlockMetadataWithNotify(x, y, z, 0, 0);
 		}
 	}
 	
 	@Override
-	public int onBlockPlaced(World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int meta){
-		this.facing = ForgeDirection.OPPOSITES[side];
+	public int onBlockPlaced(World w, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int meta){
+		w.setBlockMetadataWithNotify(x, y, z, ForgeDirection.OPPOSITES[side], 2);
 		return side + meta;
 	}
 	
