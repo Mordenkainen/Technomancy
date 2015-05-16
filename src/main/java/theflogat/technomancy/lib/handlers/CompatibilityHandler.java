@@ -22,8 +22,8 @@ public class CompatibilityHandler {
 	public static void init() {
 		if(Conf.mkfirst){
 			if(Loader.isModLoaded("Mekanism")){
-				Technomancy.logger.info("Mekanism detected. Thermal Expansion Compatibility module will be skipped.");
 				Technomancy.logger.info("Mekanism detected. Compatibility module will be loaded.");
+				Technomancy.logger.info("Mekanism detected. Thermal Expansion Compatibility will be skiped.");
 				mk = true;
 				mods.add(Mekanism.getInstance());
 			}else{
@@ -36,11 +36,10 @@ public class CompatibilityHandler {
 					Technomancy.logger.info("Thermal Expansion not detected. Compatibility module will not be loaded.");
 				}
 			}
-
 		}else{
 			if(Loader.isModLoaded("ThermalExpansion")) {
-				Technomancy.logger.info("Thermal Expansiondetected. Mekanism Compatibility module will be skipped.");
-				Technomancy.logger.info("Thermal Expansion detected. Compatibility module will be loaded.");
+				Technomancy.logger.info("Thermal Expansion detected. Compatibility will be loaded.");
+				Technomancy.logger.info("Thermal Expansion detected. Mekanism Compatibility will be skiped.");
 				te = true;
 				mods.add(ThermalExpansion.getInstance());
 			} else {
@@ -54,12 +53,7 @@ public class CompatibilityHandler {
 				}
 			}
 		}
-		if(te && !Conf.mkfirst){
-			Technomancy.logger.info("Thermal Expansion detected. Mekanism Compatibility will be skiped.");
-		}
-		if(mk && Conf.mkfirst){
-			Technomancy.logger.info("Mekanism detected. Thermal Expansion Compatibility will be skiped.");
-		}
+		
 		if(Loader.isModLoaded("Thaumcraft")) {
 			Technomancy.logger.info("Thaumcraft detected. Compatibility module will be loaded.");
 			th = true;

@@ -1,33 +1,51 @@
 package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
+import java.util.HashMap;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectSource;
 import thaumcraft.api.aspects.IEssentiaTransport;
-import theflogat.technomancy.common.tiles.base.IRedstoneSensitive.RedstoneSet;
+import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockCondenser;
+import theflogat.technomancy.common.tiles.base.IRedstoneSensitive;
+import theflogat.technomancy.common.tiles.base.IWrenchable;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
+import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.lib.handlers.Rate;
 
-public class TileCondenser extends TileMachineBase implements IEssentiaTransport, IAspectSource {
+public class TileCondenser extends TileMachineBase implements IEssentiaTransport, IAspectSource, IRedstoneSensitive, IWrenchable {
 
 	public static final Aspect aspect = Aspect.ENERGY;
-	
+
+	public HashMap<ForgeDirection, Boolean> sides = new HashMap<ForgeDirection, Boolean>();
 	public int amount = 0;
-	public int maxAmount = 64;
+	public static final int maxAmount = 64;
 	public static int cost = Rate.condenserCost;
 	public RedstoneSet set = RedstoneSet.LOW;
 
 	public TileCondenser() {
 		super(Rate.condenserCost * 5);
+		for(ForgeDirection dir:ForgeDirection.VALID_DIRECTIONS){
+			sides.put(dir, false);
+		}
 	}
-	
+
 	@Override
 	public void updateEntity() {
 		if(set.canRun(this) && energy >= cost && amount < maxAmount) {
 			extractEnergy(cost, false);
 			amount++;
+		}
+		if(amount>0){
+			for(ForgeDirection dir:ForgeDirection.VALID_DIRECTIONS){
+				if(sides.get(dir).booleanValue()){
+					IEssentiaTransport te = (IEssentiaTransport) Thaumcraft.getConnectableTile(worldObj, xCoord, yCoord, zCoord, dir);
+					if(te!=null && te.canInputFrom(dir)){
+						amount = te.addEssentia(aspect, amount, dir);
+					}
+				}
+			}
 		}
 	}
 
@@ -35,12 +53,22 @@ public class TileCondenser extends TileMachineBase implements IEssentiaTransport
 	public void readCustomNBT(NBTTagCompound comp)  {
 		amount = comp.getShort("Amount");
 		set = RedstoneSet.load(comp);
+		sides.clear();
+		for(ForgeDirection dir:ForgeDirection.VALID_DIRECTIONS){
+			NBTTagCompound side = comp.getCompoundTag(dir.name());
+			sides.put(dir, side.getBoolean("s"));
+		}
 	}
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound comp)  {
 		comp.setShort("Amount", (short)amount);
 		set.save(comp);
+		for(ForgeDirection dir:ForgeDirection.VALID_DIRECTIONS){
+			NBTTagCompound side = new NBTTagCompound();
+			side.setBoolean("s", sides.get(dir).booleanValue());
+			comp.setTag(dir.name(), side);
+		}
 	}
 
 	@Override
@@ -90,7 +118,7 @@ public class TileCondenser extends TileMachineBase implements IEssentiaTransport
 
 	@Override
 	public boolean isConnectable(ForgeDirection face) {
-		return face==ForgeDirection.DOWN || face==ForgeDirection.UP;
+		return sides.get(face);
 	}
 
 	@Override
@@ -100,7 +128,7 @@ public class TileCondenser extends TileMachineBase implements IEssentiaTransport
 
 	@Override
 	public boolean canOutputTo(ForgeDirection face) {
-		return face==ForgeDirection.DOWN || face==ForgeDirection.UP;
+		return sides.get(face);
 	}
 
 	@Override
@@ -158,5 +186,34 @@ public class TileCondenser extends TileMachineBase implements IEssentiaTransport
 	@Override
 	public boolean doesContainerContain(AspectList ot) {
 		return ot.getAspects().length==1 && ot.getAspects()[0]==aspect && amount>0;
+	}
+	
+	public boolean toggleDir(int side) {
+		if(side!=BlockCondenser.getFacingFromMeta(worldObj.getBlockMetadata(xCoord, yCoord, zCoord))){
+			boolean b = sides.get(ForgeDirection.VALID_DIRECTIONS[side]).booleanValue();
+			sides.remove(ForgeDirection.VALID_DIRECTIONS[side]);
+			sides.put(ForgeDirection.VALID_DIRECTIONS[side], !b);
+			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public RedstoneSet getCurrentSetting() {
+		return set;
+	}
+
+	@Override
+	public void setNewSetting(RedstoneSet newSet) {
+		set = newSet;
+	}
+
+	@Override
+	public boolean onWrenched() {
+		blockMetadata = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+		blockMetadata++;
+		worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, blockMetadata>=4 ? 0 : blockMetadata, 2);
+		return false;
 	}
 }

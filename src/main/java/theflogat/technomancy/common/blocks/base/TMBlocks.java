@@ -22,7 +22,6 @@ import theflogat.technomancy.common.rituals.e.RitualCaveInT2;
 import theflogat.technomancy.common.rituals.e.RitualCaveInT3;
 import theflogat.technomancy.common.rituals.f.RitualOfFireT1;
 import theflogat.technomancy.common.rituals.f.RitualOfFireT2;
-import theflogat.technomancy.common.rituals.f.RitualOfFireT3;
 import theflogat.technomancy.common.rituals.l.RitualPurificationT1;
 import theflogat.technomancy.common.rituals.l.RitualPurificationT2;
 import theflogat.technomancy.common.rituals.l.RitualPurificationT3;
@@ -112,7 +111,7 @@ public class TMBlocks {
 		RitualRegistry.add(new RitualPurificationT3());
 		RitualRegistry.add(new RitualPurificationT2());
 		RitualRegistry.add(new RitualPurificationT1());
-		RitualRegistry.add(new RitualOfFireT3());
+//		RitualRegistry.add(new RitualOfFireT3());
 		RitualRegistry.add(new RitualOfFireT2());
 		RitualRegistry.add(new RitualOfFireT1());
 	}

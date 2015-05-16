@@ -2,7 +2,6 @@ package theflogat.technomancy.common.items.base;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,12 +11,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-
 import org.lwjgl.input.Keyboard;
-
 import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.items.technom.ItemBoost;
 import theflogat.technomancy.common.tiles.base.IUpgradable;
+import theflogat.technomancy.lib.Conf;
 
 public class ItemAdvancedBase extends ItemBlock{
 
@@ -37,7 +35,7 @@ public class ItemAdvancedBase extends ItemBlock{
 			ItemBoost.upgradeable.add(name + ":" + up.getInfo());
 		}
 	}
-	
+
 	@Override
 	public void onUpdate(ItemStack items, World w, Entity player, int dmg, boolean held) {
 		if(items.stackTagCompound==null){
@@ -48,13 +46,19 @@ public class ItemAdvancedBase extends ItemBlock{
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void addInformation(ItemStack items, EntityPlayer player, List l, boolean moreInfo) {
-		if(items.stackTagCompound==null){
-			initializeNBT(items);
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)){
-			((BlockContainerAdvanced)field_150939_a).getNBTInfo(items.stackTagCompound, (ArrayList<String>) l, items.getItemDamage());
-		}else{
-			l.add(EnumChatFormatting.WHITE.toString() + EnumChatFormatting.ITALIC + StatCollector.translateToLocal("info.techno:shift"));
+		if(items==null)
+			return;
+		try{
+			if(items.stackTagCompound==null){
+				initializeNBT(items);
+			}
+			if(Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)){
+				((BlockContainerAdvanced)field_150939_a).getNBTInfo(items.stackTagCompound, (ArrayList<String>) l, items.getItemDamage());
+			}else{
+				l.add(EnumChatFormatting.WHITE.toString() + EnumChatFormatting.ITALIC + StatCollector.translateToLocal("info.techno:shift"));
+			}
+		}catch(Exception e){
+			Conf.ex(e);
 		}
 	}
 
