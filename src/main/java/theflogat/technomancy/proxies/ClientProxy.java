@@ -23,7 +23,6 @@ import theflogat.technomancy.client.blocks.BlockItemTransmitterRenderer;
 import theflogat.technomancy.client.blocks.BlockManaFabricatorRenderer;
 import theflogat.technomancy.client.blocks.BlockNodeDynamoRenderer;
 import theflogat.technomancy.client.blocks.BlockNodeGeneratorRenderer;
-import theflogat.technomancy.client.blocks.BlockReconstructorRenderer;
 import theflogat.technomancy.client.gui.GuiProcessorBM;
 import theflogat.technomancy.client.gui.GuiProcessorBO;
 import theflogat.technomancy.client.gui.GuiProcessorTC;
@@ -121,7 +120,7 @@ public class ClientProxy extends CommonProxy implements IGuiHandler{
     		RenderIds.idCreativeJar = RenderingRegistry.getNextAvailableRenderId(); 
     	
 //    		ClientRegistry.bindTileEntitySpecialRenderer(TileReconstructor.class, new TileReconstructorRenderer());
-    		RenderIds.idReconstructor = RenderingRegistry.getNextAvailableRenderId();
+//    		RenderIds.idReconstructor = RenderingRegistry.getNextAvailableRenderId();
     		
     		ClientRegistry.bindTileEntitySpecialRenderer(TileAdvDeconTable.class, new TileAdvDeconTableRenderer());
     		RenderIds.idAdvDeconTable = RenderingRegistry.getNextAvailableRenderId();
@@ -141,7 +140,7 @@ public class ClientProxy extends CommonProxy implements IGuiHandler{
         	RenderingRegistry.registerBlockHandler(new BlockEssentiaTransmitterRenderer());  
         	RenderingRegistry.registerBlockHandler(new BlockElectricBellowsRenderer());
         	RenderingRegistry.registerBlockHandler(new BlockCreativeJarRenderer());
-        	RenderingRegistry.registerBlockHandler(new BlockReconstructorRenderer());
+//        	RenderingRegistry.registerBlockHandler(new BlockReconstructorRenderer());
         	RenderingRegistry.registerBlockHandler(new BlockEldritchConsumerRenderer());
         	RenderingRegistry.registerBlockHandler(new BlockAdvDeconTableRenderer());
         	RenderingRegistry.registerBlockHandler(new BlockItemTransmitterRenderer());

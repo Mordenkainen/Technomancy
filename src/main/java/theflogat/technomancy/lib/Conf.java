@@ -7,6 +7,7 @@ public class Conf {
 	public static int[] blacklist = {};
 	public static boolean bonus = true;
 	public static boolean debug = false;
+	public static boolean	mkfirst = false;
 	
 	public static void ex(Exception e) {
 		if(debug) {

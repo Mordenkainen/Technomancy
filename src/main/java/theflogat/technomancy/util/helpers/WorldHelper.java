@@ -3,6 +3,7 @@ package theflogat.technomancy.util.helpers;
 import java.util.ArrayList;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -54,6 +55,12 @@ public class WorldHelper {
 		ForgeDirection dir = ForgeDirection.VALID_DIRECTIONS[facing%ForgeDirection.VALID_DIRECTIONS.length];
 		return tile.getWorldObj().getTileEntity(tile.xCoord + dir.offsetX, tile.yCoord + dir.offsetY, tile.zCoord + dir.offsetZ);
 	}
+	
+	public static TileEntity getAdjacentTileEntity(TileEntity tile, ForgeDirection dir) {
+		if(tile==null || tile.getWorldObj()==null && dir==null)
+			return null;
+		return tile.getWorldObj().getTileEntity(tile.xCoord + dir.offsetX, tile.yCoord + dir.offsetY, tile.zCoord + dir.offsetZ);
+	}
 
 	public static boolean isEnergyHandlerFromOppFacing(TileEntity tile, byte facing) {
 		ForgeDirection dir = ForgeDirection.VALID_DIRECTIONS[facing%ForgeDirection.VALID_DIRECTIONS.length];
@@ -75,5 +82,11 @@ public class WorldHelper {
 	
 	public static boolean isChunkLoaded(World w, int x, int z){
 		return w.getChunkFromBlockCoords(x, z).isChunkLoaded;
+	}
+	
+	public static boolean isPlayerProbablyCollidingWithBlock(EntityPlayer player, int x, int y, int z) {
+		return Math.floor(player.posX)-1>x && Math.ceil(player.posX)<x &&
+				Math.floor(player.posY)-1>y && Math.ceil(player.posY)<y &&
+				Math.floor(player.posZ)-1>z && Math.ceil(player.posZ)<z;
 	}
 }
