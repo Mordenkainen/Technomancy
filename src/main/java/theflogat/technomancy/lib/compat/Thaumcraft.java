@@ -219,8 +219,8 @@ public class Thaumcraft extends ModuleBase {
 		TMBlocks.eldritchConsumer = Ids.eldrichConsumer ? new BlockEldritchConsumer() : null;
 		TMBlocks.reservoir = Ids.reservoir ? new BlockReservoir() : null;
 		TMBlocks.advDeconTable = Ids.advDeconTable ? new BlockAdvDeconTable() : null;
-		TMBlocks.essentiaFusor = Ids.advDeconTable ? new BlockEssentiaFusor() : null;
-
+		TMBlocks.essentiaFusor = Ids.fusor ? new BlockEssentiaFusor() : null;
+		
 		registerBlock(TMBlocks.nodeDynamo, Names.nodeDynamo);
 		registerBlock(TMBlocks.essentiaContainer, Names.essentiaContainer);
 		registerBlock(TMBlocks.cosmeticOpaque, Names.cosmeticOpaque);

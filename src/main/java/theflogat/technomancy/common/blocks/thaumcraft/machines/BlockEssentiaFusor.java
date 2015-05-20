@@ -8,7 +8,7 @@ import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaFusor;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.RenderIds;
-import theflogat.technomancy.util.InvHelper;
+import theflogat.technomancy.util.helpers.WorldHelper;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -52,21 +52,29 @@ public class BlockEssentiaFusor extends BlockContainerAdvanced{
 			if(slot != null && tile != null) {
 				if(player.getHeldItem() == null) {
 					if(tile.isSideOccupied(slot)) {
-						ItemStack toDrop = tile.clearSide(slot);
-						if(toDrop != null) {
-							if(!world.isRemote) {
-								InvHelper.spawnEntItem(world, player.posX, player.posY, player.posZ, toDrop);
+						if(!world.isRemote) {
+							ItemStack toDrop = tile.clearSide(slot);
+							if(toDrop != null) {
+								if(!world.isRemote) {
+									WorldHelper.spawnEntItem(world, player.posX, player.posY, player.posZ, toDrop);
+								}
+							}
+						}
+						world.markBlockForUpdate(x, y, z);
+						tile.markDirty();
+						return true;
+					}
+				} else if(player.getHeldItem().getItem() == ConfigItems.itemEssence && !tile.isSideOccupied(slot)) {
+					if(!world.isRemote) {
+						if(tile.markSide(slot, player.getHeldItem())) {
+							if(--player.inventory.mainInventory[player.inventory.currentItem].stackSize == 0) {
+								player.inventory.mainInventory[player.inventory.currentItem] = null;
 							}
 							return true;
 						}
 					}
-				} else if(player.getHeldItem().getItem() == ConfigItems.itemEssence && !tile.isSideOccupied(slot)) {
-					if(tile.markSide(slot, player.getHeldItem())) {
-						if(--player.inventory.mainInventory[player.inventory.currentItem].stackSize == 0) {
-							player.inventory.mainInventory[player.inventory.currentItem] = null;
-						}
-						return true;
-					}
+					world.markBlockForUpdate(x, y, z);
+					tile.markDirty();
 				}
 			}
 		}

@@ -19,7 +19,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEssentiaFusor extends TileMachineBase implements IAspectContainer, IEssentiaTransport, IRedstoneSensitive{
+public class TileEssentiaFusor extends TileMachineBase implements IAspectContainer, IEssentiaTransport, IRedstoneSensitive {
 	private enum SideType {
 		INPUT,
 		OUTPUT,
@@ -56,7 +56,7 @@ public class TileEssentiaFusor extends TileMachineBase implements IAspectContain
 	
 	private HashMap<ForgeDirection, SideInfo> sides = new HashMap<ForgeDirection, SideInfo>();
 	private static final int MAX_AMOUNT = 64;
-	public RedstoneSet rSet = RedstoneSet.HIGH;
+	public RedstoneSet set = RedstoneSet.HIGH;
 	
 	public TileEssentiaFusor() {
 		super(Rate.fusorCost * 10);
@@ -72,17 +72,16 @@ public class TileEssentiaFusor extends TileMachineBase implements IAspectContain
 		flag |= fill();
 		flag |= fuse();
 		if(flag) {
-			if(worldObj.isRemote) {
-				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-				markDirty();
-			}
+			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+			markDirty();
 		}
 	}
 	
 	private boolean fill() {
 		boolean ret = false;
-		for (SideInfo side : sides.values()) {
-			if(side.type == SideType.INPUT) {
+		SideInfo[] inputSides = getInputSides();
+		for (SideInfo side : inputSides) {
+			if(side.amount < MAX_AMOUNT) {
 				TileEntity te = Thaumcraft.getConnectableTile(this.worldObj, this.xCoord, this.yCoord, this.zCoord, side.side);
 				if (te != null) {
 					IEssentiaTransport ic = (IEssentiaTransport)te;
@@ -100,7 +99,7 @@ public class TileEssentiaFusor extends TileMachineBase implements IAspectContain
 	
 	private boolean fuse() {
 		boolean ret = false;
-		if(rSet.canRun(this) && outputMarked() && getOutputSideInfo().amount < MAX_AMOUNT && getEnergyStored(ForgeDirection.UNKNOWN) >= Rate.fusorCost) {
+		if(set.canRun(this) && outputMarked() && getOutputSideInfo().amount < MAX_AMOUNT && getEnergyStored(ForgeDirection.UNKNOWN) >= Rate.fusorCost) {
 			SideInfo[] inputSides = getInputSides();
 			if(inputSides.length == 2) {
 				if(inputSides[0].amount > 0 && inputSides[1].amount > 0) {
@@ -124,21 +123,17 @@ public class TileEssentiaFusor extends TileMachineBase implements IAspectContain
 			if(!outputMarked()) {
 				sides.get(side).type = SideType.OUTPUT;
 				setOutputAspect();
-				if(worldObj.isRemote) {worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);}
-				markDirty();
 				return true;
 			}
 		} else {
 			AspectList aspects = new AspectList();
-			for(SideInfo curSide : sides.values()) {
-				if(curSide.type == SideType.INPUT) {
-					aspects.add(curSide.aspect, 1);
-				}
+			SideInfo[] inputSides = getInputSides();
+			for(SideInfo curSide : inputSides) {
+				aspects.add(curSide.aspect, 1);
 			}
 			if(aspects.visSize() == 0) {
 				sides.get(side).type = SideType.INPUT;
 				sides.get(side).aspect = getAspectFromStack(stack);
-				if(worldObj.isRemote) {worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);}
 				return true;
 			} else if (aspects.visSize() == 1) {
 				Aspect newAspect = getAspectFromStack(stack);
@@ -147,8 +142,6 @@ public class TileEssentiaFusor extends TileMachineBase implements IAspectContain
 					sides.get(side).type = SideType.INPUT;
 					sides.get(side).aspect = getAspectFromStack(stack);
 					setOutputAspect();
-					if(worldObj.isRemote) {worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);}
-					markDirty();
 					return true;
 				}
 			}
@@ -198,8 +191,6 @@ public class TileEssentiaFusor extends TileMachineBase implements IAspectContain
 			if(outputSide != null) {
 				outputSide.aspect = null;
 			}
-			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-			markDirty();
 		}
 		return output;
 	}
@@ -225,7 +216,7 @@ public class TileEssentiaFusor extends TileMachineBase implements IAspectContain
 		return null;
 	}
 	
-	private boolean outputMarked () {
+	private boolean outputMarked() {
 		for(SideInfo side : sides.values()) {
 			if(side.type == SideType.OUTPUT) {
 				return true;
@@ -272,7 +263,9 @@ public class TileEssentiaFusor extends TileMachineBase implements IAspectContain
 		for(int i = 0; i < list.tagCount(); i++) {
 			NBTTagCompound sideVal = list.getCompoundTagAt(i);
 			sides.get(ForgeDirection.getOrientation((int)sideVal.getByte("side"))).load(sideVal);
-		}		
+			ForgeDirection tubeDir = ForgeDirection.getOrientation((int)sideVal.getByte("side"));
+			worldObj.markBlockForUpdate(xCoord + tubeDir.offsetX, yCoord + tubeDir.offsetY, zCoord + tubeDir.offsetZ);
+		}
 		
 		RedstoneSet.load(comp);
 	}
@@ -282,13 +275,11 @@ public class TileEssentiaFusor extends TileMachineBase implements IAspectContain
 		NBTTagList list = new NBTTagList();
 
 		for(SideInfo side : sides.values()) {
-			if(side.type != SideType.NONE) {
-				NBTTagCompound sideVal = side.save();
-				list.appendTag(sideVal);
-			}
+			NBTTagCompound sideVal = side.save();
+			list.appendTag(sideVal);
 		}
 		comp.setTag("SideInfo", list);
-		rSet.save(comp);
+		set.save(comp);
 	}
 
 	@Override
@@ -457,11 +448,11 @@ public class TileEssentiaFusor extends TileMachineBase implements IAspectContain
 
 	@Override
 	public RedstoneSet getCurrentSetting() {
-		return rSet;
+		return set;
 	}
 
 	@Override
 	public void setNewSetting(RedstoneSet newSet) {
-		rSet = newSet;
+		set = newSet;
 	}
 }
