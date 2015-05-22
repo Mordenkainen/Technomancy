@@ -409,6 +409,14 @@ public class Thaumcraft extends ModuleBase {
 					new ItemStack(Blocks.piston), new ItemStack(Items.emerald)}));
 		}
 		
+		if(Ids.fusor) {
+			TechnoResearch.recipes.put("EssentiaFusor", ThaumcraftApi.addInfusionCraftingRecipe("ESSENTIAFUSOR", new ItemStack(TMBlocks.essentiaFusor),
+					10, new AspectList().add(Aspect.MAGIC, 32).add(Aspect.CRAFT, 32).add(Aspect.EXCHANGE, 16).add(Aspect.MECHANISM, 16),
+					new ItemStack(blockTube, 1, 2), new ItemStack[]{new ItemStack(blockJar), new ItemStack(blockTube, 1, 1), new ItemStack(blockJar),
+					new ItemStack(TMItems.itemMaterial, 1, 0), new ItemStack(blockJar), new ItemStack(blockTube, 1, 1), new ItemStack(blockJar),
+					new ItemStack(TMItems.itemMaterial, 1, 0)}));
+		}
+		
 		if(CompatibilityHandler.te) {
 			//Infusion Recipes
 			if(Ids.nodeGen) {

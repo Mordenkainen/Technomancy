@@ -167,5 +167,12 @@ public class TechnoResearch {
 				new ResearchPage("techno.research_page.ADVDECONTABLE.1"), new ResearchPage((InfusionRecipe)recipes.get("AdvDeconTable"))})
 				.setParents(new String[] {"TECHNOBASICS", "DECONSTRUCTOR"}).setRound().registerResearchItem();
 		}
+		
+		if(Ids.fusor && Ids.itemMaterial) {
+			new ResearchItem("ESSENTIAFUSOR", "TECHNOMANCY", new AspectList().add(Aspect.MECHANISM,10).add(Aspect.EXCHANGE,10).add(Aspect.MAGIC,10)
+					.add(Aspect.CRAFT, 10), -2, -4, 3, new ItemStack(TMBlocks.essentiaFusor)).setPages(new ResearchPage[] {
+					new ResearchPage("techno.research_page.ESSENTIAFUSOR.1"), new ResearchPage("techno.research_page.ESSENTIAFUSOR.2"), new ResearchPage((InfusionRecipe)recipes.get("EssentiaFusor"))})
+					.setParents(new String[] {"TECHNOBASICS"}).setRound().setHidden().setItemTriggers(new ItemStack(Thaumcraft.blockTube, 1, 2)).registerResearchItem();
+		}
 	}
 }

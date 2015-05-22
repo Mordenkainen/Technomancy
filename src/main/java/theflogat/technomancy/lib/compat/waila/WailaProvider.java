@@ -9,6 +9,7 @@ import theflogat.technomancy.common.tiles.botania.machines.TileManaExchanger;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBiomeMorpher;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEldritchConsumer;
+import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaFusor;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileFluxLamp;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
 import mcp.mobius.waila.api.IWailaDataProvider;
@@ -16,8 +17,7 @@ import mcp.mobius.waila.api.IWailaRegistrar;
 
 public class WailaProvider {
 	public static void callbackRegister(IWailaRegistrar registrar) {
-		IWailaDataProvider dynamoHUD = new DynamoHUDHandler();
-		registrar.registerBodyProvider(dynamoHUD, TileDynamoBase.class);
+		registrar.registerBodyProvider(new DynamoHUDHandler(), TileDynamoBase.class);
 		
 		IWailaDataProvider biomeMorpher = new BiomeMorpherHUDHandler();
 		registrar.registerBodyProvider(biomeMorpher, TileBiomeMorpher.class);
@@ -40,13 +40,14 @@ public class WailaProvider {
 		
 		registrar.registerBodyProvider(new CatalystHUDHandler(), TileCatalyst.class);
 		
-		IWailaDataProvider processor = new ProcessorHUDHandler();
-		registrar.registerBodyProvider(processor, TileProcessorBase.class);
+		registrar.registerBodyProvider(new ProcessorHUDHandler(), TileProcessorBase.class);
 		
 		IWailaDataProvider manaExchanger = new ManaExchangerHUDHandler();
 		registrar.registerBodyProvider(manaExchanger, TileManaExchanger.class);
 		registrar.registerNBTProvider(manaExchanger, TileManaExchanger.class);
 		
 		registrar.registerBodyProvider(new CoilTransmitterHUDHandler(), TileCoilTransmitter.class);
+		
+		registrar.registerBodyProvider(new EssentiaFusorHUDHandler(), TileEssentiaFusor.class);
     }
 }
