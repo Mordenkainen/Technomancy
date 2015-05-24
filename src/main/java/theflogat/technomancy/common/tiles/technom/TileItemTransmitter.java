@@ -8,14 +8,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraftforge.common.util.ForgeDirection;
 import theflogat.technomancy.common.tiles.base.ICouplable;
-import theflogat.technomancy.common.tiles.base.IRedstoneSensitive;
 import theflogat.technomancy.common.tiles.base.IUpgradable;
 import theflogat.technomancy.common.tiles.base.IWrenchable;
 import theflogat.technomancy.common.tiles.base.TileCoilTransmitter;
 import theflogat.technomancy.util.helpers.InvHelper;
 import theflogat.technomancy.util.helpers.WorldHelper;
 
-public class TileItemTransmitter extends TileCoilTransmitter implements IUpgradable, ICouplable, IRedstoneSensitive, IWrenchable{
+public class TileItemTransmitter extends TileCoilTransmitter implements IUpgradable, ICouplable, IWrenchable{
 
 	public ItemStack filter = null;
 
@@ -103,19 +102,9 @@ public class TileItemTransmitter extends TileCoilTransmitter implements IUpgrada
 	public void clear() {
 		sources.clear();
 	}
-
-	@Override
-	public RedstoneSet getCurrentSetting() {
-		return set;
-	}
-
-	@Override
-	public void setNewSetting(RedstoneSet newSet) {
-		set = newSet;
-	}
 	
 	@Override
-	public boolean onWrenched() {
+	public boolean onWrenched(boolean sneaking) {
 		for (int i = facing + 1; i < facing + 6; i++){
 			TileEntity tile = WorldHelper.getAdjacentTileEntity(this, (byte) (i % 6));
 			if (tile instanceof IInventory) {

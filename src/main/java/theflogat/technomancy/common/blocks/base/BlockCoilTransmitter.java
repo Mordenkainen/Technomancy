@@ -46,8 +46,7 @@ public abstract class BlockCoilTransmitter extends BlockContainerAdvanced {
 	
 	@Override
 	public int onBlockPlaced(World w, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int meta){
-		w.setBlockMetadataWithNotify(x, y, z, ForgeDirection.OPPOSITES[side], 2);
-		return side + meta;
+		return ForgeDirection.OPPOSITES[side];
 	}
 	
 	@Override

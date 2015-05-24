@@ -11,6 +11,7 @@ import theflogat.technomancy.common.blocks.base.BlockCoilTransmitter;
 import theflogat.technomancy.common.items.technom.ItemCoilCoupler;
 import theflogat.technomancy.common.tiles.base.TileCoilTransmitter;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaTransmitter;
+import theflogat.technomancy.lib.RenderIds;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 
 public class BlockEssentiaTransmitter extends BlockCoilTransmitter {
@@ -58,5 +59,10 @@ public class BlockEssentiaTransmitter extends BlockCoilTransmitter {
 		if(stack!=null && stack.getItem() instanceof ItemCoilCoupler)
 			return false;
 		return super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ);
+	}
+	
+	@Override
+	public int getRenderType() {
+		return RenderIds.idEssentiaTransmitter;
 	}
 }

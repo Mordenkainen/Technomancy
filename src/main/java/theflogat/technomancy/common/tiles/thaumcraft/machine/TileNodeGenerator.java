@@ -23,19 +23,18 @@ import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
 import thaumcraft.common.lib.world.biomes.BiomeHandler;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.tiles.air.TileFakeAirNG;
-import theflogat.technomancy.common.tiles.base.IRedstoneSensitive;
 import theflogat.technomancy.common.tiles.base.IUpgradable;
 import theflogat.technomancy.common.tiles.base.IWrenchable;
-import theflogat.technomancy.common.tiles.base.TileMachineBase;
+import theflogat.technomancy.common.tiles.base.TileMachineRedstone;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.util.helpers.MathHelper;
 import theflogat.technomancy.util.helpers.WorldHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class TileNodeGenerator extends TileMachineBase implements IEssentiaTransport, IAspectContainer, IWandable, IUpgradable, IRedstoneSensitive, IWrenchable {
+public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaTransport, IAspectContainer, IWandable, IUpgradable, IWrenchable {
 
-	private boolean firstAdded = true;
+	private boolean regenDummyBlocks = true;
 	private Aspect aspect;
 	public int amount = 0;
 	private int maxAmount = 256;
@@ -47,7 +46,6 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 	private boolean initiator = false;
 	public boolean running = false;
 	public int step = 0;
-	public RedstoneSet set = RedstoneSet.LOW;
 	public boolean boost = false;
 	private static HashMap<Byte,double[][]> lightning = new HashMap<Byte,double[][]>();
 
@@ -59,19 +57,19 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 	}
 
 	public TileNodeGenerator() {
-		super(50000000);
+		super(50000000, RedstoneSet.LOW);
 	}
 
 	@Override
 	public void updateEntity() {
 		if(isWholeTileLoaded()){
-			if(firstAdded){
+			if(regenDummyBlocks){
 				createDummyBlocks();
-				firstAdded = false;
+				regenDummyBlocks = false;
 			}
 
 			TileNodeGenerator partner = getTE(worldObj, xCoord + ForgeDirection.getOrientation(facing).offsetX * 6, yCoord, zCoord + ForgeDirection.getOrientation(facing).offsetZ * 6);
-			active = partner!=null ? partner.isWholeTileLoaded() : false;
+			active = partner!=null ? partner.isWholeTileLoaded() ? ForgeDirection.getOrientation(facing).getOpposite() == ForgeDirection.getOrientation(partner.facing): false : false;
 			if(active) {
 				int xx = xCoord + ForgeDirection.getOrientation(facing).offsetX * 3;
 				int zz = zCoord + ForgeDirection.getOrientation(facing).offsetZ * 3;
@@ -261,7 +259,7 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 
 	@Override
 	public int onWandRightClick(World world, ItemStack wandstack, EntityPlayer player, int x, int y, int z, int side, int md) {
-		if(canRun() && player != null && world != null && active && canSpawn && !running) {
+		if(canRun() && player != null && !player.isSneaking() && world != null && active && canSpawn && !running) {
 			int xx = xCoord + ForgeDirection.getOrientation(facing).offsetX * 6;
 			int zz = zCoord + ForgeDirection.getOrientation(facing).offsetZ * 6;
 			TileNodeGenerator partner = getTE(worldObj, xx, yCoord, zz);
@@ -302,7 +300,6 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 		}
 	}
 
-
 	@Override
 	public void readCustomNBT(NBTTagCompound compound)  {
 		aspect = Aspect.getAspect(compound.getString("Aspect"));
@@ -314,7 +311,8 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 		initiator = compound.getBoolean("Initiator");
 		step = compound.getInteger("Step");
 		boost = compound.getBoolean("Boost");
-		firstAdded = false;
+		regenDummyBlocks = compound.getBoolean("RegenDummyBlocks");
+		super.readCustomNBT(compound);
 	}
 
 	@Override
@@ -330,6 +328,8 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 		compound.setBoolean("Initiator", initiator);
 		compound.setInteger("Step", step);
 		compound.setBoolean("Boost", boost);
+		compound.setBoolean("FirstAdded", regenDummyBlocks);
+		super.writeCustomNBT(compound);
 	}
 
 	@Override
@@ -414,7 +414,6 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 	public boolean renderExtendedTube() {
 		return true;
 	}
-
 
 	@Override
 	public void setAspects(AspectList aspects) {}
@@ -503,9 +502,9 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 		for (int h = 0; h < 3 && state; h++){
 			for (int w = -1; w < 2 && state; w++) {
 				if(facing==2 || facing==3) {
-					state = set.canRun(worldObj.getTileEntity(xCoord + w, yCoord + h, zCoord));
+					state = set.canRun(worldObj, xCoord + w, yCoord + h, zCoord);
 				} else {
-					state = set.canRun(worldObj.getTileEntity(xCoord, yCoord + h, zCoord + w));
+					state = set.canRun(worldObj, xCoord, yCoord + h, zCoord + w);
 				}
 			}
 		}
@@ -513,21 +512,15 @@ public class TileNodeGenerator extends TileMachineBase implements IEssentiaTrans
 	}
 
 	@Override
-	public RedstoneSet getCurrentSetting() {
-		return set;
-	}
-
-	@Override
-	public void setNewSetting(RedstoneSet newSet) {
-		set = newSet;
-	}
-
-	@Override
-	public boolean onWrenched() {
-		destroyDummyBlocks();
-		facing = (byte) (facing==5 ? 2 : facing + 1);
-
-		createDummyBlocks();
+	public boolean onWrenched(boolean sneaking) {
+		if(sneaking) {
+			destroyDummyBlocks();
+			if(!worldObj.isRemote) {
+				facing = (byte) (facing==5 ? 2 : facing + 1);
+				regenDummyBlocks = true;
+				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+			}
+		}
 		return false;
 	}
 

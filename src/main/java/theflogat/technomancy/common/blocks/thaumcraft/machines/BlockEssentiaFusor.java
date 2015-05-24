@@ -61,7 +61,7 @@ public class BlockEssentiaFusor extends BlockContainerRedstone{
 						tile.markDirty();
 						return true;
 					}
-				} else if(player.getHeldItem().getItem() == ConfigItems.itemEssence && !tile.isSideOccupied(slot)) {
+				} else if(player.getHeldItem() != null && player.getHeldItem().getItem() == ConfigItems.itemEssence && !tile.isSideOccupied(slot)) {
 					if(!world.isRemote) {
 						if(tile.markSide(slot, player.getHeldItem())) {
 							if(--player.inventory.mainInventory[player.inventory.currentItem].stackSize == 0) {

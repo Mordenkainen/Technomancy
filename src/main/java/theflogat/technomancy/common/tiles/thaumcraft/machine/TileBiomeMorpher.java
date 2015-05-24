@@ -10,18 +10,16 @@ import thaumcraft.api.nodes.NodeModifier;
 import thaumcraft.api.nodes.NodeType;
 import thaumcraft.common.lib.utils.Utils;
 import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
-import theflogat.technomancy.common.tiles.base.IRedstoneSensitive;
-import theflogat.technomancy.common.tiles.base.TileMachineBase;
+import theflogat.technomancy.common.tiles.base.TileMachineRedstone;
 import theflogat.technomancy.lib.handlers.Rate;
 
-public class TileBiomeMorpher extends TileMachineBase implements INode, IRedstoneSensitive{	
+public class TileBiomeMorpher extends TileMachineRedstone implements INode {	
 	
 	private AspectList aspects = new AspectList();
 	public static int cost = Rate.biomeMorpherCost;
-	public RedstoneSet set = RedstoneSet.LOW;
 	
 	public TileBiomeMorpher() {
-		super(Rate.biomeMorpherCost * 40);
+		super(Rate.biomeMorpherCost * 40, RedstoneSet.LOW);
 	}
 	
 	@Override
@@ -176,12 +174,12 @@ public class TileBiomeMorpher extends TileMachineBase implements INode, IRedston
 	
 	@Override
 	public void readCustomNBT(NBTTagCompound comp) {
-		set = RedstoneSet.load(comp);
+		super.readCustomNBT(comp);
 	}
 	
 	@Override
 	public void writeCustomNBT(NBTTagCompound comp) {
-		set.save(comp);
+		super.writeCustomNBT(comp);
 	}
 	
 	@Override
@@ -198,15 +196,4 @@ public class TileBiomeMorpher extends TileMachineBase implements INode, IRedston
 	}
 	@Override
 	public void setNodeVisBase(Aspect aspect, short nodeVisBase) {}
-
-	@Override
-	public RedstoneSet getCurrentSetting() {
-		return set;
-	}
-
-	@Override
-	public void setNewSetting(RedstoneSet newSet) {
-		set = newSet;
-	}
-
 }

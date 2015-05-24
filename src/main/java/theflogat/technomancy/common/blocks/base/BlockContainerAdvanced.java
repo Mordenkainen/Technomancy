@@ -38,7 +38,7 @@ public abstract class BlockContainerAdvanced extends BlockContainerRedstone{
 	@Override
 	public void breakBlock(World w, int x, int y, int z, Block b, int meta) {
 		w.getTileEntity(x, y, z).writeToNBT(comp);
-		super.breakBlock(w, x, y, z, b, meta);
+		w.removeTileEntity(x, y, z);
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public abstract class BlockContainerAdvanced extends BlockContainerRedstone{
 		ItemStack items = player.inventory.mainInventory[player.inventory.currentItem];
 		if(te instanceof IWrenchable){
 			if (ToolWrench.isWrench(items)){
-				((IWrenchable)te).onWrenched();
+				((IWrenchable)te).onWrenched(player.isSneaking());
 				return true;
 			}
 		}

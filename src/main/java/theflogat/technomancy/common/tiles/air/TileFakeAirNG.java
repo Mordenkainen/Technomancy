@@ -12,20 +12,24 @@ import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import thaumcraft.api.wands.IWandable;
 import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockNodeGenerator;
+import theflogat.technomancy.common.tiles.base.IRedstoneSensitive;
 import theflogat.technomancy.common.tiles.base.IUpgradable;
+import theflogat.technomancy.common.tiles.base.IWrenchable;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.util.Coords;
 
-public class TileFakeAirNG extends TileFakeAirCore implements IEnergyHandler, IEssentiaTransport, IAspectContainer, IWandable, IUpgradable {
+public class TileFakeAirNG extends TileFakeAirCore implements IEnergyHandler, IEssentiaTransport, IAspectContainer, IWandable, IUpgradable, IRedstoneSensitive, IWrenchable {
 	
 	@Override
 	public void updateEntity() {
 		if(!(worldObj.getBlock(x, y, z) instanceof BlockNodeGenerator)){
 			worldObj.setBlockToAir(xCoord, yCoord, zCoord);
 		}else{
-			TileNodeGenerator tile = (TileNodeGenerator) worldObj.getTileEntity(x, y, z);
-			fill(tile);
+			TileNodeGenerator tile = getTE();
+			if(tile != null) {
+				fill(tile);
+			}
 		}
 	}
 	
@@ -57,171 +61,249 @@ public class TileFakeAirNG extends TileFakeAirCore implements IEnergyHandler, IE
 
 	@Override
 	public boolean canConnectEnergy(ForgeDirection from) {
-		return true;
+		TileNodeGenerator te = getTE();
+		if(te != null) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override
 	public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).receiveEnergy(maxReceive, simulate);
+		TileNodeGenerator te = getTE();
+		return te != null ? te.receiveEnergy(maxReceive, simulate) : 0;
 	}
 
 	@Override
 	public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).extractEnergy(maxExtract, simulate);
+		TileNodeGenerator te = getTE();
+		return te != null ? te.extractEnergy(maxExtract, simulate) : 0;
 	}
 
 	@Override
 	public int getEnergyStored(ForgeDirection from) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).getEnergyStored();
+		TileNodeGenerator te = getTE();
+		return te != null ? te.getEnergyStored() : 0;
 	}
 
 	@Override
 	public int getMaxEnergyStored(ForgeDirection from) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).getMaxEnergyStored();
+		TileNodeGenerator te = getTE();
+		return te != null ? te.getMaxEnergyStored() : 0;
 	}
 
 	@Override
 	public boolean toggleBoost() {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).toggleBoost();
+		TileNodeGenerator te = getTE();
+		return te != null ? te.toggleBoost() : false;
 	}
 
 	@Override
 	public boolean getBoost() {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).getBoost();
+		TileNodeGenerator te = getTE();
+		return te != null ? te.getBoost() : false;
 	}
 
 	@Override
 	public void setBoost(boolean newBoost) {
-		((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).setBoost(newBoost);
+		TileNodeGenerator te = getTE();
+		if(te != null) {
+			te.setBoost(newBoost);
+		}
 	}
 
 	@Override
 	public int onWandRightClick(World world, ItemStack wandstack, EntityPlayer player, int x, int y, int z, int side, int md) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(this.x, this.y, this.z)).onWandRightClick(world, wandstack, player, this.x, this.y, this.z, side, md);
+		TileNodeGenerator te = getTE();
+		return te != null ? te.onWandRightClick(world, wandstack, player, this.x, this.y, this.z, side, md) : -1;
 	}
 
 	@Override
 	public ItemStack onWandRightClick(World world, ItemStack wandstack, EntityPlayer player) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).onWandRightClick(world, wandstack, player);
+		TileNodeGenerator te = getTE();
+		return te != null ? te.onWandRightClick(world, wandstack, player) : wandstack;
 	}
 
 	@Override
 	public void onUsingWandTick(ItemStack wandstack, EntityPlayer player, int count) {
-		((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).onUsingWandTick(wandstack, player, count);
+		TileNodeGenerator te = getTE();
+		if(te != null) {
+			te.onUsingWandTick(wandstack, player, count);
+		}
 	}
 
 	@Override
 	public void onWandStoppedUsing(ItemStack wandstack, World world, EntityPlayer player, int count) {
-		((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).onWandStoppedUsing(wandstack, world, player, count);
+		TileNodeGenerator te = getTE();
+		if(te != null) {
+			te.onWandStoppedUsing(wandstack, world, player, count);
+		}
 	}
 
 	@Override
 	public AspectList getAspects() {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).getAspects();
+		TileNodeGenerator te = getTE();
+		return te != null ? te.getAspects() : new AspectList();
 	}
 
 	@Override
 	public void setAspects(AspectList aspects) {
-		((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).setAspects(aspects);
+		TileNodeGenerator te = getTE();
+		if(te != null) {
+			te.setAspects(aspects);
+		}
 	}
 
 	@Override
 	public boolean doesContainerAccept(Aspect tag) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).doesContainerAccept(tag);
+		TileNodeGenerator te = getTE();
+		return te != null ? te.doesContainerAccept(tag) : false;
 	}
 
 	@Override
 	public int addToContainer(Aspect tag, int amount) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).addToContainer(tag, amount);
+		TileNodeGenerator te = getTE();
+		return te != null ? te.addToContainer(tag, amount): amount;
 	}
 
 	@Override
 	public boolean takeFromContainer(Aspect tag, int amount) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).takeFromContainer(tag, amount);
+		TileNodeGenerator te = getTE();
+		return te != null ? te.takeFromContainer(tag, amount) : false;
 	}
 
 	@Override
 	public boolean takeFromContainer(AspectList ot) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).takeFromContainer(ot);
+		TileNodeGenerator te = getTE();
+		return te != null ? te.takeFromContainer(ot) : false;
 	}
 
 	@Override
 	public boolean doesContainerContainAmount(Aspect tag, int amount) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).doesContainerContainAmount(tag, amount);
+		TileNodeGenerator te = getTE();
+		return te != null ? te.doesContainerContainAmount(tag, amount) : false;
 	}
 
 	@Override
 	public boolean doesContainerContain(AspectList ot) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).doesContainerContain(ot);
+		TileNodeGenerator te = getTE();
+		return te != null ? te.doesContainerContain(ot) : false;
 	}
 
 	@Override
 	public int containerContains(Aspect tag) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).containerContains(tag);
+		TileNodeGenerator te = getTE();
+		return te != null ? te.containerContains(tag) : 0;
 	}
 
 	@Override
 	public boolean isConnectable(ForgeDirection face) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).isConnectable(face);
+		TileNodeGenerator te = getTE();
+		return te != null ? te.isConnectable(face) : false;
 	}
 
 	@Override
 	public boolean canInputFrom(ForgeDirection face) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).canInputFrom(face);
+		TileNodeGenerator te = getTE();
+		return te != null ? te.canInputFrom(face) : false;
 	}
 
 	@Override
 	public boolean canOutputTo(ForgeDirection face) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).canOutputTo(face);
+		TileNodeGenerator te = getTE();
+		return te != null ? te.canOutputTo(face) : false;
 	}
 
 	@Override
 	public void setSuction(Aspect aspect, int amount) {
-		((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).setSuction(aspect, amount);
+		TileNodeGenerator te = getTE();
+		if(te != null) {
+			te.setSuction(aspect, amount);
+		}
 	}
 
 	@Override
 	public Aspect getSuctionType(ForgeDirection face) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).getSuctionType(face);
+		TileNodeGenerator te = getTE();
+		return te != null ? te.getSuctionType(face) : null;
 	}
 
 	@Override
 	public int getSuctionAmount(ForgeDirection face) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).getSuctionAmount(face);
+		TileNodeGenerator te = getTE();
+		return te != null ? te.getSuctionAmount(face) : 0;
 	}
 
 	@Override
 	public int takeEssentia(Aspect aspect, int amount, ForgeDirection face) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).takeEssentia(aspect, amount, face);
+		TileNodeGenerator te = getTE();
+		return te != null ? te.takeEssentia(aspect, amount, face) : 0;
 	}
 
 	@Override
 	public int addEssentia(Aspect aspect, int amount, ForgeDirection face) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).addEssentia(aspect, amount, face);
+		TileNodeGenerator te = getTE();
+		return te != null ? te.addEssentia(aspect, amount, face) : 0;
 	}
 
 	@Override
 	public Aspect getEssentiaType(ForgeDirection face) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).getEssentiaType(face);
+		TileNodeGenerator te = getTE();
+		return te != null ? te.getEssentiaType(face) : null;
 	}
 
 	@Override
 	public int getEssentiaAmount(ForgeDirection face) {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).getEssentiaAmount(face);
+		TileNodeGenerator te = getTE();
+		return te != null ? te.getEssentiaAmount(face) : 0;
 	}
 
 	@Override
 	public int getMinimumSuction() {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).getMinimumSuction();
+		TileNodeGenerator te = getTE();
+		return te != null ? te.getMinimumSuction() : 0;
 	}
 
 	@Override
 	public boolean renderExtendedTube() {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).renderExtendedTube();
+		TileNodeGenerator te = getTE();
+		return te != null ? te.renderExtendedTube() : false;
 	}
 
 	@Override
+	public RedstoneSet getCurrentSetting() {
+		TileNodeGenerator te = getTE();
+		return te != null ? te.getCurrentSetting() : RedstoneSet.LOW;
+	}
+
+	@Override
+	public void setNewSetting(RedstoneSet newSet) {
+		TileNodeGenerator te = getTE();
+		if(te != null) {
+			te.setNewSetting(newSet);
+		}
+	}
+
+	@Override
+	public boolean isModified() {
+		TileNodeGenerator te = getTE();
+		return te != null ? te.isModified() : false;
+	}
+	
+	@Override
+	public boolean onWrenched(boolean sneaking) {
+		TileNodeGenerator te = getTE();
+		return te != null ? te.onWrenched(sneaking) : false;
+	}
+	
+	@Override
 	public String getInfo() {
-		return ((TileNodeGenerator)worldObj.getTileEntity(x, y, z)).getInfo();
+		TileNodeGenerator te = getTE();
+		return te != null ? te.getInfo() : ""; 
+	}
+	
+	private TileNodeGenerator getTE() {
+		TileEntity tile = worldObj.getTileEntity(x, y, z);
+		return tile instanceof TileNodeGenerator ? (TileNodeGenerator)tile : null;
 	}
 }

@@ -195,7 +195,7 @@ public class TileEssentiaTransmitter extends TileCoilTransmitter implements IEss
 	}
 	
 	@Override
-	public boolean onWrenched() {
+	public boolean onWrenched(boolean sneaking) {
 		for (int i = facing + 1; i < facing + 6; i++){
 			TileEntity tile = WorldHelper.getAdjacentTileEntity(this, (byte) (i % 6));
 			if (tile instanceof IAspectContainer) {

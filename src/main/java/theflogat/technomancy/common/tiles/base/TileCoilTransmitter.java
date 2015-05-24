@@ -4,15 +4,19 @@ import java.util.ArrayList;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChunkCoordinates;
 
-public abstract class TileCoilTransmitter extends TileTechnomancy implements ICouplable, IRedstoneSensitive, IWrenchable, IUpgradable{
-	
+public abstract class TileCoilTransmitter extends TileTechnomancyRedstone implements ICouplable, IWrenchable, IUpgradable{
+
+	public TileCoilTransmitter() {
+		super(RedstoneSet.LOW);
+	}
+
 	public ArrayList<ChunkCoordinates> sources = new ArrayList<ChunkCoordinates>();
 	public int facing = 0;
-	public RedstoneSet set = RedstoneSet.LOW;
 	public boolean boost;
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound comp) {
+		super.writeCustomNBT(comp);
 		comp.setByte("facing", (byte)facing);
 		int sourceCount = 0;
 		for(int i = 0; i < sources.size(); i++) {
@@ -29,6 +33,7 @@ public abstract class TileCoilTransmitter extends TileTechnomancy implements ICo
 
 	@Override
 	public void readCustomNBT(NBTTagCompound comp) {
+		super.readCustomNBT(comp);
 		facing = comp.getByte("facing");
 		int size = comp.getInteger("size");
 		for(int i = 0; i < size; i ++) {
@@ -48,16 +53,6 @@ public abstract class TileCoilTransmitter extends TileTechnomancy implements ICo
 	@Override
 	public void clear() {
 		sources.clear();
-	}
-
-	@Override
-	public RedstoneSet getCurrentSetting() {
-		return set;
-	}
-
-	@Override
-	public void setNewSetting(RedstoneSet newSet) {
-		set = newSet;
 	}
 
 	@Override

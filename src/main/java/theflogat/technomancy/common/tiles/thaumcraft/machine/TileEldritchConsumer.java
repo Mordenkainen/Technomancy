@@ -1,6 +1,7 @@
 package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
 import java.util.ArrayList;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,12 +14,11 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
-import theflogat.technomancy.common.tiles.base.IRedstoneSensitive;
-import theflogat.technomancy.common.tiles.base.TileMachineBase;
+import theflogat.technomancy.common.tiles.base.TileMachineRedstone;
 import theflogat.technomancy.lib.handlers.Rate;
 import theflogat.technomancy.util.Coords;
 
-public class TileEldritchConsumer extends TileMachineBase implements IAspectContainer, IEssentiaTransport, IRedstoneSensitive{
+public class TileEldritchConsumer extends TileMachineRedstone implements IAspectContainer, IEssentiaTransport {
 
 	public enum Range{
 		LARGE(9, -1, 0, "Large"),
@@ -76,10 +76,9 @@ public class TileEldritchConsumer extends TileMachineBase implements IAspectCont
 	public int time = 0;
 	public float panelRotation = 0;
 	public int cost = Rate.consumerCost;
-	public RedstoneSet set = RedstoneSet.HIGH;
 
 	public TileEldritchConsumer() {
-		super(Rate.consumerCost * 50);
+		super(Rate.consumerCost * 50, RedstoneSet.HIGH);
 	}
 
 	@Override
@@ -203,7 +202,7 @@ public class TileEldritchConsumer extends TileMachineBase implements IAspectCont
 		list.readFromNBT(comp);
 		cooldown = comp.getInteger("cooldown");
 		current = Range.readFromNbt(comp);
-		set = RedstoneSet.load(comp);
+		super.readCustomNBT(comp);
 	}
 
 	@Override
@@ -211,7 +210,7 @@ public class TileEldritchConsumer extends TileMachineBase implements IAspectCont
 		list.writeToNBT(comp);
 		comp.setInteger("cooldown", cooldown);
 		current.writeToNbt(comp);
-		set.save(comp);
+		super.writeCustomNBT(comp);
 	}
 
 	@Override
@@ -337,15 +336,5 @@ public class TileEldritchConsumer extends TileMachineBase implements IAspectCont
 	@Override
 	public boolean renderExtendedTube() {
 		return true;
-	}
-
-	@Override
-	public RedstoneSet getCurrentSetting() {
-		return set;
-	}
-
-	@Override
-	public void setNewSetting(RedstoneSet newSet) {
-		set = newSet;
 	}
 }

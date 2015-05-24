@@ -1,6 +1,8 @@
 package theflogat.technomancy.common.blocks.base;
 
 import java.util.HashMap;
+
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -18,8 +20,7 @@ public abstract class BlockContainerRedstone extends BlockContainerBase {
 	public static HashMap<Item, RedstoneSet> itemToSetting = new HashMap<Item, RedstoneSet>();
 	public static HashMap<RedstoneSet, Item> settingToItem = new HashMap<RedstoneSet, Item>();
 
-	public BlockContainerRedstone() {
-		super();
+	static {
 		itemToSetting.put(Items.gunpowder, RedstoneSet.NONE);
 		itemToSetting.put(Items.redstone, RedstoneSet.HIGH);
 		itemToSetting.put(Item.getItemFromBlock(Blocks.redstone_torch), RedstoneSet.LOW);
@@ -35,9 +36,11 @@ public abstract class BlockContainerRedstone extends BlockContainerBase {
 			ItemStack items = player.inventory.mainInventory[player.inventory.currentItem];
 			if(items!=null && itemToSetting.containsKey(items.getItem())) {
 				if(itemToSetting.get(items.getItem())!=te.getCurrentSetting()){
-					Item it = settingToItem.get(te.getCurrentSetting());
-					if(!w.isRemote) {
-						WorldHelper.spawnEntItem(w, x, y, z, new ItemStack(it, 1));
+					if(te.isModified()) {
+						Item it = settingToItem.get(te.getCurrentSetting());
+						if(!w.isRemote) {
+							WorldHelper.spawnEntItem(w, x, y, z, new ItemStack(it, 1));
+						}
 					}
 					te.setNewSetting(itemToSetting.get(items.getItem()));
 					player.inventory.mainInventory[player.inventory.currentItem] = --player.inventory.mainInventory[player.inventory.currentItem].stackSize==0 ? null:
@@ -47,6 +50,18 @@ public abstract class BlockContainerRedstone extends BlockContainerBase {
 			}
 		}
 		return false;
+	}
+	
+	@Override
+	public void breakBlock(World w, int x, int y, int z, Block b, int meta) {
+		IRedstoneSensitive tile = getTE(w, x, y, z);
+		if(tile.isModified()){
+			Item it = settingToItem.get(tile.getCurrentSetting());
+			if(!w.isRemote) {
+				WorldHelper.spawnEntItem(w, x, y, z, new ItemStack(it, 1));
+			}
+		}
+		super.breakBlock(w, x, y, z, b, meta);
 	}
 	
 	private IRedstoneSensitive getTE(IBlockAccess access, int x, int y, int z) {
