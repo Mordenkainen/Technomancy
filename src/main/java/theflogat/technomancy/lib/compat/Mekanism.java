@@ -1,11 +1,8 @@
 package theflogat.technomancy.lib.compat;
 
-import java.util.ArrayList;
 import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.lib.handlers.CompatibilityHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -30,24 +27,10 @@ public class Mekanism implements IModModule{
 	public void Init() {
 		energyCube = new ItemStack(GameRegistry.findItem("Mekanism", "EnergyCube"), 1);
 		setEnergyCubeTier(BaseTier.ADVANCED, energyCube);
-		Item BasicBlock = GameRegistry.findItem("Mekanism", "BasicBlock");
-		ArrayList<ItemStack> stackBBlocks = new ArrayList<ItemStack>();
-		BasicBlock.getSubItems(BasicBlock, CreativeTabs.tabAllSearch, stackBBlocks);
-		for(ItemStack items : stackBBlocks){
-			if(items.getUnlocalizedName().toLowerCase().contains("steel")){
-				steelCasing = items;
-			}
-		}
+		steelCasing = new ItemStack(GameRegistry.findItem("Mekanism", "BasicBlock"), 1, 8);
 		energyTablet = GameRegistry.findItemStack("Mekanism", "EnergyTablet", 1);
 		enrichedAlloy = GameRegistry.findItemStack("Mekanism", "EnrichedAlloy", 1);
-		Item OtherDust = GameRegistry.findItem("Mekanism", "OtherDust");
-		ArrayList<ItemStack> stackODusts = new ArrayList<ItemStack>();
-		OtherDust.getSubItems(OtherDust, CreativeTabs.tabAllSearch, stackODusts);
-		for(ItemStack items : stackODusts){
-			if(items.getUnlocalizedName().toLowerCase().contains("lithium")){
-				lithiumDust = items;
-			}
-		}
+		lithiumDust = new ItemStack(GameRegistry.findItem("Mekanism", "OtherDust"), 1, 4);
 		if(energyCube != null && steelCasing != null && energyTablet != null && enrichedAlloy != null &&
 				lithiumDust != null) {
 			Technomancy.logger.info("Mekanism compatibility module loaded.");
