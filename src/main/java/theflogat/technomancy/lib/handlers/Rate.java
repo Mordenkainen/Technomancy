@@ -16,6 +16,7 @@ public final class Rate {
        	consumerCost = config.get(category, "EldritchConsumer", consumerCost).getInt(Rate.consumerCost);
        	bellowsCost = config.get(category, "ElectricBellows", bellowsCost).getInt(Rate.bellowsCost);
        	exchangerCost = config.get(category, "ManaExchanger", exchangerCost).getInt(Rate.exchangerCost);
+       	fusorCost = config.get(category, "EssentiaFusor", fusorCost).getInt(Rate.fusorCost);
 	}
 	
 	public static int manaFabCost = 1000000;
@@ -25,4 +26,5 @@ public final class Rate {
 	public static int consumerCost = 20000;
 	public static int bellowsCost = 500;
 	public static int exchangerCost = 1000;
+	public static int fusorCost = 1000;
 }

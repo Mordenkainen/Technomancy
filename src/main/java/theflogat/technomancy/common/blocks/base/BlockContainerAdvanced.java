@@ -1,15 +1,10 @@
 package theflogat.technomancy.common.blocks.base;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -29,35 +24,21 @@ import theflogat.technomancy.util.ToolWrench;
 import theflogat.technomancy.util.helpers.WorldHelper;
 import cofh.api.energy.IEnergyHandler;
 
-public abstract class BlockContainerAdvanced extends BlockContainerBase{
+public abstract class BlockContainerAdvanced extends BlockContainerRedstone{
 
-	public static HashMap<Item, RedstoneSet> map = new HashMap<Item, RedstoneSet>();
 	public TileEntity dummy;
 
 	public BlockContainerAdvanced() {
-		map.put(Items.gunpowder, RedstoneSet.NONE);
-		map.put(Items.redstone, RedstoneSet.HIGH);
-		map.put(Item.getItemFromBlock(Blocks.redstone_torch), RedstoneSet.LOW);
+		super();
 		dummy = createNewTileEntity(null, 0);
 	}
 
-	public static Item getItem(RedstoneSet r){
-		Iterator<Item> i = map.keySet().iterator();
-		while(i.hasNext()){
-			Item it = i.next();
-			if(map.get(it)==r){
-				return it;
-			}
-		}
-		return null;
-	}
-	
 	NBTTagCompound comp = new NBTTagCompound();
 
 	@Override
 	public void breakBlock(World w, int x, int y, int z, Block b, int meta) {
 		w.getTileEntity(x, y, z).writeToNBT(comp);
-		super.breakBlock(w, x, y, z, b, meta);
+		w.removeTileEntity(x, y, z);
 	}
 
 	@Override
@@ -85,21 +66,8 @@ public abstract class BlockContainerAdvanced extends BlockContainerBase{
 		ItemStack items = player.inventory.mainInventory[player.inventory.currentItem];
 		if(te instanceof IWrenchable){
 			if (ToolWrench.isWrench(items)){
-				((IWrenchable)te).onWrenched();
+				((IWrenchable)te).onWrenched(player.isSneaking());
 				return true;
-			}
-		}
-		if(te instanceof IRedstoneSensitive){
-			if(items!=null && map.containsKey(items.getItem())){
-				if(map.get(items.getItem())!=((IRedstoneSensitive)te).getCurrentSetting()){
-					Item it = getItem(((IRedstoneSensitive)te).getCurrentSetting());
-					if(!w.isRemote)
-						WorldHelper.spawnEntItem(w, x, y, z, new ItemStack(it, 1));
-					((IRedstoneSensitive)te).setNewSetting(map.get(items.getItem()));
-					player.inventory.mainInventory[player.inventory.currentItem] = --player.inventory.mainInventory[player.inventory.currentItem].stackSize==0 ? null:
-						player.inventory.mainInventory[player.inventory.currentItem];
-					return true;
-				}
 			}
 		}
 		if(te instanceof IUpgradable){
@@ -112,7 +80,7 @@ public abstract class BlockContainerAdvanced extends BlockContainerBase{
 				}
 			}
 		}
-		return false;
+		return super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ);
 	}
 
 	public void getNBTInfo(NBTTagCompound comp, ArrayList<String> l, int meta){

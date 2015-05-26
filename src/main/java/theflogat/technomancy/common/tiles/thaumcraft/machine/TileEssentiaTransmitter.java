@@ -62,13 +62,25 @@ public class TileEssentiaTransmitter extends TileCoilTransmitter implements IEss
 			cont = new AspectContainerEssentiaTransport((IEssentiaTransport) te);
 		}
 		
-		if(getBlockMetadata()==0){
-			if(boost && !Thaumcraft.isFull(cont)){
-				worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 3);
+		if(!worldObj.isRemote) {
+			boolean flag = false;
+			if(!boost){ 
+				if(redstoneState) {
+					redstoneState = false;
+					flag = true;
+				}
+			} else {
+				if(!Thaumcraft.isFull(cont) && !redstoneState) {
+					redstoneState = true;
+					flag = true;
+				} else if (Thaumcraft.isFull(cont) && redstoneState) {
+					redstoneState = false;
+					flag = true;
+				}
 			}
-		}else{
-			if(!(boost && !Thaumcraft.isFull(cont))){
-				worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3);
+			if(flag) {
+				worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, blockType);
+				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 			}
 		}
 		
@@ -195,7 +207,7 @@ public class TileEssentiaTransmitter extends TileCoilTransmitter implements IEss
 	}
 	
 	@Override
-	public boolean onWrenched() {
+	public boolean onWrenched(boolean sneaking) {
 		for (int i = facing + 1; i < facing + 6; i++){
 			TileEntity tile = WorldHelper.getAdjacentTileEntity(this, (byte) (i % 6));
 			if (tile instanceof IAspectContainer) {

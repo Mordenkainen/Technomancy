@@ -31,6 +31,7 @@ import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockBiomeMorpher
 import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockCondenser;
 import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockEldritchConsumer;
 import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockElectricBellows;
+import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockEssentiaFusor;
 import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockEssentiaTransmitter;
 import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockFluxLamp;
 import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockNodeGenerator;
@@ -53,6 +54,7 @@ import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBiomeMorpher;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileCondenser;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEldritchConsumer;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileElectricBellows;
+import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaFusor;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaTransmitter;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileFluxLamp;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
@@ -217,7 +219,8 @@ public class Thaumcraft extends ModuleBase {
 		TMBlocks.eldritchConsumer = Ids.eldrichConsumer ? new BlockEldritchConsumer() : null;
 		TMBlocks.reservoir = Ids.reservoir ? new BlockReservoir() : null;
 		TMBlocks.advDeconTable = Ids.advDeconTable ? new BlockAdvDeconTable() : null;
-
+		TMBlocks.essentiaFusor = Ids.fusor ? new BlockEssentiaFusor() : null;
+		
 		registerBlock(TMBlocks.nodeDynamo, Names.nodeDynamo);
 		registerBlock(TMBlocks.essentiaContainer, Names.essentiaContainer);
 		registerBlock(TMBlocks.cosmeticOpaque, Names.cosmeticOpaque);
@@ -235,6 +238,7 @@ public class Thaumcraft extends ModuleBase {
 		registerBlock(TMBlocks.eldritchConsumer, Names.eldritchConsumer);
 		registerBlock(TMBlocks.reservoir, Names.reservoir);
 		registerBlock(TMBlocks.advDeconTable, Names.advDeconTable);
+		registerBlock(TMBlocks.essentiaFusor, Names.fusor);
 
 		registerTileEntity(TMBlocks.essentiaContainer, TileEssentiaContainer.class, "TileEssentiacontainer");
 		registerTileEntity(TMBlocks.nodeDynamo, TileNodeDynamo.class, "TileNodeDynamo");
@@ -252,6 +256,7 @@ public class Thaumcraft extends ModuleBase {
 		registerTileEntity(TMBlocks.eldritchConsumer, TileEldritchConsumer.class, "TileEldrichConsumer");
 		registerTileEntity(TMBlocks.reservoir, TileEssentiaReservoir.class, Ref.MOD_PREFIX + "TileEssentiaReservoir");
 		registerTileEntity(TMBlocks.advDeconTable, TileAdvDeconTable.class, Ref.MOD_PREFIX + "TileAdvDeconTable");
+		registerTileEntity(TMBlocks.essentiaFusor, TileEssentiaFusor.class, Ref.MOD_PREFIX + "TileEssentiaFusor");
 	}
 
 	@Override
@@ -402,6 +407,14 @@ public class Thaumcraft extends ModuleBase {
 					10, new AspectList().add(Aspect.MAGIC, 32).add(Aspect.CRAFT, 8).add(Aspect.EXCHANGE, 16).add(Aspect.TOOL, 16),
 					new ItemStack(Thaumcraft.blockTable, 1, 14), new ItemStack[]{new ItemStack(Blocks.piston), new ItemStack(Blocks.piston),
 					new ItemStack(Blocks.piston), new ItemStack(Items.emerald)}));
+		}
+		
+		if(Ids.fusor) {
+			TechnoResearch.recipes.put("EssentiaFusor", ThaumcraftApi.addInfusionCraftingRecipe("ESSENTIAFUSOR", new ItemStack(TMBlocks.essentiaFusor),
+					10, new AspectList().add(Aspect.MAGIC, 32).add(Aspect.CRAFT, 32).add(Aspect.EXCHANGE, 16).add(Aspect.MECHANISM, 16),
+					new ItemStack(blockTube, 1, 2), new ItemStack[]{new ItemStack(blockJar), new ItemStack(blockTube, 1, 1), new ItemStack(blockJar),
+					new ItemStack(TMItems.itemMaterial, 1, 0), new ItemStack(blockJar), new ItemStack(blockTube, 1, 1), new ItemStack(blockJar),
+					new ItemStack(TMItems.itemMaterial, 1, 0)}));
 		}
 		
 		if(CompatibilityHandler.te) {

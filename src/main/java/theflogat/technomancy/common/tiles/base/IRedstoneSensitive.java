@@ -2,6 +2,7 @@ package theflogat.technomancy.common.tiles.base;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
 public interface IRedstoneSensitive {
 
@@ -60,8 +61,21 @@ public interface IRedstoneSensitive {
 				}
 			return false;
 		}
+		
+		public boolean canRun(World world, int x, int y, int z){
+			switch(this){
+			case HIGH:
+				return world.isBlockIndirectlyGettingPowered(x, y, z);
+			case LOW:
+				return world.isBlockIndirectlyGettingPowered(x, y, z);
+			case NONE:
+				return true;
+			}
+			return false;
+		}
 	}
 
 	public RedstoneSet getCurrentSetting();
 	public void setNewSetting(RedstoneSet newSet);
+	public boolean isModified();
 }

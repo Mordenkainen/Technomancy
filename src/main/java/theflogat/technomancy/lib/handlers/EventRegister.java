@@ -30,9 +30,11 @@ public class EventRegister {
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void handleBreakAir(PlayerInteractEvent event) {
-		if(event.action==Action.LEFT_CLICK_BLOCK){
-			if(event.world.getTileEntity(event.x, event.y, event.z) instanceof TileFakeAirNG){
-				((TileFakeAirNG) event.world.getTileEntity(event.x, event.y, event.z)).getMain().setAirAndDrop();
+		if(CompatibilityHandler.th) {
+			if(event.action==Action.LEFT_CLICK_BLOCK){
+				if(event.world.getTileEntity(event.x, event.y, event.z) instanceof TileFakeAirNG){
+					((TileFakeAirNG) event.world.getTileEntity(event.x, event.y, event.z)).getMain().setAirAndDrop();
+				}
 			}
 		}
 	}

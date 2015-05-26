@@ -10,11 +10,14 @@ import net.minecraftforge.common.util.ForgeDirection;
 import theflogat.technomancy.util.helpers.WorldHelper;
 import cofh.api.energy.IEnergyHandler;
 
-public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyHandler, IUpgradable, IWrenchable, IRedstoneSensitive {
+public abstract class TileDynamoBase extends TileTechnomancyRedstone implements IEnergyHandler, IUpgradable, IWrenchable {
+	public TileDynamoBase() {
+		super(RedstoneSet.HIGH);
+	}
+
 	public static final int maxEnergy = 40000;
 	public static final int maxExtract = 320;
 
-	public RedstoneSet set = RedstoneSet.HIGH;
 	public int ener = 0;
 	public boolean boost = false;
 	public byte facing = 1;
@@ -81,7 +84,7 @@ public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyH
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound comp) {
-		set.save(comp);
+		super.writeCustomNBT(comp);
 		comp.setInteger("energy", ener);
 		comp.setByte("face", facing);
 		comp.setInteger("fuel", fuel);
@@ -90,7 +93,7 @@ public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyH
 
 	@Override
 	public void readCustomNBT(NBTTagCompound comp) {
-		set = RedstoneSet.load(comp);
+		super.readCustomNBT(comp);
 		ener = comp.getInteger("energy");
 		facing = comp.getByte("face");
 		fuel = comp.getInteger("fuel");
@@ -158,7 +161,7 @@ public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyH
 	}
 	
 	@Override
-	public boolean onWrenched() {
+	public boolean onWrenched(boolean sneaking) {
 		for (int i = facing + 1; i < facing + 6; i++){
 			TileEntity tile = WorldHelper.getAdjacentTileEntity(this, (byte) (i % 6));
 			if ((tile instanceof IEnergyHandler)) {
@@ -177,16 +180,6 @@ public abstract class TileDynamoBase extends TileTechnomancy implements IEnergyH
 			}
 		}
 		return false;
-	}
-	
-	@Override
-	public RedstoneSet getCurrentSetting() {
-		return set;
-	}
-	
-	@Override
-	public void setNewSetting(RedstoneSet newSet) {
-		set = newSet;
 	}
 	
 	@Override

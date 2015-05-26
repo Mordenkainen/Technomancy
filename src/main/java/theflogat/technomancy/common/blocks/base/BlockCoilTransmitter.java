@@ -1,6 +1,9 @@
 package theflogat.technomancy.common.blocks.base;
 
 import java.util.ArrayList;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -9,28 +12,32 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import thaumcraft.api.aspects.Aspect;
 import theflogat.technomancy.common.tiles.base.TileCoilTransmitter;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public abstract class BlockCoilTransmitter extends BlockContainerAdvanced {
 
 	public BlockCoilTransmitter() {
-		setBlockName(Ref.MOD_PREFIX + Names.essentiaTransmitter);
 		setBlockBounds(0.1875F, 0.0F, 0.1875F, 0.8125F, 1.0F, 0.8125F);
 	}
 	
 	@Override
 	public int isProvidingStrongPower(IBlockAccess w, int x, int y, int z, int side) {
-		return w.getBlockMetadata(x, y, z)==1 ? 15:0;
+		TileCoilTransmitter tile = getTE(w, x, y, z);
+		if(tile!=null) {
+			return tile.redstoneState ? 15 : 0;
+		}
+		return 0;
 	}
 	
 	@Override
 	public int isProvidingWeakPower(IBlockAccess w, int x, int y, int z, int side) {
-		return w.getBlockMetadata(x, y, z)==1 ? 15:0;
+		TileCoilTransmitter tile = getTE(w, x, y, z);
+		if(tile!=null) {
+			return tile.redstoneState ? 15 : 0;
+		}
+		return 0;
 	}
 	
 	@Override
@@ -46,8 +53,7 @@ public abstract class BlockCoilTransmitter extends BlockContainerAdvanced {
 	
 	@Override
 	public int onBlockPlaced(World w, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int meta){
-		w.setBlockMetadataWithNotify(x, y, z, ForgeDirection.OPPOSITES[side], 2);
-		return side + meta;
+		return ForgeDirection.OPPOSITES[side];
 	}
 	
 	@Override
@@ -86,14 +92,14 @@ public abstract class BlockCoilTransmitter extends BlockContainerAdvanced {
 	public boolean renderAsNormalBlock() {
 		return false;
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister icon) {
 		blockIcon = icon.registerIcon(Ref.getAsset(Names.essentiaTransmitter));
 	}
-
-	protected static TileCoilTransmitter getTE(IBlockAccess world, int x, int y, int z) {
+	
+	private static TileCoilTransmitter getTE(IBlockAccess world, int x, int y, int z) {
 		TileEntity tile = world.getTileEntity(x, y, z);
 		return tile instanceof TileCoilTransmitter ? (TileCoilTransmitter)tile : null;
 	}
@@ -101,9 +107,5 @@ public abstract class BlockCoilTransmitter extends BlockContainerAdvanced {
 	@Override
 	public void getNBTInfo(NBTTagCompound comp, ArrayList<String> l, int meta) {
 		super.getNBTInfo(comp, l, meta);
-		Aspect filter = Aspect.getAspect(comp.getString("AspectFilter"));
-		if(filter!=null){
-			l.add("Filter" + filter.getChatcolor() + filter.getName());
-		}
 	}
 }

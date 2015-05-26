@@ -9,34 +9,37 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
-import theflogat.technomancy.common.tiles.base.IRedstoneSensitive;
 import theflogat.technomancy.common.tiles.base.IWrenchable;
-import theflogat.technomancy.common.tiles.base.TileTechnomancy;
+import theflogat.technomancy.common.tiles.base.TileTechnomancyRedstone;
 import theflogat.technomancy.lib.handlers.Rate;
 import vazkii.botania.common.block.tile.mana.TilePool;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 
-public class TileManaExchanger extends TileTechnomancy implements IFluidHandler, IEnergyReceiver, IRedstoneSensitive, IWrenchable{
+public class TileManaExchanger extends TileTechnomancyRedstone implements IFluidHandler, IEnergyReceiver, IWrenchable{
+
+	public TileManaExchanger() {
+		super(RedstoneSet.LOW);
+	}
+
 	public FluidTank tank = new FluidTank(1000);
-	public RedstoneSet set = RedstoneSet.LOW;
 	public boolean mode;
 	public boolean active;
 	public EnergyStorage storage = new EnergyStorage(Rate.exchangerCost * 10);
 
 	@Override
 	public void readCustomNBT(NBTTagCompound comp) {
+		super.readCustomNBT(comp);
 		tank = new FluidTank(1000);
 		tank.readFromNBT(comp);
-		set = RedstoneSet.load(comp);
 		mode = comp.getBoolean("Mode");
 		storage.readFromNBT(comp);
 	}
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound comp) {
+		super.writeCustomNBT(comp);
 		tank.writeToNBT(comp);
-		set.save(comp);
 		comp.setBoolean("Mode", mode);
 		storage.writeToNBT(comp);
 	}
@@ -129,17 +132,7 @@ public class TileManaExchanger extends TileTechnomancy implements IFluidHandler,
 	}
 
 	@Override
-	public RedstoneSet getCurrentSetting() {
-		return set;
-	}
-
-	@Override
-	public void setNewSetting(RedstoneSet newSet) {
-		set = newSet;
-	}
-
-	@Override
-	public boolean onWrenched() {
+	public boolean onWrenched(boolean sneaking) {
 		mode = !mode;
 		return true;
 	}

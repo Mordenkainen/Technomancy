@@ -1,6 +1,7 @@
 package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
 import java.util.HashMap;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.Aspect;
@@ -8,13 +9,12 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectSource;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import theflogat.technomancy.common.blocks.thaumcraft.machines.BlockCondenser;
-import theflogat.technomancy.common.tiles.base.IRedstoneSensitive;
 import theflogat.technomancy.common.tiles.base.IWrenchable;
-import theflogat.technomancy.common.tiles.base.TileMachineBase;
+import theflogat.technomancy.common.tiles.base.TileMachineRedstone;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.lib.handlers.Rate;
 
-public class TileCondenser extends TileMachineBase implements IEssentiaTransport, IAspectSource, IRedstoneSensitive, IWrenchable {
+public class TileCondenser extends TileMachineRedstone implements IEssentiaTransport, IAspectSource, IWrenchable {
 
 	public static final Aspect aspect = Aspect.ENERGY;
 
@@ -22,10 +22,9 @@ public class TileCondenser extends TileMachineBase implements IEssentiaTransport
 	public int amount = 0;
 	public static final int maxAmount = 64;
 	public static int cost = Rate.condenserCost;
-	public RedstoneSet set = RedstoneSet.LOW;
 
 	public TileCondenser() {
-		super(Rate.condenserCost * 5);
+		super(Rate.condenserCost * 5, RedstoneSet.LOW);
 		for(ForgeDirection dir:ForgeDirection.VALID_DIRECTIONS){
 			sides.put(dir, false);
 		}
@@ -51,8 +50,8 @@ public class TileCondenser extends TileMachineBase implements IEssentiaTransport
 
 	@Override
 	public void readCustomNBT(NBTTagCompound comp)  {
+		super.readCustomNBT(comp);
 		amount = comp.getShort("Amount");
-		set = RedstoneSet.load(comp);
 		sides.clear();
 		for(ForgeDirection dir:ForgeDirection.VALID_DIRECTIONS){
 			NBTTagCompound side = comp.getCompoundTag(dir.name());
@@ -62,8 +61,8 @@ public class TileCondenser extends TileMachineBase implements IEssentiaTransport
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound comp)  {
+		super.writeCustomNBT(comp);
 		comp.setShort("Amount", (short)amount);
-		set.save(comp);
 		for(ForgeDirection dir:ForgeDirection.VALID_DIRECTIONS){
 			NBTTagCompound side = new NBTTagCompound();
 			side.setBoolean("s", sides.get(dir).booleanValue());
@@ -200,17 +199,7 @@ public class TileCondenser extends TileMachineBase implements IEssentiaTransport
 	}
 
 	@Override
-	public RedstoneSet getCurrentSetting() {
-		return set;
-	}
-
-	@Override
-	public void setNewSetting(RedstoneSet newSet) {
-		set = newSet;
-	}
-
-	@Override
-	public boolean onWrenched() {
+	public boolean onWrenched(boolean sneaking) {
 		blockMetadata = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
 		blockMetadata++;
 		worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, blockMetadata>=4 ? 0 : blockMetadata, 2);

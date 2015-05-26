@@ -1,25 +1,35 @@
 package theflogat.technomancy.lib.compat.waila;
 
 import java.util.List;
-import mcp.mobius.waila.api.IWailaConfigHandler;
-import mcp.mobius.waila.api.IWailaDataAccessor;
-import mcp.mobius.waila.api.IWailaDataProvider;
+
+import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaFusor;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import theflogat.technomancy.common.tiles.base.TileCoilTransmitter;
+import net.minecraftforge.common.util.ForgeDirection;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
+import mcp.mobius.waila.api.IWailaDataProvider;
 
-public class CoilTransmitterHUDHandler implements IWailaDataProvider {
+public class EssentiaFusorHUDHandler implements IWailaDataProvider {
 
 	@Override
 	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,	IWailaConfigHandler config) {
-		final TileCoilTransmitter te = (TileCoilTransmitter) accessor.getTileEntity();
-		if(te.redstoneState){
-			currenttip.add("Currently Emitting a Signal");
+		WailaHelper.drawDefault(currenttip, accessor.getTileEntity());
+		if(accessor.getPlayer().isSneaking()) {
+			TileEssentiaFusor tile = (TileEssentiaFusor)accessor.getTileEntity();
+			for(ForgeDirection side : ForgeDirection.VALID_DIRECTIONS) {
+				if(side != ForgeDirection.UP && side != ForgeDirection.DOWN) {
+					if(tile.getEssentiaType(side) != null) {
+						currenttip.add(side.name() + " : " + tile.getEssentiaType(side).getName());
+					} else {
+						currenttip.add(side.name() + " : None");
+					}
+				}
+			}
 		}
-		WailaHelper.drawDefault(currenttip, te);
 		return currenttip;
 	}
 	
@@ -40,6 +50,9 @@ public class CoilTransmitterHUDHandler implements IWailaDataProvider {
 
 	@Override
 	public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x, int y, int z) {
-		return null;
+		if (te != null) {
+            te.writeToNBT(tag);
+		}
+        return tag;
 	}
 }

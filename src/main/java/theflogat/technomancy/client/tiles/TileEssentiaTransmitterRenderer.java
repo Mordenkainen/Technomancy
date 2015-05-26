@@ -39,7 +39,6 @@ public class TileEssentiaTransmitterRenderer extends TileEntitySpecialRenderer {
 		model.renderRings();
 		GL11.glPopMatrix();
 		
-		
 		GL11.glPopMatrix();
 	}
 	

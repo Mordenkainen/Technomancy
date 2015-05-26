@@ -8,14 +8,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraftforge.common.util.ForgeDirection;
 import theflogat.technomancy.common.tiles.base.ICouplable;
-import theflogat.technomancy.common.tiles.base.IRedstoneSensitive;
 import theflogat.technomancy.common.tiles.base.IUpgradable;
 import theflogat.technomancy.common.tiles.base.IWrenchable;
 import theflogat.technomancy.common.tiles.base.TileCoilTransmitter;
 import theflogat.technomancy.util.helpers.InvHelper;
 import theflogat.technomancy.util.helpers.WorldHelper;
 
-public class TileItemTransmitter extends TileCoilTransmitter implements IUpgradable, ICouplable, IRedstoneSensitive, IWrenchable{
+public class TileItemTransmitter extends TileCoilTransmitter implements IUpgradable, ICouplable, IWrenchable{
 
 	public ItemStack filter = null;
 
@@ -28,30 +27,41 @@ public class TileItemTransmitter extends TileCoilTransmitter implements IUpgrada
 			return;
 		}
 		
-		if(getBlockMetadata()==0){
-			if(boost && !InvHelper.isFull((IInventory)te)){
-				worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 3);
+		if(!worldObj.isRemote) {
+			boolean flag = false;
+			if(!boost){ 
+				if(redstoneState) {
+					redstoneState = false;
+					flag = true;
+				}
+			} else {
+				if(!InvHelper.isFull((IInventory)te) && !redstoneState) {
+					redstoneState = true;
+					flag = true;
+				} else if(InvHelper.isFull((IInventory)te) && redstoneState) {
+					redstoneState = false;
+					flag = true;
+				}
 			}
-		}else{
-			if(!(boost && !InvHelper.isFull((IInventory)te))){
-				worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3);
+			if(flag) {
+				worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, blockType);
+				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 			}
 		}
 		
-		
-		if (set.canRun(this) &&  !sources.isEmpty()) {
+		if (set.canRun(this) && !sources.isEmpty()) {
 			IInventory inv = (IInventory) te;
-			if(!InvHelper.isFull(inv)){
+			if(!InvHelper.isFull(inv)) {
 				Iterator<ChunkCoordinates> sourceIter = sources.iterator();
 				while (sourceIter.hasNext()) {
 					ChunkCoordinates coords = sourceIter.next();
 					TileEntity tile = worldObj.getTileEntity(coords.posX, coords.posY, coords.posZ);
-					if(tile!=null && tile instanceof IInventory){
+					if(tile != null && tile instanceof IInventory) {
 						IInventory rem = (IInventory)tile;
-						for(int i=0;i<rem.getSizeInventory() && !InvHelper.isFull(inv);i++){
+						for(int i=0; i < rem.getSizeInventory() && !InvHelper.isFull(inv); i++){
 							ItemStack toMove = rem.getStackInSlot(i);
-							if(toMove!=null && (filter==null || areItemStacksEqual(toMove, filter))){
-								if(InvHelper.insertInEmptySlot(inv, toMove, ForgeDirection.VALID_DIRECTIONS[facing].getOpposite()))
+							if(toMove != null && (filter == null || areItemStacksEqual(toMove, filter))){
+								if(InvHelper.insertInEmptySlot(inv, toMove, ForgeDirection.getOrientation(facing).getOpposite()))
 									rem.setInventorySlotContents(i, null);
 							}
 						}
@@ -64,9 +74,7 @@ public class TileItemTransmitter extends TileCoilTransmitter implements IUpgrada
 	}
 	
     private static boolean areItemStacksEqual(ItemStack toMove, ItemStack filter){
-        return toMove.getItem() != filter.getItem() ? false : (toMove.getItemDamage() != filter.getItemDamage()
-        		? false : (toMove.stackTagCompound == null && filter.stackTagCompound != null ? false : toMove.stackTagCompound == null ||
-        		toMove.stackTagCompound.equals(filter.stackTagCompound)));
+    	return toMove.isItemEqual(filter) && ItemStack.areItemStackTagsEqual(toMove, filter);
     }
 
 	@Override
@@ -103,19 +111,9 @@ public class TileItemTransmitter extends TileCoilTransmitter implements IUpgrada
 	public void clear() {
 		sources.clear();
 	}
-
-	@Override
-	public RedstoneSet getCurrentSetting() {
-		return set;
-	}
-
-	@Override
-	public void setNewSetting(RedstoneSet newSet) {
-		set = newSet;
-	}
 	
 	@Override
-	public boolean onWrenched() {
+	public boolean onWrenched(boolean sneaking) {
 		for (int i = facing + 1; i < facing + 6; i++){
 			TileEntity tile = WorldHelper.getAdjacentTileEntity(this, (byte) (i % 6));
 			if (tile instanceof IInventory) {
@@ -128,8 +126,7 @@ public class TileItemTransmitter extends TileCoilTransmitter implements IUpgrada
 	}
 
 	public void addFilter(ItemStack newFilter) {
-		filter = new ItemStack(newFilter.getItem(), 1, newFilter.getItemDamage());
-		if(newFilter.stackTagCompound!=null)
-			filter.stackTagCompound = newFilter.stackTagCompound;
+		filter = newFilter.copy();
+		filter.stackSize = 1;
 	}
 }

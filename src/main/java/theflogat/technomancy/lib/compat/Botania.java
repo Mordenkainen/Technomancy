@@ -61,10 +61,9 @@ public class Botania extends ModuleBase {
 			TechnoLexicon flowerDynLex = new TechnoLexicon("tc.research_name.DYNAMO", BotaniaAPI.categoryDevices);
 			flowerDynLex.setLexiconPages(BotaniaAPI.internalHandler.textPage("techno.lexicon_page.FLOWERDYNAMO.1"),
 					BotaniaAPI.internalHandler.textPage("techno.lexicon_page.FLOWERDYNAMO.2"),
-					BotaniaAPI.internalHandler.textPage("techno.lexicon_page.FLOWERDYNAMO.3"),
 					BotaniaAPI.internalHandler.craftingRecipePage("Hippie Dynamo", flowerDynamo));
 			if(Ids.itemBoost) {
-				flowerDynLex.addPage(BotaniaAPI.internalHandler.textPage("techno.lexicon_page.FLOWERDYNAMO.4"));
+				flowerDynLex.addPage(BotaniaAPI.internalHandler.textPage("techno.lexicon_page.FLOWERDYNAMO.3"));
 				flowerDynLex.addPage(BotaniaAPI.internalHandler.craftingRecipePage("Potency Gem", CraftingHandler.itemBoost));
 			}
 		}

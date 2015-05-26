@@ -20,6 +20,7 @@ public class TileItemTransmitterRenderer  extends TileEntitySpecialRenderer {
 
 	@Override
 	public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float f) {
+		
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float)x, (float)y, (float)z);
 		GL11.glScalef(-1.0F, -1.0F, 1.0f);

@@ -49,6 +49,7 @@ public class ConfigHandler {
         Ids.manaExchanger = config.get(blocks, Names.manaExchanger, true).getBoolean();
         Ids.itemTransmitter = config.get(blocks, Names.itemTransmitter, true).getBoolean();
         Ids.basalt = config.get(blocks, Names.basalt, true).getBoolean();
+        Ids.fusor = config.get(blocks, Names.fusor, true).getBoolean();
         
         String items = "Items";
         //Items        
