@@ -6,6 +6,8 @@ import net.minecraft.util.ChunkCoordinates;
 
 public abstract class TileCoilTransmitter extends TileTechnomancyRedstone implements ICouplable, IWrenchable, IUpgradable{
 
+	public boolean redstoneState = false;
+	
 	public TileCoilTransmitter() {
 		super(RedstoneSet.LOW);
 	}
@@ -29,6 +31,7 @@ public abstract class TileCoilTransmitter extends TileTechnomancyRedstone implem
 		}
 		comp.setInteger("size", sourceCount);
 		comp.setBoolean("boost", boost);
+		comp.setBoolean("redstone", redstoneState);
 	}
 
 	@Override
@@ -43,6 +46,7 @@ public abstract class TileCoilTransmitter extends TileTechnomancyRedstone implem
 			this.sources.add(new ChunkCoordinates(xx, yy, zz));
 		}
 		boost = comp.getBoolean("boost");
+		redstoneState = comp.getBoolean("redstone");
 	}
 
 	@Override

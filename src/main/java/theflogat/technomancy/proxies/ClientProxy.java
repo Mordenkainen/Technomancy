@@ -91,8 +91,12 @@ public class ClientProxy extends CommonProxy implements IGuiHandler{
 		ClientRegistry.bindTileEntitySpecialRenderer(TileCatalyst.class, new TileCatalystRenderer());
 		RenderIds.idCatalyst = RenderingRegistry.getNextAvailableRenderId();
 		
+		ClientRegistry.bindTileEntitySpecialRenderer(TileItemTransmitter.class, new TileItemTransmitterRenderer());
+		RenderIds.idItemTransmitter = RenderingRegistry.getNextAvailableRenderId();
+		
 		RenderingRegistry.registerBlockHandler(new BlockCrystalRenderer());
 		RenderingRegistry.registerBlockHandler(new BlockCatalystRenderer());
+    	RenderingRegistry.registerBlockHandler(new BlockItemTransmitterRenderer());
     	
     	if(CompatibilityHandler.th) {
     		ClientRegistry.bindTileEntitySpecialRenderer(TileNodeDynamo.class, new TileNodeDynamoRenderer());
@@ -131,9 +135,6 @@ public class ClientProxy extends CommonProxy implements IGuiHandler{
     		ClientRegistry.bindTileEntitySpecialRenderer(TileEldritchConsumer.class, new TileEldritchConsumerRenderer());
     		RenderIds.idEldrichConsumer = RenderingRegistry.getNextAvailableRenderId();
     		
-    		ClientRegistry.bindTileEntitySpecialRenderer(TileItemTransmitter.class, new TileItemTransmitterRenderer());
-    		RenderIds.idItemTransmitter = RenderingRegistry.getNextAvailableRenderId();
-    		
     		ClientRegistry.bindTileEntitySpecialRenderer(TileEssentiaFusor.class, new TileEssentiaFusorRenderer());
     		RenderIds.idEssentiaFusor = RenderingRegistry.getNextAvailableRenderId();
     		
@@ -149,7 +150,6 @@ public class ClientProxy extends CommonProxy implements IGuiHandler{
 //        	RenderingRegistry.registerBlockHandler(new BlockReconstructorRenderer());
         	RenderingRegistry.registerBlockHandler(new BlockEldritchConsumerRenderer());
         	RenderingRegistry.registerBlockHandler(new BlockAdvDeconTableRenderer());
-        	RenderingRegistry.registerBlockHandler(new BlockItemTransmitterRenderer());
         	RenderingRegistry.registerBlockHandler(new BlockEssentiaFusorRenderer());
         	
         	MinecraftForgeClient.registerItemRenderer(TMItems.itemTechnoturgeScepter, new ItemWandRenderer());
