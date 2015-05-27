@@ -291,6 +291,12 @@ public class TileFakeAirNG extends TileFakeAirCore implements IEnergyHandler, IE
 	}
 	
 	@Override
+	public boolean canBeModified() {
+		TileNodeGenerator te = getTE();
+		return te != null ? te.canBeModified() : false;
+	}
+	
+	@Override
 	public boolean onWrenched(boolean sneaking) {
 		TileNodeGenerator te = getTE();
 		return te != null ? te.onWrenched(sneaking) : false;

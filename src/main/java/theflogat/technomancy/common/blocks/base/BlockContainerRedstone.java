@@ -34,7 +34,7 @@ public abstract class BlockContainerRedstone extends BlockContainerBase {
 		IRedstoneSensitive te = getTE(w, x, y, z);
 		if(te != null) {
 			ItemStack items = player.inventory.mainInventory[player.inventory.currentItem];
-			if(items!=null && itemToSetting.containsKey(items.getItem())) {
+			if(items!=null && itemToSetting.containsKey(items.getItem()) && te.canBeModified()) {
 				if(itemToSetting.get(items.getItem())!=te.getCurrentSetting()){
 					if(te.isModified()) {
 						Item it = settingToItem.get(te.getCurrentSetting());

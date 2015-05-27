@@ -71,7 +71,7 @@ public class BlockFakeAirNG extends BlockContainer{
 				return true;
 			}
 		}
-		if(items!=null && itemToSetting.containsKey(items.getItem())) {
+		if(items!=null && itemToSetting.containsKey(items.getItem()) && fakeAir.canBeModified()) {
 			if(itemToSetting.get(items.getItem())!=fakeAir.getCurrentSetting()){
 				if(fakeAir.isModified()) {
 					Item it = settingToItem.get(fakeAir.getCurrentSetting());

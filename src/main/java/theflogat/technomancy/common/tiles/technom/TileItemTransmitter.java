@@ -83,6 +83,8 @@ public class TileItemTransmitter extends TileCoilTransmitter implements IUpgrada
 			NBTTagCompound item = comp.getCompoundTag("filter");
 			filter = ItemStack.loadItemStackFromNBT(item);
 			filter.readFromNBT(item);
+		} else {
+			filter = null;
 		}
 		super.readCustomNBT(comp);
 	}

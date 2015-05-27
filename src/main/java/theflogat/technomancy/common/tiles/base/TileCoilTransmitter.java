@@ -1,6 +1,11 @@
 package theflogat.technomancy.common.tiles.base;
 
 import java.util.ArrayList;
+
+import theflogat.technomancy.common.blocks.base.BlockContainerRedstone;
+import theflogat.technomancy.util.helpers.WorldHelper;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChunkCoordinates;
 
@@ -62,6 +67,7 @@ public abstract class TileCoilTransmitter extends TileTechnomancyRedstone implem
 	@Override
 	public boolean toggleBoost() {
 		boost = !boost;
+		fixRedstone();
 		return boost;
 	}
 
@@ -73,6 +79,28 @@ public abstract class TileCoilTransmitter extends TileTechnomancyRedstone implem
 	@Override
 	public void setBoost(boolean newBoost) {
 		boost = newBoost;
+		fixRedstone();
+	}
+	
+	@Override
+	public boolean canBeModified() {
+		return !boost;
+	}
+
+	private void fixRedstone() {
+		if(boost) {
+			if(modified) {
+				Item it = BlockContainerRedstone.settingToItem.get(set);
+				if(!worldObj.isRemote) {
+					WorldHelper.spawnEntItem(worldObj, xCoord, yCoord, zCoord, new ItemStack(it, 1));
+				}
+				modified = false;
+			}
+			set = RedstoneSet.NONE;
+		} else {
+			set = RedstoneSet.LOW;
+		}
+		
 	}
 
 	@Override

@@ -1,10 +1,13 @@
 package theflogat.technomancy.client.tiles;
 
 import java.awt.Color;
+
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
+
 import theflogat.technomancy.client.models.ModelTeslaCoil;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaTransmitter;
 import theflogat.technomancy.lib.Ref;
@@ -32,11 +35,20 @@ public class TileEssentiaTransmitterRenderer extends TileEntitySpecialRenderer {
 		model.render();
 		
 		GL11.glPushMatrix();
+		if(((TileEssentiaTransmitter)entity).boost) {
+			GL11.glColor3d(Color.RED.getRed(), 0, 0);
+		}
+		model.renderTopRing();
+		GL11.glColor3d(1, 1, 1);
+		GL11.glPopMatrix();
+		
+		GL11.glPushMatrix();
 		if(((TileEssentiaTransmitter)entity).aspectFilter != null) {
 			Color color = new Color(((TileEssentiaTransmitter)entity).aspectFilter.getColor());
 			GL11.glColor3d(color.getRed() / 255.0F * 0.2F, color.getGreen() / 255.0F * 0.2F, color.getBlue() / 255.0F * 0.2F);
 		}
-		model.renderRings();
+		model.renderBottomRing();
+		GL11.glColor3d(1, 1, 1);
 		GL11.glPopMatrix();
 		
 		GL11.glPopMatrix();

@@ -36,15 +36,15 @@ public class BlockItemTransmitter extends BlockCoilTransmitter{
 		}
 		TileItemTransmitter tile = getTE(w, x, y, z);
 		if(tile!= null){
-			if(player.isSneaking()){
-				if(tile.filter!=null){
+			if(player.isSneaking()) {
+				if(tile.filter!=null) {
 					if(!w.isRemote) {
 						tile.filter = null;
 						w.markBlockForUpdate(x, y, z);
 					}
 					return true;
 				}
-			}else if(items!=null && tile.filter==null){
+			} else if(items!=null && tile.filter==null) {
 				if(!w.isRemote) {
 					tile.addFilter(player.inventory.mainInventory[player.inventory.currentItem]);
 					w.markBlockForUpdate(x, y, z);

@@ -18,10 +18,10 @@ public class ItemCrystal extends ItemBlock{
 	public void addInformation(ItemStack items, EntityPlayer player, List l, boolean moreInfo) {
 		switch(items.getItemDamage()){
 		case 0:
-			l.add("Used for light rituals. Safe for decoration.");
+			l.add("Used for dark rituals. Safe for decoration.");
 			break;
 		case 1:
-			l.add("Used for dark rituals. Safe for decoration.");
+			l.add("Used for light rituals. Safe for decoration.");
 			break;
 		case 2:
 			l.add("Used for fire rituals. Safe for decoration.");
