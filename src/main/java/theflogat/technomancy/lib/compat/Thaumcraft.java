@@ -21,6 +21,7 @@ import thaumcraft.api.aspects.IEssentiaTransport;
 import thaumcraft.api.wands.WandCap;
 import thaumcraft.api.wands.WandRod;
 import thaumcraft.common.items.wands.ItemWandCasting;
+import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.common.blocks.air.BlockFakeAirNG;
 import theflogat.technomancy.common.blocks.base.BlockCosmeticOpaque;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
@@ -166,6 +167,17 @@ public class Thaumcraft extends ModuleBase {
 		itemWandCap =  GameRegistry.findItem("Thaumcraft", "WandCap");
 		itemWandCasting =  GameRegistry.findItem("Thaumcraft", "WandCasting");
 		itemPickThaumium = GameRegistry.findItem("Thaumcraft", "ItemPickThaumium");
+		
+		if(FLUXGOO != null && blockCosmeticSolid != null && blockMetalDevice != null && blockStoneDevice != null &&
+				blockJar != null && blockTube != null && blockCustomPlant != null && blockWoodenDevice != null &&
+				blockTable != null && itemResource != null && itemEssence != null && itemNugget != null &&
+				itemShard != null && itemWandRod != null && itemWandCap != null && itemWandCasting != null &&
+				itemPickThaumium != null) {
+			Technomancy.logger.info("Thaumcraft compatibility module loaded.");
+		} else {
+			Technomancy.logger.warn("Thaumcraft compatibility module failed to load.");
+			CompatibilityHandler.th = false;
+		}
 	}
 
 	@Override

@@ -38,9 +38,7 @@ public abstract class TileDynamoBase extends TileTechnomancyRedstone implements 
 			}
 		}
 		
-		if(ener>0){
-			updateAdjacentHandlers();
-		}
+		updateAdjacentHandlers();
 	}
 
 	public int calcEner() {
@@ -49,14 +47,15 @@ public abstract class TileDynamoBase extends TileTechnomancyRedstone implements 
 
 	public void update() {
 		worldObj.updateLightByType(EnumSkyBlock.Block, xCoord, yCoord, zCoord);
-		shouldRefresh(worldObj.getBlock(xCoord, yCoord, zCoord), worldObj.getBlock(xCoord, yCoord, zCoord), 0, 0, worldObj, xCoord, yCoord, zCoord);
 		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 	}
 
 	protected void updateAdjacentHandlers() {
-		TileEntity tile = WorldHelper.getAdjacentTileEntity(this, facing);
-		if(WorldHelper.isEnergyHandlerFromOppFacing(tile, facing)) {
-			ener -= ((IEnergyHandler)tile).receiveEnergy(ForgeDirection.VALID_DIRECTIONS[facing].getOpposite(), Math.min(maxExtract, ener), false);		
+		if(ener>0){
+			TileEntity tile = WorldHelper.getAdjacentTileEntity(this, facing);
+			if(WorldHelper.isEnergyHandlerFromOppFacing(tile, facing)) {
+				ener -= ((IEnergyHandler)tile).receiveEnergy(ForgeDirection.VALID_DIRECTIONS[facing].getOpposite(), Math.min(maxExtract, ener), false);		
+			}
 		}
 		update();
 	}
@@ -162,20 +161,14 @@ public abstract class TileDynamoBase extends TileTechnomancyRedstone implements 
 	
 	@Override
 	public boolean onWrenched(boolean sneaking) {
-		for (int i = facing + 1; i < facing + 6; i++){
-			TileEntity tile = WorldHelper.getAdjacentTileEntity(this, (byte) (i % 6));
-			if ((tile instanceof IEnergyHandler)) {
-				facing = (byte) (i % 6);
-				worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord));
-				updateAdjacentHandlers();
-				return true;
-			}
-		}
 		for (int i = facing + 1; i < facing + 6; i++) {
-			if (WorldHelper.isEnergyHandlerFromOppFacing(this, (byte) (i % 6))) {
-				facing = (byte) (i % 6);
-				worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord));
-				updateAdjacentHandlers();
+			TileEntity tile = WorldHelper.getAdjacentTileEntity(this, (byte) (i % 6));
+			if (WorldHelper.isEnergyHandlerFromOppFacing(tile, (byte) (i % 6))) {
+				if(!worldObj.isRemote) {
+					facing = (byte) (i % 6);
+					worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord));
+					updateAdjacentHandlers();
+				}
 				return true;
 			}
 		}

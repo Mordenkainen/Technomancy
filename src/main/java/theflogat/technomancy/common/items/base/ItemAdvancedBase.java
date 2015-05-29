@@ -32,7 +32,7 @@ public class ItemAdvancedBase extends ItemBlock{
 		if(tileInterfaces.contains("IUpgradable")){
 			IUpgradable up = (IUpgradable)((BlockContainerAdvanced)field_150939_a).createNewTileEntity(null, 0);
 			String name = String.format(StatCollector.translateToLocal(field_150939_a.getUnlocalizedName() + ".name"));
-			ItemBoost.upgradeable.add(name + ":" + up.getInfo());
+			ItemBoost.upgradeable.add(name + ": " + up.getInfo());
 		}
 	}
 

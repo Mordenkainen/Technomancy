@@ -86,7 +86,7 @@ public abstract class BlockContainerAdvanced extends BlockContainerRedstone{
 	public void getNBTInfo(NBTTagCompound comp, ArrayList<String> l, int meta){
 		dummy.readFromNBT(comp);
 		if(dummy instanceof IEnergyHandler){
-			l.add("Energy:" + ((IEnergyHandler)dummy).getEnergyStored(null) + "/" + ((IEnergyHandler)dummy).getMaxEnergyStored(null));
+			l.add("Energy: " + ((IEnergyHandler)dummy).getEnergyStored(null) + "/" + ((IEnergyHandler)dummy).getMaxEnergyStored(null));
 		}
 		if(CompatibilityHandler.th && dummy instanceof thaumcraft.api.aspects.IAspectContainer){
 			if(Keyboard.isKeyDown(Keyboard.KEY_A)){
@@ -107,7 +107,7 @@ public abstract class BlockContainerAdvanced extends BlockContainerRedstone{
 		}
 		if(dummy instanceof IRedstoneSensitive){
 			RedstoneSet set = RedstoneSet.load(comp);
-			l.add("Redstone Setting:" + set.toString());
+			l.add("Redstone Setting: " + set.toString());
 		}
 		if(dummy instanceof IInventory){
 			if(Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL)){
@@ -126,8 +126,11 @@ public abstract class BlockContainerAdvanced extends BlockContainerRedstone{
 		}
 		if(dummy instanceof IFluidHandler){
 			FluidTankInfo[] infoTanks = ((IFluidHandler)dummy).getTankInfo(null);
-			for(FluidTankInfo info:infoTanks)
-				l.add(info.fluid.getLocalizedName() + ":" + info.fluid.amount + "/" + info.capacity);
+			for(FluidTankInfo info:infoTanks) {
+				if(info.fluid != null) {
+					l.add(info.fluid.getLocalizedName() + ": " + info.fluid.amount + "/" + info.capacity);
+				}
+			}
 		}
 	}
 }

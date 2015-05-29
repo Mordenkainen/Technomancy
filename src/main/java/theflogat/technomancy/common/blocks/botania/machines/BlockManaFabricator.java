@@ -29,20 +29,19 @@ public class BlockManaFabricator extends BlockContainerAdvanced implements IWand
 		return new TileManaFabricator();
 	}
 	
-	private int facing;	
 	@Override
 	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase entity, ItemStack items){
 		super.onBlockPlacedBy(w, x, y, z, entity, items);
 		TileEntity tile = w.getTileEntity(x, y, z);
 		if(tile instanceof TileManaFabricator) {
-			((TileManaFabricator)tile).facing = this.facing;
+			((TileManaFabricator)tile).facing = w.getBlockMetadata(x, y, z);
+			w.setBlockMetadataWithNotify(x, y, z, 0, 0);
 		}
 	}
 	
 	@Override
 	public int onBlockPlaced(World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int meta){
-		this.facing = ForgeDirection.OPPOSITES[side];
-		return side + meta;
+		return ForgeDirection.OPPOSITES[side];
 	}
 	
 	@Override

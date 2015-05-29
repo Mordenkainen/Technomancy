@@ -1,12 +1,14 @@
 package theflogat.technomancy.lib.compat;
 
 import java.util.Random;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
+import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.blocks.botania.BlockManaFluid;
 import theflogat.technomancy.common.blocks.botania.dynamos.BlockFlowerDynamo;
@@ -91,7 +93,9 @@ public class Botania extends ModuleBase {
 	}
 
 	@Override
-	public void Init() {}
+	public void Init() {
+		Technomancy.logger.info("Botania compatibility module loaded.");
+	}
 
 	@Override
 	public void PostInit() {
@@ -107,6 +111,8 @@ public class Botania extends ModuleBase {
     	//Registration
     	registerItem(TMItems.itemBO, Names.itemBO);
     	registerItem(TMItems.manaBucket, Names.manaBucket);
+    	
+    	registerBucket(TMBlocks.manaFluid, TMBlocks.manaFluidBlock, TMItems.manaBucket);
 	}
 
 	@Override
@@ -128,8 +134,6 @@ public class Botania extends ModuleBase {
 		registerTileEntity(TMBlocks.manaFabricator, TileManaFabricator.class, "ManaFabricator");
 		registerTileEntity(TMBlocks.processorBO, TileBOProcessor.class, "TileProcessorBO");
 		registerTileEntity(TMBlocks.manaExchanger, TileManaExchanger.class, "TileManaExchanger");
-		
-		registerBucket(TMBlocks.manaFluid, TMBlocks.manaFluidBlock, TMItems.manaBucket);
 	}
 
 	@Override
