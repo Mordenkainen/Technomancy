@@ -1,5 +1,7 @@
 package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
+import java.lang.reflect.Field;
+
 import net.minecraft.block.BlockFurnace;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -11,6 +13,7 @@ import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
 import thaumcraft.common.tiles.TileAlchemyFurnace;
 import thaumcraft.common.tiles.TileArcaneFurnace;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
+import theflogat.technomancy.lib.Conf;
 import theflogat.technomancy.lib.handlers.Rate;
 
 public class TileElectricBellows extends TileMachineBase {
@@ -73,6 +76,13 @@ public class TileElectricBellows extends TileMachineBase {
 					}
 					if(((TileAlchemyFurnace)furnace).furnaceBurnTime <= 2 && ((TileAlchemyFurnace)furnace).aspects.visSize() + al.visSize() < 50) {
 						((TileAlchemyFurnace)furnace).furnaceBurnTime = 80;
+						try {
+							Field speedBoost = TileAlchemyFurnace.class.getDeclaredField("speedBoost");
+							speedBoost.setAccessible(true);
+							speedBoost.setBoolean(furnace, true);
+						} catch (Exception e) {
+							Conf.ex(e);
+						}
 						extractEnergy(baseCost * 6, false);
 					}					
 				}
