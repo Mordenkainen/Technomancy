@@ -263,7 +263,7 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
 
 		for(int i = 0; i < list.tagCount(); i++) {
 			NBTTagCompound sideVal = list.getCompoundTagAt(i);
-			sides.get(ForgeDirection.getOrientation((int)sideVal.getByte("side"))).load(sideVal);
+			sides.get(ForgeDirection.getOrientation(sideVal.getByte("side"))).load(sideVal);
 		}
 		if(worldObj != null) {
 			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
@@ -351,7 +351,7 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
 	public void setAspects(AspectList arg0) {}
 
 	@Override
-	public boolean takeFromContainer(AspectList arg0) {
+	public boolean takeFromContainer(AspectList al) {
 		return false;
 	}
 
@@ -401,12 +401,12 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
 
 	@Override
 	public int getMinimumSuction() {
-		return 48;
+		return -48;
 	}
 
 	@Override
 	public int getSuctionAmount(ForgeDirection side) {
-		return isValidSide(side) && sides.get(side).type == SideType.INPUT && fullyMarked() ? 48 : 0;
+		return isValidSide(side) && fullyMarked() ? (sides.get(side).type == SideType.INPUT ? 48 : (sides.get(side).type == SideType.OUTPUT ? -48 :0)): 0;
 	}
 
 	@Override

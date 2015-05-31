@@ -64,7 +64,7 @@ public abstract class BlockContainerRedstone extends BlockContainerBase {
 		super.breakBlock(w, x, y, z, b, meta);
 	}
 	
-	private IRedstoneSensitive getTE(IBlockAccess access, int x, int y, int z) {
+	private static IRedstoneSensitive getTE(IBlockAccess access, int x, int y, int z) {
 		TileEntity tile = access.getTileEntity(x, y, z);
 		return tile instanceof IRedstoneSensitive ? (IRedstoneSensitive)tile : null;
 	}
