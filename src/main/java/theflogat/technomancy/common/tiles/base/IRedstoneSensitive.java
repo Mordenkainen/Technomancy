@@ -78,4 +78,5 @@ public interface IRedstoneSensitive {
 	public RedstoneSet getCurrentSetting();
 	public void setNewSetting(RedstoneSet newSet);
 	public boolean isModified();
+	public boolean canBeModified();
 }

@@ -37,10 +37,17 @@ public class TileItemTransmitterRenderer  extends TileEntitySpecialRenderer {
 		GL11.glPushMatrix();
 		if(((TileItemTransmitter)entity).boost) {
 			GL11.glColor3d(Color.RED.getRed(), 0, 0);
-			if(((TileItemTransmitter)entity).filter!=null)
-				GL11.glColor3d(0, Color.GREEN.getGreen(), 0);
 		}
-		model.renderRings();
+		model.renderTopRing();
+		GL11.glColor3d(1, 1, 1);
+		GL11.glPopMatrix();
+		
+		GL11.glPushMatrix();
+		if(((TileItemTransmitter)entity).filter != null) {
+			GL11.glColor3d(0, Color.GREEN.getGreen(), 0);
+		}
+		model.renderBottomRing();
+		GL11.glColor3d(1, 1, 1);
 		GL11.glPopMatrix();
 		
 		GL11.glPopMatrix();

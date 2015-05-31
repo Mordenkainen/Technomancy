@@ -27,6 +27,11 @@ public abstract class TileMachineRedstone extends TileMachineBase implements IRe
 	public boolean isModified() {
 		return modified;
 	}
+	
+	@Override
+	public boolean canBeModified() {
+		return true;
+	}
 
 	@Override
 	public void readCustomNBT(NBTTagCompound comp) {

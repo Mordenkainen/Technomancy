@@ -1,12 +1,10 @@
 package theflogat.technomancy.common.blocks.bloodmagic.machines;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
@@ -51,13 +49,6 @@ public class BlockBloodFabricator extends BlockContainerAdvanced {
 		}
 		return super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ);
 	}
-	
-	@Override
-	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase entity, ItemStack items)    {
-		super.onBlockPlacedBy(w, x, y, z, entity, items);
-        int rotation = MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 2.5D) & 3;
-        w.setBlockMetadataWithNotify(x, y, z, rotation, 2);
-    }
 	
 	@SideOnly(Side.CLIENT)
 	@Override
