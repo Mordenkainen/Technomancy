@@ -31,20 +31,18 @@ public class BlockItemTransmitter extends BlockCoilTransmitter{
 		if(items!=null && (items.getItem() instanceof ItemCoilCoupler || items.getItem() instanceof ItemBoost)) {
 			return false;
 		}
-		if(super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ)) {
-			return true;
-		}
+		boolean flag = super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ);
 		TileItemTransmitter tile = getTE(w, x, y, z);
 		if(tile!= null){
-			if(player.isSneaking()) {
-				if(tile.filter!=null) {
+			if(player.isSneaking() && !flag){
+				if(tile.filter!=null){
 					if(!w.isRemote) {
 						tile.filter = null;
 						w.markBlockForUpdate(x, y, z);
 					}
 					return true;
 				}
-			} else if(items!=null && tile.filter==null) {
+			}else if(items!=null && tile.filter==null){
 				if(!w.isRemote) {
 					tile.addFilter(player.inventory.mainInventory[player.inventory.currentItem]);
 					w.markBlockForUpdate(x, y, z);
@@ -52,7 +50,7 @@ public class BlockItemTransmitter extends BlockCoilTransmitter{
 				return true;
 			}
 		}
-		return false;
+		return flag;
 	}
 
 	@Override

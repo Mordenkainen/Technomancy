@@ -211,7 +211,8 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
 
 	@Override
 	public void setInventorySlotContents(int i, ItemStack stack) {
-		inv[i] = stack;
+		if(!worldObj.isRemote)
+			inv[i] = stack;
 	}
 
 	@Override
