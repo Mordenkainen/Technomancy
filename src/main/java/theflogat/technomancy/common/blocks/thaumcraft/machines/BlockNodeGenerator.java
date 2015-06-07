@@ -49,6 +49,9 @@ public class BlockNodeGenerator extends BlockContainerAdvanced {
 
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack items){
+		if(items.hasTagCompound()) {
+			items.stackTagCompound.setBoolean("RegenDummyBlocks", true);
+		}
 		super.onBlockPlacedBy(world, x, y, z, entity, items);
 		int facing = MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 0.5D) & 0x3;
 		TileNodeGenerator tile = getTE(world, x, y, z);
@@ -62,6 +65,7 @@ public class BlockNodeGenerator extends BlockContainerAdvanced {
 			} else if (facing == 3) {
 				tile.facing = 4;
 			}
+			
 		}
 	}
 	

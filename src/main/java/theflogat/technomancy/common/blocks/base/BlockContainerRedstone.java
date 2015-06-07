@@ -55,7 +55,7 @@ public abstract class BlockContainerRedstone extends BlockContainerBase {
 	@Override
 	public void breakBlock(World w, int x, int y, int z, Block b, int meta) {
 		IRedstoneSensitive tile = getTE(w, x, y, z);
-		if(tile.isModified()){
+		if(tile != null && tile.isModified()){
 			Item it = settingToItem.get(tile.getCurrentSetting());
 			if(!w.isRemote) {
 				WorldHelper.spawnEntItem(w, x, y, z, new ItemStack(it, 1));

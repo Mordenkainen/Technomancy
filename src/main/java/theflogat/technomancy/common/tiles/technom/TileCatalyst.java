@@ -37,7 +37,9 @@ public class TileCatalyst extends TileTechnomancy {
 	}
 
 	public void activateRitual(EntityPlayer player) {
-		userName = player.getDisplayName();
+		if(player != null) {
+			userName = player.getDisplayName();
+		}
 		for(Ritual r : RitualRegistry.getRituals()){
 			if(r!=null){
 				if(r.isCoreComplete(worldObj, xCoord, yCoord, zCoord)){

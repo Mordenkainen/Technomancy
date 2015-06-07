@@ -37,8 +37,11 @@ public abstract class BlockContainerAdvanced extends BlockContainerRedstone{
 
 	@Override
 	public void breakBlock(World w, int x, int y, int z, Block b, int meta) {
-		w.getTileEntity(x, y, z).writeToNBT(comp);
-		w.removeTileEntity(x, y, z);
+		TileEntity tile = w.getTileEntity(x, y, z);
+		if(tile != null) {
+			tile.writeToNBT(comp);
+			w.removeTileEntity(x, y, z);
+		}
 	}
 
 	@Override
@@ -52,11 +55,13 @@ public abstract class BlockContainerAdvanced extends BlockContainerRedstone{
 
 	@Override
 	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase player,	ItemStack items) {
-		items.stackTagCompound.setInteger("x", x);
-		items.stackTagCompound.setInteger("y", y);
-		items.stackTagCompound.setInteger("z", z);
-		if(w.getTileEntity(x, y, z)!=null){
-			w.getTileEntity(x, y, z).readFromNBT(items.stackTagCompound);
+		if(items.hasTagCompound()) {
+			items.stackTagCompound.setInteger("x", x);
+			items.stackTagCompound.setInteger("y", y);
+			items.stackTagCompound.setInteger("z", z);
+			if(w.getTileEntity(x, y, z)!=null){
+				w.getTileEntity(x, y, z).readFromNBT(items.stackTagCompound);
+			}
 		}
 	}
 
@@ -71,7 +76,7 @@ public abstract class BlockContainerAdvanced extends BlockContainerRedstone{
 			}
 		}
 		if(te instanceof IUpgradable){
-			if(player.getHeldItem()==null && player.isSneaking()){
+			if(items==null && player.isSneaking()){
 				if(((IUpgradable)te).getBoost()){
 					((IUpgradable)te).toggleBoost();
 					if(!w.isRemote)
@@ -93,7 +98,7 @@ public abstract class BlockContainerAdvanced extends BlockContainerRedstone{
 				thaumcraft.api.aspects.AspectList al = ((thaumcraft.api.aspects.IAspectContainer)dummy).getAspects();
 				for(thaumcraft.api.aspects.Aspect as: al.getAspects()){
 					if(al.getAmount(as)>0){
-						l.add(as.getChatcolor() + as.getName() + ":" + al.getAmount(as));
+						l.add(as.getName() + ":" + al.getAmount(as));
 					}
 				}
 			}else{
