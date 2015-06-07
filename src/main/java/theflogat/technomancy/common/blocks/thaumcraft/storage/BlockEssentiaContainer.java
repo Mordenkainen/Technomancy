@@ -184,7 +184,7 @@ public class BlockEssentiaContainer extends BlockContainerAdvanced {
 		super.getNBTInfo(comp, l, meta);
 		if(comp.hasKey("AspectFilter")){
 			Aspect as = Aspect.getAspect(comp.getString("AspectFilter"));
-			l.add("Filter:" + as.getChatcolor() + as.getName());
+			l.add("Filter: " + as.getName());
 		}
 	}
 }

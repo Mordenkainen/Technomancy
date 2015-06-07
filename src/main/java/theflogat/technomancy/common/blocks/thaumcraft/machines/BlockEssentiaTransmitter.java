@@ -87,7 +87,7 @@ public class BlockEssentiaTransmitter extends BlockCoilTransmitter {
 		super.getNBTInfo(comp, l, meta);
 		Aspect filter = Aspect.getAspect(comp.getString("AspectFilter"));
 		if(filter!=null){
-			l.add("Filter" + filter.getChatcolor() + filter.getName());
+			l.add("Filter " + filter.getName());
 		}
 	}
 	

@@ -67,7 +67,7 @@ public interface IRedstoneSensitive {
 			case HIGH:
 				return world.isBlockIndirectlyGettingPowered(x, y, z);
 			case LOW:
-				return world.isBlockIndirectlyGettingPowered(x, y, z);
+				return !world.isBlockIndirectlyGettingPowered(x, y, z);
 			case NONE:
 				return true;
 			}

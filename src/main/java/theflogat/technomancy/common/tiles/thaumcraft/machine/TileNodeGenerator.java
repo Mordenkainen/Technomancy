@@ -21,6 +21,7 @@ import thaumcraft.api.wands.IWandable;
 import thaumcraft.client.fx.bolt.FXLightningBolt;
 import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
 import thaumcraft.common.lib.world.biomes.BiomeHandler;
+import thaumcraft.common.tiles.TileNode;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.tiles.air.TileFakeAirNG;
 import theflogat.technomancy.common.tiles.base.IUpgradable;
@@ -77,7 +78,7 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
 				if(entity == null && worldObj.isAirBlock(xx, yCoord + 1, zz)) {
 					canSpawn = true;
 					addNode = false;
-				} else if(entity instanceof INode) {
+				} else if(entity instanceof TileNode) {
 					INode node = (INode)entity;
 					addNode = true;			
 					if(canRun() && !worldObj.isRemote && amount > 0 && aspect != null) {
@@ -232,7 +233,7 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
 		for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
 			if (dir != ForgeDirection.getOrientation(facing)) {
 				TileEntity te = Thaumcraft.getConnectableTile(worldObj, xCoord, yCoord, zCoord, dir);
-				if (te != null && !(te instanceof TileFakeAirNG)) {
+				if (te != null) {
 					IEssentiaTransport ic = (IEssentiaTransport)te;
 					Aspect ta = ic.getEssentiaType(dir.getOpposite());
 					if (ic.getEssentiaAmount(dir.getOpposite()) > 0 && ic.getSuctionAmount(dir.getOpposite()) < getSuctionAmount(null) &&
@@ -328,7 +329,7 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
 		compound.setBoolean("Initiator", initiator);
 		compound.setInteger("Step", step);
 		compound.setBoolean("Boost", boost);
-		compound.setBoolean("FirstAdded", regenDummyBlocks);
+		compound.setBoolean("RegenDummyBlocks", regenDummyBlocks);
 		super.writeCustomNBT(compound);
 	}
 
