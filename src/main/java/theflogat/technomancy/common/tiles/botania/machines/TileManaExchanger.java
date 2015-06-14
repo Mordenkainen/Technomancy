@@ -28,20 +28,26 @@ public class TileManaExchanger extends TileTechnomancyRedstone implements IFluid
 	public EnergyStorage storage = new EnergyStorage(Rate.exchangerCost * 10);
 
 	@Override
-	public void readCustomNBT(NBTTagCompound comp) {
-		super.readCustomNBT(comp);
+	public void readCustomNBT(NBTTagCompound comp) {}
+
+	@Override
+	public void writeCustomNBT(NBTTagCompound comp) {}
+	
+	@Override
+	public void writeSyncData(NBTTagCompound comp) {
+		super.writeSyncData(comp);
+		tank.writeToNBT(comp);
+		comp.setBoolean("Mode", mode);
+		storage.writeToNBT(comp);
+	}
+	
+	@Override
+	public void readSyncData(NBTTagCompound comp) {
+		super.readSyncData(comp);
 		tank = new FluidTank(1000);
 		tank.readFromNBT(comp);
 		mode = comp.getBoolean("Mode");
 		storage.readFromNBT(comp);
-	}
-
-	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {
-		super.writeCustomNBT(comp);
-		tank.writeToNBT(comp);
-		comp.setBoolean("Mode", mode);
-		storage.writeToNBT(comp);
 	}
 	
 	@Override

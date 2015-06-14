@@ -46,15 +46,15 @@ public class TileFlowerDynamo extends TileDynamoBase implements IManaReceiver {
 	}
 	
 	@Override
-	public void readCustomNBT(NBTTagCompound comp) {
-		super.readCustomNBT(comp);
-		mana = comp.getInteger("Mana");
+	public void writeSyncData(NBTTagCompound comp) {
+		super.writeSyncData(comp);
+		comp.setInteger("Mana", this.mana);
 	}
 	
 	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {
-		super.writeCustomNBT(comp);
-		comp.setInteger("Mana", this.mana);
+	public void readSyncData(NBTTagCompound comp) {
+		super.readSyncData(comp);
+		mana = comp.getInteger("Mana");
 	}
 
 	@Override

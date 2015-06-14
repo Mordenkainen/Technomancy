@@ -1,6 +1,7 @@
 package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
 import java.util.Iterator;
+
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -26,43 +27,43 @@ public class TileEssentiaTransmitter extends TileCoilTransmitter implements IEss
 	private boolean onSpecialBlock;
 	
 	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {
+	public void writeSyncData(NBTTagCompound comp) {
+		super.writeSyncData(comp);
 		if (aspectFilter != null) {
 			comp.setString("AspectFilter", aspectFilter.getTag());
 		}
-		super.writeCustomNBT(comp);
 	}
 	
 	@Override
-	public void readCustomNBT(NBTTagCompound comp) {
+	public void readSyncData(NBTTagCompound comp) {
+		super.readSyncData(comp);
 		aspectFilter = Aspect.getAspect(comp.getString("AspectFilter"));
-		super.readCustomNBT(comp);
 	}
 	
 	@Override
 	public void updateEntity() {
-		Block connectedBlock = worldObj.getBlock(xCoord + ForgeDirection.getOrientation(facing).offsetX, 
-				yCoord + ForgeDirection.getOrientation(facing).offsetY, zCoord + ForgeDirection.getOrientation(facing).offsetZ);
-		int blockMeta = worldObj.getBlockMetadata(xCoord + ForgeDirection.getOrientation(facing).offsetX, 
-				yCoord + ForgeDirection.getOrientation(facing).offsetY, zCoord + ForgeDirection.getOrientation(facing).offsetZ);
-		if(connectedBlock == GameRegistry.findBlock("Thaumcraft", "blockMetalDevice") && 
-				(blockMeta == 8 || blockMeta == 10 || blockMeta == 11 || blockMeta == 13)) {
-			onSpecialBlock = true;
-			return;
-		}
-		TileEntity te = Thaumcraft.getConnectableAsContainer(worldObj, xCoord, yCoord, zCoord, ForgeDirection.getOrientation(facing));
-		if(te==null){
-			return;
-		}
-		
-		IAspectContainer cont;
-		if(te instanceof IAspectContainer){
-			cont = (IAspectContainer)te;
-		}else{
-			cont = new AspectContainerEssentiaTransport((IEssentiaTransport) te);
-		}
-		
 		if(!worldObj.isRemote) {
+			Block connectedBlock = worldObj.getBlock(xCoord + ForgeDirection.getOrientation(facing).offsetX, 
+					yCoord + ForgeDirection.getOrientation(facing).offsetY, zCoord + ForgeDirection.getOrientation(facing).offsetZ);
+			int blockMeta = worldObj.getBlockMetadata(xCoord + ForgeDirection.getOrientation(facing).offsetX, 
+					yCoord + ForgeDirection.getOrientation(facing).offsetY, zCoord + ForgeDirection.getOrientation(facing).offsetZ);
+			if(connectedBlock == GameRegistry.findBlock("Thaumcraft", "blockMetalDevice") && 
+					(blockMeta == 8 || blockMeta == 10 || blockMeta == 11 || blockMeta == 13)) {
+				onSpecialBlock = true;
+				return;
+			}
+			TileEntity te = Thaumcraft.getConnectableAsContainer(worldObj, xCoord, yCoord, zCoord, ForgeDirection.getOrientation(facing));
+			if(te==null){
+				return;
+			}
+			
+			IAspectContainer cont;
+			if(te instanceof IAspectContainer){
+				cont = (IAspectContainer)te;
+			}else{
+				cont = new AspectContainerEssentiaTransport((IEssentiaTransport) te);
+			}
+			
 			boolean flag = false;
 			if(!boost){ 
 				if(redstoneState) {
@@ -82,35 +83,35 @@ public class TileEssentiaTransmitter extends TileCoilTransmitter implements IEss
 				worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, blockType);
 				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 			}
-		}
-		
-		if (set.canRun(this) && !sources.isEmpty()) {
-			Iterator<ChunkCoordinates> sourceIter = sources.iterator();
-			while (sourceIter.hasNext()) {
-				ChunkCoordinates coords = sourceIter.next();
-				TileEntity tile = worldObj.getTileEntity(coords.posX, coords.posY, coords.posZ);
-				if(tile!=null && tile instanceof IAspectContainer) {
-					IAspectContainer source = (IAspectContainer)tile;
-					AspectList al = source.getAspects();
-					if(al!=null)
-						for(int i = 0; i < al.size(); i++) {
-							Aspect aspect = al.getAspects()[i];
-							if(aspect != null && (aspectFilter == null || aspect == aspectFilter) && cont.doesContainerAccept(aspect) && cont.addToContainer(aspect, 1) == 0) {
-								if(source.takeFromContainer(aspect, 1)) {
-									if(Conf.fancy) {
-										if (this.xCoord - tile.xCoord <= Byte.MAX_VALUE && this.yCoord - tile.yCoord <= Byte.MAX_VALUE && this.zCoord - tile.zCoord <= Byte.MAX_VALUE) {
-											PacketHandler.INSTANCE.sendToAllAround(new PacketFXEssentiaSource(this.xCoord, this.yCoord+1, this.zCoord, (byte)(this.xCoord - tile.xCoord),
-												(byte)(this.yCoord - tile.yCoord), (byte)(this.zCoord - tile.zCoord), aspect.getColor()), new NetworkRegistry.TargetPoint(
-												tile.getWorldObj().provider.dimensionId, tile.xCoord, tile.yCoord, tile.zCoord, 32.0D));
+			
+			if (set.canRun(this) && !sources.isEmpty()) {
+				Iterator<ChunkCoordinates> sourceIter = sources.iterator();
+				while (sourceIter.hasNext()) {
+					ChunkCoordinates coords = sourceIter.next();
+					TileEntity tile = worldObj.getTileEntity(coords.posX, coords.posY, coords.posZ);
+					if(tile!=null && tile instanceof IAspectContainer) {
+						IAspectContainer source = (IAspectContainer)tile;
+						AspectList al = source.getAspects();
+						if(al!=null)
+							for(int i = 0; i < al.size(); i++) {
+								Aspect aspect = al.getAspects()[i];
+								if(aspect != null && (aspectFilter == null || aspect == aspectFilter) && cont.doesContainerAccept(aspect) && cont.addToContainer(aspect, 1) == 0) {
+									if(source.takeFromContainer(aspect, 1)) {
+										if(Conf.fancy) {
+											if (this.xCoord - tile.xCoord <= Byte.MAX_VALUE && this.yCoord - tile.yCoord <= Byte.MAX_VALUE && this.zCoord - tile.zCoord <= Byte.MAX_VALUE) {
+												PacketHandler.INSTANCE.sendToAllAround(new PacketFXEssentiaSource(this.xCoord, this.yCoord+1, this.zCoord, (byte)(this.xCoord - tile.xCoord),
+													(byte)(this.yCoord - tile.yCoord), (byte)(this.zCoord - tile.zCoord), aspect.getColor()), new NetworkRegistry.TargetPoint(
+													tile.getWorldObj().provider.dimensionId, tile.xCoord, tile.yCoord, tile.zCoord, 32.0D));
+											}
 										}
+									} else {
+										cont.takeFromContainer(aspect, 1);
 									}
-								} else {
-									cont.takeFromContainer(aspect, 1);
 								}
 							}
-						}
-				}else{
-					sourceIter.remove();
+					}else{
+						sourceIter.remove();
+					}
 				}
 			}
 		}

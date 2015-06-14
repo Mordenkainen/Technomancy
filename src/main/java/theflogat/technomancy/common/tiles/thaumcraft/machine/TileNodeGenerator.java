@@ -302,22 +302,8 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
 	}
 
 	@Override
-	public void readCustomNBT(NBTTagCompound compound)  {
-		aspect = Aspect.getAspect(compound.getString("Aspect"));
-		amount = compound.getShort("Amount");
-		active = compound.getBoolean("Active");
-		canSpawn = compound.getBoolean("Spawn");
-		facing = compound.getByte("Facing");
-		running = compound.getBoolean("Running");
-		initiator = compound.getBoolean("Initiator");
-		step = compound.getInteger("Step");
-		boost = compound.getBoolean("Boost");
-		regenDummyBlocks = compound.getBoolean("RegenDummyBlocks");
-		super.readCustomNBT(compound);
-	}
-
-	@Override
-	public void writeCustomNBT(NBTTagCompound compound) {
+	public void writeSyncData(NBTTagCompound compound) {
+		super.writeSyncData(compound);
 		if (aspect != null) {
 			compound.setString("Aspect", aspect.getTag());
 		}
@@ -330,7 +316,21 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
 		compound.setInteger("Step", step);
 		compound.setBoolean("Boost", boost);
 		compound.setBoolean("RegenDummyBlocks", regenDummyBlocks);
-		super.writeCustomNBT(compound);
+	}
+	
+	@Override
+	public void readSyncData(NBTTagCompound compound) {
+		super.readSyncData(compound);
+		aspect = Aspect.getAspect(compound.getString("Aspect"));
+		amount = compound.getShort("Amount");
+		active = compound.getBoolean("Active");
+		canSpawn = compound.getBoolean("Spawn");
+		facing = compound.getByte("Facing");
+		running = compound.getBoolean("Running");
+		initiator = compound.getBoolean("Initiator");
+		step = compound.getInteger("Step");
+		boost = compound.getBoolean("Boost");
+		regenDummyBlocks = compound.getBoolean("RegenDummyBlocks");
 	}
 
 	@Override

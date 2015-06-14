@@ -18,13 +18,14 @@ public class TileCrystal extends TileTechnomancy{
 	}
 	
 	@Override
-	public void readCustomNBT(NBTTagCompound comp) {
-		
-	}
+	public void readCustomNBT(NBTTagCompound comp) {}
 
 	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {
-		
-	}
-
+	public void writeCustomNBT(NBTTagCompound comp) {}
+	
+	@Override
+	public void writeSyncData(NBTTagCompound compound) {}
+	
+	@Override
+	public void readSyncData(NBTTagCompound compound) {}
 }

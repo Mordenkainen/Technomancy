@@ -1,10 +1,10 @@
 package theflogat.technomancy.common.tiles.air;
 
 import net.minecraft.nbt.NBTTagCompound;
-import theflogat.technomancy.common.tiles.base.TileTechnomancy;
+import net.minecraft.tileentity.TileEntity;
 import theflogat.technomancy.util.Coords;
 
-public class TileFakeAirCore extends TileTechnomancy{
+public class TileFakeAirCore extends TileEntity{
 
 	protected int x = 0;
 	protected int y = 0;
@@ -30,7 +30,8 @@ public class TileFakeAirCore extends TileTechnomancy{
 	}
 
 	@Override
-	public void readCustomNBT(NBTTagCompound comp) {
+	public void readFromNBT(NBTTagCompound comp) {
+		super.readFromNBT(comp);
 		x = comp.getInteger("mainx");
 		y = comp.getInteger("mainy");
 		z = comp.getInteger("mainz");
@@ -42,7 +43,8 @@ public class TileFakeAirCore extends TileTechnomancy{
 	}
 
 	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {
+	public void writeToNBT(NBTTagCompound comp) {
+		super.writeToNBT(comp);
 		comp.setInteger("mainx", x);
 		comp.setInteger("mainy", y);
 		comp.setInteger("mainz", z);

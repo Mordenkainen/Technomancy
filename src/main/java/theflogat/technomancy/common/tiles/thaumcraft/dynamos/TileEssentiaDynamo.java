@@ -36,19 +36,19 @@ public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContain
 	}
 
 	@Override
-	public void readCustomNBT(NBTTagCompound comp) {
-		super.readCustomNBT(comp);
-		amount = comp.getShort("Amount");
-		aspect = Aspect.getAspect(comp.getString("Aspect"));
-	}
-
-	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {
-		super.writeCustomNBT(comp);
+	public void writeSyncData(NBTTagCompound comp) {
+		super.writeSyncData(comp);
 		comp.setShort("Amount", (short)amount);
 		if (aspect != null) {
 			comp.setString("Aspect", aspect.getTag());
 		}
+	}
+	
+	@Override
+	public void readSyncData(NBTTagCompound comp) {
+		super.readSyncData(comp);
+		amount = comp.getShort("Amount");
+		aspect = Aspect.getAspect(comp.getString("Aspect"));
 	}
 
 	public int getAspectFuel(Aspect aspect) {

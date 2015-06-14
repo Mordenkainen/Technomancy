@@ -76,14 +76,16 @@ public class TileBloodFabricator extends TileMachineBase implements IFluidHandle
 	}
 	
 	@Override
-	public void readCustomNBT(NBTTagCompound compound) {
-		tank = new FluidTank(10000);
-		tank.readFromNBT(compound);
+	public void writeSyncData(NBTTagCompound compound) {
+		super.writeSyncData(compound);
+		tank.writeToNBT(compound);
 	}
 	
 	@Override
-	public void writeCustomNBT(NBTTagCompound compound) {
-		tank.writeToNBT(compound);
+	public void readSyncData(NBTTagCompound compound) {
+		super.readSyncData(compound);
+		tank = new FluidTank(10000);
+		tank.readFromNBT(compound);
 	}
 	
 	@Override

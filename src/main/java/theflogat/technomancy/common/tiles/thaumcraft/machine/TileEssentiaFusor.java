@@ -258,7 +258,20 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
 	}
 
 	@Override
-	public void readCustomNBT(NBTTagCompound comp) {
+	public void writeSyncData(NBTTagCompound comp) {
+		super.writeSyncData(comp);
+		NBTTagList list = new NBTTagList();
+
+		for(SideInfo side : sides.values()) {
+			NBTTagCompound sideVal = side.save();
+			list.appendTag(sideVal);
+		}
+		comp.setTag("SideInfo", list);
+	}
+	
+	@Override
+	public void readSyncData(NBTTagCompound comp) {
+		super.readSyncData(comp);
 		NBTTagList list = comp.getTagList("SideInfo", 10);
 
 		for(int i = 0; i < list.tagCount(); i++) {
@@ -268,20 +281,6 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
 		if(worldObj != null) {
 			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		}
-
-		super.readCustomNBT(comp);
-	}
-
-	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {
-		NBTTagList list = new NBTTagList();
-
-		for(SideInfo side : sides.values()) {
-			NBTTagCompound sideVal = side.save();
-			list.appendTag(sideVal);
-		}
-		comp.setTag("SideInfo", list);
-		super.writeCustomNBT(comp);
 	}
 
 	@Override

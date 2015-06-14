@@ -32,16 +32,16 @@ public abstract class TileTechnomancyRedstone extends TileTechnomancy implements
 	public boolean canBeModified() {
 		return true;
 	}
-
+	
 	@Override
-	public void readCustomNBT(NBTTagCompound comp) {
-		set = RedstoneSet.load(comp);
-		modified = comp.getBoolean("modified");
-	}
-
-	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {
+	public void writeSyncData(NBTTagCompound comp) {
 		set.save(comp);
 		comp.setBoolean("modified", modified);
+	}
+	
+	@Override
+	public void readSyncData(NBTTagCompound comp) {
+		set = RedstoneSet.load(comp);
+		modified = comp.getBoolean("modified");
 	}
 }

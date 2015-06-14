@@ -151,9 +151,6 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
 				inv[slot] = ItemStack.loadItemStackFromNBT(item);
 			}
 		}
-		
-		progress = compound.getInteger("Time");
-		isActive = compound.getBoolean("Active");
 	}	
 
 	@Override
@@ -173,8 +170,16 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
 		}
 		
 		compound.setTag("ItemsTile", list);
+	}
+	
+	public void writeSyncData(NBTTagCompound compound) {
 		compound.setInteger("Time", progress);
 		compound.setBoolean("Active", isActive);
+	}
+	
+	public void readSyncData(NBTTagCompound compound) {
+		progress = compound.getInteger("Time");
+		isActive = compound.getBoolean("Active");
 	}
 	
 	@Override
@@ -211,8 +216,7 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
 
 	@Override
 	public void setInventorySlotContents(int i, ItemStack stack) {
-		if(!worldObj.isRemote)
-			inv[i] = stack;
+		inv[i] = stack;
 	}
 
 	@Override

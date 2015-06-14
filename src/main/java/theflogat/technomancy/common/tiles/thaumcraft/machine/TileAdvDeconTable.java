@@ -55,6 +55,12 @@ public class TileAdvDeconTable extends TileTechnomancy implements IInventory, IU
 		comp.setTag("Items", list);
 		comp.setInteger("breakspeed", breakSpeed);
 	}
+	
+	@Override
+	public void writeSyncData(NBTTagCompound compound) {}
+	
+	@Override
+	public void readSyncData(NBTTagCompound compound) {}
 
 	@Override
 	public int getSizeInventory() {

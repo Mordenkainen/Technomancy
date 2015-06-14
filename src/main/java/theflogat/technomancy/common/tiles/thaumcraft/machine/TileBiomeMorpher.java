@@ -1,6 +1,5 @@
 package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.Aspect;
@@ -170,16 +169,6 @@ public class TileBiomeMorpher extends TileMachineRedstone implements INode {
 	@Override
 	public NodeModifier getNodeModifier() {
 		return null;
-	}
-	
-	@Override
-	public void readCustomNBT(NBTTagCompound comp) {
-		super.readCustomNBT(comp);
-	}
-	
-	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {
-		super.writeCustomNBT(comp);
 	}
 	
 	@Override

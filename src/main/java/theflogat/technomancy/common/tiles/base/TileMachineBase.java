@@ -15,15 +15,19 @@ public abstract class TileMachineBase extends TileTechnomancy implements IEnergy
 	}
 	
 	@Override
-	public void readFromNBT(NBTTagCompound compound) {
-		super.readFromNBT(compound);
-		energy = compound.getInteger("energy");
-	}
-
+	public void readCustomNBT(NBTTagCompound comp) {}
+	
 	@Override
-	public void writeToNBT(NBTTagCompound compound) {
-		super.writeToNBT(compound);		
+	public void writeCustomNBT(NBTTagCompound comp) {};
+	
+	@Override
+	public void writeSyncData(NBTTagCompound compound) {
 		compound.setInteger("energy", energy);
+	}
+	
+	@Override
+	public void readSyncData(NBTTagCompound compound) {
+		energy = compound.getInteger("energy");
 	}
 
 	@Override

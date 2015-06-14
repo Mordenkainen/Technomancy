@@ -1,6 +1,7 @@
 package theflogat.technomancy.common.tiles.technom;
 
 import java.util.Iterator;
+
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -19,15 +20,15 @@ public class TileItemTransmitter extends TileCoilTransmitter implements IUpgrada
 	public ItemStack filter = null;
 
 	@Override
-	public void updateEntity() {
-		if(set==null)
-			set = RedstoneSet.LOW;
-		TileEntity te = WorldHelper.getAdjacentTileEntity(this, (byte) facing);
-		if(te==null || !(te instanceof IInventory)){
-			return;
-		}
-		
+	public void updateEntity() {		
 		if(!worldObj.isRemote) {
+			if(set==null)
+				set = RedstoneSet.LOW;
+			TileEntity te = WorldHelper.getAdjacentTileEntity(this, (byte) facing);
+			if(te==null || !(te instanceof IInventory)){
+				return;
+			}
+			
 			boolean flag = false;
 			if(!boost){ 
 				if(redstoneState) {
@@ -47,26 +48,26 @@ public class TileItemTransmitter extends TileCoilTransmitter implements IUpgrada
 				worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, blockType);
 				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 			}
-		}
 		
-		if (set.canRun(this) && !sources.isEmpty()) {
-			IInventory inv = (IInventory) te;
-			if(!InvHelper.isFull(inv)) {
-				Iterator<ChunkCoordinates> sourceIter = sources.iterator();
-				while (sourceIter.hasNext()) {
-					ChunkCoordinates coords = sourceIter.next();
-					TileEntity tile = worldObj.getTileEntity(coords.posX, coords.posY, coords.posZ);
-					if(tile != null && tile instanceof IInventory) {
-						IInventory rem = (IInventory)tile;
-						for(int i=0; i < rem.getSizeInventory() && !InvHelper.isFull(inv); i++){
-							ItemStack toMove = rem.getStackInSlot(i);
-							if(toMove != null && (filter == null || areItemStacksEqual(toMove, filter))){
-								if(InvHelper.insertInEmptySlot(inv, toMove, ForgeDirection.getOrientation(facing).getOpposite()))
-									rem.setInventorySlotContents(i, null);
+			if (set.canRun(this) && !sources.isEmpty()) {
+				IInventory inv = (IInventory) te;
+				if(!InvHelper.isFull(inv)) {
+					Iterator<ChunkCoordinates> sourceIter = sources.iterator();
+					while (sourceIter.hasNext()) {
+						ChunkCoordinates coords = sourceIter.next();
+						TileEntity tile = worldObj.getTileEntity(coords.posX, coords.posY, coords.posZ);
+						if(tile != null && tile instanceof IInventory) {
+							IInventory rem = (IInventory)tile;
+							for(int i=0; i < rem.getSizeInventory() && !InvHelper.isFull(inv); i++){
+								ItemStack toMove = rem.getStackInSlot(i);
+								if(toMove != null && (filter == null || areItemStacksEqual(toMove, filter))){
+									if(InvHelper.insertInEmptySlot(inv, toMove, ForgeDirection.getOrientation(facing).getOpposite()))
+										rem.setInventorySlotContents(i, null);
+								}
 							}
+						}else{
+							sourceIter.remove();
 						}
-					}else{
-						sourceIter.remove();
 					}
 				}
 			}
@@ -78,7 +79,18 @@ public class TileItemTransmitter extends TileCoilTransmitter implements IUpgrada
     }
 
 	@Override
-	public void readCustomNBT(NBTTagCompound comp) {
+	public void writeSyncData(NBTTagCompound comp) {
+		super.writeSyncData(comp);
+		if(filter!=null){
+			NBTTagCompound item = new NBTTagCompound();
+			filter.writeToNBT(item);
+			comp.setTag("filter", item);
+		}
+	}
+	
+	@Override
+	public void readSyncData(NBTTagCompound comp) {
+		super.readSyncData(comp);
 		if(comp.hasKey("filter")){
 			NBTTagCompound item = comp.getCompoundTag("filter");
 			filter = ItemStack.loadItemStackFromNBT(item);
@@ -86,17 +98,6 @@ public class TileItemTransmitter extends TileCoilTransmitter implements IUpgrada
 		} else {
 			filter = null;
 		}
-		super.readCustomNBT(comp);
-	}
-
-	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {
-		if(filter!=null){
-			NBTTagCompound item = new NBTTagCompound();
-			filter.writeToNBT(item);
-			comp.setTag("filter", item);
-		}
-		super.writeCustomNBT(comp);
 	}
 
 	@Override

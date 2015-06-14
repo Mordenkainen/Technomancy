@@ -47,26 +47,26 @@ public class TileCondenser extends TileMachineRedstone implements IEssentiaTrans
 			}
 		}
 	}
-
+	
 	@Override
-	public void readCustomNBT(NBTTagCompound comp)  {
-		super.readCustomNBT(comp);
-		amount = comp.getShort("Amount");
-		sides.clear();
-		for(ForgeDirection dir:ForgeDirection.VALID_DIRECTIONS){
-			NBTTagCompound side = comp.getCompoundTag(dir.name());
-			sides.put(dir, side.getBoolean("s"));
-		}
-	}
-
-	@Override
-	public void writeCustomNBT(NBTTagCompound comp)  {
-		super.writeCustomNBT(comp);
-		comp.setShort("Amount", (short)amount);
+	public void writeSyncData(NBTTagCompound compound) {
+		super.writeSyncData(compound);
+		compound.setShort("Amount", (short)amount);
 		for(ForgeDirection dir:ForgeDirection.VALID_DIRECTIONS){
 			NBTTagCompound side = new NBTTagCompound();
 			side.setBoolean("s", sides.get(dir).booleanValue());
-			comp.setTag(dir.name(), side);
+			compound.setTag(dir.name(), side);
+		}
+	}
+	
+	@Override
+	public void readSyncData(NBTTagCompound compound) {
+		super.readSyncData(compound);
+		amount = compound.getShort("Amount");
+		sides.clear();
+		for(ForgeDirection dir:ForgeDirection.VALID_DIRECTIONS){
+			NBTTagCompound side = compound.getCompoundTag(dir.name());
+			sides.put(dir, side.getBoolean("s"));
 		}
 	}
 

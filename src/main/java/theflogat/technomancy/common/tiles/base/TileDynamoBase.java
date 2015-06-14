@@ -1,9 +1,6 @@
 package theflogat.technomancy.common.tiles.base;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -82,17 +79,23 @@ public abstract class TileDynamoBase extends TileTechnomancyRedstone implements 
 	}
 
 	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {
-		super.writeCustomNBT(comp);
+	public void writeCustomNBT(NBTTagCompound comp) {}
+
+	@Override
+	public void readCustomNBT(NBTTagCompound comp) {}
+	
+	@Override
+	public void writeSyncData(NBTTagCompound comp) {
+		super.writeSyncData(comp);
 		comp.setInteger("energy", ener);
 		comp.setByte("face", facing);
 		comp.setInteger("fuel", fuel);
 		comp.setBoolean("Boost", boost);
 	}
-
+	
 	@Override
-	public void readCustomNBT(NBTTagCompound comp) {
-		super.readCustomNBT(comp);
+	public void readSyncData(NBTTagCompound comp) {
+		super.readSyncData(comp);
 		ener = comp.getInteger("energy");
 		facing = comp.getByte("face");
 		fuel = comp.getInteger("fuel");
@@ -111,22 +114,6 @@ public abstract class TileDynamoBase extends TileTechnomancyRedstone implements 
 	public void onNeighborTileChange(int tileX, int tileY, int tileZ)	  {
 		super.onNeighborTileChange(tileX, tileY, tileZ);
 //		updateAdjacentHandlers();
-	}
-
-	@Override
-	public Packet getDescriptionPacket() {
-		if(!worldObj.isRemote){
-			NBTTagCompound comp = new NBTTagCompound();writeToNBT(comp);
-			return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, comp);
-		}
-		return null;
-	}
-
-	@Override
-	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
-		if(pkt!=null && pkt.func_148857_g()!=null){
-			readFromNBT(pkt.func_148857_g());
-		}
 	}
 
 	@Override

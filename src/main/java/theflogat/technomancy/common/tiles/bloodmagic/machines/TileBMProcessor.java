@@ -24,16 +24,16 @@ public class TileBMProcessor extends TileProcessorBase {
 		}
 		return true;
 	}
-
+	
 	@Override
-	public void writeCustomNBT(NBTTagCompound compound) {
-		super.writeCustomNBT(compound);
+	public void writeSyncData(NBTTagCompound compound) {
+		super.writeSyncData(compound);
 		compound.setString("Owner", owner);
 	}
-
+	
 	@Override
-	public void readCustomNBT(NBTTagCompound compound) {
-		super.readCustomNBT(compound);
+	public void readSyncData(NBTTagCompound compound) {
+		super.readSyncData(compound);
 		owner = compound.getString("Owner");
 	}
 

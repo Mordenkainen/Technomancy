@@ -198,19 +198,19 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
 	}
 
 	@Override
-	public void readCustomNBT(NBTTagCompound comp) {
-		list.readFromNBT(comp);
-		cooldown = comp.getInteger("cooldown");
-		current = Range.readFromNbt(comp);
-		super.readCustomNBT(comp);
+	public void writeSyncData(NBTTagCompound compound) {
+		super.writeSyncData(compound);
+		list.writeToNBT(compound);
+		compound.setInteger("cooldown", cooldown);
+		current.writeToNbt(compound);
 	}
-
+	
 	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {
-		list.writeToNBT(comp);
-		comp.setInteger("cooldown", cooldown);
-		current.writeToNbt(comp);
-		super.writeCustomNBT(comp);
+	public void readSyncData(NBTTagCompound compound) {
+		super.readSyncData(compound);
+		list.readFromNBT(compound);
+		cooldown = compound.getInteger("cooldown");
+		current = Range.readFromNbt(compound);
 	}
 
 	@Override

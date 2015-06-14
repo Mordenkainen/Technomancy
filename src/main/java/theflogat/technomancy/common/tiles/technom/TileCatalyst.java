@@ -85,4 +85,10 @@ public class TileCatalyst extends TileTechnomancy {
 		if(userName!=null)
 			comp.setString("user", userName);
 	}
+	
+	@Override
+	public void writeSyncData(NBTTagCompound compound) {}
+	
+	@Override
+	public void readSyncData(NBTTagCompound compound) {}
 }

@@ -74,14 +74,14 @@ public class TileBloodDynamo extends TileDynamoBase implements IFluidHandler {
 	}
 	
 	@Override
-	public void readCustomNBT(NBTTagCompound comp) {
-		super.readCustomNBT(comp);
-		liquid = comp.getInteger("liquid");
+	public void writeSyncData(NBTTagCompound comp) {
+		super.writeSyncData(comp);
+		comp.setInteger("liquid", liquid);
 	}
 	
 	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {
-		super.writeCustomNBT(comp);
-		comp.setInteger("liquid", liquid);
+	public void readSyncData(NBTTagCompound comp) {
+		super.readSyncData(comp);
+		liquid = comp.getInteger("liquid");
 	}
 }
