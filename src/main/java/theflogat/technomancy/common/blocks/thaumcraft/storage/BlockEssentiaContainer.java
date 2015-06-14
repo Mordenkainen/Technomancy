@@ -113,7 +113,7 @@ public class BlockEssentiaContainer extends BlockContainerAdvanced {
 							if (!player.inventory.addItemStackToInventory(phial)) {		       
 								w.spawnEntityInWorld(new EntityItem(w, x + 0.5F, y + 0.5F, z + 0.5F, phial));
 							}
-							w.playSoundAtEntity(player, "liquid.swim", 0.25F, 1.0F);
+							w.playSoundAtEntity(player, "game.neutral.swim", 0.25F, 1.0F);
 							player.inventoryContainer.detectAndSendChanges();
 							return true;	
 						}
@@ -123,7 +123,7 @@ public class BlockEssentiaContainer extends BlockContainerAdvanced {
 					Aspect asp = Aspect.getAspect(container.aspect.getTag());
 					if (container.takeFromContainer(container.aspect, 8) == true) {
 						item.stackSize -= 1;
-						w.playSoundAtEntity(player, "liquid.swim", 0.25F, 1.0F);						
+						w.playSoundAtEntity(player, "game.neutral.swim", 0.25F, 1.0F);						
 						ItemStack phial = new ItemStack(Thaumcraft.itemEssence, 1, 1);
 						setAspects(phial, new AspectList().add(asp, 8));
 						if (!player.inventory.addItemStackToInventory(phial)) {
