@@ -55,7 +55,7 @@ public abstract class BlockContainerAdvanced extends BlockContainerRedstone{
 
 	@Override
 	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase player,	ItemStack items) {
-		if(items.hasTagCompound()) {
+		if(items != null && items.hasTagCompound()) {
 			items.stackTagCompound.setInteger("x", x);
 			items.stackTagCompound.setInteger("y", y);
 			items.stackTagCompound.setInteger("z", z);
