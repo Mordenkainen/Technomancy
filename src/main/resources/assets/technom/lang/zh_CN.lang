@@ -39,7 +39,7 @@ tile.techno:fluxLamp.name=秩序之灯
 tile.techno:teslaCoil.name=源质能量线圈
 tile.techno:electricBellows.name=镀锌奥术风箱
 tile.techno:creativeJar.name=创造之罐
-tile.techno:reconstructorBlock.name=质再现器
+tile.techno:reconstructorBlock.name=源质再现器
 tile.techno:crystalBlock.0.name=空间水晶
 tile.techno:crystalBlock.1.name=现实水晶
 tile.techno:crystalBlock.2.name=能量水晶
@@ -66,9 +66,9 @@ fluid.techno:manaFluid=浓缩魔力
 
 #Information
 info.techno:purity=纯度
-info.techno:shift=-Hold shift for info-
-info.techno:ctrl=-Hold control for inv-
-info.techno:a=-Hold a for aspects-
+info.techno:shift=-按住Shift获取更多信息-
+info.techno:ctrl=-按住Control获取更多信息-
+info.techno:a=-按住获取更多要素信息-
 info.techno:process=请放进熔炉里加工
 
 #Research Tab
