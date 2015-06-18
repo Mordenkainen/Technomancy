@@ -494,7 +494,7 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
 	}
 
 	private TileNodeGenerator getTE(IBlockAccess world, int x, int y, int z) {
-		TileEntity tile = worldObj.getTileEntity(x, y, z);
+		TileEntity tile = world.getTileEntity(x, y, z);
 		return tile instanceof TileNodeGenerator ? (TileNodeGenerator)tile : null;
 	}
 
