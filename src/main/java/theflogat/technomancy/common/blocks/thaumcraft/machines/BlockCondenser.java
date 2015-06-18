@@ -2,23 +2,30 @@ package theflogat.technomancy.common.blocks.thaumcraft.machines;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.aspects.AspectList;
 import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileCondenser;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.compat.Thaumcraft;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockCondenser extends BlockContainerAdvanced {
 
+	static AspectList phialAspect = new AspectList().add(Aspect.ENERGY, 8);
+	
 	@SideOnly(Side.CLIENT)
 	IIcon[] icons;
 	
@@ -29,8 +36,26 @@ public class BlockCondenser extends BlockContainerAdvanced {
 	@Override
 	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		boolean flag = super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ);
-		if(w.getTileEntity(x, y, z) instanceof TileCondenser && player.isSneaking()){
-			return ((TileCondenser) w.getTileEntity(x, y, z)).toggleDir(side);
+		ItemStack item = player.getHeldItem();
+		TileCondenser condenser = getTE(w, x, y, z);
+		if(condenser != null && player.isSneaking()){
+			return condenser.toggleDir(side);
+		}
+		if (item != null && item.getItem() == Thaumcraft.itemEssence && item.getItemDamage() == 0 && condenser.amount >= 8) {
+			if (condenser.takeFromContainer(Aspect.ENERGY, 8) == true) {
+				item.stackSize -= 1;
+				w.playSoundAtEntity(player, "game.neutral.swim", 0.25F, 1.0F);						
+				ItemStack phial = new ItemStack(Thaumcraft.itemEssence, 1, 1);
+				if (!phial.hasTagCompound()) {
+					phial.setTagCompound(new NBTTagCompound());
+				}
+				phialAspect.writeToNBT(phial.getTagCompound());
+				if (!player.inventory.addItemStackToInventory(phial)) {
+					w.spawnEntityInWorld(new EntityItem(w,  x + 0.5F, y + 0.5F, z + 0.5F, phial));
+				}	
+				player.inventoryContainer.detectAndSendChanges();
+				return true;
+			}					
 		}
 		return flag;
 	}
@@ -99,5 +124,10 @@ public class BlockCondenser extends BlockContainerAdvanced {
 			return 5;
 		}
 		return 0;
+	}
+	
+	private TileCondenser getTE(IBlockAccess world, int x, int y, int z) {
+		TileEntity tile = world.getTileEntity(x, y, z);
+		return tile instanceof TileCondenser ? (TileCondenser)tile : null;
 	}
 }
