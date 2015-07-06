@@ -13,11 +13,13 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.crafting.CrucibleRecipe;
 import thaumcraft.api.crafting.IArcaneRecipe;
 import thaumcraft.api.crafting.InfusionRecipe;
+import thaumcraft.api.crafting.ShapedArcaneRecipe;
 import thaumcraft.api.research.ResearchCategories;
 import thaumcraft.api.research.ResearchItem;
 import thaumcraft.api.research.ResearchPage;
 import thaumcraft.api.wands.WandCap;
 import thaumcraft.api.wands.WandRod;
+import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.items.wands.ItemWandCasting;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.items.base.TMItems;
@@ -117,21 +119,55 @@ public class TechnoResearch {
 		}
 		
 		if(Ids.itemMaterial && Ids.wandCores){
-			new ResearchItem("ENERGIZEDWAND", "TECHNOMANCY", new AspectList().add(Aspect.TOOL, 5).add(Aspect.MAGIC, 5).add(Aspect.ENERGY, 5)
+			new ResearchItem("ROD_electric", "TECHNOMANCY", new AspectList().add(Aspect.TOOL, 5).add(Aspect.MAGIC, 5).add(Aspect.ENERGY, 5)
 				.add(Aspect.EXCHANGE, 5), -1, 2, 3, new ItemStack(TMItems.itemWandCores, 1, 0)).setPages(new ResearchPage[] {
 				new ResearchPage("techno.research_page.ELECTRICWAND.1"), new ResearchPage((InfusionRecipe)recipes.get("EnergizedWandRod"))})
 				.setParents(new String[] { "TECHNOBASICS" }).setHidden().setItemTriggers(new ItemStack(Thaumcraft.itemWandRod, 1, 2))
 				.registerResearchItem();
 			if(Ids.scepter) {
-				ItemStack scepter = new ItemStack(TMItems.itemTechnoturgeScepter, 1, 73);
-				scepter.setTagInfo("sceptre", new NBTTagByte((byte)1));
-				((ItemWandCasting)scepter.getItem()).setCap(scepter, WandCap.caps.get("thaumium"));
-				((ItemWandCasting)scepter.getItem()).setRod(scepter, WandRod.rods.get("technoturge"));
+				ArrayList<IArcaneRecipe> scer = new ArrayList<IArcaneRecipe>();
+			    AspectList al1 = new AspectList();
+			    AspectList al2 = new AspectList();
+			    AspectList al3 = new AspectList();
+			    
+			    int cost = (int)(WandCap.caps.get("iron").getCraftCost() * WandRod.rods.get("technoturge").getCraftCost() * 1.5F);
+			    for (Aspect as : Aspect.getPrimalAspects()) {
+			      al1.add(as, cost);
+			    }
+			    ItemStack scepter1 = new ItemStack(TMItems.itemTechnoturgeScepter, 1, cost);
+			    scepter1.setTagInfo("sceptre", new NBTTagByte((byte)1));
+				((ItemWandCasting)scepter1.getItem()).setCap(scepter1, WandCap.caps.get("iron"));
+				((ItemWandCasting)scepter1.getItem()).setRod(scepter1, WandRod.rods.get("technoturge"));
+				ShapedArcaneRecipe r1 = new ShapedArcaneRecipe("TECHNOTURGESCEPTER", scepter1, al1, new Object[] { " TF", " RT", "T  ", Character.valueOf('T'), WandCap.caps.get("iron").getItem(), Character.valueOf('R'), WandRod.rods.get("technoturge").getItem(), Character.valueOf('F'), new ItemStack(ConfigItems.itemResource, 1, 15) });
+				scer.add(r1);
+				
+				cost = (int)(WandCap.caps.get("gold").getCraftCost() * WandRod.rods.get("technoturge").getCraftCost() * 1.5F);
+			    for (Aspect as : Aspect.getPrimalAspects()) {
+			      al2.add(as, cost);
+			    }
+			    ItemStack scepter2 = new ItemStack(TMItems.itemTechnoturgeScepter, 1, cost);
+			    scepter2.setTagInfo("sceptre", new NBTTagByte((byte)1));
+				((ItemWandCasting)scepter2.getItem()).setCap(scepter2, WandCap.caps.get("gold"));
+				((ItemWandCasting)scepter2.getItem()).setRod(scepter2, WandRod.rods.get("technoturge"));
+				ShapedArcaneRecipe r2 = new ShapedArcaneRecipe("TECHNOTURGESCEPTER", scepter2, al2, new Object[] { " TF", " RT", "T  ", Character.valueOf('T'), WandCap.caps.get("gold").getItem(), Character.valueOf('R'), WandRod.rods.get("technoturge").getItem(), Character.valueOf('F'), new ItemStack(ConfigItems.itemResource, 1, 15) });
+				scer.add(r2);
+				
+				cost = (int)(WandCap.caps.get("thaumium").getCraftCost() * WandRod.rods.get("technoturge").getCraftCost() * 1.5F);
+			    for (Aspect as : Aspect.getPrimalAspects()) {
+			      al3.add(as, cost);
+			    }
+			    ItemStack scepter3 = new ItemStack(TMItems.itemTechnoturgeScepter, 1, cost);
+			    scepter3.setTagInfo("sceptre", new NBTTagByte((byte)1));
+				((ItemWandCasting)scepter3.getItem()).setCap(scepter3, WandCap.caps.get("thaumium"));
+				((ItemWandCasting)scepter3.getItem()).setRod(scepter3, WandRod.rods.get("technoturge"));
+				ShapedArcaneRecipe r3 = new ShapedArcaneRecipe("TECHNOTURGESCEPTER", scepter3, al3, new Object[] { " TF", " RT", "T  ", Character.valueOf('T'), WandCap.caps.get("thaumium").getItem(), Character.valueOf('R'), WandRod.rods.get("technoturge").getItem(), Character.valueOf('F'), new ItemStack(ConfigItems.itemResource, 1, 15) });
+				scer.add(r3);
+				
 				new ResearchItem("TECHNOTURGESCEPTER", "TECHNOMANCY", new AspectList().add(Aspect.TOOL, 5).add(Aspect.MAGIC, 5).add(Aspect.ENERGY, 5)
-					.add(Aspect.EXCHANGE, 5), -1, 3, 3, scepter).setPages(new ResearchPage[] {
+					.add(Aspect.EXCHANGE, 5), -1, 3, 3, scepter3).setPages(new ResearchPage[] {
 					new ResearchPage("techno.research_page.TECHNOTURGESCEPTER.1"), new ResearchPage((InfusionRecipe)recipes.get("TechnoturgeScepterRod")),
-					new ResearchPage((IArcaneRecipe)recipes.get("TechnoturgeScepterRodT")), new ResearchPage((IArcaneRecipe)recipes.get("TechnoturgeScepterRodV"))})
-					.setParents(new String[] { "ENERGIZEDWAND" }).setConcealed().registerResearchItem();
+					new ResearchPage((IArcaneRecipe[])scer.toArray(new IArcaneRecipe[0]))})
+					.setParents(new String[] { "ROD_electric" }).setConcealed().registerResearchItem();
 			}
 		}
 		

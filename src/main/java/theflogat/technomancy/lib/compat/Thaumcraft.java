@@ -5,7 +5,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagByte;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
@@ -18,9 +17,7 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
-import thaumcraft.api.wands.WandCap;
 import thaumcraft.api.wands.WandRod;
-import thaumcraft.common.items.wands.ItemWandCasting;
 import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.common.blocks.air.BlockFakeAirNG;
 import theflogat.technomancy.common.blocks.base.BlockCosmeticOpaque;
@@ -67,6 +64,7 @@ import theflogat.technomancy.lib.Conf;
 import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.compat.thaumcraft.ScepterRecipe;
 import theflogat.technomancy.lib.compat.thaumcraft.TechnoResearch;
 import theflogat.technomancy.lib.handlers.CompatibilityHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -205,9 +203,9 @@ public class Thaumcraft extends ModuleBase {
 
 		registerItem(TMItems.itemWandCores, Names.wandCores);
 		if(Ids.wandCores) {
-			WAND_ROD_ELECTRIC = new WandRod("electric", 25, new ItemStack(TMItems.itemWandCores, 1, 0), 9, new ElectricWandUpdate(),
+			WAND_ROD_ELECTRIC = new WandRod("electric", 25, new ItemStack(TMItems.itemWandCores, 1, 0), 10, new ElectricWandUpdate(),
 					new ResourceLocation("technom", "textures/models/electricWand.png"));
-			WAND_ROD_TECHNOTURGE = new WandRod("technoturge", 100, new ItemStack(TMItems.itemWandCores, 1, 1), 9, new ResourceLocation("technom",
+			WAND_ROD_TECHNOTURGE = new WandRod("technoturge", 100, new ItemStack(TMItems.itemWandCores, 1, 1), 11, new ResourceLocation("technom",
 					"textures/models/electricWand.png"));
 		}
 	}
@@ -271,6 +269,7 @@ public class Thaumcraft extends ModuleBase {
 		registerTileEntity(TMBlocks.essentiaFusor, TileEssentiaFusor.class, Ref.MOD_PREFIX + "TileEssentiaFusor");
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void RegisterRecipes() {
 		//Crucible Recipes
@@ -307,43 +306,9 @@ public class Thaumcraft extends ModuleBase {
 					new ItemStack(Items.bucket), new ItemStack(Items.bucket), new ItemStack(Items.emerald), new ItemStack(Items.emerald)}));
 		}
 		if(Ids.wandCores) {
-			ItemStack electric = new ItemStack(Thaumcraft.itemWandCasting, 1, 72);
-			((ItemWandCasting)electric.getItem()).setCap(electric, WandCap.caps.get("thaumium"));
-			((ItemWandCasting)electric.getItem()).setRod(electric, WandRod.rods.get("electric"));
-			ThaumcraftApi.addArcaneCraftingRecipe("ENERGIZEDWAND", electric, new AspectList().add(Aspect.AIR, 60).add(Aspect.ORDER, 60)
-					.add(Aspect.EARTH, 60).add(Aspect.FIRE, 60).add(Aspect.WATER, 60).add(Aspect.ENTROPY, 60), 
-					new Object[]{"  C", " R ", "C  ", Character.valueOf('C'), WandCap.caps.get("thaumium").getItem(), 
-					Character.valueOf('R'), WandRod.rods.get("electric").getItem()});
-
-			electric = new ItemStack(Thaumcraft.itemWandCasting, 1, 72);
-			((ItemWandCasting)electric.getItem()).setCap(electric, WandCap.caps.get("void"));
-			((ItemWandCasting)electric.getItem()).setRod(electric, WandRod.rods.get("electric"));
-			ThaumcraftApi.addArcaneCraftingRecipe("ENERGIZEDWAND", electric, new AspectList().add(Aspect.AIR, 87).add(Aspect.ORDER, 87)
-					.add(Aspect.EARTH, 87).add(Aspect.FIRE, 87).add(Aspect.WATER, 87).add(Aspect.ENTROPY, 87), 
-					new Object[]{"  C", " R ", "C  ", 
-					Character.valueOf('C'), WandCap.caps.get("void").getItem(), 
-					Character.valueOf('R'), WandRod.rods.get("electric").getItem()});
 			if(Ids.scepter){
-				ItemStack scepter = new ItemStack(TMItems.itemTechnoturgeScepter, 1, 73);
-				scepter.setTagInfo("sceptre", new NBTTagByte((byte)1));
-				((ItemWandCasting)scepter.getItem()).setCap(scepter, WandCap.caps.get("thaumium"));
-				((ItemWandCasting)scepter.getItem()).setRod(scepter, WandRod.rods.get("technoturge"));
-				TechnoResearch.recipes.put("TechnoturgeScepterRodT",ThaumcraftApi.addArcaneCraftingRecipe("TECHNOTURGESCEPTER", scepter, new AspectList()
-						.add(Aspect.AIR, 100).add(Aspect.ORDER, 100).add(Aspect.EARTH, 100).add(Aspect.FIRE, 100).add(Aspect.WATER, 100)
-						.add(Aspect.ENTROPY, 100), new Object[]{" CP", " RC", "C  ", Character.valueOf('C'), WandCap.caps.get("thaumium").getItem(), 
-						Character.valueOf('P'), new ItemStack(Thaumcraft.itemResource, 1, 15), Character.valueOf('R'), WandRod.rods.get("technoturge").getItem()}));
-
-				scepter = new ItemStack(TMItems.itemTechnoturgeScepter, 1, 73);
-				scepter.setTagInfo("sceptre", new NBTTagByte((byte)1));
-				((ItemWandCasting)scepter.getItem()).setCap(scepter, WandCap.caps.get("void"));
-				((ItemWandCasting)scepter.getItem()).setRod(scepter, WandRod.rods.get("technoturge"));
-				//Wands
-				TechnoResearch.recipes.put("TechnoturgeScepterRodV",ThaumcraftApi.addArcaneCraftingRecipe("TECHNOTURGESCEPTER", scepter, new AspectList()
-						.add(Aspect.AIR, 150).add(Aspect.ORDER, 150).add(Aspect.EARTH, 150).add(Aspect.FIRE, 150).add(Aspect.WATER, 150).add(Aspect.ENTROPY, 150), 
-						new Object[]{" CP", " RC", "C  ", 
-						Character.valueOf('C'), WandCap.caps.get("void").getItem(), 
-						Character.valueOf('P'), new ItemStack(Thaumcraft.itemResource, 1, 15), 
-						Character.valueOf('R'), WandRod.rods.get("technoturge").getItem()}));
+				ScepterRecipe scepter = new ScepterRecipe();
+				ThaumcraftApi.getCraftingRecipes().add(scepter);
 				ItemStack scepter2 = new ItemStack(TMItems.itemWandCores, 1, 1);
 				TechnoResearch.recipes.put("TechnoturgeScepterRod", ThaumcraftApi.addInfusionCraftingRecipe("TECHNOTURGESCEPTER", scepter2, 20, new AspectList()
 						.add(Aspect.ENERGY, 64).add(Aspect.MAGIC, 64).add(Aspect.MECHANISM, 64).add(Aspect.EXCHANGE, 64).add(Aspect.FIRE, 32).add(Aspect.EARTH, 32)
