@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChunkCoordinates;
 
-public abstract class TileCoilTransmitter extends TileTechnomancyRedstone implements ICouplable, IWrenchable, IUpgradable{
+public abstract class TileCoilTransmitter extends TileTechnomancyRedstone implements ICouplable, IWrenchable, IUpgradable {
 
 	public boolean redstoneState = false;
 	
@@ -98,8 +98,8 @@ public abstract class TileCoilTransmitter extends TileTechnomancyRedstone implem
 	private void fixRedstone() {
 		if(boost) {
 			if(modified) {
-				Item it = BlockContainerRedstone.settingToItem.get(set);
 				if(!worldObj.isRemote) {
+					Item it = BlockContainerRedstone.settingToItem.get(set);
 					WorldHelper.spawnEntItem(worldObj, xCoord, yCoord, zCoord, new ItemStack(it, 1));
 				}
 				modified = false;
@@ -108,7 +108,6 @@ public abstract class TileCoilTransmitter extends TileTechnomancyRedstone implem
 		} else {
 			set = RedstoneSet.LOW;
 		}
-		
 	}
 
 	@Override

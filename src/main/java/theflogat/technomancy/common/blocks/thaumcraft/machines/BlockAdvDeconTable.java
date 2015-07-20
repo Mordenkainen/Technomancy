@@ -19,7 +19,7 @@ import theflogat.technomancy.util.helpers.WorldHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockAdvDeconTable extends BlockContainerAdvanced{
+public class BlockAdvDeconTable extends BlockContainerAdvanced {
 	
 	public BlockAdvDeconTable() {
 		setBlockName(Ref.getId(Names.advDeconTable));
@@ -29,21 +29,21 @@ public class BlockAdvDeconTable extends BlockContainerAdvanced{
 	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase ent,	ItemStack items) {
 		super.onBlockPlacedBy(w, x, y, z, ent, items);
 		TileAdvDeconTable te = getTE(w, x, y, z);
-		if(te!=null && ent instanceof EntityPlayer)
+		if(te != null && ent instanceof EntityPlayer)
 			te.owner = ((EntityPlayer)ent).getDisplayName();
 	}
 	
 	@Override
 	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		TileAdvDeconTable te = getTE(w, x, y, z);
-		if(te!=null && !player.isSneaking()){
-			if(te.getStackInSlot(0)==null){
-				if(player.getHeldItem()!=null){
+		if(te != null && !player.isSneaking()) {
+			if(te.getStackInSlot(0) == null) {
+				if(player.getHeldItem() != null) {
 					te.setInventorySlotContents(0, player.getHeldItem());
 					player.inventory.mainInventory[player.inventory.currentItem] = null;
 					return true;
 				}
-			}else{
+			} else {
 				if(!w.isRemote) {
 					WorldHelper.spawnEntItem(w, player.posX, player.posY, player.posZ, te.getStackInSlot(0));
 				}

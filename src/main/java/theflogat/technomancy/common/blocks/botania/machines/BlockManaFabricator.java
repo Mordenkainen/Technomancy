@@ -21,7 +21,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockManaFabricator extends BlockContainerAdvanced implements IWandHUD {
 
 	public BlockManaFabricator() {
-		setBlockName(Ref.MOD_PREFIX + Names.manaFabricator);
+		setBlockName(Ref.getId(Names.manaFabricator));
 	}
 
 	@Override
@@ -50,15 +50,14 @@ public class BlockManaFabricator extends BlockContainerAdvanced implements IWand
 		if(tile instanceof TileManaFabricator) {
 			switch(((TileManaFabricator)tile).facing) {
 			case 0:
-				setBlockBounds(0.1875F, 0.0F, 0.1875F, 0.8125F, 1.0F, 0.8125F);break;
 			case 1:
-				setBlockBounds(0.1875F, 0.0F, 0.1875F, 0.8125F, 1.0F, 0.8125F);break;
+				setBlockBounds(0.1875F, 0.0F, 0.1875F, 0.8125F, 1.0F, 0.8125F);
+				break;
 			case 2:
-				setBlockBounds(0.1875F, 0.1875F, 0.0F, 0.8125F, 0.8125F, 1.0F);break;
 			case 3:
-				setBlockBounds(0.1875F, 0.1875F, 0.0F, 0.8125F, 0.8125F, 1.0F);break;
+				setBlockBounds(0.1875F, 0.1875F, 0.0F, 0.8125F, 0.8125F, 1.0F);
+				break;
 			case 4:
-				setBlockBounds(0.0F, 0.1875F, 0.1875F, 1.0F, 0.8125F, 0.8125F);break;
 			case 5:
 				setBlockBounds(0.0F, 0.1875F, 0.1875F, 1.0F, 0.8125F, 0.8125F);
 			}

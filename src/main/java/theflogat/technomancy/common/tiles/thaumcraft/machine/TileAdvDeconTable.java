@@ -12,7 +12,7 @@ import theflogat.technomancy.common.tiles.base.IUpgradable;
 import theflogat.technomancy.common.tiles.base.TileTechnomancy;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 
-public class TileAdvDeconTable extends TileTechnomancy implements IInventory, IUpgradable{
+public class TileAdvDeconTable extends TileTechnomancy implements IInventory, IUpgradable {
 
 	public int breakSpeed = 80;
 	public Aspect aspect;
@@ -21,31 +21,22 @@ public class TileAdvDeconTable extends TileTechnomancy implements IInventory, IU
 	public String owner = "";
 
 	@Override
-	public void readCustomNBT(NBTTagCompound comp) {
-		owner = comp.getString("owner");
-		aspect = Aspect.getAspect(comp.getString("Aspect"));
-		NBTTagList list = comp.getTagList("Items", 10);
-		items = new ItemStack[getSizeInventory()];
-		for (int i = 0; i < list.tagCount(); i++){
-			NBTTagCompound stack = list.getCompoundTagAt(i);
-			byte slot = stack.getByte("Slot");
-			if ((slot >= 0) && (slot < this.items.length)) {
-				items[slot] = ItemStack.loadItemStackFromNBT(stack);
-			}
-		}
-		breakSpeed = comp.getInteger("breakspeed");
-	}
+	public void readCustomNBT(NBTTagCompound comp) {}
 
 	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {
-		if(!owner.equals(""))
+	public void writeCustomNBT(NBTTagCompound comp) {}
+	
+	@Override
+	public void writeSyncData(NBTTagCompound comp) {
+		if(!owner.equals("")) {
 			comp.setString("owner", owner);
+		}
 		if (aspect != null) {
 			comp.setString("Aspect", aspect.getTag());
 		}
 		NBTTagList list = new NBTTagList();
-		for (int i = 0; i < items.length; i++) {
-			if (items[i] != null){
+		for(int i = 0; i < items.length; i++) {
+			if(items[i] != null) {
 				NBTTagCompound stack = new NBTTagCompound();
 				stack.setByte("Slot", (byte)i);
 				items[i].writeToNBT(stack);
@@ -57,10 +48,20 @@ public class TileAdvDeconTable extends TileTechnomancy implements IInventory, IU
 	}
 	
 	@Override
-	public void writeSyncData(NBTTagCompound compound) {}
-	
-	@Override
-	public void readSyncData(NBTTagCompound compound) {}
+	public void readSyncData(NBTTagCompound comp) {
+		owner = comp.getString("owner");
+		aspect = Aspect.getAspect(comp.getString("Aspect"));
+		NBTTagList list = comp.getTagList("Items", 10);
+		items = new ItemStack[getSizeInventory()];
+		for(int i = 0; i < list.tagCount(); i++) {
+			NBTTagCompound stack = list.getCompoundTagAt(i);
+			byte slot = stack.getByte("Slot");
+			if((slot >= 0) && (slot < this.items.length)) {
+				items[slot] = ItemStack.loadItemStackFromNBT(stack);
+			}
+		}
+		breakSpeed = comp.getInteger("breakspeed");
+	}
 
 	@Override
 	public int getSizeInventory() {
@@ -74,16 +75,14 @@ public class TileAdvDeconTable extends TileTechnomancy implements IInventory, IU
 
 	@Override
 	public ItemStack decrStackSize(int i, int j) {
-		if (this.items[i] != null)
-		{
-			if (this.items[i].stackSize <= j)
-			{
+		if(this.items[i] != null) {
+			if(this.items[i].stackSize <= j) {
 				ItemStack itemstack = this.items[i];
 				this.items[i] = null;
 				return itemstack;
 			}
 			ItemStack itemstack = this.items[i].splitStack(j);
-			if (this.items[i].stackSize == 0) {
+			if(this.items[i].stackSize == 0) {
 				this.items[i] = null;
 			}
 			return itemstack;
@@ -121,7 +120,7 @@ public class TileAdvDeconTable extends TileTechnomancy implements IInventory, IU
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
-		return player.getDistanceSq(xCoord, yCoord, zCoord)<=64;
+		return player.getDistanceSq(xCoord, yCoord, zCoord) <= 64;
 	}
 
 	@Override
@@ -148,39 +147,38 @@ public class TileAdvDeconTable extends TileTechnomancy implements IInventory, IU
 	@Override
 	public void updateEntity() {
 		boolean update = false;
-		if (!worldObj.isRemote){
-			if (breaktime == 0 && canBreak()){
+		if(!worldObj.isRemote) {
+			if(breaktime == 0 && canBreak()) {
 				breaktime = breakSpeed;
 				update = true;
 			}
-			if (breaktime > 0 && canBreak()){
-				breaktime -= 1;
-				if (breaktime == 0){
-					breaktime = 0;
+			if(breaktime > 0 && canBreak()) {
+				breaktime--;
+				if(breaktime == 0) {
 					breakItem();
 					update = true;
 				}
-			}else{
+			} else {
 				breaktime = 0;
 			}
 		}
 
-		if(worldObj.getWorldTime() % 20 == 0 && aspect!=null){
+		if(worldObj.getWorldTime() % 20 == 0 && aspect != null) {
 			short curr = Thaumcraft.getAspectPoolFor(owner, aspect);
-			if(curr<Short.MAX_VALUE){
+			if(curr < Short.MAX_VALUE) {
 				curr++;
 				Thaumcraft.addAspectsToPool(owner, aspect, curr);
 				aspect = null;
 			}
 		}
 
-		if (update){
+		if(update) {
 			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		}
 	}
 
-	private boolean canBreak(){
-		if (items[0] == null || aspect != null) {
+	private boolean canBreak() {
+		if(items[0] == null || aspect != null) {
 			return false;
 		}
 		AspectList al = ThaumcraftCraftingManager.getObjectTags(items[0]);
@@ -191,34 +189,36 @@ public class TileAdvDeconTable extends TileTechnomancy implements IInventory, IU
 		return true;
 	}
 
-	private void breakItem(){
-		if (canBreak()){
+	private void breakItem() {
+		if (canBreak()) {
 			AspectList al = ThaumcraftCraftingManager.getObjectTags(this.items[0]);
 			al = ThaumcraftCraftingManager.getBonusTags(items[0], al);
 
 			AspectList primals = reduceToPrimals(al);
 
-			if (worldObj.rand.nextInt(80) < primals.visSize() && worldObj.rand.nextInt(8) == 0)
+			if (worldObj.rand.nextInt(80) < primals.visSize() && worldObj.rand.nextInt(8) == 0) {
 				aspect = primals.getAspects()[worldObj.rand.nextInt(primals.getAspects().length)];
+			}
 
 			items[0].stackSize -= 1;
-			if (items[0].stackSize <= 0)
+			if (items[0].stackSize <= 0) {
 				items[0] = null;
+			}
 		}
 	}
 
 	public static AspectList reduceToPrimals(AspectList al) {
 		AspectList out = new AspectList();
-		for (Aspect aspect : al.getAspects()) {
-			if (aspect != null) {
-				if (aspect.isPrimal()) {
+		for(Aspect aspect : al.getAspects()) {
+			if(aspect != null) {
+				if(aspect.isPrimal()) {
 					out.add(aspect, al.getAmount(aspect));
 				} else {
 					AspectList send = new AspectList();
 					send.add(aspect.getComponents()[0], al.getAmount(aspect));
 					send.add(aspect.getComponents()[1], al.getAmount(aspect));
 					send = reduceToPrimals(send);
-					for (Aspect a : send.getAspects()) {
+					for(Aspect a : send.getAspects()) {
 						out.add(a, send.getAmount(a));
 					}
 				}
@@ -229,9 +229,9 @@ public class TileAdvDeconTable extends TileTechnomancy implements IInventory, IU
 
 	@Override
 	public boolean toggleBoost() {
-		if(getBoost()){
+		if(getBoost()) {
 			breakSpeed = 80;
-		}else{
+		} else {
 			breakSpeed = 40;
 		}
 		return getBoost();

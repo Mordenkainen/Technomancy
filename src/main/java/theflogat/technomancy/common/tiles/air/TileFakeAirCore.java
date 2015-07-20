@@ -1,10 +1,10 @@
 package theflogat.technomancy.common.tiles.air;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
+import theflogat.technomancy.common.tiles.base.TileTechnomancy;
 import theflogat.technomancy.util.Coords;
 
-public class TileFakeAirCore extends TileEntity{
+public class TileFakeAirCore extends TileTechnomancy{
 
 	protected int x = 0;
 	protected int y = 0;
@@ -30,8 +30,22 @@ public class TileFakeAirCore extends TileEntity{
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound comp) {
-		super.readFromNBT(comp);
+	public void readCustomNBT(NBTTagCompound comp) {}
+
+	@Override
+	public void writeCustomNBT(NBTTagCompound comp) {}
+
+	@Override
+	public void writeSyncData(NBTTagCompound comp) {
+		comp.setInteger("mainx", x);
+		comp.setInteger("mainy", y);
+		comp.setInteger("mainz", z);
+		if(core!=null)
+			comp.setString("core", core.getName());
+	}
+
+	@Override
+	public void readSyncData(NBTTagCompound comp) {
 		x = comp.getInteger("mainx");
 		y = comp.getInteger("mainy");
 		z = comp.getInteger("mainz");
@@ -40,15 +54,6 @@ public class TileFakeAirCore extends TileEntity{
 		} catch (ClassNotFoundException e) {
 			core = null;
 		}
-	}
-
-	@Override
-	public void writeToNBT(NBTTagCompound comp) {
-		super.writeToNBT(comp);
-		comp.setInteger("mainx", x);
-		comp.setInteger("mainy", y);
-		comp.setInteger("mainz", z);
-		if(core!=null)
-			comp.setString("core", core.getName());
+		
 	}
 }

@@ -16,7 +16,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockFluxLamp extends BlockContainerAdvanced {
 	
 	public BlockFluxLamp() {
-		setBlockName(Ref.MOD_PREFIX + Names.fluxLamp);
+		setBlockName(Ref.getId(Names.fluxLamp));
 	}
 
 	@Override

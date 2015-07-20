@@ -1,5 +1,6 @@
 package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -65,67 +66,75 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
 	public void updateEntity() {
 		if(isWholeTileLoaded()){
 			if(regenDummyBlocks){
+				destroyDummyBlocks();
 				createDummyBlocks();
 				regenDummyBlocks = false;
 			}
-
-			TileNodeGenerator partner = getTE(worldObj, xCoord + ForgeDirection.getOrientation(facing).offsetX * 6, yCoord, zCoord + ForgeDirection.getOrientation(facing).offsetZ * 6);
-			active = partner!=null ? partner.isWholeTileLoaded() ? ForgeDirection.getOrientation(facing).getOpposite() == ForgeDirection.getOrientation(partner.facing): false : false;
-			if(active) {
-				int xx = xCoord + ForgeDirection.getOrientation(facing).offsetX * 3;
-				int zz = zCoord + ForgeDirection.getOrientation(facing).offsetZ * 3;
-				TileEntity entity = worldObj.getTileEntity(xx, yCoord + 1, zz);
-				if(entity == null && worldObj.isAirBlock(xx, yCoord + 1, zz)) {
-					canSpawn = true;
-					addNode = false;
-				} else if(entity instanceof TileNode) {
-					INode node = (INode)entity;
-					addNode = true;			
-					if(canRun() && !worldObj.isRemote && amount > 0 && aspect != null) {
-						if (getEnergyStored() >= 1000 && node.getAspects().aspects.containsKey(aspect) && node.getAspects().getAmount(aspect) < node.getAspectsBase().getAmount(aspect)) {
-							extractEnergy(1000, false);
-							node.addToContainer(aspect, 1);
-							takeFromContainer(aspect, 1);
-							worldObj.markBlockForUpdate(xx, yCoord + 1, zz);
-						} else if (boost && getEnergyStored() >= 10000 && amount >= 10) {
-							if (node.getNodeVisBase(aspect) < Short.MAX_VALUE) {
-								extractEnergy(10000, false);
-								node.setNodeVisBase(aspect, (short)(node.getNodeVisBase(aspect) + 1));
+			if(!worldObj.isRemote) {
+				TileNodeGenerator partner = getTE(worldObj, xCoord + ForgeDirection.getOrientation(facing).offsetX * 6, yCoord, zCoord + ForgeDirection.getOrientation(facing).offsetZ * 6);
+				active = partner!=null ? partner.isWholeTileLoaded() ? ForgeDirection.getOrientation(facing).getOpposite() == ForgeDirection.getOrientation(partner.facing): false : false;
+				if(active) {
+					int xx = xCoord + ForgeDirection.getOrientation(facing).offsetX * 3;
+					int zz = zCoord + ForgeDirection.getOrientation(facing).offsetZ * 3;
+					TileEntity entity = worldObj.getTileEntity(xx, yCoord + 1, zz);
+					if(entity == null && worldObj.isAirBlock(xx, yCoord + 1, zz)) {
+						canSpawn = true;
+						addNode = false;
+					} else if(entity instanceof TileNode) {
+						INode node = (INode)entity;
+						addNode = true;			
+						if(canRun() && !worldObj.isRemote && amount > 0 && aspect != null) {
+							if (getEnergyStored() >= 1000 && node.getAspects().aspects.containsKey(aspect) && node.getAspects().getAmount(aspect) < node.getAspectsBase().getAmount(aspect)) {
+								extractEnergy(1000, false);
 								node.addToContainer(aspect, 1);
-								takeFromContainer(aspect, 10);
+								takeFromContainer(aspect, 1);
 								worldObj.markBlockForUpdate(xx, yCoord + 1, zz);
+							} else if (boost && getEnergyStored() >= 10000 && amount >= 10) {
+								if (node.getNodeVisBase(aspect) < Short.MAX_VALUE) {
+									extractEnergy(10000, false);
+									node.setNodeVisBase(aspect, (short)(node.getNodeVisBase(aspect) + 1));
+									node.addToContainer(aspect, 1);
+									takeFromContainer(aspect, 10);
+									worldObj.markBlockForUpdate(xx, yCoord + 1, zz);
+								}
 							}
 						}
+						canSpawn = running = initiator = false;
+						step = 0;
 					}
-					canSpawn = running = initiator = false;
-					step = 0;
+					if (step == 200 && initiator) {
+						AspectList al = new AspectList();
+						al.add(aspect, amount);
+						al.add(partner.aspect, partner.amount);
+						generateNode(al);
+						takeFromContainer(aspect, amount);
+						partner.takeFromContainer(partner.aspect, partner.amount);
+						extractEnergy(MathHelper.round(Math.pow((amount + partner.amount)/2, 2) * 762.939453125), false);
+						worldObj.markBlockForUpdate(xx, yCoord + 1, zz);
+					}
+					fill();
+					worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 				}
+			} else {
+				if(active) {
+					rotation += 1 + step / 5;
+					if (rotation >= 360) {
+						rotation -= 360;
+					}
+					if (worldObj.rand.nextInt(Math.max(60 - step / 4, 1)) == 0) {
+						shootLightning();
+					}
+				}
+			}
+
+			if(active) {
 				if (running) {
 					step++;
 				}
-				rotation += 1 + step / 5;
-				if (rotation >= 360) {
-					rotation -= 360;
-				}
-				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-				if (worldObj.rand.nextInt(60 - step / 4) == 0) {
-					shootLightning();
-				}
-				if (step == 200 && initiator) {
-					AspectList al = new AspectList();
-					al.add(aspect, amount);
-					al.add(partner.aspect, partner.amount);
-					generateNode(al);
-					takeFromContainer(aspect, amount);
-					partner.takeFromContainer(partner.aspect, partner.amount);
-					extractEnergy(MathHelper.round(Math.pow((amount + partner.amount)/2, 2) * 762.939453125), false);
-				}		
 			} else {
 				canSpawn = addNode = running = initiator = false;
 				step = 0;
 			}
-
-			fill();
 		}
 	}	
 
@@ -185,34 +194,8 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
 	//Just using as a reference
 	//NORMAL, UNSTABLE, DARK, TAINTED, HUNGRY, PURE
 	void generateNode(AspectList aspects) {
-		NodeType type = NodeType.NORMAL;
-		NodeModifier mod = null;
-		Aspect ra = null;
-		int aurum = aspects.getAmount(Aspect.AURA);
-		int taint = aspects.getAmount(Aspect.TAINT);
 		int xx = xCoord + ForgeDirection.getOrientation(facing).offsetX * 3;
 		int zz = zCoord + ForgeDirection.getOrientation(facing).offsetZ * 3;
-		ra = BiomeHandler.getRandomBiomeTag(worldObj.getBiomeGenForCoords(xx, zz).biomeID, worldObj.rand);
-		if (aurum == taint && (aurum + taint == 122 || aurum + taint == 152 || aurum + taint == 218 || aurum + taint == 510)) {
-			type = NodeType.PURE;
-		} else if (aurum + taint > 256) {
-			type = NodeType.HUNGRY;
-		} else if (aurum - 64 > taint) {
-			type = NodeType.UNSTABLE;
-		} else if (taint - 64 > aurum) {
-			if (taint > 96) {
-				type = NodeType.TAINTED;
-			} else {
-				type = NodeType.DARK;
-			}				
-		}
-		if (aurum + taint < 80) {
-			mod = NodeModifier.FADING;
-		} else if (aurum + taint > 200 && aurum + taint < 256 || aurum + taint == 510) {
-			mod = NodeModifier.BRIGHT;
-		} else if (aurum + taint > 350 && aurum + taint != 510) {
-			mod = NodeModifier.PALE;
-		}
 		if (worldObj.isRemote) {
 			for (int a = 0; a < 6; a++) {
 				for (int b = 0; b < 6; b++) {
@@ -225,6 +208,36 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
 			}
 			worldObj.playSound(xx + 0.5F, yCoord + 1.5, zz + 0.5F, "thaumcraft:craftstart", 1.0F, 1.0F, false);	
 		} else {
+			NodeType type = NodeType.NORMAL;
+			NodeModifier mod = null;
+			Aspect ra = null;
+			int aurum = aspects.getAmount(Aspect.AURA);
+			int taint = aspects.getAmount(Aspect.TAINT);
+			ra = BiomeHandler.getRandomBiomeTag(worldObj.getBiomeGenForCoords(xx, zz).biomeID, worldObj.rand);
+			if(ra == null) {
+				ArrayList<Aspect> primals = Aspect.getPrimalAspects();
+				ra = primals.get(worldObj.rand.nextInt(primals.size()));
+			}
+			if (aurum == taint && (aurum + taint == 122 || aurum + taint == 152 || aurum + taint == 218 || aurum + taint == 510)) {
+				type = NodeType.PURE;
+			} else if (aurum + taint > 256) {
+				type = NodeType.HUNGRY;
+			} else if (aurum - 64 > taint) {
+				type = NodeType.UNSTABLE;
+			} else if (taint - 64 > aurum) {
+				if (taint > 96) {
+					type = NodeType.TAINTED;
+				} else {
+					type = NodeType.DARK;
+				}				
+			}
+			if (aurum + taint < 80) {
+				mod = NodeModifier.FADING;
+			} else if (aurum + taint > 200 && aurum + taint < 256 || aurum + taint == 510) {
+				mod = NodeModifier.BRIGHT;
+			} else if (aurum + taint > 350 && aurum + taint != 510) {
+				mod = NodeModifier.PALE;
+			}
 			ThaumcraftWorldGenerator.createNodeAt(worldObj, xx, yCoord + 1, zz, type, mod, new AspectList().add(ra, (aurum + taint)/ 2));
 		}	
 	}
@@ -246,16 +259,14 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
 	}
 
 	void shootLightning() {
-		if (worldObj.isRemote) {
-			double [] boltdata = lightning.get(facing)[worldObj.rand.nextInt(4)];
-			FXLightningBolt bolt = new FXLightningBolt(worldObj, xCoord + boltdata[0], yCoord + boltdata[1],
-					zCoord + boltdata[2], xCoord + boltdata[3], yCoord + boltdata[4], zCoord + boltdata[5], worldObj.rand.nextLong(), 6, 0.5F);
-			bolt.defaultFractal();
-			bolt.setType((int)boltdata[6]);
-			bolt.setWidth(0.02F);
-			bolt.finalizeBolt();
-			worldObj.playSound(xCoord + 0.5F, yCoord + 0.5F, zCoord + 0.5F, "thaumcraft:zap", 1.0F,worldObj.rand.nextFloat(), false);
-		}
+		double [] boltdata = lightning.get(facing)[worldObj.rand.nextInt(4)];
+		FXLightningBolt bolt = new FXLightningBolt(worldObj, xCoord + boltdata[0], yCoord + boltdata[1],
+				zCoord + boltdata[2], xCoord + boltdata[3], yCoord + boltdata[4], zCoord + boltdata[5], worldObj.rand.nextLong(), 6, 0.5F);
+		bolt.defaultFractal();
+		bolt.setType((int)boltdata[6]);
+		bolt.setWidth(0.02F);
+		bolt.finalizeBolt();
+		worldObj.playSound(xCoord + 0.5F, yCoord + 0.5F, zCoord + 0.5F, "thaumcraft:zap", 0.5F,worldObj.rand.nextFloat(), false);
 	}
 
 	@Override
@@ -300,7 +311,7 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
 			return AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord - 1.0F, this.xCoord + 1.0F, this.yCoord + 3.0F, this.zCoord + 2.0F);
 		}
 	}
-
+	
 	@Override
 	public void writeSyncData(NBTTagCompound compound) {
 		super.writeSyncData(compound);

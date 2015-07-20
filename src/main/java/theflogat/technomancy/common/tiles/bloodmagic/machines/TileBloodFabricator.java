@@ -44,11 +44,13 @@ public class TileBloodFabricator extends TileMachineBase implements IFluidHandle
 
 	@Override
 	public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
+		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		return tank.drain(resource.amount, doDrain);
 	}
 
 	@Override
 	public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
+		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		if(tank.getFluid() != null) {
 			return tank.drain(maxDrain, doDrain);
 		}
@@ -72,7 +74,7 @@ public class TileBloodFabricator extends TileMachineBase implements IFluidHandle
 
 	@Override
 	public FluidTankInfo[] getTankInfo(ForgeDirection from) {
-		return new FluidTankInfo[] { this.tank.getInfo() };
+		return new FluidTankInfo[] {this.tank.getInfo()};
 	}
 	
 	@Override

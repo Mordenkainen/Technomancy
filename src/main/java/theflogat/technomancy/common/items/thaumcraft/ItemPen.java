@@ -28,32 +28,35 @@ public class ItemPen extends ItemBase implements IScribeTools {
 	}
 	
 	@Override
-	public boolean onItemUse(ItemStack stack, EntityPlayer player, World w, int x, int y, int z, int side, float hitX, float hitY, float hitZ){
+	public boolean onItemUse(ItemStack stack, EntityPlayer player, World w, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
 		TileEntity tile = w.getTileEntity(x, y, z);
 		int md = w.getBlockMetadata(x, y, z);
 		Block bi = w.getBlock(x, y, z);
 
-		if (tile instanceof TileTable && md != 6) {
-			if (w.isRemote) {return false;}
-			for (int a = 2; a < 6; a++) {
-				ForgeDirection dir = ForgeDirection.VALID_DIRECTIONS[a];
+		if(tile instanceof TileTable && md != 6) {
+			if (w.isRemote) {
+				return false;
+			}
+			for(int a = 2; a < 6; a++) {
+				ForgeDirection dir = ForgeDirection.getOrientation(a);
 				TileEntity tile2 = w.getTileEntity(x + dir.offsetX , y + dir.offsetY, z + dir.offsetZ);
 				
 				int md2 = w.getBlockMetadata(x + dir.offsetX , y + dir.offsetY, z + dir.offsetZ);
 				
-				if (tile2 instanceof TileTable && md2 < 6) {
+				if(tile2 instanceof TileTable && md2 < 6) {
 					w.setBlock(x, y, z, bi, a, 0);
 					w.setTileEntity(x, y, z, new TileResearchTable());
 					w.setBlock(x + dir.offsetX , y + dir.offsetY, z + dir.offsetZ, bi, dir.getOpposite().ordinal() + 4, 0);
 					
 					w.markBlockForUpdate(x, y, z);
-					w.markBlockForUpdate(x + dir.offsetX , y + dir.offsetY, z + dir.offsetZ);
+					w.markBlockForUpdate(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ);
 					
 					TileEntity tile3 = w.getTileEntity(x, y, z);
-					if (tile3 instanceof TileResearchTable) {
+					if(tile3 instanceof TileResearchTable) {
 						((IInventory)tile3).setInventorySlotContents(0, stack.copy());
-						if (!player.capabilities.isCreativeMode) {
+						if(!player.capabilities.isCreativeMode) {
 							player.inventory.decrStackSize(player.inventory.currentItem, 1);
+							player.inventory.markDirty();
 						}
 						w.markBlockForUpdate(x, y, z);
 					}
@@ -67,12 +70,12 @@ public class ItemPen extends ItemBase implements IScribeTools {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister icon) {
-		itemIcon = icon.registerIcon(Ref.TEXTURE_PREFIX + "penItem");
+		itemIcon = icon.registerIcon(Ref.getAsset("penItem"));
 	}
 
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		return Ref.MOD_PREFIX + Names.pen;
+		return Ref.getId(Names.pen);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })

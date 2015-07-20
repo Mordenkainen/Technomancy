@@ -16,15 +16,13 @@ public class TileBloodDynamo extends TileDynamoBase implements IFluidHandler {
 	
 	@Override
 	public int extractFuel(int ener) {
-		if(liquid!=0){
-			float ratio = (ener) / 80F;
-			float val = 100F * ratio;
-			float fuelPerc = val / Math.min(liquid, val);
-			liquid -= Math.min(liquid, val);
-			float fuel = 400F * fuelPerc;
-			return (int) fuel;
+		float ratio = (ener) / 80F;
+		int val = (int)Math.ceil(100 * ratio);
+		if(val > liquid) {
+			return 0;
 		}
-		return 0;
+		liquid -= val;
+		return 400;
 	}
 	
 	public boolean emptyBucket() {

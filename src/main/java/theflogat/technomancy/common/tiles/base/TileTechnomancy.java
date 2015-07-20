@@ -5,14 +5,8 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import theflogat.technomancy.util.Coords;
 
 public abstract class TileTechnomancy extends TileEntity {
-
-	protected Coords getCoords() {
-		Coords coords = new Coords(xCoord, yCoord, zCoord, worldObj);
-		return coords;
-	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbttagcompound){
@@ -47,7 +41,4 @@ public abstract class TileTechnomancy extends TileEntity {
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
 		readSyncData(pkt.func_148857_g());
 	}
-
-	public void onNeighborBlockChange() {}
-	public void onNeighborTileChange(int tileX, int tileY, int tileZ) {}
 }

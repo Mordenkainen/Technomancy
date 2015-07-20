@@ -39,6 +39,11 @@ public class BlockFakeAirNG extends BlockContainer{
 		setBlockName(Ref.getId(Names.fakeAirNG));
 	}
 	
+	public String getUnlocalizedName()
+    {
+        return "tile.techno:nodeGenerator";
+    }
+	
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
 		blockIcon = reg.registerIcon(Ref.getAsset(Names.fakeAirNG));
@@ -66,20 +71,22 @@ public class BlockFakeAirNG extends BlockContainer{
 			if(fakeAir.getBoost()) {
 				if(!w.isRemote) {
 					WorldHelper.dropBoost(w, x, y, z);
+					fakeAir.setBoost(false);
+					w.markBlockForUpdate(x, y, z);
 				}
-				fakeAir.setBoost(false);
 				return true;
 			}
 		}
 		if(items!=null && itemToSetting.containsKey(items.getItem()) && fakeAir.canBeModified()) {
 			if(itemToSetting.get(items.getItem())!=fakeAir.getCurrentSetting()){
-				if(fakeAir.isModified()) {
-					Item it = settingToItem.get(fakeAir.getCurrentSetting());
-					if(!w.isRemote) {
+				if(!w.isRemote) {
+					if(fakeAir.isModified()) {
+						Item it = settingToItem.get(fakeAir.getCurrentSetting());
 						WorldHelper.spawnEntItem(w, x, y, z, new ItemStack(it, 1));
 					}
+					fakeAir.setNewSetting(itemToSetting.get(items.getItem()));
+					w.markBlockForUpdate(x, y, z);
 				}
-				fakeAir.setNewSetting(itemToSetting.get(items.getItem()));
 				player.inventory.mainInventory[player.inventory.currentItem] = --player.inventory.mainInventory[player.inventory.currentItem].stackSize==0 ? null:
 					player.inventory.mainInventory[player.inventory.currentItem];
 				return true;

@@ -1,9 +1,11 @@
 package theflogat.technomancy.common.tiles.thaumcraft.dynamos;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import scala.actors.threadpool.Arrays;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.nodes.INode;
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
@@ -21,17 +23,17 @@ public class TileNodeDynamo extends TileDynamoBase{
 	@Override
 	public int extractFuel(int ener) {
 		float ratio = (ener) / 80F;
-		if(((int)ratio)>amount)
+		if(ratio > amount) {
 			return 0;
-		amount -= ((int)ratio);
-		return (int) (((float)10*20)*ratio);
+		}
+		amount -= Math.ceil(ratio);
+		return 30;
 	}
 
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
-		counter += 1;
-		if (counter == 20) {
+		if (counter++ == 20) {
 			draining = false;
 			if(amount<maxAmount){
 				takeAspectsFromNodes();
@@ -43,10 +45,12 @@ public class TileNodeDynamo extends TileDynamoBase{
 	public void takeAspectsFromNodes() {
 		ArrayList<TileEntity> l = getNodes();
 		if(!l.isEmpty()){
+			Collections.shuffle(l);
 			for(TileEntity te : l){
 				if (te != null && te instanceof INode) {
 					INode node = (INode)te;
 					Aspect[] as = node.getAspects().getAspects();
+					Collections.shuffle(Arrays.asList(as));
 					for (int i = 0; i < as.length; i++) {
 						Aspect aspect = as[i];
 						if(node.getAspects().getAmount(aspect) > 1 && amount < 16){

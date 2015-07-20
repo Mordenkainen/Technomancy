@@ -19,7 +19,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockBloodDynamo extends BlockDynamoBase {
 
 	public BlockBloodDynamo() {
-		setBlockName(Ref.MOD_PREFIX + Names.bloodDynamo);
+		setBlockName(Ref.getId(Names.bloodDynamo));
 	}
 	
 	@Override

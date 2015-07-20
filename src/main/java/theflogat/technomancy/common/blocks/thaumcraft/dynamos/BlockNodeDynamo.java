@@ -17,7 +17,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockNodeDynamo extends BlockDynamoBase {
 
 	public BlockNodeDynamo() {
-		setBlockName(Ref.MOD_PREFIX + Names.nodeDynamo);
+		setBlockName(Ref.getId(Names.nodeDynamo));
 	}
 	
 	@Override

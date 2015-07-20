@@ -1,5 +1,6 @@
 package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
+import java.util.Collections;
 import java.util.Iterator;
 
 import net.minecraft.block.Block;
@@ -53,15 +54,15 @@ public class TileEssentiaTransmitter extends TileCoilTransmitter implements IEss
 				return;
 			}
 			TileEntity te = Thaumcraft.getConnectableAsContainer(worldObj, xCoord, yCoord, zCoord, ForgeDirection.getOrientation(facing));
-			if(te==null){
+			if(te == null) {
 				return;
 			}
 			
 			IAspectContainer cont;
-			if(te instanceof IAspectContainer){
+			if(te instanceof IAspectContainer) {
 				cont = (IAspectContainer)te;
-			}else{
-				cont = new AspectContainerEssentiaTransport((IEssentiaTransport) te);
+			} else {
+				cont = new AspectContainerEssentiaTransport((IEssentiaTransport)te);
 			}
 			
 			boolean flag = false;
@@ -71,28 +72,33 @@ public class TileEssentiaTransmitter extends TileCoilTransmitter implements IEss
 					flag = true;
 				}
 			} else {
-				if(!Thaumcraft.isFull(cont) && !redstoneState) {
-					redstoneState = true;
-					flag = true;
-				} else if (Thaumcraft.isFull(cont) && redstoneState) {
-					redstoneState = false;
-					flag = true;
+				if(!Thaumcraft.isFull(cont)) {
+					if(!redstoneState) {
+						redstoneState = true;
+						flag = true;
+					}
+				} else if (Thaumcraft.isFull(cont)) {
+					if(redstoneState) {
+						redstoneState = false;
+						flag = true;
+					}
 				}
 			}
 			if(flag) {
-				worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, blockType);
+				worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord));
 				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 			}
 			
 			if (set.canRun(this) && !sources.isEmpty()) {
+				Collections.shuffle(sources);
 				Iterator<ChunkCoordinates> sourceIter = sources.iterator();
 				while (sourceIter.hasNext()) {
 					ChunkCoordinates coords = sourceIter.next();
 					TileEntity tile = worldObj.getTileEntity(coords.posX, coords.posY, coords.posZ);
-					if(tile!=null && tile instanceof IAspectContainer) {
+					if(tile != null && !tile.isInvalid() && tile instanceof IAspectContainer) {
 						IAspectContainer source = (IAspectContainer)tile;
 						AspectList al = source.getAspects();
-						if(al!=null)
+						if(al != null) {
 							for(int i = 0; i < al.size(); i++) {
 								Aspect aspect = al.getAspects()[i];
 								if(aspect != null && (aspectFilter == null || aspect == aspectFilter) && cont.doesContainerAccept(aspect) && cont.addToContainer(aspect, 1) == 0) {
@@ -109,8 +115,11 @@ public class TileEssentiaTransmitter extends TileCoilTransmitter implements IEss
 									}
 								}
 							}
+						}
 					}else{
-						sourceIter.remove();
+						if(tile == null || (tile != null && !tile.isInvalid())) {
+							sourceIter.remove();
+						}
 					}
 				}
 			}
@@ -148,12 +157,13 @@ public class TileEssentiaTransmitter extends TileCoilTransmitter implements IEss
 	@Override
 	public int takeEssentia(Aspect aspect, int amount, ForgeDirection face) {
 		if (onSpecialBlock && set.canRun(this) && !sources.isEmpty()) {
+			Collections.shuffle(sources);
 			Iterator<ChunkCoordinates> sourceIter = sources.iterator();
 			boolean gotEssentia = false;
 			while (sourceIter.hasNext() && !gotEssentia) {
 				ChunkCoordinates coords = sourceIter.next();
 				TileEntity tile = worldObj.getTileEntity(coords.posX, coords.posY, coords.posZ);
-				if(tile!=null && tile instanceof IAspectContainer) {
+				if(tile!=null && !tile.isInvalid() && tile instanceof IAspectContainer) {
 					IAspectContainer source = (IAspectContainer)tile;
 					if(source.doesContainerContainAmount(aspect, amount)) {
 						gotEssentia = source.takeFromContainer(aspect, amount);
@@ -169,7 +179,9 @@ public class TileEssentiaTransmitter extends TileCoilTransmitter implements IEss
 						}
 					}
 				}else{
-					sourceIter.remove();
+					if(tile == null || (tile != null && !tile.isInvalid())) {
+						sourceIter.remove();
+					}
 				}
 				
 			}

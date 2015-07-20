@@ -9,9 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IEssentiaContainerItem;
@@ -35,21 +33,9 @@ public class BlockCreativeJar extends BlockContainerAdvanced {
 	@Override
 	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase entity, ItemStack items){
 		super.onBlockPlacedBy(w, x, y, z, entity, items);
-		int face = MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 0.5D) & 0x3;
 		TileEntity tile = w.getTileEntity(x, y, z);
 		if ((tile instanceof TileCreativeJar)) {
-			if (face == 0) {
-				((TileCreativeJar)tile).facing = 2;
-			}
-			if (face == 1) {
-				((TileCreativeJar)tile).facing = 5;
-			}
-			if (face == 2) {
-				((TileCreativeJar)tile).facing = 3;
-			}
-			if (face == 3) {
-				((TileCreativeJar)tile).facing = 4;
-			}
+			((TileCreativeJar)tile).facing = 2;
 		}
 	}
 	
@@ -58,19 +44,6 @@ public class BlockCreativeJar extends BlockContainerAdvanced {
 		if (w.getTileEntity(x, y, z) instanceof TileCreativeJar ) {
 			TileCreativeJar container = (TileCreativeJar)w.getTileEntity(x, y, z);	  
 			ItemStack item = player.getHeldItem();		
-			//Removes labels
-			if (container.aspectFilter != null && item == null  && player.isSneaking() && side == container.facing) {
-				container.aspectFilter = null;
-				if (w.isRemote) {
-			        w.playSound(x + 0.5F, y + 0.5F, z + 0.5F, "thaumcraft:page", 1.0F, 1.0F, false);
-			    }
-			    ForgeDirection fd = ForgeDirection.getOrientation(side);
-			    if (!player.inventory.addItemStackToInventory(new ItemStack(Thaumcraft.itemResource, 1, 13))) {	
-			    	w.spawnEntityInWorld(new EntityItem(w, x + 0.5F + fd.offsetX / 3.0F, y + 0.5F, z + 0.5F + fd.offsetZ /
-			    			3.0F, new ItemStack(Thaumcraft.itemResource, 1, 13)));
-			    }			    
-				return true;
-			}
 			//Empties Jars
 			if ((player.isSneaking()) && (container.amount >= 0) && item == null && container.aspectFilter == null) {
 				container.amount = 0;
@@ -80,25 +53,6 @@ public class BlockCreativeJar extends BlockContainerAdvanced {
 				return true;
 			}
 			if(item != null) {
-				//Adds labels
-//				if (container.aspectFilter == null && item.getItemDamage() == 13 && item.getItem() == Thaumcraft.itemResource &&
-//						container.aspect != null) {
-//					if(((IEssentiaContainerItem)item.getItem()).getAspects(item) != null) {
-//						container.aspectFilter = ((IEssentiaContainerItem)item.getItem()).getAspects(item).getAspects()[0];
-//						item.stackSize -= 1;
-//						if (world.isRemote) {
-//							world.playSound(x + 0.5F, y + 0.5F, z + 0.5F, "thaumcraft:page", 1.0F, 1.0F, false);
-//						}
-//						player.inventoryContainer.detectAndSendChanges();
-//					}
-//					container.aspectFilter = container.aspect;
-//					item.stackSize -= 1;
-//					if (world.isRemote) {
-//						world.playSound(x + 0.5F, y + 0.5F, z + 0.5F, "thaumcraft:page", 1.0F, 1.0F, false);
-//					}
-//					player.inventoryContainer.detectAndSendChanges();
-//					return true;
-//				}
 				//Adds Essentia from Phials
 				if (item.getItem() == Thaumcraft.itemEssence && item.getItemDamage() == 1 && container.amount <= (container.maxAmount - 8)) {
 						if(container.addToContainer(((IEssentiaContainerItem)player.getHeldItem().getItem())

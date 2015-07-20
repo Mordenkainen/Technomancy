@@ -12,7 +12,7 @@ import theflogat.technomancy.common.tiles.base.IUpgradable;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 
-public class ItemBoost extends Item{
+public class ItemBoost extends Item {
 	
 	public static ArrayList<String> upgradeable = new ArrayList<String>();
 	
@@ -35,7 +35,10 @@ public class ItemBoost extends Item{
 		if(w.getTileEntity(x, y, z) instanceof IUpgradable){
 			IUpgradable tile = (IUpgradable)w.getTileEntity(x, y, z);
 			if(tile.getBoost() == false){
-				tile.setBoost(true);
+				if(!w.isRemote) {
+					tile.setBoost(true);
+					w.markBlockForUpdate(x, y, z);
+				}
 				if(--player.inventory.mainInventory[player.inventory.currentItem].stackSize == 0) {
 					player.inventory.mainInventory[player.inventory.currentItem] = null;
 				}

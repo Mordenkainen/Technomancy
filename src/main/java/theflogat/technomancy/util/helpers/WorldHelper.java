@@ -18,13 +18,16 @@ public class WorldHelper {
 
 	public static boolean destroyAndDrop(World w, int x, int y, int z){
 		Block block = w.getBlock(x, y, z);
-		if(block!=null && block.getBlockHardness(w, x, y, z)>=0 && !w.isRemote){
-			block.breakBlock(w, x, y, z, block, w.getBlockMetadata(x, y, z));
-			ArrayList<ItemStack> d = block.getDrops(w, x, y, z, w.getBlockMetadata(x, y, z), 0);
-			for(ItemStack s : d){
-				spawnEntItem(w, x, y, z, s);
+		if(block!=null && block.getBlockHardness(w, x, y, z)>=0) {
+			if(!w.isRemote){
+				block.breakBlock(w, x, y, z, block, w.getBlockMetadata(x, y, z));
+				ArrayList<ItemStack> d = block.getDrops(w, x, y, z, w.getBlockMetadata(x, y, z), 0);
+				for(ItemStack s : d){
+					spawnEntItem(w, x, y, z, s);
+				}
 			}
 			w.setBlockToAir(x, y, z);
+				
 			return true;
 		}
 		return false;

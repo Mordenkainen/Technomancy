@@ -8,6 +8,7 @@ import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBloodFabricato
 import theflogat.technomancy.common.tiles.botania.machines.TileManaExchanger;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBiomeMorpher;
+import theflogat.technomancy.common.tiles.thaumcraft.machine.TileCondenser;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEldritchConsumer;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaFusor;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileFluxLamp;
@@ -45,6 +46,8 @@ public class WailaProvider {
 			registrar.registerBodyProvider(new FluxLampHUDHandler(), TileFluxLamp.class);
 			
 			registrar.registerBodyProvider(new EssentiaFusorHUDHandler(), TileEssentiaFusor.class);
+			
+			registrar.registerBodyProvider(new CondenserHUDHandler(), TileCondenser.class);
 		}
 		
 		if(CompatibilityHandler.bo) {

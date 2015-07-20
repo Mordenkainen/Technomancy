@@ -14,7 +14,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockEssentiaDynamo extends BlockDynamoBase {
 
 	public BlockEssentiaDynamo() {
-		setBlockName(Ref.MOD_PREFIX + Names.essentiaDynamo);
+		setBlockName(Ref.getId(Names.essentiaDynamo));
 	}
 
 	@SideOnly(Side.CLIENT)

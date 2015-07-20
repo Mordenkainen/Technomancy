@@ -1,6 +1,7 @@
 package theflogat.technomancy.common.blocks.technom;
 
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;

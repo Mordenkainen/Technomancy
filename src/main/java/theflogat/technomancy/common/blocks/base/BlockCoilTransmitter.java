@@ -41,6 +41,16 @@ public abstract class BlockCoilTransmitter extends BlockContainerAdvanced {
 	}
 	
 	@Override
+	public boolean canConnectRedstone(IBlockAccess world, int x, int y, int z, int side)
+    {
+		TileCoilTransmitter tile = getTE(world, x, y, z);
+		if(tile!=null) {
+			return tile.getBoost();
+		}
+		return false;
+    }
+	
+	@Override
 	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase entity, ItemStack items){
 		super.onBlockPlacedBy(w, x, y, z, entity, items);
 		TileCoilTransmitter tile = getTE(w, x, y, z);
@@ -62,20 +72,14 @@ public abstract class BlockCoilTransmitter extends BlockContainerAdvanced {
 		if(tile != null) {
 			switch(tile.facing) {
 				case 0:
-					setBlockBounds(0.1875F, 0.0F, 0.1875F, 0.8125F, 1.0F, 0.8125F);
-					break;
 				case 1:
 					setBlockBounds(0.1875F, 0.0F, 0.1875F, 0.8125F, 1.0F, 0.8125F);
 					break;
 				case 2:
-					setBlockBounds(0.1875F, 0.1875F, 0.0F, 0.8125F, 0.8125F, 1.0F);
-					break;
 				case 3:
 					setBlockBounds(0.1875F, 0.1875F, 0.0F, 0.8125F, 0.8125F, 1.0F);
 					break;
 				case 4:
-					setBlockBounds(0.0F, 0.1875F, 0.1875F, 1.0F, 0.8125F, 0.8125F);
-					break;
 				case 5:
 					setBlockBounds(0.0F, 0.1875F, 0.1875F, 1.0F, 0.8125F, 0.8125F);
 					break;
