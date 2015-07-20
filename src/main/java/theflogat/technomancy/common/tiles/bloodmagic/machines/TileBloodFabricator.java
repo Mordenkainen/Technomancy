@@ -44,11 +44,13 @@ public class TileBloodFabricator extends TileMachineBase implements IFluidHandle
 
 	@Override
 	public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
+		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		return tank.drain(resource.amount, doDrain);
 	}
 
 	@Override
 	public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
+		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		if(tank.getFluid() != null) {
 			return tank.drain(maxDrain, doDrain);
 		}
@@ -72,18 +74,20 @@ public class TileBloodFabricator extends TileMachineBase implements IFluidHandle
 
 	@Override
 	public FluidTankInfo[] getTankInfo(ForgeDirection from) {
-		return new FluidTankInfo[] { this.tank.getInfo() };
+		return new FluidTankInfo[] {this.tank.getInfo()};
 	}
 	
 	@Override
-	public void readCustomNBT(NBTTagCompound compound) {
+	public void writeSyncData(NBTTagCompound compound) {
+		super.writeSyncData(compound);
+		tank.writeToNBT(compound);
+	}
+	
+	@Override
+	public void readSyncData(NBTTagCompound compound) {
+		super.readSyncData(compound);
 		tank = new FluidTank(10000);
 		tank.readFromNBT(compound);
-	}
-	
-	@Override
-	public void writeCustomNBT(NBTTagCompound compound) {
-		tank.writeToNBT(compound);
 	}
 	
 	@Override

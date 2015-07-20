@@ -36,13 +36,14 @@ public abstract class BlockContainerRedstone extends BlockContainerBase {
 			ItemStack items = player.inventory.mainInventory[player.inventory.currentItem];
 			if(items!=null && itemToSetting.containsKey(items.getItem()) && te.canBeModified()) {
 				if(itemToSetting.get(items.getItem())!=te.getCurrentSetting()){
-					if(te.isModified()) {
-						Item it = settingToItem.get(te.getCurrentSetting());
-						if(!w.isRemote) {
+					if(!w.isRemote) {
+						if(te.isModified()) {
+							Item it = settingToItem.get(te.getCurrentSetting());
 							WorldHelper.spawnEntItem(w, x, y, z, new ItemStack(it, 1));
 						}
+						te.setNewSetting(itemToSetting.get(items.getItem()));
+						w.markBlockForUpdate(x, y, z);
 					}
-					te.setNewSetting(itemToSetting.get(items.getItem()));
 					player.inventory.mainInventory[player.inventory.currentItem] = --player.inventory.mainInventory[player.inventory.currentItem].stackSize==0 ? null:
 						player.inventory.mainInventory[player.inventory.currentItem];
 					return true;

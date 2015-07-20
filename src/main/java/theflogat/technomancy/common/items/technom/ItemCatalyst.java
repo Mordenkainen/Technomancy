@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class ItemCatalyst extends ItemBlock{
+public class ItemCatalyst extends ItemBlock {
 
 	public ItemCatalyst(Block catalyst) {
 		super(catalyst);

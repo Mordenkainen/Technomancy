@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChunkCoordinates;
 
-public abstract class TileCoilTransmitter extends TileTechnomancyRedstone implements ICouplable, IWrenchable, IUpgradable{
+public abstract class TileCoilTransmitter extends TileTechnomancyRedstone implements ICouplable, IWrenchable, IUpgradable {
 
 	public boolean redstoneState = false;
 	
@@ -23,8 +23,6 @@ public abstract class TileCoilTransmitter extends TileTechnomancyRedstone implem
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound comp) {
-		super.writeCustomNBT(comp);
-		comp.setByte("facing", (byte)facing);
 		int sourceCount = 0;
 		for(int i = 0; i < sources.size(); i++) {
 			if(sources.get(i) != null) {
@@ -35,14 +33,10 @@ public abstract class TileCoilTransmitter extends TileTechnomancyRedstone implem
 			}		
 		}
 		comp.setInteger("size", sourceCount);
-		comp.setBoolean("boost", boost);
-		comp.setBoolean("redstone", redstoneState);
 	}
 
 	@Override
 	public void readCustomNBT(NBTTagCompound comp) {
-		super.readCustomNBT(comp);
-		facing = comp.getByte("facing");
 		int size = comp.getInteger("size");
 		for(int i = 0; i < size; i ++) {
 			int xx = comp.getInteger("xcoord" + i);		
@@ -50,6 +44,20 @@ public abstract class TileCoilTransmitter extends TileTechnomancyRedstone implem
 			int zz = comp.getInteger("zcoord" + i);
 			this.sources.add(new ChunkCoordinates(xx, yy, zz));
 		}
+	}
+	
+	@Override
+	public void writeSyncData(NBTTagCompound comp) {
+		super.writeSyncData(comp);
+		comp.setByte("facing", (byte)facing);
+		comp.setBoolean("boost", boost);
+		comp.setBoolean("redstone", redstoneState);
+	}
+	
+	@Override
+	public void readSyncData(NBTTagCompound comp) {
+		super.readSyncData(comp);
+		facing = comp.getByte("facing");
 		boost = comp.getBoolean("boost");
 		redstoneState = comp.getBoolean("redstone");
 	}
@@ -90,8 +98,8 @@ public abstract class TileCoilTransmitter extends TileTechnomancyRedstone implem
 	private void fixRedstone() {
 		if(boost) {
 			if(modified) {
-				Item it = BlockContainerRedstone.settingToItem.get(set);
 				if(!worldObj.isRemote) {
+					Item it = BlockContainerRedstone.settingToItem.get(set);
 					WorldHelper.spawnEntItem(worldObj, xCoord, yCoord, zCoord, new ItemStack(it, 1));
 				}
 				modified = false;
@@ -100,7 +108,6 @@ public abstract class TileCoilTransmitter extends TileTechnomancyRedstone implem
 		} else {
 			set = RedstoneSet.LOW;
 		}
-		
 	}
 
 	@Override

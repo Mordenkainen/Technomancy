@@ -1,6 +1,7 @@
 package theflogat.technomancy.common.tiles.botania.machines;
 
 import java.awt.Color;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.item.ItemStack;
@@ -54,17 +55,17 @@ public class TileBOProcessor extends TileProcessorBase implements IManaReceiver 
 			}
 		}
 	}
-
+	
 	@Override
-	public void readCustomNBT(NBTTagCompound compound) {
-		super.readCustomNBT(compound);
-		mana = compound.getInteger("Mana");
+	public void writeSyncData(NBTTagCompound compound) {
+		super.writeSyncData(compound);
+		compound.setInteger("Mana", mana);
 	}
 	
 	@Override
-	public void writeCustomNBT(NBTTagCompound compound) {
-		super.writeCustomNBT(compound);
-		compound.setInteger("Mana", mana);
+	public void readSyncData(NBTTagCompound compound) {
+		super.readSyncData(compound);
+		mana = compound.getInteger("Mana");
 	}
 
 	@Override

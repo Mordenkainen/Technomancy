@@ -34,15 +34,17 @@ public class TileManaFabricator extends TileMachineBase implements IManaPool, IW
 	}
 	
 	@Override
-	public void readCustomNBT(NBTTagCompound compound) {
-		mana = compound.getInteger("Mana");
-		facing = compound.getInteger("Facing");
+	public void writeSyncData(NBTTagCompound compound) {
+		super.writeSyncData(compound);
+		compound.setInteger("Mana", mana);
+		compound.setInteger("Facing", facing);
 	}
 	
 	@Override
-	public void writeCustomNBT(NBTTagCompound compound) {
-		compound.setInteger("Mana", mana);
-		compound.setInteger("Facing", facing);
+	public void readSyncData(NBTTagCompound compound) {
+		super.readSyncData(compound);
+		mana = compound.getInteger("Mana");
+		facing = compound.getInteger("Facing");
 	}
 	
 	@Override

@@ -1,21 +1,14 @@
 package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.util.ForgeDirection;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
-import thaumcraft.api.nodes.INode;
-import thaumcraft.api.nodes.NodeModifier;
-import thaumcraft.api.nodes.NodeType;
 import thaumcraft.common.lib.utils.Utils;
 import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
 import theflogat.technomancy.common.tiles.base.TileMachineRedstone;
 import theflogat.technomancy.lib.handlers.Rate;
 
-public class TileBiomeMorpher extends TileMachineRedstone implements INode {	
+public class TileBiomeMorpher extends TileMachineRedstone {	
 	
-	private AspectList aspects = new AspectList();
 	public static int cost = Rate.biomeMorpherCost;
 	
 	public TileBiomeMorpher() {
@@ -87,113 +80,9 @@ public class TileBiomeMorpher extends TileMachineRedstone implements INode {
 		}
 		return biome;
 	}
-
-	@Override
-	public AspectList getAspects() {		
-		return this.aspects;
-	}
-
-	@Override
-	public void setAspects(AspectList aspects) {
-		this.aspects = aspects.copy();
-	}
-
-	@Override
-	public boolean doesContainerAccept(Aspect tag) {
-		return false;
-	}
-
-	@Override
-	public int addToContainer(Aspect tag, int amount) {
-		return 0;
-	}
-
-	@Override
-	public boolean takeFromContainer(Aspect tag, int amount) {
-		return false;
-	}
-
-	@Override
-	public boolean takeFromContainer(AspectList ot) {
-		return false;
-	}
-
-	@Override
-	public boolean doesContainerContainAmount(Aspect tag, int amount) {
-		if (this.aspects.getAmount(tag) >= amount) {
-			return true;
-		}
-		return false;
-	}
-
-	@Override
-	public boolean doesContainerContain(AspectList ot) {
-		for (Aspect tt : ot.getAspects()) {
-			if (this.aspects.getAmount(tt) < ot.getAmount(tt)) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	@Override
-	public int containerContains(Aspect tag) {
-		return this.aspects.getAmount(tag);
-	}
-
-	@Override
-	public String getId() {
-		return null;
-	}
-
-	@Override
-	public NodeType getNodeType() {
-		switch (this.blockMetadata) {
-		case 0:
-			return NodeType.PURE;
-		case 1:
-			return NodeType.DARK;
-		case 2:
-			return NodeType.TAINTED;
-		}
-		return null;
-	}
-
-	@Override
-	public void setNodeType(NodeType nodeType) {	
-	}
-
-	@Override
-	public void setNodeModifier(NodeModifier nodeModifier) {
-	}
-
-	@Override
-	public NodeModifier getNodeModifier() {
-		return null;
-	}
-	
-	@Override
-	public void readCustomNBT(NBTTagCompound comp) {
-		super.readCustomNBT(comp);
-	}
-	
-	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {
-		super.writeCustomNBT(comp);
-	}
 	
 	@Override
 	public boolean canConnectEnergy(ForgeDirection from) {
 		return true;
 	}
-	@Override
-	public AspectList getAspectsBase() {
-		return null;
-	}
-	@Override
-	public int getNodeVisBase(Aspect aspect) {
-		return 35;
-	}
-	@Override
-	public void setNodeVisBase(Aspect aspect, short nodeVisBase) {}
 }

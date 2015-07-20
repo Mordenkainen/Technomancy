@@ -6,7 +6,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import theflogat.technomancy.api.rituals.Ritual;
 
-public class RitualOfFireT1 extends Ritual{
+public class RitualOfFireT1 extends Ritual {
 
 	public RitualOfFireT1() {
 		super(new Type[]{Type.FIRE},Type.FIRE);
@@ -22,12 +22,12 @@ public class RitualOfFireT1 extends Ritual{
 		w.setBlockToAir(x, y, z);
 		removeFrame(w, x, y, z);
 			
-		for(int i=-9; i<=9; i++){
-			for(int j=-9; j<=9; j++){
-				for(int k=-19; k<0; k++){
-					Block bl = w.getBlock(x+i, y+k, z+j);
-					if(bl!=null&&bl.getMaterial()==Material.water){
-						w.setBlock(x+i, y+k, z+j, Blocks.obsidian);
+		for(int i =- 9; i <= 9; i++) {
+			for(int j =- 9; j <= 9; j++) {
+				for(int k =- 19; k < 0; k++) {
+					Block bl = w.getBlock(x + i, y + k, z + j);
+					if(bl != null && bl.getMaterial() == Material.water){
+						w.setBlock(x + i, y + k, z + j, Blocks.obsidian);
 					}
 				}
 			}

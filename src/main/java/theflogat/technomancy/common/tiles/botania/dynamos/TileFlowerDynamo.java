@@ -17,17 +17,21 @@ public class TileFlowerDynamo extends TileDynamoBase implements IManaReceiver {
 	
 	@Override
 	public int extractFuel(int ener) {
-		if (mana == 0) return 0;
 		float ratio = (ener) / 80F;
-		int val = (int) (20 * ratio);
-		float fuel = (float) val / (float) Math.min(mana, val);mana -= Math.min(mana, val);
-		return (int) (((float)10*16)*fuel);
+		int val = (int)Math.ceil(20 * ratio);
+		if(val > mana) {
+			return 0;
+		}
+		mana -= val;
+		return 160;
 	}
 	
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
-		drainMana();
+		if(mana <= maxMana - 100) {
+			drainMana();
+		}
 	}
 	
 	public void drainMana(){
@@ -46,15 +50,15 @@ public class TileFlowerDynamo extends TileDynamoBase implements IManaReceiver {
 	}
 	
 	@Override
-	public void readCustomNBT(NBTTagCompound comp) {
-		super.readCustomNBT(comp);
-		mana = comp.getInteger("Mana");
+	public void writeSyncData(NBTTagCompound comp) {
+		super.writeSyncData(comp);
+		comp.setInteger("Mana", this.mana);
 	}
 	
 	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {
-		super.writeCustomNBT(comp);
-		comp.setInteger("Mana", this.mana);
+	public void readSyncData(NBTTagCompound comp) {
+		super.readSyncData(comp);
+		mana = comp.getInteger("Mana");
 	}
 
 	@Override

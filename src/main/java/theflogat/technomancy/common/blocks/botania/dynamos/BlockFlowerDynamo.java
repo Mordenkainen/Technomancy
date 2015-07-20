@@ -17,7 +17,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockFlowerDynamo extends BlockDynamoBase implements IWandHUD {
 
 	public BlockFlowerDynamo() {
-		setBlockName(Ref.MOD_PREFIX + Names.flowerDynamo);
+		setBlockName(Ref.getId(Names.flowerDynamo));
 	}
 	
 	@SideOnly(Side.CLIENT)

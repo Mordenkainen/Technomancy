@@ -14,7 +14,7 @@ import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.RenderIds;
 
-public class BlockEldritchConsumer extends BlockContainerAdvanced{
+public class BlockEldritchConsumer extends BlockContainerAdvanced {
 
 	public BlockEldritchConsumer() {
 		setBlockName(Ref.getId(Names.eldritchConsumer));
@@ -22,28 +22,25 @@ public class BlockEldritchConsumer extends BlockContainerAdvanced{
 	
 	@Override
 	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-		if(super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ))
+		if(super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ)) {
 			return true;
+		}
 		TileEntity te = w.getTileEntity(x, y, z);
-		if(te==null || !(te instanceof TileEldritchConsumer)){
+		if(!(te instanceof TileEldritchConsumer)) {
 			return false;
 		}
 		if(!w.isRemote){
-			if(player.isSneaking()){
-				Range c = ((TileEldritchConsumer)te).current = ((TileEldritchConsumer)te).current.getNext();
-				player.addChatComponentMessage(new ChatComponentText("Set to: "+c.toString()));
-				player.addChatComponentMessage(new ChatComponentText("Range: "+Integer.toString(c.r*2 + 1)+"x"+Integer.toString(c.r*2 + 1)));
-				player.addChatComponentMessage(new ChatComponentText("Depth: "+(c.h==-1 ? "To BedRock" : c.h)));
-				return true;
+			Range c;
+			if(player.isSneaking()) {
+				c = ((TileEldritchConsumer)te).current = ((TileEldritchConsumer)te).current.getNext();
 			} else {
-				Range c = ((TileEldritchConsumer)te).current;
-				player.addChatComponentMessage(new ChatComponentText("Processing as: " + c.toString()));
-				player.addChatComponentMessage(new ChatComponentText("Range: "+Integer.toString(c.r*2 + 1)+"x"+Integer.toString(c.r*2 + 1)));
-				player.addChatComponentMessage(new ChatComponentText("Depth: " + (c.h==-1 ? "To BedRock" : c.h)));
-				return true;
+				c = ((TileEldritchConsumer)te).current;
 			}
+			player.addChatComponentMessage(new ChatComponentText("Set to: " + c.toString()));
+			player.addChatComponentMessage(new ChatComponentText("Range: " + Integer.toString(c.r * 2 + 1) + "x" + Integer.toString(c.r * 2 + 1)));
+			player.addChatComponentMessage(new ChatComponentText("Depth: " + (c.h == -1 ? "To BedRock" : c.h)));
 		}
-		return false;
+		return true;
 	}
 	
 	@Override
@@ -76,7 +73,7 @@ public class BlockEldritchConsumer extends BlockContainerAdvanced{
 		super.getNBTInfo(comp, l, meta);
 		Range c = Range.readFromNbt(comp);
 		l.add("Processing as: " + c.toString());
-		l.add("Range: "+Integer.toString(c.r*2 + 1)+"x"+Integer.toString(c.r*2 + 1));
-		l.add("Depth: " + (c.h==-1 ? "To BedRock" : c.h));
+		l.add("Range: " + Integer.toString(c.r * 2 + 1) + "x" + Integer.toString(c.r * 2 + 1));
+		l.add("Depth: " + (c.h == -1 ? "To BedRock" : c.h));
 	}
 }

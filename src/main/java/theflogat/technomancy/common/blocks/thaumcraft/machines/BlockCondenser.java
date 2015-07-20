@@ -30,7 +30,7 @@ public class BlockCondenser extends BlockContainerAdvanced {
 	IIcon[] icons;
 	
 	public BlockCondenser() {
-		setBlockName(Ref.MOD_PREFIX + Names.condenserBlock);
+		setBlockName(Ref.getId(Names.condenserBlock));
 	}
 	
 	@Override

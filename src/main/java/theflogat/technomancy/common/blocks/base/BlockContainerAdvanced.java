@@ -47,7 +47,7 @@ public abstract class BlockContainerAdvanced extends BlockContainerRedstone{
 	@Override
 	public ArrayList<ItemStack> getDrops(World w, int x, int y, int z, int metadata, int fortune) {
 		ItemStack drop = new ItemStack(this, 1, metadata);
-		drop.stackTagCompound = (NBTTagCompound) comp.copy();
+		drop.stackTagCompound = (NBTTagCompound)comp.copy();
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		drops.add(drop);
 		return drops;
@@ -78,9 +78,11 @@ public abstract class BlockContainerAdvanced extends BlockContainerRedstone{
 		if(te instanceof IUpgradable){
 			if(items==null && player.isSneaking()){
 				if(((IUpgradable)te).getBoost()){
-					((IUpgradable)te).toggleBoost();
-					if(!w.isRemote)
+					if(!w.isRemote) {
+						((IUpgradable)te).toggleBoost();
 						WorldHelper.dropBoost(w, x, y, z);
+						w.markBlockForUpdate(x, y, z);
+					}
 					return true;
 				}
 			}

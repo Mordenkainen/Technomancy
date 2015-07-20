@@ -16,7 +16,7 @@ import theflogat.technomancy.common.tiles.base.ICouplable.Couple;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 
-public class ItemCoilCoupler extends Item{
+public class ItemCoilCoupler extends Item {
 	
 	public ItemCoilCoupler() {
 		setUnlocalizedName(Ref.getId(Names.coilCoupler));
@@ -29,7 +29,7 @@ public class ItemCoilCoupler extends Item{
 	}
 	
 	@Override
-	public boolean onItemUse(ItemStack stack, EntityPlayer player, World w, int x, int y, int z, int side, float hitX, float hitY,float hitZ){
+	public boolean onItemUse(ItemStack stack, EntityPlayer player, World w, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
 		if(stack.stackTagCompound==null){
 			stack.stackTagCompound = new NBTTagCompound();
 			stack.stackTagCompound.setBoolean("ent", false);
@@ -48,7 +48,7 @@ public class ItemCoilCoupler extends Item{
 						((ICouplable)te).clear();
 						player.addChatComponentMessage(new ChatComponentText("Links Cleared"));
 						return false;
-					}else{
+					} else {
 						player.addChatComponentMessage(new ChatComponentText("Begin Linking"));					
 						stack.stackTagCompound.setBoolean("ent", true);
 						stack.stackTagCompound.setString("type", ((ICouplable)te).getType().id);
@@ -58,21 +58,21 @@ public class ItemCoilCoupler extends Item{
 						stack.stackTagCompound.setInteger("dimId", te.getWorldObj().provider.dimensionId);
 						return true;
 					}
-				}else{
+				} else {
 					ArrayList<String> t = Couple.getType(te);
-					if(t.contains(stack.stackTagCompound.getString("type"))){
+					if(t.contains(stack.stackTagCompound.getString("type"))) {
 						if(stack.stackTagCompound.getBoolean("ent")) {
-							if(te.getWorldObj().provider.dimensionId==stack.stackTagCompound.getInteger("dimId")){
+							if(te.getWorldObj().provider.dimensionId==stack.stackTagCompound.getInteger("dimId")) {
 								if(!areCoordsEqual(stack.stackTagCompound, x, y, z)) {
 									int[] i = retrievePos(stack.stackTagCompound);
 									((ICouplable)w.getTileEntity(i[0], i[1], i[2])).addPos(new ChunkCoordinates(x, y, z));
 									player.addChatComponentMessage(new ChatComponentText("Linked"));
 									return true;
 								}
-							}else{
+							} else {
 								player.addChatComponentMessage(new ChatComponentText("Cannot create an interdimensional link"));
 							}
-						}else{
+						} else {
 							player.addChatComponentMessage(new ChatComponentText("No source to link from."));
 						}
 					}
@@ -83,9 +83,7 @@ public class ItemCoilCoupler extends Item{
 	}
 	
 	private static boolean areCoordsEqual(NBTTagCompound comp, int x, int y, int z) {
-		int nx = comp.getInteger("x");int ny = comp.getInteger("y");int nz = comp.getInteger("z");
-
-		return nx==x && ny==y && nz==z;
+		return comp.getInteger("x")==x && comp.getInteger("y")==y && comp.getInteger("z")==z;
 	}
 
 	private static int[] retrievePos(NBTTagCompound comp) {

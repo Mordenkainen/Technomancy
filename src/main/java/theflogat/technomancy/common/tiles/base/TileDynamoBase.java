@@ -1,9 +1,6 @@
 package theflogat.technomancy.common.tiles.base;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -28,11 +25,11 @@ public abstract class TileDynamoBase extends TileTechnomancyRedstone implements 
 		if(worldObj.isRemote)
 			return;
 
-		if(set.canRun(this)){
-			if(fuel<32){
+		if(set.canRun(this)) {
+			if(fuel < 32) {
 				fuel += extractFuel(calcEner());
 			}
-			if(fuel!=0 && ener + calcEner() <= maxEnergy){
+			if(fuel != 0 && ener + calcEner() <= maxEnergy) {
 				ener += calcEner();
 				fuel--;
 			}
@@ -51,7 +48,7 @@ public abstract class TileDynamoBase extends TileTechnomancyRedstone implements 
 	}
 
 	protected void updateAdjacentHandlers() {
-		if(ener>0){
+		if(ener > 0) {
 			TileEntity tile = WorldHelper.getAdjacentTileEntity(this, facing);
 			if(WorldHelper.isEnergyHandlerFromOppFacing(tile, facing)) {
 				ener -= ((IEnergyHandler)tile).receiveEnergy(ForgeDirection.VALID_DIRECTIONS[facing].getOpposite(), Math.min(maxExtract, ener), false);		
@@ -82,17 +79,23 @@ public abstract class TileDynamoBase extends TileTechnomancyRedstone implements 
 	}
 
 	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {
-		super.writeCustomNBT(comp);
+	public void writeCustomNBT(NBTTagCompound comp) {}
+
+	@Override
+	public void readCustomNBT(NBTTagCompound comp) {}
+	
+	@Override
+	public void writeSyncData(NBTTagCompound comp) {
+		super.writeSyncData(comp);
 		comp.setInteger("energy", ener);
 		comp.setByte("face", facing);
 		comp.setInteger("fuel", fuel);
 		comp.setBoolean("Boost", boost);
 	}
-
+	
 	@Override
-	public void readCustomNBT(NBTTagCompound comp) {
-		super.readCustomNBT(comp);
+	public void readSyncData(NBTTagCompound comp) {
+		super.readSyncData(comp);
 		ener = comp.getInteger("energy");
 		facing = comp.getByte("face");
 		fuel = comp.getInteger("fuel");
@@ -102,41 +105,13 @@ public abstract class TileDynamoBase extends TileTechnomancyRedstone implements 
 	public abstract int extractFuel(int ener);
 
 	@Override
-	public void onNeighborBlockChange()	  {
-		super.onNeighborBlockChange();
-		updateAdjacentHandlers();
-	}
-
-	@Override
-	public void onNeighborTileChange(int tileX, int tileY, int tileZ)	  {
-		super.onNeighborTileChange(tileX, tileY, tileZ);
-//		updateAdjacentHandlers();
-	}
-
-	@Override
-	public Packet getDescriptionPacket() {
-		if(!worldObj.isRemote){
-			NBTTagCompound comp = new NBTTagCompound();writeToNBT(comp);
-			return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, comp);
-		}
-		return null;
-	}
-
-	@Override
-	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
-		if(pkt!=null && pkt.func_148857_g()!=null){
-			readFromNBT(pkt.func_148857_g());
-		}
-	}
-
-	@Override
 	public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate) {
 		return 0;
 	}
 
 	@Override
 	public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate) {
-		if(from.ordinal()==facing){
+		if(from.ordinal() == facing) {
 			int ener = this.ener;
 			this.ener -= simulate ? 0 : Math.min(maxExtract, ener);
 			return Math.min(maxExtract, ener);
@@ -146,7 +121,7 @@ public abstract class TileDynamoBase extends TileTechnomancyRedstone implements 
 
 	@Override
 	public boolean canConnectEnergy(ForgeDirection from) {
-		return from.ordinal()==facing;
+		return from.ordinal() == facing;
 	}
 	
 	@Override
@@ -162,10 +137,10 @@ public abstract class TileDynamoBase extends TileTechnomancyRedstone implements 
 	@Override
 	public boolean onWrenched(boolean sneaking) {
 		for (int i = facing + 1; i < facing + 6; i++) {
-			TileEntity tile = WorldHelper.getAdjacentTileEntity(this, (byte) (i % 6));
-			if (WorldHelper.isEnergyHandlerFromOppFacing(tile, (byte) (i % 6))) {
+			TileEntity tile = WorldHelper.getAdjacentTileEntity(this, (byte)(i % 6));
+			if (WorldHelper.isEnergyHandlerFromOppFacing(tile, (byte)(i % 6))) {
 				if(!worldObj.isRemote) {
-					facing = (byte) (i % 6);
+					facing = (byte)(i % 6);
 					worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord));
 					updateAdjacentHandlers();
 				}

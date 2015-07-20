@@ -32,16 +32,18 @@ public abstract class TileMachineRedstone extends TileMachineBase implements IRe
 	public boolean canBeModified() {
 		return true;
 	}
-
+	
 	@Override
-	public void readCustomNBT(NBTTagCompound comp) {
-		set = RedstoneSet.load(comp);
-		modified = comp.getBoolean("modified");
+	public void writeSyncData(NBTTagCompound compound) {
+		super.writeSyncData(compound);
+		set.save(compound);
+		compound.setBoolean("modified", modified);
 	}
-
+	
 	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {
-		set.save(comp);
-		comp.setBoolean("modified", modified);
+	public void readSyncData(NBTTagCompound compound) {
+		super.readSyncData(compound);
+		set = RedstoneSet.load(compound);
+		modified = compound.getBoolean("modified");
 	}
 }

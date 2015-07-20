@@ -16,15 +16,13 @@ public class TileBloodDynamo extends TileDynamoBase implements IFluidHandler {
 	
 	@Override
 	public int extractFuel(int ener) {
-		if(liquid!=0){
-			float ratio = (ener) / 80F;
-			float val = 100F * ratio;
-			float fuelPerc = val / Math.min(liquid, val);
-			liquid -= Math.min(liquid, val);
-			float fuel = 400F * fuelPerc;
-			return (int) fuel;
+		float ratio = (ener) / 80F;
+		int val = (int)Math.ceil(100 * ratio);
+		if(val > liquid) {
+			return 0;
 		}
-		return 0;
+		liquid -= val;
+		return 400;
 	}
 	
 	public boolean emptyBucket() {
@@ -74,14 +72,14 @@ public class TileBloodDynamo extends TileDynamoBase implements IFluidHandler {
 	}
 	
 	@Override
-	public void readCustomNBT(NBTTagCompound comp) {
-		super.readCustomNBT(comp);
-		liquid = comp.getInteger("liquid");
+	public void writeSyncData(NBTTagCompound comp) {
+		super.writeSyncData(comp);
+		comp.setInteger("liquid", liquid);
 	}
 	
 	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {
-		super.writeCustomNBT(comp);
-		comp.setInteger("liquid", liquid);
+	public void readSyncData(NBTTagCompound comp) {
+		super.readSyncData(comp);
+		liquid = comp.getInteger("liquid");
 	}
 }

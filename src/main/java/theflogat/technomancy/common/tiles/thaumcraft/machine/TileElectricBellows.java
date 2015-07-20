@@ -28,13 +28,16 @@ public class TileElectricBellows extends TileMachineBase {
 	public TileElectricBellows() {
 		super(Rate.bellowsCost * 40);
 	}
+	
 	@Override
-	public void writeCustomNBT(NBTTagCompound compound) {
+	public void writeSyncData(NBTTagCompound compound) {
+		super.writeSyncData(compound);
 		compound.setByte("Facing", this.facing);
 	}
-
+	
 	@Override
-	public void readCustomNBT(NBTTagCompound compound) {
+	public void readSyncData(NBTTagCompound compound) {
+		super.readSyncData(compound);
 		this.facing = compound.getByte("Facing");
 	}
 

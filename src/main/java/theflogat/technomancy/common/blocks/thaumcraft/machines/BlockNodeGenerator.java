@@ -18,7 +18,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockNodeGenerator extends BlockContainerAdvanced {
 
 	public BlockNodeGenerator() {
-		setBlockName(Ref.MOD_PREFIX + Names.nodeGenerator);
+		setBlockName(Ref.getId(Names.nodeGenerator));
 	}
 
 	@Override

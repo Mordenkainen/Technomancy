@@ -37,37 +37,28 @@ public class BlockBiomeMorpher extends BlockContainerAdvanced {
 	@Override
 	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		if (!w.isRemote) {
-			if(player.isSneaking()){
+			String pre = "Processing: ";
+			if(player.isSneaking()) {
+				pre = "Set to: ";
 				if (w.getBlockMetadata(x, y, z) != 2) {
-					w.setBlockMetadataWithNotify(x, y, z, ((w.getBlockMetadata(x, y, z)) + 1), 3);
-				}else{
+					w.setBlockMetadataWithNotify(x, y, z, w.getBlockMetadata(x, y, z) + 1, 3);
+				} else {
 					w.setBlockMetadataWithNotify(x, y, z, 0, 3);
 				}
-				String text = null;
-				switch (w.getBlockMetadata(x, y, z)) {
-				case 0:
-					text = "Magical Forest"; break;
-				case 1:
-					text = "Eerie"; break;
-				case 2:
-					text = "Tainted Land";
-				}
-				if(text != null) {
-					player.addChatComponentMessage(new ChatComponentText("Set to: " + text));
-				}
-			}else{
-				String text = null;
-				switch (w.getBlockMetadata(x, y, z)) {
-				case 0:
-					text = "Magical Forest"; break;
-				case 1:
-					text = "Eerie"; break;
-				case 2:
-					text = "Tainted Land";
-				}
-				if(text != null) {
-					player.addChatComponentMessage(new ChatComponentText("Processing : " + text));
-				}
+			}
+			String text = null;
+			switch (w.getBlockMetadata(x, y, z)) {
+			case 0:
+				text = "Magical Forest";
+				break;
+			case 1:
+				text = "Eerie";
+				break;
+			case 2:
+				text = "Tainted Land";
+			}
+			if(text != null) {
+				player.addChatComponentMessage(new ChatComponentText(pre + text));
 			}
 		}
 		return super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ);

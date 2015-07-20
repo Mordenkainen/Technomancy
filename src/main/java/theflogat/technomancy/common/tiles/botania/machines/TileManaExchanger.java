@@ -16,7 +16,7 @@ import vazkii.botania.common.block.tile.mana.TilePool;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 
-public class TileManaExchanger extends TileTechnomancyRedstone implements IFluidHandler, IEnergyReceiver, IWrenchable{
+public class TileManaExchanger extends TileTechnomancyRedstone implements IFluidHandler, IEnergyReceiver, IWrenchable {
 
 	public TileManaExchanger() {
 		super(RedstoneSet.LOW);
@@ -28,20 +28,26 @@ public class TileManaExchanger extends TileTechnomancyRedstone implements IFluid
 	public EnergyStorage storage = new EnergyStorage(Rate.exchangerCost * 10);
 
 	@Override
-	public void readCustomNBT(NBTTagCompound comp) {
-		super.readCustomNBT(comp);
+	public void readCustomNBT(NBTTagCompound comp) {}
+
+	@Override
+	public void writeCustomNBT(NBTTagCompound comp) {}
+	
+	@Override
+	public void writeSyncData(NBTTagCompound comp) {
+		super.writeSyncData(comp);
+		tank.writeToNBT(comp);
+		comp.setBoolean("Mode", mode);
+		storage.writeToNBT(comp);
+	}
+	
+	@Override
+	public void readSyncData(NBTTagCompound comp) {
+		super.readSyncData(comp);
 		tank = new FluidTank(1000);
 		tank.readFromNBT(comp);
 		mode = comp.getBoolean("Mode");
 		storage.readFromNBT(comp);
-	}
-
-	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {
-		super.writeCustomNBT(comp);
-		tank.writeToNBT(comp);
-		comp.setBoolean("Mode", mode);
-		storage.writeToNBT(comp);
 	}
 	
 	@Override
@@ -54,7 +60,9 @@ public class TileManaExchanger extends TileTechnomancyRedstone implements IFluid
 		}
 		TileEntity tile = worldObj.getTileEntity(xCoord, yCoord + 1, zCoord);
 		if(tile instanceof TilePool){
-			if (worldObj.isRemote) return;
+			if (worldObj.isRemote) {
+				return;
+			}
 			TilePool pool = (TilePool)tile;
 			if(storage.getEnergyStored() >= Rate.exchangerCost) {
 				if(mode) {
@@ -85,19 +93,25 @@ public class TileManaExchanger extends TileTechnomancyRedstone implements IFluid
 
 	@Override
 	public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
-		if(resource.getFluid() != TMBlocks.manaFluid || from == ForgeDirection.UP || !mode) return 0;
+		if(resource.getFluid() != TMBlocks.manaFluid || from == ForgeDirection.UP || !mode) {
+			return 0;
+		}
 		return tank.fill(resource, doFill);
 	}
 
 	@Override
 	public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
-		if(resource.getFluid() != TMBlocks.manaFluid) return null;
+		if(resource.getFluid() != TMBlocks.manaFluid) {
+			return null;
+		}
 		return drain(from, resource.amount, doDrain);
 	}
 
 	@Override
 	public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
-		if(from == ForgeDirection.UP || mode) return null;
+		if(from == ForgeDirection.UP || mode) {
+			return null;
+		}
 		return tank.drain(maxDrain, doDrain);
 	}
 

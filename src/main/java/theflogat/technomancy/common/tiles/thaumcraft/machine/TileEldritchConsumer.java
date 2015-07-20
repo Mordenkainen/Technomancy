@@ -20,7 +20,7 @@ import theflogat.technomancy.util.Coords;
 
 public class TileEldritchConsumer extends TileMachineRedstone implements IAspectContainer, IEssentiaTransport {
 
-	public enum Range{
+	public enum Range {
 		LARGE(9, -1, 0, "Large"),
 		SMALL(1, 1, 1, "Small"),
 		TINY(0, 1, 2, "Tiny"),
@@ -38,9 +38,11 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
 		public String chat;
 
 		@Override
-		public String toString() {return chat;}
+		public String toString() {
+			return chat;
+		}
 
-		Range(int range, int height, int id, String chat){
+		Range(int range, int height, int id, String chat) {
 			r = range;
 			h = height;
 			this.id = id;
@@ -52,17 +54,13 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
 		}
 
 		public Range getNext() {
-			if(this==ValidRanges[ValidRanges.length-1]){
-				return ValidRanges[0];
-			} else {
-				return ValidRanges[id+1];
-			}
+			return this == ValidRanges[ValidRanges.length - 1] ? ValidRanges[0] : ValidRanges[id + 1];
 		}
 
-		public static Range readFromNbt(NBTTagCompound comp){
+		public static Range readFromNbt(NBTTagCompound comp) {
 			int i = comp.getInteger(loc);
-			for(Range r : ValidRanges){
-				if(r.id==i){
+			for(Range r : ValidRanges) {
+				if(r.id == i) {
 					return r;
 				}
 			}
@@ -83,12 +81,12 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
 
 	@Override
 	public void updateEntity() {
-		if(!worldObj.isRemote){
+		if(!worldObj.isRemote) {
 			if(set.canRun(this)) {
-				if(time<=0 && canFillList(list)){
-					if (getEnergyStored() >= cost) {
+				if(time <= 0) {
+					if(canFillList(list) && getEnergyStored() >= cost) {
 						Coords c = seekForBlock();
-						if(c!=null){
+						if(c != null) {
 							processFromCoords(c);
 							extractEnergy(cost, false);
 							cooldown = 40;
@@ -106,11 +104,11 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
 				cooldown--;
 				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 			}
-		}else{
-			if(cooldown>0){
-				panelRotation = Math.min((float) -Math.PI/4, panelRotation -= 0.02F);
+		} else {
+			if(cooldown > 0) {
+				panelRotation = Math.min((float)-Math.PI / 4, panelRotation -= 0.02F);
 			} else {
-				if(panelRotation>0){
+				if(panelRotation > 0) {
 					panelRotation = Math.min(0, panelRotation -= 0.02F);
 				}else {
 					panelRotation = Math.max(0, panelRotation += 0.02F);
@@ -120,38 +118,29 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
 	}
 
 	private static boolean canFillList(AspectList list) {
-		if(list.getAspects().length>=4)
+		if(list.getAspects().length >= 4) {
 			return false;
+		}
 
-		boolean flag = false;
+		boolean flag = true;
 
-		for(Aspect as : list.getAspects())
-			if(list.getAmount(as)<4)
-				flag = true;
+		for(Aspect as : list.getAspects()) {
+			if(list.getAmount(as) > 4) {
+				flag = false;
+				break;
+			}
+		}
 
 		return flag;
 	}
 
 	private Coords seekForBlock() {
-		if(current.h==-1){
-			for(int yy = 0; yy<yCoord ; yy++){
-				for(int xx = -current.r;(current.r==0 ? xx==current.r : xx<=current.r); xx++){
-					for(int zz = -current.r;(current.r==0 ? zz==current.r : zz<=current.r); zz++){
-						if(worldObj.getBlock(xCoord+xx, yy, zCoord+zz)!=null && isBlockOk(worldObj.getTileEntity(xCoord+xx,
-								yy, zCoord+zz), worldObj.getBlock(xCoord+xx, yy, zCoord+zz), xCoord+xx, yy, zCoord+zz)){
-							return new Coords(xCoord+xx, yy, zCoord+zz, worldObj);
-						}
-					}
-				}
-			}
-		}else{
-			for(int yy = yCoord-current.h; yy<yCoord ; yy++){
-				for(int xx = -current.r;(current.r==0 ? xx==current.r : xx<=current.r); xx++){
-					for(int zz = -current.r;(current.r==0 ? zz==current.r : zz<=current.r); zz++){
-						if(worldObj.getBlock(xCoord+xx, yy, zCoord+zz)!=null && isBlockOk(worldObj.getTileEntity(xCoord+xx,
-								yy, zCoord+zz), worldObj.getBlock(xCoord+xx, yy, zCoord+zz), xCoord+xx, yy, zCoord+zz)){
-							return new Coords(xCoord+xx, yy, zCoord+zz, worldObj);
-						}
+		for(int yy = current.h == -1 ? 0 : yCoord-current.h; yy < yCoord; yy++) {
+			for(int xx = -current.r; xx <= current.r; xx++) {
+				for(int zz = -current.r; zz <= current.r; zz++) {
+					if(worldObj.getBlock(xCoord + xx, yy, zCoord + zz) != null && isBlockOk(worldObj.getTileEntity(xCoord + xx,
+							yy, zCoord + zz), worldObj.getBlock(xCoord + xx, yy, zCoord + zz), xCoord + xx, yy, zCoord + zz)) {
+						return new Coords(xCoord + xx, yy, zCoord + zz, worldObj);
 					}
 				}
 			}
@@ -178,39 +167,34 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
 	private void processFromCoords(Coords c) {
 		ArrayList<ItemStack> drops = c.w.getBlock(c.x, c.y, c.z).getDrops(worldObj, c.x, c.y, c.z, c.w.getBlockMetadata(c.x, c.y, c.z), 0);
 
-		boolean flag = true;
-
 		for(ItemStack items : drops){
-			//c.w.spawnEntityInWorld(new BlockTrail(c.w, c.x, c.y, c.z, xCoord, yCoord, zCoord, items));
 			AspectList al = ThaumcraftCraftingManager.getObjectTags(items);
 			al = ThaumcraftCraftingManager.getBonusTags(items, al);
 
 			for(Aspect as : al.getAspects()){
 				int amount = al.getAmount(as);
-				list.merge(as, amount);
+				list.add(as, amount);
 			}
 		}
 
-		if(flag){
-			c.w.getBlock(c.x, c.y, c.z).breakBlock(c.w, c.x, c.y, c.z, c.w.getBlock(c.x, c.y, c.z), c.w.getBlockMetadata(c.x, c.y, c.z));
-			c.w.setBlockToAir(c.x, c.y, c.z);
-		}
+		c.w.getBlock(c.x, c.y, c.z).breakBlock(c.w, c.x, c.y, c.z, c.w.getBlock(c.x, c.y, c.z), c.w.getBlockMetadata(c.x, c.y, c.z));
+		c.w.setBlockToAir(c.x, c.y, c.z);
 	}
 
 	@Override
-	public void readCustomNBT(NBTTagCompound comp) {
-		list.readFromNBT(comp);
-		cooldown = comp.getInteger("cooldown");
-		current = Range.readFromNbt(comp);
-		super.readCustomNBT(comp);
+	public void writeSyncData(NBTTagCompound compound) {
+		super.writeSyncData(compound);
+		list.writeToNBT(compound);
+		compound.setInteger("cooldown", cooldown);
+		current.writeToNbt(compound);
 	}
-
+	
 	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {
-		list.writeToNBT(comp);
-		comp.setInteger("cooldown", cooldown);
-		current.writeToNbt(comp);
-		super.writeCustomNBT(comp);
+	public void readSyncData(NBTTagCompound compound) {
+		super.readSyncData(compound);
+		list.readFromNBT(compound);
+		cooldown = compound.getInteger("cooldown");
+		current = Range.readFromNbt(compound);
 	}
 
 	@Override
@@ -238,7 +222,7 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
 		if(!list.aspects.containsKey(paramAspect) || list.getAmount(paramAspect) < paramInt)
 			return false;
 		list.reduce(paramAspect, paramInt);
-		if (list.getAmount(paramAspect) <= 0) {
+		if(list.getAmount(paramAspect) <= 0) {
 			list.remove(paramAspect);
 		}
 		return true;		
@@ -247,8 +231,9 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
 	@Override
 	public boolean takeFromContainer(AspectList al) {
 		for(Aspect as : al.getAspects()){
-			boolean bool = takeFromContainer(as, al.getAmount(as));
-			if(!bool)return false;
+			if(!takeFromContainer(as, al.getAmount(as))) {
+				return false;
+			}
 		}
 		return true;
 	}
@@ -261,9 +246,9 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
 	@Override
 	public boolean doesContainerContain(AspectList al) {
 		for(Aspect as : al.getAspects()){
-			int amount = al.getAmount(as);
-			boolean bool = list.aspects.containsKey(as) && list.getAmount(as)>=amount;
-			if(!bool)return false;
+			if(!doesContainerContainAmount(as, al.getAmount(as))) {
+				return false;
+			}
 		}
 		return true;
 	}
@@ -303,8 +288,9 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
 
 	@Override
 	public int takeEssentia(Aspect paramAspect, int paramInt, ForgeDirection paramForgeDirection) {
-		if(!list.aspects.containsKey(paramAspect))
+		if(!list.aspects.containsKey(paramAspect)) {
 			return 0;
+		}
 		int amountToRemove = Math.min(paramInt, list.getAmount(paramAspect));
 		list.reduce(paramAspect, amountToRemove);
 		if (list.getAmount(paramAspect) <= 0) {

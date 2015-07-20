@@ -1,10 +1,9 @@
 package theflogat.technomancy.common.tiles.technom;
 
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import theflogat.technomancy.common.blocks.technom.BlockCrystal;
-import theflogat.technomancy.common.tiles.base.TileTechnomancy;
 
-public class TileCrystal extends TileTechnomancy{
+public class TileCrystal extends TileEntity {
 	
 	public int getStage() {
 		int i = 0;
@@ -16,15 +15,4 @@ public class TileCrystal extends TileTechnomancy{
 		}
 		return i;
 	}
-	
-	@Override
-	public void readCustomNBT(NBTTagCompound comp) {
-		
-	}
-
-	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {
-		
-	}
-
 }

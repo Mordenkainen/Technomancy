@@ -1,6 +1,9 @@
 package theflogat.technomancy.common.blocks.technom;
 
 import java.util.List;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -17,8 +20,12 @@ import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.RenderIds;
 
-public class BlockCatalyst extends BlockContainerAdvanced{
+public class BlockCatalyst extends BlockContainerAdvanced {
+	static final int maxSubBlocks = 5;
 
+	@SideOnly(Side.CLIENT)
+	public IIcon[] icons;
+	
 	public BlockCatalyst() {
 		setBlockName(Ref.getId(Names.catalyst));
 		setCreativeTab(Technomancy.tabsTM);
@@ -50,23 +57,23 @@ public class BlockCatalyst extends BlockContainerAdvanced{
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubBlocks(Item id, CreativeTabs tab, List l) {
-		l.add(new ItemStack(id, 1, 0));
-		l.add(new ItemStack(id, 1, 1));
-		l.add(new ItemStack(id, 1, 2));
-		l.add(new ItemStack(id, 1, 3));
-		l.add(new ItemStack(id, 1, 4));
+		for(int i = 0; i < maxSubBlocks; i++) {
+			l.add(new ItemStack(id, 1, i));
+		}
 	}
 	
-	public IIcon[] icons = new IIcon[5];
-	
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister icon) {
+		icons = new IIcon[maxSubBlocks];
 		for(int i=0; i<icons.length; i++)
 			icons[i] = icon.registerIcon(Ref.getAsset(Names.catalyst) + "_" + i);
 	}
 	
+	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int side, int meta) {
 		return icons[meta];

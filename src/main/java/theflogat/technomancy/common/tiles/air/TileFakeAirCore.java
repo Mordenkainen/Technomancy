@@ -30,7 +30,22 @@ public class TileFakeAirCore extends TileTechnomancy{
 	}
 
 	@Override
-	public void readCustomNBT(NBTTagCompound comp) {
+	public void readCustomNBT(NBTTagCompound comp) {}
+
+	@Override
+	public void writeCustomNBT(NBTTagCompound comp) {}
+
+	@Override
+	public void writeSyncData(NBTTagCompound comp) {
+		comp.setInteger("mainx", x);
+		comp.setInteger("mainy", y);
+		comp.setInteger("mainz", z);
+		if(core!=null)
+			comp.setString("core", core.getName());
+	}
+
+	@Override
+	public void readSyncData(NBTTagCompound comp) {
 		x = comp.getInteger("mainx");
 		y = comp.getInteger("mainy");
 		z = comp.getInteger("mainz");
@@ -39,14 +54,6 @@ public class TileFakeAirCore extends TileTechnomancy{
 		} catch (ClassNotFoundException e) {
 			core = null;
 		}
-	}
-
-	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {
-		comp.setInteger("mainx", x);
-		comp.setInteger("mainy", y);
-		comp.setInteger("mainz", z);
-		if(core!=null)
-			comp.setString("core", core.getName());
+		
 	}
 }

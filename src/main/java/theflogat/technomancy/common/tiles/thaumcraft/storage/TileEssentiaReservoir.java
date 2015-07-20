@@ -43,14 +43,13 @@ public class TileEssentiaReservoir extends TileTechnomancy implements IEssentiaT
 	}
 
 	@Override
-	public void readCustomNBT(NBTTagCompound comp) {
-		amount = comp.getInteger("amount");
-		as = Aspect.getAspect(comp.getString("as"));
-		suction = Aspect.getAspect(comp.getString("suction"));
-	}
+	public void readCustomNBT(NBTTagCompound comp) {}
 
 	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {
+	public void writeCustomNBT(NBTTagCompound comp) {}
+	
+	@Override
+	public void writeSyncData(NBTTagCompound comp) {
 		comp.setInteger("amount", amount);
 		if(as!=null){
 			comp.setString("as", as.getTag());
@@ -58,6 +57,13 @@ public class TileEssentiaReservoir extends TileTechnomancy implements IEssentiaT
 		if(suction!=null){
 			comp.setString("suction", suction.getTag());
 		}
+	}
+	
+	@Override
+	public void readSyncData(NBTTagCompound comp) {
+		amount = comp.getInteger("amount");
+		as = Aspect.getAspect(comp.getString("as"));
+		suction = Aspect.getAspect(comp.getString("suction"));
 	}
 
 	@Override

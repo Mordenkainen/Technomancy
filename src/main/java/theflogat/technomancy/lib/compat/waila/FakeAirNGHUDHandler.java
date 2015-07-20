@@ -25,16 +25,18 @@ public class FakeAirNGHUDHandler implements IWailaDataProvider {
 		final TileFakeAirNG tileAir = (TileFakeAirNG) accessor.getTileEntity();
 		Coords nodeGenerator = tileAir.getMain();
 		final TileNodeGenerator tileEntity = (TileNodeGenerator) nodeGenerator.w.getTileEntity(nodeGenerator.x, nodeGenerator.y, nodeGenerator.z);
-		if (tileEntity.getBoost()) {
-			currenttip.add(SpecialChars.GREEN + "Potency Gem Installed");
-		}
-		currenttip.add("Redstone Setting: " + formatSetting(((IRedstoneSensitive)tileEntity).getCurrentSetting().id));
-		currenttip.add(((TileNodeGenerator)tileEntity).canRun() ? SpecialChars.GREEN + "Enabled" : SpecialChars.RED + "Disabled");
-		if (accessor.getNBTData().getBoolean("Active")) {
-			currenttip.add(accessor.getNBTData().getBoolean("Spawn") ? "Mode: Create Node" : "Mode: Recharge Node");
+		if(tileEntity != null) {
+			if (tileEntity.getBoost()) {
+				currenttip.add(SpecialChars.GREEN + "Potency Gem Installed");
+			}
+			currenttip.add("Redstone Setting: " + formatSetting(((IRedstoneSensitive)tileEntity).getCurrentSetting().id));
+			currenttip.add(((TileNodeGenerator)tileEntity).canRun() ? SpecialChars.GREEN + "Enabled" : SpecialChars.RED + "Disabled");
+			if (accessor.getNBTData().getBoolean("Active")) {
+				currenttip.add(accessor.getNBTData().getBoolean("Spawn") ? "Mode: Create Node" : tileEntity.getBoost() ? "Mode: Enhance Node" : "Mode: Recharge Node");
+			}
 		}
 		return currenttip;
-	}
+ 	}
 	
 	@Override
 	public ItemStack getWailaStack(IWailaDataAccessor accessor,	IWailaConfigHandler config) {

@@ -51,14 +51,14 @@ public class TileTCProcessor extends TileProcessorBase implements IAspectContain
 	}
 	
 	@Override
-	public void writeCustomNBT(NBTTagCompound compound) {
-		super.writeCustomNBT(compound);
+	public void writeSyncData(NBTTagCompound compound) {
+		super.writeSyncData(compound);
 		compound.setShort("Amount", (short)amount);
 	}
 	
 	@Override
-	public void readCustomNBT(NBTTagCompound compound) {
-		super.readCustomNBT(compound);
+	public void readSyncData(NBTTagCompound compound) {
+		super.readSyncData(compound);
 		amount = compound.getShort("Amount");
 	}
 

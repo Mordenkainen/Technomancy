@@ -1,11 +1,9 @@
 package theflogat.technomancy.common.tiles.thaumcraft.storage;
 
 import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.IAspectSource;
-import thaumcraft.api.aspects.IEssentiaTransport;
 import thaumcraft.common.tiles.TileJarFillable;
 
-public class TileCreativeJar extends TileJarFillable implements IAspectSource, IEssentiaTransport{
+public class TileCreativeJar extends TileJarFillable {
 
 	public int max = 320;
 	
