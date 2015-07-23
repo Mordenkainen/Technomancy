@@ -121,7 +121,7 @@ public class TechnoResearch {
 		if(Ids.itemMaterial && Ids.wandCores){
 			new ResearchItem("ROD_electric", "TECHNOMANCY", new AspectList().add(Aspect.TOOL, 5).add(Aspect.MAGIC, 5).add(Aspect.ENERGY, 5)
 				.add(Aspect.EXCHANGE, 5), -1, 2, 3, new ItemStack(TMItems.itemWandCores, 1, 0)).setPages(new ResearchPage[] {
-				new ResearchPage("techno.research_page.ELECTRICWAND.1"), new ResearchPage((InfusionRecipe)recipes.get("EnergizedWandRod"))})
+				new ResearchPage("techno.research_page.ROD_electric.1"), new ResearchPage((InfusionRecipe)recipes.get("EnergizedWandRod"))})
 				.setParents(new String[] { "TECHNOBASICS" }).setHidden().setItemTriggers(new ItemStack(Thaumcraft.itemWandRod, 1, 2))
 				.registerResearchItem();
 			if(Ids.scepter) {
