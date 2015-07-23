@@ -112,9 +112,9 @@ tc.research_name.FLUXLAMP=秩序之灯
 tc.research_text.FLUXLAMP=还用在意咒波粘浆么?
 techno.research_page.FLUXLAMP.1=被不稳定性激怒的你决定使由它不自然的力量转化为物理形式的,流动化的（就像你努力的想要用归类法来背诵英语单词一样）。通过从灯的上端通入秩序源质,灯会检测附近祭坛的不稳定性并非常轻微的降低风险,并且会产生作为副产品的咒波粘浆。不幸的是,这盏灯并不能降低太多风险,为了完全扼杀风险你至少需要5盏这样的灯。相信在引进了这件工具之后，您又会对魔法所需要的财力的理解更上一层楼了吧~
 
-tc.research_name.ENERGIZEDWAND=激发能量杖柄
-tc.research_text.ENERGIZEDWAND=抽尽能量!
-techno.research_page.ELECTRICWAND.1=通过给普通的银树杖芯注入能量,机械结构赋予它特殊的魔力消耗特性。当你的背包里有激活的RF容器时,法杖会从RF容器中抽取能量来填充它的魔力储存。这个杖柄有25vis魔力储存值，虽然看上去不是非常多但是补充方便。
+tc.research_name.ROD_electric=激发能量杖柄
+tc.research_text.ROD_electric=抽尽能量!
+techno.research_page.ROD_electric.1=通过给普通的银树杖芯注入能量,机械结构赋予它特殊的魔力消耗特性。当你的背包里有激活的RF容器时,法杖会从RF容器中抽取能量来填充它的魔力储存。这个杖柄有25vis魔力储存值，虽然看上去不是非常多但是补充方便。
 
 tc.research_name.ELECTRICBELLOWS=镀锌奥术风箱
 tc.research_text.ELECTRICBELLOWS=能量能量，为了魔法能量.

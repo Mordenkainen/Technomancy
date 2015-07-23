@@ -112,9 +112,9 @@ tc.research_name.FLUXLAMP=Orderly Lamp
 tc.research_text.FLUXLAMP=Did I mention flux florbs?
 techno.research_page.FLUXLAMP.1=By getting seriously annoyed with instability, you've decided to materialize it's unnatural power into a physical form, liquid flux. By feeding Ordo essentia into the top of the lamp, the lamp will check nearby altars for instability and reduce them slightly, producing flux as a byproduct. The liquid flux produced must be pumped out of the bottom of the lamp using pipes or other fluid transport items. Unfortunately, the lamps don't reduce much instability; you figure that you'll need 5 of them to completely nullify it.
 
-tc.research_name.ENERGIZEDWAND=Energized Wand
-tc.research_text.ENERGIZEDWAND=Drain all the energy!
-techno.research_page.ELECTRICWAND.1=Infusing a normal silverwood wand core with some energy and machines gives it special properties at the cost of its vis storage. By having a capacitor in your inventory, the wand will draw energy from the capacitor to refill its own vis storage. This wand can store 25 vis.
+tc.research_name.ROD_electric=Energized Wand
+tc.research_text.ROD_electric=Drain all the energy!
+techno.research_page.ROD_electric.1=Infusing a normal silverwood wand core with some energy and machines gives it special properties at the cost of its vis storage. By having a capacitor in your inventory, the wand will draw energy from the capacitor to refill its own vis storage. This wand can store 25 vis.
 
 tc.research_name.ELECTRICBELLOWS=Powered Magic
 tc.research_text.ELECTRICBELLOWS=Power power for magic power.

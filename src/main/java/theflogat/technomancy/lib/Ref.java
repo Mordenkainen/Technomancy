@@ -6,7 +6,7 @@ public class Ref {
     public static final String MOD_ID = "technom";
     public static final String MOD_PREFIX = "techno:";
     public static final String MOD_NAME = "Technomancy";
-    public static final String MOD_VERSION = "0.11.1";
+    public static final String MOD_VERSION = "0.11.1A";
     public static final String CHANNEL_NAME = MOD_NAME;
     public static final String proxy_loc = "theflogat.technomancy.proxies.";
     
