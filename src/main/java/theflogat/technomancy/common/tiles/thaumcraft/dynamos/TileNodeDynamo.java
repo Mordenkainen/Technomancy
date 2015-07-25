@@ -1,11 +1,11 @@
 package theflogat.technomancy.common.tiles.thaumcraft.dynamos;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import scala.actors.threadpool.Arrays;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.nodes.INode;
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
