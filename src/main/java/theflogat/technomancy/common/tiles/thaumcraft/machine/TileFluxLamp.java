@@ -1,5 +1,7 @@
 package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
+import cpw.mods.fml.common.Optional;
+import me.jezza.thaumicpipes.api.interfaces.IThaumicInput;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -18,7 +20,8 @@ import theflogat.technomancy.common.tiles.base.TileTechnomancy;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.util.helpers.WorldHelper;
 
-public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, IEssentiaTransport, IFluidHandler{
+@Optional.Interface(iface = "me.jezza.thaumicpipes.api.interfaces.IThaumicInput", modid = "ThaumicPipes")
+public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, IEssentiaTransport, IFluidHandler, IThaumicInput {
 
 	int amount = 0;
 	int maxAmount = 32;

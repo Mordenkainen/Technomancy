@@ -2,6 +2,8 @@ package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
 import java.util.ArrayList;
 
+import cpw.mods.fml.common.Optional;
+import me.jezza.thaumicpipes.api.interfaces.IThaumicOutput;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -18,7 +20,8 @@ import theflogat.technomancy.common.tiles.base.TileMachineRedstone;
 import theflogat.technomancy.lib.handlers.Rate;
 import theflogat.technomancy.util.Coords;
 
-public class TileEldritchConsumer extends TileMachineRedstone implements IAspectContainer, IEssentiaTransport {
+@Optional.Interface(iface = "me.jezza.thaumicpipes.api.interfaces.IThaumicOutput", modid = "ThaumicPipes")
+public class TileEldritchConsumer extends TileMachineRedstone implements IAspectContainer, IEssentiaTransport, IThaumicOutput {
 
 	public enum Range {
 		LARGE(9, -1, 0, "Large"),
