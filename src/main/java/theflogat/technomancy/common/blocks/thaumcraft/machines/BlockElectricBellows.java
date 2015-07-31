@@ -14,6 +14,8 @@ import theflogat.technomancy.common.tiles.thaumcraft.machine.TileElectricBellows
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.RenderIds;
+import tuhljin.automagy.api.essentia.IEssentiaDistillery;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -59,6 +61,11 @@ public class BlockElectricBellows extends BlockContainerAdvanced{
 				world.getTileEntity(x + offsetX, y, z + offsetZ) instanceof TileEntityFurnace) {
 			return true;
 		}
+		try {
+			if(Loader.isModLoaded("Automagy") && world.getTileEntity(x + offsetX, y, z + offsetZ) instanceof IEssentiaDistillery) {
+				return true;
+			}
+		} catch (Exception e) {}
 		return false;
 	}	
 
