@@ -2,6 +2,8 @@ package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
 import java.util.HashMap;
 
+import cpw.mods.fml.common.Optional;
+import me.jezza.thaumicpipes.api.interfaces.IThaumicOutput;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.Aspect;
@@ -14,7 +16,8 @@ import theflogat.technomancy.common.tiles.base.TileMachineRedstone;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.lib.handlers.Rate;
 
-public class TileCondenser extends TileMachineRedstone implements IEssentiaTransport, IAspectSource, IWrenchable {
+@Optional.Interface(iface = "me.jezza.thaumicpipes.api.interfaces.IThaumicOutput", modid = "ThaumicPipes")
+public class TileCondenser extends TileMachineRedstone implements IEssentiaTransport, IAspectSource, IWrenchable, IThaumicOutput {
 
 	public static final Aspect aspect = Aspect.ENERGY;
 

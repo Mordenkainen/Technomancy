@@ -1,5 +1,7 @@
 package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
+import cpw.mods.fml.common.Optional;
+import me.jezza.thaumicpipes.api.interfaces.IThaumicInput;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -11,7 +13,8 @@ import thaumcraft.api.aspects.IEssentiaTransport;
 import theflogat.technomancy.common.tiles.base.TileProcessorBase;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 
-public class TileTCProcessor extends TileProcessorBase implements IAspectContainer, IEssentiaTransport {
+@Optional.Interface(iface = "me.jezza.thaumicpipes.api.interfaces.IThaumicInput", modid = "ThaumicPipes")
+public class TileTCProcessor extends TileProcessorBase implements IAspectContainer, IEssentiaTransport, IThaumicInput {
 	
 	public int amount = 0;
 	public int maxAmount = 64;

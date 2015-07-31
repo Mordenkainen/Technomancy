@@ -2,6 +2,8 @@ package theflogat.technomancy.common.tiles.thaumcraft.dynamos;
 
 import java.util.Random;
 
+import cpw.mods.fml.common.Optional;
+import me.jezza.thaumicpipes.api.interfaces.IThaumicInput;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -14,7 +16,8 @@ import theflogat.technomancy.common.tiles.base.TileDynamoBase;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
 
-public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContainer, IEssentiaTransport{
+@Optional.Interface(iface = "me.jezza.thaumicpipes.api.interfaces.IThaumicInput", modid = "ThaumicPipes")
+public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContainer, IEssentiaTransport, IThaumicInput {
 
 	private int amount;
 	private int maxAmount = 64;
