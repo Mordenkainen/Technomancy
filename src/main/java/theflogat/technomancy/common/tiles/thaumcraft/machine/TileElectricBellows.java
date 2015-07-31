@@ -2,12 +2,16 @@ package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
 import java.lang.reflect.Field;
 
+import cpw.mods.fml.common.Loader;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockFurnace;
 import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.IFluidHandler;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
 import thaumcraft.common.tiles.TileAlchemyFurnace;
@@ -15,6 +19,7 @@ import thaumcraft.common.tiles.TileArcaneFurnace;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
 import theflogat.technomancy.lib.Conf;
 import theflogat.technomancy.lib.handlers.Rate;
+import tuhljin.automagy.api.essentia.IEssentiaDistillery;
 
 public class TileElectricBellows extends TileMachineBase {
 
@@ -119,6 +124,32 @@ public class TileElectricBellows extends TileMachineBase {
 					}
 				}
 			}
+			try {
+				if(Loader.isModLoaded("Automagy") && furnace instanceof IEssentiaDistillery) {
+			        if(extractEnergy(baseCost * 6, true) == baseCost * 6) {
+			                if(((ISidedInventory)furnace).getStackInSlot(0) != null) {
+			                        return;
+			                }
+			                if(((IFluidHandler)furnace).getTankInfo(dir.getOpposite())[0].fluid == null || ((IFluidHandler)furnace).getTankInfo(dir.getOpposite())[0].fluid.amount < 1000) {
+			                        return;
+			                }
+			                Block fluidBlock = ((IFluidHandler)furnace).getTankInfo(dir.getOpposite())[0].fluid.getFluid().getBlock();
+			                if(fluidBlock == null) {
+			                        return;
+			                }
+			                AspectList al = ThaumcraftCraftingManager.getObjectTags(new ItemStack(fluidBlock));
+			                al = ThaumcraftCraftingManager.getBonusTags(new ItemStack(fluidBlock), al);
+			                if(al == null || al.size() == 0) {
+			                        return;
+			                }
+			                if(((IEssentiaDistillery)furnace).getFurnaceBurnTime() <= 2 && ((IEssentiaDistillery)furnace).getStoredVis() + al.visSize() <= ((IEssentiaDistillery)furnace).getStoredVisMax()) {
+			                        ((IEssentiaDistillery)furnace).setFurnaceBurnTime(80);
+			                        ((IEssentiaDistillery)furnace).setSpeedBoosted(true);
+			                        extractEnergy(baseCost * 6, false);
+			                }                                      
+			        }
+				}
+			} catch (Exception e) {}
 		}
 	}
 
