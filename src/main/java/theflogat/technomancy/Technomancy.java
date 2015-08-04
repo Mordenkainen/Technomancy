@@ -1,9 +1,7 @@
 package theflogat.technomancy;
 
 import java.io.File;
-
 import org.apache.logging.log4j.Logger;
-
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.items.base.TMItems;
 import theflogat.technomancy.lib.Ref;
@@ -16,6 +14,8 @@ import theflogat.technomancy.lib.handlers.EventRegister;
 import theflogat.technomancy.proxies.CommonProxy;
 import theflogat.technomancy.util.Ore;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraftforge.common.util.EnumHelper;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -47,6 +47,8 @@ public class Technomancy {
 	public static CreativeTabs tabsTM = new CreativeTabTM(CreativeTabs.getNextID(), Ref.MOD_ID);
 
 	public static Logger logger;
+	
+	public static ArmorMaterial existencePower = EnumHelper.addArmorMaterial("existencePower", 20, new int[] {3, 8, 6, 3}, 35);
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {

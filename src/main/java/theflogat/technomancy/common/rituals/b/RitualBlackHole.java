@@ -30,7 +30,8 @@ public abstract class RitualBlackHole extends Ritual implements IRitualEffectHan
 	public void applyEffect(TileCatalyst te) {
 		@SuppressWarnings("unchecked")
 		ArrayList<EntityLivingBase> e = (ArrayList<EntityLivingBase>) te.getWorldObj().getEntitiesWithinAABB(EntityLivingBase.class,
-				AxisAlignedBB.getBoundingBox(te.xCoord - 2, te.yCoord - 2, te.zCoord - 2, te.xCoord + 2, te.yCoord + 2, te.zCoord + 2));
+				AxisAlignedBB.getBoundingBox(te.xCoord - radiusX, te.yCoord - radiusY, te.zCoord - radiusZ, te.xCoord + radiusX, 
+				te.yCoord + radiusY, te.zCoord + radiusZ));
 
 		for(EntityLivingBase ent : e) {
 			if(ent.isEntityInvulnerable()) {
@@ -65,7 +66,7 @@ public abstract class RitualBlackHole extends Ritual implements IRitualEffectHan
 
 		@SuppressWarnings("unchecked")
 		ArrayList<EntityLivingBase> e = (ArrayList<EntityLivingBase>) w.getEntitiesWithinAABB(EntityLivingBase.class,
-				AxisAlignedBB.getBoundingBox(x - 2, y - 2, z - 2, x + 2, y + 2, z + 2));
+				AxisAlignedBB.getBoundingBox(x - radiusX, y - radiusY, z - radiusZ, x + radiusX, y + radiusY, z + radiusZ));
 
 		for(EntityLivingBase ent : e) {
 			if(ent.isEntityInvulnerable()) {

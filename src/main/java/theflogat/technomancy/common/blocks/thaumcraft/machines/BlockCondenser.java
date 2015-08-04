@@ -126,7 +126,7 @@ public class BlockCondenser extends BlockContainerAdvanced {
 		return 0;
 	}
 	
-	private TileCondenser getTE(IBlockAccess world, int x, int y, int z) {
+	private static TileCondenser getTE(IBlockAccess world, int x, int y, int z) {
 		TileEntity tile = world.getTileEntity(x, y, z);
 		return tile instanceof TileCondenser ? (TileCondenser)tile : null;
 	}

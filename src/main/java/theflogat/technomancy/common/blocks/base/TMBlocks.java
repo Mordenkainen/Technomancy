@@ -10,6 +10,7 @@ import theflogat.technomancy.common.blocks.air.BlockFakeAirLight;
 import theflogat.technomancy.common.blocks.technom.BlockBasalt;
 import theflogat.technomancy.common.blocks.technom.BlockCatalyst;
 import theflogat.technomancy.common.blocks.technom.BlockCrystal;
+import theflogat.technomancy.common.blocks.technom.BlockFountainExistence;
 import theflogat.technomancy.common.blocks.technom.BlockItemTransmitter;
 import theflogat.technomancy.common.items.base.ItemAdvancedBase;
 import theflogat.technomancy.common.items.technom.ItemCatalyst;
@@ -17,6 +18,7 @@ import theflogat.technomancy.common.items.technom.ItemCrystal;
 import theflogat.technomancy.common.rituals.b.RitualBlackHoleT1;
 import theflogat.technomancy.common.rituals.b.RitualBlackHoleT2;
 import theflogat.technomancy.common.rituals.b.RitualBlackHoleT3;
+import theflogat.technomancy.common.rituals.b.RitualFountainExistence;
 import theflogat.technomancy.common.rituals.e.RitualCaveInT1;
 import theflogat.technomancy.common.rituals.e.RitualCaveInT2;
 import theflogat.technomancy.common.rituals.e.RitualCaveInT3;
@@ -29,6 +31,7 @@ import theflogat.technomancy.common.rituals.w.RitualWaterT1;
 import theflogat.technomancy.common.rituals.w.RitualWaterT2;
 import theflogat.technomancy.common.rituals.w.RitualWaterT3;
 import theflogat.technomancy.common.tiles.air.TileFakeAirCore;
+import theflogat.technomancy.common.tiles.existence.TileFountainExistence;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import theflogat.technomancy.common.tiles.technom.TileCrystal;
 import theflogat.technomancy.common.tiles.technom.TileItemTransmitter;
@@ -38,6 +41,7 @@ import theflogat.technomancy.lib.Ref;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class TMBlocks {
+	
 	//Block Instances	
 	public static Block nodeDynamo;
 	public static Block essentiaContainer;
@@ -71,6 +75,7 @@ public class TMBlocks {
 	public static Block itemTransmitter;
 	public static Block basalt;
 	public static Block essentiaFusor;
+	public static Block	fountainExistence;
 	
 	public static Fluid manaFluid;
 	
@@ -80,6 +85,7 @@ public class TMBlocks {
 		fakeAirLight = Ids.catalyst ? new BlockFakeAirLight() : null;
 		itemTransmitter = Ids.itemTransmitter ? new BlockItemTransmitter() : null;
 		basalt = Ids.basalt ? new BlockBasalt() : null;
+		fountainExistence = Ids.fountainExistence ? new BlockFountainExistence() : null;
 		
 		
 		registerBlock(crystalBlock, Names.crystalBlock, ItemCrystal.class);
@@ -87,6 +93,7 @@ public class TMBlocks {
 		registerBlock(fakeAirLight, Names.fakeAirLight);
 		registerBlock(itemTransmitter, Names.itemTransmitter);
 		registerBlock(basalt, Names.basalt);
+		registerBlock(fountainExistence, Names.fountainExistence);
 		
 		OreDictionary.registerOre("basalt", basalt);
 		
@@ -94,12 +101,14 @@ public class TMBlocks {
 		GameRegistry.registerTileEntity(TileCatalyst.class, Ref.MOD_PREFIX + "TileCatalyst");
 		GameRegistry.registerTileEntity(TileFakeAirCore.class, Ref.MOD_PREFIX + "TileFakeAirCore");
 		GameRegistry.registerTileEntity(TileItemTransmitter.class, Ref.MOD_PREFIX + "TileItemTransmitter");
+		GameRegistry.registerTileEntity(TileFountainExistence.class, Ref.MOD_PREFIX + "TileFountainExistence");
 		
 		
 		MovableTileRegistry.addAllowed(TileCrystal.class);
 		MovableTileRegistry.addAllowed(TileCatalyst.class);
 		
 		
+		RitualRegistry.add(new RitualFountainExistence());
 		RitualRegistry.add(new RitualCaveInT3());
 		RitualRegistry.add(new RitualCaveInT2());
 		RitualRegistry.add(new RitualCaveInT1());

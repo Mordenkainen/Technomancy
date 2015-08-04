@@ -2,7 +2,6 @@ package theflogat.technomancy.common.tiles.technom;
 
 import java.util.Collections;
 import java.util.Iterator;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.inventory.IInventory;
@@ -21,6 +20,7 @@ public class TileItemTransmitter extends TileCoilTransmitter {
 
 	public ItemStack filter = null;
 
+	@SuppressWarnings({ "null", "cast" })
 	@Override
 	public void updateEntity() {		
 		if(!worldObj.isRemote) {

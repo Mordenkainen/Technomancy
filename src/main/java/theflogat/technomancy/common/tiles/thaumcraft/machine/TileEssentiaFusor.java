@@ -48,7 +48,7 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
 
 		public void load(NBTTagCompound tags) {
 			aspect = tags.hasKey("aspect") ? Aspect.getAspect(tags.getString("aspect")) : null;
-			type = SideType.values()[(int)tags.getByte("type")];
+			type = SideType.values()[tags.getByte("type")];
 			amount = tags.getInteger("amount");
 		}
 	}
@@ -159,7 +159,7 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
 		}
 	}
 
-	private Aspect getAspectCombo(Aspect priAspect, Aspect secAspect) {
+	private static Aspect getAspectCombo(Aspect priAspect, Aspect secAspect) {
 		if(priAspect != secAspect) {
 			for(Aspect curAspect : Aspect.getCompoundAspects()) {
 				Aspect aspect1 = curAspect.getComponents()[0];
@@ -234,7 +234,7 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
 		return inputSides.toArray(new SideInfo[inputSides.size()]);
 	}
 
-	private Aspect getAspectFromStack(ItemStack stack) {
+	private static Aspect getAspectFromStack(ItemStack stack) {
 		if(stack.getItem() instanceof ItemEssence) {
 			return ((ItemEssence)stack.getItem()).getAspects(stack).getAspects()[0];
 		}
@@ -248,7 +248,7 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
 		return false;
 	}
 	
-	private boolean isValidSide(ForgeDirection side) {
+	private static boolean isValidSide(ForgeDirection side) {
 		return side != ForgeDirection.UP && side != ForgeDirection.DOWN;
 	}
 

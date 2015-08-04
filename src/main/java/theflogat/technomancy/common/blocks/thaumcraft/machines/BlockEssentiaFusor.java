@@ -112,7 +112,7 @@ public class BlockEssentiaFusor extends BlockContainerRedstone{
 		return null;
 	}
 	
-	private TileEssentiaFusor getTE(IBlockAccess access, int x, int y, int z) {
+	private static TileEssentiaFusor getTE(IBlockAccess access, int x, int y, int z) {
 		TileEntity tile = access.getTileEntity(x, y, z);
 		return tile instanceof TileEssentiaFusor ? (TileEssentiaFusor)tile : null;
 	}

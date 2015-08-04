@@ -16,6 +16,7 @@ public class Names {
 	public static final String manaBucket = "manaBucket";
 	public static final String coilCoupler = "coilCoupler";
 	public static final String scepter = "itemScepter";
+	public static final String itemGlasses	= "itemGlasses";
 
     /*
      * Blocks
@@ -51,6 +52,7 @@ public class Names {
 	public static final String itemTransmitter = "itemTransmitter";
 	public static final String basalt = "basalt";
 	public static final String fusor = "fusor";
+	public static final String fountainExistence = "fountainExistence";
 
     /*
      * Fluids

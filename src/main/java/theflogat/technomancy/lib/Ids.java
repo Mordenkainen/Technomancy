@@ -42,4 +42,5 @@ public class Ids {
 	public static boolean basalt;
 	public static boolean scepter;
 	public static boolean fusor;
+	public static boolean fountainExistence;
 }
