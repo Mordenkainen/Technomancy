@@ -21,4 +21,5 @@ public class RenderIds {
 	public static int idAdvDeconTable;
 	public static int idItemTransmitter;
 	public static int idEssentiaFusor;
+	public static int idExFountain;
 }

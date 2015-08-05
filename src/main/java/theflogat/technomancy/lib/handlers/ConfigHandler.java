@@ -50,7 +50,11 @@ public class ConfigHandler {
         Ids.itemTransmitter = config.get(blocks, Names.itemTransmitter, true).getBoolean();
         Ids.basalt = config.get(blocks, Names.basalt, true).getBoolean();
         Ids.fusor = config.get(blocks, Names.fusor, true).getBoolean();
-        Ids.fountainExistence = config.get(blocks, Names.fusor, true).getBoolean();
+        Ids.existenceFountain = config.get(blocks, Names.existenceFountain, true).getBoolean();
+        Ids.existenceBurner = config.get(blocks, Names.existenceBurner, true).getBoolean();
+        Ids.existenceDynamicBurner = config.get(blocks, Names.existenceDynamicBurner, true).getBoolean();
+        Ids.existencePylon = config.get(blocks, Names.existencePylon, true).getBoolean();
+        Ids.existenceCropAcc = config.get(blocks, Names.existenceCropAcc, true).getBoolean();
         
         String items = "Items";
         //Items        

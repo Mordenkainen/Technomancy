@@ -1,9 +1,9 @@
-package theflogat.technomancy.common.tiles.existence;
+package theflogat.technomancy.common.tiles.technom.existence;
 
 import net.minecraft.nbt.NBTTagCompound;
 import theflogat.technomancy.common.tiles.base.TileTechnomancy;
 
-public class TileFountainExistence extends TileTechnomancy implements IExistenceStorage{
+public class TileExistenceFountain extends TileTechnomancy implements IExistenceProducer{
 	
 	public int power;
 	private static final int powerCap = 1000000;
@@ -26,12 +26,12 @@ public class TileFountainExistence extends TileTechnomancy implements IExistence
 
 	@Override
 	public void writeSyncData(NBTTagCompound compound) {
-		writeToNBT(compound);
+		writeCustomNBT(compound);
 	}
 
 	@Override
 	public void readSyncData(NBTTagCompound compound) {
-		readFromNBT(compound);
+		readCustomNBT(compound);
 	}
 
 	@Override
@@ -57,5 +57,10 @@ public class TileFountainExistence extends TileTechnomancy implements IExistence
 	@Override
 	public boolean canOutput() {
 		return true;
+	}
+
+	@Override
+	public void addPower(int val) {
+		power += val;
 	}
 }

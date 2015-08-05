@@ -10,8 +10,12 @@ import theflogat.technomancy.common.blocks.air.BlockFakeAirLight;
 import theflogat.technomancy.common.blocks.technom.BlockBasalt;
 import theflogat.technomancy.common.blocks.technom.BlockCatalyst;
 import theflogat.technomancy.common.blocks.technom.BlockCrystal;
-import theflogat.technomancy.common.blocks.technom.BlockFountainExistence;
 import theflogat.technomancy.common.blocks.technom.BlockItemTransmitter;
+import theflogat.technomancy.common.blocks.technom.existence.BlockExistenceBurner;
+import theflogat.technomancy.common.blocks.technom.existence.BlockExistenceCropAccelerator;
+import theflogat.technomancy.common.blocks.technom.existence.BlockExistenceDynamicBurner;
+import theflogat.technomancy.common.blocks.technom.existence.BlockExistenceFountain;
+import theflogat.technomancy.common.blocks.technom.existence.BlockExistencePylon;
 import theflogat.technomancy.common.items.base.ItemAdvancedBase;
 import theflogat.technomancy.common.items.technom.ItemCatalyst;
 import theflogat.technomancy.common.items.technom.ItemCrystal;
@@ -31,10 +35,14 @@ import theflogat.technomancy.common.rituals.w.RitualWaterT1;
 import theflogat.technomancy.common.rituals.w.RitualWaterT2;
 import theflogat.technomancy.common.rituals.w.RitualWaterT3;
 import theflogat.technomancy.common.tiles.air.TileFakeAirCore;
-import theflogat.technomancy.common.tiles.existence.TileFountainExistence;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import theflogat.technomancy.common.tiles.technom.TileCrystal;
 import theflogat.technomancy.common.tiles.technom.TileItemTransmitter;
+import theflogat.technomancy.common.tiles.technom.existence.TileExistenceBurner;
+import theflogat.technomancy.common.tiles.technom.existence.TileExistenceCropAccelerator;
+import theflogat.technomancy.common.tiles.technom.existence.TileExistenceDynamicBurner;
+import theflogat.technomancy.common.tiles.technom.existence.TileExistenceFountain;
+import theflogat.technomancy.common.tiles.technom.existence.TileExistencePylon;
 import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
@@ -76,6 +84,10 @@ public class TMBlocks {
 	public static Block basalt;
 	public static Block essentiaFusor;
 	public static Block	fountainExistence;
+	public static Block	existenceBurner;
+	public static Block existenceDynamicBurner;
+	public static Block existencePylon;
+	public static Block existenceCropAcc;
 	
 	public static Fluid manaFluid;
 	
@@ -85,7 +97,11 @@ public class TMBlocks {
 		fakeAirLight = Ids.catalyst ? new BlockFakeAirLight() : null;
 		itemTransmitter = Ids.itemTransmitter ? new BlockItemTransmitter() : null;
 		basalt = Ids.basalt ? new BlockBasalt() : null;
-		fountainExistence = Ids.fountainExistence ? new BlockFountainExistence() : null;
+		fountainExistence = Ids.existenceFountain ? new BlockExistenceFountain() : null;
+		existenceBurner = Ids.existenceBurner ? new BlockExistenceBurner() : null;
+		existenceDynamicBurner = Ids.existenceDynamicBurner ? new BlockExistenceDynamicBurner() : null;
+		existencePylon = Ids.existencePylon ? new BlockExistencePylon() : null;
+		existenceCropAcc = Ids.existenceCropAcc ? new BlockExistenceCropAccelerator() : null;
 		
 		
 		registerBlock(crystalBlock, Names.crystalBlock, ItemCrystal.class);
@@ -93,7 +109,11 @@ public class TMBlocks {
 		registerBlock(fakeAirLight, Names.fakeAirLight);
 		registerBlock(itemTransmitter, Names.itemTransmitter);
 		registerBlock(basalt, Names.basalt);
-		registerBlock(fountainExistence, Names.fountainExistence);
+		registerBlock(fountainExistence, Names.existenceFountain);
+		registerBlock(existenceBurner, Names.existenceBurner);
+		registerBlock(existenceDynamicBurner, Names.existenceDynamicBurner);
+		registerBlock(existencePylon, Names.existencePylon);
+		registerBlock(existenceCropAcc, Names.existenceCropAcc);
 		
 		OreDictionary.registerOre("basalt", basalt);
 		
@@ -101,7 +121,11 @@ public class TMBlocks {
 		GameRegistry.registerTileEntity(TileCatalyst.class, Ref.MOD_PREFIX + "TileCatalyst");
 		GameRegistry.registerTileEntity(TileFakeAirCore.class, Ref.MOD_PREFIX + "TileFakeAirCore");
 		GameRegistry.registerTileEntity(TileItemTransmitter.class, Ref.MOD_PREFIX + "TileItemTransmitter");
-		GameRegistry.registerTileEntity(TileFountainExistence.class, Ref.MOD_PREFIX + "TileFountainExistence");
+		GameRegistry.registerTileEntity(TileExistenceFountain.class, Ref.MOD_PREFIX + "TileExistenceFountain");
+		GameRegistry.registerTileEntity(TileExistenceBurner.class, Ref.MOD_PREFIX + "TileExistenceBurner");
+		GameRegistry.registerTileEntity(TileExistenceDynamicBurner.class, Ref.MOD_PREFIX + "TileExistenceDynamicBurner");
+		GameRegistry.registerTileEntity(TileExistencePylon.class, Ref.MOD_PREFIX + "TileExistencePylon");
+		GameRegistry.registerTileEntity(TileExistenceCropAccelerator.class, Ref.MOD_PREFIX + "TileExistenceCropAccelerator");
 		
 		
 		MovableTileRegistry.addAllowed(TileCrystal.class);

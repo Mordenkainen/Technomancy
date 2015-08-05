@@ -52,7 +52,11 @@ public class Names {
 	public static final String itemTransmitter = "itemTransmitter";
 	public static final String basalt = "basalt";
 	public static final String fusor = "fusor";
-	public static final String fountainExistence = "fountainExistence";
+	public static final String existenceFountain = "existenceFountain";
+	public static final String existenceBurner	= "existenceBurner";
+	public static final String existenceDynamicBurner	= "existenceDynamicBurner";
+	public static final String existencePylon	= "existencePylon";
+	public static final String	existenceCropAcc = "existenceCropAcc";
 
     /*
      * Fluids

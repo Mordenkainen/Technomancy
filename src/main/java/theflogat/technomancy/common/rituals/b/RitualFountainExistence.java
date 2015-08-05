@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.passive.EntityVillager;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
@@ -40,7 +41,7 @@ public class RitualFountainExistence extends Ritual implements IRitualEffectHand
 					AxisAlignedBB.getBoundingBox(te.xCoord - 11, te.yCoord - 11, te.zCoord - 11, te.xCoord + 11, te.yCoord + 11, te.zCoord + 11));
 
 			for(EntityLivingBase ent : e) {
-				if(ent.isEntityInvulnerable()) {
+				if(!ent.isEntityInvulnerable() && !(ent instanceof EntityPlayer)) {
 					ent.onDeath(DamageSource.generic);
 					ent.setDead();
 					te.data[0] = ((Integer)te.data[0]).intValue() + (ent instanceof EntityVillager ? 50 :

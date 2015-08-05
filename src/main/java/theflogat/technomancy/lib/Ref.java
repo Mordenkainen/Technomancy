@@ -36,6 +36,7 @@ public class Ref {
 	public static final String MODEL_REF_TEXTURE = MODEL_PREFIX + "sphere.png";
 	public static final String MODEL_CATALYST_TEXTURE = MODEL_PREFIX + "catalyst.png";
 	public static final String MODEL_FUSOR_TEXTURE = MODEL_PREFIX + "fusor.png";
+	public static final String MODEL_TEST_TEXTURE = MODEL_PREFIX + "test.png";
 	
 	//GUI Textures
 	public static final String GUI_BM_PROCESSOR_TEXTURE = GUI_PREFIX + "processorBM.png";
