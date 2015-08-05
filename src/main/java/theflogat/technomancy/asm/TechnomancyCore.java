@@ -19,6 +19,8 @@ public class TechnomancyCore extends DummyModContainer {
 		metadata.modId = Ref.MOD_ID + "Core";
 		metadata.name = Ref.MOD_NAME + " Core";
 		metadata.version = Ref.MOD_VERSION;
+		metadata.authorList.add("Democretes");
+		metadata.authorList.add("theflogat");
 		metadata.authorList.add("Mordenkainen");
 	}
 	
