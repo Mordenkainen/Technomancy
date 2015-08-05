@@ -1,11 +1,13 @@
 package theflogat.technomancy.common.blocks.thaumcraft.storage;
 
 import java.util.ArrayList;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -88,19 +90,15 @@ public class BlockEssentiaContainer extends BlockContainerAdvanced {
 						container.aspect != null) {
 					if(((IEssentiaContainerItem)item.getItem()).getAspects(item) != null) {
 						container.aspectFilter = ((IEssentiaContainerItem)item.getItem()).getAspects(item).getAspects()[0];
-						item.stackSize -= 1;
-						if (w.isRemote) {
-							w.playSound(x + 0.5F, y + 0.5F, z + 0.5F, "thaumcraft:page", 1.0F, 1.0F, false);
-						}
-						player.inventoryContainer.detectAndSendChanges();
+						
 					}else{
 						container.aspectFilter = container.aspect;
-						item.stackSize -= 1;
-						if (w.isRemote) {
-							w.playSound(x + 0.5F, y + 0.5F, z + 0.5F, "thaumcraft:page", 1.0F, 1.0F, false);
-						}
-						player.inventoryContainer.detectAndSendChanges();
 					}
+					item.stackSize--;
+					if (w.isRemote) {
+						w.playSound(x + 0.5F, y + 0.5F, z + 0.5F, "thaumcraft:page", 1.0F, 1.0F, false);
+					}
+					player.inventoryContainer.detectAndSendChanges();
 					onBlockPlacedBy(w, x, y, z, player, null);
 					return true;
 				}				
@@ -108,7 +106,7 @@ public class BlockEssentiaContainer extends BlockContainerAdvanced {
 				if (item.getItem() == Thaumcraft.itemEssence && item.getItemDamage() == 1 && container.amount <= (container.maxAmount - 8)) {
 						if(container.addToContainer(((IEssentiaContainerItem)player.getHeldItem().getItem())
 								.getAspects(player.getHeldItem()).getAspects()[0], 8) == 0) {
-							item.stackSize -= 1;
+							item.stackSize--;
 							ItemStack phial = new ItemStack(Thaumcraft.itemEssence, 1, 0);
 							if (!player.inventory.addItemStackToInventory(phial)) {		       
 								w.spawnEntityInWorld(new EntityItem(w, x + 0.5F, y + 0.5F, z + 0.5F, phial));
@@ -122,7 +120,7 @@ public class BlockEssentiaContainer extends BlockContainerAdvanced {
 				if (item.getItem() == Thaumcraft.itemEssence && item.getItemDamage() == 0 && container.aspect != null) {
 					Aspect asp = Aspect.getAspect(container.aspect.getTag());
 					if (container.takeFromContainer(container.aspect, 8) == true) {
-						item.stackSize -= 1;
+						item.stackSize--;
 						w.playSoundAtEntity(player, "game.neutral.swim", 0.25F, 1.0F);						
 						ItemStack phial = new ItemStack(Thaumcraft.itemEssence, 1, 1);
 						setAspects(phial, new AspectList().add(asp, 8));
@@ -132,7 +130,50 @@ public class BlockEssentiaContainer extends BlockContainerAdvanced {
 						player.inventoryContainer.detectAndSendChanges();
 						return true;
 					}					
-				}			
+				}
+				// Fills empty, non-labeled Jars
+				if (((item.getItem() == Item.getItemFromBlock(Thaumcraft.blockJar) && item.getItemDamage() == 0)) && container.amount > 0) {
+					int amountToAdd = Math.min(64, container.amount);
+					AspectList newAspects = new AspectList().add(container.aspect, amountToAdd);
+					container.amount -= amountToAdd;
+					if(container.amount <= 0) {
+						container.aspect = null;
+					}
+					ItemStack newJar = new ItemStack(Thaumcraft.itemJarFilled, 1);
+					((IEssentiaContainerItem)newJar.getItem()).setAspects(newJar, newAspects);
+					item.stackSize--;
+					if (!player.inventory.addItemStackToInventory(newJar)) {
+						w.spawnEntityInWorld(new EntityItem(w,  x + 0.5F, y + 0.5F, z + 0.5F, newJar));
+					}	
+					player.inventoryContainer.detectAndSendChanges();
+					w.playSoundAtEntity(player, "game.neutral.swim", 0.25F, 1.0F);
+					return true;
+				}
+				//Empties Jars
+				if (item.getItem() == Thaumcraft.itemJarFilled && container.amount < container.maxAmount && ((IEssentiaContainerItem)item.getItem()).getAspects(item) != null && ((IEssentiaContainerItem)item.getItem()).getAspects(item).visSize() > 0) {
+					Aspect targetAspect = container.aspect == null ? container.aspectFilter == null ? ((IEssentiaContainerItem)item.getItem()).getAspects(item).getAspects()[0] : container.aspectFilter : container.aspect;
+					if(targetAspect == ((IEssentiaContainerItem)item.getItem()).getAspects(item).getAspects()[0]) {
+						int amountToAdd = Math.min(((IEssentiaContainerItem)item.getItem()).getAspects(item).getAmount(container.aspect), container.maxAmount - container.amount);
+						container.aspect = targetAspect;
+						container.amount += amountToAdd;
+						AspectList newAspects = ((IEssentiaContainerItem)item.getItem()).getAspects(item);
+						newAspects.remove(targetAspect, amountToAdd);
+						((IEssentiaContainerItem)item.getItem()).setAspects(item, newAspects);
+						w.playSoundAtEntity(player, "game.neutral.swim", 0.25F, 1.0F);
+						if(((IEssentiaContainerItem)item.getItem()).getAspects(item) == null) {
+							if(!item.hasTagCompound() || !item.stackTagCompound.hasKey("AspectFilter")) {
+								item.stackSize--;
+								ItemStack jar = new ItemStack(Item.getItemFromBlock(Thaumcraft.blockJar), 1, 0);
+								if (!player.inventory.addItemStackToInventory(jar)) {
+									w.spawnEntityInWorld(new EntityItem(w,  x + 0.5F, y + 0.5F, z + 0.5F, jar));
+								}	
+								player.inventoryContainer.detectAndSendChanges();
+							}
+						}
+						return true;
+					}
+					return !player.isSneaking();
+				}
 			}			 
 		}
 		return super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ);

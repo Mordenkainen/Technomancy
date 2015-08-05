@@ -82,6 +82,7 @@ public class Thaumcraft extends ModuleBase {
 	public static Item itemWandCap;
 	public static Item itemWandCasting;
 	public static Item itemPickThaumium;
+	public static Item itemJarFilled;
 
 	public static Block blockCosmeticSolid;
 	public static Block blockMetalDevice;
@@ -165,12 +166,13 @@ public class Thaumcraft extends ModuleBase {
 		itemWandCap =  GameRegistry.findItem("Thaumcraft", "WandCap");
 		itemWandCasting =  GameRegistry.findItem("Thaumcraft", "WandCasting");
 		itemPickThaumium = GameRegistry.findItem("Thaumcraft", "ItemPickThaumium");
+		itemJarFilled = GameRegistry.findItem("Thaumcraft", "BlockJarFilledItem");
 		
 		if(FLUXGOO != null && blockCosmeticSolid != null && blockMetalDevice != null && blockStoneDevice != null &&
 				blockJar != null && blockTube != null && blockCustomPlant != null && blockWoodenDevice != null &&
 				blockTable != null && itemResource != null && itemEssence != null && itemNugget != null &&
 				itemShard != null && itemWandRod != null && itemWandCap != null && itemWandCasting != null &&
-				itemPickThaumium != null) {
+				itemPickThaumium != null && itemJarFilled!= null) {
 			Technomancy.logger.info("Thaumcraft compatibility module loaded.");
 		} else {
 			Technomancy.logger.warn("Thaumcraft compatibility module failed to load.");
