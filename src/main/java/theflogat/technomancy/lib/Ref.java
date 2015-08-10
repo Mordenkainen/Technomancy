@@ -17,6 +17,7 @@ public class Ref {
     
     public static final String EXT = ".png";
     //Model Names
+	public static final String MODEL_TEST_TEXTURE = MODEL_PREFIX + "test.png";
     public static final String MODEL_NODE_DYNAMO_TEXTURE = MODEL_PREFIX + "nodeDynamo.png";
 	public static final String MODEL_ESSENTIA_CONTAINER_TEXTURE = MODEL_PREFIX + "essentiaContainer.png";
 	public static final String MODEL_ESSENTIA_DYNAMO_TEXTURE =  MODEL_PREFIX + "essentiaDynamo.png";
@@ -36,7 +37,8 @@ public class Ref {
 	public static final String MODEL_REF_TEXTURE = MODEL_PREFIX + "sphere.png";
 	public static final String MODEL_CATALYST_TEXTURE = MODEL_PREFIX + "catalyst.png";
 	public static final String MODEL_FUSOR_TEXTURE = MODEL_PREFIX + "fusor.png";
-	public static final String MODEL_TEST_TEXTURE = MODEL_PREFIX + "test.png";
+	public static final String MODEL_FOUNTAIN_TEXTURE = MODEL_PREFIX + "fountain.png";
+	public static final String MODEL_EXISTENCE_TEXTURE = MODEL_PREFIX + "existence.png";
 	
 	//GUI Textures
 	public static final String GUI_BM_PROCESSOR_TEXTURE = GUI_PREFIX + "processorBM.png";

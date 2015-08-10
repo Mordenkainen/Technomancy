@@ -18,6 +18,7 @@ import theflogat.technomancy.client.blocks.BlockEssentiaContainerRenderer;
 import theflogat.technomancy.client.blocks.BlockEssentiaDynamoRenderer;
 import theflogat.technomancy.client.blocks.BlockEssentiaFusorRenderer;
 import theflogat.technomancy.client.blocks.BlockEssentiaTransmitterRenderer;
+import theflogat.technomancy.client.blocks.BlockExistenceFountainRenderer;
 import theflogat.technomancy.client.blocks.BlockFlowerDynamoRenderer;
 import theflogat.technomancy.client.blocks.BlockFluxLampRenderer;
 import theflogat.technomancy.client.blocks.BlockItemTransmitterRenderer;
@@ -102,6 +103,7 @@ public class ClientProxy extends CommonProxy implements IGuiHandler{
 		RenderingRegistry.registerBlockHandler(new BlockCrystalRenderer());
 		RenderingRegistry.registerBlockHandler(new BlockCatalystRenderer());
     	RenderingRegistry.registerBlockHandler(new BlockItemTransmitterRenderer());
+    	RenderingRegistry.registerBlockHandler(new BlockExistenceFountainRenderer());
     	
     	if(CompatibilityHandler.th) {
     		ClientRegistry.bindTileEntitySpecialRenderer(TileNodeDynamo.class, new TileNodeDynamoRenderer());
