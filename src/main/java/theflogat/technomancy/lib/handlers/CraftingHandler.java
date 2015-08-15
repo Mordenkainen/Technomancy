@@ -120,5 +120,13 @@ public class CraftingHandler {
 				'R', Items.book, 'S', "dyeBlack", 'I', Items.glowstone_dust
 			}));
 		}
+		if(Ids.existenceBurner){
+			GameRegistry.addRecipe(new ItemStack(TMBlocks.existenceBurner, 1), new Object[]{
+				"EAE",
+				"   ",
+				"   ",
+				'E', Items.emerald, 'A', Blocks.anvil
+			});
+		}
 	}
 }

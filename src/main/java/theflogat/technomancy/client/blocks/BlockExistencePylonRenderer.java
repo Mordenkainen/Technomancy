@@ -5,17 +5,20 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.world.IBlockAccess;
 import org.lwjgl.opengl.GL11;
-import theflogat.technomancy.common.tiles.technom.existence.TileExistenceFountain;
+import theflogat.technomancy.common.tiles.technom.existence.TileExistencePylon;
+import theflogat.technomancy.common.tiles.technom.existence.TileExistencePylon.Type;
 import theflogat.technomancy.lib.RenderIds;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
-public class BlockExistenceFountainRenderer implements ISimpleBlockRenderingHandler{
+public class BlockExistencePylonRenderer implements ISimpleBlockRenderingHandler{
 
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
 		GL11.glPushMatrix();
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-		TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileExistenceFountain(), 0.0D, 0.0D, 0.0D, 0.0F);
+		TileExistencePylon tile = new TileExistencePylon();
+		tile.transferRate = Type.getTypeFromId(metadata);
+		TileEntityRendererDispatcher.instance.renderTileEntityAt(tile, 0.0D, 0.0D, 0.0D, 0.0F);
 		GL11.glPopMatrix();
 	}
 
@@ -31,6 +34,6 @@ public class BlockExistenceFountainRenderer implements ISimpleBlockRenderingHand
 
 	@Override
 	public int getRenderId() {
-		return RenderIds.idExFountain;
+		return RenderIds.idExPylon;
 	}
 }

@@ -22,4 +22,5 @@ public class RenderIds {
 	public static int idItemTransmitter;
 	public static int idEssentiaFusor;
 	public static int idExFountain;
+	public static int idExPylon;
 }

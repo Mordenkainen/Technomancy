@@ -1,0 +1,29 @@
+package theflogat.technomancy.common.items.technom.existence;
+
+import java.util.List;
+import theflogat.technomancy.common.tiles.technom.existence.TileExistencePylon.Type;
+import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+
+public class ItemBlockExistencePylon extends ItemBlock{
+
+	public ItemBlockExistencePylon(Block b) {
+		super(b);
+	}
+	
+	@Override
+	public void getSubItems(Item item, CreativeTabs tab, List l) {
+		for(Type t:Type.allTypes){
+			l.add(new ItemStack(item, 1, t.id));
+		}
+	}
+	
+	@Override
+	public void addInformation(ItemStack s, EntityPlayer p, List l, boolean mInfo) {
+		l.add("Tier: " + (s.getItemDamage()+1));
+	}
+}

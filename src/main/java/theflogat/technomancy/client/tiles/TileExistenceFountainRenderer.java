@@ -12,7 +12,7 @@ public class TileExistenceFountainRenderer extends TileEntitySpecialRenderer{
 
 	public static ModelExistenceFountain model = new ModelExistenceFountain();
 
-	public static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_FOUNTAIN_TEXTURE);
+	public static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_COBBLEM_TEXTURE);
 	public static final ResourceLocation exTexture = new ResourceLocation(Ref.MODEL_EXISTENCE_TEXTURE);
 
 	@Override

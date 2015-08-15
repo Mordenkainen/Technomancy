@@ -63,4 +63,8 @@ public class TileExistenceFountain extends TileTechnomancy implements IExistence
 	public void addPower(int val) {
 		power += val;
 	}
+
+	public boolean isRunning() {
+		return power<powerCap;
+	}
 }

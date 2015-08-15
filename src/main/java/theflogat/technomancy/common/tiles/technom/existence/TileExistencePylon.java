@@ -7,17 +7,17 @@ import theflogat.technomancy.common.tiles.base.TileTechnomancyRedstone;
 public class TileExistencePylon extends TileTechnomancyRedstone implements IExistenceTransmitter{
 	
 	public enum Type {
-		BASIC(5),
-		ADVANCED(25),
-		COMPLEX(125);
+		BASIC(5, 0),
+		ADVANCED(25, 1),
+		COMPLEX(125, 2);
 		
 		public int id;
 		public int tRate;
 		public static final Type[] allTypes = {BASIC,ADVANCED,COMPLEX};
 		
-		private Type(int tRate) {
+		private Type(int tRate, int id) {
 			this.tRate = tRate;
-			id = this.ordinal();
+			this.id = id;
 		}
 		
 		public static Type getTypeFromId(int id){
@@ -30,17 +30,20 @@ public class TileExistencePylon extends TileTechnomancyRedstone implements IExis
 		}
 	}
 	
-	public int transferRate;
+	public Type transferRate;
 	public int power;
 	
-	public TileExistencePylon(Type t) {
+	public TileExistencePylon() {
 		super(RedstoneSet.LOW);
-		this.transferRate = t.tRate;
 	}
 	
 	@Override
 	public void updateEntity() {
-		if(power<transferRate){
+		if(transferRate==null){
+			transferRate = Type.getTypeFromId(blockMetadata);
+		}
+		
+		if(power<transferRate.tRate){
 			input();
 		}
 		if(power>0){
@@ -56,7 +59,7 @@ public class TileExistencePylon extends TileTechnomancyRedstone implements IExis
 					if(te!=null && te instanceof IExistenceProducer){
 						IExistenceProducer ex = (IExistenceProducer)te;
 						if(ex.canOutput()){
-							int t = Math.min(transferRate - power, Math.min(ex.getMaxRate(), ex.getPower()));
+							int t = Math.min(transferRate.tRate - power, Math.min(ex.getMaxRate(), ex.getPower()));
 							if(t>0){
 								ex.addPower(-t);
 								power += t;
@@ -102,6 +105,6 @@ public class TileExistencePylon extends TileTechnomancyRedstone implements IExis
 
 	@Override
 	public int getMaxRate() {
-		return transferRate;
+		return transferRate.tRate;
 	}
 }

@@ -19,6 +19,7 @@ import theflogat.technomancy.common.blocks.technom.existence.BlockExistencePylon
 import theflogat.technomancy.common.items.base.ItemAdvancedBase;
 import theflogat.technomancy.common.items.technom.ItemCatalyst;
 import theflogat.technomancy.common.items.technom.ItemCrystal;
+import theflogat.technomancy.common.items.technom.existence.ItemBlockExistencePylon;
 import theflogat.technomancy.common.rituals.b.RitualBlackHoleT1;
 import theflogat.technomancy.common.rituals.b.RitualBlackHoleT2;
 import theflogat.technomancy.common.rituals.b.RitualBlackHoleT3;
@@ -112,7 +113,7 @@ public class TMBlocks {
 		registerBlock(fountainExistence, Names.existenceFountain);
 		registerBlock(existenceBurner, Names.existenceBurner);
 		registerBlock(existenceDynamicBurner, Names.existenceDynamicBurner);
-		registerBlock(existencePylon, Names.existencePylon);
+		registerBlock(existencePylon, Names.existencePylon, ItemBlockExistencePylon.class);
 		registerBlock(existenceCropAcc, Names.existenceCropAcc);
 		
 		OreDictionary.registerOre("basalt", basalt);
