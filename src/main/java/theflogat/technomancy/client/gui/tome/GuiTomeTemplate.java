@@ -35,14 +35,13 @@ public class GuiTomeTemplate extends GuiScreen{
 		background = new ResourceLocation(Ref.MOD_ID.toLowerCase(), "textures/gui/tomeBack" + id + ".png");
 		buttons = new ResourceLocation(Ref.MOD_ID.toLowerCase(), "textures/gui/tomeButtons" + id + ".png");
 		
-		
 		xSize = 256;
 		ySize = 256;
 	}
 	
 	static {
 		pageCh[0] = new ButtonChangePage(18, 230, 0, 0, 1);
-		pageCh[1] = new ButtonChangePage(256-18-18, 230, 16, 0, -1);
+		pageCh[1] = new ButtonChangePage(220, 230, 16, 0, -1);
 	}
 	
 	@Override
@@ -51,8 +50,8 @@ public class GuiTomeTemplate extends GuiScreen{
 		int top = (height - ySize) / 2;
 		
 		drawBackground(left, top);
-
 		drawButtons(left, top);
+		
 		if(activeEntry!=-1){
 			ButtonEntry entry = tabs[activeTab].getEntries()[activeEntry];
 			GL11.glDisable(GL11.GL_LIGHTING);
@@ -67,22 +66,18 @@ public class GuiTomeTemplate extends GuiScreen{
 					change.draw(left, top, this, page);
 				}
 			}
-			
 		}else{
 			if(activeTab!=-1){
 				GL11.glDisable(GL11.GL_LIGHTING);
 				drawTabs(left, top, activeTab, x, y);
 			}
 		}
-
 		
 		mc.renderEngine.bindTexture(buttons);
 		try{
 			for(ButtonTab tab: tabs){
 				if(tab.isPointInRegion(x, y, left, top, this)){
 					drawHoveringButton(left, top, tab.getX(), tab.getY());
-					//ArrayList<String> list = new ArrayList<String>();
-					//list.add(tab.getName());
 					//drawRect(x, y, tab.getName().length() * 5, 6, Color.black.getRGB());
 					fontRendererObj.drawString(tab.getName(), x, y, Color.white.getRGB());
 				}
@@ -143,16 +138,12 @@ public class GuiTomeTemplate extends GuiScreen{
 				for(ButtonChangePage change: pageCh){
 					if(change.isPointInRegion(x, y, left, top, this)){
 						activePage += change.getId();
-						
 						if(activePage<0){
 							activePage = 0;
 						}
-
-							System.out.println(activePage);
+//						System.out.println(activePage);
 					}
 				}
-				
-				
 				
 				tabs[activeTab].getEntries()[activeEntry].drawPage(this, left, top, activePage);
 			}

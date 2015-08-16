@@ -10,20 +10,18 @@ public class TileExistenceCropAccelerator extends TileTechnomancyRedstone implem
 	public TileExistenceCropAccelerator() {
 		super(RedstoneSet.LOW);
 	}
-	
+
 	public int power;
-	
+
 	@Override
 	public void updateEntity() {
 		if(!worldObj.isRemote){
-			if(power>=15){
-				for(int xx =-5; xx<=5; xx++){
-					for(int zz =-5; zz<=5; zz++){
-						Block b = worldObj.getBlock(xCoord + xx, yCoord + 2, zCoord + zz);
-						if(b instanceof IGrowable){
-							b.updateTick(worldObj, xCoord + xx, yCoord + 2, zCoord + zz, worldObj.rand);
-							power -= 15;
-						}
+			for(int xx =-5; xx<=5 && power>=15; xx++){
+				for(int zz =-5; zz<=5 && power>=15; zz++){
+					Block b = worldObj.getBlock(xCoord + xx, yCoord + 2, zCoord + zz);
+					if(b instanceof IGrowable){
+						b.updateTick(worldObj, xCoord + xx, yCoord + 2, zCoord + zz, worldObj.rand);
+						power -= 15;
 					}
 				}
 			}
@@ -64,5 +62,5 @@ public class TileExistenceCropAccelerator extends TileTechnomancyRedstone implem
 	public void writeCustomNBT(NBTTagCompound comp) {
 		comp.setInteger("power", power);
 	}
-	
+
 }

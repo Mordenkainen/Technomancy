@@ -1,10 +1,10 @@
 package theflogat.technomancy.lib.compat;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import theflogat.technomancy.Technomancy;
-import theflogat.technomancy.lib.handlers.CompatibilityHandler;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
+import theflogat.technomancy.Technomancy;
+import theflogat.technomancy.lib.handlers.CompatibilityHandler;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ThermalExpansion extends ModuleBase {
 
@@ -22,6 +22,7 @@ public class ThermalExpansion extends ModuleBase {
 	public static Block blockCell;
 	public static Block blockDynamo;
 	public static Block blockTank;
+	
 	
 	private ThermalExpansion() {}
 	

@@ -86,9 +86,9 @@ public class TMBlocks {
 	public static Block essentiaFusor;
 	public static Block	fountainExistence;
 	public static Block	existenceBurner;
-	public static Block existenceDynamicBurner;
 	public static Block existencePylon;
 	public static Block existenceCropAcc;
+	public static Block existenceDynamicBurner;
 	
 	public static Fluid manaFluid;
 	
@@ -100,9 +100,9 @@ public class TMBlocks {
 		basalt = Ids.basalt ? new BlockBasalt() : null;
 		fountainExistence = Ids.existenceFountain ? new BlockExistenceFountain() : null;
 		existenceBurner = Ids.existenceBurner ? new BlockExistenceBurner() : null;
-		existenceDynamicBurner = Ids.existenceDynamicBurner ? new BlockExistenceDynamicBurner() : null;
 		existencePylon = Ids.existencePylon ? new BlockExistencePylon() : null;
 		existenceCropAcc = Ids.existenceCropAcc ? new BlockExistenceCropAccelerator() : null;
+		existenceDynamicBurner = Ids.existenceDynamicBurner ? new BlockExistenceDynamicBurner() : null;
 		
 		
 		registerBlock(crystalBlock, Names.crystalBlock, ItemCrystal.class);
@@ -112,11 +112,13 @@ public class TMBlocks {
 		registerBlock(basalt, Names.basalt);
 		registerBlock(fountainExistence, Names.existenceFountain);
 		registerBlock(existenceBurner, Names.existenceBurner);
-		registerBlock(existenceDynamicBurner, Names.existenceDynamicBurner);
 		registerBlock(existencePylon, Names.existencePylon, ItemBlockExistencePylon.class);
 		registerBlock(existenceCropAcc, Names.existenceCropAcc);
+		registerBlock(existenceDynamicBurner, Names.existenceDynamicBurner);
+		
 		
 		OreDictionary.registerOre("basalt", basalt);
+		
 		
 		GameRegistry.registerTileEntity(TileCrystal.class, Ref.MOD_PREFIX + "TileCrystal");
 		GameRegistry.registerTileEntity(TileCatalyst.class, Ref.MOD_PREFIX + "TileCatalyst");
@@ -124,9 +126,9 @@ public class TMBlocks {
 		GameRegistry.registerTileEntity(TileItemTransmitter.class, Ref.MOD_PREFIX + "TileItemTransmitter");
 		GameRegistry.registerTileEntity(TileExistenceFountain.class, Ref.MOD_PREFIX + "TileExistenceFountain");
 		GameRegistry.registerTileEntity(TileExistenceBurner.class, Ref.MOD_PREFIX + "TileExistenceBurner");
-		GameRegistry.registerTileEntity(TileExistenceDynamicBurner.class, Ref.MOD_PREFIX + "TileExistenceDynamicBurner");
 		GameRegistry.registerTileEntity(TileExistencePylon.class, Ref.MOD_PREFIX + "TileExistencePylon");
 		GameRegistry.registerTileEntity(TileExistenceCropAccelerator.class, Ref.MOD_PREFIX + "TileExistenceCropAccelerator");
+		GameRegistry.registerTileEntity(TileExistenceDynamicBurner.class, Ref.MOD_PREFIX + "TileExistenceDynamicBurner");
 		
 		
 		MovableTileRegistry.addAllowed(TileCrystal.class);

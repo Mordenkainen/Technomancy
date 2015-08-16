@@ -1,5 +1,6 @@
 package theflogat.technomancy.client.gui;
 
+import java.util.ArrayList;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -14,6 +15,8 @@ import theflogat.technomancy.client.gui.tome.render.pages.PageRecipeMult;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.items.tome.ItemRitualTome.Res;
 import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.compat.ThermalExpansion;
+import theflogat.technomancy.lib.handlers.CompatibilityHandler;
 
 public class GuiRitualTome extends GuiTomeTemplate{
 
@@ -74,13 +77,13 @@ public class GuiRitualTome extends GuiTomeTemplate{
 								new ItemStack(Items.dye, 1, 1),new ItemStack(Blocks.gold_block),new ItemStack(Items.dye, 1, 1),
 								new ItemStack(Items.blaze_rod),new ItemStack(Items.dye, 1, 1),new ItemStack(Items.blaze_rod)
 							},{
-								new ItemStack(Items.fish),new ItemStack(Items.dye, 1, 2),new ItemStack(Blocks.clay),
+								new ItemStack(Blocks.grass),new ItemStack(Items.dye, 1, 2),new ItemStack(Blocks.grass),
 								new ItemStack(Items.dye, 1, 2),new ItemStack(Blocks.gold_block),new ItemStack(Items.dye, 1, 2),
-								new ItemStack(Blocks.clay),new ItemStack(Items.dye, 1, 2),new ItemStack(Items.fish)
+								new ItemStack(Blocks.grass),new ItemStack(Items.dye, 1, 2),new ItemStack(Blocks.grass)
 							},{
-								new ItemStack(Blocks.grass),new ItemStack(Items.dye, 1, 4),new ItemStack(Blocks.grass),
+								new ItemStack(Items.fish),new ItemStack(Items.dye, 1, 4),new ItemStack(Blocks.clay),
 								new ItemStack(Items.dye, 1, 4),new ItemStack(Blocks.gold_block),new ItemStack(Items.dye, 1, 4),
-								new ItemStack(Blocks.grass),new ItemStack(Items.dye, 1, 4),new ItemStack(Blocks.grass)
+								new ItemStack(Blocks.clay),new ItemStack(Items.dye, 1, 4),new ItemStack(Items.fish)
 							}
 					}))
 				}
@@ -112,26 +115,19 @@ public class GuiRitualTome extends GuiTomeTemplate{
 				"Will destroy every blocks and kill every living thing in a 7x7x7 area.",
 				"Ritual is consumed."
 		});
-		pagesD[0][1].setImageOffsets(64, 0);
+		pagesD[0][1].setImageOffsets(54, 0);
 		pagesD[0][2].addLines(new String[]{
 				"Tier 2:",
 				"Will destroy every blocks and kill every living thing in a 11x11x11 area.",
 				"Ritual is consumed."
 		});
-		pagesD[0][3].setImageOffsets(64, 0);
+		pagesD[0][3].setImageOffsets(54, 0);
 		pagesD[0][4].addLines(new String[]{
 				"Tier 3:",
 				"Will destroy every blocks and kill every living thing in a 19x19x19 area.",
 				"Ritual is consumed."
 		});
-		pagesD[0][5].setImageOffsets(64, 0);
-		
-		pagesD[1][0].addText("The Birth of the Foutain is a ritual that converts power of existence of nearby beings into " +
-							"a self-sustaining mass of power of existence. It takes the shape of a cobblestone Graal since " +
-							"cobblestone is the most common ressource and easiest to create with the power of existence.");
-		pagesD[1][1].addText("The color of its content indicates how rich the fountain currently is. Green means close to empty while " +
-							"dark blue means it is nearing its max capacity.");
-		pagesD[1][2].setImageOffsets(-64, 0);
+		pagesD[0][5].setImageOffsets(54, 0);
 
 		Page[][] pagesL = {
 				{
@@ -144,18 +140,18 @@ public class GuiRitualTome extends GuiTomeTemplate{
 				"Tier 1:",
 				"Will kill every monster above the catalyst in a 1x1x3."
 		});
-		pagesL[0][1].setImageOffsets(64, 0);
+		pagesL[0][1].setImageOffsets(54, 0);
 		pagesL[0][2].addLines(new String[]{
 				"Tier 2:",
 				"Will kill every monster above the catalyst in a 3x3x11 area."
 		});
-		pagesL[0][3].setImageOffsets(64, 0);
+		pagesL[0][3].setImageOffsets(54, 0);
 		pagesL[0][4].addLines(new String[]{
 				"Tier 3:",
 				"Will kill every monster above the catalyst in a 7x7 area.",
 				"Range: World Max Height"
 		});
-		pagesL[0][5].setImageOffsets(64, 0);
+		pagesL[0][5].setImageOffsets(54, 0);
 
 		Page[][] pagesF = {
 				{
@@ -170,19 +166,19 @@ public class GuiRitualTome extends GuiTomeTemplate{
 				"Will convert Water to Obsidian in a 19x19x19 area under the ritual.",
 				"Ritual is consumed."
 		});
-		pagesF[0][1].setImageOffsets(64, 0);
+		pagesF[0][1].setImageOffsets(54, 0);
 		pagesF[0][2].addLines(new String[]{
 				"Tier 2:",
 				"Will create a 9x9x19 lava pool.",
 				"Ritual is consumed."
 		});
-		pagesF[0][3].setImageOffsets(64, 0);
+		pagesF[0][3].setImageOffsets(54, 0);
 		pagesF[0][4].addLines(new String[]{
 				"Tier 3: DISABLED.",
 				"Will make a Volcano emerge.",
 				"Ritual is consumed."
 		});
-		pagesF[0][5].setImageOffsets(64, 0);
+		pagesF[0][5].setImageOffsets(54, 0);
 		
 		Page[][] pagesW = {
 				{
@@ -196,18 +192,18 @@ public class GuiRitualTome extends GuiTomeTemplate{
 				"Tier 1:",
 				"Places water underneath in a 3x3 area."
 		});
-		pagesW[0][1].setImageOffsets(64, 0);
+		pagesW[0][1].setImageOffsets(54, 0);
 		pagesW[0][2].addLines(new String[]{
 				"Tier 2:",
 				"Places water underneath in a 7x7 area."
 		});
-		pagesW[0][3].setImageOffsets(64, 0);
+		pagesW[0][3].setImageOffsets(54, 0);
 		pagesW[0][4].addLines(new String[]{
 				"Tier 3: DISABLED.",
 				"Replaces blocks underneath with water in a 19x19 area.",
 				"Ritual is consumed."
 		});
-		pagesW[0][5].setImageOffsets(64, 0);
+		pagesW[0][5].setImageOffsets(54, 0);
 		
 		Page[][] pagesE = {
 				{
@@ -221,58 +217,99 @@ public class GuiRitualTome extends GuiTomeTemplate{
 				"Closes all the gaps underneath the ritual in a 3x3 area.",
 				"Good for closing caves. Ritual is consumed."
 		});
-		pagesE[0][1].setImageOffsets(64, 0);
+		pagesE[0][1].setImageOffsets(54, 0);
 		pagesE[0][2].addLines(new String[]{
 				"Tier 2:",
 				"Closes all the gaps underneath the ritual in a 7x7 area.",
 				"Good for closing caves. Ritual is consumed."
 		});
-		pagesE[0][3].setImageOffsets(64, 0);
+		pagesE[0][3].setImageOffsets(54, 0);
 		pagesE[0][4].addLines(new String[]{
 				"Tier 3: DISABLED.",
 				"Closes all the gaps underneath the ritual in a 11x11 area.",
 				"Good for closing caves. Ritual is consumed."
 		});
-		pagesE[0][5].setImageOffsets(64, 0);
+		pagesE[0][5].setImageOffsets(54, 0);
 		
 		Page[][] pagesP = {
 				{
-					new Page(Type.TEXT)
+					new Page(Type.TEXT),new Page(Type.TEXT)
 				},{
 					new Page(Type.TEXT),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existenceBurner), new ItemStack[]{
 						new ItemStack(Items.emerald),new ItemStack(Blocks.anvil),new ItemStack(Items.emerald)
+					})),new Page(Type.TEXT),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existenceDynamicBurner), CompatibilityHandler.te ?
+							new ItemStack[]{new ItemStack(TMBlocks.existenceBurner), ThermalExpansion.frameMachineBasic, ThermalExpansion.powerCoilSilver} :
+								new ItemStack[]{new ItemStack(TMBlocks.existenceBurner), new ItemStack(Items.redstone), new ItemStack(Blocks.piston)}))
+				},{
+					new Page(Type.TEXT),new Page(Type.TEXT),new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.FT))),
+				},{
+					new Page(Type.TEXT),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existencePylon), new ItemStack[]{
+						new ItemStack(Items.redstone),new ItemStack(Items.redstone),new ItemStack(Items.redstone),
+						new ItemStack(Items.redstone),new ItemStack(Items.emerald),new ItemStack(Items.redstone),
+						new ItemStack(Items.redstone),new ItemStack(Blocks.piston),new ItemStack(Items.redstone)
+					})),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existencePylon, 1, 1), new ItemStack[]{
+						new ItemStack(Items.diamond),new ItemStack(TMBlocks.existencePylon, 1, 0)
+					})),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existencePylon, 1, 2), new ItemStack[]{
+						new ItemStack(Items.ender_pearl),new ItemStack(Items.diamond),new ItemStack(TMBlocks.existencePylon, 1, 1)
+					}))
+				},{
+					new Page(Type.TEXT),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existenceCropAcc), new ItemStack[]{
+						null,new ItemStack(Items.golden_carrot),null,
+						new ItemStack(Items.golden_apple), new ItemStack(Items.emerald), new ItemStack(Items.golden_apple),
+						null,new ItemStack(Items.golden_carrot),null
 					}))
 				}
 		};
 		pagesP[0][0].addText("Every living being comes from a single source: Power of Existence. This Power is the very root of any existence " +
 							"hence its name. A small amount of it is present in each being. When a large amount of it is focused in one place it becomes " +
 							"rather dangerous but there exists ways to prevent instability.");
+		pagesP[0][1].addText("You have discovered that emeraulds are a particularly great catalyst. It seems this particular gem has a very high amount " +
+							"of power stored inside it. Maybe this is a clue that can help you master this power.");
 		pagesP[1][0].addText("You have found a way to collect a meek amount of existence and store it in a single device. The power is collected from " +
 							"nearby creatures. Unfortunately you have also discovered that doing so kills off these creatures. Apparently, the smarter the " +
 							"creature the more power it has.");
+		pagesP[1][2].addText("You have found a way to make existence collecting much more efficient. It seems raw energy allows to amplify the power collect from" +
+							"nearby creatures. Pumping RF into a Dynamic Burner allows the device to draw more power. Unfortunately the RF seems to overwhelmed" +
+							"and voided by the Power of Existence.");
+		pagesP[2][0].addText("The Birth of the Foutain is a ritual that converts power of existence of nearby beings into " +
+							"a self-sustaining mass of power of existence. It takes the shape of a cobblestone Graal since " +
+							"this shape is supposedly the best for holding nonsense.");
+		pagesP[2][1].addText("The color of its content indicates how rich the fountain currently is. Green means close to empty while " +
+							"dark blue means it is nearing its max capacity.");
+		pagesP[2][2].setImageOffsets(-64, 0);
+		pagesP[3][0].addText("Using emeraulds have proven to be a good way to allow the transfer of Power. Your device, the Pylons have an inherent ability " +
+							"to draw Power where it is highly focused and to disperse it wher it is not. There seems to be ways to upgrade the emeraulds' " +
+							"power by coupling it with other Powerful items.");
+		pagesP[4][0].addText("It seems crops react in an... interesting way to Power of Existence. Your new device uses the Power of Existence to accelerate " +
+							"crop growth in a 9x9 area. It must be placed underneath the soil so it is rather convinient.");
 		
 		
+		ArrayList<String> bof = new ArrayList<String>();
+		bof.add("Birth of the");
+		bof.add("Fountain");
 		
 		ButtonEntry but[][] = {
 				{
-					new ButtonEntry(30, 12, "Introduction", 0, pages101[0]),
-					new ButtonEntry(30, 20, "Crystal Blocks", 1, pages101[1]),
-					new ButtonEntry(30, 28, "Catalysts", 2, pages101[2]),
+					new ButtonEntry("Introduction", pages101[0]),
+					new ButtonEntry("Crystal Blocks", pages101[1]),
+					new ButtonEntry("Catalysts", pages101[2]),
 				},
 				{
-					new ButtonEntry(30, 12, "Black Hole", 0, pagesD[0]),
-					new ButtonEntry(30, 20, "Birth of the Fountain", 0, pagesD[1])
+					new ButtonEntry("Black Hole", pagesD[0]),
 				},{
-					new ButtonEntry(30, 12, "Purification", 0, pagesL[0]),
+					new ButtonEntry("Purification", pagesL[0]),
 				},{
-					new ButtonEntry(30, 12, "Fire", 0, pagesF[0])
+					new ButtonEntry("Fire", pagesF[0])
 				},{
-					new ButtonEntry(30, 12, "Water", 0, pagesW[0])
+					new ButtonEntry("Water", pagesW[0])
 				},{
-					new ButtonEntry(30, 12, "Collapse", 0, pagesE[0]),
+					new ButtonEntry("Collapse", pagesE[0]),
 				},{
-					new ButtonEntry(30, 12, "Power of Existence", 0, pagesP[0]),
-					new ButtonEntry(30, 12, "Farming Power", 0, pagesP[1])
+					new ButtonEntry("Power of Existence", pagesP[0]),
+					new ButtonEntry("Farming Power", pagesP[1]),
+					new ButtonEntry(bof, pagesP[2]),
+					new ButtonEntry("Pylons", pagesP[3]),
+					new ButtonEntry("Better Farming", pagesP[4])
 				}
 		};
 

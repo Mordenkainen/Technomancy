@@ -10,6 +10,7 @@ import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.items.base.TMItems;
 import theflogat.technomancy.common.items.technom.ItemProcessedOre;
 import theflogat.technomancy.lib.Ids;
+import theflogat.technomancy.lib.compat.ThermalExpansion;
 import theflogat.technomancy.util.Ore;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -37,27 +38,27 @@ public class CraftingHandler {
 			});
 
 		if(Ids.crystalBlock){
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.crystalBlock, 1, 0), new Object[]{
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.crystalBlock, 3, 0), new Object[]{
 				"GR ",
 				"RG ",
 				'G', Items.glowstone_dust, 'R', "dyeBlack"
 			}));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.crystalBlock, 1, 1), new Object[]{
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.crystalBlock, 3, 1), new Object[]{
 				"GR ",
 				"RG ",
 				'G', Items.glowstone_dust, 'R', "dyeWhite"
 			}));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.crystalBlock, 1, 2), new Object[]{
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.crystalBlock, 3, 2), new Object[]{
 				"GR ",
 				"RG ",
 				'G', Items.glowstone_dust, 'R', "dyeRed"
 			}));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.crystalBlock, 1, 3), new Object[]{
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.crystalBlock, 3, 3), new Object[]{
 				"GR ",
 				"RG ",
 				'G', Items.glowstone_dust, 'R', "dyeGreen"
 			}));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.crystalBlock, 1, 4), new Object[]{
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.crystalBlock, 3, 4), new Object[]{
 				"GR ",
 				"RG ",
 				'G', Items.glowstone_dust, 'R', "dyeBlue"
@@ -126,6 +127,39 @@ public class CraftingHandler {
 				"   ",
 				"   ",
 				'E', Items.emerald, 'A', Blocks.anvil
+			});
+		}
+		if(Ids.existenceDynamicBurner){
+			if(CompatibilityHandler.te){
+				GameRegistry.addShapelessRecipe(new ItemStack(TMBlocks.existenceDynamicBurner, 1), new Object[]{
+					TMBlocks.existenceBurner, ThermalExpansion.frameMachineBasic, ThermalExpansion.powerCoilSilver
+				});
+			} else {
+				GameRegistry.addShapelessRecipe(new ItemStack(TMBlocks.existenceDynamicBurner, 1), new Object[]{
+					TMBlocks.existenceBurner, Items.redstone, Blocks.piston
+				});
+			}
+		}
+		if(Ids.existenceCropAcc){
+			GameRegistry.addRecipe(new ItemStack(TMBlocks.existenceCropAcc, 1), new Object[]{
+				" A ",
+				"BGB",
+				" A ",
+				'G', Items.emerald, 'B', Items.golden_apple, 'A', Items.golden_carrot
+			});
+		}
+		if(Ids.existencePylon){
+			GameRegistry.addRecipe(new ItemStack(TMBlocks.existencePylon, 1, 0), new Object[]{
+				"RRR",
+				"RER",
+				"RPR",
+				'R', Items.redstone, 'E', Items.emerald, 'P', Blocks.piston
+			});
+			GameRegistry.addShapelessRecipe(new ItemStack(TMBlocks.existencePylon, 1, 1), new Object[]{
+				Items.diamond, new ItemStack(TMBlocks.existencePylon, 1, 0)
+			});
+			GameRegistry.addShapelessRecipe(new ItemStack(TMBlocks.existencePylon, 1, 2), new Object[]{
+				Items.ender_pearl, Items.diamond, new ItemStack(TMBlocks.existencePylon, 1, 1)
 			});
 		}
 	}

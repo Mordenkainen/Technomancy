@@ -4,7 +4,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import theflogat.technomancy.common.tiles.base.TileTechnomancyRedstone;
 
-public class TileExistencePylon extends TileTechnomancyRedstone implements IExistenceTransmitter{
+public class TileExistencePylon extends TileTechnomancyRedstone implements IExistenceTransmitter, IExistenceProducer{
 	
 	public enum Type {
 		BASIC(5, 0),
@@ -106,5 +106,30 @@ public class TileExistencePylon extends TileTechnomancyRedstone implements IExis
 	@Override
 	public int getMaxRate() {
 		return transferRate.tRate;
+	}
+
+	@Override
+	public int getPower() {
+		return power;
+	}
+
+	@Override
+	public int getPowerCap() {
+		return transferRate.tRate;
+	}
+
+	@Override
+	public void addPower(int val) {
+		power += val;
+	}
+
+	@Override
+	public boolean canInput() {
+		return false;
+	}
+
+	@Override
+	public boolean canOutput() {
+		return power>0;
 	}
 }

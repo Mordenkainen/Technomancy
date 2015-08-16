@@ -1,5 +1,6 @@
 package theflogat.technomancy.common.blocks.technom.existence;
 
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import theflogat.technomancy.common.blocks.base.BlockContainerBase;
@@ -11,6 +12,11 @@ public class BlockExistenceBurner extends BlockContainerBase{
 	
 	public BlockExistenceBurner() {
 		setBlockName(Ref.getId(Names.existenceBurner));
+	}
+	
+	@Override
+	public void registerBlockIcons(IIconRegister reg) {
+		blockIcon = reg.registerIcon(Ref.getAsset(Names.existenceBurner));
 	}
 
 	@Override
