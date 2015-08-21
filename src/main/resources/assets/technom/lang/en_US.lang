@@ -61,8 +61,8 @@ tile.techno:itemTransmitter.name=Item Coil
 tile.techno:basalt.name=Basalt
 tile.techno:fusor.name=Essentia Fusor
 tile.techno:existencePylon.name=Existence Pylon
-tile.techno:existenceBurner.name=Existence Burner
-tile.techno:existenceDynamicBurner.name=Dynamic Existence Burner
+techno:existenceBurner.name=Existence Burner
+techno:existenceDynamicBurner.name=Dynamic Existence Burner
 tile.techno:existenceCropAcc.name=Existence Crop Fertiliser
 tile.techno:existenceFountain.name=Fountain of Existence
 

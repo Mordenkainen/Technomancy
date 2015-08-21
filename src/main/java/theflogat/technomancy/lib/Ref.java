@@ -39,6 +39,8 @@ public class Ref {
 	public static final String MODEL_CATALYST_TEXTURE = MODEL_PREFIX + "catalyst.png";
 	public static final String MODEL_FUSOR_TEXTURE = MODEL_PREFIX + "fusor.png";
 	public static final String MODEL_COBBLEM_TEXTURE = MODEL_PREFIX + "fountain.png";
+	public static final String MODEL_ANVIL_TEXTURE = MODEL_PREFIX + "anvil.png";
+	public static final String MODEL_BRF_TEXTURE = MODEL_PREFIX + "bottomRF.png";
 	public static final String MODEL_EXISTENCE_TEXTURE = MODEL_PREFIX + "existence.png";
 	
 	//GUI Textures

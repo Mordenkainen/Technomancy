@@ -13,12 +13,12 @@ import theflogat.technomancy.common.blocks.technom.BlockCrystal;
 import theflogat.technomancy.common.blocks.technom.BlockItemTransmitter;
 import theflogat.technomancy.common.blocks.technom.existence.BlockExistenceBurner;
 import theflogat.technomancy.common.blocks.technom.existence.BlockExistenceCropAccelerator;
-import theflogat.technomancy.common.blocks.technom.existence.BlockExistenceDynamicBurner;
 import theflogat.technomancy.common.blocks.technom.existence.BlockExistenceFountain;
 import theflogat.technomancy.common.blocks.technom.existence.BlockExistencePylon;
 import theflogat.technomancy.common.items.base.ItemAdvancedBase;
 import theflogat.technomancy.common.items.technom.ItemCatalyst;
 import theflogat.technomancy.common.items.technom.ItemCrystal;
+import theflogat.technomancy.common.items.technom.existence.ItemBlockExistenceBurner;
 import theflogat.technomancy.common.items.technom.existence.ItemBlockExistencePylon;
 import theflogat.technomancy.common.rituals.b.RitualBlackHoleT1;
 import theflogat.technomancy.common.rituals.b.RitualBlackHoleT2;
@@ -88,7 +88,6 @@ public class TMBlocks {
 	public static Block	existenceBurner;
 	public static Block existencePylon;
 	public static Block existenceCropAcc;
-	public static Block existenceDynamicBurner;
 	
 	public static Fluid manaFluid;
 	
@@ -102,7 +101,6 @@ public class TMBlocks {
 		existenceBurner = Ids.existenceBurner ? new BlockExistenceBurner() : null;
 		existencePylon = Ids.existencePylon ? new BlockExistencePylon() : null;
 		existenceCropAcc = Ids.existenceCropAcc ? new BlockExistenceCropAccelerator() : null;
-		existenceDynamicBurner = Ids.existenceDynamicBurner ? new BlockExistenceDynamicBurner() : null;
 		
 		
 		registerBlock(crystalBlock, Names.crystalBlock, ItemCrystal.class);
@@ -111,10 +109,9 @@ public class TMBlocks {
 		registerBlock(itemTransmitter, Names.itemTransmitter);
 		registerBlock(basalt, Names.basalt);
 		registerBlock(fountainExistence, Names.existenceFountain);
-		registerBlock(existenceBurner, Names.existenceBurner);
+		registerBlock(existenceBurner, Names.existenceBurner[0], ItemBlockExistenceBurner.class);
 		registerBlock(existencePylon, Names.existencePylon, ItemBlockExistencePylon.class);
 		registerBlock(existenceCropAcc, Names.existenceCropAcc);
-		registerBlock(existenceDynamicBurner, Names.existenceDynamicBurner);
 		
 		
 		OreDictionary.registerOre("basalt", basalt);

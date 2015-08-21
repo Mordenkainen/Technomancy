@@ -45,6 +45,7 @@ public class TileExistencePylon extends TileTechnomancyRedstone implements IExis
 		
 		if(power<transferRate.tRate){
 			input();
+			transfert();
 		}
 		if(power>0){
 			output();
@@ -56,7 +57,27 @@ public class TileExistencePylon extends TileTechnomancyRedstone implements IExis
 			for(int zz =-7; zz<=7; zz++){
 				for(int yy =-1; yy<=1; yy++){
 					TileEntity te = worldObj.getTileEntity(xCoord + xx, yCoord + yy, zCoord + zz);
-					if(te!=null && te instanceof IExistenceProducer){
+					if(te!=null && te instanceof IExistenceProducer && !(te instanceof IExistenceTransmitter)){
+						IExistenceProducer ex = (IExistenceProducer)te;
+						if(ex.canOutput()){
+							int t = Math.min(transferRate.tRate - power, Math.min(ex.getMaxRate(), ex.getPower()));
+							if(t>0){
+								ex.addPower(-t);
+								power += t;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	private void transfert(){
+		for(int xx =-7; xx<=7; xx++){
+			for(int zz =-7; zz<=7; zz++){
+				for(int yy =-1; yy<=1; yy++){
+					TileEntity te = worldObj.getTileEntity(xCoord + xx, yCoord + yy, zCoord + zz);
+					if(te!=null && te instanceof IExistenceProducer && te instanceof IExistenceTransmitter){
 						IExistenceProducer ex = (IExistenceProducer)te;
 						if(ex.canOutput()){
 							int t = Math.min(transferRate.tRate - power, Math.min(ex.getMaxRate(), ex.getPower()));

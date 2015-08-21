@@ -13,6 +13,7 @@ import theflogat.technomancy.client.gui.tome.render.pages.Page.Type;
 import theflogat.technomancy.client.gui.tome.render.pages.PageRecipeInst;
 import theflogat.technomancy.client.gui.tome.render.pages.PageRecipeMult;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
+import theflogat.technomancy.common.items.base.TMItems;
 import theflogat.technomancy.common.items.tome.ItemRitualTome.Res;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.compat.ThermalExpansion;
@@ -233,11 +234,15 @@ public class GuiRitualTome extends GuiTomeTemplate{
 		
 		Page[][] pagesP = {
 				{
-					new Page(Type.TEXT),new Page(Type.TEXT)
+					new Page(Type.TEXT),new Page(Type.TEXT),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMItems.exGem, 1, 100), new ItemStack[]{
+						null,new ItemStack(Items.gold_nugget),null,
+						new ItemStack(Items.gold_nugget),new ItemStack(Items.emerald),new ItemStack(Items.gold_nugget),
+						null,new ItemStack(Items.gold_nugget),null
+					}))
 				},{
 					new Page(Type.TEXT),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existenceBurner), new ItemStack[]{
 						new ItemStack(Items.emerald),new ItemStack(Blocks.anvil),new ItemStack(Items.emerald)
-					})),new Page(Type.TEXT),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existenceDynamicBurner), CompatibilityHandler.te ?
+					})),new Page(Type.TEXT),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existenceBurner, 1, 1), CompatibilityHandler.te ?
 							new ItemStack[]{new ItemStack(TMBlocks.existenceBurner), ThermalExpansion.frameMachineBasic, ThermalExpansion.powerCoilSilver} :
 								new ItemStack[]{new ItemStack(TMBlocks.existenceBurner), new ItemStack(Items.redstone), new ItemStack(Blocks.piston)}))
 				},{
@@ -264,7 +269,8 @@ public class GuiRitualTome extends GuiTomeTemplate{
 							"hence its name. A small amount of it is present in each being. When a large amount of it is focused in one place it becomes " +
 							"rather dangerous but there exists ways to prevent instability.");
 		pagesP[0][1].addText("You have discovered that emeraulds are a particularly great catalyst. It seems this particular gem has a very high amount " +
-							"of power stored inside it. Maybe this is a clue that can help you master this power.");
+							"of power stored inside it. Maybe this is a clue that can help you master this power. You decide to experiment a little " +
+							"and manage to create a gem that can store a small amount of existence.");
 		pagesP[1][0].addText("You have found a way to collect a meek amount of existence and store it in a single device. The power is collected from " +
 							"nearby creatures. Unfortunately you have also discovered that doing so kills off these creatures. Apparently, the smarter the " +
 							"creature the more power it has.");
@@ -287,6 +293,7 @@ public class GuiRitualTome extends GuiTomeTemplate{
 		ArrayList<String> bof = new ArrayList<String>();
 		bof.add("Birth of the");
 		bof.add("Fountain");
+		
 		
 		ButtonEntry but[][] = {
 				{

@@ -51,8 +51,7 @@ public class ConfigHandler {
         Ids.basalt = config.get(blocks, Names.basalt, true).getBoolean();
         Ids.fusor = config.get(blocks, Names.fusor, true).getBoolean();
         Ids.existenceFountain = config.get(blocks, Names.existenceFountain, true).getBoolean();
-        Ids.existenceBurner = config.get(blocks, Names.existenceBurner, true).getBoolean();
-        Ids.existenceDynamicBurner = config.get(blocks, Names.existenceDynamicBurner, true).getBoolean();
+        Ids.existenceBurner = config.get(blocks, Names.existenceBurner[0], true).getBoolean();
         Ids.existencePylon = config.get(blocks, Names.existencePylon, true).getBoolean();
         Ids.existenceCropAcc = config.get(blocks, Names.existenceCropAcc, true).getBoolean();
         
@@ -69,6 +68,8 @@ public class ConfigHandler {
         Ids.ritualTome = config.get(items, Names.ritualTome, true).getBoolean();
         Ids.coilCoupler = config.get(items, Names.coilCoupler, true).getBoolean();
         Ids.scepter = config.get(items, Names.scepter, true).getBoolean();
+        Ids.exGem = config.get(items, Names.exGem, true).getBoolean();
+        Ids.treasures = config.get(items, "treasures", true).getBoolean();
 
         //Recipe Whatnots
         Conf.bonus = config.get("Recipes", "Add/Increase Smelting bonus to dusts/ore", Conf.bonus).getBoolean(Conf.bonus);

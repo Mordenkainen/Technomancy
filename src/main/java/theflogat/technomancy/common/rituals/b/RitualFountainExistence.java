@@ -2,8 +2,6 @@ package theflogat.technomancy.common.rituals.b;
 
 import java.util.ArrayList;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
@@ -12,6 +10,7 @@ import theflogat.technomancy.api.rituals.IRitualEffectHandler;
 import theflogat.technomancy.api.rituals.Ritual;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
+import theflogat.technomancy.lib.handlers.ExistenceConversion;
 
 public class RitualFountainExistence extends Ritual implements IRitualEffectHandler  {
 
@@ -44,8 +43,7 @@ public class RitualFountainExistence extends Ritual implements IRitualEffectHand
 				if(!ent.isEntityInvulnerable() && !(ent instanceof EntityPlayer)) {
 					ent.onDeath(DamageSource.generic);
 					ent.setDead();
-					te.data[0] = ((Integer)te.data[0]).intValue() + (ent instanceof EntityVillager ? 50 :
-						(EnumCreatureType.monster.getCreatureClass().isAssignableFrom(ent.getClass()) ? 1 : 5));
+					te.data[0] = ((Integer)te.data[0]).intValue() + ExistenceConversion.getValue(ent);
 				}
 			}
 		}

@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
+import net.minecraftforge.common.util.ForgeDirection;
 import theflogat.technomancy.common.tiles.base.TileMachineRedstone;
 
 public class TileExistenceDynamicBurner extends TileMachineRedstone implements IExistenceProducer{
@@ -39,6 +40,11 @@ public class TileExistenceDynamicBurner extends TileMachineRedstone implements I
 		if(power>maxPower){
 			power = maxPower;
 		}
+	}
+	
+	@Override
+	public boolean canConnectEnergy(ForgeDirection from) {
+		return from==ForgeDirection.DOWN;
 	}
 	
 	@Override
@@ -75,7 +81,7 @@ public class TileExistenceDynamicBurner extends TileMachineRedstone implements I
 
 	@Override
 	public boolean canOutput() {
-		return true;
+		return power>0;
 	}
 
 	@Override

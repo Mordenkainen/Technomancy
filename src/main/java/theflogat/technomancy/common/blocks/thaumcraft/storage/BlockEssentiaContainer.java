@@ -1,7 +1,6 @@
 package theflogat.technomancy.common.blocks.thaumcraft.storage;
 
 import java.util.ArrayList;
-
 import net.minecraft.block.BlockContainer;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;

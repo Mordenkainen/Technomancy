@@ -23,4 +23,5 @@ public class RenderIds {
 	public static int idEssentiaFusor;
 	public static int idExFountain;
 	public static int idExPylon;
+	public static int idExBurner;
 }

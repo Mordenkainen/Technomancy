@@ -21,6 +21,9 @@ public class TileExistenceBurner extends TileTechnomancyRedstone implements IExi
 	
 	@Override
 	public void updateEntity() {
+		if(blockMetadata==1){
+			worldObj.setTileEntity(xCoord, yCoord, zCoord, new TileExistenceDynamicBurner());
+		}
 		if(set.canRun(this) && power<maxPower){
 			@SuppressWarnings("unchecked")
 			ArrayList<EntityLivingBase> e = (ArrayList<EntityLivingBase>) worldObj.getEntitiesWithinAABB(EntityLivingBase.class,

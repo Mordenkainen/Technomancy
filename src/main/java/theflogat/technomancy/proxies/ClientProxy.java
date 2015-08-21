@@ -18,6 +18,7 @@ import theflogat.technomancy.client.blocks.BlockEssentiaContainerRenderer;
 import theflogat.technomancy.client.blocks.BlockEssentiaDynamoRenderer;
 import theflogat.technomancy.client.blocks.BlockEssentiaFusorRenderer;
 import theflogat.technomancy.client.blocks.BlockEssentiaTransmitterRenderer;
+import theflogat.technomancy.client.blocks.BlockExistenceBurnerRenderer;
 import theflogat.technomancy.client.blocks.BlockExistenceFountainRenderer;
 import theflogat.technomancy.client.blocks.BlockExistencePylonRenderer;
 import theflogat.technomancy.client.blocks.BlockFlowerDynamoRenderer;
@@ -43,6 +44,7 @@ import theflogat.technomancy.client.tiles.TileEssentiaContainerRenderer;
 import theflogat.technomancy.client.tiles.TileEssentiaDynamoRenderer;
 import theflogat.technomancy.client.tiles.TileEssentiaFusorRenderer;
 import theflogat.technomancy.client.tiles.TileEssentiaTransmitterRenderer;
+import theflogat.technomancy.client.tiles.TileExistenceBurnerRenderer;
 import theflogat.technomancy.client.tiles.TileExistenceFountainRenderer;
 import theflogat.technomancy.client.tiles.TileExistencePylonRenderer;
 import theflogat.technomancy.client.tiles.TileFlowerDynamoRenderer;
@@ -61,6 +63,8 @@ import theflogat.technomancy.common.tiles.botania.machines.TileManaFabricator;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import theflogat.technomancy.common.tiles.technom.TileCrystal;
 import theflogat.technomancy.common.tiles.technom.TileItemTransmitter;
+import theflogat.technomancy.common.tiles.technom.existence.TileExistenceBurner;
+import theflogat.technomancy.common.tiles.technom.existence.TileExistenceDynamicBurner;
 import theflogat.technomancy.common.tiles.technom.existence.TileExistenceFountain;
 import theflogat.technomancy.common.tiles.technom.existence.TileExistencePylon;
 import theflogat.technomancy.common.tiles.thaumcraft.dynamos.TileEssentiaDynamo;
@@ -106,11 +110,17 @@ public class ClientProxy extends CommonProxy implements IGuiHandler{
 		ClientRegistry.bindTileEntitySpecialRenderer(TileExistencePylon.class, new TileExistencePylonRenderer());
 		RenderIds.idExPylon = RenderingRegistry.getNextAvailableRenderId();
 		
+		TileExistenceBurnerRenderer rendBurner = new TileExistenceBurnerRenderer();
+		ClientRegistry.bindTileEntitySpecialRenderer(TileExistenceBurner.class, rendBurner);
+		ClientRegistry.bindTileEntitySpecialRenderer(TileExistenceDynamicBurner.class, rendBurner);
+		RenderIds.idExBurner = RenderingRegistry.getNextAvailableRenderId();
+		
 		RenderingRegistry.registerBlockHandler(new BlockCrystalRenderer());
 		RenderingRegistry.registerBlockHandler(new BlockCatalystRenderer());
     	RenderingRegistry.registerBlockHandler(new BlockItemTransmitterRenderer());
     	RenderingRegistry.registerBlockHandler(new BlockExistenceFountainRenderer());
     	RenderingRegistry.registerBlockHandler(new BlockExistencePylonRenderer());
+    	RenderingRegistry.registerBlockHandler(new BlockExistenceBurnerRenderer());
     	
     	if(CompatibilityHandler.th) {
     		ClientRegistry.bindTileEntitySpecialRenderer(TileNodeDynamo.class, new TileNodeDynamoRenderer());
