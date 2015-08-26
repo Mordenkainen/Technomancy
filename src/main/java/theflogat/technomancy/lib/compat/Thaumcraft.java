@@ -409,7 +409,7 @@ public class Thaumcraft extends ModuleBase {
 						new ItemStack(ThermalExpansion.blockCell, 1, 3)}));
 			}
 			if(Ids.wandCores) {
-				TechnoResearch.recipes.put("EnergizedWandRod", ThaumcraftApi.addInfusionCraftingRecipe("ENERGIZEDWAND",
+				TechnoResearch.recipes.put("EnergizedWandRod", ThaumcraftApi.addInfusionCraftingRecipe("ROD_electric",
 						new ItemStack(TMItems.itemWandCores, 1, 0), 8, new AspectList().add(Aspect.ENERGY, 50).add(Aspect.TOOL, 50)
 						.add(Aspect.MAGIC, 50).add(Aspect.MECHANISM, 50).add(Aspect.EXCHANGE,50),new ItemStack(Thaumcraft.itemWandRod, 1, 2),
 						new ItemStack[] { new ItemStack((ThermalExpansion.capacitorResonant).getItem(), 1, 4), new ItemStack(
@@ -463,7 +463,7 @@ public class Thaumcraft extends ModuleBase {
 						Mekanism.energyCube}));
 			}
 			if(Ids.wandCores) {
-				TechnoResearch.recipes.put("EnergizedWandRod", ThaumcraftApi.addInfusionCraftingRecipe("ENERGIZEDWAND",
+				TechnoResearch.recipes.put("EnergizedWandRod", ThaumcraftApi.addInfusionCraftingRecipe("ROD_electric",
 						new ItemStack(TMItems.itemWandCores, 1, 0), 8, new AspectList().add(Aspect.ENERGY, 50).add(Aspect.TOOL, 50)
 						.add(Aspect.MAGIC, 50).add(Aspect.MECHANISM, 50).add(Aspect.EXCHANGE,50),new ItemStack(Thaumcraft.itemWandRod, 1, 2),
 						new ItemStack[] { Mekanism.lithiumDust, Mekanism.lithiumDust, Mekanism.lithiumDust,
@@ -516,7 +516,7 @@ public class Thaumcraft extends ModuleBase {
 						new ItemStack(Blocks.gold_block, 1, 0)}));
 			}
 			if(Ids.wandCores) {
-				TechnoResearch.recipes.put("EnergizedWandRod", ThaumcraftApi.addInfusionCraftingRecipe("ENERGIZEDWAND",
+				TechnoResearch.recipes.put("EnergizedWandRod", ThaumcraftApi.addInfusionCraftingRecipe("ROD_electric",
 						new ItemStack(TMItems.itemWandCores, 1), 8,
 						new AspectList().add(Aspect.ENERGY, 50).add(Aspect.TOOL, 50).add(Aspect.MAGIC, 50).add(Aspect.MECHANISM, 50)
 						.add(Aspect.EXCHANGE, 50),new ItemStack(Thaumcraft.itemWandRod, 1, 2), new ItemStack[] { new ItemStack(Blocks.redstone_block, 1),
