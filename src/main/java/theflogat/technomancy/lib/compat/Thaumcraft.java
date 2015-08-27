@@ -517,10 +517,9 @@ public class Thaumcraft extends ModuleBase {
 			}
 			if(Ids.wandCores) {
 				TechnoResearch.recipes.put("EnergizedWandRod", ThaumcraftApi.addInfusionCraftingRecipe("ENERGIZEDWAND",
-						new ItemStack(TMItems.itemWandCores, 1), 8,
-						new AspectList().add(Aspect.ENERGY, 50).add(Aspect.TOOL, 50).add(Aspect.MAGIC, 50).add(Aspect.MECHANISM, 50)
-						.add(Aspect.EXCHANGE, 50),new ItemStack(Thaumcraft.itemWandRod, 1, 2), new ItemStack[] { new ItemStack(Blocks.redstone_block, 1),
-						new ItemStack(Blocks.gold_block, 1, 193),new ItemStack(TMItems.itemMaterial, 1, 2),
+						new ItemStack(TMItems.itemWandCores, 1), 8, new AspectList().add(Aspect.ENERGY, 50).add(Aspect.TOOL, 50).add(Aspect.MAGIC, 50)
+						.add(Aspect.MECHANISM, 50).add(Aspect.EXCHANGE, 50),new ItemStack(Thaumcraft.itemWandRod, 1, 2), new ItemStack[] {
+						new ItemStack(Blocks.redstone_block, 1), new ItemStack(Blocks.gold_block, 1, 193),new ItemStack(TMItems.itemMaterial, 1, 2),
 						new ItemStack(TMItems.itemMaterial, 1, 1), new ItemStack(TMItems.itemMaterial, 1, 1) }));
 			}
 			if(Ids.condenser) {

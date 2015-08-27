@@ -51,6 +51,7 @@ public class ItemRitualTome extends Item{
 		public static final String W3 = "waterT3"+E;
 		
 		public static final String FT = "fountain"+E;
+		public static final String ET = "extract"+E;
 	}
 	
 }

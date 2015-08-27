@@ -241,7 +241,8 @@ public class GuiRitualTome extends GuiTomeTemplate{
 					}))
 				},{
 					new Page(Type.TEXT),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existenceBurner), new ItemStack[]{
-						new ItemStack(Items.emerald),new ItemStack(Blocks.anvil),new ItemStack(Items.emerald)
+						new ItemStack(TMItems.exGem),null,null,
+						new ItemStack(Blocks.anvil)
 					})),new Page(Type.TEXT),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existenceBurner, 1, 1), CompatibilityHandler.te ?
 							new ItemStack[]{new ItemStack(TMBlocks.existenceBurner), ThermalExpansion.frameMachineBasic, ThermalExpansion.powerCoilSilver} :
 								new ItemStack[]{new ItemStack(TMBlocks.existenceBurner), new ItemStack(Items.redstone), new ItemStack(Blocks.piston)}))
@@ -290,6 +291,21 @@ public class GuiRitualTome extends GuiTomeTemplate{
 							"crop growth in a 9x9 area. It must be placed underneath the soil so it is rather convinient.");
 		
 		
+		Page[][] pagesT = {
+				{
+					new Page(Type.TEXT),new Page(Type.TEXT)
+				},{
+					new Page(Type.TEXT),new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.FT))),
+				}
+		};
+		
+		pagesT[0][0].addText("Some lore that you found in a Village's library seems to indicate that some Villagers have shown overworldly characteristics. " +
+							"They look just like normal Villagers but exihibit incredible capacities. You found a special note indicating that " +
+							"the power comes from some artifacts buried inside the existence mass of Villagers.");
+		pagesT[0][1].addText("You think of a way to extract these artifacts and you conclude that Rituals are your best ally.");
+		pagesT[1][0].addText("The Ritual of Extraction serves to extract artifacts from special Villagers. It is quite unstable and may cause catastrophies " +
+							"if not used correctly.");
+		
 		ArrayList<String> bof = new ArrayList<String>();
 		bof.add("Birth of the");
 		bof.add("Fountain");
@@ -317,6 +333,9 @@ public class GuiRitualTome extends GuiTomeTemplate{
 					new ButtonEntry(bof, pagesP[2]),
 					new ButtonEntry("Pylons", pagesP[3]),
 					new ButtonEntry("Better Farming", pagesP[4])
+				},{
+					new ButtonEntry("Treasures?!?", pagesT[0]),
+					new ButtonEntry("Extraction", pagesT[1])
 				}
 		};
 
@@ -342,6 +361,8 @@ public class GuiRitualTome extends GuiTomeTemplate{
 			return "Earth Rituals";
 		case 6:
 			return "Power of Existence";
+		case 7:
+			return "Treasures";
 		}
 		return "";
 	}

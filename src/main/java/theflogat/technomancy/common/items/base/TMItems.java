@@ -28,7 +28,7 @@ public class TMItems {
     public static Item coilCoupler;
 	public static Item itemTechnoturgeScepter;
 	public static Item exGem;
-	public static Item treasures;
+	public static ItemTreasure treasures;
     
     public static void initTechnomancy() {
         itemBoost = Ids.itemBoost ? new ItemBoost() : null;

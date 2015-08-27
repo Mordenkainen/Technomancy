@@ -26,6 +26,8 @@ item.techno:itemBoost.name=Potency Gem
 item.techno.pure.name=Purified 
 item.techno:manaBucket.name=Mana Condensate Bucket
 item.techno:ritualTome.name=Ritual Tome
+item.techno:existenceGem.name=Existence Gem
+techno:fireGem.name=Fire Gem
 
 #Block Names
 tile.techno:cosmeticOpaque.name=Quantized Glass

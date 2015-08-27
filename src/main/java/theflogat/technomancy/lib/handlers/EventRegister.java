@@ -5,12 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import net.minecraft.block.Block;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
@@ -38,7 +36,7 @@ public class EventRegister {
 
 	public static Map<Block, Item> buckets = new HashMap<Block, Item>();
 	public static Random rand = new Random();
-
+	
 	public EventRegister(){
 		MinecraftForge.EVENT_BUS.register(this);
 	}
@@ -72,14 +70,13 @@ public class EventRegister {
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void onHurt(LivingHurtEvent event){
 		if(event.entityLiving instanceof EntityVillager && event.entityLiving.getEntityData().hasKey("treasure")){
-			if(event.source.isFireDamage()){
-				if(event.entityLiving.getEntityData().getString("treasure").contains(Names.treasures[0])){
-					event.setCanceled(true);
-				}
-			}
-			if(event.source instanceof EntityDamageSource){
-				if(event.entityLiving.getEntityData().getString("treasure").contains(Names.treasures[0])){
-					((EntityDamageSource)event.source).getEntity().setFire(15);
+			TMItems.treasures.onUserHit(event, TMItems.treasures.getTreasureId(event.entityLiving.getEntityData().getString("treasure")));
+		}else if(event.entityLiving instanceof EntityPlayer && ((EntityPlayer)event.entityLiving).inventory.hasItem(TMItems.treasures)){
+			EntityPlayer player = ((EntityPlayer)event.entityLiving);
+			for(int i=0;i<player.inventory.mainInventory.length;i++){
+				ItemStack stack = player.inventory.mainInventory[i];
+				if(stack!=null && stack.getItem()==TMItems.treasures){
+					TMItems.treasures.onUserHit(event, stack.getItemDamage());
 				}
 			}
 		}
@@ -88,17 +85,8 @@ public class EventRegister {
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void entityDeath(LivingDeathEvent event){
 		if(event.entityLiving instanceof EntityVillager && event.entityLiving.getEntityData().hasKey("treasure")){
-			if(event.entityLiving.getEntityData().getString("treasure").contains(Names.treasures[0])){
-				event.entityLiving.worldObj.createExplosion(event.entityLiving, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, 30, true);
-				ArrayList<EntityLivingBase> l = (ArrayList<EntityLivingBase>) event.entityLiving.worldObj.getEntitiesWithinAABB(EntityLivingBase.class,
-						AxisAlignedBB.getBoundingBox(event.entityLiving.posX-25, event.entityLiving.posY-25, event.entityLiving.posZ-25,
-						event.entityLiving.posX+25, event.entityLiving.posY+25, event.entityLiving.posZ+25));
-				for(EntityLivingBase ent:l){
-					if(!ent.isEntityInvulnerable()){
-						ent.setFire(120);
-					}
-				}
-			}
+			TMItems.treasures.onTreasureDestroyed(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, 
+					event.entityLiving, TMItems.treasures.getTreasureId(event.entityLiving.getEntityData().getString("treasure")));
 		}
 		if(event.source instanceof EntityDamageSource){
 			EntityDamageSource dmger = (EntityDamageSource)event.source;

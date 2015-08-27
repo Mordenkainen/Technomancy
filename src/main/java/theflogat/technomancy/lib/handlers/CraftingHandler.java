@@ -130,10 +130,10 @@ public class CraftingHandler {
 			});
 			if(Ids.existenceBurner){
 				GameRegistry.addRecipe(new ItemStack(TMBlocks.existenceBurner, 1), new Object[]{
-					"EAE",
+					"E  ",
+					"A  ",
 					"   ",
-					"   ",
-					'E', Items.emerald, 'A', Blocks.anvil
+					'E', TMItems.exGem, 'A', Blocks.anvil
 				});
 				if(CompatibilityHandler.te){
 					GameRegistry.addShapelessRecipe(new ItemStack(TMBlocks.existenceBurner, 1, 1), new Object[]{
@@ -150,7 +150,7 @@ public class CraftingHandler {
 					" A ",
 					"BGB",
 					" A ",
-					'G', Items.emerald, 'B', Items.golden_apple, 'A', Items.golden_carrot
+					'G', TMItems.exGem, 'B', Items.golden_apple, 'A', Items.golden_carrot
 				});
 			}
 			if(Ids.existencePylon){
@@ -158,13 +158,13 @@ public class CraftingHandler {
 					"RRR",
 					"RER",
 					"RPR",
-					'R', Items.redstone, 'E', Items.emerald, 'P', Blocks.piston
+					'R', Items.redstone, 'E', TMItems.exGem, 'P', Blocks.piston
 				});
 				GameRegistry.addShapelessRecipe(new ItemStack(TMBlocks.existencePylon, 1, 1), new Object[]{
-					Items.diamond, new ItemStack(TMBlocks.existencePylon, 1, 0)
+					Items.diamond, TMItems.itemBoost, TMItems.exGem, new ItemStack(TMBlocks.existencePylon, 1, 0)
 				});
 				GameRegistry.addShapelessRecipe(new ItemStack(TMBlocks.existencePylon, 1, 2), new Object[]{
-					Items.ender_pearl, Items.diamond, new ItemStack(TMBlocks.existencePylon, 1, 1)
+					Items.ender_pearl, Items.diamond, TMItems.exGem, new ItemStack(TMBlocks.existencePylon, 1, 1)
 				});
 			}
 		}
