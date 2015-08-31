@@ -26,7 +26,7 @@ public class TileExistenceBurnerRenderer extends TileEntitySpecialRenderer{
 		}
 		model.renderBottom();
 		bindTexture(cube);
-		model.renderCube();
+		model.renderCube(te.getBlockMetadata()==1);
 		GL11.glPopMatrix();
 	}
 }

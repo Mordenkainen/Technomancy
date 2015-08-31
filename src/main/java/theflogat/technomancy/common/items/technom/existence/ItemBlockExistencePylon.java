@@ -2,6 +2,8 @@ package theflogat.technomancy.common.items.technom.existence;
 
 import java.util.List;
 import theflogat.technomancy.common.tiles.technom.existence.TileExistencePylon.Type;
+import theflogat.technomancy.lib.Names;
+import theflogat.technomancy.lib.Ref;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,6 +15,11 @@ public class ItemBlockExistencePylon extends ItemBlock{
 
 	public ItemBlockExistencePylon(Block b) {
 		super(b);
+	}
+	
+	@Override
+	public String getUnlocalizedName(ItemStack items) {
+		return Ref.getId(Names.existencePylon + items.getItemDamage());
 	}
 	
 	@Override

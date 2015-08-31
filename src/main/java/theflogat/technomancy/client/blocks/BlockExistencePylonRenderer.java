@@ -6,7 +6,6 @@ import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.world.IBlockAccess;
 import org.lwjgl.opengl.GL11;
 import theflogat.technomancy.common.tiles.technom.existence.TileExistencePylon;
-import theflogat.technomancy.common.tiles.technom.existence.TileExistencePylon.Type;
 import theflogat.technomancy.lib.RenderIds;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
@@ -17,7 +16,7 @@ public class BlockExistencePylonRenderer implements ISimpleBlockRenderingHandler
 		GL11.glPushMatrix();
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
 		TileExistencePylon tile = new TileExistencePylon();
-		tile.transferRate = Type.getTypeFromId(metadata);
+		tile.blockMetadata = metadata;
 		TileEntityRendererDispatcher.instance.renderTileEntityAt(tile, 0.0D, 0.0D, 0.0D, 0.0F);
 		GL11.glPopMatrix();
 	}

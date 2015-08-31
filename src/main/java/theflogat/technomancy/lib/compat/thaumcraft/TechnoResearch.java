@@ -119,10 +119,10 @@ public class TechnoResearch {
 		}
 		
 		if(Ids.itemMaterial && Ids.wandCores){
-			new ResearchItem("ELECTRICROD", "TECHNOMANCY", new AspectList().add(Aspect.TOOL, 5).add(Aspect.MAGIC, 5).add(Aspect.ENERGY, 5)
+			new ResearchItem("ROD_electric", "TECHNOMANCY", new AspectList().add(Aspect.TOOL, 5).add(Aspect.MAGIC, 5).add(Aspect.ENERGY, 5)
 				.add(Aspect.EXCHANGE, 5), -1, 2, 3, new ItemStack(TMItems.itemWandCores, 1, 0)).setPages(new ResearchPage[] {
 				new ResearchPage("techno.research_page.ROD_electric.1"), new ResearchPage((InfusionRecipe)recipes.get("EnergizedWandRod"))})
-				.setParents(new String[] { "TECHNOBASICS" }).setConcealed().setHidden().setItemTriggers(new ItemStack(Thaumcraft.itemWandRod, 1, 2))
+				.setParents(new String[] { "TECHNOBASICS" }).setHidden().setItemTriggers(new ItemStack(Thaumcraft.itemWandRod, 1, 2))
 				.registerResearchItem();
 			if(Ids.scepter) {
 				ArrayList<IArcaneRecipe> scer = new ArrayList<IArcaneRecipe>();
@@ -167,7 +167,7 @@ public class TechnoResearch {
 					.add(Aspect.EXCHANGE, 5), -1, 3, 3, scepter3).setPages(new ResearchPage[] {
 					new ResearchPage("techno.research_page.TECHNOTURGESCEPTER.1"), new ResearchPage((InfusionRecipe)recipes.get("TechnoturgeScepterRod")),
 					new ResearchPage(scer.toArray(new IArcaneRecipe[0]))})
-					.setParents(new String[] { "ELECTRICROD" }).setHidden().setItemTriggers(new ItemStack(TMItems.itemWandCores, 1)).registerResearchItem();
+					.setParents(new String[] { "ROD_electric" }).setHidden().setItemTriggers(new ItemStack(TMItems.itemWandCores, 1)).registerResearchItem();
 			}
 		}
 		

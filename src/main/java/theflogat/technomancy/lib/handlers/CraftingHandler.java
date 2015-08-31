@@ -145,12 +145,18 @@ public class CraftingHandler {
 					});
 				}
 			}
-			if(Ids.existenceCropAcc){
-				GameRegistry.addRecipe(new ItemStack(TMBlocks.existenceCropAcc, 1), new Object[]{
+			if(Ids.existenceUser){
+				GameRegistry.addRecipe(new ItemStack(TMBlocks.existenceUser, 1), new Object[]{
 					" A ",
 					"BGB",
 					" A ",
 					'G', TMItems.exGem, 'B', Items.golden_apple, 'A', Items.golden_carrot
+				});
+				GameRegistry.addRecipe(new ItemStack(TMBlocks.existenceUser, 1, 1), new Object[]{
+					" H ",
+					"BGB",
+					" H ",
+					'G', TMItems.exGem, 'B', Items.golden_apple, 'H', Items.iron_hoe
 				});
 			}
 			if(Ids.existencePylon){

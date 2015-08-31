@@ -36,8 +36,8 @@ public class ModelExistenceBurner extends ModelBase{
 		}
 	}
 	
-	public void renderCube(){
-		GL11.glColor3f(0, 0.7F, 0);
+	public void renderCube(boolean burn){
+		GL11.glColor3f(burn ? 0.5F : 0, 0.7F, 0);
 		cube.render(1F/16F);
 		GL11.glColor3f(1, 1, 1);
 	}

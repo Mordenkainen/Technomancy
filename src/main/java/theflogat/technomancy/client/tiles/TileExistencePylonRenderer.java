@@ -23,7 +23,7 @@ public class TileExistencePylonRenderer extends TileEntitySpecialRenderer{
 			bindTexture(modelTexture);
 			model.render();
 			bindTexture(cube);
-			model.renderCube(((TileExistencePylon)te).transferRate);
+			model.renderCube(((TileExistencePylon)te).blockMetadata);
 			GL11.glPopMatrix();
 		}
 	}

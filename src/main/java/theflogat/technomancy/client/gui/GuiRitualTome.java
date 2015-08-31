@@ -254,15 +254,19 @@ public class GuiRitualTome extends GuiTomeTemplate{
 						new ItemStack(Items.redstone),new ItemStack(Items.emerald),new ItemStack(Items.redstone),
 						new ItemStack(Items.redstone),new ItemStack(Blocks.piston),new ItemStack(Items.redstone)
 					})),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existencePylon, 1, 1), new ItemStack[]{
-						new ItemStack(Items.diamond),new ItemStack(TMBlocks.existencePylon, 1, 0)
+						new ItemStack(Items.diamond),new ItemStack(TMItems.itemBoost),new ItemStack(TMItems.exGem),new ItemStack(TMBlocks.existencePylon, 1, 0)
 					})),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existencePylon, 1, 2), new ItemStack[]{
-						new ItemStack(Items.ender_pearl),new ItemStack(Items.diamond),new ItemStack(TMBlocks.existencePylon, 1, 1)
+						new ItemStack(Items.ender_pearl),new ItemStack(Items.diamond),new ItemStack(TMItems.exGem),new ItemStack(TMBlocks.existencePylon, 1, 1)
 					}))
 				},{
-					new Page(Type.TEXT),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existenceCropAcc), new ItemStack[]{
+					new Page(Type.TEXT),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existenceUser, 1, 1), new ItemStack[]{
 						null,new ItemStack(Items.golden_carrot),null,
 						new ItemStack(Items.golden_apple), new ItemStack(Items.emerald), new ItemStack(Items.golden_apple),
 						null,new ItemStack(Items.golden_carrot),null
+					})), new Page(Type.TEXT),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existenceUser, 1, 2), new ItemStack[]{
+						null,new ItemStack(Items.iron_hoe),null,
+						new ItemStack(Items.golden_apple), new ItemStack(Items.emerald), new ItemStack(Items.golden_apple),
+						null,new ItemStack(Items.iron_hoe),null
 					}))
 				}
 		};
@@ -289,13 +293,15 @@ public class GuiRitualTome extends GuiTomeTemplate{
 							"power by coupling it with other Powerful items.");
 		pagesP[4][0].addText("It seems crops react in an... interesting way to Power of Existence. Your new device uses the Power of Existence to accelerate " +
 							"crop growth in a 9x9 area. It must be placed underneath the soil so it is rather convinient.");
+		pagesP[4][2].addText("Thinking that having to harvest manually is boring is what made you design an existence based harvester. By infusing hoes with " +
+							"a small amount of power of existence seems to harvest ripe crops nearby.");
 		
 		
 		Page[][] pagesT = {
 				{
 					new Page(Type.TEXT),new Page(Type.TEXT)
 				},{
-					new Page(Type.TEXT),new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.FT))),
+					new Page(Type.TEXT),new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.ET))),
 				}
 		};
 		
@@ -339,7 +345,7 @@ public class GuiRitualTome extends GuiTomeTemplate{
 				}
 		};
 
-		tabs = new ButtonTab[7];
+		tabs = new ButtonTab[8];
 		for(int i=0; i<tabs.length; i++){
 			tabs[i] = new ButtonTab(9, i*16+9, 0, i*16, i, but[i], getTabFromId(i));
 		}

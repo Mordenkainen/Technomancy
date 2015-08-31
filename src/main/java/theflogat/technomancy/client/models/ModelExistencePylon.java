@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import org.lwjgl.opengl.GL11;
-import theflogat.technomancy.common.tiles.technom.existence.TileExistencePylon.Type;
 
 public class ModelExistencePylon extends ModelBase{
 	
@@ -42,8 +41,8 @@ public class ModelExistencePylon extends ModelBase{
 		}
 	}
 	
-	public void renderCube(Type t){
-		switch(t.id){
+	public void renderCube(int meta){
+		switch(meta){
 		case 0:
 			GL11.glColor3f(0, 0, 0.7F);
 			break;
