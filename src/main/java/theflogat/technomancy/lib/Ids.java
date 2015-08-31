@@ -42,4 +42,13 @@ public class Ids {
 	public static boolean basalt;
 	public static boolean scepter;
 	public static boolean fusor;
+	public static boolean existenceFountain;
+	public static boolean existenceBurner;
+	public static boolean existencePylon;
+	public static boolean existenceUser;
+	public static boolean exGem;
+	public static boolean treasures;
+	
+	public static int drown;
+	public static int slowFall;
 }

@@ -65,15 +65,19 @@ public class ItemCoilCoupler extends Item {
 							if(te.getWorldObj().provider.dimensionId==stack.stackTagCompound.getInteger("dimId")) {
 								if(!areCoordsEqual(stack.stackTagCompound, x, y, z)) {
 									int[] i = retrievePos(stack.stackTagCompound);
-									((ICouplable)w.getTileEntity(i[0], i[1], i[2])).addPos(new ChunkCoordinates(x, y, z));
-									player.addChatComponentMessage(new ChatComponentText("Linked"));
-									return true;
+									if(w.getTileEntity(i[0], i[1], i[2]) instanceof ICouplable){
+										((ICouplable)w.getTileEntity(i[0], i[1], i[2])).addPos(new ChunkCoordinates(x, y, z));
+										player.addChatComponentMessage(new ChatComponentText("Linked"));
+										return true;
+									}
+									player.addChatComponentMessage(new ChatComponentText("Core got removed"));
+									return false;
 								}
 							} else {
 								player.addChatComponentMessage(new ChatComponentText("Cannot create an interdimensional link"));
 							}
 						} else {
-							player.addChatComponentMessage(new ChatComponentText("No source to link from."));
+							player.addChatComponentMessage(new ChatComponentText("No source to link from"));
 						}
 					}
 				}

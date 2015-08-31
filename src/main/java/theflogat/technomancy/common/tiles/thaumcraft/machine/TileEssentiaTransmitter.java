@@ -2,7 +2,6 @@ package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
 import java.util.Collections;
 import java.util.Iterator;
-
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -41,6 +40,7 @@ public class TileEssentiaTransmitter extends TileCoilTransmitter implements IEss
 		aspectFilter = Aspect.getAspect(comp.getString("AspectFilter"));
 	}
 	
+	@SuppressWarnings("null")
 	@Override
 	public void updateEntity() {
 		if(!worldObj.isRemote) {
@@ -154,6 +154,7 @@ public class TileEssentiaTransmitter extends TileCoilTransmitter implements IEss
 		return 0;
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	public int takeEssentia(Aspect aspect, int amount, ForgeDirection face) {
 		if (onSpecialBlock && set.canRun(this) && !sources.isEmpty()) {

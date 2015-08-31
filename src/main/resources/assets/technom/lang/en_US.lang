@@ -26,6 +26,10 @@ item.techno:itemBoost.name=Potency Gem
 item.techno.pure.name=Purified 
 item.techno:manaBucket.name=Mana Condensate Bucket
 item.techno:ritualTome.name=Ritual Tome
+item.techno:existenceGem.name=Existence Gem
+techno:fireGem.name=Fire Gem
+techno:powerPlate.name=Pure Existence Plate
+techno:goldenWing.name=A Certain Magical Beast's Wing
 
 #Block Names
 tile.techno:cosmeticOpaque.name=Quantized Glass
@@ -60,9 +64,20 @@ tile.techno:manaExchanger.name=Mana Exchanger
 tile.techno:itemTransmitter.name=Item Coil
 tile.techno:basalt.name=Basalt
 tile.techno:fusor.name=Essentia Fusor
+techno:existencePylon0.name=Existence Pylon T1
+techno:existencePylon1.name=Existence Pylon T2
+techno:existencePylon2.name=Existence Pylon T3
+techno:existenceBurner.name=Existence Burner
+techno:existenceDynamicBurner.name=Dynamic Existence Burner
+techno:existenceCropAcc.name=Existence Crop Fertiliser
+techno:existenceHarvester.name=Existence Crop Harvester
+tile.techno:existenceFountain.name=Fountain of Existence
 
 #Fluid Names
 fluid.techno:manaFluid=Mana Condensate
+
+#Potion Names
+techno:slowFall=Feather Fall
 
 #Information
 info.techno:purity=Purity

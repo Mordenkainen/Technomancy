@@ -50,6 +50,10 @@ public class ConfigHandler {
         Ids.itemTransmitter = config.get(blocks, Names.itemTransmitter, true).getBoolean();
         Ids.basalt = config.get(blocks, Names.basalt, true).getBoolean();
         Ids.fusor = config.get(blocks, Names.fusor, true).getBoolean();
+        Ids.existenceFountain = config.get(blocks, Names.existenceFountain, true).getBoolean();
+        Ids.existenceBurner = config.get(blocks, Names.existenceBurner[0], true).getBoolean();
+        Ids.existencePylon = config.get(blocks, Names.existencePylon, true).getBoolean();
+        Ids.existenceUser = config.get(blocks, "existenceUser", true).getBoolean();
         
         String items = "Items";
         //Items        
@@ -64,7 +68,14 @@ public class ConfigHandler {
         Ids.ritualTome = config.get(items, Names.ritualTome, true).getBoolean();
         Ids.coilCoupler = config.get(items, Names.coilCoupler, true).getBoolean();
         Ids.scepter = config.get(items, Names.scepter, true).getBoolean();
-
+        Ids.exGem = config.get(items, Names.exGem, true).getBoolean();
+        Ids.treasures = config.get(items, "treasures", true).getBoolean();
+        
+        //Potions
+        String potions = "Potions";
+        Ids.drown = config.get(potions, Names.drown, 82).getInt(82);
+        Ids.slowFall = config.get(potions, Names.slowFall, 83).getInt(83);
+        
         //Recipe Whatnots
         Conf.bonus = config.get("Recipes", "Add/Increase Smelting bonus to dusts/ore", Conf.bonus).getBoolean(Conf.bonus);
         

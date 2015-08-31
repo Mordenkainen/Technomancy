@@ -11,7 +11,7 @@ public class ButtonTab {
 	int v;
 	int id;
 	int sizes = 16;
-	ButtonEntry[] entry = new ButtonEntry[20];
+	ButtonEntry[] entries = new ButtonEntry[20];
 	private String name;
 	
 	public ButtonTab(int x, int y, int u, int v, int id, ButtonEntry[] entries, String name){
@@ -21,7 +21,14 @@ public class ButtonTab {
 		this.v = v;
 		this.id = id;
 		this.name = name;
-		entry = entries;
+		this.entries = entries;
+		int np = 0;
+		for(int i=0;i<entries.length;i++){
+			ButtonEntry entry = this.entries[i];
+			entry.setId(i);
+			entry.setYX(np>15 ? 50 : 30, 12 + (np*8));
+			np += entry.text.size();
+		}
 	}
 	
 	public void draw(int left, int top, GuiScreen gui){
@@ -38,7 +45,7 @@ public class ButtonTab {
 	}
 	
 	public ButtonEntry[] getEntries() {
-		return entry;
+		return entries;
 	}
 
 	public int getX() {

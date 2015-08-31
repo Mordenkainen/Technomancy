@@ -1,5 +1,7 @@
 package theflogat.technomancy.lib.compat.waila;
 
+import mcp.mobius.waila.api.IWailaDataProvider;
+import mcp.mobius.waila.api.IWailaRegistrar;
 import theflogat.technomancy.common.tiles.air.TileFakeAirNG;
 import theflogat.technomancy.common.tiles.base.TileCoilTransmitter;
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
@@ -14,8 +16,6 @@ import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaFusor;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileFluxLamp;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
 import theflogat.technomancy.lib.handlers.CompatibilityHandler;
-import mcp.mobius.waila.api.IWailaDataProvider;
-import mcp.mobius.waila.api.IWailaRegistrar;
 
 public class WailaProvider {
 	public static void callbackRegister(IWailaRegistrar registrar) {
@@ -26,6 +26,9 @@ public class WailaProvider {
 		registrar.registerBodyProvider(new ProcessorHUDHandler(), TileProcessorBase.class);
 		
 		registrar.registerBodyProvider(new CoilTransmitterHUDHandler(), TileCoilTransmitter.class);
+
+//		registrar.registerBodyProvider(new ExistenceConsumerHUDHandler(), TileExistenceCropAccelerator.class);
+//		registrar.registerBodyProvider(new ExistenceProducerHUDHandler(), TileExistenceBurner.class);
 		
 		if(CompatibilityHandler.th) {
 			IWailaDataProvider biomeMorpher = new BiomeMorpherHUDHandler();

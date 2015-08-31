@@ -13,14 +13,14 @@ import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 
 public class ItemBoost extends Item {
-	
+
 	public static ArrayList<String> upgradeable = new ArrayList<String>();
-	
+
 	public ItemBoost() {
 		setCreativeTab(Technomancy.tabsTM);
 		setUnlocalizedName(Ref.getId(Names.itemBoost));
 	}
-	
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void addInformation(ItemStack items, EntityPlayer player, List l, boolean moreInfo) {
@@ -29,9 +29,20 @@ public class ItemBoost extends Item {
 			l.add(s);
 		}
 	}
-	
+
 	@Override
 	public boolean onItemUse(ItemStack items, EntityPlayer player, World w, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+//		if(!w.isRemote){
+//			if(w.getTileEntity(x, y, z) instanceof IExistenceProducer){
+//				player.addChatComponentMessage(new ChatComponentText("Power:" + ((IExistenceProducer)w.getTileEntity(x, y, z)).getPower()));
+//			}
+//			if(w.getTileEntity(x, y, z) instanceof TileExistencePylon){
+//				player.addChatComponentMessage(new ChatComponentText("Power:" + ((TileExistencePylon)w.getTileEntity(x, y, z)).getPower()));
+//			}
+//			if(w.getTileEntity(x, y, z) instanceof IExistenceConsumer){
+//				player.addChatComponentMessage(new ChatComponentText("Power:" + ((IExistenceConsumer)w.getTileEntity(x, y, z)).getPower()));
+//			}
+//		}
 		if(w.getTileEntity(x, y, z) instanceof IUpgradable){
 			IUpgradable tile = (IUpgradable)w.getTileEntity(x, y, z);
 			if(tile.getBoost() == false){
@@ -47,7 +58,7 @@ public class ItemBoost extends Item {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public void registerIcons(IIconRegister reg) {
 		itemIcon = reg.registerIcon(Ref.TEXTURE_PREFIX + Names.itemBoost);

@@ -30,17 +30,28 @@ public class ItemRitualTome extends Item{
 	public static class Res{
 		public static final String E = ".png";
 		
-		public static final String BHT1 = "blackHoleT1"+E;
-		public static final String BHT2 = "blackHoleT2"+E;
-		public static final String BHT3 = "blackHoleT3"+E;
+		public static final String BH1 = "blackHoleT1"+E;
+		public static final String BH2 = "blackHoleT2"+E;
+		public static final String BH3 = "blackHoleT3"+E;
 		
-		public static final String CIT1 = "caveInT1"+E;
-		public static final String CIT2 = "caveInT2"+E;
-		public static final String CIT3 = "caveInT3"+E;
+		public static final String CI1 = "caveInT1"+E;
+		public static final String CI2 = "caveInT2"+E;
+		public static final String CI3 = "caveInT3"+E;
 		
-		public static final String PUT1 = "purificationT1"+E;
-		public static final String PUT2 = "purificationT2"+E;
-		public static final String PUT3 = "purificationT3"+E;
+		public static final String PU1 = "purificationT1"+E;
+		public static final String PU2 = "purificationT2"+E;
+		public static final String PU3 = "purificationT3"+E;
+		
+		public static final String F1 = "fireT1"+E;
+		public static final String F2 = "fireT2"+E;
+		public static final String F3 = "fireT3"+E;
+		
+		public static final String W1 = "waterT1"+E;
+		public static final String W2 = "waterT2"+E;
+		public static final String W3 = "waterT3"+E;
+		
+		public static final String FT = "fountain"+E;
+		public static final String ET = "extract"+E;
 	}
 	
 }

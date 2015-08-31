@@ -11,15 +11,24 @@ import theflogat.technomancy.common.blocks.technom.BlockBasalt;
 import theflogat.technomancy.common.blocks.technom.BlockCatalyst;
 import theflogat.technomancy.common.blocks.technom.BlockCrystal;
 import theflogat.technomancy.common.blocks.technom.BlockItemTransmitter;
+import theflogat.technomancy.common.blocks.technom.existence.BlockExistenceBurner;
+import theflogat.technomancy.common.blocks.technom.existence.BlockExistenceUser;
+import theflogat.technomancy.common.blocks.technom.existence.BlockExistenceFountain;
+import theflogat.technomancy.common.blocks.technom.existence.BlockExistencePylon;
 import theflogat.technomancy.common.items.base.ItemAdvancedBase;
 import theflogat.technomancy.common.items.technom.ItemCatalyst;
 import theflogat.technomancy.common.items.technom.ItemCrystal;
+import theflogat.technomancy.common.items.technom.existence.ItemBlockExistenceBurner;
+import theflogat.technomancy.common.items.technom.existence.ItemBlockExistencePylon;
+import theflogat.technomancy.common.items.technom.existence.ItemBlockExistenceUser;
 import theflogat.technomancy.common.rituals.b.RitualBlackHoleT1;
 import theflogat.technomancy.common.rituals.b.RitualBlackHoleT2;
 import theflogat.technomancy.common.rituals.b.RitualBlackHoleT3;
+import theflogat.technomancy.common.rituals.b.RitualFountainExistence;
 import theflogat.technomancy.common.rituals.e.RitualCaveInT1;
 import theflogat.technomancy.common.rituals.e.RitualCaveInT2;
 import theflogat.technomancy.common.rituals.e.RitualCaveInT3;
+import theflogat.technomancy.common.rituals.e.RitualExtraction;
 import theflogat.technomancy.common.rituals.f.RitualOfFireT1;
 import theflogat.technomancy.common.rituals.f.RitualOfFireT2;
 import theflogat.technomancy.common.rituals.l.RitualPurificationT1;
@@ -32,12 +41,19 @@ import theflogat.technomancy.common.tiles.air.TileFakeAirCore;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import theflogat.technomancy.common.tiles.technom.TileCrystal;
 import theflogat.technomancy.common.tiles.technom.TileItemTransmitter;
+import theflogat.technomancy.common.tiles.technom.existence.TileExistenceBurner;
+import theflogat.technomancy.common.tiles.technom.existence.TileExistenceCropAccelerator;
+import theflogat.technomancy.common.tiles.technom.existence.TileExistenceDynamicBurner;
+import theflogat.technomancy.common.tiles.technom.existence.TileExistenceFountain;
+import theflogat.technomancy.common.tiles.technom.existence.TileExistenceHarvester;
+import theflogat.technomancy.common.tiles.technom.existence.TileExistencePylon;
 import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class TMBlocks {
+	
 	//Block Instances	
 	public static Block nodeDynamo;
 	public static Block essentiaContainer;
@@ -71,6 +87,10 @@ public class TMBlocks {
 	public static Block itemTransmitter;
 	public static Block basalt;
 	public static Block essentiaFusor;
+	public static Block	fountainExistence;
+	public static Block	existenceBurner;
+	public static Block existencePylon;
+	public static Block existenceUser;
 	
 	public static Fluid manaFluid;
 	
@@ -80,6 +100,10 @@ public class TMBlocks {
 		fakeAirLight = Ids.catalyst ? new BlockFakeAirLight() : null;
 		itemTransmitter = Ids.itemTransmitter ? new BlockItemTransmitter() : null;
 		basalt = Ids.basalt ? new BlockBasalt() : null;
+		fountainExistence = Ids.existenceFountain ? new BlockExistenceFountain() : null;
+		existenceBurner = Ids.existenceBurner ? new BlockExistenceBurner() : null;
+		existencePylon = Ids.existencePylon ? new BlockExistencePylon() : null;
+		existenceUser = Ids.existenceUser ? new BlockExistenceUser() : null;
 		
 		
 		registerBlock(crystalBlock, Names.crystalBlock, ItemCrystal.class);
@@ -87,19 +111,33 @@ public class TMBlocks {
 		registerBlock(fakeAirLight, Names.fakeAirLight);
 		registerBlock(itemTransmitter, Names.itemTransmitter);
 		registerBlock(basalt, Names.basalt);
+		registerBlock(fountainExistence, Names.existenceFountain);
+		registerBlock(existenceBurner, Names.existenceBurner[0], ItemBlockExistenceBurner.class);
+		registerBlock(existencePylon, Names.existencePylon, ItemBlockExistencePylon.class);
+		registerBlock(existenceUser, "existenceUser", ItemBlockExistenceUser.class);
+		
 		
 		OreDictionary.registerOre("basalt", basalt);
+		
 		
 		GameRegistry.registerTileEntity(TileCrystal.class, Ref.MOD_PREFIX + "TileCrystal");
 		GameRegistry.registerTileEntity(TileCatalyst.class, Ref.MOD_PREFIX + "TileCatalyst");
 		GameRegistry.registerTileEntity(TileFakeAirCore.class, Ref.MOD_PREFIX + "TileFakeAirCore");
 		GameRegistry.registerTileEntity(TileItemTransmitter.class, Ref.MOD_PREFIX + "TileItemTransmitter");
+		GameRegistry.registerTileEntity(TileExistenceFountain.class, Ref.MOD_PREFIX + "TileExistenceFountain");
+		GameRegistry.registerTileEntity(TileExistenceBurner.class, Ref.MOD_PREFIX + "TileExistenceBurner");
+		GameRegistry.registerTileEntity(TileExistencePylon.class, Ref.MOD_PREFIX + "TileExistencePylon");
+		GameRegistry.registerTileEntity(TileExistenceDynamicBurner.class, Ref.MOD_PREFIX + "TileExistenceDynamicBurner");
+		GameRegistry.registerTileEntity(TileExistenceCropAccelerator.class, Ref.MOD_PREFIX + "TileExistenceCropAccelerator");
+		GameRegistry.registerTileEntity(TileExistenceHarvester.class, Ref.MOD_PREFIX + "TileExistenceHarvester");
 		
 		
 		MovableTileRegistry.addAllowed(TileCrystal.class);
 		MovableTileRegistry.addAllowed(TileCatalyst.class);
 		
-		
+
+		RitualRegistry.add(new RitualExtraction());
+		RitualRegistry.add(new RitualFountainExistence());
 		RitualRegistry.add(new RitualCaveInT3());
 		RitualRegistry.add(new RitualCaveInT2());
 		RitualRegistry.add(new RitualCaveInT1());

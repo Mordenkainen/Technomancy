@@ -18,7 +18,7 @@ public abstract class TileMachineBase extends TileTechnomancy implements IEnergy
 	public void readCustomNBT(NBTTagCompound comp) {}
 	
 	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {};
+	public void writeCustomNBT(NBTTagCompound comp) {}
 	
 	@Override
 	public void writeSyncData(NBTTagCompound compound) {

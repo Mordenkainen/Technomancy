@@ -16,6 +16,9 @@ public class Names {
 	public static final String manaBucket = "manaBucket";
 	public static final String coilCoupler = "coilCoupler";
 	public static final String scepter = "itemScepter";
+	public static final String itemGlasses	= "itemGlasses";
+	public static final String exGem = "existenceGem";
+	public static final String treasures[] = {"fireGem","powerPlate","goldenWing"};
 
     /*
      * Blocks
@@ -51,9 +54,20 @@ public class Names {
 	public static final String itemTransmitter = "itemTransmitter";
 	public static final String basalt = "basalt";
 	public static final String fusor = "fusor";
+	public static final String existenceFountain = "existenceFountain";
+	public static final String existencePylon	= "existencePylon";
+
+	public static final String[] existenceBurner = {"existenceBurner", "existenceDynamicBurner"};
+	public static final String[] existenceUser = {"existenceCropAcc", "existenceHarvester"};
 
     /*
      * Fluids
      */
 	public static final String manaFluid = "manaFluid";
+	
+	/*
+	 * Potions
+	 */
+	public static final String	drown = "drown";
+	public static final String	slowFall = "slowFall";
 }

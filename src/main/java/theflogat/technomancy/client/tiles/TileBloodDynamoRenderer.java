@@ -14,7 +14,6 @@ import theflogat.technomancy.lib.Ref;
 public class TileBloodDynamoRenderer extends TileEntitySpecialRenderer {
 	
 	ModelBloodDynamo model = new ModelBloodDynamo();
-	
 	private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_BLOOD_DYNAMO_TEXTURE);
 
 	@Override

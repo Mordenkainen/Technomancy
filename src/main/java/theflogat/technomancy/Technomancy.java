@@ -1,11 +1,12 @@
 package theflogat.technomancy;
 
 import java.io.File;
-
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import org.apache.logging.log4j.Logger;
-
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.items.base.TMItems;
+import theflogat.technomancy.common.potions.TMPotions;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.compat.IModModule;
 import theflogat.technomancy.lib.handlers.CompatibilityHandler;
@@ -16,6 +17,9 @@ import theflogat.technomancy.lib.handlers.EventRegister;
 import theflogat.technomancy.proxies.CommonProxy;
 import theflogat.technomancy.util.Ore;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.potion.Potion;
+import net.minecraftforge.common.util.EnumHelper;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -47,9 +51,32 @@ public class Technomancy {
 	public static CreativeTabs tabsTM = new CreativeTabTM(CreativeTabs.getNextID(), Ref.MOD_ID);
 
 	public static Logger logger;
+	
+	public static ArmorMaterial existencePower = EnumHelper.addArmorMaterial("existencePower", 20, new int[] {4, 4, 4, 4}, 35);
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
+		Potion[] potionTypes = null;
+
+	    for (Field f : Potion.class.getDeclaredFields()) {
+	        f.setAccessible(true);
+	        try {
+	            if (f.getName().equals("potionTypes") || f.getName().equals("field_76425_a")) {
+	                Field modfield = Field.class.getDeclaredField("modifiers");
+	                modfield.setAccessible(true);
+	                modfield.setInt(f, f.getModifiers() & ~Modifier.FINAL);
+
+	                potionTypes = (Potion[])f.get(null);
+	                final Potion[] newPotionTypes = new Potion[256];
+	                System.arraycopy(potionTypes, 0, newPotionTypes, 0, potionTypes.length);
+	                f.set(null, newPotionTypes);
+	            }
+	        } catch (Exception e) {
+	            System.err.println("Severe error, please report this to the mod author:");
+	            System.err.println(e);
+	        }
+	    }
+	    
 		logger = event.getModLog();
 		ConfigHandler.init(new File(event.getModConfigurationDirectory(), Ref.MOD_NAME + ".cfg"));
 		new EventRegister();
@@ -65,6 +92,7 @@ public class Technomancy {
 		
 		TMItems.initTechnomancy();
 		TMBlocks.initTechnomancy();
+		TMPotions.initTechnomancy();
 
 		for(IModModule mod : CompatibilityHandler.mods) {
 			mod.RegisterBlocks();
