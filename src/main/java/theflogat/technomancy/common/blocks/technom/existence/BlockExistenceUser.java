@@ -41,11 +41,12 @@ public class BlockExistenceUser extends BlockContainerMultiTiles{
 	}
 
 	@SideOnly(Side.CLIENT)
-	IIcon icons[] = new IIcon[2];
+	public IIcon[] icons;
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
+		icons = new IIcon[2];
 		blockIcon = reg.registerIcon(Ref.getAsset(Names.existenceUser[0]));
 		icons[0] = reg.registerIcon(Ref.getAsset(Names.existenceUser[0] + "_top"));
 		icons[1] = reg.registerIcon(Ref.getAsset(Names.existenceUser[1]));
