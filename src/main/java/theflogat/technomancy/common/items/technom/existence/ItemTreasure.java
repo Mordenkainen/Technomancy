@@ -44,20 +44,21 @@ public class ItemTreasure extends ItemBase{
 	}
 
 	@SideOnly(Side.CLIENT)
-	IIcon[] icons = new IIcon[Names.treasures.length];
+	public IIcon[] icons;
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerIcons(IIconRegister reg) {
+		icons = new IIcon[Names.treasures.length];
 		for(int i=0;i<icons.length;i++){
 			icons[i] = reg.registerIcon(Ref.getAsset(Names.treasures[i]));
 		}
 	}
 
+	@Override	
 	@SideOnly(Side.CLIENT)
-	@Override
-	public IIcon getIconFromDamage(int meta) {
-		return icons[meta%icons.length];
+	public IIcon getIconFromDamage(int par) {
+		return icons[par%icons.length];
 	}
 
 	@Override

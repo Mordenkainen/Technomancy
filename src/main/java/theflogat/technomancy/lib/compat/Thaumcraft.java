@@ -198,7 +198,7 @@ public class Thaumcraft extends ModuleBase {
 
 		//Registry
 		//GameRegistry.registerItem(essentiaCannon, LibNames.ESSENTIA_CANNON_NAME);
-		registerItem(TMItems.itemMaterial, Names.itemMaterial);
+		//registerItem(TMItems.itemMaterial, Names.itemMaterial);
 		registerItem(TMItems.itemPen, Names.pen);
 		registerItem(TMItems.itemFusionFocus, Names.fusionFocus);
 		registerItem(TMItems.itemTechnoturgeScepter, Names.scepter);
