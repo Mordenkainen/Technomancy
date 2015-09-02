@@ -36,17 +36,13 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
-if (hasProperty('appendBuildNumber')){
-  version = version + "-" + appendBuildNumber
-}
-
-version = config.mc_version + "-" + config.mod_version + "-" + config.build_number
+version = config.mc_version + "-" + config.mod_version
 group= config.package_group
 archivesBaseName = config.mod_name
 
 minecraft {
     version = config.mc_version + "-" + config.forge_version
-    runDir = "eclipse"
+    runDir = "eclipse/assets"
 }
 
 dependencies {
