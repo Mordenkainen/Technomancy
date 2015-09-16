@@ -7,6 +7,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import theflogat.technomancy.common.blocks.base.BlockContainerMultiTiles;
+import theflogat.technomancy.common.tiles.technom.existence.TileExistenceSealingDevice;
 import theflogat.technomancy.common.tiles.technom.existence.TileExistenceCropAccelerator;
 import theflogat.technomancy.common.tiles.technom.existence.TileExistenceHarvester;
 import theflogat.technomancy.lib.Names;
@@ -46,16 +47,16 @@ public class BlockExistenceUser extends BlockContainerMultiTiles{
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
-		icons = new IIcon[2];
+		icons = new IIcon[3];
 		blockIcon = reg.registerIcon(Ref.getAsset(Names.existenceUser[0]));
 		icons[0] = reg.registerIcon(Ref.getAsset(Names.existenceUser[0] + "_top"));
 		icons[1] = reg.registerIcon(Ref.getAsset(Names.existenceUser[1]));
+		icons[2] = reg.registerIcon(Ref.getAsset(Names.existenceUser[2]));
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int side, int meta) {
-		
 		if(meta==0){
 			if(side==1){
 				return icons[0];
@@ -65,6 +66,12 @@ public class BlockExistenceUser extends BlockContainerMultiTiles{
 		if(meta==1){
 			if(side!=0 && side!=1){
 				return icons[0];
+			}
+			return blockIcon;
+		}
+		if(meta==2){
+			if(side==1){
+				return icons[2];
 			}
 			return blockIcon;
 		}
@@ -78,6 +85,8 @@ public class BlockExistenceUser extends BlockContainerMultiTiles{
 			return new TileExistenceCropAccelerator();
 		case 1:
 			return new TileExistenceHarvester();
+		case 2:
+			return new TileExistenceSealingDevice();
 		}
 		return null;
 	}

@@ -90,8 +90,9 @@ public class BlockCrystal extends BlockContainerBase{
 
 	@Override
 	public void registerBlockIcons(IIconRegister icon) {
-		for(int i=0; i<icons.length; i++)
+		for(int i=0; i<icons.length; i++){
 			icons[i] = icon.registerIcon(Ref.getAsset(Names.catalyst) + "_" + i);
+		}
 	}
 
 	@Override

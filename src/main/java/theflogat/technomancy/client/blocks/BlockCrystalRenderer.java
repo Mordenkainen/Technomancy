@@ -5,6 +5,7 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.world.IBlockAccess;
 import org.lwjgl.opengl.GL11;
+import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.tiles.technom.TileCrystal;
 import theflogat.technomancy.lib.RenderIds;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -16,6 +17,7 @@ public class BlockCrystalRenderer implements ISimpleBlockRenderingHandler{
 		GL11.glPushMatrix();
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
 		TileCrystal te = new TileCrystal();
+		te.blockType = TMBlocks.crystalBlock;
 		te.blockMetadata = metadata;
 		TileEntityRendererDispatcher.instance.renderTileEntityAt(te, 0.0D, 0.0D, 0.0D, 0.0F);
 		GL11.glPopMatrix();

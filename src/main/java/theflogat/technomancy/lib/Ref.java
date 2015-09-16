@@ -6,7 +6,7 @@ public class Ref {
     public static final String MOD_ID = "technom";
     public static final String MOD_PREFIX = "techno:";
     public static final String MOD_NAME = "Technomancy";
-    public static final String MOD_VERSION = "0.11.3";
+    public static final String MOD_VERSION = "0.12.0A";
     public static final String CHANNEL_NAME = MOD_NAME;
     public static final String proxy_loc = "theflogat.technomancy.proxies.";
     
@@ -42,6 +42,8 @@ public class Ref {
 	public static final String MODEL_ANVIL_TEXTURE = MODEL_PREFIX + "anvil.png";
 	public static final String MODEL_BRF_TEXTURE = MODEL_PREFIX + "bottomRF.png";
 	public static final String MODEL_EXISTENCE_TEXTURE = MODEL_PREFIX + "existence.png";
+	public static final String HUD_TEXTURE = MODEL_PREFIX + "hud.png";
+	public static final String HUD_EX_TEXTURE = MODEL_PREFIX + "exHud.png";
 	
 	//GUI Textures
 	public static final String GUI_BM_PROCESSOR_TEXTURE = GUI_PREFIX + "processorBM.png";

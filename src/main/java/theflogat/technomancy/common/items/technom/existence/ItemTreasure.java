@@ -19,6 +19,8 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import theflogat.technomancy.common.items.base.ItemBase;
+import theflogat.technomancy.common.player.PlayerData;
+import theflogat.technomancy.common.player.PlayerData.Affinity;
 import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
@@ -60,11 +62,26 @@ public class ItemTreasure extends ItemBase{
 	public IIcon getIconFromDamage(int meta) {
 		return icons[meta%icons.length];
 	}
+	
+	public Affinity getAffinity(int meta){
+		switch(meta){
+		case 0:
+			return Affinity.FIRE;
+		case 1:
+			return Affinity.DARK;
+		case 2:
+			return Affinity.LIGHT;
+		}
+		return Affinity.NORMAL;
+	}
 
 	@Override
 	public void onUpdate(ItemStack stack, World w, Entity player, int pos, boolean inHand) {
 		if(!(player instanceof EntityPlayer)){
 			return;
+		}
+		if(getAffinity(stack.getItemDamage())!=Affinity.NORMAL && w.getTotalWorldTime()%20==0){
+			PlayerData.addAffinity(w, (EntityPlayer) player, getAffinity(stack.getItemDamage()), 1);
 		}
 		switch(stack.getItemDamage()){
 		case 0:

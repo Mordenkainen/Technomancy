@@ -47,6 +47,7 @@ import theflogat.technomancy.common.tiles.technom.existence.TileExistenceDynamic
 import theflogat.technomancy.common.tiles.technom.existence.TileExistenceFountain;
 import theflogat.technomancy.common.tiles.technom.existence.TileExistenceHarvester;
 import theflogat.technomancy.common.tiles.technom.existence.TileExistencePylon;
+import theflogat.technomancy.common.tiles.technom.existence.TileExistenceSealingDevice;
 import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
@@ -130,6 +131,7 @@ public class TMBlocks {
 		GameRegistry.registerTileEntity(TileExistenceDynamicBurner.class, Ref.MOD_PREFIX + "TileExistenceDynamicBurner");
 		GameRegistry.registerTileEntity(TileExistenceCropAccelerator.class, Ref.MOD_PREFIX + "TileExistenceCropAccelerator");
 		GameRegistry.registerTileEntity(TileExistenceHarvester.class, Ref.MOD_PREFIX + "TileExistenceHarvester");
+		GameRegistry.registerTileEntity(TileExistenceSealingDevice.class, Ref.MOD_PREFIX + "TileExistenceSealingDevice");
 		
 		
 		MovableTileRegistry.addAllowed(TileCrystal.class);

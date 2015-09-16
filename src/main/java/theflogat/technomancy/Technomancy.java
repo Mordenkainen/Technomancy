@@ -3,6 +3,10 @@ package theflogat.technomancy;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.potion.Potion;
+import net.minecraftforge.common.util.EnumHelper;
 import org.apache.logging.log4j.Logger;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.items.base.TMItems;
@@ -14,12 +18,9 @@ import theflogat.technomancy.lib.handlers.ConfigHandler;
 import theflogat.technomancy.lib.handlers.CraftingHandler;
 import theflogat.technomancy.lib.handlers.CreativeTabTM;
 import theflogat.technomancy.lib.handlers.EventRegister;
+import theflogat.technomancy.network.PacketHandler;
 import theflogat.technomancy.proxies.CommonProxy;
 import theflogat.technomancy.util.Ore;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.ItemArmor.ArmorMaterial;
-import net.minecraft.potion.Potion;
-import net.minecraftforge.common.util.EnumHelper;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -79,6 +80,7 @@ public class Technomancy {
 	    
 		logger = event.getModLog();
 		ConfigHandler.init(new File(event.getModConfigurationDirectory(), Ref.MOD_NAME + ".cfg"));
+		PacketHandler.instance = new PacketHandler();
 		new EventRegister();
 	}
 

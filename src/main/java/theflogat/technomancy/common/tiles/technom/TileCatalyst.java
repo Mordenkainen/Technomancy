@@ -7,6 +7,7 @@ import theflogat.technomancy.api.renderers.ModelCatalystSpecial;
 import theflogat.technomancy.api.rituals.IRitualEffectHandler;
 import theflogat.technomancy.api.rituals.Ritual;
 import theflogat.technomancy.api.rituals.RitualRegistry;
+import theflogat.technomancy.common.player.PlayerData;
 import theflogat.technomancy.common.tiles.base.TileTechnomancy;
 import theflogat.technomancy.util.Java;
 
@@ -15,14 +16,19 @@ public class TileCatalyst extends TileTechnomancy {
 	public int remCount = -1;
 	public ModelCatalystSpecial specialRender = null;
 	public ResourceLocation textLoc = null;
-	public String userName;
+	public String userName = "";
 	public IRitualEffectHandler handler = null;
 	public Object[] data;
 
 	@Override
 	public void updateEntity() {
-		if(worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord))
-			activateRitual(null);
+		if(worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
+			if(userName.equals("")){
+				activateRitual(null);
+			}else{
+				activateRitual(worldObj.getPlayerEntityByName(userName));
+			}
+		}
 
 		if(handler!=null)
 			handler.applyEffect(this);
@@ -37,7 +43,7 @@ public class TileCatalyst extends TileTechnomancy {
 	}
 
 	public void activateRitual(EntityPlayer player) {
-		if(player != null) {
+		if(player!=null) {
 			userName = player.getDisplayName();
 		}
 		for(Ritual r : RitualRegistry.getRituals()){
@@ -46,6 +52,10 @@ public class TileCatalyst extends TileTechnomancy {
 					if(r.isFrameComplete(worldObj, xCoord, yCoord, zCoord)){
 						if(r.canApplyEffect(worldObj, xCoord, yCoord, zCoord)){
 							r.applyEffect(worldObj, xCoord, yCoord, zCoord);
+							if(!userName.equals("")){
+								r.addAffinity(worldObj, userName);
+								PlayerData.addExistencePower(worldObj, userName);
+							}
 						}
 					}
 				}

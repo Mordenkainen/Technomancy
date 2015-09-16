@@ -8,7 +8,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class ItemCrystal extends ItemBlock {
-	private static String[] types = new String[] {"dark", "light", "fire", "nature", "water"};
+	private static String[] types = new String[] {"nature", "fire", "water", "light", "dark"};
 	
 	public ItemCrystal(Block crystal) {
 		super(crystal);

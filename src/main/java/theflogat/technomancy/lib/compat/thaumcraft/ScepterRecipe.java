@@ -36,7 +36,7 @@ public class ScepterRecipe implements IArcaneRecipe {
 		return checkMatch(cap1, cap2, cap3, rod, focus, player);
 	}
 
-	private boolean checkMatch(ItemStack cap1, ItemStack cap2, ItemStack cap3, ItemStack rod, ItemStack focus, EntityPlayer player) {
+	private static boolean checkMatch(ItemStack cap1, ItemStack cap2, ItemStack cap3, ItemStack rod, ItemStack focus, EntityPlayer player) {
 		boolean bc = false;
 		boolean br = false;
 
@@ -92,8 +92,8 @@ public class ScepterRecipe implements IArcaneRecipe {
 	    	if ((bc != null) && (br != null)) {
 	    		int cost = (int)(cc * cr * 1.5F);
 	    		out = new ItemStack(TMItems.itemTechnoturgeScepter, 1, cost);
-	    		((ItemWandCasting)out.getItem()).setCap(out, (WandCap)WandCap.caps.get(bc));
-	    		((ItemWandCasting)out.getItem()).setRod(out, (WandRod)WandRod.rods.get(br));
+	    		((ItemWandCasting)out.getItem()).setCap(out, WandCap.caps.get(bc));
+	    		((ItemWandCasting)out.getItem()).setRod(out, WandRod.rods.get(br));
 	    		out.setTagInfo("sceptre", new NBTTagByte((byte)1));
 	    	}
 	    }
@@ -163,7 +163,7 @@ public class ScepterRecipe implements IArcaneRecipe {
 		return "";
 	}
 	
-	private boolean checkItemEquals(ItemStack target, ItemStack input) {
+	private static boolean checkItemEquals(ItemStack target, ItemStack input) {
 		if (((input == null) && (target != null)) || ((input != null) && (target == null))) {
 			return false;
 		}
