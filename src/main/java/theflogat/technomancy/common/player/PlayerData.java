@@ -15,6 +15,8 @@ import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.network.PacketHandler;
 import theflogat.technomancy.util.Loc;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class PlayerData {
 
@@ -206,6 +208,7 @@ public class PlayerData {
     	HUDHandler.renderHUD(PlayerData.getCurrentPower(player), PlayerData.getExistenceLevel(player));
 	}
 	
+	@SideOnly(Side.CLIENT)
 	public static class HUDHandler{
 		public static final ResourceLocation modelTexture = new ResourceLocation(Ref.HUD_TEXTURE);
 		public static final ResourceLocation exTexture = new ResourceLocation(Ref.HUD_EX_TEXTURE);

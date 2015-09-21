@@ -55,6 +55,7 @@ public class EventRegister {
 		FMLCommonHandler.instance().bus().register(this);
 	}
 
+	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void renderOverlayEvent(RenderTickEvent event){
 		if (event.phase==Phase.END && Minecraft.getMinecraft().theWorld!=null){
