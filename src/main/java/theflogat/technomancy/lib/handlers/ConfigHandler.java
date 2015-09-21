@@ -76,6 +76,10 @@ public class ConfigHandler {
         Ids.drown = config.get(potions, Names.drown, 82).getInt(82);
         Ids.slowFall = config.get(potions, Names.slowFall, 83).getInt(83);
         
+        //HUD
+        Ids.hudStartX = config.get("HUD", "StartX", 16).getInt(16);
+        Ids.hudStartY = config.get("HUD", "StartY", 88).getInt(88);
+        
         //Recipe Whatnots
         Conf.bonus = config.get("Recipes", "Add/Increase Smelting bonus to dusts/ore", Conf.bonus).getBoolean(Conf.bonus);
         

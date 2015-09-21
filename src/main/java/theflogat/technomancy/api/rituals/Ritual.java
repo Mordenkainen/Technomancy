@@ -1,18 +1,34 @@
 package theflogat.technomancy.api.rituals;
 
-import theflogat.technomancy.util.helpers.RitualHelper;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import theflogat.technomancy.common.player.PlayerData;
+import theflogat.technomancy.common.player.PlayerData.Affinity;
+import theflogat.technomancy.util.helpers.RitualHelper;
 
 public abstract class Ritual {
 
 	public enum Type{
-		DARK(0),LIGHT(1),FIRE(2),EARTH(3),WATER(4);
+		EARTH(0),FIRE(1),WATER(2),LIGHT(3),DARK(4);
 
 		int id;
-		static Type[] allTypes = {DARK,LIGHT,FIRE,EARTH,WATER};
+		static Type[] allTypes = {EARTH,FIRE,WATER,LIGHT,DARK};
 
-		private Type(int mid) {
-			id = mid;
+		private Type(int id) {
+			this.id = id;
+		}
+		
+		public static Type getType(int id) {
+			for(Type t : allTypes){
+				if(t.id==id){
+					return t;
+				}
+			}
+			return null;
+		}
+		
+		public Affinity getAffinity(){
+			return Affinity.getAffinity(id);
 		}
 	}
 
@@ -35,7 +51,7 @@ public abstract class Ritual {
 	public boolean isCoreComplete(World w, int x, int y, int z){
 		return w.getBlockMetadata(x, y, z)==core.id;
 	}
-
+	
 	public boolean isFrameComplete(World w, int x, int y, int z){
 		for(int i=0;i<frame.length;i++){
 			if(frame[i]==null){
@@ -66,6 +82,28 @@ public abstract class Ritual {
 			}
 		}
 		return true;
+	}
+	
+	public void addAffinity(World w, String playerName){
+		EntityPlayer player = w.getPlayerEntityByName(playerName);
+		if(player==null){
+			return;
+		}
+		PlayerData.addAffinity(w, player, core.getAffinity(), 5);
+		for(Type t : frame){
+			if(t!=null){
+				PlayerData.addAffinity(w, player, t.getAffinity(), 1);
+			}
+		}
+		int j = 0;
+		for(int i=0;i<frame.length;i++){
+			if(frame[i]!=null){
+				j++;
+			}
+		}
+		for(int i=0;i<=25*j;i++){
+			PlayerData.addExistencePower(w.rand, player);
+		}
 	}
 
 	public abstract boolean canApplyEffect(World w, int x, int y, int z);

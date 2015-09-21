@@ -33,15 +33,18 @@ public class BlockCatalyst extends BlockContainerAdvanced {
 	
 	@Override
 	public float getBlockHardness(World w, int x, int y, int z) {
-		return ((TileCatalyst)w.getTileEntity(x, y, z)).remCount!=-1 ? -1 : blockHardness;
+		return ((TileCatalyst)w.getTileEntity(x, y, z)).remCount==-1 ? blockHardness : -1;
 	}
 	
 	@Override
 	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ);
-		if(player.isSneaking()){
-			((TileCatalyst)w.getTileEntity(x, y, z)).activateRitual(player);
-			return true;
+		if(player.isSneaking() && w.getTileEntity(x, y, z) instanceof TileCatalyst){
+			TileCatalyst te = (TileCatalyst)w.getTileEntity(x, y, z);
+			if(te.remCount==-1){
+				((TileCatalyst)w.getTileEntity(x, y, z)).activateRitual(player);
+				return true;
+			}
 		}
 		return false;
 	}
@@ -49,6 +52,10 @@ public class BlockCatalyst extends BlockContainerAdvanced {
 	@Override
 	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase ent, ItemStack items) {
 		w.setBlockMetadataWithNotify(x, y, z, items.getItemDamage(), 3);
+		if(ent instanceof EntityPlayer && w.getTileEntity(x, y, z) instanceof TileCatalyst){
+			TileCatalyst te = (TileCatalyst) w.getTileEntity(x, y, z);
+			te.userName = ((EntityPlayer)ent).getDisplayName();
+		}
 	}
 	
 	@Override

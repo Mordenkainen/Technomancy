@@ -35,7 +35,7 @@ public class TechnomancyCoreTransformer implements IClassTransformer {
 		return basicClass;
 	}
 
-	private byte[] patchRenderWorldLast(byte[] origCode, boolean isDeobfEnvironment) {
+	private static byte[] patchRenderWorldLast(byte[] origCode, boolean isDeobfEnvironment) {
 		ClassReader cr = new ClassReader(origCode);
 
 		ClassNode classNode=new ClassNode();

@@ -158,6 +158,12 @@ public class CraftingHandler {
 					" H ",
 					'G', TMItems.exGem, 'B', Items.golden_apple, 'H', Items.iron_hoe
 				});
+				GameRegistry.addRecipe(new ItemStack(TMBlocks.existenceUser, 1, 2), new Object[]{
+					"OFO",
+					"FGF",
+					"OFO",
+					'G', TMItems.exGem, 'O', Blocks.obsidian, 'F', Items.flint_and_steel
+				});
 			}
 			if(Ids.existencePylon){
 				GameRegistry.addRecipe(new ItemStack(TMBlocks.existencePylon, 1, 0), new Object[]{

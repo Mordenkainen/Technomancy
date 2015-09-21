@@ -58,7 +58,7 @@ public class Names {
 	public static final String existencePylon	= "existencePylon";
 
 	public static final String[] existenceBurner = {"existenceBurner", "existenceDynamicBurner"};
-	public static final String[] existenceUser = {"existenceCropAcc", "existenceHarvester"};
+	public static final String[] existenceUser = {"existenceCropAcc", "existenceHarvester", "existenceSealer"};
 
     /*
      * Fluids

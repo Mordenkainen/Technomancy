@@ -43,6 +43,10 @@ public class ItemBoost extends Item {
 //				player.addChatComponentMessage(new ChatComponentText("Power:" + ((IExistenceConsumer)w.getTileEntity(x, y, z)).getPower()));
 //			}
 //		}
+//		PlayerData.addAffinity(w, player, Affinity.FIRE, 50);
+//		if(!w.isRemote){
+//			player.addChatComponentMessage(new ChatComponentText("Power:" + PlayerData.getCurrentPower(player) + "/" + PlayerData.getExistenceLevel(player)));
+//		}
 		if(w.getTileEntity(x, y, z) instanceof IUpgradable){
 			IUpgradable tile = (IUpgradable)w.getTileEntity(x, y, z);
 			if(tile.getBoost() == false){

@@ -1,9 +1,9 @@
 package theflogat.technomancy.client.models;
 
-import org.lwjgl.opengl.GL11;
-
+import java.awt.Color;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
+import org.lwjgl.opengl.GL11;
 
 public class ModelCrystal extends ModelBase{
 	
@@ -27,23 +27,8 @@ public class ModelCrystal extends ModelBase{
 	
 	public void render(int stage, int meta) {
 		float alpha = 0.6F;
-		switch(meta){
-		case 0:
-			GL11.glColor4f(0.1F, 0.1F, 0.1F, alpha);
-			break;
-		case 1:
-			GL11.glColor4f(0.9F, 0.9F, 0.9F, alpha);
-			break;
-		case 2:
-			GL11.glColor4f(0.9F, 0, 0, alpha);
-			break;
-		case 3:
-			GL11.glColor4f(0, 0.9F, 0, alpha);
-			break;
-		case 4:
-			GL11.glColor4f(0, 0, 0.9F, alpha);
-			break;
-		}
+		Color c = getColor(meta);
+		GL11.glColor4f(c.getRed(), c.getGreen(), c.getBlue(), alpha);
 		switch(stage){
 		case 0:
 			crystalBig.render(0.0625F);
@@ -55,6 +40,22 @@ public class ModelCrystal extends ModelBase{
 			crystalSma.render(0.0625F);
 			break;
 		}
-		GL11.glColor3f(1, 1, 1);
+		GL11.glColor4f(1, 1, 1, 0);
+	}
+	
+	public static Color getColor(int meta){
+		switch(meta){
+		case 0:
+			return new Color(0x00DD00);
+		case 1:
+			return new Color(0xDD0000);
+		case 2:
+			return new Color(0x0000DD);
+		case 3:
+			return new Color(0x111111);
+		case 4:
+			return new Color(0xDDDDDD);
+		}
+		return new Color(0x2266AA);
 	}
 }

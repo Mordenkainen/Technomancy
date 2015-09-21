@@ -1,6 +1,9 @@
 package theflogat.technomancy.lib;
 
 public class Ids {
+    public static int hudStartX = 16;
+    public static int hudStartY = 75;
+    
 	public static boolean dynNode;
 	public static boolean contEssentia;
 	public static boolean cosmeticOpaque;

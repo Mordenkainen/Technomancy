@@ -34,7 +34,7 @@ public abstract class RitualBlackHole extends Ritual implements IRitualEffectHan
 				te.yCoord + radiusY, te.zCoord + radiusZ));
 
 		for(EntityLivingBase ent : e) {
-			if(!ent.isEntityInvulnerable()) {
+			if(ent.isEntityInvulnerable()) {
 				ent.onDeath(DamageSource.generic);
 				ent.setDead();
 			}

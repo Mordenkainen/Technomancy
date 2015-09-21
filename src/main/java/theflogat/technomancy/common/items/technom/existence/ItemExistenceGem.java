@@ -1,8 +1,6 @@
 package theflogat.technomancy.common.items.technom.existence;
 
 import java.util.List;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
@@ -11,6 +9,8 @@ import net.minecraft.item.ItemStack;
 import theflogat.technomancy.common.items.base.ItemBase;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemExistenceGem extends ItemBase{
 	

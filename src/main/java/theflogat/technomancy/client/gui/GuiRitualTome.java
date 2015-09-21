@@ -200,7 +200,7 @@ public class GuiRitualTome extends GuiTomeTemplate{
 		});
 		pagesW[0][3].setImageOffsets(54, 0);
 		pagesW[0][4].addLines(new String[]{
-				"Tier 3: DISABLED.",
+				"Tier 3:",
 				"Replaces blocks underneath with water in a 19x19 area.",
 				"Ritual is consumed."
 		});
@@ -226,7 +226,7 @@ public class GuiRitualTome extends GuiTomeTemplate{
 		});
 		pagesE[0][3].setImageOffsets(54, 0);
 		pagesE[0][4].addLines(new String[]{
-				"Tier 3: DISABLED.",
+				"Tier 3:",
 				"Closes all the gaps underneath the ritual in a 11x11 area.",
 				"Good for closing caves. Ritual is consumed."
 		});
@@ -261,11 +261,11 @@ public class GuiRitualTome extends GuiTomeTemplate{
 				},{
 					new Page(Type.TEXT),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existenceUser, 1, 1), new ItemStack[]{
 						null,new ItemStack(Items.golden_carrot),null,
-						new ItemStack(Items.golden_apple), new ItemStack(Items.emerald), new ItemStack(Items.golden_apple),
+						new ItemStack(Items.golden_apple), new ItemStack(TMItems.exGem), new ItemStack(Items.golden_apple),
 						null,new ItemStack(Items.golden_carrot),null
 					})), new Page(Type.TEXT),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existenceUser, 1, 2), new ItemStack[]{
 						null,new ItemStack(Items.iron_hoe),null,
-						new ItemStack(Items.golden_apple), new ItemStack(Items.emerald), new ItemStack(Items.golden_apple),
+						new ItemStack(Items.golden_apple), new ItemStack(TMItems.exGem), new ItemStack(Items.golden_apple),
 						null,new ItemStack(Items.iron_hoe),null
 					}))
 				}
@@ -302,6 +302,12 @@ public class GuiRitualTome extends GuiTomeTemplate{
 					new Page(Type.TEXT),new Page(Type.TEXT)
 				},{
 					new Page(Type.TEXT),new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.ET))),
+				},{
+					new Page(Type.TEXT),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existenceUser, 1, 2), new ItemStack[]{
+						new ItemStack(Blocks.obsidian), new ItemStack(Items.flint_and_steel),new ItemStack(Blocks.obsidian),
+						new ItemStack(Items.flint_and_steel), new ItemStack(TMItems.exGem), new ItemStack(Items.flint_and_steel),
+						new ItemStack(Blocks.obsidian),new ItemStack(Items.flint_and_steel),new ItemStack(Blocks.obsidian)
+					}))
 				}
 		};
 		
@@ -311,6 +317,9 @@ public class GuiRitualTome extends GuiTomeTemplate{
 		pagesT[0][1].addText("You think of a way to extract these artifacts and you conclude that Rituals are your best ally.");
 		pagesT[1][0].addText("The Ritual of Extraction serves to extract artifacts from special Villagers. It is quite unstable and may cause catastrophies " +
 							"if not used correctly.");
+		pagesT[2][0].addText("Now that you know how dangerous those Villagers are, you decide to invent a device that seals temporairly this power. " +
+							"The Existence Sealing Device allows for an easy way to seal off nearby powerfull villager for 4 seconds at an important " +
+							"existence cost.");
 		
 		ArrayList<String> bof = new ArrayList<String>();
 		bof.add("Birth of the");
@@ -341,7 +350,8 @@ public class GuiRitualTome extends GuiTomeTemplate{
 					new ButtonEntry("Better Farming", pagesP[4])
 				},{
 					new ButtonEntry("Treasures?!?", pagesT[0]),
-					new ButtonEntry("Extraction", pagesT[1])
+					new ButtonEntry("Extraction", pagesT[1]),
+					new ButtonEntry("Protection", pagesT[2])
 				}
 		};
 
