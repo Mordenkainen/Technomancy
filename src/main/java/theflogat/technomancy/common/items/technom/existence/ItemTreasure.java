@@ -113,7 +113,7 @@ public class ItemTreasure extends ItemBase{
 			if(event.source instanceof EntityDamageSource){
 				Entity hit = ((EntityDamageSource)event.source).getEntity();
 				int knockBack = 3;
-				hit.addVelocity(-MathHelper.sin((float)(Math.PI- hit.rotationYaw) * (float)Math.PI / 180.0F) * knockBack * 0.5F, 3D,
+				hit.addVelocity(-MathHelper.sin((float)(Math.PI- hit.rotationYaw) * (float)Math.PI / 180.0F) * knockBack * 0.5F, 2.1D,
 						MathHelper.cos((float)(Math.PI - hit.rotationYaw) * (float)Math.PI / 180.0F) * knockBack * 0.5F);
 			}
 			return;

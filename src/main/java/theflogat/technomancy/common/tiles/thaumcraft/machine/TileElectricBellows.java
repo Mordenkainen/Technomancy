@@ -118,7 +118,7 @@ public class TileElectricBellows extends TileMachineBase {
 					if(delay >= 2) {
 						delay = 0;
 						if (((TileEntityFurnace)furnace).furnaceCookTime > 0 && ((TileEntityFurnace)furnace).furnaceCookTime < 199) {
-							System.out.println(((TileEntityFurnace)furnace).furnaceCookTime);
+//							System.out.println(((TileEntityFurnace)furnace).furnaceCookTime);
 							((TileEntityFurnace)furnace).furnaceCookTime += 1;
 				        }
 					}

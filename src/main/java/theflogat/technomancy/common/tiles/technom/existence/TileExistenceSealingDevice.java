@@ -21,6 +21,7 @@ public class TileExistenceSealingDevice extends TileExistenceRedstoneBase{
 				if(ent!=null && ent.getEntityData().hasKey("treasure") && !ent.getEntityData().hasKey("seal")){
 					ent.getEntityData().setBoolean("seal", true);
 					power -= 500000;
+					return;
 				}
 			}
 		}
