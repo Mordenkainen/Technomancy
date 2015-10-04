@@ -20,7 +20,6 @@ public class TileItemTransmitter extends TileCoilTransmitter {
 
 	public ItemStack filter = null;
 
-	@SuppressWarnings({ "null", "cast" })
 	@Override
 	public void updateEntity() {		
 		if(!worldObj.isRemote) {

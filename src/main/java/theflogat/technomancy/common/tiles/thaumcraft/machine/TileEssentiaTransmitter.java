@@ -40,7 +40,6 @@ public class TileEssentiaTransmitter extends TileCoilTransmitter implements IEss
 		aspectFilter = Aspect.getAspect(comp.getString("AspectFilter"));
 	}
 	
-	@SuppressWarnings("null")
 	@Override
 	public void updateEntity() {
 		if(!worldObj.isRemote) {
@@ -154,7 +153,6 @@ public class TileEssentiaTransmitter extends TileCoilTransmitter implements IEss
 		return 0;
 	}
 
-	@SuppressWarnings("null")
 	@Override
 	public int takeEssentia(Aspect aspect, int amount, ForgeDirection face) {
 		if (onSpecialBlock && set.canRun(this) && !sources.isEmpty()) {

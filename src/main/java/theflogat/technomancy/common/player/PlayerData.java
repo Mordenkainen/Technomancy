@@ -46,7 +46,7 @@ public class PlayerData {
 			}
 			return Ref.getId("normal");
 		}
-		
+
 		public Color getColor(){
 			switch(id){
 			case 0:
@@ -62,7 +62,7 @@ public class PlayerData {
 			}
 			return new Color(0x2266AA);
 		}
-		
+
 		public String getRName(){
 			return "r" + getName();
 		}
@@ -76,24 +76,24 @@ public class PlayerData {
 			return NORMAL;
 		}
 	}
-	
+
 	public static NBTTagCompound getData(EntityPlayer player){
 		NBTTagCompound forgeData = player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG); 
-        NBTTagCompound data = forgeData.getCompoundTag(Ref.MOD_ID); 
-        
-        //For some reason it sometimes is null
-        if(data==null){
-        	data = new NBTTagCompound();
-        }
-        
-        if (!forgeData.hasKey(Ref.MOD_ID)){
-        	forgeData.setTag(Ref.MOD_ID, data); 
-        }
-        if (!player.getEntityData().hasKey(EntityPlayer.PERSISTED_NBT_TAG)){
-        	player.getEntityData().setTag(EntityPlayer.PERSISTED_NBT_TAG, forgeData); 
-        }
+		NBTTagCompound data = forgeData.getCompoundTag(Ref.MOD_ID); 
 
-        return data; 
+		//For some reason it sometimes is null
+		if(data==null){
+			data = new NBTTagCompound();
+		}
+
+		if (!forgeData.hasKey(Ref.MOD_ID)){
+			forgeData.setTag(Ref.MOD_ID, data); 
+		}
+		if (!player.getEntityData().hasKey(EntityPlayer.PERSISTED_NBT_TAG)){
+			player.getEntityData().setTag(EntityPlayer.PERSISTED_NBT_TAG, forgeData); 
+		}
+
+		return data; 
 	}
 
 	public static void prepareData(EntityPlayer player){
@@ -115,11 +115,11 @@ public class PlayerData {
 			}
 		}
 	}
-	
+
 	public static void syncData(EntityPlayer player){
 		PacketHandler.instance.sendTo(PacketHandler.getPacket((EntityPlayerMP) player), (EntityPlayerMP)player);
 	}
-	
+
 	public static Affinity getAffinity(EntityPlayer player){
 		NBTTagCompound data = getData(player);
 		if(data.getInteger("existencelevel") >= 20){
@@ -133,7 +133,7 @@ public class PlayerData {
 		}
 		return Affinity.NORMAL;
 	}
-	
+
 	public static HashMap<Affinity, Integer> getAffinityValues(NBTTagCompound data) {
 		HashMap<Affinity, Integer> map = new HashMap<Affinity, Integer>();
 		int total = 0;
@@ -175,15 +175,17 @@ public class PlayerData {
 			data.setInteger("rexistencelevel", data.getInteger("rexistencelevel") + 1);
 		}
 	}
-	
+
 	public static void addExistencePower(Random rand, EntityPlayer player) {
 		NBTTagCompound data = getData(player);
-		int randVal =  data.getInteger("existencelevel") * 100 - data.getInteger("rexistencelevel");
-		if(rand.nextInt(randVal)==0){
-			data.setInteger("existencelevel", data.getInteger("existencelevel") + 1);
-			data.setInteger("rexistencelevel", 0);
-		}else{
-			data.setInteger("rexistencelevel", data.getInteger("rexistencelevel") + 1);
+		if(data.hasKey("existencelevel")){
+			int randVal =  data.getInteger("existencelevel") * 100 - data.getInteger("rexistencelevel");
+			if(rand.nextInt(randVal)==0){
+				data.setInteger("existencelevel", data.getInteger("existencelevel") + 1);
+				data.setInteger("rexistencelevel", 0);
+			}else{
+				data.setInteger("rexistencelevel", data.getInteger("rexistencelevel") + 1);
+			}
 		}
 	}
 
@@ -202,45 +204,45 @@ public class PlayerData {
 		}
 		return data.getInteger("existencepower");
 	}
-	
+
 	public static void renderHUD(EntityPlayer player){
-		
-    	HUDHandler.renderHUD(PlayerData.getCurrentPower(player), PlayerData.getExistenceLevel(player));
+
+		HUDHandler.renderHUD(PlayerData.getCurrentPower(player), PlayerData.getExistenceLevel(player));
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	public static class HUDHandler{
 		public static final ResourceLocation modelTexture = new ResourceLocation(Ref.HUD_TEXTURE);
 		public static final ResourceLocation exTexture = new ResourceLocation(Ref.HUD_EX_TEXTURE);
-		
-	    public static void renderHUD(int amt, int maxAmount){
-	    	GL11.glPushMatrix();
-	    	int xSize = 32;
-	    	int ySize = 32;
-	    	float ratio = ((float)amt) / ((float)maxAmount);
-	    	int scale = 20;
-	    	int amount = (int) (scale *  ratio);
-	        
-	        Minecraft.getMinecraft().getTextureManager().bindTexture(modelTexture);
-	        drawRectangle(Ids.hudStartX, Ids.hudStartY, 0, 0, xSize, ySize);
-	        Color c = getAffinity(Minecraft.getMinecraft().thePlayer).getColor();
-	        GL11.glColor3f(c.getRed(), c.getGreen(), c.getBlue());
-	        Minecraft.getMinecraft().getTextureManager().bindTexture(exTexture);
-	        drawRectangle(Ids.hudStartX, Ids.hudStartY + 5 + scale - amount, 0, 0, xSize, amount);
-	        
-	        GL11.glPopMatrix();
-	    }
-	    
-	    public static void drawRectangle(int x, int y, int u, int v, double width, double length){
-	        float f = 0.00390625F;
-	        float f1 = 0.00390625F;
-	        Tessellator tessellator = Tessellator.instance;
-	        tessellator.startDrawingQuads();
-	        tessellator.addVertexWithUV(x, y + length, 0, (u * f), (v + length) * f1);
-	        tessellator.addVertexWithUV(x + width, y + length, 0, (u + width) * f, (v + length) * f1);
-	        tessellator.addVertexWithUV(x + width, y, 0, (u + width) * f, v * f1);
-	        tessellator.addVertexWithUV(x, y, 0, u * f, v * f1);
-	        tessellator.draw();
-	    }
+
+		public static void renderHUD(int amt, int maxAmount){
+			GL11.glPushMatrix();
+			int xSize = 32;
+			int ySize = 32;
+			float ratio = ((float)amt) / ((float)maxAmount);
+			int scale = 20;
+			int amount = (int) (scale *  ratio);
+
+			Minecraft.getMinecraft().getTextureManager().bindTexture(modelTexture);
+			drawRectangle(Ids.hudStartX, Ids.hudStartY, 0, 0, xSize, ySize);
+			Color c = getAffinity(Minecraft.getMinecraft().thePlayer).getColor();
+			GL11.glColor3f(c.getRed(), c.getGreen(), c.getBlue());
+			Minecraft.getMinecraft().getTextureManager().bindTexture(exTexture);
+			drawRectangle(Ids.hudStartX, Ids.hudStartY + 5 + scale - amount, 0, 0, xSize, amount);
+
+			GL11.glPopMatrix();
+		}
+
+		public static void drawRectangle(int x, int y, int u, int v, double width, double length){
+			float f = 0.00390625F;
+			float f1 = 0.00390625F;
+			Tessellator tessellator = Tessellator.instance;
+			tessellator.startDrawingQuads();
+			tessellator.addVertexWithUV(x, y + length, 0, (u * f), (v + length) * f1);
+			tessellator.addVertexWithUV(x + width, y + length, 0, (u + width) * f, (v + length) * f1);
+			tessellator.addVertexWithUV(x + width, y, 0, (u + width) * f, v * f1);
+			tessellator.addVertexWithUV(x, y, 0, u * f, v * f1);
+			tessellator.draw();
+		}
 	}
 }
