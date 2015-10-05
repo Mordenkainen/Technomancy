@@ -114,42 +114,47 @@ public class EventRegister {
 			PlayerData.prepareData((EntityPlayer) event.entity);
 		}
 
-		if(event.entity instanceof EntityVillager && !event.entity.getEntityData().hasKey("treasureAttempt")){
-			event.entity.getEntityData().setBoolean("treasureAttempt", true);
-			ArrayList<Integer> l = new ArrayList<Integer>();
-			for(int i=0;i<ItemTreasure.rarity.length;i++){
-				if(rand.nextInt(10000)<=ItemTreasure.rarity[i]){
-					l.add(i);
-				}
-			}
-			int c=-1;
-			for(int i:l){
-				if(c==-1){
-					c=i;
-				}else{
-					if(ItemTreasure.rarity[i]<ItemTreasure.rarity[c]){
-						c=i;
+		if(Ids.treasures){
+			if(event.entity instanceof EntityVillager && !event.entity.getEntityData().hasKey("treasureAttempt")){
+				event.entity.getEntityData().setBoolean("treasureAttempt", true);
+				ArrayList<Integer> l = new ArrayList<Integer>();
+				for(int i=0;i<ItemTreasure.rarity.length;i++){
+					if(rand.nextInt(10000)<=ItemTreasure.rarity[i]){
+						l.add(i);
 					}
 				}
-			}
-			if(c!=-1){
-				event.entity.getEntityData().setString("treasure", Names.treasures[c]);
+				int c=-1;
+				for(int i:l){
+					if(c==-1){
+						c=i;
+					}else{
+						if(ItemTreasure.rarity[i]<ItemTreasure.rarity[c]){
+							c=i;
+						}
+					}
+				}
+				if(c!=-1){
+					event.entity.getEntityData().setString("treasure", Names.treasures[c]);
+				}
 			}
 		}
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void onHurt(LivingHurtEvent event){
-		if(event.entityLiving instanceof EntityVillager && event.entityLiving.getEntityData().hasKey("treasure")){
-			if(!event.entityLiving.getEntityData().hasKey("seal") || !event.entityLiving.getEntityData().getBoolean("seal")){
-				TMItems.treasures.onUserHit(event, TMItems.treasures.getTreasureId(event.entityLiving.getEntityData().getString("treasure")));
-			}
-		}else if(event.entityLiving instanceof EntityPlayer && ((EntityPlayer)event.entityLiving).inventory.hasItem(TMItems.treasures)){
-			EntityPlayer player = ((EntityPlayer)event.entityLiving);
-			for(int i=0;i<player.inventory.mainInventory.length;i++){
-				ItemStack stack = player.inventory.mainInventory[i];
-				if(stack!=null && stack.getItem()==TMItems.treasures){
-					TMItems.treasures.onUserHit(event, stack.getItemDamage());
+
+		if(Ids.treasures){
+			if(event.entityLiving instanceof EntityVillager && event.entityLiving.getEntityData().hasKey("treasure")){
+				if(!event.entityLiving.getEntityData().hasKey("seal") || !event.entityLiving.getEntityData().getBoolean("seal")){
+					TMItems.treasures.onUserHit(event, TMItems.treasures.getTreasureId(event.entityLiving.getEntityData().getString("treasure")));
+				}
+			}else if(event.entityLiving instanceof EntityPlayer && ((EntityPlayer)event.entityLiving).inventory.hasItem(TMItems.treasures)){
+				EntityPlayer player = ((EntityPlayer)event.entityLiving);
+				for(int i=0;i<player.inventory.mainInventory.length;i++){
+					ItemStack stack = player.inventory.mainInventory[i];
+					if(stack!=null && stack.getItem()==TMItems.treasures){
+						TMItems.treasures.onUserHit(event, stack.getItemDamage());
+					}
 				}
 			}
 		}
@@ -157,10 +162,12 @@ public class EventRegister {
 
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void entityDeath(LivingDeathEvent event){
-		if(event.entityLiving instanceof EntityVillager && event.entityLiving.getEntityData().hasKey("treasure")){
-			if(!event.entityLiving.getEntityData().hasKey("seal") || !event.entityLiving.getEntityData().getBoolean("seal")){
-				TMItems.treasures.onTreasureDestroyed(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, 
-						event.entityLiving, TMItems.treasures.getTreasureId(event.entityLiving.getEntityData().getString("treasure")));
+		if(Ids.treasures){
+			if(event.entityLiving instanceof EntityVillager && event.entityLiving.getEntityData().hasKey("treasure")){
+				if(!event.entityLiving.getEntityData().hasKey("seal") || !event.entityLiving.getEntityData().getBoolean("seal")){
+					TMItems.treasures.onTreasureDestroyed(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, 
+							event.entityLiving, TMItems.treasures.getTreasureId(event.entityLiving.getEntityData().getString("treasure")));
+				}
 			}
 		}
 		if(event.source instanceof EntityDamageSource){
