@@ -79,6 +79,7 @@ public class ConfigHandler {
         //HUD
         Ids.hudStartX = config.get("HUD", "StartX", 16).getInt(16);
         Ids.hudStartY = config.get("HUD", "StartY", 88).getInt(88);
+        Conf.showHUD = config.get("HUD", "ShowHUD", Conf.showHUD).getBoolean(Conf.showHUD);
         
         //Recipe Whatnots
         Conf.bonus = config.get("Recipes", "Add/Increase Smelting bonus to dusts/ore", Conf.bonus).getBoolean(Conf.bonus);
