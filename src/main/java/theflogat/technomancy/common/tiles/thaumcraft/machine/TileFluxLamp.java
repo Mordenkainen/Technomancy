@@ -91,11 +91,9 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
 		for(int yy = -5; yy < 5; yy++) {
 			for(int xx = -10; xx < 10; xx++) {
 				for(int zz = -10; zz < 10; zz++) {
-					if(xx != 0 && zz != 0 && yy != 0) {
-						TileEntity te = this.worldObj.getTileEntity(this.xCoord + xx, this.yCoord + yy, this.zCoord + zz);
-						if(te instanceof TileInfusionMatrix) {
-							return te;
-						}
+					TileEntity te = this.worldObj.getTileEntity(this.xCoord + xx, this.yCoord + yy, this.zCoord + zz);
+					if(te instanceof TileInfusionMatrix) {
+						return te;
 					}
 				}
 			}
