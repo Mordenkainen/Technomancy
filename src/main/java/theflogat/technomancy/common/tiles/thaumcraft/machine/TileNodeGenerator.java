@@ -434,12 +434,12 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
 	public boolean doesContainerAccept(Aspect tag) {
 		if (!addNode && active) { 
 			if((facing == 2 || facing == 4)) {
-				return tag == Aspect.AURA;
+				return tag == Aspect.AURA && amount < maxAmount;
 			} else {
-				return tag == Aspect.TAINT;
+				return tag == Aspect.TAINT && amount < maxAmount;
 			}		
 		} else {
-			return aspect == null ? true : aspect == tag ;
+			return aspect == null ? true : (aspect == tag && amount < maxAmount);
 		}
 	}
 

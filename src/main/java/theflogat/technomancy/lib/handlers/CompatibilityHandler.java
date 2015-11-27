@@ -1,6 +1,7 @@
 package theflogat.technomancy.lib.handlers;
 
 import java.util.LinkedList;
+
 import cpw.mods.fml.common.Loader;
 import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.lib.Conf;
@@ -9,6 +10,7 @@ import theflogat.technomancy.lib.compat.Botania;
 import theflogat.technomancy.lib.compat.IModModule;
 import theflogat.technomancy.lib.compat.Mekanism;
 import theflogat.technomancy.lib.compat.Thaumcraft;
+import theflogat.technomancy.lib.compat.ThaumicEnergistics;
 import theflogat.technomancy.lib.compat.ThermalExpansion;
 
 public class CompatibilityHandler {
@@ -17,6 +19,7 @@ public class CompatibilityHandler {
 	public static boolean bo = false;
 	public static boolean th = false;
 	public static boolean mk = false;
+	public static boolean the = false;
 	public static LinkedList<IModModule> mods = new LinkedList<IModModule>();
 
 	public static void init() {
@@ -76,6 +79,14 @@ public class CompatibilityHandler {
 			mods.add(Botania.getInstance());
 		} else {
 			Technomancy.logger.info("Botania not detected. Compatibility module will not be loaded.");
+		}
+		
+		if(Loader.isModLoaded("thaumicenergistics")) {
+			Technomancy.logger.info("Thaumic Energistics detected. Compatibility module will be loaded.");
+			the = true;
+			mods.add(ThaumicEnergistics.getInstance());
+		} else {
+			Technomancy.logger.info("Thaumic Energistics not detected. Compatibility module will not be loaded.");
 		}
 	}
 }

@@ -158,7 +158,7 @@ public class TileTCProcessor extends TileProcessorBase implements IAspectContain
 
 	@Override
 	public boolean doesContainerAccept(Aspect tag) {
-		return tag == Aspect.FIRE;
+		return tag == Aspect.FIRE && amount < maxAmount;
 	}
 
 	@Override

@@ -197,12 +197,12 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
 
 	@Override
 	public int containerContains(Aspect tag)  {
-		return 0;
+		return tag == Aspect.ORDER ? amount : 0;
 	}
 
 	@Override
 	public boolean doesContainerAccept(Aspect tag) {
-		return false;
+		return tag == Aspect.ORDER && amount < maxAmount;
 	}
 
 	@Override
