@@ -1,9 +1,11 @@
 package theflogat.technomancy.common.items.thaumcraft;
 
 import ic2.api.tile.IWrenchable;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import powercrystals.minefactoryreloaded.api.IMFRHammer;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.common.eventhandler.Event.Result;
@@ -21,6 +23,7 @@ import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagByte;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -29,7 +32,10 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.wands.WandCap;
+import thaumcraft.api.wands.WandRod;
 import thaumcraft.common.items.wands.ItemWandCasting;
+import theflogat.technomancy.common.items.base.TMItems;
 import theflogat.technomancy.util.helpers.BlockHelper;
 import appeng.api.implementations.items.IAEWrench;
 import buildcraft.api.tools.IToolWrench;
@@ -67,10 +73,21 @@ public class ItemTechnoturgeScepter extends ItemWandCasting implements
         shiftRotations.add(BlockChest.class);
 	}
 	
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List){}
+	public void getSubItems(Item id, CreativeTabs tab, List list){
+		ItemStack scepter = new ItemStack(TMItems.itemTechnoturgeScepter, 1);
+		scepter.setTagInfo("sceptre", new NBTTagByte((byte)1));
+		((ItemWandCasting)scepter.getItem()).setCap(scepter, WandCap.caps.get("thaumium"));
+		((ItemWandCasting)scepter.getItem()).setRod(scepter, WandRod.rods.get("technoturge"));
+		ItemStack scepterCharged = scepter.copy();
+		for(Aspect al : Aspect.getPrimalAspects()) {
+			((ItemWandCasting)scepterCharged.getItem()).addVis(scepterCharged, al, 150, true);
+		}
+		list.add(scepter);
+		list.add(scepterCharged);
+	}
 	
 	@Override
     public boolean doesSneakBypassUse(World world, int x, int y, int z, EntityPlayer player) {

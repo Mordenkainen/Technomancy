@@ -6,15 +6,12 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagByte;
 import net.minecraft.util.IIcon;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.wands.WandCap;
 import thaumcraft.api.wands.WandRod;
 import thaumcraft.common.items.wands.ItemWandCasting;
 import theflogat.technomancy.common.items.base.ItemBase;
-import theflogat.technomancy.common.items.base.TMItems;
-import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.compat.Thaumcraft;
@@ -62,18 +59,6 @@ public class ItemWandCores extends ItemBase{
 		}
 		list.add(electric);
 		list.add(electricCharged);
-		if(Ids.scepter) {
-			ItemStack scepter = new ItemStack(TMItems.itemTechnoturgeScepter, 1);
-			scepter.setTagInfo("sceptre", new NBTTagByte((byte)1));
-			((ItemWandCasting)scepter.getItem()).setCap(scepter, WandCap.caps.get("thaumium"));
-			((ItemWandCasting)scepter.getItem()).setRod(scepter, WandRod.rods.get("technoturge"));
-			ItemStack scepterCharged = scepter.copy();
-			for(Aspect al : Aspect.getPrimalAspects()) {
-				((ItemWandCasting)scepterCharged.getItem()).addVis(scepterCharged, al, 150, true);
-			}
-			list.add(scepter);
-			list.add(scepterCharged);
-		}
 	}
 	
 	@SideOnly(Side.CLIENT)

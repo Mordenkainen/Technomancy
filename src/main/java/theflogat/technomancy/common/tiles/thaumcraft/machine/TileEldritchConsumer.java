@@ -290,9 +290,7 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
 	}
 
 	@Override
-	public void setAspects(AspectList al) {
-		list = al;
-	}
+	public void setAspects(AspectList al) {}
 
 	@Override
 	public boolean doesContainerAccept(Aspect paramAspect) {
@@ -309,10 +307,7 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
 		if(!list.aspects.containsKey(paramAspect) || list.getAmount(paramAspect) < paramInt) {
 			return false;
 		}
-		list.reduce(paramAspect, paramInt);
-		if(list.getAmount(paramAspect) <= 0) {
-			list.remove(paramAspect);
-		}
+		list.remove(paramAspect, paramInt);
 		return true;		
 	}
 
@@ -379,10 +374,7 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
 		int amountToRemove = 0;
 		if(list.aspects.containsKey(paramAspect)) {
 			amountToRemove = Math.min(paramInt, list.getAmount(paramAspect));
-			list.reduce(paramAspect, amountToRemove);
-			if (list.getAmount(paramAspect) <= 0) {
-				list.remove(paramAspect);
-			}
+			list.remove(paramAspect, amountToRemove);
 		}
 		
 		return amountToRemove;

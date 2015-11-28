@@ -38,6 +38,7 @@ public abstract class BlockContainerAdvanced extends BlockContainerRedstone{
 	@Override
 	public void breakBlock(World w, int x, int y, int z, Block b, int meta) {
 		TileEntity tile = w.getTileEntity(x, y, z);
+		comp = new NBTTagCompound();
 		if(tile != null) {
 			tile.writeToNBT(comp);
 			w.removeTileEntity(x, y, z);
