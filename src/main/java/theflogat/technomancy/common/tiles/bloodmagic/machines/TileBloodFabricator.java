@@ -5,6 +5,7 @@ import theflogat.technomancy.lib.compat.BloodMagic;
 import theflogat.technomancy.lib.handlers.Rate;
 import theflogat.technomancy.util.helpers.WorldHelper;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -28,7 +29,24 @@ public class TileBloodFabricator extends TileMachineBase implements IFluidHandle
 			extractEnergy(cost, false);
 			tank.fill(new FluidStack(BloodMagic.lifeEssenceFluid, 200), true);
 			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-		}	
+		}
+		if(tank.getFluidAmount() >= 200) {
+			for(ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
+				TileEntity te = worldObj.getTileEntity(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ);
+				if(te instanceof IFluidHandler) {
+					IFluidHandler target = (IFluidHandler)te;
+					if(target.canFill(dir.getOpposite(), BloodMagic.lifeEssenceFluid)) {
+						FluidStack push = tank.getFluid().copy();
+						push.amount = Math.min(push.amount, 200);
+						int filled = target.fill(dir.getOpposite(), push, true);
+						if(filled > 0) {
+							tank.drain(filled, true);
+							return;
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	@Override
