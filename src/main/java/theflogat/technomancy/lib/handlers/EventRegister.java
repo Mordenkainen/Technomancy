@@ -62,7 +62,7 @@ public class EventRegister {
 	@SubscribeEvent
 	public void renderOverlayEvent(RenderTickEvent event){
 		Minecraft mc = FMLClientHandler.instance().getClient();
-		if (mc.inGameHasFocus || mc.currentScreen == null) {
+		if ((mc.inGameHasFocus || mc.currentScreen == null) && !Minecraft.getMinecraft().gameSettings.showDebugInfo) {
 			if (event.phase == Phase.END && Minecraft.getMinecraft().theWorld != null && Conf.showHUD){
 				PlayerData.renderHUD(Minecraft.getMinecraft().thePlayer);
 			}
