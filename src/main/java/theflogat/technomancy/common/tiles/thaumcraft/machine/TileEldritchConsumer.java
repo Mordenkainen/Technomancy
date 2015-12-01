@@ -5,12 +5,16 @@ import java.util.ArrayList;
 import cpw.mods.fml.common.Optional;
 import me.jezza.thaumicpipes.api.interfaces.IThaumicOutput;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.BlockFluidBase;
-import net.minecraftforge.fluids.BlockFluidClassic;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
@@ -88,10 +92,17 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
 			if(set.canRun(this)) {
 				if(time <= 0) {
 					if(canFillList(list) && getEnergyStored() >= cost) {
-						Coords c = seekForBlock();
-						if(c != null) {
-							processFromCoords(c);
-							extractEnergy(cost, false);
+						boolean flag = dealWithMobs();
+						flag |= dealWithItems();
+						if(getEnergyStored() >= cost) {
+							Coords c = seekForBlock();
+							if(c != null) {
+								processFromCoords(c);
+								extractEnergy(cost, false);
+								flag = true;
+							}
+						}
+						if(flag) {
 							cooldown = 40;
 							worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 						}else{
@@ -103,7 +114,7 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
 				}
 			}
 			
-			if(cooldown>0){
+			if(cooldown > 0) {
 				cooldown--;
 				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 			}
@@ -138,11 +149,17 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
 	}
 
 	private Coords seekForBlock() {
-		for(int yy = current.h == -1 ? 0 : yCoord-current.h; yy < yCoord; yy++) {
+		for(int yy = yCoord - 1; yy > (current.h == -1 ? 0 : yCoord - current.h - 1); yy--) {
 			for(int xx = -current.r; xx <= current.r; xx++) {
 				for(int zz = -current.r; zz <= current.r; zz++) {
-					if(worldObj.getBlock(xCoord + xx, yy, zCoord + zz) != null && isBlockOk(worldObj.getTileEntity(xCoord + xx,
-							yy, zCoord + zz), worldObj.getBlock(xCoord + xx, yy, zCoord + zz), xCoord + xx, yy, zCoord + zz)) {
+					if(xx == -current.r || xx == current.r) {
+						stopFlows(xx == -current.r ? xCoord + xx - 1 : xCoord + xx + 1, yy, zCoord + zz);
+					}
+					if(zz == -current.r || zz == current.r) {
+						stopFlows(xCoord + xx, yy, zz == -current.r ? zCoord + zz - 1 : zCoord + zz + 1);
+					}
+					dealWithFluid(xCoord + xx, yy, zCoord + zz);
+					if(isBlockOk(xCoord + xx, yy, zCoord + zz)) {
 						return new Coords(xCoord + xx, yy, zCoord + zz, worldObj);
 					}
 				}
@@ -151,32 +168,99 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
 		return null;
 	}
 
-	private boolean isBlockOk(TileEntity tile, Block block, int x, int y, int z) {
-		if(tile instanceof TileEldritchConsumer)
-			return false;
+	@SuppressWarnings("unchecked")
+	private boolean dealWithMobs() {
+		boolean flag = false;
+		
+		ArrayList<EntityLiving> mobs = (ArrayList<EntityLiving>) worldObj.getEntitiesWithinAABB(EntityLiving.class,
+				AxisAlignedBB.getBoundingBox(xCoord - current.r, current.h == -1 ? 0 : yCoord - current.h - 1, zCoord - current.r,
+				xCoord + current.r, yCoord - 1, zCoord + current.r));
+		
+		if(!mobs.isEmpty()) {
+			for(EntityLiving mob : mobs){
+				if(!mob.isDead && mob.deathTime <= 0 && !mob.isEntityInvulnerable()) {
+					if(getEnergyStored() < cost) {
+						break;
+					}
+					flag = true;
+					extractEnergy(cost, false);
+					mob.onDeath(DamageSource.magic);
+					mob.setDead();
+				}
+			}
+		}
+		return flag;
+	}
 
-		if(block.getBlockHardness(worldObj, xCoord, yCoord, zCoord)==-1)
-			return false;
+	@SuppressWarnings("unchecked")
+	private boolean dealWithItems() {
+		boolean flag = false;
+		
+		ArrayList<EntityItem> items = (ArrayList<EntityItem>) worldObj.getEntitiesWithinAABB(EntityItem.class,
+				AxisAlignedBB.getBoundingBox(xCoord - current.r, current.h == -1 ? 0 : yCoord - current.h - 1, zCoord - current.r,
+				xCoord + current.r, yCoord - 1, zCoord + current.r));
+		
+		if(!items.isEmpty()) {
+			for (EntityItem item : items) {
+				if(getEnergyStored() < cost) {
+					break;
+				}
+				flag = true;
+				extractEnergy(cost, false);
+				AspectList al = ThaumcraftCraftingManager.getObjectTags(item.getEntityItem());
+				al = ThaumcraftCraftingManager.getBonusTags(item.getEntityItem(), al);
+				if(--item.getEntityItem().stackSize <= 0) {
+					item.setDead();
+				}
+				for(Aspect as : al.getAspects()){
+					if (as != null) {
+						int amount = al.getAmount(as);
+						list.add(as, amount);
+					}
+				}
+			}
+		}
+		return flag;
+	}
 
-		if(block instanceof BlockFluidClassic || block instanceof BlockFluidBase)
-			return false;
+	private void dealWithFluid(int x, int y, int z) {
+		Block block = worldObj.getBlock(x, y, z);
+		
+		if(block instanceof BlockFluidBase || block instanceof BlockLiquid) {
+			worldObj.setBlockToAir(x, y, z);
+		}
+	}
 
-		if(block.isAir(worldObj, x, y, z))
-			return false;
+	private void stopFlows(int x, int y, int z) {
+		Block block = worldObj.getBlock(x, y, z);
+		
+		if(block instanceof BlockFluidBase || block instanceof BlockLiquid) {
+			worldObj.setBlock(x, y, z, Blocks.stone, 0, 2);
+		}
+	}
 
+	private boolean isBlockOk(int x, int y, int z) {
+		Block block = worldObj.getBlock(x, y, z);
+		
+		if(block == null || block.isAir(worldObj, x, y, z) || block.getBlockHardness(worldObj, x, y, z) == -1) {
+			return false;
+		}
+		
 		return true;
 	}
 
 	private void processFromCoords(Coords c) {
 		ArrayList<ItemStack> drops = c.w.getBlock(c.x, c.y, c.z).getDrops(worldObj, c.x, c.y, c.z, c.w.getBlockMetadata(c.x, c.y, c.z), 0);
 
-		for(ItemStack items : drops){
+		for(ItemStack items : drops) {
 			AspectList al = ThaumcraftCraftingManager.getObjectTags(items);
 			al = ThaumcraftCraftingManager.getBonusTags(items, al);
 
-			for(Aspect as : al.getAspects()){
-				int amount = al.getAmount(as);
-				list.add(as, amount);
+			for(Aspect as : al.getAspects()) {
+				if (as != null) {
+					int amount = al.getAmount(as);
+					list.add(as, amount);
+				}
 			}
 		}
 
@@ -206,9 +290,7 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
 	}
 
 	@Override
-	public void setAspects(AspectList al) {
-		list = al;
-	}
+	public void setAspects(AspectList al) {}
 
 	@Override
 	public boolean doesContainerAccept(Aspect paramAspect) {
@@ -222,12 +304,10 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
 
 	@Override
 	public boolean takeFromContainer(Aspect paramAspect, int paramInt) {
-		if(!list.aspects.containsKey(paramAspect) || list.getAmount(paramAspect) < paramInt)
+		if(!list.aspects.containsKey(paramAspect) || list.getAmount(paramAspect) < paramInt) {
 			return false;
-		list.reduce(paramAspect, paramInt);
-		if(list.getAmount(paramAspect) <= 0) {
-			list.remove(paramAspect);
 		}
+		list.remove(paramAspect, paramInt);
 		return true;		
 	}
 
@@ -291,14 +371,12 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
 
 	@Override
 	public int takeEssentia(Aspect paramAspect, int paramInt, ForgeDirection paramForgeDirection) {
-		if(!list.aspects.containsKey(paramAspect)) {
-			return 0;
+		int amountToRemove = 0;
+		if(list.aspects.containsKey(paramAspect)) {
+			amountToRemove = Math.min(paramInt, list.getAmount(paramAspect));
+			list.remove(paramAspect, amountToRemove);
 		}
-		int amountToRemove = Math.min(paramInt, list.getAmount(paramAspect));
-		list.reduce(paramAspect, amountToRemove);
-		if (list.getAmount(paramAspect) <= 0) {
-			list.remove(paramAspect);
-		}
+		
 		return amountToRemove;
 	}
 

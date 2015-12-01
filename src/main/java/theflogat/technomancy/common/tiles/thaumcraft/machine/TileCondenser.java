@@ -38,6 +38,7 @@ public class TileCondenser extends TileMachineRedstone implements IEssentiaTrans
 		if(set.canRun(this) && energy >= cost && amount < maxAmount) {
 			extractEnergy(cost, false);
 			amount++;
+			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		}
 		if(amount > 0) {
 			for(ForgeDirection dir:ForgeDirection.VALID_DIRECTIONS) {
@@ -45,6 +46,7 @@ public class TileCondenser extends TileMachineRedstone implements IEssentiaTrans
 					IEssentiaTransport te = (IEssentiaTransport)Thaumcraft.getConnectableTile(worldObj, xCoord, yCoord, zCoord, dir);
 					if(te != null && te.canInputFrom(dir)) {
 						amount = te.addEssentia(aspect, amount, dir);
+						worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 					}
 				}
 			}
@@ -91,6 +93,7 @@ public class TileCondenser extends TileMachineRedstone implements IEssentiaTrans
 	public boolean takeFromContainer(Aspect tag, int amount) {
 		if(tag==aspect && amount<=this.amount){
 			this.amount -= amount;
+			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 			return true;
 		}
 		return false;
@@ -100,6 +103,7 @@ public class TileCondenser extends TileMachineRedstone implements IEssentiaTrans
 	public boolean takeFromContainer(AspectList ot) {
 		if(ot.getAspects().length == 1 && ot.getAspects()[0] == aspect && ot.getAmount(aspect) <= amount) {
 			amount -= ot.getAmount(aspect);
+			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 			return true;
 		}
 		return false;
@@ -138,6 +142,7 @@ public class TileCondenser extends TileMachineRedstone implements IEssentiaTrans
 
 	@Override
 	public int takeEssentia(Aspect aspect, int amount, ForgeDirection dir) {
+		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		return takeFromContainer(aspect, amount) ? amount : 0;
 	}
 

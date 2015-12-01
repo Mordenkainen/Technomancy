@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -31,10 +32,12 @@ import theflogat.technomancy.common.items.technom.existence.ItemTreasure;
 import theflogat.technomancy.common.player.PlayerData;
 import theflogat.technomancy.common.potions.TMPotions;
 import theflogat.technomancy.common.tiles.air.TileFakeAirNG;
+import theflogat.technomancy.lib.Conf;
 import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.network.PacketHandler;
 import theflogat.technomancy.util.Ore;
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.EventPriority;
@@ -58,8 +61,11 @@ public class EventRegister {
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void renderOverlayEvent(RenderTickEvent event){
-		if (event.phase==Phase.END && Minecraft.getMinecraft().theWorld!=null){
-			PlayerData.renderHUD(Minecraft.getMinecraft().thePlayer);
+		Minecraft mc = FMLClientHandler.instance().getClient();
+		if ((mc.inGameHasFocus || mc.currentScreen == null) && !Minecraft.getMinecraft().gameSettings.showDebugInfo) {
+			if (event.phase == Phase.END && Minecraft.getMinecraft().theWorld != null && Conf.showHUD){
+				PlayerData.renderHUD(Minecraft.getMinecraft().thePlayer);
+			}
 		}
 	}
 

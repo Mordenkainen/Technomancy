@@ -2,7 +2,7 @@ package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
 import java.util.Collections;
 import java.util.Iterator;
-import net.minecraft.block.Block;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
@@ -13,18 +13,24 @@ import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import thaumcraft.common.lib.network.PacketHandler;
 import thaumcraft.common.lib.network.fx.PacketFXEssentiaSource;
+import thaumcraft.common.tiles.TileArcaneBoreBase;
+import thaumcraft.common.tiles.TileArcaneLampFertility;
+import thaumcraft.common.tiles.TileArcaneLampGrowth;
+import thaumcraft.common.tiles.TileThaumatorium;
+import thaumcraft.common.tiles.TileThaumatoriumTop;
+import thaumcraft.common.tiles.TileTubeBuffer;
 import theflogat.technomancy.common.tiles.base.TileCoilTransmitter;
 import theflogat.technomancy.common.tiles.thaumcraft.util.AspectContainerEssentiaTransport;
 import theflogat.technomancy.lib.Conf;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.util.helpers.WorldHelper;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
 
-public class TileEssentiaTransmitter extends TileCoilTransmitter implements IEssentiaTransport{
+public class TileEssentiaTransmitter extends TileCoilTransmitter implements IEssentiaTransport {
 
 	public Aspect aspectFilter = null;
 	private boolean onSpecialBlock;
+	private boolean onBuffer;
 	
 	@Override
 	public void writeSyncData(NBTTagCompound comp) {
@@ -32,29 +38,39 @@ public class TileEssentiaTransmitter extends TileCoilTransmitter implements IEss
 		if (aspectFilter != null) {
 			comp.setString("AspectFilter", aspectFilter.getTag());
 		}
+		comp.setBoolean("Buffer", onBuffer);
 	}
 	
 	@Override
 	public void readSyncData(NBTTagCompound comp) {
 		super.readSyncData(comp);
 		aspectFilter = Aspect.getAspect(comp.getString("AspectFilter"));
+		onBuffer = comp.getBoolean("Buffer");
+		if(onBuffer) {
+			ForgeDirection dir = ForgeDirection.getOrientation(facing);
+			worldObj.markBlockForUpdate(this.xCoord + dir.offsetX, this.yCoord + dir.offsetY, this.zCoord + dir.offsetZ);
+		}
 	}
 	
 	@Override
 	public void updateEntity() {
 		if(!worldObj.isRemote) {
-			Block connectedBlock = worldObj.getBlock(xCoord + ForgeDirection.getOrientation(facing).offsetX, 
-					yCoord + ForgeDirection.getOrientation(facing).offsetY, zCoord + ForgeDirection.getOrientation(facing).offsetZ);
-			int blockMeta = worldObj.getBlockMetadata(xCoord + ForgeDirection.getOrientation(facing).offsetX, 
-					yCoord + ForgeDirection.getOrientation(facing).offsetY, zCoord + ForgeDirection.getOrientation(facing).offsetZ);
-			if(connectedBlock == GameRegistry.findBlock("Thaumcraft", "blockMetalDevice") && 
-					(blockMeta == 8 || blockMeta == 10 || blockMeta == 11 || blockMeta == 13)) {
-				onSpecialBlock = true;
-				return;
-			}
 			TileEntity te = Thaumcraft.getConnectableAsContainer(worldObj, xCoord, yCoord, zCoord, ForgeDirection.getOrientation(facing));
 			if(te == null) {
 				return;
+			}
+			
+			if(te instanceof TileArcaneBoreBase || te instanceof TileArcaneLampGrowth || te instanceof TileArcaneLampFertility ||
+					te instanceof TileArcaneLampFertility || te instanceof TileThaumatorium || te instanceof TileThaumatoriumTop) {
+				onSpecialBlock = true;
+				return;
+			} else {
+				onSpecialBlock = false;
+			}
+			
+			if(te instanceof TileTubeBuffer) {
+				onBuffer = true;
+				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 			}
 			
 			IAspectContainer cont;
@@ -127,7 +143,7 @@ public class TileEssentiaTransmitter extends TileCoilTransmitter implements IEss
 	
 	@Override
 	public boolean isConnectable(ForgeDirection face) {
-		return onSpecialBlock && face == ForgeDirection.getOrientation(facing);
+		return (onSpecialBlock || onBuffer) && face == ForgeDirection.getOrientation(facing);
 	}
 
 	@Override
@@ -215,7 +231,7 @@ public class TileEssentiaTransmitter extends TileCoilTransmitter implements IEss
 
 	@Override
 	public boolean renderExtendedTube() {
-		return true;
+		return false;
 	}
 	
 	@Override

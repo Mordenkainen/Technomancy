@@ -261,7 +261,7 @@ public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContain
 
 	@Override
 	public boolean doesContainerAccept(Aspect tag) {
-		return aspect==null || tag==aspect;
+		return (aspect==null || tag==aspect) && amount < maxAmount;
 	}
 
 	@Override
