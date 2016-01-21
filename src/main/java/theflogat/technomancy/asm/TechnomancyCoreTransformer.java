@@ -72,7 +72,7 @@ public class TechnomancyCoreTransformer implements IClassTransformer {
 			}
 		}
 		
-		ClassWriter cw=new ClassWriter(ClassWriter.COMPUTE_MAXS);
+		ClassWriter cw=new ClassWriter(ClassWriter.COMPUTE_FRAMES);
 		classNode.accept(cw);
 		
 		return cw.toByteArray();
