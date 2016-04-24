@@ -46,7 +46,7 @@ public class TileEssentiaTransmitter extends TileCoilTransmitter implements IEss
 		super.readSyncData(comp);
 		aspectFilter = Aspect.getAspect(comp.getString("AspectFilter"));
 		onBuffer = comp.getBoolean("Buffer");
-		if(onBuffer) {
+		if(onBuffer && worldObj != null) {
 			ForgeDirection dir = ForgeDirection.getOrientation(facing);
 			worldObj.markBlockForUpdate(this.xCoord + dir.offsetX, this.yCoord + dir.offsetY, this.zCoord + dir.offsetZ);
 		}
