@@ -70,6 +70,9 @@ public class ConfigHandler {
         Ids.scepter = config.get(items, Names.scepter, true).getBoolean();
         Ids.exGem = config.get(items, Names.exGem, true).getBoolean();
         Ids.treasures = config.get(items, "treasures", true).getBoolean();
+        Ids.treasures &= config.get(items, "treasureSafeguard", false, 
+        		"Enhanced villagers will only be enabled if this option AND the treasures option are true. "
+        		+ "Note, some of the villagers can cause large scale damage, you have been warned!").getBoolean();
         
         //Potions
         String potions = "Potions";
