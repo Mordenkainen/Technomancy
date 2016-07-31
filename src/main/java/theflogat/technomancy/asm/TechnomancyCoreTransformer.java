@@ -16,6 +16,7 @@ import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.TypeInsnNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
+import cpw.mods.fml.common.Loader;
 import net.minecraft.launchwrapper.IClassTransformer;
 import net.minecraft.launchwrapper.Launch;
 
@@ -28,8 +29,10 @@ public class TechnomancyCoreTransformer implements IClassTransformer {
 		isDeobfEnvironment = (Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment");
 				
 		if(name.equals("powercrystals.minefactoryreloaded.MineFactoryReloadedClient")) {
-			byte[] newCode = patchRenderWorldLast(basicClass, isDeobfEnvironment);
-			return newCode;
+			if(Loader.isModLoaded("Thaumcraft")) {
+				byte[] newCode = patchRenderWorldLast(basicClass, isDeobfEnvironment);
+				return newCode;
+			}
 		}
 		
 		return basicClass;

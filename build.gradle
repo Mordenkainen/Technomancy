@@ -17,13 +17,28 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.0"
-group= "com.yourname.modid" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+version = "${mod_version}"
+group= "com.theflogat.technomancy" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Technomancy"
 
 minecraft {
-    version = "1.7.10-10.13.4.1448-1.7.10"
-    runDir = "eclipse"
+    version = "${minecraft_version}-${forge_version}"
+    runDir = ".minecraft"
+}
+
+repositories {
+    maven {
+        name 'Mobius Repo'
+        url "http://mobiusstrip.eu/maven"
+    }
+    maven {
+        name 'CB Repo'
+        url "http://chickenbones.net/maven/"
+    }
+    maven {
+        name = "RX14"
+        url = "http://mvn.rx14.co.uk/repo/"
+    } 
 }
 
 jar {
@@ -33,6 +48,16 @@ jar {
 }
 
 dependencies {
+    compile "codechicken:CodeChickenLib:${minecraft_version}-${ccl_version}:dev"
+    compile "codechicken:CodeChickenCore:${minecraft_version}-${ccc_version}:dev"
+    compile "codechicken:NotEnoughItems:${minecraft_version}-${nei_version}:dev"
+    compile "mcp.mobius.waila:Waila:${waila_version}_${minecraft_version}:dev"
+    compile "vazkii.botania:Botania:${botania_version}:deobf"
+
+    compile fileTree(dir: 'libs', include: '*.jar') 
+
+
+
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
     //compile "some.group:artifact:version:classifier"

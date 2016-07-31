@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import powercrystals.minefactoryreloaded.api.IMFRHammer;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.relauncher.Side;
@@ -131,42 +132,44 @@ public class ItemTechnoturgeScepter extends ItemWandCasting implements
 		}
 		TileEntity tile = world.getTileEntity(x, y, z);
 
-		if (tile instanceof IWrenchable) {
-			IWrenchable wrenchable = (IWrenchable) tile;
-
-			if (player.isSneaking()) {
-				side = BlockHelper.SIDE_OPPOSITE[side];
-			}
-			if (wrenchable.wrenchCanSetFacing(player, side)) {
-				if (!world.isRemote) {
-					wrenchable.setFacing((short) side);
+		if (Loader.isModLoaded("IC2")) {
+			if (tile instanceof IWrenchable) {
+				IWrenchable wrenchable = (IWrenchable) tile;
+	
+				if (player.isSneaking()) {
+					side = BlockHelper.SIDE_OPPOSITE[side];
 				}
-			} else if (wrenchable.wrenchCanRemove(player)) {
-				ItemStack dropBlock = wrenchable.getWrenchDrop(player);
-
-				if (dropBlock != null) {
-					world.setBlockToAir(x, y, z);
+				if (wrenchable.wrenchCanSetFacing(player, side)) {
 					if (!world.isRemote) {
-						List<ItemStack> drops = block.getDrops(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
-
-						if (drops.isEmpty()) {
-							drops.add(dropBlock);
-						} else {
-							drops.set(0, dropBlock);
-						}
-						for (ItemStack drop : drops) {
-							float f = 0.7F;
-							double x2 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
-							double y2 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
-							double z2 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
-							EntityItem entity = new EntityItem(world, x + x2, y + y2, z + z2, drop);
-							entity.delayBeforeCanPickup = 10;
-							world.spawnEntityInWorld(entity);
+						wrenchable.setFacing((short) side);
+					}
+				} else if (wrenchable.wrenchCanRemove(player)) {
+					ItemStack dropBlock = wrenchable.getWrenchDrop(player);
+	
+					if (dropBlock != null) {
+						world.setBlockToAir(x, y, z);
+						if (!world.isRemote) {
+							List<ItemStack> drops = block.getDrops(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
+	
+							if (drops.isEmpty()) {
+								drops.add(dropBlock);
+							} else {
+								drops.set(0, dropBlock);
+							}
+							for (ItemStack drop : drops) {
+								float f = 0.7F;
+								double x2 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
+								double y2 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
+								double z2 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
+								EntityItem entity = new EntityItem(world, x + x2, y + y2, z + z2, drop);
+								entity.delayBeforeCanPickup = 10;
+								world.spawnEntityInWorld(entity);
+							}
 						}
 					}
 				}
+				return !world.isRemote;
 			}
-			return !world.isRemote;
 		}
 		
         return super.onItemUseFirst(stack, player, world, x, y, z, side, hitX, hitY, hitZ);
