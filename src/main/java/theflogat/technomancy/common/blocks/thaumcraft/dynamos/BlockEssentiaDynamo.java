@@ -13,23 +13,23 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockEssentiaDynamo extends BlockDynamoBase {
 
-	public BlockEssentiaDynamo() {
-		setBlockName(Ref.getId(Names.essentiaDynamo));
-	}
+    public BlockEssentiaDynamo() {
+        setBlockName(Ref.getId(Names.essentiaDynamo));
+    }
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void registerBlockIcons(IIconRegister icon) {
-		blockIcon = icon.registerIcon(Ref.getAsset(Names.essentiaDynamo));
-	}
-	
-	@Override
-	public TileEntity createNewTileEntity(World w, int meta) {
-		return new TileEssentiaDynamo();
-	}
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerBlockIcons(IIconRegister icon) {
+        blockIcon = icon.registerIcon(Ref.getAsset(Names.essentiaDynamo));
+    }
 
-	@Override
-	public int getRenderType() {
-		return RenderIds.idEssentiaDynamo;
-	}
+    @Override
+    public TileEntity createNewTileEntity(World w, int meta) {
+        return new TileEssentiaDynamo();
+    }
+
+    @Override
+    public int getRenderType() {
+        return RenderIds.idEssentiaDynamo;
+    }
 }

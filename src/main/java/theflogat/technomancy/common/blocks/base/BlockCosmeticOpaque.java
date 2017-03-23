@@ -13,33 +13,33 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockCosmeticOpaque extends Block {
 
-	public BlockCosmeticOpaque() {
-		super(Material.glass);
-		setStepSound(Block.soundTypeGlass);
-		setHardness(.25F);
-		setBlockName(Ref.MOD_PREFIX + Names.cosmeticOpaque);
-		this.setCreativeTab(Technomancy.tabsTM);
-	}
-	
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void registerBlockIcons(IIconRegister icon) {
-		blockIcon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.cosmeticOpaque);
-	}
-	
-	@Override
-	public int quantityDropped(Random par1Random) {
-		return 1;
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
+    public BlockCosmeticOpaque() {
+        super(Material.glass);
+        setStepSound(Block.soundTypeGlass);
+        setHardness(.25F);
+        setBlockName(Ref.MOD_PREFIX + Names.cosmeticOpaque);
+        this.setCreativeTab(Technomancy.tabsTM);
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerBlockIcons(IIconRegister icon) {
+        blockIcon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.cosmeticOpaque);
+    }
+
+    @Override
+    public int quantityDropped(Random par1Random) {
+        return 1;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
     public int getRenderBlockPass() {
-		return 1;
-	}
-	
-	@Override
-	public boolean isOpaqueCube() {
-		return false;
-	}
+        return 1;
+    }
+
+    @Override
+    public boolean isOpaqueCube() {
+        return false;
+    }
 }

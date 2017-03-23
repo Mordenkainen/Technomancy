@@ -16,30 +16,30 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockNodeDynamo extends BlockDynamoBase {
 
-	public BlockNodeDynamo() {
-		setBlockName(Ref.getId(Names.nodeDynamo));
-	}
-	
-	@Override
-	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase entity, ItemStack items) {
-		super.onBlockPlacedBy(w, x, y, z, entity, items);
-		TileNodeDynamo tile = (TileNodeDynamo)w.getTileEntity(x, y, z);
-		tile.facing = 0;
-	}
+    public BlockNodeDynamo() {
+        setBlockName(Ref.getId(Names.nodeDynamo));
+    }
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void registerBlockIcons(IIconRegister reg) {
-		blockIcon = Blocks.stone.getIcon(0, 0);
-	}
-	
-	@Override
-	public TileEntity createNewTileEntity(World w, int meta) {
-		return new TileNodeDynamo();
-	}
+    @Override
+    public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase entity, ItemStack items) {
+        super.onBlockPlacedBy(w, x, y, z, entity, items);
+        TileNodeDynamo tile = (TileNodeDynamo) w.getTileEntity(x, y, z);
+        tile.facing = 0;
+    }
 
-	@Override
-	public int getRenderType() {
-		return RenderIds.idNodeDynamo;
-	}
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerBlockIcons(IIconRegister reg) {
+        blockIcon = Blocks.stone.getIcon(0, 0);
+    }
+
+    @Override
+    public TileEntity createNewTileEntity(World w, int meta) {
+        return new TileNodeDynamo();
+    }
+
+    @Override
+    public int getRenderType() {
+        return RenderIds.idNodeDynamo;
+    }
 }

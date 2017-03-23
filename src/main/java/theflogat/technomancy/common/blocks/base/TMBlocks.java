@@ -54,120 +54,115 @@ import theflogat.technomancy.lib.Ref;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class TMBlocks {
-	
-	//Block Instances	
-	public static Block nodeDynamo;
-	public static Block essentiaContainer;
-	public static Block cosmeticOpaque;
-	public static Block cosmeticPane;
-	public static Block essentiaDynamo;
-	public static Block biomeMorpher;
-	public static Block nodeGenerator;
-	public static Block fluxLamp;
-	public static Block teslaCoil;
-	public static Block electricBellows;
-	public static Block creativeJar;
-	public static Block crystalBlock;	
-//	public static Block reconstructorBlock;
-	public static Block bloodDynamo;
-	public static Block condenserBlock;
-	public static Block bloodFabricator;
-	public static Block flowerDynamo;
-	public static Block manaFabricator;
-	public static Block processorTC;
-	public static Block processorBM;
-	public static Block processorBO;
-	public static Block eldritchConsumer;
-	public static Block catalyst;
-	public static Block fakeAirNG;
-	public static Block reservoir;
-	public static Block fakeAirLight;
-	public static Block advDeconTable;
-	public static Block manaFluidBlock;
-	public static Block manaExchanger;
-	public static Block itemTransmitter;
-	public static Block basalt;
-	public static Block essentiaFusor;
-	public static Block	fountainExistence;
-	public static Block	existenceBurner;
-	public static Block existencePylon;
-	public static Block existenceUser;
-	
-	public static Fluid manaFluid;
-	
-	public static void initTechnomancy(){
-		crystalBlock = Ids.crystalBlock ? new BlockCrystal() : null;
-		catalyst = Ids.catalyst ? new BlockCatalyst() : null;
-		fakeAirLight = Ids.catalyst ? new BlockFakeAirLight() : null;
-		itemTransmitter = Ids.itemTransmitter ? new BlockItemTransmitter() : null;
-		basalt = Ids.basalt ? new BlockBasalt() : null;
-		fountainExistence = Ids.existenceFountain ? new BlockExistenceFountain() : null;
-		existenceBurner = Ids.existenceBurner ? new BlockExistenceBurner() : null;
-		existencePylon = Ids.existencePylon ? new BlockExistencePylon() : null;
-		existenceUser = Ids.existenceUser ? new BlockExistenceUser() : null;
-		
-		
-		registerBlock(crystalBlock, Names.crystalBlock, ItemCrystal.class);
-		registerBlock(catalyst, Names.catalyst, ItemCatalyst.class);
-		registerBlock(fakeAirLight, Names.fakeAirLight);
-		registerBlock(itemTransmitter, Names.itemTransmitter);
-		registerBlock(basalt, Names.basalt);
-		registerBlock(fountainExistence, Names.existenceFountain);
-		registerBlock(existenceBurner, Names.existenceBurner[0], ItemBlockExistenceBurner.class);
-		registerBlock(existencePylon, Names.existencePylon, ItemBlockExistencePylon.class);
-		registerBlock(existenceUser, "existenceUser", ItemBlockExistenceUser.class);
-		
-		
-		OreDictionary.registerOre("basalt", basalt);
-		
-		
-		GameRegistry.registerTileEntity(TileCrystal.class, Ref.MOD_PREFIX + "TileCrystal");
-		GameRegistry.registerTileEntity(TileCatalyst.class, Ref.MOD_PREFIX + "TileCatalyst");
-		GameRegistry.registerTileEntity(TileFakeAirCore.class, Ref.MOD_PREFIX + "TileFakeAirCore");
-		GameRegistry.registerTileEntity(TileItemTransmitter.class, Ref.MOD_PREFIX + "TileItemTransmitter");
-		GameRegistry.registerTileEntity(TileExistenceFountain.class, Ref.MOD_PREFIX + "TileExistenceFountain");
-		GameRegistry.registerTileEntity(TileExistenceBurner.class, Ref.MOD_PREFIX + "TileExistenceBurner");
-		GameRegistry.registerTileEntity(TileExistencePylon.class, Ref.MOD_PREFIX + "TileExistencePylon");
-		GameRegistry.registerTileEntity(TileExistenceDynamicBurner.class, Ref.MOD_PREFIX + "TileExistenceDynamicBurner");
-		GameRegistry.registerTileEntity(TileExistenceCropAccelerator.class, Ref.MOD_PREFIX + "TileExistenceCropAccelerator");
-		GameRegistry.registerTileEntity(TileExistenceHarvester.class, Ref.MOD_PREFIX + "TileExistenceHarvester");
-		GameRegistry.registerTileEntity(TileExistenceSealingDevice.class, Ref.MOD_PREFIX + "TileExistenceSealingDevice");
-		
-		
-		MovableTileRegistry.addAllowed(TileCrystal.class);
-		MovableTileRegistry.addAllowed(TileCatalyst.class);
-		
 
-		RitualRegistry.add(new RitualExtraction());
-		RitualRegistry.add(new RitualFountainExistence());
-		RitualRegistry.add(new RitualCaveInT3());
-		RitualRegistry.add(new RitualCaveInT2());
-		RitualRegistry.add(new RitualCaveInT1());
-		RitualRegistry.add(new RitualBlackHoleT3());
-		RitualRegistry.add(new RitualBlackHoleT2());
-		RitualRegistry.add(new RitualBlackHoleT1());
-		RitualRegistry.add(new RitualWaterT3());
-		RitualRegistry.add(new RitualWaterT2());
-		RitualRegistry.add(new RitualWaterT1());
-		RitualRegistry.add(new RitualPurificationT3());
-		RitualRegistry.add(new RitualPurificationT2());
-		RitualRegistry.add(new RitualPurificationT1());
-//		RitualRegistry.add(new RitualOfFireT3());
-		RitualRegistry.add(new RitualOfFireT2());
-		RitualRegistry.add(new RitualOfFireT1());
-	}
-	
-	public static void registerBlock(Block block, String name) {
-		if(block instanceof BlockContainerAdvanced){
-			GameRegistry.registerBlock(block, ItemAdvancedBase.class, name);
-			return;
-		}
-		if(block!=null)
-			GameRegistry.registerBlock(block, name);
-	}
-	
-	public static void registerBlock(Block block, String name, Class<? extends ItemBlock> itemclass) {
-		if(block!=null)
-			GameRegistry.registerBlock(block, itemclass, name);
-	}
+    // Block Instances
+    public static Block nodeDynamo;
+    public static Block essentiaContainer;
+    public static Block cosmeticOpaque;
+    public static Block cosmeticPane;
+    public static Block essentiaDynamo;
+    public static Block biomeMorpher;
+    public static Block nodeGenerator;
+    public static Block fluxLamp;
+    public static Block teslaCoil;
+    public static Block electricBellows;
+    public static Block creativeJar;
+    public static Block crystalBlock;
+    // public static Block reconstructorBlock;
+    public static Block bloodDynamo;
+    public static Block condenserBlock;
+    public static Block bloodFabricator;
+    public static Block flowerDynamo;
+    public static Block manaFabricator;
+    public static Block processorTC;
+    public static Block processorBM;
+    public static Block processorBO;
+    public static Block eldritchConsumer;
+    public static Block catalyst;
+    public static Block fakeAirNG;
+    public static Block reservoir;
+    public static Block fakeAirLight;
+    public static Block advDeconTable;
+    public static Block manaFluidBlock;
+    public static Block manaExchanger;
+    public static Block itemTransmitter;
+    public static Block basalt;
+    public static Block essentiaFusor;
+    public static Block fountainExistence;
+    public static Block existenceBurner;
+    public static Block existencePylon;
+    public static Block existenceUser;
+
+    public static Fluid manaFluid;
+
+    public static void initTechnomancy() {
+        crystalBlock = Ids.crystalBlock ? new BlockCrystal() : null;
+        catalyst = Ids.catalyst ? new BlockCatalyst() : null;
+        fakeAirLight = Ids.catalyst ? new BlockFakeAirLight() : null;
+        itemTransmitter = Ids.itemTransmitter ? new BlockItemTransmitter() : null;
+        basalt = Ids.basalt ? new BlockBasalt() : null;
+        fountainExistence = Ids.existenceFountain ? new BlockExistenceFountain() : null;
+        existenceBurner = Ids.existenceBurner ? new BlockExistenceBurner() : null;
+        existencePylon = Ids.existencePylon ? new BlockExistencePylon() : null;
+        existenceUser = Ids.existenceUser ? new BlockExistenceUser() : null;
+
+        registerBlock(crystalBlock, Names.crystalBlock, ItemCrystal.class);
+        registerBlock(catalyst, Names.catalyst, ItemCatalyst.class);
+        registerBlock(fakeAirLight, Names.fakeAirLight);
+        registerBlock(itemTransmitter, Names.itemTransmitter);
+        registerBlock(basalt, Names.basalt);
+        registerBlock(fountainExistence, Names.existenceFountain);
+        registerBlock(existenceBurner, Names.existenceBurner[0], ItemBlockExistenceBurner.class);
+        registerBlock(existencePylon, Names.existencePylon, ItemBlockExistencePylon.class);
+        registerBlock(existenceUser, "existenceUser", ItemBlockExistenceUser.class);
+
+        OreDictionary.registerOre("basalt", basalt);
+
+        GameRegistry.registerTileEntity(TileCrystal.class, Ref.MOD_PREFIX + "TileCrystal");
+        GameRegistry.registerTileEntity(TileCatalyst.class, Ref.MOD_PREFIX + "TileCatalyst");
+        GameRegistry.registerTileEntity(TileFakeAirCore.class, Ref.MOD_PREFIX + "TileFakeAirCore");
+        GameRegistry.registerTileEntity(TileItemTransmitter.class, Ref.MOD_PREFIX + "TileItemTransmitter");
+        GameRegistry.registerTileEntity(TileExistenceFountain.class, Ref.MOD_PREFIX + "TileExistenceFountain");
+        GameRegistry.registerTileEntity(TileExistenceBurner.class, Ref.MOD_PREFIX + "TileExistenceBurner");
+        GameRegistry.registerTileEntity(TileExistencePylon.class, Ref.MOD_PREFIX + "TileExistencePylon");
+        GameRegistry.registerTileEntity(TileExistenceDynamicBurner.class, Ref.MOD_PREFIX + "TileExistenceDynamicBurner");
+        GameRegistry.registerTileEntity(TileExistenceCropAccelerator.class, Ref.MOD_PREFIX + "TileExistenceCropAccelerator");
+        GameRegistry.registerTileEntity(TileExistenceHarvester.class, Ref.MOD_PREFIX + "TileExistenceHarvester");
+        GameRegistry.registerTileEntity(TileExistenceSealingDevice.class, Ref.MOD_PREFIX + "TileExistenceSealingDevice");
+
+        MovableTileRegistry.addAllowed(TileCrystal.class);
+        MovableTileRegistry.addAllowed(TileCatalyst.class);
+
+        RitualRegistry.add(new RitualExtraction());
+        RitualRegistry.add(new RitualFountainExistence());
+        RitualRegistry.add(new RitualCaveInT3());
+        RitualRegistry.add(new RitualCaveInT2());
+        RitualRegistry.add(new RitualCaveInT1());
+        RitualRegistry.add(new RitualBlackHoleT3());
+        RitualRegistry.add(new RitualBlackHoleT2());
+        RitualRegistry.add(new RitualBlackHoleT1());
+        RitualRegistry.add(new RitualWaterT3());
+        RitualRegistry.add(new RitualWaterT2());
+        RitualRegistry.add(new RitualWaterT1());
+        RitualRegistry.add(new RitualPurificationT3());
+        RitualRegistry.add(new RitualPurificationT2());
+        RitualRegistry.add(new RitualPurificationT1());
+        // RitualRegistry.add(new RitualOfFireT3());
+        RitualRegistry.add(new RitualOfFireT2());
+        RitualRegistry.add(new RitualOfFireT1());
+    }
+
+    public static void registerBlock(Block block, String name) {
+        if (block instanceof BlockContainerAdvanced) {
+            GameRegistry.registerBlock(block, ItemAdvancedBase.class, name);
+            return;
+        }
+        if (block != null)
+            GameRegistry.registerBlock(block, name);
+    }
+
+    public static void registerBlock(Block block, String name, Class<? extends ItemBlock> itemclass) {
+        if (block != null)
+            GameRegistry.registerBlock(block, itemclass, name);
+    }
 }

@@ -3,68 +3,68 @@ package theflogat.technomancy.common.tiles.technom.existence;
 import net.minecraft.nbt.NBTTagCompound;
 import theflogat.technomancy.common.tiles.base.TileTechnomancy;
 
-public class TileExistenceFountain extends TileTechnomancy implements IExistenceProducer{
-	
-	public int power;
-	private static final int powerCap = 1000000;
-	private static final int prodRate = 500;
-	
-	@Override
-	public void updateEntity() {
-		power += Math.min(prodRate, powerCap - power);
-	}
+public class TileExistenceFountain extends TileTechnomancy implements IExistenceProducer {
 
-	@Override
-	public void readCustomNBT(NBTTagCompound comp) {
-		power = comp.getInteger("power");
-	}
+    public int power;
+    private static final int powerCap = 1000000;
+    private static final int prodRate = 500;
 
-	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {
-		comp.setInteger("power", power);
-	}
+    @Override
+    public void updateEntity() {
+        power += Math.min(prodRate, powerCap - power);
+    }
 
-	@Override
-	public void writeSyncData(NBTTagCompound compound) {
-		writeCustomNBT(compound);
-	}
+    @Override
+    public void readCustomNBT(NBTTagCompound comp) {
+        power = comp.getInteger("power");
+    }
 
-	@Override
-	public void readSyncData(NBTTagCompound compound) {
-		readCustomNBT(compound);
-	}
+    @Override
+    public void writeCustomNBT(NBTTagCompound comp) {
+        comp.setInteger("power", power);
+    }
 
-	@Override
-	public int getPower() {
-		return power;
-	}
+    @Override
+    public void writeSyncData(NBTTagCompound compound) {
+        writeCustomNBT(compound);
+    }
 
-	@Override
-	public int getPowerCap() {
-		return powerCap;
-	}
+    @Override
+    public void readSyncData(NBTTagCompound compound) {
+        readCustomNBT(compound);
+    }
 
-	@Override
-	public int getMaxRate() {
-		return prodRate * 4;
-	}
+    @Override
+    public int getPower() {
+        return power;
+    }
 
-	@Override
-	public boolean canInput() {
-		return false;
-	}
+    @Override
+    public int getPowerCap() {
+        return powerCap;
+    }
 
-	@Override
-	public boolean canOutput() {
-		return true;
-	}
+    @Override
+    public int getMaxRate() {
+        return prodRate * 4;
+    }
 
-	@Override
-	public void addPower(int val) {
-		power += val;
-	}
+    @Override
+    public boolean canInput() {
+        return false;
+    }
 
-	public boolean isRunning() {
-		return power<powerCap;
-	}
+    @Override
+    public boolean canOutput() {
+        return true;
+    }
+
+    @Override
+    public void addPower(int val) {
+        power += val;
+    }
+
+    public boolean isRunning() {
+        return power < powerCap;
+    }
 }

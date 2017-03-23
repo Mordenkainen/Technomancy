@@ -18,43 +18,43 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockBloodDynamo extends BlockDynamoBase {
 
-	public BlockBloodDynamo() {
-		setBlockName(Ref.getId(Names.bloodDynamo));
-	}
-	
-	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float vecX, float vecY, float vecZ) {
-		if (player.getHeldItem() != null) {
-			TileBloodDynamo tile = (TileBloodDynamo)world.getTileEntity(x, y, z);
-			if(player.getHeldItem().getItem()==BloodMagic.divinationSigil){
-				if(!world.isRemote) {
-					player.addChatComponentMessage(new ChatComponentText("Energy: " + tile.getEnergyStored(null) + "/" + tile.getMaxEnergyStored(null)));
-					player.addChatComponentMessage(new ChatComponentText("Blood: " + tile.liquid + "/" + TileBloodDynamo.capacity));
-				}
-				return true;
-			}else if(player.getHeldItem().getItem()==BloodMagic.bucketLife){
-				if(tile.emptyBucket()) {
-					player.inventory.mainInventory[player.inventory.currentItem] = new ItemStack(Items.bucket);
-					return true;
-				}
-			}
-		}
-		return super.onBlockActivated(world, x, y, z, player, side, vecX, vecY, vecZ);
-	}
-	
-	@Override
-	public TileEntity createNewTileEntity(World w, int meta) {
-		return new TileBloodDynamo();
-	}
+    public BlockBloodDynamo() {
+        setBlockName(Ref.getId(Names.bloodDynamo));
+    }
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void registerBlockIcons(IIconRegister icon) {
-		blockIcon = icon.registerIcon(Ref.getAsset(Names.bloodDynamo));
-	}
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float vecX, float vecY, float vecZ) {
+        if (player.getHeldItem() != null) {
+            TileBloodDynamo tile = (TileBloodDynamo) world.getTileEntity(x, y, z);
+            if (player.getHeldItem().getItem() == BloodMagic.divinationSigil) {
+                if (!world.isRemote) {
+                    player.addChatComponentMessage(new ChatComponentText("Energy: " + tile.getEnergyStored(null) + "/" + tile.getMaxEnergyStored(null)));
+                    player.addChatComponentMessage(new ChatComponentText("Blood: " + tile.liquid + "/" + TileBloodDynamo.capacity));
+                }
+                return true;
+            } else if (player.getHeldItem().getItem() == BloodMagic.bucketLife) {
+                if (tile.emptyBucket()) {
+                    player.inventory.mainInventory[player.inventory.currentItem] = new ItemStack(Items.bucket);
+                    return true;
+                }
+            }
+        }
+        return super.onBlockActivated(world, x, y, z, player, side, vecX, vecY, vecZ);
+    }
 
-	@Override
-	public int getRenderType() {
-		return RenderIds.idBloodDynamo;
-	}
+    @Override
+    public TileEntity createNewTileEntity(World w, int meta) {
+        return new TileBloodDynamo();
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerBlockIcons(IIconRegister icon) {
+        blockIcon = icon.registerIcon(Ref.getAsset(Names.bloodDynamo));
+    }
+
+    @Override
+    public int getRenderType() {
+        return RenderIds.idBloodDynamo;
+    }
 }

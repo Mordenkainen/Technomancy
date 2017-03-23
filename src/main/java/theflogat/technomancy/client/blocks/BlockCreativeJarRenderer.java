@@ -11,28 +11,28 @@ import theflogat.technomancy.common.tiles.thaumcraft.storage.TileCreativeJar;
 import theflogat.technomancy.lib.RenderIds;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
-public class BlockCreativeJarRenderer implements ISimpleBlockRenderingHandler{
-	
-	@Override
-	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
-		GL11.glPushMatrix();
-		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-		TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileCreativeJar(), 0.0D, 0.0D, 0.0D, 0.0F);
-		GL11.glPopMatrix();
-	}
+public class BlockCreativeJarRenderer implements ISimpleBlockRenderingHandler {
 
-	@Override
-	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
-		return false;
-	}
+    @Override
+    public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
+        GL11.glPushMatrix();
+        GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+        TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileCreativeJar(), 0.0D, 0.0D, 0.0D, 0.0F);
+        GL11.glPopMatrix();
+    }
 
-	@Override
-	public boolean shouldRender3DInInventory(int modelId) {
-		return true;
-	}
+    @Override
+    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
+        return false;
+    }
 
-	@Override
-	public int getRenderId() {
-		return RenderIds.idCreativeJar;
-	}
+    @Override
+    public boolean shouldRender3DInInventory(int modelId) {
+        return true;
+    }
+
+    @Override
+    public int getRenderId() {
+        return RenderIds.idCreativeJar;
+    }
 }

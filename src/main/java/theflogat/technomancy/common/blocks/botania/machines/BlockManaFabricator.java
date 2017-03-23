@@ -20,74 +20,74 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockManaFabricator extends BlockContainerAdvanced implements IWandHUD {
 
-	public BlockManaFabricator() {
-		setBlockName(Ref.getId(Names.manaFabricator));
-	}
+    public BlockManaFabricator() {
+        setBlockName(Ref.getId(Names.manaFabricator));
+    }
 
-	@Override
-	public TileEntity createNewTileEntity(World w, int meta) {
-		return new TileManaFabricator();
-	}
-	
-	@Override
-	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase entity, ItemStack items){
-		super.onBlockPlacedBy(w, x, y, z, entity, items);
-		TileEntity tile = w.getTileEntity(x, y, z);
-		if(tile instanceof TileManaFabricator) {
-			((TileManaFabricator)tile).facing = w.getBlockMetadata(x, y, z);
-			w.setBlockMetadataWithNotify(x, y, z, 0, 0);
-		}
-	}
-	
-	@Override
-	public int onBlockPlaced(World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int meta){
-		return ForgeDirection.OPPOSITES[side];
-	}
-	
-	@Override
-	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
-		TileEntity tile = world.getTileEntity(x, y, z);
-		if(tile instanceof TileManaFabricator) {
-			switch(((TileManaFabricator)tile).facing) {
-			case 0:
-			case 1:
-				setBlockBounds(0.1875F, 0.0F, 0.1875F, 0.8125F, 1.0F, 0.8125F);
-				break;
-			case 2:
-			case 3:
-				setBlockBounds(0.1875F, 0.1875F, 0.0F, 0.8125F, 0.8125F, 1.0F);
-				break;
-			case 4:
-			case 5:
-				setBlockBounds(0.0F, 0.1875F, 0.1875F, 1.0F, 0.8125F, 0.8125F);
-			}
-		}
-	}
-	
-	@Override
-	public boolean isOpaqueCube() {
-		return false;
-	}
+    @Override
+    public TileEntity createNewTileEntity(World w, int meta) {
+        return new TileManaFabricator();
+    }
 
-	@Override
-	public boolean renderAsNormalBlock() {
-		return false;
-	}
-	
-	@Override
-	public int getRenderType() {
-		return RenderIds.idManaFabricator;
-	}
-	
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void registerBlockIcons(IIconRegister icon) {
-		blockIcon = icon.registerIcon(Ref.getAsset(Names.manaFabricator));
-	}
-	
-	@Override
-	public void renderHUD(Minecraft mc, ScaledResolution res, World world, int x, int y, int z) {
-		((TileManaFabricator)world.getTileEntity(x, y, z)).renderHUD(mc, res);
-	}
+    @Override
+    public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase entity, ItemStack items) {
+        super.onBlockPlacedBy(w, x, y, z, entity, items);
+        TileEntity tile = w.getTileEntity(x, y, z);
+        if (tile instanceof TileManaFabricator) {
+            ((TileManaFabricator) tile).facing = w.getBlockMetadata(x, y, z);
+            w.setBlockMetadataWithNotify(x, y, z, 0, 0);
+        }
+    }
+
+    @Override
+    public int onBlockPlaced(World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int meta) {
+        return ForgeDirection.OPPOSITES[side];
+    }
+
+    @Override
+    public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
+        TileEntity tile = world.getTileEntity(x, y, z);
+        if (tile instanceof TileManaFabricator) {
+            switch (((TileManaFabricator) tile).facing) {
+                case 0:
+                case 1:
+                    setBlockBounds(0.1875F, 0.0F, 0.1875F, 0.8125F, 1.0F, 0.8125F);
+                    break;
+                case 2:
+                case 3:
+                    setBlockBounds(0.1875F, 0.1875F, 0.0F, 0.8125F, 0.8125F, 1.0F);
+                    break;
+                case 4:
+                case 5:
+                    setBlockBounds(0.0F, 0.1875F, 0.1875F, 1.0F, 0.8125F, 0.8125F);
+            }
+        }
+    }
+
+    @Override
+    public boolean isOpaqueCube() {
+        return false;
+    }
+
+    @Override
+    public boolean renderAsNormalBlock() {
+        return false;
+    }
+
+    @Override
+    public int getRenderType() {
+        return RenderIds.idManaFabricator;
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerBlockIcons(IIconRegister icon) {
+        blockIcon = icon.registerIcon(Ref.getAsset(Names.manaFabricator));
+    }
+
+    @Override
+    public void renderHUD(Minecraft mc, ScaledResolution res, World world, int x, int y, int z) {
+        ((TileManaFabricator) world.getTileEntity(x, y, z)).renderHUD(mc, res);
+    }
 
 }

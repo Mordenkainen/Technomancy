@@ -18,49 +18,52 @@ import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
 import theflogat.technomancy.lib.handlers.CompatibilityHandler;
 
 public class WailaProvider {
-	public static void callbackRegister(IWailaRegistrar registrar) {
-		registrar.registerBodyProvider(new DynamoHUDHandler(), TileDynamoBase.class);
-		
-		registrar.registerBodyProvider(new CatalystHUDHandler(), TileCatalyst.class);
-		
-		registrar.registerBodyProvider(new ProcessorHUDHandler(), TileProcessorBase.class);
-		
-		registrar.registerBodyProvider(new CoilTransmitterHUDHandler(), TileCoilTransmitter.class);
 
-//		registrar.registerBodyProvider(new ExistenceConsumerHUDHandler(), TileExistenceCropAccelerator.class);
-//		registrar.registerBodyProvider(new ExistenceProducerHUDHandler(), TileExistenceBurner.class);
-		
-		if(CompatibilityHandler.th) {
-			IWailaDataProvider biomeMorpher = new BiomeMorpherHUDHandler();
-			registrar.registerBodyProvider(biomeMorpher, TileBiomeMorpher.class);
-			registrar.registerNBTProvider(biomeMorpher, TileBiomeMorpher.class);
-		
-			IWailaDataProvider nodeGenerator = new NodeGeneratorHUDHandler();
-			registrar.registerBodyProvider(nodeGenerator, TileNodeGenerator.class);
-			registrar.registerNBTProvider(nodeGenerator, TileNodeGenerator.class);
-			
-			IWailaDataProvider nodeGeneratorAir = new FakeAirNGHUDHandler();
-			registrar.registerBodyProvider(nodeGeneratorAir, TileFakeAirNG.class);
-			registrar.registerNBTProvider(nodeGeneratorAir, TileFakeAirNG.class);
-			registrar.registerStackProvider(nodeGeneratorAir, TileFakeAirNG.class);
-			
-			registrar.registerBodyProvider(new EldritchConsumerHUDHandler(), TileEldritchConsumer.class);
-			
-			registrar.registerBodyProvider(new FluxLampHUDHandler(), TileFluxLamp.class);
-			
-			registrar.registerBodyProvider(new EssentiaFusorHUDHandler(), TileEssentiaFusor.class);
-			
-			registrar.registerBodyProvider(new CondenserHUDHandler(), TileCondenser.class);
-		}
-		
-		if(CompatibilityHandler.bo) {
-			IWailaDataProvider manaExchanger = new ManaExchangerHUDHandler();
-			registrar.registerBodyProvider(manaExchanger, TileManaExchanger.class);
-			registrar.registerNBTProvider(manaExchanger, TileManaExchanger.class);
-		}
-		
-		if(CompatibilityHandler.bm) {
-			registrar.registerBodyProvider(new BloodFabricatorHUDHandler(), TileBloodFabricator.class);
-		}
+    public static void callbackRegister(IWailaRegistrar registrar) {
+        registrar.registerBodyProvider(new DynamoHUDHandler(), TileDynamoBase.class);
+
+        registrar.registerBodyProvider(new CatalystHUDHandler(), TileCatalyst.class);
+
+        registrar.registerBodyProvider(new ProcessorHUDHandler(), TileProcessorBase.class);
+
+        registrar.registerBodyProvider(new CoilTransmitterHUDHandler(), TileCoilTransmitter.class);
+
+        // registrar.registerBodyProvider(new ExistenceConsumerHUDHandler(),
+        // TileExistenceCropAccelerator.class);
+        // registrar.registerBodyProvider(new ExistenceProducerHUDHandler(),
+        // TileExistenceBurner.class);
+
+        if (CompatibilityHandler.th) {
+            IWailaDataProvider biomeMorpher = new BiomeMorpherHUDHandler();
+            registrar.registerBodyProvider(biomeMorpher, TileBiomeMorpher.class);
+            registrar.registerNBTProvider(biomeMorpher, TileBiomeMorpher.class);
+
+            IWailaDataProvider nodeGenerator = new NodeGeneratorHUDHandler();
+            registrar.registerBodyProvider(nodeGenerator, TileNodeGenerator.class);
+            registrar.registerNBTProvider(nodeGenerator, TileNodeGenerator.class);
+
+            IWailaDataProvider nodeGeneratorAir = new FakeAirNGHUDHandler();
+            registrar.registerBodyProvider(nodeGeneratorAir, TileFakeAirNG.class);
+            registrar.registerNBTProvider(nodeGeneratorAir, TileFakeAirNG.class);
+            registrar.registerStackProvider(nodeGeneratorAir, TileFakeAirNG.class);
+
+            registrar.registerBodyProvider(new EldritchConsumerHUDHandler(), TileEldritchConsumer.class);
+
+            registrar.registerBodyProvider(new FluxLampHUDHandler(), TileFluxLamp.class);
+
+            registrar.registerBodyProvider(new EssentiaFusorHUDHandler(), TileEssentiaFusor.class);
+
+            registrar.registerBodyProvider(new CondenserHUDHandler(), TileCondenser.class);
+        }
+
+        if (CompatibilityHandler.bo) {
+            IWailaDataProvider manaExchanger = new ManaExchangerHUDHandler();
+            registrar.registerBodyProvider(manaExchanger, TileManaExchanger.class);
+            registrar.registerNBTProvider(manaExchanger, TileManaExchanger.class);
+        }
+
+        if (CompatibilityHandler.bm) {
+            registrar.registerBodyProvider(new BloodFabricatorHUDHandler(), TileBloodFabricator.class);
+        }
     }
 }

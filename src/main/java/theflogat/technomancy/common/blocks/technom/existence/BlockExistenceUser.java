@@ -15,79 +15,79 @@ import theflogat.technomancy.lib.Ref;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockExistenceUser extends BlockContainerMultiTiles{
+public class BlockExistenceUser extends BlockContainerMultiTiles {
 
-	public BlockExistenceUser() {
-		setBlockName(Ref.getId("existenceUser"));
-	}
-	
-	@Override
-	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase ent, ItemStack items) {
-		w.setBlockMetadataWithNotify(x, y, z, items.getItemDamage(), 3);
-	}
-	
-	@Override
-	public int damageDropped(int meta) {
-		return meta;
-	}
-	
-	@Override
-	public boolean isBlockNormalCube() {
-		return false;
-	}
-	
-	@Override
-	public boolean isOpaqueCube() {
-		return false;
-	}
+    public BlockExistenceUser() {
+        setBlockName(Ref.getId("existenceUser"));
+    }
 
-	@SideOnly(Side.CLIENT)
-	IIcon[] icons;
+    @Override
+    public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase ent, ItemStack items) {
+        w.setBlockMetadataWithNotify(x, y, z, items.getItemDamage(), 3);
+    }
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void registerBlockIcons(IIconRegister reg) {
-		icons = new IIcon[3];
-		blockIcon = reg.registerIcon(Ref.getAsset(Names.existenceUser[0]));
-		icons[0] = reg.registerIcon(Ref.getAsset(Names.existenceUser[0] + "_top"));
-		icons[1] = reg.registerIcon(Ref.getAsset(Names.existenceUser[1]));
-		icons[2] = reg.registerIcon(Ref.getAsset(Names.existenceUser[2]));
-	}
+    @Override
+    public int damageDropped(int meta) {
+        return meta;
+    }
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public IIcon getIcon(int side, int meta) {
-		if(meta==0){
-			if(side==1){
-				return icons[0];
-			}
-			return blockIcon;
-		}
-		if(meta==1){
-			if(side!=0 && side!=1){
-				return icons[0];
-			}
-			return blockIcon;
-		}
-		if(meta==2){
-			if(side==1){
-				return icons[2];
-			}
-			return blockIcon;
-		}
-		return icons[1];
-	}
+    @Override
+    public boolean isBlockNormalCube() {
+        return false;
+    }
 
-	@Override
-	public TileEntity getTile(int meta) {
-		switch(meta){
-		case 0:
-			return new TileExistenceCropAccelerator();
-		case 1:
-			return new TileExistenceHarvester();
-		case 2:
-			return new TileExistenceSealingDevice();
-		}
-		return null;
-	}
+    @Override
+    public boolean isOpaqueCube() {
+        return false;
+    }
+
+    @SideOnly(Side.CLIENT)
+    IIcon[] icons;
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerBlockIcons(IIconRegister reg) {
+        icons = new IIcon[3];
+        blockIcon = reg.registerIcon(Ref.getAsset(Names.existenceUser[0]));
+        icons[0] = reg.registerIcon(Ref.getAsset(Names.existenceUser[0] + "_top"));
+        icons[1] = reg.registerIcon(Ref.getAsset(Names.existenceUser[1]));
+        icons[2] = reg.registerIcon(Ref.getAsset(Names.existenceUser[2]));
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public IIcon getIcon(int side, int meta) {
+        if (meta == 0) {
+            if (side == 1) {
+                return icons[0];
+            }
+            return blockIcon;
+        }
+        if (meta == 1) {
+            if (side != 0 && side != 1) {
+                return icons[0];
+            }
+            return blockIcon;
+        }
+        if (meta == 2) {
+            if (side == 1) {
+                return icons[2];
+            }
+            return blockIcon;
+        }
+        return icons[1];
+    }
+
+    @Override
+    public TileEntity getTile(int meta) {
+        switch (meta) {
+            case 0:
+                return new TileExistenceCropAccelerator();
+            case 1:
+                return new TileExistenceHarvester();
+            case 2:
+                return new TileExistenceSealingDevice();
+        }
+        return null;
+    }
 }

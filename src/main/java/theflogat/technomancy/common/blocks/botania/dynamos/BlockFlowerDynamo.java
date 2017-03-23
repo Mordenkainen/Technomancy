@@ -16,28 +16,28 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockFlowerDynamo extends BlockDynamoBase implements IWandHUD {
 
-	public BlockFlowerDynamo() {
-		setBlockName(Ref.getId(Names.flowerDynamo));
-	}
-	
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void registerBlockIcons(IIconRegister icon) {
-		blockIcon = icon.registerIcon(Ref.getAsset(Names.flowerDynamo));
-	}
+    public BlockFlowerDynamo() {
+        setBlockName(Ref.getId(Names.flowerDynamo));
+    }
 
-	@Override
-	public TileEntity createNewTileEntity(World w, int meta) {
-		return new TileFlowerDynamo();
-	}
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerBlockIcons(IIconRegister icon) {
+        blockIcon = icon.registerIcon(Ref.getAsset(Names.flowerDynamo));
+    }
 
-	@Override
-	public void renderHUD(Minecraft mc, ScaledResolution res, World world, int x, int y, int z) {
-		((TileFlowerDynamo)world.getTileEntity(x, y, z)).renderHUD(mc, res);
-	}
+    @Override
+    public TileEntity createNewTileEntity(World w, int meta) {
+        return new TileFlowerDynamo();
+    }
 
-	@Override
-	public int getRenderType() {
-		return RenderIds.idFlowerDynamo;
-	}
+    @Override
+    public void renderHUD(Minecraft mc, ScaledResolution res, World world, int x, int y, int z) {
+        ((TileFlowerDynamo) world.getTileEntity(x, y, z)).renderHUD(mc, res);
+    }
+
+    @Override
+    public int getRenderType() {
+        return RenderIds.idFlowerDynamo;
+    }
 }

@@ -7,9 +7,9 @@ import net.minecraftforge.fluids.FluidRegistry;
 
 public class ManaFluid extends Fluid {
 
-	public ManaFluid() {
-		super(Names.manaFluid);
-		setUnlocalizedName(Ref.MOD_PREFIX + Names.manaFluid);
-		FluidRegistry.registerFluid(this);
-	}
+    public ManaFluid() {
+        super(Names.manaFluid);
+        setUnlocalizedName(Ref.MOD_PREFIX + Names.manaFluid);
+        FluidRegistry.registerFluid(this);
+    }
 }

@@ -4,7 +4,8 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 
 public class ModelEssentiaFusor extends ModelBase {
-	public ModelRenderer fusor;
+
+    public ModelRenderer fusor;
 
     public ModelEssentiaFusor() {
         textureWidth = 64;
@@ -15,7 +16,7 @@ public class ModelEssentiaFusor extends ModelBase {
     }
 
     public void render() {
-    	final float scale = 1F/16F;
+        final float scale = 1F / 16F;
         fusor.render(scale);
     }
 }

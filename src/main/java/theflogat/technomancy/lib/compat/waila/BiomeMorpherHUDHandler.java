@@ -13,45 +13,45 @@ import mcp.mobius.waila.api.SpecialChars;
 
 public class BiomeMorpherHUDHandler implements IWailaDataProvider {
 
-	@Override
-	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,	IWailaConfigHandler config) {
-		currenttip.add("Biome: " + biomeForMeta(accessor.getMetadata()));
-		WailaHelper.drawDefault(currenttip, accessor.getTileEntity());
-		return currenttip;
-	}
-	
-	@Override
-	public ItemStack getWailaStack(IWailaDataAccessor accessor,	IWailaConfigHandler config) {
-		return null;
-	}
+    @Override
+    public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+        currenttip.add("Biome: " + biomeForMeta(accessor.getMetadata()));
+        WailaHelper.drawDefault(currenttip, accessor.getTileEntity());
+        return currenttip;
+    }
 
-	@Override
-	public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,	IWailaConfigHandler config) {
-		return null;
-	}
+    @Override
+    public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
+        return null;
+    }
 
-	@Override
-	public List<String> getWailaTail(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,	IWailaConfigHandler config) {
-		return null;
-	}
+    @Override
+    public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+        return null;
+    }
 
-	@Override
-	public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x, int y, int z) {
-		if (te != null) {
+    @Override
+    public List<String> getWailaTail(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+        return null;
+    }
+
+    @Override
+    public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x, int y, int z) {
+        if (te != null) {
             te.writeToNBT(tag);
-		}
+        }
         return tag;
-	}
-	
-	private static String biomeForMeta(int meta) {
-		if (meta == 0) {
-			return SpecialChars.GREEN + "Magical Forest";
-		}else if (meta == 1) {
-			return SpecialChars.DGRAY + "Eerie";
-		}else if (meta == 2) {
-			return SpecialChars.DPURPLE + "Tainted Land";
-		} else {
-			return "Unknown";
-		}
-	}
+    }
+
+    private static String biomeForMeta(int meta) {
+        if (meta == 0) {
+            return SpecialChars.GREEN + "Magical Forest";
+        } else if (meta == 1) {
+            return SpecialChars.DGRAY + "Eerie";
+        } else if (meta == 2) {
+            return SpecialChars.DPURPLE + "Tainted Land";
+        } else {
+            return "Unknown";
+        }
+    }
 }

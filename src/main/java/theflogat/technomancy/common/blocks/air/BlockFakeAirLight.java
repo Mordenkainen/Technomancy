@@ -9,32 +9,32 @@ import theflogat.technomancy.common.tiles.air.TileFakeAirCore;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 
-public class BlockFakeAirLight extends BlockContainer{
+public class BlockFakeAirLight extends BlockContainer {
 
-	public BlockFakeAirLight() {
-		super(Material.air);
-		setBlockName(Ref.getId(Names.fakeAirLight));
-		setLightLevel(1F);
-	}
-	
-	@Override
-	public boolean isAir(IBlockAccess world, int x, int y, int z) {
-		return true;
-	}
-	
-	@Override
-	public boolean isBlockNormalCube() {
-		return false;
-	}
-	
-	@Override
-	public boolean isOpaqueCube() {
-		return false;
-	}
+    public BlockFakeAirLight() {
+        super(Material.air);
+        setBlockName(Ref.getId(Names.fakeAirLight));
+        setLightLevel(1F);
+    }
 
-	@Override
-	public TileEntity createNewTileEntity(World w, int meta) {
-		return new TileFakeAirCore();
-	}
+    @Override
+    public boolean isAir(IBlockAccess world, int x, int y, int z) {
+        return true;
+    }
+
+    @Override
+    public boolean isBlockNormalCube() {
+        return false;
+    }
+
+    @Override
+    public boolean isOpaqueCube() {
+        return false;
+    }
+
+    @Override
+    public TileEntity createNewTileEntity(World w, int meta) {
+        return new TileFakeAirCore();
+    }
 
 }

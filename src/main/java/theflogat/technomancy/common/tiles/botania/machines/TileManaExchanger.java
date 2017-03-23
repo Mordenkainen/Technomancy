@@ -18,136 +18,136 @@ import cofh.api.energy.IEnergyReceiver;
 
 public class TileManaExchanger extends TileTechnomancyRedstone implements IFluidHandler, IEnergyReceiver, IWrenchable {
 
-	public TileManaExchanger() {
-		super(RedstoneSet.LOW);
-	}
+    public TileManaExchanger() {
+        super(RedstoneSet.LOW);
+    }
 
-	public FluidTank tank = new FluidTank(1000);
-	public boolean mode;
-	public boolean active;
-	public EnergyStorage storage = new EnergyStorage(Rate.exchangerCost * 10);
+    public FluidTank tank = new FluidTank(1000);
+    public boolean mode;
+    public boolean active;
+    public EnergyStorage storage = new EnergyStorage(Rate.exchangerCost * 10);
 
-	@Override
-	public void readCustomNBT(NBTTagCompound comp) {}
+    @Override
+    public void readCustomNBT(NBTTagCompound comp) {}
 
-	@Override
-	public void writeCustomNBT(NBTTagCompound comp) {}
-	
-	@Override
-	public void writeSyncData(NBTTagCompound comp) {
-		super.writeSyncData(comp);
-		tank.writeToNBT(comp);
-		comp.setBoolean("Mode", mode);
-		storage.writeToNBT(comp);
-	}
-	
-	@Override
-	public void readSyncData(NBTTagCompound comp) {
-		super.readSyncData(comp);
-		tank = new FluidTank(1000);
-		tank.readFromNBT(comp);
-		mode = comp.getBoolean("Mode");
-		storage.readFromNBT(comp);
-	}
-	
-	@Override
-	public void updateEntity() {
-		if (!set.canRun(this)) {
-			active = false;
-			return;
-		} else {
-			active = true;
-		}
-		TileEntity tile = worldObj.getTileEntity(xCoord, yCoord + 1, zCoord);
-		if(tile instanceof TilePool){
-			if (worldObj.isRemote) {
-				return;
-			}
-			TilePool pool = (TilePool)tile;
-			if(storage.getEnergyStored() >= Rate.exchangerCost) {
-				if(mode) {
-					if(tank.getFluidAmount() > 0 && pool.getCurrentMana() <= pool.manaCap - 1000) {
-						pool.recieveMana(1000);
-						tank.drain(1, true);
-						storage.extractEnergy(Rate.exchangerCost, false);
-						worldObj.markBlockForUpdate(xCoord, yCoord + 1, zCoord);
-					}
-				} else {
-					if(tank.getFluidAmount() < tank.getCapacity() && pool.getCurrentMana() >= 1000) {
-						pool.recieveMana(-1000);
-						tank.fill(new FluidStack(TMBlocks.manaFluid, 1), true);
-						storage.extractEnergy(Rate.exchangerCost, false);
-						worldObj.markBlockForUpdate(xCoord, yCoord + 1, zCoord);
-					}
-				}
-			}
-		} else {
-			active = false;
-		}
-	}
+    @Override
+    public void writeCustomNBT(NBTTagCompound comp) {}
 
-	@Override
-	public FluidTankInfo[] getTankInfo(ForgeDirection from) {
-		return new FluidTankInfo[] {this.tank.getInfo()};
-	}
+    @Override
+    public void writeSyncData(NBTTagCompound comp) {
+        super.writeSyncData(comp);
+        tank.writeToNBT(comp);
+        comp.setBoolean("Mode", mode);
+        storage.writeToNBT(comp);
+    }
 
-	@Override
-	public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
-		if(resource.getFluid() != TMBlocks.manaFluid || from == ForgeDirection.UP || !mode) {
-			return 0;
-		}
-		return tank.fill(resource, doFill);
-	}
+    @Override
+    public void readSyncData(NBTTagCompound comp) {
+        super.readSyncData(comp);
+        tank = new FluidTank(1000);
+        tank.readFromNBT(comp);
+        mode = comp.getBoolean("Mode");
+        storage.readFromNBT(comp);
+    }
 
-	@Override
-	public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
-		if(resource.getFluid() != TMBlocks.manaFluid) {
-			return null;
-		}
-		return drain(from, resource.amount, doDrain);
-	}
+    @Override
+    public void updateEntity() {
+        if (!set.canRun(this)) {
+            active = false;
+            return;
+        } else {
+            active = true;
+        }
+        TileEntity tile = worldObj.getTileEntity(xCoord, yCoord + 1, zCoord);
+        if (tile instanceof TilePool) {
+            if (worldObj.isRemote) {
+                return;
+            }
+            TilePool pool = (TilePool) tile;
+            if (storage.getEnergyStored() >= Rate.exchangerCost) {
+                if (mode) {
+                    if (tank.getFluidAmount() > 0 && pool.getCurrentMana() <= pool.manaCap - 1000) {
+                        pool.recieveMana(1000);
+                        tank.drain(1, true);
+                        storage.extractEnergy(Rate.exchangerCost, false);
+                        worldObj.markBlockForUpdate(xCoord, yCoord + 1, zCoord);
+                    }
+                } else {
+                    if (tank.getFluidAmount() < tank.getCapacity() && pool.getCurrentMana() >= 1000) {
+                        pool.recieveMana(-1000);
+                        tank.fill(new FluidStack(TMBlocks.manaFluid, 1), true);
+                        storage.extractEnergy(Rate.exchangerCost, false);
+                        worldObj.markBlockForUpdate(xCoord, yCoord + 1, zCoord);
+                    }
+                }
+            }
+        } else {
+            active = false;
+        }
+    }
 
-	@Override
-	public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
-		if(from == ForgeDirection.UP || mode) {
-			return null;
-		}
-		return tank.drain(maxDrain, doDrain);
-	}
+    @Override
+    public FluidTankInfo[] getTankInfo(ForgeDirection from) {
+        return new FluidTankInfo[] { this.tank.getInfo() };
+    }
 
-	@Override
-	public boolean canFill(ForgeDirection from, Fluid fluid) {
-		return from != ForgeDirection.UP && mode;
-	}
+    @Override
+    public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
+        if (resource.getFluid() != TMBlocks.manaFluid || from == ForgeDirection.UP || !mode) {
+            return 0;
+        }
+        return tank.fill(resource, doFill);
+    }
 
-	@Override
-	public boolean canDrain(ForgeDirection from, Fluid fluid) {
-		return from != ForgeDirection.UP && !mode;
-	}
+    @Override
+    public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
+        if (resource.getFluid() != TMBlocks.manaFluid) {
+            return null;
+        }
+        return drain(from, resource.amount, doDrain);
+    }
 
-	@Override
-	public boolean canConnectEnergy(ForgeDirection from) {
-		return from != ForgeDirection.UP;
-	}
+    @Override
+    public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
+        if (from == ForgeDirection.UP || mode) {
+            return null;
+        }
+        return tank.drain(maxDrain, doDrain);
+    }
 
-	@Override
-	public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate) {
-		return storage.receiveEnergy(maxReceive, simulate);
-	}
+    @Override
+    public boolean canFill(ForgeDirection from, Fluid fluid) {
+        return from != ForgeDirection.UP && mode;
+    }
 
-	@Override
-	public int getEnergyStored(ForgeDirection from) {
-		return storage.getEnergyStored();
-	}
+    @Override
+    public boolean canDrain(ForgeDirection from, Fluid fluid) {
+        return from != ForgeDirection.UP && !mode;
+    }
 
-	@Override
-	public int getMaxEnergyStored(ForgeDirection from) {
-		return storage.getMaxEnergyStored();
-	}
+    @Override
+    public boolean canConnectEnergy(ForgeDirection from) {
+        return from != ForgeDirection.UP;
+    }
 
-	@Override
-	public boolean onWrenched(boolean sneaking) {
-		mode = !mode;
-		return true;
-	}
+    @Override
+    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate) {
+        return storage.receiveEnergy(maxReceive, simulate);
+    }
+
+    @Override
+    public int getEnergyStored(ForgeDirection from) {
+        return storage.getEnergyStored();
+    }
+
+    @Override
+    public int getMaxEnergyStored(ForgeDirection from) {
+        return storage.getMaxEnergyStored();
+    }
+
+    @Override
+    public boolean onWrenched(boolean sneaking) {
+        mode = !mode;
+        return true;
+    }
 }

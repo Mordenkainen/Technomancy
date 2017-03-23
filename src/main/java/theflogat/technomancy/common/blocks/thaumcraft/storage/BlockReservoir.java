@@ -10,30 +10,30 @@ import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 
 public class BlockReservoir extends BlockContainerAdvanced {
-	
-	public BlockReservoir() {
-		setBlockName(Ref.getId(Names.reservoir));
-		setBlockBounds(0.125F, 0.125F, 0.125F, 0.875F, 0.875F, 0.875F);
-	}
-	
-	@Override
-	public boolean isBlockNormalCube() {
-		return false;
-	}
-	
-	@Override
-	public boolean isBlockSolid(IBlockAccess w, int x, int y, int z, int side) {
-		return false;
-	}
-	
-	@Override
-	public void registerBlockIcons(IIconRegister reg) {
-		blockIcon = reg.registerIcon(Ref.getAsset(Names.reservoir));
-	}
 
-	@Override
-	public TileEntity createNewTileEntity(World w, int meta) {
-		return new TileEssentiaReservoir();
-	}
+    public BlockReservoir() {
+        setBlockName(Ref.getId(Names.reservoir));
+        setBlockBounds(0.125F, 0.125F, 0.125F, 0.875F, 0.875F, 0.875F);
+    }
+
+    @Override
+    public boolean isBlockNormalCube() {
+        return false;
+    }
+
+    @Override
+    public boolean isBlockSolid(IBlockAccess w, int x, int y, int z, int side) {
+        return false;
+    }
+
+    @Override
+    public void registerBlockIcons(IIconRegister reg) {
+        blockIcon = reg.registerIcon(Ref.getAsset(Names.reservoir));
+    }
+
+    @Override
+    public TileEntity createNewTileEntity(World w, int meta) {
+        return new TileEssentiaReservoir();
+    }
 
 }

@@ -9,22 +9,22 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 
-public class TileEldritchConsumerRenderer extends TileEntitySpecialRenderer{
-	
-	public static final ModelEldritchConsumer model = new ModelEldritchConsumer();
-	public static final ResourceLocation texture = new ResourceLocation(Ref.MODEL_ELDRITCH_CONSUMER_TEXTURE);
+public class TileEldritchConsumerRenderer extends TileEntitySpecialRenderer {
 
-	@Override
-	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float f) {
-		GL11.glPushMatrix();
-		GL11.glTranslatef((float)x, (float)y, (float)z);
-		GL11.glScalef(-1F,-1F,1F);
-		
-		bindTexture(texture);
-		model.render(0.0625F, ((TileEldritchConsumer)te).panelRotation, ((TileEldritchConsumer)te).cooldown>0);
+    public static final ModelEldritchConsumer model = new ModelEldritchConsumer();
+    public static final ResourceLocation texture = new ResourceLocation(Ref.MODEL_ELDRITCH_CONSUMER_TEXTURE);
 
-		GL11.glPopMatrix();
+    @Override
+    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float f) {
+        GL11.glPushMatrix();
+        GL11.glTranslatef((float) x, (float) y, (float) z);
+        GL11.glScalef(-1F, -1F, 1F);
 
-	}
+        bindTexture(texture);
+        model.render(0.0625F, ((TileEldritchConsumer) te).panelRotation, ((TileEldritchConsumer) te).cooldown > 0);
+
+        GL11.glPopMatrix();
+
+    }
 
 }

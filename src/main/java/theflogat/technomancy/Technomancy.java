@@ -31,105 +31,106 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
-@Mod(modid = Ref.MOD_ID, 
-name = Ref.MOD_NAME, 
-version = Ref.MOD_VERSION, 
-dependencies = "after:*")
-
-//@NetworkMod(channels = { Ref.CHANNEL_NAME }, 
-//	clientSideRequired = true, 
-//	serverSideRequired = false, 
-//	packetHandler = PacketHandler.class)
+@Mod(modid = Ref.MOD_ID, name = Ref.MOD_NAME, version = Ref.MOD_VERSION, dependencies = "after:*")
 
 public class Technomancy {
 
-	@Instance(Ref.MOD_ID)
-	public static Technomancy instance;
+    @Instance(Ref.MOD_ID)
+    public static Technomancy instance;
 
-	@SidedProxy(clientSide = Ref.proxy_loc + "ClientProxy", serverSide = Ref.proxy_loc + "CommonProxy")
-	public static CommonProxy proxy;
+    @SidedProxy(clientSide = Ref.proxy_loc + "ClientProxy", serverSide = Ref.proxy_loc + "CommonProxy")
+    public static CommonProxy proxy;
 
-	public static CreativeTabs tabsTM = new CreativeTabTM(CreativeTabs.getNextID(), Ref.MOD_ID);
+    public static CreativeTabs tabsTM = new CreativeTabTM(CreativeTabs.getNextID(), Ref.MOD_ID);
 
-	public static Logger logger;
-	
-	public static ArmorMaterial existencePower = EnumHelper.addArmorMaterial("existencePower", 20, new int[] {4, 4, 4, 4}, 35);
+    public static Logger logger;
 
-	@EventHandler
-	public void preInit(FMLPreInitializationEvent event) {
-		logger = event.getModLog();
-		
-		if(Potion.potionTypes.length < 256) {
-			expandPotions();
-		}
-	    
-		ConfigHandler.init(new File(event.getModConfigurationDirectory(), Ref.MOD_NAME + ".cfg"));
-		PacketHandler.instance = new PacketHandler();
-		new EventRegister();
-	}
+    public static ArmorMaterial existencePower = EnumHelper.addArmorMaterial("existencePower", 20, new int[] { 4, 4, 4, 4 }, 35);
 
-	@EventHandler
-	public void init(FMLInitializationEvent event) {
-		CompatibilityHandler.init();
+    @EventHandler
+    public void preInit(final FMLPreInitializationEvent event) {
+        logger = event.getModLog();
 
-		for(IModModule mod : CompatibilityHandler.mods) {
-			mod.Init();
-		}
-		
-		TMItems.initTechnomancy();
-		TMBlocks.initTechnomancy();
-		TMPotions.initTechnomancy();
+        if (Potion.potionTypes.length < 256) {
+            expandPotions();
+        }
 
-		for(IModModule mod : CompatibilityHandler.mods) {
-			mod.RegisterBlocks();
-			mod.RegisterItems();
-		}
+        ConfigHandler.init(new File(event.getModConfigurationDirectory(), Ref.MOD_NAME + ".cfg"));
+        PacketHandler.instance = new PacketHandler();
+        new EventRegister();
+    }
 
-		proxy.initRenderers();
-		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
-		FMLInterModComms.sendMessage("Waila", "register", "theflogat.technomancy.lib.compat.waila.WailaProvider.callbackRegister");
-	}
+    @EventHandler
+    public void init(final FMLInitializationEvent event) {
+        CompatibilityHandler.init();
 
-	@EventHandler
-	public void postInit(FMLPostInitializationEvent event) {
-		Ore.init();
+        for (final IModModule mod : CompatibilityHandler.mods) {
+            mod.Init();
+        }
 
-		ConfigHandler.initOreConfigs();
+        TMItems.initTechnomancy();
+        TMBlocks.initTechnomancy();
+        TMPotions.initTechnomancy();
 
-		TMItems.initPureOres();
+        for (final IModModule mod : CompatibilityHandler.mods) {
+            mod.RegisterBlocks();
+            mod.RegisterItems();
+        }
 
-		CraftingHandler.initTechnomancyRecipes();
-		CraftingHandler.initFurnaceRecipes();
+        proxy.initRenderers();
+        NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
+        FMLInterModComms.sendMessage("Waila", "register", "theflogat.technomancy.lib.compat.waila.WailaProvider.callbackRegister");
+    }
 
-		for(IModModule mod : CompatibilityHandler.mods) {
-			mod.RegisterRecipes();
-		}
-	
-		for(IModModule mod : CompatibilityHandler.mods) {
-			mod.PostInit();
-		}
-	}
-	
-	private void expandPotions() {
-		Potion[] potionTypes = null;
-		
-	    for (Field f : Potion.class.getDeclaredFields()) {
-	        f.setAccessible(true);
-	        try {
-	            if (f.getName().equals("potionTypes") || f.getName().equals("field_76425_a")) {
-	                Field modfield = Field.class.getDeclaredField("modifiers");
-	                modfield.setAccessible(true);
-	                modfield.setInt(f, f.getModifiers() & ~Modifier.FINAL);
-	                potionTypes = (Potion[])f.get(null);
-	                final Potion[] newPotionTypes = new Potion[256];
-	                System.arraycopy(potionTypes, 0, newPotionTypes, 0, potionTypes.length);
-	                f.set(null, newPotionTypes);
-	            }
-	        } catch (Exception e) {
-	        	logger.warn("Unable to expand potion array. Error:", e);
-	        	break;
-	        }
-	    }
-	}
+    @EventHandler
+    public void postInit(final FMLPostInitializationEvent event) {
+        Ore.init();
+
+        ConfigHandler.initOreConfigs();
+
+        TMItems.initPureOres();
+
+        CraftingHandler.initTechnomancyRecipes();
+        CraftingHandler.initFurnaceRecipes();
+
+        for (final IModModule mod : CompatibilityHandler.mods) {
+            mod.RegisterRecipes();
+        }
+
+        for (final IModModule mod : CompatibilityHandler.mods) {
+            mod.PostInit();
+        }
+    }
+
+    private void expandPotions() {
+        Potion[] potionTypes = null;
+
+        for (final Field f : Potion.class.getDeclaredFields()) {
+            f.setAccessible(true);
+            try {
+                if (f.getName().equals("potionTypes") || f.getName().equals("field_76425_a")) {
+                    final Field modfield = Field.class.getDeclaredField("modifiers");
+                    modfield.setAccessible(true);
+                    modfield.setInt(f, f.getModifiers() & ~Modifier.FINAL);
+                    potionTypes = (Potion[]) f.get(null);
+                    final Potion[] newPotionTypes = new Potion[256];
+                    System.arraycopy(potionTypes, 0, newPotionTypes, 0, potionTypes.length);
+                    f.set(null, newPotionTypes);
+                }
+            } catch (IllegalArgumentException e) {
+                logger.warn("Unable to expand potion array. Error:", e);
+                break;
+            } catch (IllegalAccessException e) {
+                logger.warn("Unable to expand potion array. Error:", e);
+                break;
+            } catch (NoSuchFieldException e) {
+                logger.warn("Unable to expand potion array. Error:", e);
+                break;
+            } catch (SecurityException e) {
+                logger.warn("Unable to expand potion array. Error:", e);
+                break;
+            }
+        }
+    }
 
 }

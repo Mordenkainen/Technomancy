@@ -7,49 +7,49 @@ import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 
 public class TileBMProcessor extends TileProcessorBase {
 
-	public String owner = "";
+    public String owner = "";
 
-	public TileBMProcessor() {
-		super(2);
-	}
+    public TileBMProcessor() {
+        super(2);
+    }
 
-	@Override
-	protected boolean getFuel(ItemStack items, int multiplier, int reprocess) {
-		int cost = multiplier * 100 + 1000 * reprocess;
-		if(!(SoulNetworkHandler.getCurrentEssence(owner) > cost)){
-			return false;
-		}
-		if (!worldObj.isRemote) {
-			SoulNetworkHandler.setCurrentEssence(owner, (SoulNetworkHandler.getCurrentEssence(owner) - cost));
-		}
-		return true;
-	}
-	
-	@Override
-	public void writeSyncData(NBTTagCompound compound) {
-		super.writeSyncData(compound);
-		compound.setString("Owner", owner);
-	}
-	
-	@Override
-	public void readSyncData(NBTTagCompound compound) {
-		super.readSyncData(compound);
-		owner = compound.getString("Owner");
-	}
+    @Override
+    protected boolean getFuel(ItemStack items, int multiplier, int reprocess) {
+        int cost = multiplier * 100 + 1000 * reprocess;
+        if (!(SoulNetworkHandler.getCurrentEssence(owner) > cost)) {
+            return false;
+        }
+        if (!worldObj.isRemote) {
+            SoulNetworkHandler.setCurrentEssence(owner, (SoulNetworkHandler.getCurrentEssence(owner) - cost));
+        }
+        return true;
+    }
 
-	@Override
-	public String getInventoryName() {
-		return null;
-	}
+    @Override
+    public void writeSyncData(NBTTagCompound compound) {
+        super.writeSyncData(compound);
+        compound.setString("Owner", owner);
+    }
 
-	@Override
-	public boolean hasCustomInventoryName() {
-		return false;
-	}
+    @Override
+    public void readSyncData(NBTTagCompound compound) {
+        super.readSyncData(compound);
+        owner = compound.getString("Owner");
+    }
 
-	@Override
-	public void openInventory() {}
+    @Override
+    public String getInventoryName() {
+        return null;
+    }
 
-	@Override
-	public void closeInventory() {}
+    @Override
+    public boolean hasCustomInventoryName() {
+        return false;
+    }
+
+    @Override
+    public void openInventory() {}
+
+    @Override
+    public void closeInventory() {}
 }

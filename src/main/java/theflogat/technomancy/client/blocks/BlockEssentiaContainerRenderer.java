@@ -11,31 +11,31 @@ import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaContain
 import theflogat.technomancy.lib.RenderIds;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
-public class BlockEssentiaContainerRenderer implements ISimpleBlockRenderingHandler{
-	
-	//TODO: Render liquid in inventory
-	@Override
-	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
-		GL11.glPushMatrix();
-		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-		TileEssentiaContainer te = new TileEssentiaContainer();
-		TileEntityRendererDispatcher.instance.renderTileEntityAt(te, 0.0D, 0.0D, 0.0D, 0.0F);
-		GL11.glPopMatrix();
-	}
+public class BlockEssentiaContainerRenderer implements ISimpleBlockRenderingHandler {
 
-	@Override
-	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
-		return false;
-	}
+    // TODO: Render liquid in inventory
+    @Override
+    public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
+        GL11.glPushMatrix();
+        GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+        TileEssentiaContainer te = new TileEssentiaContainer();
+        TileEntityRendererDispatcher.instance.renderTileEntityAt(te, 0.0D, 0.0D, 0.0D, 0.0F);
+        GL11.glPopMatrix();
+    }
 
-	@Override
-	public boolean shouldRender3DInInventory(int modelId) {
-		return true;
-	}
+    @Override
+    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
+        return false;
+    }
 
-	@Override
-	public int getRenderId() {
-		return RenderIds.idEssentiaContainer;
-	}
+    @Override
+    public boolean shouldRender3DInInventory(int modelId) {
+        return true;
+    }
+
+    @Override
+    public int getRenderId() {
+        return RenderIds.idEssentiaContainer;
+    }
 
 }

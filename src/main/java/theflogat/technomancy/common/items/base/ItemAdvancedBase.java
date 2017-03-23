@@ -21,54 +21,54 @@ import theflogat.technomancy.common.items.technom.ItemBoost;
 import theflogat.technomancy.common.tiles.base.IUpgradable;
 import theflogat.technomancy.lib.Conf;
 
-public class ItemAdvancedBase extends ItemBlock{
+public class ItemAdvancedBase extends ItemBlock {
 
-	ArrayList<String> tileInterfaces = new ArrayList<String>();
+    ArrayList<String> tileInterfaces = new ArrayList<String>();
 
-	public ItemAdvancedBase(Block b) {
-		super(b);
-		TileEntity te = ((BlockContainerAdvanced)b).createNewTileEntity(null, 0);
-		Class<?>[] interfaces = te.getClass().getInterfaces();
-		for(Class<?> curInterface: interfaces) {
-			String intName = curInterface.getName();
-			tileInterfaces.add(intName.substring(intName.lastIndexOf('.') + 1, intName.length()));
-		}
-		setUnlocalizedName(b.getUnlocalizedName());
-		if(tileInterfaces.contains("IUpgradable")) {
-			IUpgradable up = (IUpgradable)te;
-			String name = String.format(StatCollector.translateToLocal(b.getUnlocalizedName() + ".name"));
-			ItemBoost.upgradeable.add(name + ": " + up.getInfo());
-		}
-	}
+    public ItemAdvancedBase(Block b) {
+        super(b);
+        TileEntity te = ((BlockContainerAdvanced) b).createNewTileEntity(null, 0);
+        Class<?>[] interfaces = te.getClass().getInterfaces();
+        for (Class<?> curInterface : interfaces) {
+            String intName = curInterface.getName();
+            tileInterfaces.add(intName.substring(intName.lastIndexOf('.') + 1, intName.length()));
+        }
+        setUnlocalizedName(b.getUnlocalizedName());
+        if (tileInterfaces.contains("IUpgradable")) {
+            IUpgradable up = (IUpgradable) te;
+            String name = String.format(StatCollector.translateToLocal(b.getUnlocalizedName() + ".name"));
+            ItemBoost.upgradeable.add(name + ": " + up.getInfo());
+        }
+    }
 
-	@Override
-	public void onUpdate(ItemStack items, World w, Entity player, int dmg, boolean held) {
-		if(items.stackTagCompound==null) {
-			initializeNBT(items);
-		}
-	}
+    @Override
+    public void onUpdate(ItemStack items, World w, Entity player, int dmg, boolean held) {
+        if (items.stackTagCompound == null) {
+            initializeNBT(items);
+        }
+    }
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@Override
-	public void addInformation(ItemStack items, EntityPlayer player, List l, boolean moreInfo) {
-		if(items==null)
-			return;
-		try {
-			if(items.stackTagCompound==null) {
-				initializeNBT(items);
-			}
-			if(Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-				((BlockContainerAdvanced)field_150939_a).getNBTInfo(items.stackTagCompound, (ArrayList<String>) l, items.getItemDamage());
-			} else {
-				l.add(EnumChatFormatting.WHITE.toString() + EnumChatFormatting.ITALIC + StatCollector.translateToLocal("info.techno:shift"));
-			}
-		} catch(Exception e) {
-			Conf.ex(e);
-		}
-	}
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public void addInformation(ItemStack items, EntityPlayer player, List l, boolean moreInfo) {
+        if (items == null)
+            return;
+        try {
+            if (items.stackTagCompound == null) {
+                initializeNBT(items);
+            }
+            if (Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+                ((BlockContainerAdvanced) field_150939_a).getNBTInfo(items.stackTagCompound, (ArrayList<String>) l, items.getItemDamage());
+            } else {
+                l.add(EnumChatFormatting.WHITE.toString() + EnumChatFormatting.ITALIC + StatCollector.translateToLocal("info.techno:shift"));
+            }
+        } catch (Exception e) {
+            Conf.ex(e);
+        }
+    }
 
-	public void initializeNBT(ItemStack items) {
-		items.stackTagCompound = new NBTTagCompound();
-		((BlockContainerAdvanced)field_150939_a).createNewTileEntity(null, 0).writeToNBT(items.stackTagCompound);
-	}
+    public void initializeNBT(ItemStack items) {
+        items.stackTagCompound = new NBTTagCompound();
+        ((BlockContainerAdvanced) field_150939_a).createNewTileEntity(null, 0).writeToNBT(items.stackTagCompound);
+    }
 }

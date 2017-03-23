@@ -5,10 +5,10 @@ import net.minecraft.block.material.Material;
 import theflogat.technomancy.Technomancy;
 
 public abstract class BlockContainerBase extends BlockContainer {
-	
-	public BlockContainerBase() {
-		super(Material.iron);
-		setCreativeTab(Technomancy.tabsTM);
-		setHardness(2F);
-	}
+
+    public BlockContainerBase() {
+        super(Material.iron);
+        setCreativeTab(Technomancy.tabsTM);
+        setHardness(2F);
+    }
 }

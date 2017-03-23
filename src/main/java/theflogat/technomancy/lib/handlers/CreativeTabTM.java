@@ -20,21 +20,21 @@ public class CreativeTabTM extends CreativeTabs {
     public String getTabLabel() {
         return "Technomancy";
     }
-    
+
     @SideOnly(Side.CLIENT)
     @Override
     public ItemStack getIconItemStack() {
-		if(TMItems.itemMaterial!=null){
-			return new ItemStack(TMItems.itemMaterial);
-		}else if(Ore.ores.get(0) != null){
-			return new ItemStack(Ore.ores.get(0).getPure(), 1, 5);
-		}
-		return super.getIconItemStack();
-	}
+        if (TMItems.itemMaterial != null) {
+            return new ItemStack(TMItems.itemMaterial);
+        } else if (Ore.ORES.get(0) != null) {
+            return new ItemStack(Ore.ORES.get(0).getPure(), 1, 5);
+        }
+        return super.getIconItemStack();
+    }
 
     @SideOnly(Side.CLIENT)
-	@Override
-	public Item getTabIconItem() {
-    	return Item.getItemFromBlock(Blocks.stone);
-	}
+    @Override
+    public Item getTabIconItem() {
+        return Item.getItemFromBlock(Blocks.stone);
+    }
 }

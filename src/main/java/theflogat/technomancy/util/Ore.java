@@ -24,251 +24,259 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class Ore {
 
-	public static final ArrayList<Ore> ores = new ArrayList<Ore>();
-	public static final ArrayList<String> oreNames = new ArrayList<String>();
+    public static final List<Ore> ORES = new ArrayList<Ore>();
+    public static final List<String> ORENAMES = new ArrayList<String>();
+    
+    private final String oreName;
+    private String name;
+    private final ItemStack ingot;
+    private Item pureItem;
+    private Color color = Color.WHITE;
+    private boolean state;
+    private int[] ingotsPerStage = { 2, 3, 4, 5, 6, 7 };
 
-	public static Ore newOre(String dictName, ItemStack ingot, String name) {
-		oreNames.add(dictName);
-		return new Ore(dictName, ingot, name);
-	}
-	
-	public static void init() {
-		getMetalsWithPrefixes("ore", "ingot");
-	}
-	
-	private static void getMetalsWithPrefixes(String prefix1, String prefix2) {
-		for (String name : OreDictionary.getOreNames()) {
-			if (name.startsWith(prefix1) && !OreDictionary.getOres(name).isEmpty()) {
-				String oreName = name.substring(prefix1.length());
-				foundit:
-				for (String n : OreDictionary.getOreNames()) {
-					if (n.equals(prefix2 + oreName) && !OreDictionary.getOres(n).isEmpty()) {
-						for (ItemStack ore : OreDictionary.getOres(name)) {
-							ItemStack testIngot = FurnaceRecipes.smelting().getSmeltingResult(ore);
-							if (testIngot != null) {
-								for (ItemStack ingot: OreDictionary.getOres(n)) {
-									if (testIngot.isItemEqual(ingot) && testIngot.getItemDamage() == ingot.getItemDamage()) {
-										newOre(name, testIngot, oreName);
-										break foundit;
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		
-		if (oreNames.contains("oreAluminum") && oreNames.contains("oreAluminium")) {
-			Iterator<Ore> oreIter = ores.iterator();
-			while (oreIter.hasNext()) {
-				Ore ore = oreIter.next();
-				if (ore.oreName() == "oreAluminium") {
-					oreIter.remove();
-					oreNames.remove("oreAluminium");
-					break;
-				}
-			}
-		}
-	}
+    public static Ore newOre(final String dictName, final ItemStack ingot, final String name) {
+        ORENAMES.add(dictName);
+        return new Ore(dictName, ingot, name);
+    }
 
-	private static String adjustName(String name) {
-		if (name.equals("FzDarkIron"))
-			return "Dark Iron";
-		else
-			return name;
-	}
-	
-	public static void initColors() {
-		for (Ore ore : ores)
-			ore.setColor(getColor(ore.oreName().substring(3)));
-	}
-	
-	private static int getStackColor(ItemStack stack, int pass) {
-		if (Loader.isModLoaded("gregtech"))
-			try {
-				Class<?> cls = Class.forName("gregtech.api.items.GT_MetaGenerated_Item");
-				Class<?> itemCls = stack.getItem().getClass();
-				if (cls.isAssignableFrom(itemCls)) {
-					Method m = itemCls.getMethod("getRGBa", ItemStack.class);
-					short[] rgba = (short[]) m.invoke(stack.getItem(), stack);
-					return new Color(rgba[0], rgba[1], rgba[2], rgba[3]).getRGB();
-				}
-			} catch (Exception e) {
-			}
-		return stack.getItem().getColorFromItemStack(stack, pass);
-	}
+    public static void init() {
+        getMetalsWithPrefixes("ore", "ingot");
+    }
 
-	private static Color getColor(String oreName) {
-		List<ItemStack> ores = OreDictionary.getOres("ingot" + oreName);
-		if (ores.isEmpty())
-			return null;
+    private static void getMetalsWithPrefixes(final String prefix1, final String prefix2) {
+        for (final String name : OreDictionary.getOreNames()) {
+            if (name.startsWith(prefix1) && !OreDictionary.getOres(name).isEmpty()) {
+                final String oreName = name.substring(prefix1.length());
+                foundit: for (final String n : OreDictionary.getOreNames()) {
+                    if (n.equals(prefix2 + oreName) && !OreDictionary.getOres(n).isEmpty()) {
+                        for (final ItemStack ore : OreDictionary.getOres(name)) {
+                            final ItemStack testIngot = FurnaceRecipes.smelting().getSmeltingResult(ore);
+                            if (testIngot != null) {
+                                for (final ItemStack ingot : OreDictionary.getOres(n)) {
+                                    if (testIngot.isItemEqual(ingot) && testIngot.getItemDamage() == ingot.getItemDamage()) {
+                                        newOre(name, testIngot, oreName);
+                                        break foundit;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
-		Set<Color> colors = new LinkedHashSet<Color>();
-		for (ItemStack stack : ores)
-			try {
-				BufferedImage texture = ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(getIconResource(stack)).getInputStream());
-				Color texColour = getAverageColor(texture);
-				colors.add(texColour);
-				for (int pass = 0; pass < stack.getItem().getRenderPasses(stack.getItemDamage()); pass++) {
-					int c = getStackColor(stack, pass);
-					if (c != 0xFFFFFF) {
-						colors.add(new Color(c));
-						colors.remove(texColour);
-					}
-				}
-			} catch (Exception e) {
-				continue;
-			}
+        if (ORENAMES.contains("oreAluminum") && ORENAMES.contains("oreAluminium")) {
+            final Iterator<Ore> oreIter = ORES.iterator();
+            while (oreIter.hasNext()) {
+                final Ore ore = oreIter.next();
+                if ("oreAluminium".equals(ore.oreName())) {
+                    oreIter.remove();
+                    ORENAMES.remove("oreAluminium");
+                    break;
+                }
+            }
+        }
+    }
 
-		float red = 0;
-		float green = 0;
-		float blue = 0;
-		for (Color c : colors) {
-			red += c.getRed();
-			green += c.getGreen();
-			blue += c.getBlue();
-		}
-		float count = colors.size();
-		return new Color((int) (red / count), (int) (green / count), (int) (blue / count));
-	}
+    private static String adjustName(final String name) {
+        if ("FzDarkIron".equals(name)) {
+            return "Dark Iron";
+        } else {
+            return name;
+        }
+    }
 
-	private static Color getAverageColor(BufferedImage image) {
-		float red = 0;
-		float green = 0;
-		float blue = 0;
-		float count = 0;
-		for (int i = 0; i < image.getWidth(); i++)
-			for (int j = 0; j < image.getHeight(); j++) {
-				Color c = new Color(image.getRGB(i, j));
-				if (c.getAlpha() != 255 || c.getRed() <= 10 && c.getBlue() <= 10 && c.getGreen() <= 10)
-					continue;
-				red += c.getRed();
-				green += c.getGreen();
-				blue += c.getBlue();
-				count++;
-			}
+    public static void initColors() {
+        for (final Ore ore : ORES) {
+            ore.setColor(getColor(ore.oreName().substring(3)));
+        }
+    }
 
-		return new Color((int) (red / count), (int) (green / count), (int) (blue / count));
-	}
+    private static int getStackColor(final ItemStack stack, final int pass) {
+        if (Loader.isModLoaded("gregtech")) {
+            try {
+                final Class<?> cls = Class.forName("gregtech.api.items.GT_MetaGenerated_Item");
+                final Class<?> itemCls = stack.getItem().getClass();
+                if (cls.isAssignableFrom(itemCls)) {
+                    final Method m = itemCls.getMethod("getRGBa", ItemStack.class);
+                    final short[] rgba = (short[]) m.invoke(stack.getItem(), stack);
+                    return new Color(rgba[0], rgba[1], rgba[2], rgba[3]).getRGB();
+                }
+            } catch (Exception e) {}
+        }
+        return stack.getItem().getColorFromItemStack(stack, pass);
+    }
 
-	private static String getIconName(ItemStack stack) {
-		IIcon icon = stack.getItem().getIconFromDamage(stack.getItemDamage());
-		if (icon != null)
-			return icon.getIconName();
-		return null;
-	}
+    private static Color getColor(final String oreName) {
+        final List<ItemStack> ores = OreDictionary.getOres("ingot" + oreName);
+        if (ores.isEmpty()) {
+            return null;
+        }
 
-	private static ResourceLocation getIconResource(ItemStack stack) {
-		String iconName = getIconName(stack);
-		if (iconName == null)
-			return null;
+        final Set<Color> colors = new LinkedHashSet<Color>();
+        for (final ItemStack stack : ores) {
+            try {
+                final BufferedImage texture = ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(getIconResource(stack)).getInputStream());
+                final Color texColour = getAverageColor(texture);
+                colors.add(texColour);
+                for (int pass = 0; pass < stack.getItem().getRenderPasses(stack.getItemDamage()); pass++) {
+                    final int c = getStackColor(stack, pass);
+                    if (c != 0xFFFFFF) {
+                        colors.add(new Color(c));
+                        colors.remove(texColour);
+                    }
+                }
+            } catch (Exception e) {
+                continue;
+            }
+        }
 
-		String string = "minecraft";
+        float red = 0;
+        float green = 0;
+        float blue = 0;
+        for (final Color c : colors) {
+            red += c.getRed();
+            green += c.getGreen();
+            blue += c.getBlue();
+        }
+        final float count = colors.size();
+        return new Color((int) (red / count), (int) (green / count), (int) (blue / count));
+    }
 
-		int colonIndex = iconName.indexOf(58);
-		if (colonIndex >= 0) {
-			if (colonIndex > 1)
-				string = iconName.substring(0, colonIndex);
+    private static Color getAverageColor(final BufferedImage image) {
+        float red = 0;
+        float green = 0;
+        float blue = 0;
+        float count = 0;
+        for (int i = 0; i < image.getWidth(); i++) {
+            for (int j = 0; j < image.getHeight(); j++) {
+                final Color c = new Color(image.getRGB(i, j));
+                if (c.getAlpha() != 255 || c.getRed() <= 10 && c.getBlue() <= 10 && c.getGreen() <= 10) {
+                    continue;
+                }
+                red += c.getRed();
+                green += c.getGreen();
+                blue += c.getBlue();
+                count++;
+            }
+        }
 
-			iconName = iconName.substring(colonIndex + 1, iconName.length());
-		}
+        return new Color((int) (red / count), (int) (green / count), (int) (blue / count));
+    }
 
-		string = string.toLowerCase();
-		iconName = "textures/items/" + iconName + ".png";
-		return new ResourceLocation(string, iconName);
-	}
-	
-	public static boolean isProcessableOre(ItemStack items) {
-		int[] ids = OreDictionary.getOreIDs(items);
-		for (int id : ids) {
-			if(Ore.oreNames.contains(OreDictionary.getOreName(id))) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	private final String oreName;
-	private String name;
-	private final ItemStack ingot;
-	private Item pureItem;
-	private Color color = Color.WHITE;
-	private boolean state;
-	private int[] ingotsPerStage = {2,3,4,5,6,7};
+    private static String getIconName(final ItemStack stack) {
+        final IIcon icon = stack.getItem().getIconFromDamage(stack.getItemDamage());
+        if (icon != null) {
+            return icon.getIconName();
+        }
+        return null;
+    }
 
-	protected Ore(String oreName, ItemStack ingot, String name) {
-		this.oreName = oreName;
-		this.ingot = ingot;
-		this.name = adjustName(name);
-		ores.add(this);
-	}
+    private static ResourceLocation getIconResource(final ItemStack stack) {
+        String iconName = getIconName(stack);
+        if (iconName == null) {
+            return null;
+        }
 
-	public String oreName() {
-		return oreName;
-	}
-	
-	public String name() {
-		return name;
-	}
+        String string = "minecraft";
 
-	public ItemStack ingot() {
-		return ingot;
-	}
+        final int colonIndex = iconName.indexOf(58);
+        if (colonIndex >= 0) {
+            if (colonIndex > 1) {
+                string = iconName.substring(0, colonIndex);
+            }
 
-	public int color() {
-		return color.getRGB() & 0x00FFFFFF;
-	}
+            iconName = iconName.substring(colonIndex + 1, iconName.length());
+        }
 
-	public void setColor(Color color) {
-		this.color = color;
-	}
-	
-	public void setPure(Item pure) {
-		pureItem = pure;
-	}
-	
-	public Item getPure() {
-		return pureItem;
-	}
+        string = string.toLowerCase();
+        iconName = "textures/items/" + iconName + ".png";
+        return new ResourceLocation(string, iconName);
+    }
 
-	public int getIngotsPerStage(int stage) {
-		return ingotsPerStage[stage];
-	}
-	
-	public void setIngotsPerStage(List<String> nums) {
-		for (int i = 0 ; i < ingotsPerStage.length ; i++ ) {
-			ingotsPerStage[i] = Integer.parseInt(nums.get(i).trim());
-		}
-	}
-	
-	@Override
-	public int hashCode() {
-		return oreName.hashCode();
-	}
+    public static boolean isProcessableOre(final ItemStack items) {
+        final int[] ids = OreDictionary.getOreIDs(items);
+        for (final int id : ids) {
+            if (Ore.ORENAMES.contains(OreDictionary.getOreName(id))) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		return obj instanceof Ore && oreName.equals(((Ore)obj).oreName);
-	}
+    protected Ore(final String oreName, final ItemStack ingot, final String name) {
+        this.oreName = oreName;
+        this.ingot = ingot;
+        this.name = adjustName(name);
+        ORES.add(this);
+    }
 
-	@Override
-	public String toString() {
-		return oreName();
-	}
+    public String oreName() {
+        return oreName;
+    }
 
-	public void setEnabled(boolean state) {
-		this.state = state;
-		if (!state) {
-			oreNames.remove(oreName);
-		}
-	}
-	
-	public boolean getEnabled() {
-		return state;
-	}
+    public String name() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public ItemStack ingot() {
+        return ingot;
+    }
+
+    public int color() {
+        return color.getRGB() & 0x00FFFFFF;
+    }
+
+    public void setColor(final Color color) {
+        this.color = color;
+    }
+
+    public void setPure(final Item pure) {
+        pureItem = pure;
+    }
+
+    public Item getPure() {
+        return pureItem;
+    }
+
+    public int getIngotsPerStage(final int stage) {
+        return ingotsPerStage[stage];
+    }
+
+    public void setIngotsPerStage(final List<String> nums) {
+        for (int i = 0; i < ingotsPerStage.length; i++) {
+            ingotsPerStage[i] = Integer.parseInt(nums.get(i).trim());
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return oreName.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        return obj instanceof Ore && oreName.equals(((Ore) obj).oreName);
+    }
+
+    @Override
+    public String toString() {
+        return oreName();
+    }
+
+    public void setEnabled(final boolean state) {
+        this.state = state;
+        if (!state) {
+            ORENAMES.remove(oreName);
+        }
+    }
+
+    public boolean isEnabled() {
+        return state;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
 }

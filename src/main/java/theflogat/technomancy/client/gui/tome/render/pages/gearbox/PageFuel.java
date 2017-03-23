@@ -5,28 +5,28 @@ import java.awt.Color;
 import net.minecraft.item.ItemStack;
 import theflogat.technomancy.client.gui.tome.render.pages.PageRecipeFuel;
 
-public class PageFuel extends PageRecipeFuel{
-	
-	ItemStack[] outputs;
-	int[] val;
-	
-	public PageFuel(ItemStack[] start, int[] end) {
-		outputs = start;
-		val = end;
-	}
+public class PageFuel extends PageRecipeFuel {
 
-	@Override
-	public int[] getValues() {
-		return val;
-	}
+    ItemStack[] outputs;
+    int[] val;
 
-	@Override
-	public ItemStack[] getOutputs() {
-		return outputs;
-	}
+    public PageFuel(ItemStack[] start, int[] end) {
+        outputs = start;
+        val = end;
+    }
 
-	@Override
-	public Color getColor() {
-		return Color.RED;
-	}
+    @Override
+    public int[] getValues() {
+        return val;
+    }
+
+    @Override
+    public ItemStack[] getOutputs() {
+        return outputs;
+    }
+
+    @Override
+    public Color getColor() {
+        return Color.RED;
+    }
 }

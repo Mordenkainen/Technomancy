@@ -2,14 +2,16 @@ package theflogat.technomancy.util;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 
-public class Loc {
-	
-	public static boolean isClient(){
-		return FMLCommonHandler.instance().getEffectiveSide().isClient();
-	}
+public final class Loc {
 
-	public static boolean isServer(){
-		return FMLCommonHandler.instance().getEffectiveSide().isServer();
-	}
-	
+    private Loc() {}
+    
+    public static boolean isClient() {
+        return FMLCommonHandler.instance().getEffectiveSide().isClient();
+    }
+
+    public static boolean isServer() {
+        return FMLCommonHandler.instance().getEffectiveSide().isServer();
+    }
+
 }
