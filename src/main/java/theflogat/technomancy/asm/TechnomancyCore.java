@@ -16,7 +16,7 @@ public class TechnomancyCore extends DummyModContainer {
 
     public TechnomancyCore() {
         super(new ModMetadata());
-        ModMetadata metadata = getMetadata();
+        final ModMetadata metadata = getMetadata();
         metadata.modId = Ref.MOD_ID + "Core";
         metadata.name = Ref.MOD_NAME + " Core";
         metadata.version = Ref.MOD_VERSION;
@@ -26,17 +26,17 @@ public class TechnomancyCore extends DummyModContainer {
     }
 
     @Override
-    public boolean registerBus(EventBus bus, LoadController controller) {
+    public boolean registerBus(final EventBus bus, final LoadController controller) {
         bus.register(this);
         return true;
     }
 
     @Subscribe
-    public void modConstruction(FMLConstructionEvent event) {}
+    public void modConstruction(final FMLConstructionEvent event) {}
 
     @EventHandler
-    public void preinit(FMLPreInitializationEvent event) {}
+    public void preinit(final FMLPreInitializationEvent event) {}
 
     @EventHandler
-    public void postInit(FMLPostInitializationEvent event) {}
+    public void postInit(final FMLPostInitializationEvent event) {}
 }

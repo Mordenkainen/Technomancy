@@ -1,22 +1,24 @@
 package theflogat.technomancy.api.rituals;
 
-public class RitualRegistry {
+public final class RitualRegistry {
 
     private static Ritual[] rituals = new Ritual[64];
-    private static int current = 0;
+    private static int current;
 
-    public static int add(Ritual rit) {
+    private RitualRegistry() {}
+    
+    public static int add(final Ritual rit) {
         rituals[current] = rit;
         rit.setId(current);
         return current++;
     }
 
-    public static Ritual getRitual(int id) {
+    public static Ritual getRitual(final int id) {
         return rituals[id];
     }
 
     public static Ritual[] getRituals() {
-        return rituals;
+        return rituals.clone();
     }
 
     public static int getLength() {

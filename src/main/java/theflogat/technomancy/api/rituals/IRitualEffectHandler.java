@@ -4,5 +4,5 @@ import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 
 public interface IRitualEffectHandler {
 
-    public abstract void applyEffect(TileCatalyst te);
+    void applyEffect(TileCatalyst te);
 }

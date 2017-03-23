@@ -15,15 +15,15 @@ public abstract class Ritual {
         LIGHT(3),
         DARK(4);
 
-        int id;
-        static Type[] allTypes = { EARTH, FIRE, WATER, LIGHT, DARK };
+        public int id;
+        public static Type[] allTypes = { EARTH, FIRE, WATER, LIGHT, DARK };
 
-        private Type(int id) {
+        private Type(final int id) {
             this.id = id;
         }
 
-        public static Type getType(int id) {
-            for (Type t : allTypes) {
+        public static Type getType(final int id) {
+            for (final Type t : allTypes) {
                 if (t.id == id) {
                     return t;
                 }
@@ -38,25 +38,25 @@ public abstract class Ritual {
 
     protected Type[] frame = { null, null, null };
     protected Type core;
+    protected int id;
 
-    public Ritual(Type[] frame, Type core) {
-        for (int i = 0; i < Math.min(frame.length, this.frame.length); i++) {
-            this.frame[i] = frame[i];
+    public Ritual(final Type[] frame, final Type core) {
+        final Type[] tmpFrame = frame.clone();
+        for (int i = 0; i < Math.min(tmpFrame.length, this.frame.length); i++) {
+            this.frame[i] = tmpFrame[i];
         }
         this.core = core;
     }
 
-    protected int id = 0;
-
-    protected void setId(int id) {
+    protected void setId(final int id) {
         this.id = id;
     }
 
-    public boolean isCoreComplete(World w, int x, int y, int z) {
+    public boolean isCoreComplete(final World w, final int x, final int y, final int z) {
         return w.getBlockMetadata(x, y, z) == core.id;
     }
 
-    public boolean isFrameComplete(World w, int x, int y, int z) {
+    public boolean isFrameComplete(final World w, final int x, final int y, final int z) {
         for (int i = 0; i < frame.length; i++) {
             if (frame[i] == null) {
                 if (!checkEmpty(w, x, y, z, i)) {
@@ -71,7 +71,7 @@ public abstract class Ritual {
         return true;
     }
 
-    protected void removeFrame(World w, int x, int y, int z) {
+    protected void removeFrame(final World w, final int x, final int y, final int z) {
         for (int i = 0; i < frame.length; i++) {
             if (frame[i] != null) {
                 RitualHelper.removeT(w, x, y, z, i);
@@ -79,8 +79,8 @@ public abstract class Ritual {
         }
     }
 
-    protected boolean checkEmpty(World w, int x, int y, int z, int tier) {
-        for (Type t : Type.allTypes) {
+    protected boolean checkEmpty(final World w, final int x, final int y, final int z, final int tier) {
+        for (final Type t : Type.allTypes) {
             if (RitualHelper.checkForT(w, x, y, z, t.id, tier)) {
                 return false;
             }
@@ -88,13 +88,13 @@ public abstract class Ritual {
         return true;
     }
 
-    public void addAffinity(World w, String playerName) {
-        EntityPlayer player = w.getPlayerEntityByName(playerName);
+    public void addAffinity(final World w, final String playerName) {
+        final EntityPlayer player = w.getPlayerEntityByName(playerName);
         if (player == null) {
             return;
         }
         PlayerData.addAffinity(w, player, core.getAffinity(), 5);
-        for (Type t : frame) {
+        for (final Type t : frame) {
             if (t != null) {
                 PlayerData.addAffinity(w, player, t.getAffinity(), 1);
             }

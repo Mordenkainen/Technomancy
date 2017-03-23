@@ -18,41 +18,33 @@ import org.objectweb.asm.tree.VarInsnNode;
 
 import cpw.mods.fml.common.Loader;
 import net.minecraft.launchwrapper.IClassTransformer;
-import net.minecraft.launchwrapper.Launch;
 
 public class TechnomancyCoreTransformer implements IClassTransformer {
 
-    static boolean isDeobfEnvironment;
-
     @Override
-    public byte[] transform(String name, String transformedName, byte[] basicClass) {
-        isDeobfEnvironment = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
-
-        if (name.equals("powercrystals.minefactoryreloaded.MineFactoryReloadedClient")) {
-            if (Loader.isModLoaded("Thaumcraft")) {
-                byte[] newCode = patchRenderWorldLast(basicClass, isDeobfEnvironment);
-                return newCode;
-            }
+    public byte[] transform(final String name, final String transformedName, final byte[] basicClass) {
+        if ("powercrystals.minefactoryreloaded.MineFactoryReloadedClient".equals(name) && Loader.isModLoaded("Thaumcraft")) {
+            return patchRenderWorldLast(basicClass);
         }
 
         return basicClass;
     }
 
-    private static byte[] patchRenderWorldLast(byte[] origCode, boolean isDeobfEnvironment) {
-        ClassReader cr = new ClassReader(origCode);
+    private static byte[] patchRenderWorldLast(final byte[] origCode) {
+        final ClassReader cr = new ClassReader(origCode);
 
-        ClassNode classNode = new ClassNode();
+        final ClassNode classNode = new ClassNode();
         cr.accept(classNode, 0);
 
-        for (MethodNode methodNode : classNode.methods) {
-            if (methodNode.name.equals("renderWorldLast") && methodNode.desc.equals("(Lnet/minecraftforge/client/event/RenderWorldLastEvent;)V")) {
-                Iterator<AbstractInsnNode> insnNodes = methodNode.instructions.iterator();
+        for (final MethodNode methodNode : classNode.methods) {
+            if ("renderWorldLast".equals(methodNode.name) && "(Lnet/minecraftforge/client/event/RenderWorldLastEvent;)V".equals(methodNode.desc)) {
+                final Iterator<AbstractInsnNode> insnNodes = methodNode.instructions.iterator();
                 boolean foundIf = false;
                 boolean foundJump = false;
                 LabelNode label = new LabelNode();
-                LabelNode retNode = new LabelNode();
+                final LabelNode retNode = new LabelNode();
                 while (insnNodes.hasNext() && !foundIf) {
-                    AbstractInsnNode insn = insnNodes.next();
+                    final AbstractInsnNode insn = insnNodes.next();
 
                     if (insn.getOpcode() == Opcodes.IFNULL && !foundJump) {
                         foundJump = true;
@@ -60,7 +52,7 @@ public class TechnomancyCoreTransformer implements IClassTransformer {
                     }
                     if (insn.getOpcode() == Opcodes.RETURN) {
                         foundIf = true;
-                        InsnList endList = new InsnList();
+                        final InsnList endList = new InsnList();
                         endList.add(new VarInsnNode(Opcodes.ALOAD, 2));
                         endList.add(new FieldInsnNode(Opcodes.GETFIELD, "net/minecraft/entity/player/EntityPlayer", "field_71071_by", "Lnet/minecraft/entity/player/InventoryPlayer;"));
                         endList.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "net/minecraft/entity/player/InventoryPlayer", "func_70448_g", "()Lnet/minecraft/item/ItemStack;", false));
@@ -75,7 +67,7 @@ public class TechnomancyCoreTransformer implements IClassTransformer {
             }
         }
 
-        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
+        final ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
         classNode.accept(cw);
 
         return cw.toByteArray();

@@ -26,7 +26,7 @@ public class TechnomancyCoreLoader implements IFMLLoadingPlugin {
     }
 
     @Override
-    public void injectData(Map<String, Object> data) {}
+    public void injectData(final Map<String, Object> data) {}
 
     @Override
     public String getAccessTransformerClass() {
