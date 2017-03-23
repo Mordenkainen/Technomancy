@@ -39,6 +39,10 @@ repositories {
         name 'ic2'
         url "http://maven.ic2.player.to/"
     }
+    maven {
+        name = 'RX14'
+        url = "http://mvn.rx14.co.uk/repo/"
+    }
     ivy {
         name 'BuildCraft'
         artifactPattern "http://www.mod-buildcraft.com/releases/BuildCraft/[revision]/[module]-[revision]-[classifier].[ext]"
@@ -47,11 +51,6 @@ repositories {
         name 'Thaumcraft'
         artifactPattern "https://dl.dropboxusercontent.com/u/47135879/[module]-[classifier]-${minecraft_version}-[revision].[ext]"
     }
-    ivy {
-        name 'Botania'
-        artifactPattern "http://botaniamod.net/files/[classifier]/[module] [revision]-[classifier].[ext]"
-    }
-
 }
 
 jar {
@@ -80,11 +79,10 @@ dependencies {
     compile ("appeng:appliedenergistics2:${ae2_version}:api"){
         transitive = false
     }
-    compile "net.industrial-craft:industrialcraft-2:${ic2_version}:api"
+    compile "vazkii.botania:Botania:${bot_version}:deobf"
     compile name: "buildcraft", version: "${bc_version}", classifier: "dev"
+    compile "net.industrial-craft:industrialcraft-2:${ic2_version}:api"
     compile name: "Thaumcraft", version: "${tc_version}", classifier: "deobf"
-    compile name: "Botania", version: "${bot_version}", classifier: "deobf"
-
 }
 
 sourceSets {
