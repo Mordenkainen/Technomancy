@@ -18,7 +18,7 @@ public class BlockFakeAirLight extends BlockContainer {
     }
 
     @Override
-    public boolean isAir(IBlockAccess world, int x, int y, int z) {
+    public boolean isAir(final IBlockAccess world, final int x, final int y, final int z) {
         return true;
     }
 
@@ -33,7 +33,7 @@ public class BlockFakeAirLight extends BlockContainer {
     }
 
     @Override
-    public TileEntity createNewTileEntity(World w, int meta) {
+    public TileEntity createNewTileEntity(final World w, final int meta) {
         return new TileFakeAirCore();
     }
 

@@ -2,11 +2,11 @@ package theflogat.technomancy.common.tiles.base;
 
 public interface IUpgradable {
 
-    public boolean toggleBoost();
+    boolean toggleBoost();
 
-    public boolean getBoost();
+    boolean isBoosted();
 
-    public void setBoost(boolean newBoost);
+    void setBoost(boolean newBoost);
 
-    public String getInfo();
+    String getInfo();
 }

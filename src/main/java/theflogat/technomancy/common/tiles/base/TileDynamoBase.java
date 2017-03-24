@@ -70,7 +70,7 @@ public abstract class TileDynamoBase extends TileTechnomancyRedstone implements 
     }
 
     @Override
-    public boolean getBoost() {
+    public boolean isBoosted() {
         return boost;
     }
 

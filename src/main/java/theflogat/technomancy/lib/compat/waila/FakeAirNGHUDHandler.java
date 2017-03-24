@@ -26,13 +26,13 @@ public class FakeAirNGHUDHandler implements IWailaDataProvider {
         Coords nodeGenerator = tileAir.getMain();
         final TileNodeGenerator tileEntity = (TileNodeGenerator) nodeGenerator.w.getTileEntity(nodeGenerator.x, nodeGenerator.y, nodeGenerator.z);
         if (tileEntity != null) {
-            if (tileEntity.getBoost()) {
+            if (tileEntity.isBoosted()) {
                 currenttip.add(SpecialChars.GREEN + "Potency Gem Installed");
             }
             currenttip.add("Redstone Setting: " + formatSetting(((IRedstoneSensitive) tileEntity).getCurrentSetting().id));
             currenttip.add(tileEntity.canRun() ? SpecialChars.GREEN + "Enabled" : SpecialChars.RED + "Disabled");
             if (accessor.getNBTData().getBoolean("Active")) {
-                currenttip.add(accessor.getNBTData().getBoolean("Spawn") ? "Mode: Create Node" : tileEntity.getBoost() ? "Mode: Enhance Node" : "Mode: Recharge Node");
+                currenttip.add(accessor.getNBTData().getBoolean("Spawn") ? "Mode: Create Node" : tileEntity.isBoosted() ? "Mode: Enhance Node" : "Mode: Recharge Node");
             }
         }
         return currenttip;

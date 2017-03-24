@@ -5,9 +5,9 @@ import net.minecraft.nbt.NBTTagCompound;
 public abstract class TileMachineRedstone extends TileMachineBase implements IRedstoneSensitive {
 
     public RedstoneSet set = RedstoneSet.HIGH;
-    private boolean modified = false;
+    private boolean modified;
 
-    public TileMachineRedstone(int capacity, RedstoneSet setDefault) {
+    public TileMachineRedstone(final int capacity, final RedstoneSet setDefault) {
         super(capacity);
         set = setDefault;
     }
@@ -18,7 +18,7 @@ public abstract class TileMachineRedstone extends TileMachineBase implements IRe
     }
 
     @Override
-    public void setNewSetting(RedstoneSet newSet) {
+    public void setNewSetting(final RedstoneSet newSet) {
         set = newSet;
         modified = true;
     }
@@ -34,14 +34,14 @@ public abstract class TileMachineRedstone extends TileMachineBase implements IRe
     }
 
     @Override
-    public void writeSyncData(NBTTagCompound compound) {
+    public void writeSyncData(final NBTTagCompound compound) {
         super.writeSyncData(compound);
         set.save(compound);
         compound.setBoolean("modified", modified);
     }
 
     @Override
-    public void readSyncData(NBTTagCompound compound) {
+    public void readSyncData(final NBTTagCompound compound) {
         super.readSyncData(compound);
         set = RedstoneSet.load(compound);
         modified = compound.getBoolean("modified");

@@ -2,13 +2,13 @@ package theflogat.technomancy.common.tiles.technom.existence;
 
 public interface IExistenceConsumer {
 
-    public int getPower();
+    int getPower();
 
-    public int getPowerCap();
+    int getPowerCap();
 
-    public int getMaxRate();
+    int getMaxRate();
 
-    public void addPower(int val);
+    void addPower(int val);
 
-    public boolean canInput();
+    boolean canInput();
 }

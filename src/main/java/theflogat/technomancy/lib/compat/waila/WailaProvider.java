@@ -19,7 +19,7 @@ import theflogat.technomancy.lib.handlers.CompatibilityHandler;
 
 public class WailaProvider {
 
-    public static void callbackRegister(IWailaRegistrar registrar) {
+    public static void callbackRegister(final IWailaRegistrar registrar) {
         registrar.registerBodyProvider(new DynamoHUDHandler(), TileDynamoBase.class);
 
         registrar.registerBodyProvider(new CatalystHUDHandler(), TileCatalyst.class);
@@ -34,15 +34,15 @@ public class WailaProvider {
         // TileExistenceBurner.class);
 
         if (CompatibilityHandler.th) {
-            IWailaDataProvider biomeMorpher = new BiomeMorpherHUDHandler();
+            final IWailaDataProvider biomeMorpher = new BiomeMorpherHUDHandler();
             registrar.registerBodyProvider(biomeMorpher, TileBiomeMorpher.class);
             registrar.registerNBTProvider(biomeMorpher, TileBiomeMorpher.class);
 
-            IWailaDataProvider nodeGenerator = new NodeGeneratorHUDHandler();
+            final IWailaDataProvider nodeGenerator = new NodeGeneratorHUDHandler();
             registrar.registerBodyProvider(nodeGenerator, TileNodeGenerator.class);
             registrar.registerNBTProvider(nodeGenerator, TileNodeGenerator.class);
 
-            IWailaDataProvider nodeGeneratorAir = new FakeAirNGHUDHandler();
+            final IWailaDataProvider nodeGeneratorAir = new FakeAirNGHUDHandler();
             registrar.registerBodyProvider(nodeGeneratorAir, TileFakeAirNG.class);
             registrar.registerNBTProvider(nodeGeneratorAir, TileFakeAirNG.class);
             registrar.registerStackProvider(nodeGeneratorAir, TileFakeAirNG.class);
@@ -57,7 +57,7 @@ public class WailaProvider {
         }
 
         if (CompatibilityHandler.bo) {
-            IWailaDataProvider manaExchanger = new ManaExchangerHUDHandler();
+            final IWailaDataProvider manaExchanger = new ManaExchangerHUDHandler();
             registrar.registerBodyProvider(manaExchanger, TileManaExchanger.class);
             registrar.registerNBTProvider(manaExchanger, TileManaExchanger.class);
         }

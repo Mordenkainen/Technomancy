@@ -95,9 +95,9 @@ public class TileFakeAirNG extends TileFakeAirCore implements IEnergyHandler, IE
     }
 
     @Override
-    public boolean getBoost() {
+    public boolean isBoosted() {
         final TileNodeGenerator te = getTE();
-        return te != null && te.getBoost();
+        return te != null && te.isBoosted();
     }
 
     @Override

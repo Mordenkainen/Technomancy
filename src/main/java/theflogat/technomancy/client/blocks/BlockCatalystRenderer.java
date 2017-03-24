@@ -18,7 +18,7 @@ public class BlockCatalystRenderer implements ISimpleBlockRenderingHandler {
         GL11.glPushMatrix();
         GL11.glScalef(-1F, -1F, 1F);
         GL11.glTranslated(0, -1F, 0);
-        Minecraft.getMinecraft().renderEngine.bindTexture(TileCatalystRenderer.modelTexture);
+        Minecraft.getMinecraft().renderEngine.bindTexture(TileCatalystRenderer.MODELTEXTURE);
         TileCatalystRenderer.model.render(metadata);
         GL11.glPopMatrix();
     }

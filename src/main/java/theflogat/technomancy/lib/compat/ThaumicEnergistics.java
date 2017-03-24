@@ -30,7 +30,7 @@ public class ThaumicEnergistics implements IModModule {
 
     @Override
     public void PostInit() {
-        IThETransportPermissions perms = ThEApi.instance().transportPermissions();
+        final IThETransportPermissions perms = ThEApi.instance().transportPermissions();
 
         if (TMConfig.fluxLamp) {
             perms.addAspectContainerTileToInjectPermissions(TileFluxLamp.class, 32);

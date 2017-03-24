@@ -14,9 +14,9 @@ public class TileBMProcessor extends TileProcessorBase {
     }
 
     @Override
-    protected boolean getFuel(ItemStack items, int multiplier, int reprocess) {
-        int cost = multiplier * 100 + 1000 * reprocess;
-        if (!(SoulNetworkHandler.getCurrentEssence(owner) > cost)) {
+    protected boolean getFuel(final ItemStack items, final int multiplier, final int reprocess) {
+        final int cost = multiplier * 100 + 1000 * reprocess;
+        if (SoulNetworkHandler.getCurrentEssence(owner) < cost) {
             return false;
         }
         if (!worldObj.isRemote) {
@@ -26,13 +26,13 @@ public class TileBMProcessor extends TileProcessorBase {
     }
 
     @Override
-    public void writeSyncData(NBTTagCompound compound) {
+    public void writeSyncData(final NBTTagCompound compound) {
         super.writeSyncData(compound);
         compound.setString("Owner", owner);
     }
 
     @Override
-    public void readSyncData(NBTTagCompound compound) {
+    public void readSyncData(final NBTTagCompound compound) {
         super.readSyncData(compound);
         owner = compound.getString("Owner");
     }

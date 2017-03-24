@@ -5,9 +5,9 @@ import net.minecraft.nbt.NBTTagCompound;
 public abstract class TileTechnomancyRedstone extends TileTechnomancy implements IRedstoneSensitive {
 
     public RedstoneSet set = RedstoneSet.HIGH;
-    protected boolean modified = false;
+    protected boolean modified;
 
-    public TileTechnomancyRedstone(RedstoneSet setDefault) {
+    public TileTechnomancyRedstone(final RedstoneSet setDefault) {
         super();
         set = setDefault;
     }
@@ -18,7 +18,7 @@ public abstract class TileTechnomancyRedstone extends TileTechnomancy implements
     }
 
     @Override
-    public void setNewSetting(RedstoneSet newSet) {
+    public void setNewSetting(final RedstoneSet newSet) {
         set = newSet;
         modified = true;
     }
@@ -34,13 +34,13 @@ public abstract class TileTechnomancyRedstone extends TileTechnomancy implements
     }
 
     @Override
-    public void writeSyncData(NBTTagCompound comp) {
+    public void writeSyncData(final NBTTagCompound comp) {
         set.save(comp);
         comp.setBoolean("modified", modified);
     }
 
     @Override
-    public void readSyncData(NBTTagCompound comp) {
+    public void readSyncData(final NBTTagCompound comp) {
         set = RedstoneSet.load(comp);
         modified = comp.getBoolean("modified");
     }

@@ -54,7 +54,7 @@ public class ItemBoost extends Item {
         // }
         if (w.getTileEntity(x, y, z) instanceof IUpgradable) {
             IUpgradable tile = (IUpgradable) w.getTileEntity(x, y, z);
-            if (tile.getBoost() == false) {
+            if (tile.isBoosted() == false) {
                 if (!w.isRemote) {
                     tile.setBoost(true);
                     w.markBlockForUpdate(x, y, z);

@@ -18,7 +18,7 @@ public class WailaHelper {
     }
 
     private static void drawBoost(List<String> currenttip, IUpgradable te) {
-        if (te.getBoost()) {
+        if (te.isBoosted()) {
             currenttip.add(SpecialChars.GREEN + "Potency Gem Installed");
         }
     }

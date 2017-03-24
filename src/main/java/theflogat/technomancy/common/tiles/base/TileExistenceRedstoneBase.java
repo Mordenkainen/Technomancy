@@ -8,7 +8,7 @@ public abstract class TileExistenceRedstoneBase extends TileTechnomancyRedstone 
     public int power;
     public int maxPower;
 
-    public TileExistenceRedstoneBase(RedstoneSet setDefault, int maxPower) {
+    public TileExistenceRedstoneBase(final RedstoneSet setDefault, final int maxPower) {
         super(setDefault);
         this.maxPower = maxPower;
     }
@@ -29,7 +29,7 @@ public abstract class TileExistenceRedstoneBase extends TileTechnomancyRedstone 
     }
 
     @Override
-    public void addPower(int val) {
+    public void addPower(final int val) {
         power += val;
     }
 
@@ -39,12 +39,12 @@ public abstract class TileExistenceRedstoneBase extends TileTechnomancyRedstone 
     }
 
     @Override
-    public void readCustomNBT(NBTTagCompound comp) {
+    public void readCustomNBT(final NBTTagCompound comp) {
         power = comp.getInteger("power");
     }
 
     @Override
-    public void writeCustomNBT(NBTTagCompound comp) {
+    public void writeCustomNBT(final NBTTagCompound comp) {
         comp.setInteger("power", power);
     }
 }

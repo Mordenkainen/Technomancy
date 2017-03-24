@@ -12,20 +12,20 @@ public class TileExistenceFountainRenderer extends TileEntitySpecialRenderer {
 
     public static ModelExistenceFountain model = new ModelExistenceFountain();
 
-    public static final ResourceLocation modelTexture = new ResourceLocation(Reference.MODEL_FOUNT);
-    public static final ResourceLocation exTexture = new ResourceLocation(Reference.MODEL_EXISTENCE);
+    public static final ResourceLocation MODELTEXTURE = new ResourceLocation(Reference.MODEL_FOUNT);
+    public static final ResourceLocation EXTEXTURE = new ResourceLocation(Reference.MODEL_EXISTENCE);
 
     @Override
-    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float t) {
+    public void renderTileEntityAt(final TileEntity te, final double x, final double y, final double z, final float t) {
         GL11.glPushMatrix();
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glTranslatef((float) x, (float) y, (float) z);
         GL11.glScalef(-1F, -1F, 1f);
         GL11.glTranslatef(.5F, -.5F, -.5F);
-        bindTexture(modelTexture);
+        bindTexture(MODELTEXTURE);
         model.render();
-        bindTexture(exTexture);
+        bindTexture(EXTEXTURE);
         if (te instanceof TileExistenceFountain) {
             model.renderLiquid(((TileExistenceFountain) te).getPower(), ((TileExistenceFountain) te).getPowerCap());
         } else {

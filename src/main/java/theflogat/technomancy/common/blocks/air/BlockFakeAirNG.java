@@ -68,7 +68,7 @@ public class BlockFakeAirNG extends BlockContainer {
             return true;
         }
         if (player.getHeldItem() == null && player.isSneaking()) {
-            if (fakeAir.getBoost()) {
+            if (fakeAir.isBoosted()) {
                 if (!w.isRemote) {
                     WorldHelper.dropBoost(w, x, y, z);
                     fakeAir.setBoost(false);

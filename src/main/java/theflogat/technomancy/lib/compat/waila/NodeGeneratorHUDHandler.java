@@ -19,13 +19,13 @@ public class NodeGeneratorHUDHandler implements IWailaDataProvider {
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
         final TileNodeGenerator tileEntity = (TileNodeGenerator) accessor.getTileEntity();
-        if (tileEntity.getBoost()) {
+        if (tileEntity.isBoosted()) {
             currenttip.add(SpecialChars.GREEN + "Potency Gem Installed");
         }
         currenttip.add("Redstone Setting: " + formatSetting(((IRedstoneSensitive) tileEntity).getCurrentSetting().id));
         currenttip.add(tileEntity.canRun() ? SpecialChars.GREEN + "Enabled" : SpecialChars.RED + "Disabled");
         if (accessor.getNBTData().getBoolean("Active")) {
-            currenttip.add(accessor.getNBTData().getBoolean("Spawn") ? "Mode: Create Node" : tileEntity.getBoost() ? "Mode: Enhance Node" : "Mode: Recharge Node");
+            currenttip.add(accessor.getNBTData().getBoolean("Spawn") ? "Mode: Create Node" : tileEntity.isBoosted() ? "Mode: Enhance Node" : "Mode: Recharge Node");
         }
         return currenttip;
     }

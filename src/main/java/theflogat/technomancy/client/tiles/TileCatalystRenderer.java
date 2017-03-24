@@ -12,27 +12,27 @@ public class TileCatalystRenderer extends TileEntitySpecialRenderer {
 
     public static ModelCatalyst model = new ModelCatalyst();
 
-    public static final ResourceLocation modelTexture = new ResourceLocation(Reference.MODEL_CATALYST);
+    public static final ResourceLocation MODELTEXTURE = new ResourceLocation(Reference.MODEL_CATALYST);
 
     @Override
-    public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float t) {
+    public void renderTileEntityAt(final TileEntity entity, final double x, final double y, final double z, final float t) {
         if (entity instanceof TileCatalyst) {
-            TileCatalyst te = (TileCatalyst) entity;
-            if (te.specialRender != null && te.textLoc != null) {
+            final TileCatalyst te = (TileCatalyst) entity;
+            if (te.specialRender == null || te.textLoc == null) {
+                GL11.glPushMatrix();
+                GL11.glTranslatef((float) x, (float) y, (float) z);
+                GL11.glScalef(-1F, -1F, 1f);
+                GL11.glTranslatef(-.5F, -1.5F, .5F);
+                bindTexture(MODELTEXTURE);
+                model.render(te.getWorldObj().getBlockMetadata(te.xCoord, te.yCoord, te.zCoord));
+                GL11.glPopMatrix();
+            } else {
                 GL11.glPushMatrix();
                 GL11.glTranslatef((float) x, (float) y, (float) z);
                 GL11.glScalef(-1F, -1F, 1f);
                 GL11.glTranslatef(.5F, -.5F, -.5F);
                 bindTexture(te.textLoc);
                 te.specialRender.render();
-                GL11.glPopMatrix();
-            } else {
-                GL11.glPushMatrix();
-                GL11.glTranslatef((float) x, (float) y, (float) z);
-                GL11.glScalef(-1F, -1F, 1f);
-                GL11.glTranslatef(-.5F, -1.5F, .5F);
-                bindTexture(modelTexture);
-                model.render(te.getWorldObj().getBlockMetadata(te.xCoord, te.yCoord, te.zCoord));
                 GL11.glPopMatrix();
             }
         }

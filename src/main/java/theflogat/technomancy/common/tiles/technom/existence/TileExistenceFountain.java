@@ -6,31 +6,31 @@ import theflogat.technomancy.common.tiles.base.TileTechnomancy;
 public class TileExistenceFountain extends TileTechnomancy implements IExistenceProducer {
 
     public int power;
-    private static final int powerCap = 1000000;
-    private static final int prodRate = 500;
+    private static final int POWERCAP = 1000000;
+    private static final int PRODRATE = 500;
 
     @Override
     public void updateEntity() {
-        power += Math.min(prodRate, powerCap - power);
+        power += Math.min(PRODRATE, POWERCAP - power);
     }
 
     @Override
-    public void readCustomNBT(NBTTagCompound comp) {
+    public void readCustomNBT(final NBTTagCompound comp) {
         power = comp.getInteger("power");
     }
 
     @Override
-    public void writeCustomNBT(NBTTagCompound comp) {
+    public void writeCustomNBT(final NBTTagCompound comp) {
         comp.setInteger("power", power);
     }
 
     @Override
-    public void writeSyncData(NBTTagCompound compound) {
+    public void writeSyncData(final NBTTagCompound compound) {
         writeCustomNBT(compound);
     }
 
     @Override
-    public void readSyncData(NBTTagCompound compound) {
+    public void readSyncData(final NBTTagCompound compound) {
         readCustomNBT(compound);
     }
 
@@ -41,12 +41,12 @@ public class TileExistenceFountain extends TileTechnomancy implements IExistence
 
     @Override
     public int getPowerCap() {
-        return powerCap;
+        return POWERCAP;
     }
 
     @Override
     public int getMaxRate() {
-        return prodRate * 4;
+        return PRODRATE * 4;
     }
 
     @Override
@@ -60,11 +60,11 @@ public class TileExistenceFountain extends TileTechnomancy implements IExistence
     }
 
     @Override
-    public void addPower(int val) {
+    public void addPower(final int val) {
         power += val;
     }
 
     public boolean isRunning() {
-        return power < powerCap;
+        return power < POWERCAP;
     }
 }

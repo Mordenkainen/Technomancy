@@ -80,7 +80,7 @@ public abstract class TileCoilTransmitter extends TileTechnomancyRedstone implem
     }
 
     @Override
-    public boolean getBoost() {
+    public boolean isBoosted() {
         return boost;
     }
 

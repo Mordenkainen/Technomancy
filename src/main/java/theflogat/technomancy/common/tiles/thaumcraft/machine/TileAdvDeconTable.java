@@ -229,16 +229,16 @@ public class TileAdvDeconTable extends TileTechnomancy implements IInventory, IU
 
     @Override
     public boolean toggleBoost() {
-        if (getBoost()) {
+        if (isBoosted()) {
             breakSpeed = 80;
         } else {
             breakSpeed = 40;
         }
-        return getBoost();
+        return isBoosted();
     }
 
     @Override
-    public boolean getBoost() {
+    public boolean isBoosted() {
         return breakSpeed == 40;
     }
 

@@ -78,7 +78,7 @@ public abstract class BlockContainerAdvanced extends BlockContainerRedstone {
         }
         if (te instanceof IUpgradable) {
             if (items == null && player.isSneaking()) {
-                if (((IUpgradable) te).getBoost()) {
+                if (((IUpgradable) te).isBoosted()) {
                     if (!w.isRemote) {
                         ((IUpgradable) te).toggleBoost();
                         WorldHelper.dropBoost(w, x, y, z);
@@ -109,7 +109,7 @@ public abstract class BlockContainerAdvanced extends BlockContainerRedstone {
             }
         }
         if (dummy instanceof IUpgradable) {
-            if (((IUpgradable) dummy).getBoost()) {
+            if (((IUpgradable) dummy).isBoosted()) {
                 l.add("Potency Gem Installed");
             }
         }

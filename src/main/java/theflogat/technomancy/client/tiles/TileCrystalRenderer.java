@@ -10,11 +10,11 @@ import theflogat.technomancy.lib.Reference;
 
 public class TileCrystalRenderer extends TileEntitySpecialRenderer {
 
-    ModelCrystal model = new ModelCrystal();
-    private static final ResourceLocation modelTexture = new ResourceLocation(Reference.MODEL_CRYSTAL);
+    private final ModelCrystal model = new ModelCrystal();
+    private static final ResourceLocation MODELTEXTURE = new ResourceLocation(Reference.MODEL_CRYSTAL);
 
     @Override
-    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float t) {
+    public void renderTileEntityAt(final TileEntity te, final double x, final double y, final double z, final float t) {
         if (te instanceof TileCrystal) {
             GL11.glPushMatrix();
             GL11.glEnable(GL11.GL_BLEND);
@@ -22,7 +22,7 @@ public class TileCrystalRenderer extends TileEntitySpecialRenderer {
             GL11.glTranslatef((float) x, (float) y, (float) z);
             GL11.glScalef(-1F, -1F, 1f);
             GL11.glTranslatef(-.5F, -1.5F, .5F);
-            bindTexture(modelTexture);
+            bindTexture(MODELTEXTURE);
             model.render(((TileCrystal) te).getStage(), te.getBlockMetadata());
             GL11.glDisable(GL11.GL_BLEND);
             GL11.glPopMatrix();

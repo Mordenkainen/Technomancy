@@ -44,7 +44,7 @@ public abstract class BlockCoilTransmitter extends BlockContainerAdvanced {
     public boolean canConnectRedstone(IBlockAccess world, int x, int y, int z, int side) {
         TileCoilTransmitter tile = getTE(world, x, y, z);
         if (tile != null) {
-            return tile.getBoost();
+            return tile.isBoosted();
         }
         return false;
     }

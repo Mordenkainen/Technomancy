@@ -492,7 +492,7 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
     }
 
     @Override
-    public boolean getBoost() {
+    public boolean isBoosted() {
         return boost;
     }
 
