@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 import cpw.mods.fml.common.Loader;
 import theflogat.technomancy.Technomancy;
-import theflogat.technomancy.lib.Conf;
+import theflogat.technomancy.lib.TMConfig;
 import theflogat.technomancy.lib.compat.BloodMagic;
 import theflogat.technomancy.lib.compat.Botania;
 import theflogat.technomancy.lib.compat.IModModule;
@@ -24,7 +24,7 @@ public class CompatibilityHandler {
     public static LinkedList<IModModule> mods = new LinkedList<IModModule>();
 
     public static void init() {
-        if (Conf.mkfirst) {
+        if (TMConfig.mkfirst) {
             if (Loader.isModLoaded("Mekanism")) {
                 Technomancy.logger.info("Mekanism detected. Compatibility module will be loaded.");
                 Technomancy.logger.info("Mekanism detected. Thermal Expansion Compatibility will be skiped.");

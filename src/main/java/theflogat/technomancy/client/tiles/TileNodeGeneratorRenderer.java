@@ -8,13 +8,13 @@ import org.lwjgl.opengl.GL11;
 
 import theflogat.technomancy.client.models.ModelNodeGenerator;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 public class TileNodeGeneratorRenderer extends TileEntitySpecialRenderer {
 
     ModelNodeGenerator model = new ModelNodeGenerator();
 
-    private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_NODE_GENERATOR_TEXTURE);
+    private static final ResourceLocation modelTexture = new ResourceLocation(Reference.MODEL_NODE_GEN);
 
     @Override
     public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float t) {

@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import theflogat.technomancy.client.models.ModelReconstructor;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 public class TileReconstructorRenderer extends TileEntitySpecialRenderer {
 
@@ -27,7 +27,7 @@ public class TileReconstructorRenderer extends TileEntitySpecialRenderer {
         itemRenderer.setRenderManager(RenderManager.instance);
     }
 
-    private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_RECONSTRUCTOR_TEXTURE);
+    private static final ResourceLocation modelTexture = new ResourceLocation(Reference.MODEL_RECON);
 
     @Override
     public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float f) {

@@ -13,13 +13,13 @@ import org.lwjgl.opengl.GL11;
 import theflogat.technomancy.client.gui.tome.buttons.ButtonChangePage;
 import theflogat.technomancy.client.gui.tome.buttons.ButtonEntry;
 import theflogat.technomancy.client.gui.tome.buttons.ButtonTab;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 public class GuiTomeTemplate extends GuiScreen {
 
     private final ResourceLocation background;
     private final ResourceLocation buttons;
-    private static final ResourceLocation page = new ResourceLocation(Ref.MOD_ID.toLowerCase(), "textures/gui/nextPrevious.png");
+    private static final ResourceLocation page = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/gui/nextPrevious.png");
     public static ButtonTab[] tabs;
     private static final ButtonChangePage[] pageCh = new ButtonChangePage[2];
     private static final RenderItem itemRender = new RenderItem();
@@ -32,8 +32,8 @@ public class GuiTomeTemplate extends GuiScreen {
     public int startTextY = 12;
 
     public GuiTomeTemplate(String id) {
-        background = new ResourceLocation(Ref.MOD_ID.toLowerCase(), "textures/gui/tomeBack" + id + ".png");
-        buttons = new ResourceLocation(Ref.MOD_ID.toLowerCase(), "textures/gui/tomeButtons" + id + ".png");
+        background = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/gui/tomeBack" + id + ".png");
+        buttons = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/gui/tomeButtons" + id + ".png");
 
         xSize = 256;
         ySize = 256;

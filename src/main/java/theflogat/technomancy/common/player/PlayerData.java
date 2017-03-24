@@ -11,8 +11,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
-import theflogat.technomancy.lib.Ids;
-import theflogat.technomancy.lib.Ref;
+
+import theflogat.technomancy.lib.TMConfig;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.network.PacketHandler;
 import theflogat.technomancy.util.Loc;
 import cpw.mods.fml.relauncher.Side;
@@ -39,17 +40,17 @@ public class PlayerData {
         public String getName() {
             switch (id) {
                 case 0:
-                    return Ref.getId("earth");
+                    return Reference.getId("earth");
                 case 1:
-                    return Ref.getId("fire");
+                    return Reference.getId("fire");
                 case 2:
-                    return Ref.getId("water");
+                    return Reference.getId("water");
                 case 3:
-                    return Ref.getId("light");
+                    return Reference.getId("light");
                 case 4:
-                    return Ref.getId("dark");
+                    return Reference.getId("dark");
             }
-            return Ref.getId("normal");
+            return Reference.getId("normal");
         }
 
         public Color getColor() {
@@ -84,15 +85,15 @@ public class PlayerData {
 
     public static NBTTagCompound getData(EntityPlayer player) {
         NBTTagCompound forgeData = player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
-        NBTTagCompound data = forgeData.getCompoundTag(Ref.MOD_ID);
+        NBTTagCompound data = forgeData.getCompoundTag(Reference.MOD_ID);
 
         // For some reason it sometimes is null
         if (data == null) {
             data = new NBTTagCompound();
         }
 
-        if (!forgeData.hasKey(Ref.MOD_ID)) {
-            forgeData.setTag(Ref.MOD_ID, data);
+        if (!forgeData.hasKey(Reference.MOD_ID)) {
+            forgeData.setTag(Reference.MOD_ID, data);
         }
         if (!player.getEntityData().hasKey(EntityPlayer.PERSISTED_NBT_TAG)) {
             player.getEntityData().setTag(EntityPlayer.PERSISTED_NBT_TAG, forgeData);
@@ -218,8 +219,8 @@ public class PlayerData {
     @SideOnly(Side.CLIENT)
     public static class HUDHandler {
 
-        public static final ResourceLocation modelTexture = new ResourceLocation(Ref.HUD_TEXTURE);
-        public static final ResourceLocation exTexture = new ResourceLocation(Ref.HUD_EX_TEXTURE);
+        public static final ResourceLocation modelTexture = new ResourceLocation(Reference.HUD_TEXTURE);
+        public static final ResourceLocation exTexture = new ResourceLocation(Reference.HUD_EX_TEXTURE);
 
         public static void renderHUD(int amt, int maxAmount) {
             GL11.glPushMatrix();
@@ -230,11 +231,11 @@ public class PlayerData {
             int amount = (int) (scale * ratio);
 
             Minecraft.getMinecraft().getTextureManager().bindTexture(modelTexture);
-            drawRectangle(Ids.hudStartX, Ids.hudStartY, 0, 0, xSize, ySize);
+            drawRectangle(TMConfig.hudStartX, TMConfig.hudStartY, 0, 0, xSize, ySize);
             Color c = getAffinity(Minecraft.getMinecraft().thePlayer).getColor();
             GL11.glColor3f(c.getRed(), c.getGreen(), c.getBlue());
             Minecraft.getMinecraft().getTextureManager().bindTexture(exTexture);
-            drawRectangle(Ids.hudStartX, Ids.hudStartY + 5 + scale - amount, 0, 0, xSize, amount);
+            drawRectangle(TMConfig.hudStartX, TMConfig.hudStartY + 5 + scale - amount, 0, 0, xSize, amount);
 
             GL11.glPopMatrix();
         }

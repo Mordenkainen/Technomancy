@@ -12,7 +12,7 @@ import thaumcraft.common.tiles.TileArcaneFurnace;
 import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileElectricBellows;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.lib.RenderIds;
 import tuhljin.automagy.api.essentia.IEssentiaDistillery;
 import cpw.mods.fml.common.Loader;
@@ -22,7 +22,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockElectricBellows extends BlockContainerAdvanced {
 
     public BlockElectricBellows() {
-        setBlockName(Ref.MOD_PREFIX + Names.electricBellows);
+        setBlockName(Reference.MOD_PREFIX + Names.ELECTRICBELLOWS);
     }
 
     private byte facing;
@@ -93,6 +93,6 @@ public class BlockElectricBellows extends BlockContainerAdvanced {
     @SideOnly(Side.CLIENT)
     @Override
     public void registerBlockIcons(IIconRegister icon) {
-        blockIcon = icon.registerIcon(Ref.getAsset(Names.electricBellows));
+        blockIcon = icon.registerIcon(Reference.getAsset(Names.ELECTRICBELLOWS));
     }
 }

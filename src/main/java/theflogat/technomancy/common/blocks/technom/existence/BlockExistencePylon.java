@@ -9,13 +9,13 @@ import net.minecraft.world.World;
 import theflogat.technomancy.common.blocks.base.BlockContainerBase;
 import theflogat.technomancy.common.tiles.technom.existence.TileExistencePylon;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.lib.RenderIds;
 
 public class BlockExistencePylon extends BlockContainerBase {
 
     public BlockExistencePylon() {
-        setBlockName(Ref.getId(Names.existencePylon));
+        setBlockName(Reference.getId(Names.EXISTENCEPYLON));
         setBlockBounds(1F / 4F, 0, 1F / 4F, 3F / 4F, 1, 3F / 4F);
     }
 

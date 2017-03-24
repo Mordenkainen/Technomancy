@@ -11,14 +11,14 @@ import theflogat.technomancy.common.tiles.technom.existence.TileExistenceSealing
 import theflogat.technomancy.common.tiles.technom.existence.TileExistenceCropAccelerator;
 import theflogat.technomancy.common.tiles.technom.existence.TileExistenceHarvester;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockExistenceUser extends BlockContainerMultiTiles {
 
     public BlockExistenceUser() {
-        setBlockName(Ref.getId("existenceUser"));
+        setBlockName(Reference.getId("existenceUser"));
     }
 
     @Override
@@ -48,10 +48,10 @@ public class BlockExistenceUser extends BlockContainerMultiTiles {
     @Override
     public void registerBlockIcons(IIconRegister reg) {
         icons = new IIcon[3];
-        blockIcon = reg.registerIcon(Ref.getAsset(Names.existenceUser[0]));
-        icons[0] = reg.registerIcon(Ref.getAsset(Names.existenceUser[0] + "_top"));
-        icons[1] = reg.registerIcon(Ref.getAsset(Names.existenceUser[1]));
-        icons[2] = reg.registerIcon(Ref.getAsset(Names.existenceUser[2]));
+        blockIcon = reg.registerIcon(Reference.getAsset(Names.EXISTENCEUSER[0]));
+        icons[0] = reg.registerIcon(Reference.getAsset(Names.EXISTENCEUSER[0] + "_top"));
+        icons[1] = reg.registerIcon(Reference.getAsset(Names.EXISTENCEUSER[1]));
+        icons[2] = reg.registerIcon(Reference.getAsset(Names.EXISTENCEUSER[2]));
     }
 
     @SideOnly(Side.CLIENT)

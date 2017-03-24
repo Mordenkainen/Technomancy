@@ -15,14 +15,14 @@ import org.lwjgl.opengl.GL11;
 import theflogat.technomancy.client.models.ModelBloodFabricator;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBloodFabricator;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.lib.compat.BloodMagic;
 
 public class TileBloodFabricatorRenderer extends TileEntitySpecialRenderer {
 
     ModelBloodFabricator model = new ModelBloodFabricator();
 
-    private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_BLOOD_FABRICATOR_TEXTURE);
+    private static final ResourceLocation modelTexture = new ResourceLocation(Reference.MODEL_BLOOD_FAB);
 
     @Override
     public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float t) {

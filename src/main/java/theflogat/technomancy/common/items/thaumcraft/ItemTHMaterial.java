@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 import theflogat.technomancy.common.items.base.ItemBase;
 import theflogat.technomancy.common.items.base.TMItems;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -28,10 +28,10 @@ public class ItemTHMaterial extends ItemBase {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister icon) {
-        itemIcon[0] = icon.registerIcon(Ref.TEXTURE_PREFIX + "neutronizedMetal");
-        itemIcon[1] = icon.registerIcon(Ref.TEXTURE_PREFIX + "enchantedCoil");
-        itemIcon[2] = icon.registerIcon(Ref.TEXTURE_PREFIX + "neutronizedGear");
-        itemIcon[3] = icon.registerIcon(Ref.TEXTURE_PREFIX + "penCore");
+        itemIcon[0] = icon.registerIcon(Reference.TEXTURE_PREFIX + "neutronizedMetal");
+        itemIcon[1] = icon.registerIcon(Reference.TEXTURE_PREFIX + "enchantedCoil");
+        itemIcon[2] = icon.registerIcon(Reference.TEXTURE_PREFIX + "neutronizedGear");
+        itemIcon[3] = icon.registerIcon(Reference.TEXTURE_PREFIX + "penCore");
     }
 
     @Override
@@ -42,7 +42,7 @@ public class ItemTHMaterial extends ItemBase {
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return Ref.MOD_PREFIX + Names.itemMaterial + "." + stack.getItemDamage();
+        return Reference.MOD_PREFIX + Names.ITEMMATERIAL + "." + stack.getItemDamage();
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

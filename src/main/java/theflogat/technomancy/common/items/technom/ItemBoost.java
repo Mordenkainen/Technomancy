@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.common.tiles.base.IUpgradable;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 public class ItemBoost extends Item {
 
@@ -18,7 +18,7 @@ public class ItemBoost extends Item {
 
     public ItemBoost() {
         setCreativeTab(Technomancy.tabsTM);
-        setUnlocalizedName(Ref.getId(Names.itemBoost));
+        setUnlocalizedName(Reference.getId(Names.ITEMBOOST));
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -70,6 +70,6 @@ public class ItemBoost extends Item {
 
     @Override
     public void registerIcons(IIconRegister reg) {
-        itemIcon = reg.registerIcon(Ref.TEXTURE_PREFIX + Names.itemBoost);
+        itemIcon = reg.registerIcon(Reference.TEXTURE_PREFIX + Names.ITEMBOOST);
     }
 }

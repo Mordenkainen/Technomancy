@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.items.base.TMItems;
 import theflogat.technomancy.common.potions.TMPotions;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.lib.compat.IModModule;
 import theflogat.technomancy.lib.handlers.CompatibilityHandler;
 import theflogat.technomancy.lib.handlers.ConfigHandler;
@@ -31,17 +31,17 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
-@Mod(modid = Ref.MOD_ID, name = Ref.MOD_NAME, version = Ref.MOD_VERSION, dependencies = "after:*")
+@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.MOD_VERSION, dependencies = "after:*")
 
 public class Technomancy {
 
-    @Instance(Ref.MOD_ID)
+    @Instance(Reference.MOD_ID)
     public static Technomancy instance;
 
-    @SidedProxy(clientSide = Ref.proxy_loc + "ClientProxy", serverSide = Ref.proxy_loc + "CommonProxy")
+    @SidedProxy(clientSide = Reference.PROXY_LOC + "ClientProxy", serverSide = Reference.PROXY_LOC + "CommonProxy")
     public static CommonProxy proxy;
 
-    public static CreativeTabs tabsTM = new CreativeTabTM(CreativeTabs.getNextID(), Ref.MOD_ID);
+    public static CreativeTabs tabsTM = new CreativeTabTM(CreativeTabs.getNextID(), Reference.MOD_ID);
 
     public static Logger logger;
 
@@ -55,7 +55,7 @@ public class Technomancy {
             expandPotions();
         }
 
-        ConfigHandler.init(new File(event.getModConfigurationDirectory(), Ref.MOD_NAME + ".cfg"));
+        ConfigHandler.init(new File(event.getModConfigurationDirectory(), Reference.MOD_NAME + ".cfg"));
         PacketHandler.instance = new PacketHandler();
         new EventRegister();
     }

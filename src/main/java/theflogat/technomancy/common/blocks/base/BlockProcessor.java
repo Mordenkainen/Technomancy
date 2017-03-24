@@ -9,7 +9,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import theflogat.technomancy.common.tiles.base.TileProcessorBase;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.util.helpers.InvHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -23,17 +23,17 @@ public abstract class BlockProcessor extends BlockContainerAdvanced {
 
     @Override
     public String getUnlocalizedName() {
-        return "tile." + Ref.MOD_PREFIX + Names.processor + name;
+        return "tile." + Reference.MOD_PREFIX + Names.PROCESSOR + name;
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public void registerBlockIcons(IIconRegister icon) {
         icons = new IIcon[4];
-        icons[0] = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.processor + name + "Side");
-        icons[1] = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.processor + name + "Active");
-        icons[2] = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.processor + name + "Inactive");
-        icons[3] = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.processor + name + "Top");
+        icons[0] = icon.registerIcon(Reference.TEXTURE_PREFIX + Names.PROCESSOR + name + "Side");
+        icons[1] = icon.registerIcon(Reference.TEXTURE_PREFIX + Names.PROCESSOR + name + "Active");
+        icons[2] = icon.registerIcon(Reference.TEXTURE_PREFIX + Names.PROCESSOR + name + "Inactive");
+        icons[3] = icon.registerIcon(Reference.TEXTURE_PREFIX + Names.PROCESSOR + name + "Top");
     }
 
     @SideOnly(Side.CLIENT)

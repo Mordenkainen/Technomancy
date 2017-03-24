@@ -6,7 +6,7 @@ import thaumcraft.common.config.ConfigItems;
 import theflogat.technomancy.common.blocks.base.BlockContainerRedstone;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaFusor;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.lib.RenderIds;
 import theflogat.technomancy.util.helpers.WorldHelper;
 import net.minecraft.block.Block;
@@ -21,7 +21,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class BlockEssentiaFusor extends BlockContainerRedstone {
 
     public BlockEssentiaFusor() {
-        setBlockName(Ref.MOD_PREFIX + Names.fusor);
+        setBlockName(Reference.MOD_PREFIX + Names.FUSOR);
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1F, 0.75F, 1F);
     }
 
@@ -81,7 +81,7 @@ public class BlockEssentiaFusor extends BlockContainerRedstone {
     @SideOnly(Side.CLIENT)
     @Override
     public void registerBlockIcons(IIconRegister icon) {
-        blockIcon = icon.registerIcon(Ref.getAsset(Names.fusor));
+        blockIcon = icon.registerIcon(Reference.getAsset(Names.FUSOR));
     }
 
     @Override

@@ -8,7 +8,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -16,13 +16,13 @@ public class BlockCosmeticPane extends BlockBase {
 
     public BlockCosmeticPane() {
         super();
-        this.setBlockName(Ref.MOD_PREFIX + Names.cosmeticPane);
+        this.setBlockName(Reference.MOD_PREFIX + Names.COSMETICPANE);
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public void registerBlockIcons(IIconRegister icon) {
-        blockIcon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.cosmeticOpaque);
+        blockIcon = icon.registerIcon(Reference.TEXTURE_PREFIX + Names.COSMETICOPAQUE);
     }
 
     @Override

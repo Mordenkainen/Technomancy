@@ -7,13 +7,13 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import theflogat.technomancy.common.tiles.air.TileFakeAirCore;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 public class BlockFakeAirLight extends BlockContainer {
 
     public BlockFakeAirLight() {
         super(Material.air);
-        setBlockName(Ref.getId(Names.fakeAirLight));
+        setBlockName(Reference.getId(Names.FAKEAIRLIGHT));
         setLightLevel(1F);
     }
 

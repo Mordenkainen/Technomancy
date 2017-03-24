@@ -7,13 +7,13 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import theflogat.technomancy.client.models.ModelBiomeMorpher;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 public class TileBiomeMorpherRenderer extends TileEntitySpecialRenderer {
 
     ModelBiomeMorpher model = new ModelBiomeMorpher();
 
-    private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_BIOME_MODIFIER_TEXTURE);
+    private static final ResourceLocation modelTexture = new ResourceLocation(Reference.MODEL_BIOME_MORPH);
 
     @Override
     public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float f) {

@@ -4,7 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import theflogat.technomancy.client.gui.container.ContainerTCProcessor;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTCProcessor;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -23,7 +23,7 @@ public class GuiProcessorTC extends GuiContainer {
         ySize = 167;
     }
 
-    private static final ResourceLocation texture = new ResourceLocation(Ref.GUI_TC_PROCESSOR_TEXTURE);
+    private static final ResourceLocation texture = new ResourceLocation(Reference.GUI_TC_PROCESSOR);
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {

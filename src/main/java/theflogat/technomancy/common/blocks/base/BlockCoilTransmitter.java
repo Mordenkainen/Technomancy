@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import theflogat.technomancy.common.tiles.base.TileCoilTransmitter;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 public abstract class BlockCoilTransmitter extends BlockContainerAdvanced {
 
@@ -99,7 +99,7 @@ public abstract class BlockCoilTransmitter extends BlockContainerAdvanced {
     @SideOnly(Side.CLIENT)
     @Override
     public void registerBlockIcons(IIconRegister icon) {
-        blockIcon = icon.registerIcon(Ref.getAsset(Names.essentiaTransmitter));
+        blockIcon = icon.registerIcon(Reference.getAsset(Names.ESSENTIATRANS));
     }
 
     private static TileCoilTransmitter getTE(IBlockAccess world, int x, int y, int z) {

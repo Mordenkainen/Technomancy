@@ -9,12 +9,12 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import theflogat.technomancy.client.models.ModelElectricBellows;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileElectricBellows;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 public class TileElectricBellowsRenderer extends TileEntitySpecialRenderer {
 
     ModelElectricBellows model = new ModelElectricBellows();
-    private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_ELECTRIC_BELLOWS_TEXTURE);
+    private static final ResourceLocation modelTexture = new ResourceLocation(Reference.MODEL_BELLOWS);
 
     private static void translateFromOrientation(double x, double y, double z, int facing) {
         GL11.glTranslatef((float) x + 0.5F, (float) y - 0.5F, (float) z + 0.5F);

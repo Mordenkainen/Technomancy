@@ -8,13 +8,13 @@ import org.lwjgl.opengl.GL11;
 
 import theflogat.technomancy.client.models.ModelFlowerDynamo;
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 public class TileFlowerDynamoRenderer extends TileEntitySpecialRenderer {
 
     ModelFlowerDynamo model = new ModelFlowerDynamo();
 
-    private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_FLOWER_DYANMO_TEXTURE);
+    private static final ResourceLocation modelTexture = new ResourceLocation(Reference.MODEL_FLOWER_DYN);
 
     @Override
     public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float f) {

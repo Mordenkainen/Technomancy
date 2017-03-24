@@ -15,7 +15,7 @@ import org.lwjgl.opengl.GL11;
 import theflogat.technomancy.client.models.ModelEssentiaContainer;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileCreativeJar;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import thaumcraft.client.lib.UtilsFX;
 import thaumcraft.common.blocks.BlockJar;
@@ -25,7 +25,7 @@ public class TileCreativeJarRenderer extends TileEntitySpecialRenderer {
 
     ModelEssentiaContainer model = new ModelEssentiaContainer();
 
-    private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_ESSENTIA_CONTAINER_TEXTURE);
+    private static final ResourceLocation modelTexture = new ResourceLocation(Reference.MODEL_ESS_CONT);
 
     @Override
     public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float t) {

@@ -8,14 +8,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import theflogat.technomancy.common.items.base.ItemBase;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemExistenceGem extends ItemBase {
 
     public ItemExistenceGem() {
-        setUnlocalizedName(Ref.getId(Names.exGem));
+        setUnlocalizedName(Reference.getId(Names.EXGEM));
         setMaxDamage(100);
     }
 
@@ -37,6 +37,6 @@ public class ItemExistenceGem extends ItemBase {
 
     @Override
     public void registerIcons(IIconRegister reg) {
-        itemIcon = reg.registerIcon(Ref.getAsset(Names.exGem));
+        itemIcon = reg.registerIcon(Reference.getAsset(Names.EXGEM));
     }
 }

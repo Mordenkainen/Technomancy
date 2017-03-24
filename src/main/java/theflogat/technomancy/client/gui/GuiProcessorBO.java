@@ -9,7 +9,7 @@ import org.lwjgl.opengl.GL11;
 
 import theflogat.technomancy.client.gui.container.ContainerBOProcessor;
 import theflogat.technomancy.common.tiles.botania.machines.TileBOProcessor;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 public class GuiProcessorBO extends GuiContainer {
 
@@ -24,7 +24,7 @@ public class GuiProcessorBO extends GuiContainer {
         ySize = 137;
     }
 
-    private static final ResourceLocation texture = new ResourceLocation(Ref.GUI_BO_PROCESSOR_TEXTURE);
+    private static final ResourceLocation texture = new ResourceLocation(Reference.GUI_BO_PROCESSOR);
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {

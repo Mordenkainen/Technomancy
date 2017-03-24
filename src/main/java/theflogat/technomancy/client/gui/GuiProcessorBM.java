@@ -9,7 +9,7 @@ import org.lwjgl.opengl.GL11;
 
 import theflogat.technomancy.client.gui.container.ContainerBMProcessor;
 import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBMProcessor;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 public class GuiProcessorBM extends GuiContainer {
 
@@ -23,7 +23,7 @@ public class GuiProcessorBM extends GuiContainer {
         ySize = 137;
     }
 
-    private static final ResourceLocation texture = new ResourceLocation(Ref.GUI_BM_PROCESSOR_TEXTURE);
+    private static final ResourceLocation texture = new ResourceLocation(Reference.GUI_BM_PROCESSOR);
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {

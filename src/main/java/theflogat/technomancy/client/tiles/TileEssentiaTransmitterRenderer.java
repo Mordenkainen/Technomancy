@@ -13,14 +13,14 @@ import thaumcraft.client.renderers.models.ModelBoreBase;
 import thaumcraft.common.tiles.TileArcaneBoreBase;
 import theflogat.technomancy.client.models.ModelTeslaCoil;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaTransmitter;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 public class TileEssentiaTransmitterRenderer extends TileEntitySpecialRenderer {
 
     ModelTeslaCoil model = new ModelTeslaCoil();
     ModelBoreBase boreModel = new ModelBoreBase();
 
-    private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_ESSENTIA_TRANSMITTER_TEXTURE);
+    private static final ResourceLocation modelTexture = new ResourceLocation(Reference.MODEL_ESS_TRAN);
     private static final ResourceLocation boreTexture = new ResourceLocation("thaumcraft", "textures/models/Bore.png");
 
     @Override

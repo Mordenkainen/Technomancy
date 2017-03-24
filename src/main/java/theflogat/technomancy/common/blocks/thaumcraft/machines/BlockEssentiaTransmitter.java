@@ -17,7 +17,7 @@ import theflogat.technomancy.common.items.technom.ItemBoost;
 import theflogat.technomancy.common.items.technom.ItemCoilCoupler;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaTransmitter;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.lib.RenderIds;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.util.helpers.WorldHelper;
@@ -26,7 +26,7 @@ public class BlockEssentiaTransmitter extends BlockCoilTransmitter {
 
     public BlockEssentiaTransmitter() {
         super();
-        setBlockName(Ref.getId(Names.essentiaTransmitter));
+        setBlockName(Reference.getId(Names.ESSENTIATRANS));
     }
 
     @Override
@@ -91,7 +91,7 @@ public class BlockEssentiaTransmitter extends BlockCoilTransmitter {
 
     @Override
     public int getRenderType() {
-        return RenderIds.idEssentiaTransmitter;
+        return RenderIds.idEssentiaTrans;
     }
 
     @Override

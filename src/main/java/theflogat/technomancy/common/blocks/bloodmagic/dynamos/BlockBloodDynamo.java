@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import theflogat.technomancy.common.blocks.base.BlockDynamoBase;
 import theflogat.technomancy.common.tiles.bloodmagic.dynamos.TileBloodDynamo;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.lib.RenderIds;
 import theflogat.technomancy.lib.compat.BloodMagic;
 import cpw.mods.fml.relauncher.Side;
@@ -19,7 +19,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockBloodDynamo extends BlockDynamoBase {
 
     public BlockBloodDynamo() {
-        setBlockName(Ref.getId(Names.bloodDynamo));
+        setBlockName(Reference.getId(Names.BLOODDYNAMO));
     }
 
     @Override
@@ -50,7 +50,7 @@ public class BlockBloodDynamo extends BlockDynamoBase {
     @SideOnly(Side.CLIENT)
     @Override
     public void registerBlockIcons(IIconRegister icon) {
-        blockIcon = icon.registerIcon(Ref.getAsset(Names.bloodDynamo));
+        blockIcon = icon.registerIcon(Reference.getAsset(Names.BLOODDYNAMO));
     }
 
     @Override

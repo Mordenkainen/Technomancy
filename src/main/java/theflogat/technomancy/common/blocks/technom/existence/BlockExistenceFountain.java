@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 import theflogat.technomancy.common.blocks.base.BlockContainerBase;
 import theflogat.technomancy.common.tiles.technom.existence.TileExistenceFountain;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.lib.RenderIds;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -16,7 +16,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockExistenceFountain extends BlockContainerBase {
 
     public BlockExistenceFountain() {
-        setBlockName(Ref.getId(Names.existenceFountain));
+        setBlockName(Reference.getId(Names.EXISTENCEFOUNTAIN));
     }
 
     @Override

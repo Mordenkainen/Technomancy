@@ -17,7 +17,7 @@ import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
 import thaumcraft.common.tiles.TileAlchemyFurnace;
 import thaumcraft.common.tiles.TileArcaneFurnace;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
-import theflogat.technomancy.lib.Conf;
+import theflogat.technomancy.lib.TMConfig;
 import theflogat.technomancy.lib.handlers.Rate;
 import tuhljin.automagy.api.essentia.IEssentiaDistillery;
 
@@ -89,7 +89,7 @@ public class TileElectricBellows extends TileMachineBase {
                             speedBoost.setAccessible(true);
                             speedBoost.setBoolean(furnace, true);
                         } catch (Exception e) {
-                            Conf.ex(e);
+                            TMConfig.error(e);
                         }
                         extractEnergy(baseCost * 6, false);
                     }

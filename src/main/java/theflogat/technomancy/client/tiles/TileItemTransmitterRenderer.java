@@ -10,13 +10,13 @@ import org.lwjgl.opengl.GL11;
 
 import theflogat.technomancy.client.models.ModelTeslaCoil;
 import theflogat.technomancy.common.tiles.technom.TileItemTransmitter;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 public class TileItemTransmitterRenderer extends TileEntitySpecialRenderer {
 
     ModelTeslaCoil model = new ModelTeslaCoil();
 
-    private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_ITEM_TRANSMITTER_TEXTURE);
+    private static final ResourceLocation modelTexture = new ResourceLocation(Reference.MODEL_ITEM_TRAN);
 
     @Override
     public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float f) {

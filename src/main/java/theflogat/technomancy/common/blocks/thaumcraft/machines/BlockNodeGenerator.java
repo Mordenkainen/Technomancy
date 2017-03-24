@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.lib.RenderIds;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -18,7 +18,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockNodeGenerator extends BlockContainerAdvanced {
 
     public BlockNodeGenerator() {
-        setBlockName(Ref.getId(Names.nodeGenerator));
+        setBlockName(Reference.getId(Names.NODEGENERATOR));
     }
 
     @Override
@@ -44,7 +44,7 @@ public class BlockNodeGenerator extends BlockContainerAdvanced {
     @SideOnly(Side.CLIENT)
     @Override
     public void registerBlockIcons(IIconRegister iconRegister) {
-        blockIcon = iconRegister.registerIcon(Ref.getAsset(Names.nodeGenerator));
+        blockIcon = iconRegister.registerIcon(Reference.getAsset(Names.NODEGENERATOR));
     }
 
     @Override

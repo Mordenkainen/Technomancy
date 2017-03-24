@@ -12,7 +12,7 @@ import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTCProcessor;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileCreativeJar;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaContainer;
-import theflogat.technomancy.lib.Ids;
+import theflogat.technomancy.lib.TMConfig;
 
 public class ThaumicEnergistics implements IModModule {
 
@@ -32,37 +32,37 @@ public class ThaumicEnergistics implements IModModule {
     public void PostInit() {
         IThETransportPermissions perms = ThEApi.instance().transportPermissions();
 
-        if (Ids.fluxLamp) {
+        if (TMConfig.fluxLamp) {
             perms.addAspectContainerTileToInjectPermissions(TileFluxLamp.class, 32);
         }
 
-        if (Ids.contEssentia) {
+        if (TMConfig.contEssentia) {
             perms.addAspectContainerTileToBothPermissions(TileEssentiaContainer.class, 640);
             perms.addAspectContainerTileToExtractPermissions(TileCreativeJar.class, 320);
         }
 
-        if (Ids.dynEssentia) {
+        if (TMConfig.dynEssentia) {
             perms.addAspectContainerTileToInjectPermissions(TileEssentiaDynamo.class, 64);
         }
 
-        if (Ids.fusor) {
+        if (TMConfig.fusor) {
             perms.addAspectContainerTileToBothPermissions(TileEssentiaFusor.class, 64);
         }
 
-        if (Ids.nodeGen) {
+        if (TMConfig.nodeGen) {
             perms.addAspectContainerTileToBothPermissions(TileNodeGenerator.class, 256);
             perms.addAspectContainerTileToBothPermissions(TileFakeAirNG.class, 256);
         }
 
-        if (Ids.condenser) {
+        if (TMConfig.condenser) {
             perms.addAspectContainerTileToExtractPermissions(TileCondenser.class, 64);
         }
 
-        if (Ids.eldrichConsumer) {
+        if (TMConfig.eldrichConsumer) {
             perms.addAspectContainerTileToExtractPermissions(TileEldritchConsumer.class, 0);
         }
 
-        if (Ids.processorTC) {
+        if (TMConfig.processorTC) {
             perms.addAspectContainerTileToInjectPermissions(TileTCProcessor.class, 64);
         }
     }

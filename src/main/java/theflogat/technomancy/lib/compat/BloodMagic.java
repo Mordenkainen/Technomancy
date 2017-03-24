@@ -16,7 +16,7 @@ import theflogat.technomancy.common.items.bloodmagic.ItemBMMaterial;
 import theflogat.technomancy.common.tiles.bloodmagic.dynamos.TileBloodDynamo;
 import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBMProcessor;
 import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBloodFabricator;
-import theflogat.technomancy.lib.Ids;
+import theflogat.technomancy.lib.TMConfig;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.handlers.CompatibilityHandler;
 import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipeRegistry;
@@ -60,21 +60,21 @@ public class BloodMagic extends ModuleBase {
     @Override
     public void RegisterItems() {
         // Initializations
-        TMItems.itemBM = Ids.matBM ? new ItemBMMaterial() : null;
+        TMItems.itemBM = TMConfig.matBM ? new ItemBMMaterial() : null;
 
         // Registration
-        registerItem(TMItems.itemBM, Names.itemBM);
+        registerItem(TMItems.itemBM, Names.ITEMBM);
     }
 
     @Override
     public void RegisterBlocks() {
-        TMBlocks.bloodDynamo = Ids.bloodDynamo ? new BlockBloodDynamo() : null;
-        TMBlocks.bloodFabricator = Ids.bloodFabricator ? new BlockBloodFabricator() : null;
-        TMBlocks.processorBM = Ids.processorBM ? new BlockBMProcessor() : null;
+        TMBlocks.bloodDynamo = TMConfig.bloodDynamo ? new BlockBloodDynamo() : null;
+        TMBlocks.bloodFabricator = TMConfig.bloodFabricator ? new BlockBloodFabricator() : null;
+        TMBlocks.processorBM = TMConfig.processorBM ? new BlockBMProcessor() : null;
 
-        registerBlock(TMBlocks.bloodDynamo, Names.bloodDynamo);
-        registerBlock(TMBlocks.bloodFabricator, Names.bloodFabricator);
-        registerBlock(TMBlocks.processorBM, Names.processor + "BM");
+        registerBlock(TMBlocks.bloodDynamo, Names.BLOODDYNAMO);
+        registerBlock(TMBlocks.bloodFabricator, Names.BLOODFABRICATOR);
+        registerBlock(TMBlocks.processorBM, Names.PROCESSOR + "BM");
 
         registerTileEntity(TMBlocks.bloodDynamo, TileBloodDynamo.class, "TileBloodDynamo");
         registerTileEntity(TMBlocks.bloodFabricator, TileBloodFabricator.class, "TileBloodFabricator");
@@ -85,36 +85,36 @@ public class BloodMagic extends ModuleBase {
     public void RegisterRecipes() {
         if (CompatibilityHandler.te) {
             // Altar Recipes
-            if (Ids.bloodDynamo) {
+            if (TMConfig.bloodDynamo) {
                 AltarRecipeRegistry.registerAltarRecipe(new ItemStack(TMBlocks.bloodDynamo), new ItemStack(ThermalExpansion.blockDynamo), 2, 10000, 100, 100, false);
             }
-            if (Ids.matBM) {
+            if (TMConfig.matBM) {
                 AltarRecipeRegistry.registerAltarRecipe(new ItemStack(TMItems.itemBM, 1, 0), new ItemStack(Items.iron_ingot), 1, 1000, 100, 100, false);
                 AltarRecipeRegistry.registerAltarRecipe(new ItemStack(TMItems.itemBM, 1, 1), ThermalExpansion.powerCoilGold, 1, 1000, 100, 100, false);
             }
 
             // Normal Recipes
-            if (Ids.bloodFabricator) {
+            if (TMConfig.bloodFabricator) {
                 GameRegistry.addShapedRecipe(new ItemStack(TMBlocks.bloodFabricator), new Object[] { " T ", "IMI", "CAC", 'T', new ItemStack(ThermalExpansion.blockTank, 1, 3), 'I', new ItemStack(TMItems.itemBM, 1, 0), 'M', ThermalExpansion.frameMachineBasic, 'C', new ItemStack(TMItems.itemBM, 1, 1), 'A', ThermalExpansion.frameTesseractFull });
             }
-            if (Ids.processorBM) {
+            if (TMConfig.processorBM) {
                 GameRegistry.addShapedRecipe(new ItemStack(TMBlocks.processorBM), new Object[] { " A ", "BMB", "ICI", 'M', ThermalExpansion.frameMachineBasic, 'I', new ItemStack(TMItems.itemBM, 1, 0), 'C', new ItemStack(TMItems.itemBM, 1, 1), 'B', new ItemStack(bloodRune, 1, 0), 'A', new ItemStack(Items.redstone) });
             }
         } else {
             // Altar Recipes
-            if (Ids.bloodDynamo) {
+            if (TMConfig.bloodDynamo) {
                 AltarRecipeRegistry.registerAltarRecipe(new ItemStack(TMBlocks.bloodDynamo), new ItemStack(Blocks.redstone_block, 1), 2, 10000, 100, 100, false);
             }
-            if (Ids.matBM) {
+            if (TMConfig.matBM) {
                 AltarRecipeRegistry.registerAltarRecipe(new ItemStack(TMItems.itemBM, 1, 0), new ItemStack(Items.iron_ingot, 1), 1, 1000, 100, 100, false);
                 AltarRecipeRegistry.registerAltarRecipe(new ItemStack(TMItems.itemBM, 1, 1), new ItemStack(Items.redstone, 1), 1, 1000, 100, 100, false);
             }
 
             // Normal Recipes
-            if (Ids.bloodFabricator) {
+            if (TMConfig.bloodFabricator) {
                 GameRegistry.addShapedRecipe(new ItemStack(TMBlocks.bloodFabricator), new Object[] { " T ", "IMI", "CAC", 'T', new ItemStack(Blocks.glass, 1, 0), 'I', new ItemStack(TMItems.itemBM, 1, 0), 'M', new ItemStack(Blocks.redstone_block, 1, 0), 'C', new ItemStack(TMItems.itemBM, 1, 1), 'A', new ItemStack(Items.ender_eye, 1, 0) });
             }
-            if (Ids.processorBM) {
+            if (TMConfig.processorBM) {
                 GameRegistry.addShapedRecipe(new ItemStack(TMBlocks.processorBM), new Object[] { " A ", "BMB", "ICI", 'M', new ItemStack(Blocks.redstone_block, 1, 0), 'I', new ItemStack(TMItems.itemBM, 1, 0), 'C', new ItemStack(TMItems.itemBM, 1, 1), 'B', new ItemStack(bloodRune, 1, 0), 'A', new ItemStack(Items.redstone) });
             }
         }

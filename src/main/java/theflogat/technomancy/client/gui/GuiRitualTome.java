@@ -15,7 +15,7 @@ import theflogat.technomancy.client.gui.tome.render.pages.PageRecipeMult;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.items.base.TMItems;
 import theflogat.technomancy.common.items.tome.ItemRitualTome.Res;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.lib.compat.ThermalExpansion;
 import theflogat.technomancy.lib.handlers.CompatibilityHandler;
 
@@ -56,7 +56,7 @@ public class GuiRitualTome extends GuiTomeTemplate {
 
         pages101[2][0].addText("Catalyst are the core of the Rituals. They determine the main element which the Ritual will lean towards. " + "They can be activated either by being right clicked or by receiving a redstone signal.");
 
-        Page[][] pagesD = { { new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.BH1))), new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.BH2))), new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.BH3))) }, { new Page(Type.TEXT), new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.FT))), }
+        Page[][] pagesD = { { new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Reference.getGui(Res.BH1))), new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Reference.getGui(Res.BH2))), new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Reference.getGui(Res.BH3))) }, { new Page(Type.TEXT), new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Reference.getGui(Res.FT))), }
 
         };
 
@@ -67,7 +67,7 @@ public class GuiRitualTome extends GuiTomeTemplate {
         pagesD[0][4].addLines(new String[] { "Tier 3:", "Will destroy every blocks and kill every living thing in a 19x19x19 area.", "Ritual is consumed." });
         pagesD[0][5].setImageOffsets(54, 0);
 
-        Page[][] pagesL = { { new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.PU1))), new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.PU2))), new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.PU3))), } };
+        Page[][] pagesL = { { new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Reference.getGui(Res.PU1))), new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Reference.getGui(Res.PU2))), new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Reference.getGui(Res.PU3))), } };
         pagesL[0][0].addLines(new String[] { "Tier 1:", "Will kill every monster above the catalyst in a 1x1x3." });
         pagesL[0][1].setImageOffsets(54, 0);
         pagesL[0][2].addLines(new String[] { "Tier 2:", "Will kill every monster above the catalyst in a 3x3x11 area." });
@@ -75,7 +75,7 @@ public class GuiRitualTome extends GuiTomeTemplate {
         pagesL[0][4].addLines(new String[] { "Tier 3:", "Will kill every monster above the catalyst in a 7x7 area.", "Range: World Max Height" });
         pagesL[0][5].setImageOffsets(54, 0);
 
-        Page[][] pagesF = { { new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.F1))), new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.F2))), new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.F3))), } };
+        Page[][] pagesF = { { new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Reference.getGui(Res.F1))), new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Reference.getGui(Res.F2))), new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Reference.getGui(Res.F3))), } };
 
         pagesF[0][0].addLines(new String[] { "Tier 1:", "Will convert Water to Obsidian in a 19x19x19 area under the ritual.", "Ritual is consumed." });
         pagesF[0][1].setImageOffsets(54, 0);
@@ -84,7 +84,7 @@ public class GuiRitualTome extends GuiTomeTemplate {
         pagesF[0][4].addLines(new String[] { "Tier 3: DISABLED.", "Will make a Volcano emerge.", "Ritual is consumed." });
         pagesF[0][5].setImageOffsets(54, 0);
 
-        Page[][] pagesW = { { new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.W1))), new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.W2))), new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.W3))), } };
+        Page[][] pagesW = { { new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Reference.getGui(Res.W1))), new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Reference.getGui(Res.W2))), new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Reference.getGui(Res.W3))), } };
 
         pagesW[0][0].addLines(new String[] { "Tier 1:", "Places water underneath in a 3x3 area." });
         pagesW[0][1].setImageOffsets(54, 0);
@@ -93,7 +93,7 @@ public class GuiRitualTome extends GuiTomeTemplate {
         pagesW[0][4].addLines(new String[] { "Tier 3:", "Replaces blocks underneath with water in a 19x19 area.", "Ritual is consumed." });
         pagesW[0][5].setImageOffsets(54, 0);
 
-        Page[][] pagesE = { { new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.CI1))), new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.CI2))), new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.CI3))), } };
+        Page[][] pagesE = { { new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Reference.getGui(Res.CI1))), new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Reference.getGui(Res.CI2))), new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Reference.getGui(Res.CI3))), } };
         pagesE[0][0].addLines(new String[] { "Tier 1:", "Closes all the gaps underneath the ritual in a 3x3 area.", "Good for closing caves. Ritual is consumed." });
         pagesE[0][1].setImageOffsets(54, 0);
         pagesE[0][2].addLines(new String[] { "Tier 2:", "Closes all the gaps underneath the ritual in a 7x7 area.", "Good for closing caves. Ritual is consumed." });
@@ -104,7 +104,7 @@ public class GuiRitualTome extends GuiTomeTemplate {
         Page[][] pagesP = { { new Page(Type.TEXT), new Page(Type.TEXT), new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMItems.exGem, 1, 100), new ItemStack[] { null, new ItemStack(Items.gold_nugget), null, new ItemStack(Items.gold_nugget), new ItemStack(Items.emerald), new ItemStack(Items.gold_nugget), null, new ItemStack(Items.gold_nugget), null })) },
                 { new Page(Type.TEXT), new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existenceBurner), new ItemStack[] { new ItemStack(TMItems.exGem), null, null, new ItemStack(Blocks.anvil) })), new Page(Type.TEXT),
                         new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existenceBurner, 1, 1), CompatibilityHandler.te ? new ItemStack[] { new ItemStack(TMBlocks.existenceBurner), ThermalExpansion.frameMachineBasic, ThermalExpansion.powerCoilSilver } : new ItemStack[] { new ItemStack(TMBlocks.existenceBurner), new ItemStack(Items.redstone), new ItemStack(Blocks.piston) })) },
-                { new Page(Type.TEXT), new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.FT))), },
+                { new Page(Type.TEXT), new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Reference.getGui(Res.FT))), },
                 { new Page(Type.TEXT), new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existencePylon), new ItemStack[] { new ItemStack(Items.redstone), new ItemStack(Items.redstone), new ItemStack(Items.redstone), new ItemStack(Items.redstone), new ItemStack(Items.emerald), new ItemStack(Items.redstone), new ItemStack(Items.redstone), new ItemStack(Blocks.piston), new ItemStack(Items.redstone) })),
                         new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existencePylon, 1, 1), new ItemStack[] { new ItemStack(Items.diamond), new ItemStack(TMItems.itemBoost), new ItemStack(TMItems.exGem), new ItemStack(TMBlocks.existencePylon, 1, 0) })),
                         new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existencePylon, 1, 2), new ItemStack[] { new ItemStack(Items.ender_pearl), new ItemStack(Items.diamond), new ItemStack(TMItems.exGem), new ItemStack(TMBlocks.existencePylon, 1, 1) })) },
@@ -121,7 +121,7 @@ public class GuiRitualTome extends GuiTomeTemplate {
         pagesP[4][0].addText("It seems crops react in an... interesting way to Power of Existence. Your new device uses the Power of Existence to accelerate " + "crop growth in a 9x9 area. It must be placed underneath the soil so it is rather convinient.");
         pagesP[4][2].addText("Thinking that having to harvest manually is boring is what made you design an existence based harvester. By infusing hoes with " + "a small amount of power of existence seems to harvest ripe crops nearby.");
 
-        Page[][] pagesT = { { new Page(Type.TEXT), new Page(Type.TEXT) }, { new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.ET))), },
+        Page[][] pagesT = { { new Page(Type.TEXT), new Page(Type.TEXT) }, { new Page(Type.TEXT), new Page(Type.IMAGE, new ResourceLocation(Reference.getGui(Res.ET))), },
                 { new Page(Type.TEXT), new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existenceUser, 1, 2), new ItemStack[] { new ItemStack(Blocks.obsidian), new ItemStack(Items.flint_and_steel), new ItemStack(Blocks.obsidian), new ItemStack(Items.flint_and_steel), new ItemStack(TMItems.exGem), new ItemStack(Items.flint_and_steel), new ItemStack(Blocks.obsidian), new ItemStack(Items.flint_and_steel), new ItemStack(Blocks.obsidian) })) } };
 
         pagesT[0][0].addText("Some lore that you found in a Village's library seems to indicate that some Villagers have shown overworldly characteristics. " + "They look just like normal Villagers but exihibit incredible capacities. You found a special note indicating that " + "the power comes from some artifacts buried inside the existence mass of Villagers.");

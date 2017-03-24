@@ -7,7 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 public class ItemBlockExistenceBurner extends ItemBlock {
 
@@ -23,6 +23,6 @@ public class ItemBlockExistenceBurner extends ItemBlock {
 
     @Override
     public String getUnlocalizedName(ItemStack items) {
-        return Ref.getId(Names.existenceBurner[items.getItemDamage() % 2]);
+        return Reference.getId(Names.EXISTENCEBURNER[items.getItemDamage() % 2]);
     }
 }

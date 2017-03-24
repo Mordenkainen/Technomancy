@@ -23,7 +23,7 @@ import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.items.wands.ItemWandCasting;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.items.base.TMItems;
-import theflogat.technomancy.lib.Ids;
+import theflogat.technomancy.lib.TMConfig;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.lib.handlers.CraftingHandler;
 
@@ -42,30 +42,30 @@ public class TechnoResearch {
     }
 
     private static void initThaumcraft() {
-        if (Ids.itemMaterial) {
+        if (TMConfig.itemMaterial) {
             new ResearchItem("TECHNOBASICS", "TECHNOMANCY", new AspectList(), 0, 0, 0, new ResourceLocation("technom", "textures/misc/technomancyBasics.png")).setPages(new ResearchPage[] { new ResearchPage("techno.research_page.TECHNOBASICS.1"), new ResearchPage((CrucibleRecipe) recipes.get("NeutronizedMetal")), new ResearchPage((IRecipe) recipes.get("MagicCoil")), new ResearchPage((IRecipe) recipes.get("NeutronizedGear")) }).setAutoUnlock().setRound().setStub().registerResearchItem();
         }
 
-        if (Ids.contEssentia && Ids.cosmeticOpaque && Ids.itemMaterial) {
+        if (TMConfig.contEssentia && TMConfig.cosmeticOpaque && TMConfig.itemMaterial) {
             new ResearchItem("QUANTUMJARS", "TECHNOMANCY", new AspectList().add(Aspect.ORDER, 5).add(Aspect.VOID, 5).add(Aspect.MAGIC, 5), 1, -2, 0, new ItemStack(TMBlocks.essentiaContainer)).setPages(new ResearchPage[] { new ResearchPage("techno.research_page.QUANTUMJARS.1"), new ResearchPage((IArcaneRecipe) recipes.get("QuantumJar")), new ResearchPage((IArcaneRecipe) recipes.get("QuantumGlass")) }).setParents(new String[] { "TECHNOBASICS" }).setSecondary().registerResearchItem();
         }
 
-        if (Ids.itemMaterial) {
+        if (TMConfig.itemMaterial) {
             ArrayList<ResearchPage> pages = new ArrayList<ResearchPage>();
             Block iconBlock = null;
-            if (Ids.dynEssentia) {
+            if (TMConfig.dynEssentia) {
                 iconBlock = TMBlocks.essentiaDynamo;
                 pages.add(new ResearchPage("techno.research_page.DYNAMO.1"));
                 pages.add(new ResearchPage("techno.research_page.DYNAMO.2"));
                 pages.add(new ResearchPage((IArcaneRecipe) recipes.get("EssentiaDynamo")));
             }
-            if (Ids.dynNode) {
+            if (TMConfig.dynNode) {
                 iconBlock = TMBlocks.nodeDynamo;
                 pages.add(new ResearchPage("techno.research_page.DYNAMO.3"));
                 pages.add(new ResearchPage((IArcaneRecipe) recipes.get("NodeDynamo")));
             }
-            if (Ids.dynEssentia || Ids.dynNode) {
-                if (Ids.itemBoost) {
+            if (TMConfig.dynEssentia || TMConfig.dynNode) {
+                if (TMConfig.itemBoost) {
                     pages.add(new ResearchPage("techno.research_page.DYNAMO.4"));
                     pages.add(new ResearchPage(CraftingHandler.itemBoost));
                 }
@@ -73,32 +73,32 @@ public class TechnoResearch {
             }
         }
 
-        if (Ids.itemMaterial && Ids.condenser && Ids.dynEssentia && Ids.dynNode && Ids.nodeGen) {
+        if (TMConfig.itemMaterial && TMConfig.condenser && TMConfig.dynEssentia && TMConfig.dynNode && TMConfig.nodeGen) {
             new ResearchItem("NODEGENERATOR", "TECHNOMANCY", new AspectList().add(Aspect.MECHANISM, 5).add(Aspect.ENERGY, 5).add(Aspect.TAINT, 5).add(Aspect.AURA, 5), 4, 3, 3, new ItemStack(TMBlocks.nodeGenerator)).setPages(new ResearchPage[] { new ResearchPage("techno.research_page.NODEGENERATOR.1"), new ResearchPage("techno.research_page.NODEGENERATOR.2"), new ResearchPage("techno.research_page.NODEGENERATOR.3"), new ResearchPage((InfusionRecipe) recipes.get("NodeGenerator")) })
                     .setParents(new String[] { "CONDENSER" }).setSpecial().registerResearchItem();
         }
 
-        if (Ids.pen) {
+        if (TMConfig.pen) {
             new ResearchItem("PEN", "TECHNOMANCY", new AspectList(), 4, -4, 0, new ItemStack(TMItems.itemPen)).setPages(new ResearchPage[] { new ResearchPage("techno.research_page.PEN.1"), new ResearchPage((IRecipe) recipes.get("Pen")), new ResearchPage((IRecipe) recipes.get("PenCore")) }).setParents(new String[] {}).setAutoUnlock().registerResearchItem();
         }
 
-        if (Ids.itemMaterial && Ids.processorTC && Ids.biomeMorpher) {
+        if (TMConfig.itemMaterial && TMConfig.processorTC && TMConfig.biomeMorpher) {
             new ResearchItem("BIOMEMORPHER", "TECHNOMANCY", new AspectList().add(Aspect.EXCHANGE, 5).add(Aspect.TAINT, 5).add(Aspect.AURA, 5).add(Aspect.EARTH, 5), -3, 0, 3, new ItemStack(TMBlocks.biomeMorpher)).setPages(new ResearchPage[] { new ResearchPage("techno.research_page.BIOMEMORPHER.1"), new ResearchPage((IArcaneRecipe) recipes.get("BiomeMorpher")) }).setParents(new String[] { "PROCESSOR" }).setSecondary().registerResearchItem();
         }
 
-        if (Ids.itemMaterial && Ids.contEssentia && Ids.cosmeticOpaque && Ids.wirelessCoil) {
+        if (TMConfig.itemMaterial && TMConfig.contEssentia && TMConfig.cosmeticOpaque && TMConfig.wirelessCoil) {
             new ResearchItem("TESLACOIL", "TECHNOMANCY", new AspectList().add(Aspect.EXCHANGE, 5).add(Aspect.ELDRITCH, 5).add(Aspect.MECHANISM, 5).add(Aspect.AURA, 5), 3, -3, 3, new ItemStack(TMBlocks.teslaCoil))
                     .setPages(new ResearchPage[] { new ResearchPage("techno.research_page.TESLACOIL.1"), new ResearchPage("techno.research_page.TESLACOIL.2"), new ResearchPage("techno.research_page.TESLACOIL.3"), new ResearchPage((IArcaneRecipe) recipes.get("TeslaCoil")), new ResearchPage(CraftingHandler.coilCoupler) }).setParents(new String[] { "QUANTUMJARS" }).setRound().registerResearchItem();
         }
 
-        if (Ids.itemMaterial && Ids.processorTC && Ids.fluxLamp) {
+        if (TMConfig.itemMaterial && TMConfig.processorTC && TMConfig.fluxLamp) {
             new ResearchItem("FLUXLAMP", "TECHNOMANCY", new AspectList().add(Aspect.ORDER, 5).add(Aspect.MECHANISM, 5).add(Aspect.EXCHANGE, 5).add(Aspect.WATER, 5), -4, -1, 2, new ItemStack(TMBlocks.fluxLamp)).setPages(new ResearchPage[] { new ResearchPage("techno.research_page.FLUXLAMP.1"), new ResearchPage((InfusionRecipe) recipes.get("FluxLamp")) }).setParents(new String[] { "PROCESSOR" }).setRound().registerResearchItem();
         }
 
-        if (Ids.itemMaterial && Ids.wandCores) {
+        if (TMConfig.itemMaterial && TMConfig.wandCores) {
             new ResearchItem("ROD_electric", "TECHNOMANCY", new AspectList().add(Aspect.TOOL, 5).add(Aspect.MAGIC, 5).add(Aspect.ENERGY, 5).add(Aspect.EXCHANGE, 5), -1, 2, 3, new ItemStack(TMItems.itemWandCores, 1, 0)).setPages(new ResearchPage[] { new ResearchPage("techno.research_page.ROD_electric.1"), new ResearchPage((InfusionRecipe) recipes.get("EnergizedWandRod")) }).setParents(new String[] { "TECHNOBASICS" }).setHidden().setItemTriggers(new ItemStack(Thaumcraft.itemWandRod, 1, 2))
                     .registerResearchItem();
-            if (Ids.scepter) {
+            if (TMConfig.scepter) {
                 ArrayList<IArcaneRecipe> scer = new ArrayList<IArcaneRecipe>();
                 AspectList al1 = new AspectList();
                 AspectList al2 = new AspectList();
@@ -142,27 +142,27 @@ public class TechnoResearch {
             }
         }
 
-        if (Ids.itemMaterial && Ids.processorTC && Ids.electricBellows) {
+        if (TMConfig.itemMaterial && TMConfig.processorTC && TMConfig.electricBellows) {
             new ResearchItem("ELECTRICBELLOWS", "TECHNOMANCY", new AspectList().add(Aspect.ENERGY, 5).add(Aspect.AIR, 5).add(Aspect.FIRE, 5), -3, -2, 2, new ItemStack(TMBlocks.electricBellows)).setPages(new ResearchPage[] { new ResearchPage("techno.research_page.ELECTRICBELLOWS.1"), new ResearchPage((IArcaneRecipe) recipes.get("ElectricBellows")) }).setParents(new String[] { "PROCESSOR", "BELLOWS" }).registerResearchItem();
         }
 
-        if (Ids.itemMaterial && Ids.dynEssentia && Ids.dynNode && Ids.condenser) {
+        if (TMConfig.itemMaterial && TMConfig.dynEssentia && TMConfig.dynNode && TMConfig.condenser) {
             new ResearchItem("CONDENSER", "TECHNOMANCY", new AspectList().add(Aspect.ENERGY, 5).add(Aspect.ORDER, 5).add(Aspect.EXCHANGE, 5), 2, 3, 3, new ItemStack(TMBlocks.condenserBlock)).setPages(new ResearchPage[] { new ResearchPage("techno.research_page.CONDENSER.1"), new ResearchPage((InfusionRecipe) recipes.get("Condenser")) }).setParents(new String[] { "DYNAMO" }).registerResearchItem();
         }
 
-        if (Ids.itemMaterial && Ids.processorTC) {
+        if (TMConfig.itemMaterial && TMConfig.processorTC) {
             new ResearchItem("PROCESSOR", "TECHNOMANCY", new AspectList().add(Aspect.FIRE, 5).add(Aspect.EXCHANGE, 5).add(Aspect.ENTROPY, 5), -2, -1, 3, new ItemStack(TMBlocks.processorTC)).setPages(new ResearchPage[] { new ResearchPage("techno.research_page.PROCESSOR.1"), new ResearchPage((IArcaneRecipe) recipes.get("Processor")) }).setParents(new String[] { "TECHNOBASICS" }).registerResearchItem();
         }
 
-        if (Ids.itemMaterial && Ids.wirelessCoil && Ids.eldrichConsumer) {
+        if (TMConfig.itemMaterial && TMConfig.wirelessCoil && TMConfig.eldrichConsumer) {
             new ResearchItem("ELDRITCHCONSUMER", "TECHNOMANCY", new AspectList().add(Aspect.MECHANISM, 10).add(Aspect.EXCHANGE, 10).add(Aspect.MOTION, 10).add(Aspect.MINE, 10), 3, -1, 3, new ItemStack(TMBlocks.eldritchConsumer)).setPages(new ResearchPage[] { new ResearchPage("techno.research_page.ELDRITCHCONSUMER.1"), new ResearchPage((InfusionRecipe) recipes.get("EldritchConsumer")) }).setParents(new String[] { "TESLACOIL" }).setRound().registerResearchItem();
         }
 
-        if (Ids.advDeconTable && Ids.itemMaterial) {
+        if (TMConfig.advDeconTable && TMConfig.itemMaterial) {
             new ResearchItem("ADVDECONTABLE", "TECHNOMANCY", new AspectList().add(Aspect.MECHANISM, 10).add(Aspect.EXCHANGE, 10).add(Aspect.MAGIC, 10).add(Aspect.TOOL, 10).add(Aspect.CRAFT, 10), 1, -1, 3, new ItemStack(TMBlocks.advDeconTable)).setPages(new ResearchPage[] { new ResearchPage("techno.research_page.ADVDECONTABLE.1"), new ResearchPage((InfusionRecipe) recipes.get("AdvDeconTable")) }).setParents(new String[] { "TECHNOBASICS", "DECONSTRUCTOR" }).setRound().registerResearchItem();
         }
 
-        if (Ids.fusor && Ids.itemMaterial) {
+        if (TMConfig.fusor && TMConfig.itemMaterial) {
             new ResearchItem("ESSENTIAFUSOR", "TECHNOMANCY", new AspectList().add(Aspect.MECHANISM, 10).add(Aspect.EXCHANGE, 10).add(Aspect.MAGIC, 10).add(Aspect.CRAFT, 10), -2, -4, 3, new ItemStack(TMBlocks.essentiaFusor)).setPages(new ResearchPage[] { new ResearchPage("techno.research_page.ESSENTIAFUSOR.1"), new ResearchPage("techno.research_page.ESSENTIAFUSOR.2"), new ResearchPage((InfusionRecipe) recipes.get("EssentiaFusor")) }).setParents(new String[] { "TECHNOBASICS" }).setRound()
                     .setHidden().setItemTriggers(new ItemStack(Thaumcraft.blockTube, 1, 2)).registerResearchItem();
         }

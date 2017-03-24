@@ -130,7 +130,7 @@ public class ClientProxy extends CommonProxy implements IGuiHandler {
             RenderIds.idEssentiaDynamo = RenderingRegistry.getNextAvailableRenderId();
 
             ClientRegistry.bindTileEntitySpecialRenderer(TileEssentiaContainer.class, new TileEssentiaContainerRenderer());
-            RenderIds.idEssentiaContainer = RenderingRegistry.getNextAvailableRenderId();
+            RenderIds.idEssentiaCont = RenderingRegistry.getNextAvailableRenderId();
 
             ClientRegistry.bindTileEntitySpecialRenderer(TileBiomeMorpher.class, new TileBiomeMorpherRenderer());
             RenderIds.idBiomeMorpher = RenderingRegistry.getNextAvailableRenderId();
@@ -142,7 +142,7 @@ public class ClientProxy extends CommonProxy implements IGuiHandler {
             RenderIds.idFluxLamp = RenderingRegistry.getNextAvailableRenderId();
 
             ClientRegistry.bindTileEntitySpecialRenderer(TileEssentiaTransmitter.class, new TileEssentiaTransmitterRenderer());
-            RenderIds.idEssentiaTransmitter = RenderingRegistry.getNextAvailableRenderId();
+            RenderIds.idEssentiaTrans = RenderingRegistry.getNextAvailableRenderId();
 
             ClientRegistry.bindTileEntitySpecialRenderer(TileElectricBellows.class, new TileElectricBellowsRenderer());
             RenderIds.idElectricBellows = RenderingRegistry.getNextAvailableRenderId();

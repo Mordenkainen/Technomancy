@@ -4,7 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.init.Items;
@@ -15,7 +15,7 @@ public class ItemManaBucket extends ItemBucket {
 
     public ItemManaBucket(Block fluid) {
         super(fluid);
-        setUnlocalizedName(Ref.MOD_PREFIX + Names.manaBucket);
+        setUnlocalizedName(Reference.MOD_PREFIX + Names.MANABUCKET);
         setContainerItem(Items.bucket);
         setCreativeTab(Technomancy.tabsTM);
     }

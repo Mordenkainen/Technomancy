@@ -16,7 +16,7 @@ import thaumcraft.api.aspects.IEssentiaContainerItem;
 import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileCreativeJar;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.lib.RenderIds;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import cpw.mods.fml.relauncher.Side;
@@ -26,7 +26,7 @@ public class BlockCreativeJar extends BlockContainerAdvanced {
 
     public BlockCreativeJar() {
         this.setHardness(1F);
-        this.setBlockName(Ref.MOD_PREFIX + Names.creativeJar);
+        this.setBlockName(Reference.MOD_PREFIX + Names.CREATIVEJAR);
         this.setBlockBounds(0.1875F, 0.0F, 0.1875F, 0.8125F, 0.75F, 0.8125F);
     }
 
@@ -122,8 +122,8 @@ public class BlockCreativeJar extends BlockContainerAdvanced {
     @SideOnly(Side.CLIENT)
     @Override
     public void registerBlockIcons(IIconRegister icon) {
-        iconJar = icon.registerIcon(Ref.MODEL_PREFIX + Names.essentiaContainer);
-        iconLiquid = icon.registerIcon(Ref.TEXTURE_PREFIX + "animatedglow");
+        iconJar = icon.registerIcon(Reference.MODEL_PREFIX + Names.ESSENTIACONTAINER);
+        iconLiquid = icon.registerIcon(Reference.TEXTURE_PREFIX + "animatedglow");
         blockIcon = Blocks.stained_glass.getIcon(0, 2);
     }
 }

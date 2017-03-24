@@ -24,7 +24,7 @@ import theflogat.technomancy.common.tiles.botania.dynamos.TileFlowerDynamo;
 import theflogat.technomancy.common.tiles.botania.machines.TileBOProcessor;
 import theflogat.technomancy.common.tiles.botania.machines.TileManaExchanger;
 import theflogat.technomancy.common.tiles.botania.machines.TileManaFabricator;
-import theflogat.technomancy.lib.Ids;
+import theflogat.technomancy.lib.TMConfig;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.compat.botania.TechnoLexicon;
 import theflogat.technomancy.lib.handlers.CompatibilityHandler;
@@ -54,27 +54,27 @@ public class Botania extends ModuleBase {
     }
 
     public static void initBotaniaLexicon() {
-        if (Ids.matBO) {
+        if (TMConfig.matBO) {
             TechnoLexicon manaCoilLex = new TechnoLexicon("tc.research_name.TECHNOBASICS", BotaniaAPI.categoryDevices);
             manaCoilLex.setLexiconPages(BotaniaAPI.internalHandler.textPage("techno.research_page.TECHNOBASICS.1"), BotaniaAPI.internalHandler.manaInfusionRecipePage("Mana Coil", manaCoilRec), BotaniaAPI.internalHandler.craftingRecipePage("Manasteel Gear", manaGear));
         }
-        if (Ids.flowerDyn) {
+        if (TMConfig.flowerDyn) {
             TechnoLexicon flowerDynLex = new TechnoLexicon("tc.research_name.DYNAMO", BotaniaAPI.categoryDevices);
             flowerDynLex.setLexiconPages(BotaniaAPI.internalHandler.textPage("techno.lexicon_page.FLOWERDYNAMO.1"), BotaniaAPI.internalHandler.textPage("techno.lexicon_page.FLOWERDYNAMO.2"), BotaniaAPI.internalHandler.craftingRecipePage("Hippie Dynamo", flowerDynamo));
-            if (Ids.itemBoost) {
+            if (TMConfig.itemBoost) {
                 flowerDynLex.addPage(BotaniaAPI.internalHandler.textPage("techno.lexicon_page.FLOWERDYNAMO.3"));
                 flowerDynLex.addPage(BotaniaAPI.internalHandler.craftingRecipePage("Potency Gem", CraftingHandler.itemBoost));
             }
         }
-        if (Ids.manaFab) {
+        if (TMConfig.manaFab) {
             TechnoLexicon manaFabLex = new TechnoLexicon("techno.lexicon_name.MANAFAB", BotaniaAPI.categoryDevices);
             manaFabLex.setLexiconPages(BotaniaAPI.internalHandler.textPage("techno.lexicon_page.MANAFAB.1"), BotaniaAPI.internalHandler.craftingRecipePage("Mana Fabricator", manaFabricator));
         }
-        if (Ids.processorBO) {
+        if (TMConfig.processorBO) {
             TechnoLexicon processorBOLex = new TechnoLexicon("techno.lexicon_name.PROCESSORBO", BotaniaAPI.categoryDevices);
             processorBOLex.setLexiconPages(BotaniaAPI.internalHandler.textPage("techno.lexicon_page.PROCESSORBO.1"), BotaniaAPI.internalHandler.textPage("techno.lexicon_page.PROCESSORBO.2"), BotaniaAPI.internalHandler.craftingRecipePage("Botanical Purifier", processorBO));
         }
-        if (Ids.manaExchanger) {
+        if (TMConfig.manaExchanger) {
             TechnoLexicon manaExchangerLex = new TechnoLexicon("techno.lexicon_name.MANAEXCHANGER", BotaniaAPI.categoryDevices);
             manaExchangerLex.setLexiconPages(BotaniaAPI.internalHandler.textPage("techno.lexicon_page.MANAEXCHANGER.1"), BotaniaAPI.internalHandler.textPage("techno.lexicon_page.MANAEXCHANGER.2"), BotaniaAPI.internalHandler.craftingRecipePage("Mana Exchanger", manaExchanger));
         }
@@ -97,30 +97,30 @@ public class Botania extends ModuleBase {
     @Override
     public void RegisterItems() {
         // Initializations
-        TMItems.itemBO = Ids.matBO ? new ItemBOMaterial() : null;
-        TMItems.manaBucket = Ids.manaFluid ? new ItemManaBucket(TMBlocks.manaFluidBlock) : null;
+        TMItems.itemBO = TMConfig.matBO ? new ItemBOMaterial() : null;
+        TMItems.manaBucket = TMConfig.manaFluid ? new ItemManaBucket(TMBlocks.manaFluidBlock) : null;
 
         // Registration
-        registerItem(TMItems.itemBO, Names.itemBO);
-        registerItem(TMItems.manaBucket, Names.manaBucket);
+        registerItem(TMItems.itemBO, Names.ITEMBO);
+        registerItem(TMItems.manaBucket, Names.MANABUCKET);
 
         registerBucket(TMBlocks.manaFluid, TMBlocks.manaFluidBlock, TMItems.manaBucket);
     }
 
     @Override
     public void RegisterBlocks() {
-        TMBlocks.manaFluid = Ids.manaFluid ? new ManaFluid() : null;
-        TMBlocks.manaFluidBlock = Ids.manaFluid ? new BlockManaFluid() : null;
-        TMBlocks.flowerDynamo = Ids.flowerDyn ? new BlockFlowerDynamo() : null;
-        TMBlocks.manaFabricator = Ids.manaFab ? new BlockManaFabricator() : null;
-        TMBlocks.processorBO = Ids.processorBO ? new BlockBOProcessor() : null;
-        TMBlocks.manaExchanger = Ids.manaExchanger ? new BlockManaExchanger() : null;
+        TMBlocks.manaFluid = TMConfig.manaFluid ? new ManaFluid() : null;
+        TMBlocks.manaFluidBlock = TMConfig.manaFluid ? new BlockManaFluid() : null;
+        TMBlocks.flowerDynamo = TMConfig.flowerDyn ? new BlockFlowerDynamo() : null;
+        TMBlocks.manaFabricator = TMConfig.manaFab ? new BlockManaFabricator() : null;
+        TMBlocks.processorBO = TMConfig.processorBO ? new BlockBOProcessor() : null;
+        TMBlocks.manaExchanger = TMConfig.manaExchanger ? new BlockManaExchanger() : null;
 
-        registerBlock(TMBlocks.flowerDynamo, Names.flowerDynamo);
-        registerBlock(TMBlocks.manaFabricator, Names.manaFabricator);
-        registerBlock(TMBlocks.processorBO, Names.processor + "BO");
-        registerBlock(TMBlocks.manaFluidBlock, Names.manaFluidBlock);
-        registerBlock(TMBlocks.manaExchanger, Names.manaExchanger, ItemManaExchanger.class);
+        registerBlock(TMBlocks.flowerDynamo, Names.FLOWERDYNAMO);
+        registerBlock(TMBlocks.manaFabricator, Names.MANAFABRICATOR);
+        registerBlock(TMBlocks.processorBO, Names.PROCESSOR + "BO");
+        registerBlock(TMBlocks.manaFluidBlock, Names.MANAFLUIDBLOCK);
+        registerBlock(TMBlocks.manaExchanger, Names.MANAEXCHANGER, ItemManaExchanger.class);
 
         registerTileEntity(TMBlocks.flowerDynamo, TileFlowerDynamo.class, "TileFlowerDynamo");
         registerTileEntity(TMBlocks.manaFabricator, TileManaFabricator.class, "ManaFabricator");
@@ -132,46 +132,46 @@ public class Botania extends ModuleBase {
     public void RegisterRecipes() {
         if (CompatibilityHandler.te) {
             // ManaInfusion
-            if (Ids.matBO) {
+            if (TMConfig.matBO) {
                 manaCoilRec = BotaniaAPI.registerManaInfusionRecipe(new ItemStack(TMItems.itemBO, 1, 0), ThermalExpansion.powerCoilSilver, 3000);
             }
 
             // Normal Recipes
-            if (Ids.matBO) {
+            if (TMConfig.matBO) {
                 manaGear = oreDictRecipe(new ItemStack(TMItems.itemBO, 1, 1), new Object[] { " M ", "MIM", " M ", 'M', "ingotManasteel", 'I', "ingotIron" });
             }
-            if (Ids.flowerDyn) {
+            if (TMConfig.flowerDyn) {
                 flowerDynamo = oreDictRecipe(new ItemStack(TMBlocks.flowerDynamo), new Object[] { " C ", "GIG", "IWI", 'W', new ItemStack(Items.redstone), 'C', new ItemStack(TMItems.itemBO, 1, 0), 'G', new ItemStack(TMItems.itemBO, 1, 1), 'I', "ingotManasteel" });
             }
-            if (Ids.manaFab) {
+            if (TMConfig.manaFab) {
                 manaFabricator = oreDictRecipe(new ItemStack(TMBlocks.manaFabricator), new Object[] { "CDC", "IDI", " P ", 'C', new ItemStack(TMItems.itemBO, 1, 1), 'I', "ingotManasteel", 'D', "manaDiamond", 'P', ThermalExpansion.frameTesseractFull });
             }
-            if (Ids.processorBO) {
+            if (TMConfig.processorBO) {
                 processorBO = oreDictRecipe(new ItemStack(TMBlocks.processorBO), new Object[] { " A ", "BMB", "ICI", 'M', ThermalExpansion.frameMachineBasic, 'I', "ingotManasteel", 'C', new ItemStack(TMItems.itemBO, 1, 0), 'B', "livingrock", 'A', new ItemStack(Items.redstone) });
             }
-            if (Ids.manaExchanger) {
+            if (TMConfig.manaExchanger) {
                 manaExchanger = oreDictRecipe(new ItemStack(TMBlocks.manaExchanger), new Object[] { " A ", "BMB", "ICI", 'M', ThermalExpansion.frameMachineBasic, 'I', new ItemStack(ThermalExpansion.blockTank, 1, 3), 'C', new ItemStack(TMItems.itemBO, 1, 0), 'B', "livingrock", 'A', new ItemStack(GameRegistry.findItem("Botania", "pool")) });
             }
         } else {
             // ManaInfusion
-            if (Ids.matBO) {
+            if (TMConfig.matBO) {
                 manaCoilRec = BotaniaAPI.registerManaInfusionRecipe(new ItemStack(TMItems.itemBO, 1, 0), new ItemStack(Items.redstone), 3000);
             }
 
             // Normal Recipes
-            if (Ids.matBO) {
+            if (TMConfig.matBO) {
                 manaGear = oreDictRecipe(new ItemStack(TMItems.itemBO, 1, 1), new Object[] { " M ", "MIM", " M ", 'M', "ingotManasteel", 'I', "ingotIron" });
             }
-            if (Ids.flowerDyn) {
+            if (TMConfig.flowerDyn) {
                 flowerDynamo = oreDictRecipe(new ItemStack(TMBlocks.flowerDynamo), new Object[] { " C ", "GIG", "IWI", 'W', new ItemStack(Items.redstone), 'C', new ItemStack(TMItems.itemBO, 1, 0), 'G', new ItemStack(TMItems.itemBO, 1, 1), 'I', "ingotManasteel" });
             }
-            if (Ids.manaFab) {
+            if (TMConfig.manaFab) {
                 manaFabricator = oreDictRecipe(new ItemStack(TMBlocks.manaFabricator), new Object[] { "CDC", "IDI", " P ", 'C', new ItemStack(TMItems.itemBO, 1, 1), 'I', "ingotManasteel", 'D', "manaDiamond", 'P', new ItemStack(Items.ender_eye, 1, 0) });
             }
-            if (Ids.processorBO) {
+            if (TMConfig.processorBO) {
                 processorBO = oreDictRecipe(new ItemStack(TMBlocks.processorBO), new Object[] { " A ", "BMB", "ICI", 'M', new ItemStack(Items.redstone), 'I', "ingotManasteel", 'C', new ItemStack(TMItems.itemBO, 1, 0), 'B', "livingrock", 'A', new ItemStack(Items.redstone) });
             }
-            if (Ids.manaExchanger) {
+            if (TMConfig.manaExchanger) {
                 manaExchanger = oreDictRecipe(new ItemStack(TMBlocks.manaExchanger), new Object[] { "IAI", "BMB", "ICI", 'M', new ItemStack(Item.getItemFromBlock(Blocks.glass)), 'I', "ingotManasteel", 'C', new ItemStack(TMItems.itemBO, 1, 0), 'B', "livingrock", 'A', new ItemStack(GameRegistry.findItem("Botania", "pool")) });
             }
         }

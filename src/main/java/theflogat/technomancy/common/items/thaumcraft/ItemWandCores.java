@@ -13,7 +13,7 @@ import thaumcraft.api.wands.WandRod;
 import thaumcraft.common.items.wands.ItemWandCasting;
 import theflogat.technomancy.common.items.base.ItemBase;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -29,7 +29,7 @@ public class ItemWandCores extends ItemBase {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister icon) {
-        coresIcon[0] = icon.registerIcon(Ref.TEXTURE_PREFIX + "electricWandCore");
+        coresIcon[0] = icon.registerIcon(Reference.TEXTURE_PREFIX + "electricWandCore");
     }
 
     @Override
@@ -40,7 +40,7 @@ public class ItemWandCores extends ItemBase {
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return Ref.MOD_PREFIX + Names.wandCores + "." + stack.getItemDamage();
+        return Reference.MOD_PREFIX + Names.WANDCORES + "." + stack.getItemDamage();
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

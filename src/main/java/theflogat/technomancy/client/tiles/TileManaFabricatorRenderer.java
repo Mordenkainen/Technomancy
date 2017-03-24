@@ -8,13 +8,13 @@ import org.lwjgl.opengl.GL11;
 
 import theflogat.technomancy.client.models.ModelManaFabricator;
 import theflogat.technomancy.common.tiles.botania.machines.TileManaFabricator;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 public class TileManaFabricatorRenderer extends TileEntitySpecialRenderer {
 
     ModelManaFabricator model = new ModelManaFabricator();
 
-    private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_MANA_FABRICATOR_TEXTURE);
+    private static final ResourceLocation modelTexture = new ResourceLocation(Reference.MODEL_MANA_FAB);
 
     @Override
     public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float f) {

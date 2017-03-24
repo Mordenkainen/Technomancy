@@ -6,7 +6,7 @@ import java.util.Random;
 import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import vazkii.botania.common.Botania;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -23,7 +23,7 @@ public class BlockManaFluid extends BlockFluidClassic {
     public BlockManaFluid() {
         super(TMBlocks.manaFluid, Material.water);
         setCreativeTab(Technomancy.tabsTM);
-        setBlockName(Ref.MOD_PREFIX + Names.manaFluid);
+        setBlockName(Reference.MOD_PREFIX + Names.MANAFLUID);
     }
 
     @Override

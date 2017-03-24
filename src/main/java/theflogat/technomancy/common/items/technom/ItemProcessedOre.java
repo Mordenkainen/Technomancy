@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import org.lwjgl.input.Keyboard;
 
 import theflogat.technomancy.common.items.base.ItemBase;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.util.Ore;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -42,7 +42,7 @@ public class ItemProcessedOre extends ItemBase {
     public void registerIcons(IIconRegister icon) {
         itemIcon = new IIcon[MAXSTAGE];
         for (int i = 0; i < MAXSTAGE; i++) {
-            itemIcon[i] = icon.registerIcon(Ref.TEXTURE_PREFIX + "ore" + i);
+            itemIcon[i] = icon.registerIcon(Reference.TEXTURE_PREFIX + "ore" + i);
         }
     }
 
@@ -64,7 +64,7 @@ public class ItemProcessedOre extends ItemBase {
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return Ref.MOD_PREFIX + "pure" + ore.oreName().substring(3);
+        return Reference.MOD_PREFIX + "pure" + ore.oreName().substring(3);
     }
 
     @Override

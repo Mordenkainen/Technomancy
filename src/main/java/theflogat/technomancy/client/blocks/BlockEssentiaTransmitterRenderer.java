@@ -30,7 +30,7 @@ public class BlockEssentiaTransmitterRenderer implements ISimpleBlockRenderingHa
 
     @Override
     public int getRenderId() {
-        return RenderIds.idEssentiaTransmitter;
+        return RenderIds.idEssentiaTrans;
     }
 
 }

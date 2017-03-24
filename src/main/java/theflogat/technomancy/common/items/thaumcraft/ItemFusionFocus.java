@@ -25,7 +25,7 @@ import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
 import thaumcraft.common.tiles.TileNode;
 import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.common.items.base.ItemBase;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -44,7 +44,7 @@ public class ItemFusionFocus extends ItemBase implements IWandFocus {
 
     @Override
     public void registerIcons(IIconRegister icon) {
-        this.iconFocus = icon.registerIcon(Ref.TEXTURE_PREFIX + "focusFusion");
+        this.iconFocus = icon.registerIcon(Reference.TEXTURE_PREFIX + "focusFusion");
     }
 
     @SideOnly(Side.CLIENT)

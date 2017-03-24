@@ -5,7 +5,7 @@ import org.lwjgl.opengl.GL11;
 import thaumcraft.client.lib.UtilsFX;
 import theflogat.technomancy.client.models.ModelNodeDynamo;
 import theflogat.technomancy.common.tiles.thaumcraft.dynamos.TileNodeDynamo;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
@@ -15,7 +15,7 @@ public class TileNodeDynamoRenderer extends TileEntitySpecialRenderer {
 
     ModelNodeDynamo model = new ModelNodeDynamo();
 
-    private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_NODE_DYNAMO_TEXTURE);
+    private static final ResourceLocation modelTexture = new ResourceLocation(Reference.MODEL_NODE_DYNAMO);
 
     @Override
     public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float partialTicks) {

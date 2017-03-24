@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBiomeMorpher;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.lib.RenderIds;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -20,7 +20,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockBiomeMorpher extends BlockContainerAdvanced {
 
     public BlockBiomeMorpher() {
-        setBlockName(Ref.MOD_PREFIX + Names.biomeMorpher);
+        setBlockName(Reference.MOD_PREFIX + Names.BIOMEMORPHER);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class BlockBiomeMorpher extends BlockContainerAdvanced {
     @SideOnly(Side.CLIENT)
     @Override
     public void registerBlockIcons(IIconRegister icon) {
-        blockIcon = icon.registerIcon(Ref.getAsset(Names.biomeMorpher));
+        blockIcon = icon.registerIcon(Reference.getAsset(Names.BIOMEMORPHER));
     }
 
     @Override

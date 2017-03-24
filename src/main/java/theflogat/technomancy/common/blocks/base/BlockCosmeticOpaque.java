@@ -4,7 +4,7 @@ import java.util.Random;
 
 import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -17,14 +17,14 @@ public class BlockCosmeticOpaque extends Block {
         super(Material.glass);
         setStepSound(Block.soundTypeGlass);
         setHardness(.25F);
-        setBlockName(Ref.MOD_PREFIX + Names.cosmeticOpaque);
+        setBlockName(Reference.MOD_PREFIX + Names.COSMETICOPAQUE);
         this.setCreativeTab(Technomancy.tabsTM);
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public void registerBlockIcons(IIconRegister icon) {
-        blockIcon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.cosmeticOpaque);
+        blockIcon = icon.registerIcon(Reference.TEXTURE_PREFIX + Names.COSMETICOPAQUE);
     }
 
     @Override

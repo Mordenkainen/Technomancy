@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileFluxLamp;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.lib.RenderIds;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -16,7 +16,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockFluxLamp extends BlockContainerAdvanced {
 
     public BlockFluxLamp() {
-        setBlockName(Ref.getId(Names.fluxLamp));
+        setBlockName(Reference.getId(Names.FLUXLAMP));
     }
 
     @Override
@@ -42,7 +42,7 @@ public class BlockFluxLamp extends BlockContainerAdvanced {
     @SideOnly(Side.CLIENT)
     @Override
     public void registerBlockIcons(IIconRegister icon) {
-        blockIcon = icon.registerIcon(Ref.getAsset(Names.fluxLamp));
+        blockIcon = icon.registerIcon(Reference.getAsset(Names.FLUXLAMP));
     }
 
     @Override

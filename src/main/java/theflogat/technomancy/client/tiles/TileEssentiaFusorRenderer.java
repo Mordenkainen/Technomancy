@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL11;
 import thaumcraft.client.lib.UtilsFX;
 import theflogat.technomancy.client.models.ModelEssentiaFusor;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaFusor;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -20,7 +20,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class TileEssentiaFusorRenderer extends TileEntitySpecialRenderer {
 
     private static final ModelEssentiaFusor model = new ModelEssentiaFusor();
-    private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_FUSOR_TEXTURE);
+    private static final ResourceLocation modelTexture = new ResourceLocation(Reference.MODEL_FUSOR);
     private static final HashMap<ForgeDirection, float[]> offsets = new HashMap<ForgeDirection, float[]>();
 
     static {

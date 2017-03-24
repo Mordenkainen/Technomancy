@@ -6,12 +6,12 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import theflogat.technomancy.client.models.ModelCrystal;
 import theflogat.technomancy.common.tiles.technom.TileCrystal;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 public class TileCrystalRenderer extends TileEntitySpecialRenderer {
 
     ModelCrystal model = new ModelCrystal();
-    private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_CRYSTAL_TEXTURE);
+    private static final ResourceLocation modelTexture = new ResourceLocation(Reference.MODEL_CRYSTAL);
 
     @Override
     public void renderTileEntityAt(TileEntity te, double x, double y, double z, float t) {

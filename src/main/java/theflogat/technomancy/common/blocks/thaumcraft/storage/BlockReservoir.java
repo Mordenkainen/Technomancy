@@ -7,12 +7,12 @@ import net.minecraft.world.World;
 import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaReservoir;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 public class BlockReservoir extends BlockContainerAdvanced {
 
     public BlockReservoir() {
-        setBlockName(Ref.getId(Names.reservoir));
+        setBlockName(Reference.getId(Names.RESERVOIR));
         setBlockBounds(0.125F, 0.125F, 0.125F, 0.875F, 0.875F, 0.875F);
     }
 
@@ -28,7 +28,7 @@ public class BlockReservoir extends BlockContainerAdvanced {
 
     @Override
     public void registerBlockIcons(IIconRegister reg) {
-        blockIcon = reg.registerIcon(Ref.getAsset(Names.reservoir));
+        blockIcon = reg.registerIcon(Reference.getAsset(Names.RESERVOIR));
     }
 
     @Override

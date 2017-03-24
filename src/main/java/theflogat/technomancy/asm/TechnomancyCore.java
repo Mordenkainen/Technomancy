@@ -3,7 +3,7 @@ package theflogat.technomancy.asm;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import cpw.mods.fml.common.DummyModContainer;
 import cpw.mods.fml.common.LoadController;
 import cpw.mods.fml.common.ModMetadata;
@@ -17,9 +17,9 @@ public class TechnomancyCore extends DummyModContainer {
     public TechnomancyCore() {
         super(new ModMetadata());
         final ModMetadata metadata = getMetadata();
-        metadata.modId = Ref.MOD_ID + "Core";
-        metadata.name = Ref.MOD_NAME + " Core";
-        metadata.version = Ref.MOD_VERSION;
+        metadata.modId = Reference.MOD_ID + "Core";
+        metadata.name = Reference.MOD_NAME + " Core";
+        metadata.version = Reference.MOD_VERSION;
         metadata.authorList.add("Democretes");
         metadata.authorList.add("theflogat");
         metadata.authorList.add("Mordenkainen");

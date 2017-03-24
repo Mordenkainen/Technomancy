@@ -4,10 +4,10 @@ import java.util.Map;
 
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 @IFMLLoadingPlugin.MCVersion("1.7.10")
-@IFMLLoadingPlugin.Name(Ref.MOD_NAME + " Core")
+@IFMLLoadingPlugin.Name(Reference.MOD_NAME + " Core")
 public class TechnomancyCoreLoader implements IFMLLoadingPlugin {
 
     @Override

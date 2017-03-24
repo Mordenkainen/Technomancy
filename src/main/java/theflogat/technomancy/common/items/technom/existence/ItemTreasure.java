@@ -21,9 +21,9 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import theflogat.technomancy.common.items.base.ItemBase;
 import theflogat.technomancy.common.player.PlayerData;
 import theflogat.technomancy.common.player.PlayerData.Affinity;
-import theflogat.technomancy.lib.Ids;
+import theflogat.technomancy.lib.TMConfig;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -36,12 +36,12 @@ public class ItemTreasure extends ItemBase {
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return Ref.getId(Names.treasures[stack.getItemDamage() % Names.treasures.length]);
+        return Reference.getId(Names.TREASURES[stack.getItemDamage() % Names.TREASURES.length]);
     }
 
     @Override
     public void getSubItems(Item item, CreativeTabs tab, List l) {
-        for (int i = 0; i < Names.treasures.length; i++) {
+        for (int i = 0; i < Names.TREASURES.length; i++) {
             l.add(new ItemStack(item, 1, i));
         }
     }
@@ -52,9 +52,9 @@ public class ItemTreasure extends ItemBase {
     @SideOnly(Side.CLIENT)
     @Override
     public void registerIcons(IIconRegister reg) {
-        icons = new IIcon[Names.treasures.length];
+        icons = new IIcon[Names.TREASURES.length];
         for (int i = 0; i < icons.length; i++) {
-            icons[i] = reg.registerIcon(Ref.getAsset(Names.treasures[i]));
+            icons[i] = reg.registerIcon(Reference.getAsset(Names.TREASURES[i]));
         }
     }
 
@@ -92,7 +92,7 @@ public class ItemTreasure extends ItemBase {
                 ((EntityPlayer) player).addPotionEffect(new PotionEffect(Potion.resistance.id, 1, 1));
                 return;
             case 2:
-                ((EntityPlayer) player).addPotionEffect(new PotionEffect(Ids.slowFall, 1, 0));
+                ((EntityPlayer) player).addPotionEffect(new PotionEffect(TMConfig.slowFall, 1, 0));
                 return;
         }
     }
@@ -163,8 +163,8 @@ public class ItemTreasure extends ItemBase {
     }
 
     public int getTreasureId(String name) {
-        for (int i = 0; i < Names.treasures.length; i++) {
-            if (name == Names.treasures[i]) {
+        for (int i = 0; i < Names.TREASURES.length; i++) {
+            if (name == Names.TREASURES[i]) {
                 return i;
             }
         }

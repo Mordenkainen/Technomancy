@@ -6,13 +6,13 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import theflogat.technomancy.client.models.ModelCatalyst;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 public class TileCatalystRenderer extends TileEntitySpecialRenderer {
 
     public static ModelCatalyst model = new ModelCatalyst();
 
-    public static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_CATALYST_TEXTURE);
+    public static final ResourceLocation modelTexture = new ResourceLocation(Reference.MODEL_CATALYST);
 
     @Override
     public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float t) {

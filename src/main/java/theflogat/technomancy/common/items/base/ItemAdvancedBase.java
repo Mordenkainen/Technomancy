@@ -19,7 +19,7 @@ import org.lwjgl.input.Keyboard;
 import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.items.technom.ItemBoost;
 import theflogat.technomancy.common.tiles.base.IUpgradable;
-import theflogat.technomancy.lib.Conf;
+import theflogat.technomancy.lib.TMConfig;
 
 public class ItemAdvancedBase extends ItemBlock {
 
@@ -63,7 +63,7 @@ public class ItemAdvancedBase extends ItemBlock {
                 l.add(EnumChatFormatting.WHITE.toString() + EnumChatFormatting.ITALIC + StatCollector.translateToLocal("info.techno:shift"));
             }
         } catch (Exception e) {
-            Conf.ex(e);
+            TMConfig.error(e);
         }
     }
 

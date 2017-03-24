@@ -10,7 +10,7 @@ import net.minecraftforge.fluids.FluidStack;
 import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBloodFabricator;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.lib.RenderIds;
 import theflogat.technomancy.lib.compat.BloodMagic;
 import theflogat.technomancy.util.helpers.WorldHelper;
@@ -20,7 +20,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockBloodFabricator extends BlockContainerAdvanced {
 
     public BlockBloodFabricator() {
-        setBlockName(Ref.MOD_PREFIX + Names.bloodFabricator);
+        setBlockName(Reference.MOD_PREFIX + Names.BLOODFABRICATOR);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class BlockBloodFabricator extends BlockContainerAdvanced {
     @SideOnly(Side.CLIENT)
     @Override
     public void registerBlockIcons(IIconRegister icon) {
-        blockIcon = icon.registerIcon(Ref.getAsset(Names.bloodFabricator));
+        blockIcon = icon.registerIcon(Reference.getAsset(Names.BLOODFABRICATOR));
     }
 
     @Override

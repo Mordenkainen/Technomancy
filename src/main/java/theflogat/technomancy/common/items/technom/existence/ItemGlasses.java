@@ -2,9 +2,9 @@ package theflogat.technomancy.common.items.technom.existence;
 
 import java.util.List;
 import theflogat.technomancy.Technomancy;
-import theflogat.technomancy.lib.Ids;
+import theflogat.technomancy.lib.TMConfig;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,7 +19,7 @@ public class ItemGlasses extends ItemArmor {
 
     public ItemGlasses() {
         super(Technomancy.existencePower, 0, 0);
-        setUnlocalizedName(Ref.getId(Names.itemGlasses));
+        setUnlocalizedName(Reference.getId(Names.ITEMGLASSES));
     }
 
     @Override
@@ -27,7 +27,7 @@ public class ItemGlasses extends ItemArmor {
         player.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 1, 0));
         player.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 1, 2));
         player.addPotionEffect(new PotionEffect(Potion.resistance.id, 1, 0));
-        player.addPotionEffect(new PotionEffect(Ids.slowFall, 1, 0));
+        player.addPotionEffect(new PotionEffect(TMConfig.slowFall, 1, 0));
 
         if (stack.stackTagCompound == null) {
             stack.stackTagCompound = new NBTTagCompound();
@@ -52,11 +52,11 @@ public class ItemGlasses extends ItemArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
-        return Ref.MOD_ID + ":textures/armor/" + Names.itemGlasses + ".png";
+        return Reference.MOD_ID + ":textures/armor/" + Names.ITEMGLASSES + ".png";
     }
 
     @Override
     public void registerIcons(IIconRegister reg) {
-        itemIcon = reg.registerIcon(Ref.getAsset(Names.itemGlasses));
+        itemIcon = reg.registerIcon(Reference.getAsset(Names.ITEMGLASSES));
     }
 }

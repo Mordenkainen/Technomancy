@@ -5,14 +5,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import theflogat.technomancy.client.models.ModelExistenceBurner;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 public class TileExistenceBurnerRenderer extends TileEntitySpecialRenderer {
 
     ModelExistenceBurner model = new ModelExistenceBurner();
-    private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_ANVIL_TEXTURE);
-    private static final ResourceLocation cube = new ResourceLocation(Ref.MODEL_WHITE_TEXTURE);
-    private static final ResourceLocation bottom = new ResourceLocation(Ref.MODEL_BRF_TEXTURE);
+    private static final ResourceLocation modelTexture = new ResourceLocation(Reference.MODEL_ANVIL);
+    private static final ResourceLocation cube = new ResourceLocation(Reference.MODEL_WHITE);
+    private static final ResourceLocation bottom = new ResourceLocation(Reference.MODEL_BRF_TEXTURE);
 
     @Override
     public void renderTileEntityAt(TileEntity te, double x, double y, double z, float f) {

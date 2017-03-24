@@ -4,7 +4,7 @@ import java.util.List;
 
 import theflogat.technomancy.common.items.base.ItemBase;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -25,8 +25,8 @@ public class ItemBMMaterial extends ItemBase {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister icon) {
-        itemIcon[0] = icon.registerIcon(Ref.TEXTURE_PREFIX + "sacrificialIngot");
-        itemIcon[1] = icon.registerIcon(Ref.TEXTURE_PREFIX + "bloodCoil");
+        itemIcon[0] = icon.registerIcon(Reference.TEXTURE_PREFIX + "sacrificialIngot");
+        itemIcon[1] = icon.registerIcon(Reference.TEXTURE_PREFIX + "bloodCoil");
     }
 
     @Override
@@ -37,7 +37,7 @@ public class ItemBMMaterial extends ItemBase {
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return Ref.MOD_PREFIX + Names.itemBM + "." + stack.getItemDamage();
+        return Reference.MOD_PREFIX + Names.ITEMBM + "." + stack.getItemDamage();
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

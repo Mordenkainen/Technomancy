@@ -9,12 +9,12 @@ import org.lwjgl.opengl.GL11;
 import theflogat.technomancy.client.models.ModelBloodDynamo;
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
 import theflogat.technomancy.common.tiles.bloodmagic.dynamos.TileBloodDynamo;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 public class TileBloodDynamoRenderer extends TileEntitySpecialRenderer {
 
     ModelBloodDynamo model = new ModelBloodDynamo();
-    private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_BLOOD_DYNAMO_TEXTURE);
+    private static final ResourceLocation modelTexture = new ResourceLocation(Reference.MODEL_BLOOD_DYN);
 
     @Override
     public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float t) {

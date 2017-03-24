@@ -4,7 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import theflogat.technomancy.client.models.ModelEldritchConsumer;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEldritchConsumer;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -12,7 +12,7 @@ import net.minecraft.util.ResourceLocation;
 public class TileEldritchConsumerRenderer extends TileEntitySpecialRenderer {
 
     public static final ModelEldritchConsumer model = new ModelEldritchConsumer();
-    public static final ResourceLocation texture = new ResourceLocation(Ref.MODEL_ELDRITCH_CONSUMER_TEXTURE);
+    public static final ResourceLocation texture = new ResourceLocation(Reference.MODEL_ELD_CONS);
 
     @Override
     public void renderTileEntityAt(TileEntity te, double x, double y, double z, float f) {

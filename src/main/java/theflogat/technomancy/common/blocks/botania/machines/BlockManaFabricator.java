@@ -12,7 +12,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.tiles.botania.machines.TileManaFabricator;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.lib.RenderIds;
 import vazkii.botania.api.wand.IWandHUD;
 import cpw.mods.fml.relauncher.Side;
@@ -21,7 +21,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockManaFabricator extends BlockContainerAdvanced implements IWandHUD {
 
     public BlockManaFabricator() {
-        setBlockName(Ref.getId(Names.manaFabricator));
+        setBlockName(Reference.getId(Names.MANAFABRICATOR));
     }
 
     @Override
@@ -82,7 +82,7 @@ public class BlockManaFabricator extends BlockContainerAdvanced implements IWand
     @SideOnly(Side.CLIENT)
     @Override
     public void registerBlockIcons(IIconRegister icon) {
-        blockIcon = icon.registerIcon(Ref.getAsset(Names.manaFabricator));
+        blockIcon = icon.registerIcon(Reference.getAsset(Names.MANAFABRICATOR));
     }
 
     @Override

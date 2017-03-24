@@ -60,10 +60,9 @@ import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTCProcessor;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileCreativeJar;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaContainer;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaReservoir;
-import theflogat.technomancy.lib.Conf;
-import theflogat.technomancy.lib.Ids;
+import theflogat.technomancy.lib.TMConfig;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.lib.compat.thaumcraft.ScepterRecipe;
 import theflogat.technomancy.lib.compat.thaumcraft.TechnoResearch;
 import theflogat.technomancy.lib.handlers.CompatibilityHandler;
@@ -135,7 +134,7 @@ public class Thaumcraft extends ModuleBase {
     }
 
     public static void smeltify() {
-        if (Conf.bonus) {
+        if (TMConfig.bonus) {
             ThaumcraftApi.addSmeltingBonus("oreGold", new ItemStack(Items.gold_nugget, 9, 0));
             ThaumcraftApi.addSmeltingBonus("oreIron", new ItemStack(Thaumcraft.itemNugget, 9, 0));
             ThaumcraftApi.addSmeltingBonus("oreCinnabar", new ItemStack(Thaumcraft.itemNugget, 9, 5));
@@ -186,22 +185,22 @@ public class Thaumcraft extends ModuleBase {
     public void RegisterItems() {
         // Item Initializations
         // essentiaCannon = new ItemEssentiaCannon(ItemIds.idESSENTIA_CANNON);
-        TMItems.itemMaterial = Ids.itemMaterial ? new ItemTHMaterial() : null;
-        TMItems.itemPen = Ids.pen ? new ItemPen() : null;
-        TMItems.itemWandCores = Ids.wandCores ? new ItemWandCores() : null;
-        TMItems.itemFusionFocus = Ids.focusFusion ? new ItemFusionFocus() : null;
-        TMItems.itemTechnoturgeScepter = Ids.scepter ? new ItemTechnoturgeScepter() : null;
+        TMItems.itemMaterial = TMConfig.itemMaterial ? new ItemTHMaterial() : null;
+        TMItems.itemPen = TMConfig.pen ? new ItemPen() : null;
+        TMItems.itemWandCores = TMConfig.wandCores ? new ItemWandCores() : null;
+        TMItems.itemFusionFocus = TMConfig.focusFusion ? new ItemFusionFocus() : null;
+        TMItems.itemTechnoturgeScepter = TMConfig.scepter ? new ItemTechnoturgeScepter() : null;
 
         // Registry
         // GameRegistry.registerItem(essentiaCannon,
         // LibNames.ESSENTIA_CANNON_NAME);
-        registerItem(TMItems.itemMaterial, Names.itemMaterial);
-        registerItem(TMItems.itemPen, Names.pen);
-        registerItem(TMItems.itemFusionFocus, Names.fusionFocus);
-        registerItem(TMItems.itemTechnoturgeScepter, Names.scepter);
+        registerItem(TMItems.itemMaterial, Names.ITEMMATERIAL);
+        registerItem(TMItems.itemPen, Names.PEN);
+        registerItem(TMItems.itemFusionFocus, Names.FUSIONFOCUS);
+        registerItem(TMItems.itemTechnoturgeScepter, Names.SCEPTER);
 
-        registerItem(TMItems.itemWandCores, Names.wandCores);
-        if (Ids.wandCores) {
+        registerItem(TMItems.itemWandCores, Names.WANDCORES);
+        if (TMConfig.wandCores) {
             WAND_ROD_ELECTRIC = new WandRod("electric", 25, new ItemStack(TMItems.itemWandCores, 1, 0), 10, new ElectricWandUpdate(), new ResourceLocation("technom", "textures/models/electricWand.png"));
             WAND_ROD_TECHNOTURGE = new WandRod("technoturge", 100, new ItemStack(TMItems.itemWandCores, 1, 1), 11, new ResourceLocation("technom", "textures/models/electricWand.png"));
         }
@@ -209,51 +208,51 @@ public class Thaumcraft extends ModuleBase {
 
     @Override
     public void RegisterBlocks() {
-        TMBlocks.nodeDynamo = Ids.dynNode ? new BlockNodeDynamo() : null;
-        TMBlocks.essentiaContainer = Ids.contEssentia ? new BlockEssentiaContainer() : null;
-        TMBlocks.cosmeticOpaque = Ids.cosmeticOpaque ? new BlockCosmeticOpaque() : null;
-        TMBlocks.essentiaDynamo = Ids.dynEssentia ? new BlockEssentiaDynamo() : null;
-        TMBlocks.biomeMorpher = Ids.biomeMorpher ? new BlockBiomeMorpher() : null;
-        TMBlocks.nodeGenerator = Ids.nodeGen ? new BlockNodeGenerator() : null;
-        TMBlocks.fakeAirNG = Ids.nodeGen ? new BlockFakeAirNG() : null;
-        TMBlocks.fluxLamp = Ids.fluxLamp ? new BlockFluxLamp() : null;
-        TMBlocks.teslaCoil = Ids.wirelessCoil ? new BlockEssentiaTransmitter() : null;
-        TMBlocks.electricBellows = Ids.electricBellows ? new BlockElectricBellows() : null;
-        TMBlocks.creativeJar = Ids.creativeJar ? new BlockCreativeJar() : null;
+        TMBlocks.nodeDynamo = TMConfig.dynNode ? new BlockNodeDynamo() : null;
+        TMBlocks.essentiaContainer = TMConfig.contEssentia ? new BlockEssentiaContainer() : null;
+        TMBlocks.cosmeticOpaque = TMConfig.cosmeticOpaque ? new BlockCosmeticOpaque() : null;
+        TMBlocks.essentiaDynamo = TMConfig.dynEssentia ? new BlockEssentiaDynamo() : null;
+        TMBlocks.biomeMorpher = TMConfig.biomeMorpher ? new BlockBiomeMorpher() : null;
+        TMBlocks.nodeGenerator = TMConfig.nodeGen ? new BlockNodeGenerator() : null;
+        TMBlocks.fakeAirNG = TMConfig.nodeGen ? new BlockFakeAirNG() : null;
+        TMBlocks.fluxLamp = TMConfig.fluxLamp ? new BlockFluxLamp() : null;
+        TMBlocks.teslaCoil = TMConfig.wirelessCoil ? new BlockEssentiaTransmitter() : null;
+        TMBlocks.electricBellows = TMConfig.electricBellows ? new BlockElectricBellows() : null;
+        TMBlocks.creativeJar = TMConfig.creativeJar ? new BlockCreativeJar() : null;
         // TMBlocks.reconstructorBlock = Ids.reconstructor ? new
         // BlockReconstructor() : null;
-        TMBlocks.condenserBlock = Ids.condenser ? new BlockCondenser() : null;
-        TMBlocks.processorTC = Ids.processorTC ? new BlockTCProcessor() : null;
-        TMBlocks.eldritchConsumer = Ids.eldrichConsumer ? new BlockEldritchConsumer() : null;
-        TMBlocks.reservoir = Ids.reservoir ? new BlockReservoir() : null;
-        TMBlocks.advDeconTable = Ids.advDeconTable ? new BlockAdvDeconTable() : null;
-        TMBlocks.essentiaFusor = Ids.fusor ? new BlockEssentiaFusor() : null;
+        TMBlocks.condenserBlock = TMConfig.condenser ? new BlockCondenser() : null;
+        TMBlocks.processorTC = TMConfig.processorTC ? new BlockTCProcessor() : null;
+        TMBlocks.eldritchConsumer = TMConfig.eldrichConsumer ? new BlockEldritchConsumer() : null;
+        TMBlocks.reservoir = TMConfig.reservoir ? new BlockReservoir() : null;
+        TMBlocks.advDeconTable = TMConfig.advDeconTable ? new BlockAdvDeconTable() : null;
+        TMBlocks.essentiaFusor = TMConfig.fusor ? new BlockEssentiaFusor() : null;
 
-        registerBlock(TMBlocks.nodeDynamo, Names.nodeDynamo);
-        registerBlock(TMBlocks.essentiaContainer, Names.essentiaContainer);
-        registerBlock(TMBlocks.cosmeticOpaque, Names.cosmeticOpaque);
-        registerBlock(TMBlocks.essentiaDynamo, Names.essentiaDynamo);
-        registerBlock(TMBlocks.biomeMorpher, Names.biomeMorpher);
-        registerBlock(TMBlocks.nodeGenerator, Names.nodeGenerator);
-        registerBlock(TMBlocks.fakeAirNG, Names.fakeAirNG);
-        registerBlock(TMBlocks.fluxLamp, Names.fluxLamp);
-        registerBlock(TMBlocks.teslaCoil, Names.essentiaTransmitter);
-        registerBlock(TMBlocks.electricBellows, Names.electricBellows);
-        registerBlock(TMBlocks.creativeJar, Names.creativeJar);
+        registerBlock(TMBlocks.nodeDynamo, Names.NODEDYNAMO);
+        registerBlock(TMBlocks.essentiaContainer, Names.ESSENTIACONTAINER);
+        registerBlock(TMBlocks.cosmeticOpaque, Names.COSMETICOPAQUE);
+        registerBlock(TMBlocks.essentiaDynamo, Names.ESSENTIADYNAMO);
+        registerBlock(TMBlocks.biomeMorpher, Names.BIOMEMORPHER);
+        registerBlock(TMBlocks.nodeGenerator, Names.NODEGENERATOR);
+        registerBlock(TMBlocks.fakeAirNG, Names.FAKEAIRNG);
+        registerBlock(TMBlocks.fluxLamp, Names.FLUXLAMP);
+        registerBlock(TMBlocks.teslaCoil, Names.ESSENTIATRANS);
+        registerBlock(TMBlocks.electricBellows, Names.ELECTRICBELLOWS);
+        registerBlock(TMBlocks.creativeJar, Names.CREATIVEJAR);
         // registerBlock(TMBlocks.reconstructorBlock, Names.reconstructor);
-        registerBlock(TMBlocks.condenserBlock, Names.condenserBlock);
-        registerBlock(TMBlocks.processorTC, Names.processor + "TC");
-        registerBlock(TMBlocks.eldritchConsumer, Names.eldritchConsumer);
-        registerBlock(TMBlocks.reservoir, Names.reservoir);
-        registerBlock(TMBlocks.advDeconTable, Names.advDeconTable);
-        registerBlock(TMBlocks.essentiaFusor, Names.fusor);
+        registerBlock(TMBlocks.condenserBlock, Names.CONDENSERBLOCK);
+        registerBlock(TMBlocks.processorTC, Names.PROCESSOR + "TC");
+        registerBlock(TMBlocks.eldritchConsumer, Names.ELDRITCHCONSUMER);
+        registerBlock(TMBlocks.reservoir, Names.RESERVOIR);
+        registerBlock(TMBlocks.advDeconTable, Names.ADVDECONTABLE);
+        registerBlock(TMBlocks.essentiaFusor, Names.FUSOR);
 
         registerTileEntity(TMBlocks.essentiaContainer, TileEssentiaContainer.class, "TileEssentiacontainer");
         registerTileEntity(TMBlocks.nodeDynamo, TileNodeDynamo.class, "TileNodeDynamo");
         registerTileEntity(TMBlocks.essentiaDynamo, TileEssentiaDynamo.class, "TileEssentiaDynamo");
         registerTileEntity(TMBlocks.biomeMorpher, TileBiomeMorpher.class, "TileBiomeMorpher");
         registerTileEntity(TMBlocks.nodeGenerator, TileNodeGenerator.class, "TileNodeGenerator");
-        registerTileEntity(TMBlocks.fakeAirNG, TileFakeAirNG.class, Ref.MOD_PREFIX + "TileFakeAir");
+        registerTileEntity(TMBlocks.fakeAirNG, TileFakeAirNG.class, Reference.MOD_PREFIX + "TileFakeAir");
         registerTileEntity(TMBlocks.fluxLamp, TileFluxLamp.class, "TileFluxLamp");
         registerTileEntity(TMBlocks.teslaCoil, TileEssentiaTransmitter.class, "TileTeslaCoil");
         registerTileEntity(TMBlocks.electricBellows, TileElectricBellows.class, "TileElectricBellows");
@@ -263,31 +262,31 @@ public class Thaumcraft extends ModuleBase {
         registerTileEntity(TMBlocks.condenserBlock, TileCondenser.class, "TileCondenser");
         registerTileEntity(TMBlocks.processorTC, TileTCProcessor.class, "TileProcessorTC");
         registerTileEntity(TMBlocks.eldritchConsumer, TileEldritchConsumer.class, "TileEldrichConsumer");
-        registerTileEntity(TMBlocks.reservoir, TileEssentiaReservoir.class, Ref.MOD_PREFIX + "TileEssentiaReservoir");
-        registerTileEntity(TMBlocks.advDeconTable, TileAdvDeconTable.class, Ref.MOD_PREFIX + "TileAdvDeconTable");
-        registerTileEntity(TMBlocks.essentiaFusor, TileEssentiaFusor.class, Ref.MOD_PREFIX + "TileEssentiaFusor");
+        registerTileEntity(TMBlocks.reservoir, TileEssentiaReservoir.class, Reference.MOD_PREFIX + "TileEssentiaReservoir");
+        registerTileEntity(TMBlocks.advDeconTable, TileAdvDeconTable.class, Reference.MOD_PREFIX + "TileAdvDeconTable");
+        registerTileEntity(TMBlocks.essentiaFusor, TileEssentiaFusor.class, Reference.MOD_PREFIX + "TileEssentiaFusor");
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public void RegisterRecipes() {
         // Crucible Recipes
-        if (Ids.itemMaterial) {
+        if (TMConfig.itemMaterial) {
             TechnoResearch.recipes.put("NeutronizedMetal", ThaumcraftApi.addCrucibleRecipe("THAUMIUM", new ItemStack(TMItems.itemMaterial, 1, 0), new ItemStack(Thaumcraft.itemResource, 1, 2), new AspectList().add(Aspect.ORDER, 2).add(Aspect.ENERGY, 2)));
             // Crafting Recipes
             TechnoResearch.recipes.put("MagicCoil", GameRegistry.addShapedRecipe(new ItemStack(TMItems.itemMaterial, 1, 1), new Object[] { "  N", " T ", "N  ", 'N', new ItemStack(Items.redstone), 'T', new ItemStack(Thaumcraft.itemResource, 1, 2) }));
             TechnoResearch.recipes.put("NeutronizedGear", GameRegistry.addShapedRecipe(new ItemStack(TMItems.itemMaterial, 1, 2), new Object[] { " T ", "TIT", " T ", 'T', new ItemStack(TMItems.itemMaterial, 0), 'I', new ItemStack(Items.iron_ingot) }));
         }
-        if (Ids.pen) {
+        if (TMConfig.pen) {
             TechnoResearch.recipes.put("PenCore", oreDictRecipe(new ItemStack(TMItems.itemMaterial, 1, 3), new Object[] { " NI", "NIN", "IN ", Character.valueOf('N'), "nuggetIron", Character.valueOf('I'), "dyeBlack" }));
             TechnoResearch.recipes.put("Pen", GameRegistry.addShapedRecipe(new ItemStack(TMItems.itemPen, 1), new Object[] { " IC", "IPI", "NI ", 'I', new ItemStack(Items.iron_ingot), 'C', new ItemStack(Thaumcraft.itemWandCap, 1, 0), 'P', new ItemStack(TMItems.itemMaterial, 1, 3), 'N', new ItemStack(Items.gold_nugget) }));
         }
-        if (Ids.fluxLamp) {
+        if (TMConfig.fluxLamp) {
             TechnoResearch.recipes.put("FluxLamp",
                     ThaumcraftApi.addInfusionCraftingRecipe("FLUXLAMP", new ItemStack(TMBlocks.fluxLamp), 10, new AspectList().add(Aspect.MECHANISM, 45).add(Aspect.TAINT, 45).add(Aspect.ORDER, 45).add(Aspect.LIGHT, 45), new ItemStack(Thaumcraft.blockMetalDevice, 1, 7), new ItemStack[] { new ItemStack(Thaumcraft.itemShard, 1, 4), new ItemStack(Thaumcraft.itemShard, 1, 4), new ItemStack(Items.bucket), new ItemStack(Items.bucket), new ItemStack(Items.emerald), new ItemStack(Items.emerald) }));
         }
-        if (Ids.wandCores) {
-            if (Ids.scepter) {
+        if (TMConfig.wandCores) {
+            if (TMConfig.scepter) {
                 ScepterRecipe scepter = new ScepterRecipe();
                 ThaumcraftApi.getCraftingRecipes().add(scepter);
                 ItemStack scepter2 = new ItemStack(TMItems.itemWandCores, 1, 1);
@@ -296,111 +295,111 @@ public class Thaumcraft extends ModuleBase {
             }
         }
         // Arcane Recipes
-        if (Ids.cosmeticOpaque) {
+        if (TMConfig.cosmeticOpaque) {
             TechnoResearch.recipes.put("QuantumGlass", ThaumcraftApi.addArcaneCraftingRecipe("QUANTUMJARS", new ItemStack(TMBlocks.cosmeticOpaque, 4, 0), new AspectList().add(Aspect.ORDER, 5).add(Aspect.FIRE, 5), new Object[] { "GG", "GG", 'G', new ItemStack(Blocks.glass) }));
         }
-        if (Ids.contEssentia) {
+        if (TMConfig.contEssentia) {
             TechnoResearch.recipes.put("QuantumJar", ThaumcraftApi.addArcaneCraftingRecipe("QUANTUMJARS", new ItemStack(TMBlocks.essentiaContainer, 1, 0), new AspectList().add(Aspect.ORDER, 15).add(Aspect.WATER, 10), new Object[] { "QNQ", "Q Q", "QQQ", 'Q', new ItemStack(TMBlocks.cosmeticOpaque), 'N', new ItemStack(TMItems.itemMaterial, 0) }));
         }
-        if (Ids.dynNode) {
+        if (TMConfig.dynNode) {
             TechnoResearch.recipes.put("NodeDynamo", ThaumcraftApi.addArcaneCraftingRecipe("DYNAMO", new ItemStack(TMBlocks.nodeDynamo, 1, 0), new AspectList().add(Aspect.EARTH, 5).add(Aspect.ORDER, 25).add(Aspect.FIRE, 15).add(Aspect.ENTROPY, 10), new Object[] { " C ", "GIG", "IRI", 'C', new ItemStack(TMItems.itemMaterial, 1, 1), 'G', new ItemStack(TMItems.itemMaterial, 1, 2), 'I', new ItemStack(TMItems.itemMaterial, 0), 'R', new ItemStack(Items.redstone) }));
         }
-        if (Ids.dynEssentia) {
+        if (TMConfig.dynEssentia) {
             TechnoResearch.recipes.put("EssentiaDynamo", ThaumcraftApi.addArcaneCraftingRecipe("DYNAMO", new ItemStack(TMBlocks.essentiaDynamo, 1, 0), new AspectList().add(Aspect.WATER, 15).add(Aspect.ORDER, 10).add(Aspect.FIRE, 5).add(Aspect.ENTROPY, 25), new Object[] { " C ", "GIG", "IWI", 'W', new ItemStack(Thaumcraft.blockJar, 1, 0), 'C', new ItemStack(TMItems.itemMaterial, 1, 1), 'G', new ItemStack(TMItems.itemMaterial, 1, 2), 'I', new ItemStack(Thaumcraft.blockTube, 1, 0), }));
         }
-        if (Ids.biomeMorpher) {
+        if (TMConfig.biomeMorpher) {
             TechnoResearch.recipes.put("BiomeMorpher", ThaumcraftApi.addArcaneCraftingRecipe("BIOMEMORPHER", new ItemStack(TMBlocks.biomeMorpher), new AspectList().add(Aspect.EARTH, 30).add(Aspect.ORDER, 30).add(Aspect.WATER, 30),
                     new Object[] { " E ", "TOB", "GCG", 'E', new ItemStack(Items.emerald), 'T', new ItemStack(Thaumcraft.itemResource, 1, 11), 'O', new ItemStack(Thaumcraft.blockCosmeticSolid, 1, 0), 'B', new ItemStack(Thaumcraft.blockCustomPlant, 1, 4), 'G', new ItemStack(TMItems.itemMaterial, 1, 2), 'C', new ItemStack(TMItems.itemMaterial, 1, 1) }));
         }
-        if (Ids.wirelessCoil) {
+        if (TMConfig.wirelessCoil) {
             TechnoResearch.recipes.put("TeslaCoil",
                     ThaumcraftApi.addArcaneCraftingRecipe("TESLACOIL", new ItemStack(TMBlocks.teslaCoil), new AspectList().add(Aspect.WATER, 20).add(Aspect.ORDER, 20).add(Aspect.ENTROPY, 20).add(Aspect.AIR, 20).add(Aspect.FIRE, 20).add(Aspect.EARTH, 20), new Object[] { " N ", " C ", "TBT", 'N', new ItemStack(TMItems.itemMaterial, 1, 0), 'C', new ItemStack(TMItems.itemMaterial, 1, 1), 'T', new ItemStack(Thaumcraft.itemResource, 1, 2), 'B', new ItemStack(Thaumcraft.blockTube, 1, 4) }));
             TechnoResearch.recipes.put("CoilCoupler", ThaumcraftApi.addArcaneCraftingRecipe("TESLACOIL", new ItemStack(TMItems.itemMaterial, 1, 4), new AspectList().add(Aspect.AIR, 10).add(Aspect.ORDER, 15), new Object[] { " C ", " T ", " S ", 'C', new ItemStack(TMItems.itemMaterial, 1, 1), 'T', new ItemStack(Thaumcraft.itemResource, 1, 2), 'S', new ItemStack(Items.stick) }));
         }
         // Infusion Recipes
-        if (Ids.advDeconTable) {
+        if (TMConfig.advDeconTable) {
             TechnoResearch.recipes.put("AdvDeconTable", ThaumcraftApi.addInfusionCraftingRecipe("ADVDECONTABLE", new ItemStack(TMBlocks.advDeconTable), 10, new AspectList().add(Aspect.MAGIC, 32).add(Aspect.CRAFT, 8).add(Aspect.EXCHANGE, 16).add(Aspect.TOOL, 16), new ItemStack(Thaumcraft.blockTable, 1, 14), new ItemStack[] { new ItemStack(Blocks.piston), new ItemStack(Blocks.piston), new ItemStack(Blocks.piston), new ItemStack(Items.emerald) }));
         }
 
-        if (Ids.fusor) {
+        if (TMConfig.fusor) {
             TechnoResearch.recipes.put("EssentiaFusor", ThaumcraftApi.addInfusionCraftingRecipe("ESSENTIAFUSOR", new ItemStack(TMBlocks.essentiaFusor), 10, new AspectList().add(Aspect.MAGIC, 32).add(Aspect.CRAFT, 32).add(Aspect.EXCHANGE, 16).add(Aspect.MECHANISM, 16), new ItemStack(blockTube, 1, 2),
                     new ItemStack[] { new ItemStack(blockJar), new ItemStack(blockTube, 1, 1), new ItemStack(blockJar), new ItemStack(TMItems.itemMaterial, 1, 0), new ItemStack(blockJar), new ItemStack(blockTube, 1, 1), new ItemStack(blockJar), new ItemStack(TMItems.itemMaterial, 1, 0) }));
         }
 
         if (CompatibilityHandler.te) {
             // Infusion Recipes
-            if (Ids.nodeGen) {
+            if (TMConfig.nodeGen) {
                 TechnoResearch.recipes.put("NodeGenerator", ThaumcraftApi.addInfusionCraftingRecipe("NODEGENERATOR", new ItemStack(TMBlocks.nodeGenerator, 1, 0), 20, new AspectList().add(Aspect.AURA, 75).add(Aspect.ENERGY, 75).add(Aspect.TAINT, 75).add(Aspect.MAGIC, 75), new ItemStack(TMBlocks.nodeDynamo, 1, 0),
                         new ItemStack[] { new ItemStack(TMItems.itemMaterial, 1, 1), new ItemStack(Blocks.diamond_block), new ItemStack(Thaumcraft.blockCosmeticSolid, 1, 4), new ItemStack(Thaumcraft.blockCosmeticSolid, 1, 4), new ItemStack(TMBlocks.essentiaContainer, 1, 0), new ItemStack(TMBlocks.essentiaContainer, 1, 0), new ItemStack(ThermalExpansion.blockCell, 1, 3) }));
             }
-            if (Ids.wandCores) {
+            if (TMConfig.wandCores) {
                 TechnoResearch.recipes.put("EnergizedWandRod", ThaumcraftApi.addInfusionCraftingRecipe("ROD_electric", new ItemStack(TMItems.itemWandCores, 1, 0), 8, new AspectList().add(Aspect.ENERGY, 50).add(Aspect.TOOL, 50).add(Aspect.MAGIC, 50).add(Aspect.MECHANISM, 50).add(Aspect.EXCHANGE, 50), new ItemStack(Thaumcraft.itemWandRod, 1, 2),
                         new ItemStack[] { new ItemStack((ThermalExpansion.capacitorResonant).getItem(), 1, 4), new ItemStack((ThermalExpansion.powerCoilElectrum).getItem(), 1, 3), new ItemStack((ThermalExpansion.powerCoilSilver).getItem(), 1, 2), new ItemStack((ThermalExpansion.powerCoilGold).getItem(), 1, 1), new ItemStack(TMItems.itemMaterial, 1, 1) }));
             }
-            if (Ids.condenser) {
+            if (TMConfig.condenser) {
                 TechnoResearch.recipes.put("Condenser", ThaumcraftApi.addInfusionCraftingRecipe("CONDENSER", new ItemStack(TMBlocks.condenserBlock), 8, new AspectList().add(Aspect.ENERGY, 100).add(Aspect.MECHANISM, 50).add(Aspect.EXCHANGE, 25).add(Aspect.ORDER, 25), new ItemStack(Thaumcraft.blockStoneDevice, 1, 2),
                         new ItemStack[] { ThermalExpansion.frameMachineBasic, new ItemStack(TMItems.itemMaterial, 1, 1), new ItemStack(TMItems.itemMaterial, 1, 1), new ItemStack(Thaumcraft.blockCosmeticSolid, 1, 4), new ItemStack(Thaumcraft.blockCosmeticSolid, 1, 4) }));
             }
-            if (Ids.eldrichConsumer) {
+            if (TMConfig.eldrichConsumer) {
                 TechnoResearch.recipes.put("EldritchConsumer", ThaumcraftApi.addInfusionCraftingRecipe("ELDRITCHCONSUMER", new ItemStack(TMBlocks.eldritchConsumer, 1), 16, new AspectList().add(Aspect.EXCHANGE, 256).add(Aspect.MINE, 128).add(Aspect.ENERGY, 64).add(Aspect.MOTION, 32), new ItemStack(Thaumcraft.blockMetalDevice, 1, 9),
                         new ItemStack[] { new ItemStack(Items.diamond_pickaxe), ThermalExpansion.powerCoilGold, new ItemStack(Thaumcraft.blockJar), new ItemStack(Thaumcraft.blockJar), new ItemStack(Thaumcraft.itemPickThaumium) }));
             }
-            if (Ids.electricBellows) {
+            if (TMConfig.electricBellows) {
                 TechnoResearch.recipes.put("ElectricBellows",
                         ThaumcraftApi.addArcaneCraftingRecipe("ELECTRICBELLOWS", new ItemStack(TMBlocks.electricBellows, 1, 0), new AspectList().add(Aspect.AIR, 30).add(Aspect.ORDER, 30).add(Aspect.FIRE, 30), new Object[] { "TG ", "EBC", "TG ", 'T', new ItemStack(Thaumcraft.itemResource, 1, 2), 'G', new ItemStack(TMItems.itemMaterial, 1, 2), 'E', ThermalExpansion.frameCellBasic, 'B', new ItemStack(Thaumcraft.blockWoodenDevice, 1, 0), 'C', new ItemStack(TMItems.itemMaterial, 1, 1) }));
             }
-            if (Ids.processorTC) {
+            if (TMConfig.processorTC) {
                 TechnoResearch.recipes.put("Processor",
                         ThaumcraftApi.addArcaneCraftingRecipe("PROCESSOR", new ItemStack(TMBlocks.processorTC, 1, 0), new AspectList().add(Aspect.FIRE, 25).add(Aspect.ENTROPY, 25).add(Aspect.ORDER, 25), new Object[] { " A ", "BMB", "ICI", 'A', new ItemStack(Items.redstone), 'B', new ItemStack(Thaumcraft.blockCosmeticSolid, 1, 6), 'M', ThermalExpansion.frameMachineBasic, 'I', new ItemStack(Thaumcraft.itemResource, 1, 2), 'C', new ItemStack(TMItems.itemMaterial, 1, 1) }));
             }
         } else if (CompatibilityHandler.mk) {
             // Infusion Recipes
-            if (Ids.nodeGen) {
+            if (TMConfig.nodeGen) {
                 TechnoResearch.recipes.put("NodeGenerator", ThaumcraftApi.addInfusionCraftingRecipe("NODEGENERATOR", new ItemStack(TMBlocks.nodeGenerator, 1, 0), 20, new AspectList().add(Aspect.AURA, 75).add(Aspect.ENERGY, 75).add(Aspect.TAINT, 75).add(Aspect.MAGIC, 75), new ItemStack(TMBlocks.nodeDynamo, 1, 0),
                         new ItemStack[] { new ItemStack(TMItems.itemMaterial, 1, 1), new ItemStack(Blocks.diamond_block), new ItemStack(Thaumcraft.blockCosmeticSolid, 1, 4), new ItemStack(Thaumcraft.blockCosmeticSolid, 1, 4), new ItemStack(TMBlocks.essentiaContainer, 1, 0), new ItemStack(TMBlocks.essentiaContainer, 1, 0), Mekanism.energyCube }));
             }
-            if (Ids.wandCores) {
+            if (TMConfig.wandCores) {
                 TechnoResearch.recipes.put("EnergizedWandRod", ThaumcraftApi.addInfusionCraftingRecipe("ROD_electric", new ItemStack(TMItems.itemWandCores, 1, 0), 8, new AspectList().add(Aspect.ENERGY, 50).add(Aspect.TOOL, 50).add(Aspect.MAGIC, 50).add(Aspect.MECHANISM, 50).add(Aspect.EXCHANGE, 50), new ItemStack(Thaumcraft.itemWandRod, 1, 2),
                         new ItemStack[] { Mekanism.lithiumDust, Mekanism.lithiumDust, Mekanism.lithiumDust, new ItemStack(TMItems.itemMaterial, 1, 1), new ItemStack(TMItems.itemMaterial, 1, 2), new ItemStack(TMItems.itemMaterial, 1, 1) }));
             }
-            if (Ids.condenser) {
+            if (TMConfig.condenser) {
                 TechnoResearch.recipes.put("Condenser", ThaumcraftApi.addInfusionCraftingRecipe("CONDENSER", new ItemStack(TMBlocks.condenserBlock), 8, new AspectList().add(Aspect.ENERGY, 100).add(Aspect.MECHANISM, 50).add(Aspect.EXCHANGE, 25).add(Aspect.ORDER, 25), new ItemStack(Thaumcraft.blockStoneDevice, 1, 2),
                         new ItemStack[] { Mekanism.steelCasing, new ItemStack(TMItems.itemMaterial, 1, 1), new ItemStack(TMItems.itemMaterial, 1, 1), new ItemStack(Thaumcraft.blockCosmeticSolid, 1, 4), new ItemStack(Thaumcraft.blockCosmeticSolid, 1, 4) }));
             }
-            if (Ids.eldrichConsumer) {
+            if (TMConfig.eldrichConsumer) {
                 TechnoResearch.recipes.put("EldritchConsumer",
                         ThaumcraftApi.addInfusionCraftingRecipe("ELDRITCHCONSUMER", new ItemStack(TMBlocks.eldritchConsumer, 1), 16, new AspectList().add(Aspect.EXCHANGE, 256).add(Aspect.MINE, 128).add(Aspect.ENERGY, 64).add(Aspect.MOTION, 32), new ItemStack(Thaumcraft.blockMetalDevice, 1, 9), new ItemStack[] { new ItemStack(Items.diamond_pickaxe), Mekanism.lithiumDust, new ItemStack(Thaumcraft.blockJar), new ItemStack(Thaumcraft.blockJar), new ItemStack(Thaumcraft.itemPickThaumium) }));
             }
-            if (Ids.electricBellows) {
+            if (TMConfig.electricBellows) {
                 TechnoResearch.recipes.put("ElectricBellows",
                         ThaumcraftApi.addArcaneCraftingRecipe("ELECTRICBELLOWS", new ItemStack(TMBlocks.electricBellows, 1, 0), new AspectList().add(Aspect.AIR, 30).add(Aspect.ORDER, 30).add(Aspect.FIRE, 30), new Object[] { "TG ", "EBC", "TG ", 'T', new ItemStack(Thaumcraft.itemResource, 1, 2), 'G', new ItemStack(TMItems.itemMaterial, 1, 2), 'E', Mekanism.steelCasing, 'B', new ItemStack(Thaumcraft.blockWoodenDevice, 1, 0), 'C', new ItemStack(TMItems.itemMaterial, 1, 1) }));
             }
-            if (Ids.processorTC) {
+            if (TMConfig.processorTC) {
                 TechnoResearch.recipes.put("Processor", ThaumcraftApi.addArcaneCraftingRecipe("PROCESSOR", new ItemStack(TMBlocks.processorTC, 1, 0), new AspectList().add(Aspect.FIRE, 25).add(Aspect.ENTROPY, 25).add(Aspect.ORDER, 25), new Object[] { " A ", "BMB", "ICI", 'A', new ItemStack(Items.redstone), 'B', new ItemStack(Thaumcraft.blockCosmeticSolid, 1, 6), 'M', Mekanism.steelCasing, 'I', new ItemStack(Thaumcraft.itemResource, 1, 2), 'C', new ItemStack(TMItems.itemMaterial, 1, 1) }));
             }
         } else {
             // Infusion Recipes
-            if (Ids.nodeGen) {
+            if (TMConfig.nodeGen) {
                 TechnoResearch.recipes.put("NodeGenerator", ThaumcraftApi.addInfusionCraftingRecipe("NODEGENERATOR", new ItemStack(TMBlocks.nodeGenerator, 1, 0), 20, new AspectList().add(Aspect.AURA, 75).add(Aspect.ENERGY, 75).add(Aspect.TAINT, 75).add(Aspect.MAGIC, 75), new ItemStack(TMBlocks.nodeDynamo, 1, 0),
                         new ItemStack[] { new ItemStack(TMItems.itemMaterial, 1, 1), new ItemStack(Blocks.diamond_block), new ItemStack(Thaumcraft.blockCosmeticSolid, 1, 4), new ItemStack(Thaumcraft.blockCosmeticSolid, 1, 4), new ItemStack(TMBlocks.essentiaContainer, 1, 0), new ItemStack(TMBlocks.essentiaContainer, 1, 0), new ItemStack(Blocks.gold_block, 1, 0) }));
             }
-            if (Ids.wandCores) {
+            if (TMConfig.wandCores) {
                 TechnoResearch.recipes.put("EnergizedWandRod", ThaumcraftApi.addInfusionCraftingRecipe("ROD_electric", new ItemStack(TMItems.itemWandCores, 1), 8, new AspectList().add(Aspect.ENERGY, 50).add(Aspect.TOOL, 50).add(Aspect.MAGIC, 50).add(Aspect.MECHANISM, 50).add(Aspect.EXCHANGE, 50), new ItemStack(Thaumcraft.itemWandRod, 1, 2),
                         new ItemStack[] { new ItemStack(Blocks.redstone_block, 1), new ItemStack(Blocks.gold_block, 1, 193), new ItemStack(TMItems.itemMaterial, 1, 2), new ItemStack(TMItems.itemMaterial, 1, 1), new ItemStack(TMItems.itemMaterial, 1, 1) }));
             }
-            if (Ids.condenser) {
+            if (TMConfig.condenser) {
                 TechnoResearch.recipes.put("Condenser", ThaumcraftApi.addInfusionCraftingRecipe("CONDENSER", new ItemStack(TMBlocks.condenserBlock), 8, new AspectList().add(Aspect.ENERGY, 100).add(Aspect.MECHANISM, 50).add(Aspect.EXCHANGE, 25).add(Aspect.ORDER, 25), new ItemStack(Thaumcraft.blockStoneDevice, 1, 2),
                         new ItemStack[] { new ItemStack(TMItems.itemMaterial, 1, 2), new ItemStack(TMItems.itemMaterial, 1, 1), new ItemStack(TMItems.itemMaterial, 1, 1), new ItemStack(Thaumcraft.blockCosmeticSolid, 1, 4), new ItemStack(Thaumcraft.blockCosmeticSolid, 1, 4) }));
             }
-            if (Ids.eldrichConsumer) {
+            if (TMConfig.eldrichConsumer) {
                 TechnoResearch.recipes.put("EldritchConsumer", ThaumcraftApi.addInfusionCraftingRecipe("ELDRITCHCONSUMER", new ItemStack(TMBlocks.eldritchConsumer, 1), 16, new AspectList().add(Aspect.EXCHANGE, 256).add(Aspect.MINE, 128).add(Aspect.ENERGY, 64).add(Aspect.MOTION, 32), new ItemStack(Thaumcraft.blockMetalDevice, 1, 9),
                         new ItemStack[] { new ItemStack(Items.diamond_pickaxe), new ItemStack(Items.redstone), new ItemStack(Thaumcraft.blockJar), new ItemStack(Thaumcraft.blockJar), new ItemStack(Thaumcraft.itemPickThaumium) }));
             }
-            if (Ids.electricBellows) {
+            if (TMConfig.electricBellows) {
                 TechnoResearch.recipes.put("ElectricBellows",
                         ThaumcraftApi.addArcaneCraftingRecipe("ELECTRICBELLOWS", new ItemStack(TMBlocks.electricBellows, 1, 0), new AspectList().add(Aspect.AIR, 30).add(Aspect.ORDER, 30).add(Aspect.FIRE, 30), new Object[] { "TG ", "EBC", "TG ", 'T', new ItemStack(Thaumcraft.itemResource, 1, 2), 'G', new ItemStack(TMItems.itemMaterial, 1, 2), 'E', new ItemStack(Blocks.redstone_block, 1), 'B', new ItemStack(Thaumcraft.blockWoodenDevice, 1, 0), 'C', new ItemStack(TMItems.itemMaterial, 1, 1) }));
             }
-            if (Ids.processorTC) {
+            if (TMConfig.processorTC) {
                 TechnoResearch.recipes.put("Processor",
                         ThaumcraftApi.addArcaneCraftingRecipe("PROCESSOR", new ItemStack(TMBlocks.processorTC, 1, 0), new AspectList().add(Aspect.FIRE, 25).add(Aspect.ENTROPY, 25).add(Aspect.ORDER, 25), new Object[] { " A ", "BMB", "ICI", 'A', new ItemStack(Items.redstone), 'B', new ItemStack(Thaumcraft.blockCosmeticSolid, 1, 6), 'M', new ItemStack(Blocks.redstone_block, 1), 'I', new ItemStack(Thaumcraft.itemResource, 1, 2), 'C', new ItemStack(TMItems.itemMaterial, 1, 1) }));
             }

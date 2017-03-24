@@ -9,13 +9,13 @@ import org.lwjgl.opengl.GL11;
 import theflogat.technomancy.client.models.ModelEssentiaDynamo;
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
 import theflogat.technomancy.common.tiles.thaumcraft.dynamos.TileEssentiaDynamo;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 public class TileEssentiaDynamoRenderer extends TileEntitySpecialRenderer {
 
     ModelEssentiaDynamo model = new ModelEssentiaDynamo();
 
-    private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_ESSENTIA_DYNAMO_TEXTURE);
+    private static final ResourceLocation modelTexture = new ResourceLocation(Reference.MODEL_ESS_DYNAMO);
 
     @Override
     public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float t) {

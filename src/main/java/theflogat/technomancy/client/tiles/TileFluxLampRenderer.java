@@ -8,14 +8,14 @@ import org.lwjgl.opengl.GL11;
 import thaumcraft.common.tiles.TileTube;
 import theflogat.technomancy.client.models.ModelFluxLamp;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileFluxLamp;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.util.helpers.WorldHelper;
 
 public class TileFluxLampRenderer extends TileEntitySpecialRenderer {
 
     ModelFluxLamp model = new ModelFluxLamp();
 
-    private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_FLUX_LAMP_TEXTURE);
+    private static final ResourceLocation modelTexture = new ResourceLocation(Reference.MODEL_FLUX_LAMP);
 
     @Override
     public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float f) {

@@ -4,7 +4,7 @@ import java.util.List;
 
 import theflogat.technomancy.common.items.base.ItemBase;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 public class ItemEssentiaCannon extends ItemBase {
 
     public ItemEssentiaCannon() {
-        setUnlocalizedName(Ref.MOD_PREFIX + Names.essentiaCannon);
+        setUnlocalizedName(Reference.MOD_PREFIX + Names.ESSENTIACANNON);
     }
 
     @Override

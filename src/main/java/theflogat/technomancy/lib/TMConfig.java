@@ -1,14 +1,20 @@
 package theflogat.technomancy.lib;
 
-public class Ids {
+import theflogat.technomancy.Technomancy;
 
-    public static int hudStartX = 16;
-    public static int hudStartY = 75;
+public final class TMConfig {
+
+    public static boolean fancy = true;
+    public static int[] blacklist = {};
+    public static boolean bonus = true;
+    public static boolean debug;
+    public static boolean mkfirst;
+    public static boolean showHUD;
 
     public static boolean dynNode;
     public static boolean contEssentia;
     public static boolean cosmeticOpaque;
-    public static boolean idCOSMETIC_PANE;
+    public static boolean idcosmeticpane;
     public static boolean dynEssentia;
     public static boolean biomeMorpher;
     public static boolean nodeGen;
@@ -17,7 +23,6 @@ public class Ids {
     public static boolean electricBellows;
     public static boolean creativeJar;
     public static boolean crystalBlock;
-    // public static boolean reconstructor;
     public static boolean bloodDynamo;
     public static boolean condenser;
     public static boolean bloodFabricator;
@@ -52,7 +57,17 @@ public class Ids {
     public static boolean existenceUser;
     public static boolean exGem;
     public static boolean treasures;
-
     public static int drown;
     public static int slowFall;
+    public static int hudStartX = 16;
+    public static int hudStartY = 75;
+    
+    private TMConfig() {}
+    
+    public static void error(final Exception e) {
+        if (debug) {
+            Technomancy.logger.error("Exception:", e);
+        }
+    }
+
 }

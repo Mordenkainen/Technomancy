@@ -6,13 +6,13 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import theflogat.technomancy.client.models.ModelExistencePylon;
 import theflogat.technomancy.common.tiles.technom.existence.TileExistencePylon;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 public class TileExistencePylonRenderer extends TileEntitySpecialRenderer {
 
     ModelExistencePylon model = new ModelExistencePylon();
-    private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_COBBLEM_TEXTURE);
-    private static final ResourceLocation cube = new ResourceLocation(Ref.MODEL_WHITE_TEXTURE);
+    private static final ResourceLocation modelTexture = new ResourceLocation(Reference.MODEL_FOUNT);
+    private static final ResourceLocation cube = new ResourceLocation(Reference.MODEL_WHITE);
 
     @Override
     public void renderTileEntityAt(TileEntity te, double x, double y, double z, float t) {

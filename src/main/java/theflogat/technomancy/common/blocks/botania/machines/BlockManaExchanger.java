@@ -10,7 +10,7 @@ import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.tiles.botania.machines.TileManaExchanger;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import vazkii.botania.api.mana.IPoolOverlayProvider;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -25,18 +25,18 @@ public class BlockManaExchanger extends BlockContainerAdvanced implements IPoolO
         setResistance(10.0F);
         setStepSound(Block.soundTypeStone);
         setCreativeTab(Technomancy.tabsTM);
-        setBlockName(Ref.MOD_PREFIX + Names.manaExchanger);
+        setBlockName(Reference.MOD_PREFIX + Names.MANAEXCHANGER);
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public void registerBlockIcons(IIconRegister icon) {
         icons = new IIcon[5];
-        icons[0] = icon.registerIcon(Ref.getAsset(Names.manaExchanger + "Bottom"));
-        icons[1] = icon.registerIcon(Ref.getAsset(Names.manaExchanger + "Out"));
-        icons[2] = icon.registerIcon(Ref.getAsset(Names.manaExchanger + "In"));
-        icons[3] = icon.registerIcon(Ref.getAsset(Names.manaExchanger + "TopActive"));
-        icons[4] = icon.registerIcon(Ref.getAsset(Names.manaExchanger + "TopInactive"));
+        icons[0] = icon.registerIcon(Reference.getAsset(Names.MANAEXCHANGER + "Bottom"));
+        icons[1] = icon.registerIcon(Reference.getAsset(Names.MANAEXCHANGER + "Out"));
+        icons[2] = icon.registerIcon(Reference.getAsset(Names.MANAEXCHANGER + "In"));
+        icons[3] = icon.registerIcon(Reference.getAsset(Names.MANAEXCHANGER + "TopActive"));
+        icons[4] = icon.registerIcon(Reference.getAsset(Names.MANAEXCHANGER + "TopInactive"));
     }
 
     @SideOnly(Side.CLIENT)

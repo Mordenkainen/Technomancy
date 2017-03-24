@@ -6,14 +6,14 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import theflogat.technomancy.client.models.ModelExistenceFountain;
 import theflogat.technomancy.common.tiles.technom.existence.TileExistenceFountain;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 public class TileExistenceFountainRenderer extends TileEntitySpecialRenderer {
 
     public static ModelExistenceFountain model = new ModelExistenceFountain();
 
-    public static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_COBBLEM_TEXTURE);
-    public static final ResourceLocation exTexture = new ResourceLocation(Ref.MODEL_EXISTENCE_TEXTURE);
+    public static final ResourceLocation modelTexture = new ResourceLocation(Reference.MODEL_FOUNT);
+    public static final ResourceLocation exTexture = new ResourceLocation(Reference.MODEL_EXISTENCE);
 
     @Override
     public void renderTileEntityAt(TileEntity te, double x, double y, double z, float t) {

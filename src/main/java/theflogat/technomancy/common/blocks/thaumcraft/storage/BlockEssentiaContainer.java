@@ -20,7 +20,7 @@ import thaumcraft.api.aspects.IEssentiaContainerItem;
 import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaContainer;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.lib.RenderIds;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import cpw.mods.fml.relauncher.Side;
@@ -32,7 +32,7 @@ public class BlockEssentiaContainer extends BlockContainerAdvanced {
 
     public BlockEssentiaContainer() {
         setHardness(1F);
-        setBlockName(Ref.MOD_PREFIX + Names.essentiaContainer);
+        setBlockName(Reference.MOD_PREFIX + Names.ESSENTIACONTAINER);
         setBlockBounds(0.1875F, 0.0F, 0.1875F, 0.8125F, 0.75F, 0.8125F);
     }
 
@@ -197,7 +197,7 @@ public class BlockEssentiaContainer extends BlockContainerAdvanced {
 
     @Override
     public int getRenderType() {
-        return RenderIds.idEssentiaContainer;
+        return RenderIds.idEssentiaCont;
     }
 
     public void setAspects(ItemStack itemstack, AspectList aspects) {
@@ -216,9 +216,9 @@ public class BlockEssentiaContainer extends BlockContainerAdvanced {
     @SideOnly(Side.CLIENT)
     @Override
     public void registerBlockIcons(IIconRegister icon) {
-        iconJar = icon.registerIcon(Ref.MODEL_PREFIX + Names.essentiaContainer);
-        iconLiquid = icon.registerIcon(Ref.TEXTURE_PREFIX + "animatedglow");
-        blockIcon = icon.registerIcon(Ref.TEXTURE_PREFIX + Names.essentiaContainer);
+        iconJar = icon.registerIcon(Reference.MODEL_PREFIX + Names.ESSENTIACONTAINER);
+        iconLiquid = icon.registerIcon(Reference.TEXTURE_PREFIX + "animatedglow");
+        blockIcon = icon.registerIcon(Reference.TEXTURE_PREFIX + Names.ESSENTIACONTAINER);
     }
 
     @Override

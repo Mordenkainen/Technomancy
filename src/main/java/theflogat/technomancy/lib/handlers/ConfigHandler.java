@@ -4,8 +4,7 @@ import java.awt.Color;
 import java.io.File;
 import java.util.Arrays;
 
-import theflogat.technomancy.lib.Conf;
-import theflogat.technomancy.lib.Ids;
+import theflogat.technomancy.lib.TMConfig;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.util.Ore;
 import net.minecraftforge.common.config.Configuration;
@@ -21,80 +20,80 @@ public class ConfigHandler {
         config.load();
         String blocks = "Blocks";
         // Blocks
-        Ids.dynNode = config.get(blocks, Names.nodeDynamo, true).getBoolean();
-        Ids.contEssentia = config.get(blocks, Names.essentiaContainer, true).getBoolean();
-        Ids.cosmeticOpaque = config.get(blocks, Names.cosmeticOpaque, true).getBoolean();
-        Ids.idCOSMETIC_PANE = config.get(blocks, Names.cosmeticPane, true).getBoolean();
-        Ids.dynEssentia = config.get(blocks, Names.essentiaDynamo, true).getBoolean();
-        Ids.biomeMorpher = config.get(blocks, Names.biomeMorpher, true).getBoolean();
-        Ids.nodeGen = config.get(blocks, Names.nodeGenerator, true).getBoolean();
-        Ids.fluxLamp = config.get(blocks, Names.fluxLamp, true).getBoolean();
-        Ids.wirelessCoil = config.get(blocks, Names.essentiaTransmitter, true).getBoolean();
-        Ids.electricBellows = config.get(blocks, Names.electricBellows, true).getBoolean();
-        Ids.creativeJar = config.get(blocks, Names.creativeJar, true).getBoolean();
-        Ids.crystalBlock = config.get(blocks, Names.crystalBlock, true).getBoolean();
+        TMConfig.dynNode = config.get(blocks, Names.NODEDYNAMO, true).getBoolean();
+        TMConfig.contEssentia = config.get(blocks, Names.ESSENTIACONTAINER, true).getBoolean();
+        TMConfig.cosmeticOpaque = config.get(blocks, Names.COSMETICOPAQUE, true).getBoolean();
+        TMConfig.idcosmeticpane = config.get(blocks, Names.COSMETICPANE, true).getBoolean();
+        TMConfig.dynEssentia = config.get(blocks, Names.ESSENTIADYNAMO, true).getBoolean();
+        TMConfig.biomeMorpher = config.get(blocks, Names.BIOMEMORPHER, true).getBoolean();
+        TMConfig.nodeGen = config.get(blocks, Names.NODEGENERATOR, true).getBoolean();
+        TMConfig.fluxLamp = config.get(blocks, Names.FLUXLAMP, true).getBoolean();
+        TMConfig.wirelessCoil = config.get(blocks, Names.ESSENTIATRANS, true).getBoolean();
+        TMConfig.electricBellows = config.get(blocks, Names.ELECTRICBELLOWS, true).getBoolean();
+        TMConfig.creativeJar = config.get(blocks, Names.CREATIVEJAR, true).getBoolean();
+        TMConfig.crystalBlock = config.get(blocks, Names.CRYSTALBLOCK, true).getBoolean();
         // Ids.reconstructor = config.get(blocks, Names.reconstructor,
         // true).getBoolean();
-        Ids.bloodDynamo = config.get(blocks, Names.bloodDynamo, true).getBoolean();
-        Ids.condenser = config.get(blocks, Names.condenserBlock, true).getBoolean();
-        Ids.bloodFabricator = config.get(blocks, Names.bloodFabricator, true).getBoolean();
-        Ids.flowerDyn = config.get(blocks, Names.flowerDynamo, true).getBoolean();
-        Ids.manaFab = config.get(blocks, Names.manaFabricator, true).getBoolean();
-        Ids.processorTC = config.get(blocks, Names.processor + "TC", true).getBoolean();
-        Ids.processorBM = config.get(blocks, Names.processor + "BM", true).getBoolean();
-        Ids.processorBO = config.get(blocks, Names.processor + "BO", true).getBoolean();
-        Ids.eldrichConsumer = config.get(blocks, Names.eldritchConsumer, true).getBoolean();
-        Ids.catalyst = config.get(blocks, Names.catalyst, true).getBoolean();
-        Ids.reservoir = config.get(blocks, Names.reservoir, true).getBoolean();
-        Ids.advDeconTable = config.get(blocks, Names.advDeconTable, true).getBoolean();
-        Ids.manaFluid = config.get(blocks, Names.manaFluid, true).getBoolean();
-        Ids.manaExchanger = config.get(blocks, Names.manaExchanger, true).getBoolean();
-        Ids.itemTransmitter = config.get(blocks, Names.itemTransmitter, true).getBoolean();
-        Ids.basalt = config.get(blocks, Names.basalt, true).getBoolean();
-        Ids.fusor = config.get(blocks, Names.fusor, true).getBoolean();
-        Ids.existenceFountain = config.get(blocks, Names.existenceFountain, true).getBoolean();
-        Ids.existenceBurner = config.get(blocks, Names.existenceBurner[0], true).getBoolean();
-        Ids.existencePylon = config.get(blocks, Names.existencePylon, true).getBoolean();
-        Ids.existenceUser = config.get(blocks, "existenceUser", true).getBoolean();
+        TMConfig.bloodDynamo = config.get(blocks, Names.BLOODDYNAMO, true).getBoolean();
+        TMConfig.condenser = config.get(blocks, Names.CONDENSERBLOCK, true).getBoolean();
+        TMConfig.bloodFabricator = config.get(blocks, Names.BLOODFABRICATOR, true).getBoolean();
+        TMConfig.flowerDyn = config.get(blocks, Names.FLOWERDYNAMO, true).getBoolean();
+        TMConfig.manaFab = config.get(blocks, Names.MANAFABRICATOR, true).getBoolean();
+        TMConfig.processorTC = config.get(blocks, Names.PROCESSOR + "TC", true).getBoolean();
+        TMConfig.processorBM = config.get(blocks, Names.PROCESSOR + "BM", true).getBoolean();
+        TMConfig.processorBO = config.get(blocks, Names.PROCESSOR + "BO", true).getBoolean();
+        TMConfig.eldrichConsumer = config.get(blocks, Names.ELDRITCHCONSUMER, true).getBoolean();
+        TMConfig.catalyst = config.get(blocks, Names.CATALYST, true).getBoolean();
+        TMConfig.reservoir = config.get(blocks, Names.RESERVOIR, true).getBoolean();
+        TMConfig.advDeconTable = config.get(blocks, Names.ADVDECONTABLE, true).getBoolean();
+        TMConfig.manaFluid = config.get(blocks, Names.MANAFLUID, true).getBoolean();
+        TMConfig.manaExchanger = config.get(blocks, Names.MANAEXCHANGER, true).getBoolean();
+        TMConfig.itemTransmitter = config.get(blocks, Names.ITEMTRANSMITTER, true).getBoolean();
+        TMConfig.basalt = config.get(blocks, Names.BASALT, true).getBoolean();
+        TMConfig.fusor = config.get(blocks, Names.FUSOR, true).getBoolean();
+        TMConfig.existenceFountain = config.get(blocks, Names.EXISTENCEFOUNTAIN, true).getBoolean();
+        TMConfig.existenceBurner = config.get(blocks, Names.EXISTENCEBURNER[0], true).getBoolean();
+        TMConfig.existencePylon = config.get(blocks, Names.EXISTENCEPYLON, true).getBoolean();
+        TMConfig.existenceUser = config.get(blocks, "existenceUser", true).getBoolean();
 
         String items = "Items";
         // Items
-        Ids.essentiaCannon = config.get(items, Names.essentiaCannon, true).getBoolean();
-        Ids.itemMaterial = config.get(items, Names.itemMaterial, true).getBoolean();
-        Ids.pen = config.get(items, Names.pen, true).getBoolean();
-        Ids.wandCores = config.get(items, Names.wandCores, true).getBoolean();
-        Ids.focusFusion = config.get(items, Names.fusionFocus, true).getBoolean();
-        Ids.matBM = config.get(items, Names.itemBM, true).getBoolean();
-        Ids.matBO = config.get(items, Names.itemBO, true).getBoolean();
-        Ids.itemBoost = config.get(items, Names.itemBoost, true).getBoolean();
-        Ids.ritualTome = config.get(items, Names.ritualTome, true).getBoolean();
-        Ids.coilCoupler = config.get(items, Names.coilCoupler, true).getBoolean();
-        Ids.scepter = config.get(items, Names.scepter, true).getBoolean();
-        Ids.exGem = config.get(items, Names.exGem, true).getBoolean();
-        Ids.treasures = config.get(items, "treasures", true).getBoolean();
-        Ids.treasures &= config.get(items, "treasureSafeguard", false, "Enhanced villagers will only be enabled if this option AND the treasures option are true. " + "Note, some of the villagers can cause large scale damage, you have been warned!").getBoolean();
+        TMConfig.essentiaCannon = config.get(items, Names.ESSENTIACANNON, true).getBoolean();
+        TMConfig.itemMaterial = config.get(items, Names.ITEMMATERIAL, true).getBoolean();
+        TMConfig.pen = config.get(items, Names.PEN, true).getBoolean();
+        TMConfig.wandCores = config.get(items, Names.WANDCORES, true).getBoolean();
+        TMConfig.focusFusion = config.get(items, Names.FUSIONFOCUS, true).getBoolean();
+        TMConfig.matBM = config.get(items, Names.ITEMBM, true).getBoolean();
+        TMConfig.matBO = config.get(items, Names.ITEMBO, true).getBoolean();
+        TMConfig.itemBoost = config.get(items, Names.ITEMBOOST, true).getBoolean();
+        TMConfig.ritualTome = config.get(items, Names.RITUALTOME, true).getBoolean();
+        TMConfig.coilCoupler = config.get(items, Names.COILCOUPLER, true).getBoolean();
+        TMConfig.scepter = config.get(items, Names.SCEPTER, true).getBoolean();
+        TMConfig.exGem = config.get(items, Names.EXGEM, true).getBoolean();
+        TMConfig.treasures = config.get(items, "treasures", true).getBoolean();
+        TMConfig.treasures &= config.get(items, "treasureSafeguard", false, "Enhanced villagers will only be enabled if this option AND the treasures option are true. " + "Note, some of the villagers can cause large scale damage, you have been warned!").getBoolean();
 
         // Potions
         String potions = "Potions";
-        Ids.drown = config.get(potions, Names.drown, 82).getInt(82);
-        Ids.slowFall = config.get(potions, Names.slowFall, 83).getInt(83);
+        TMConfig.drown = config.get(potions, Names.DROWN, 82).getInt(82);
+        TMConfig.slowFall = config.get(potions, Names.SLOWFALL, 83).getInt(83);
 
         // HUD
-        Ids.hudStartX = config.get("HUD", "StartX", 16).getInt(16);
-        Ids.hudStartY = config.get("HUD", "StartY", 88).getInt(88);
-        Conf.showHUD = config.get("HUD", "ShowHUD", Conf.showHUD).getBoolean(Conf.showHUD);
+        TMConfig.hudStartX = config.get("HUD", "StartX", 16).getInt(16);
+        TMConfig.hudStartY = config.get("HUD", "StartY", 88).getInt(88);
+        TMConfig.showHUD = config.get("HUD", "ShowHUD", TMConfig.showHUD).getBoolean(TMConfig.showHUD);
 
         // Recipe Whatnots
-        Conf.bonus = config.get("Recipes", "Add/Increase Smelting bonus to dusts/ore", Conf.bonus).getBoolean(Conf.bonus);
+        TMConfig.bonus = config.get("Recipes", "Add/Increase Smelting bonus to dusts/ore", TMConfig.bonus).getBoolean(TMConfig.bonus);
 
         // Render effects
-        Conf.fancy = config.get("Renderers", "CoilFX", Conf.fancy).getBoolean(Conf.fancy);
+        TMConfig.fancy = config.get("Renderers", "CoilFX", TMConfig.fancy).getBoolean(TMConfig.fancy);
 
         // Reconstructor stuff
-        Conf.blacklist = config.get("Machines", "Blacklisted materials for use in the Essentia Reconstructor", Conf.blacklist).getIntList();
+        TMConfig.blacklist = config.get("Machines", "Blacklisted materials for use in the Essentia Reconstructor", TMConfig.blacklist).getIntList();
 
-        Conf.debug = config.get("Misc", "DebugFunction", Conf.debug).getBoolean(Conf.debug);
-        Conf.mkfirst = config.get("Misc", "Mekanism Recipes Will Override TE Ones", Conf.mkfirst).getBoolean();
+        TMConfig.debug = config.get("Misc", "DebugFunction", TMConfig.debug).getBoolean(TMConfig.debug);
+        TMConfig.mkfirst = config.get("Misc", "Mekanism Recipes Will Override TE Ones", TMConfig.mkfirst).getBoolean();
 
         // RF Costs
         Rate.modifyRate(config);

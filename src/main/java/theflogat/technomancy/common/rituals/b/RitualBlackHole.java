@@ -11,13 +11,13 @@ import theflogat.technomancy.api.rituals.IRitualEffectHandler;
 import theflogat.technomancy.api.rituals.Ritual;
 import theflogat.technomancy.client.models.ModelBlackSphere;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.util.Loc;
 
 public abstract class RitualBlackHole extends Ritual implements IRitualEffectHandler {
 
     ModelBlackSphere specialRender;
-    protected static final ResourceLocation textLoc = new ResourceLocation(Ref.MODEL_REF_TEXTURE);
+    protected static final ResourceLocation textLoc = new ResourceLocation(Reference.MODEL_SPHERE);
     protected final int radiusX, radiusY, radiusZ;
 
     public RitualBlackHole(Type[] frame, Type core, int radX, int radY, int radZ) {

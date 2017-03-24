@@ -14,18 +14,18 @@ import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.common.tiles.base.ICouplable;
 import theflogat.technomancy.common.tiles.base.ICouplable.Couple;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 public class ItemCoilCoupler extends Item {
 
     public ItemCoilCoupler() {
-        setUnlocalizedName(Ref.getId(Names.coilCoupler));
+        setUnlocalizedName(Reference.getId(Names.COILCOUPLER));
         setCreativeTab(Technomancy.tabsTM);
     }
 
     @Override
     public void registerIcons(IIconRegister reg) {
-        itemIcon = reg.registerIcon(Ref.getAsset(Names.coilCoupler));
+        itemIcon = reg.registerIcon(Reference.getAsset(Names.COILCOUPLER));
     }
 
     @Override

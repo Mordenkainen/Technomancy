@@ -7,7 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 public class ItemBlockExistenceUser extends ItemBlock {
 
@@ -17,12 +17,12 @@ public class ItemBlockExistenceUser extends ItemBlock {
 
     @Override
     public String getUnlocalizedName(ItemStack items) {
-        return Ref.getId(Names.existenceUser[items.getItemDamage() % Names.existenceUser.length]);
+        return Reference.getId(Names.EXISTENCEUSER[items.getItemDamage() % Names.EXISTENCEUSER.length]);
     }
 
     @Override
     public void getSubItems(Item item, CreativeTabs tab, List l) {
-        for (int i = 0; i < Names.existenceUser.length; i++) {
+        for (int i = 0; i < Names.EXISTENCEUSER.length; i++) {
             l.add(new ItemStack(item, 1, i));
         }
     }

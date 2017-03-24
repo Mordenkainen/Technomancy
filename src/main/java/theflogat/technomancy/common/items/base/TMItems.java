@@ -7,7 +7,7 @@ import theflogat.technomancy.common.items.technom.ItemProcessedOre;
 import theflogat.technomancy.common.items.technom.existence.ItemExistenceGem;
 import theflogat.technomancy.common.items.technom.existence.ItemTreasure;
 import theflogat.technomancy.common.items.tome.ItemRitualTome;
-import theflogat.technomancy.lib.Ids;
+import theflogat.technomancy.lib.TMConfig;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.util.Ore;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -31,16 +31,16 @@ public class TMItems {
     public static ItemTreasure treasures;
 
     public static void initTechnomancy() {
-        itemBoost = Ids.itemBoost ? new ItemBoost() : null;
-        ritualTome = Ids.ritualTome ? new ItemRitualTome() : null;
-        coilCoupler = Ids.coilCoupler ? new ItemCoilCoupler() : null;
-        exGem = Ids.exGem ? new ItemExistenceGem() : null;
-        treasures = Ids.treasures ? new ItemTreasure() : null;
+        itemBoost = TMConfig.itemBoost ? new ItemBoost() : null;
+        ritualTome = TMConfig.ritualTome ? new ItemRitualTome() : null;
+        coilCoupler = TMConfig.coilCoupler ? new ItemCoilCoupler() : null;
+        exGem = TMConfig.exGem ? new ItemExistenceGem() : null;
+        treasures = TMConfig.treasures ? new ItemTreasure() : null;
 
-        registerItem(itemBoost, Names.itemBoost);
-        registerItem(ritualTome, Names.ritualTome);
-        registerItem(coilCoupler, Names.coilCoupler);
-        registerItem(exGem, Names.exGem);
+        registerItem(itemBoost, Names.ITEMBOOST);
+        registerItem(ritualTome, Names.RITUALTOME);
+        registerItem(coilCoupler, Names.COILCOUPLER);
+        registerItem(exGem, Names.EXGEM);
         registerItem(treasures, "treasures");
     }
 

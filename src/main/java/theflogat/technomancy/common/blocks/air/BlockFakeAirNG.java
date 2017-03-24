@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 import theflogat.technomancy.common.tiles.air.TileFakeAirNG;
 import theflogat.technomancy.common.tiles.base.IRedstoneSensitive.RedstoneSet;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.util.ToolWrench;
 import theflogat.technomancy.util.helpers.WorldHelper;
 
@@ -36,7 +36,7 @@ public class BlockFakeAirNG extends BlockContainer {
     public BlockFakeAirNG() {
         super(Material.carpet);
         setBlockUnbreakable();
-        setBlockName(Ref.getId(Names.fakeAirNG));
+        setBlockName(Reference.getId(Names.FAKEAIRNG));
     }
 
     @Override
@@ -46,7 +46,7 @@ public class BlockFakeAirNG extends BlockContainer {
 
     @Override
     public void registerBlockIcons(IIconRegister reg) {
-        blockIcon = reg.registerIcon(Ref.getAsset(Names.fakeAirNG));
+        blockIcon = reg.registerIcon(Reference.getAsset(Names.FAKEAIRNG));
     }
 
     @Override

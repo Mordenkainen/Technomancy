@@ -21,7 +21,7 @@ import thaumcraft.common.tiles.TileThaumatoriumTop;
 import thaumcraft.common.tiles.TileTubeBuffer;
 import theflogat.technomancy.common.tiles.base.TileCoilTransmitter;
 import theflogat.technomancy.common.tiles.thaumcraft.util.AspectContainerEssentiaTransport;
-import theflogat.technomancy.lib.Conf;
+import theflogat.technomancy.lib.TMConfig;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import theflogat.technomancy.util.helpers.WorldHelper;
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -117,7 +117,7 @@ public class TileEssentiaTransmitter extends TileCoilTransmitter implements IEss
                                 Aspect aspect = al.getAspects()[i];
                                 if (aspect != null && (aspectFilter == null || aspect == aspectFilter) && cont.doesContainerAccept(aspect) && cont.addToContainer(aspect, 1) == 0) {
                                     if (source.takeFromContainer(aspect, 1)) {
-                                        if (Conf.fancy) {
+                                        if (TMConfig.fancy) {
                                             if (this.xCoord - tile.xCoord <= Byte.MAX_VALUE && this.yCoord - tile.yCoord <= Byte.MAX_VALUE && this.zCoord - tile.zCoord <= Byte.MAX_VALUE) {
                                                 PacketHandler.INSTANCE.sendToAllAround(new PacketFXEssentiaSource(this.xCoord, this.yCoord + 1, this.zCoord, (byte) (this.xCoord - tile.xCoord), (byte) (this.yCoord - tile.yCoord), (byte) (this.zCoord - tile.zCoord), aspect.getColor()), new NetworkRegistry.TargetPoint(tile.getWorldObj().provider.dimensionId, tile.xCoord, tile.yCoord, tile.zCoord, 32.0D));
                                             }
@@ -180,7 +180,7 @@ public class TileEssentiaTransmitter extends TileCoilTransmitter implements IEss
                     if (source.doesContainerContainAmount(aspect, amount)) {
                         gotEssentia = source.takeFromContainer(aspect, amount);
                         if (gotEssentia) {
-                            if (Conf.fancy) {
+                            if (TMConfig.fancy) {
                                 if (this.xCoord - tile.xCoord <= Byte.MAX_VALUE && this.yCoord - tile.yCoord <= Byte.MAX_VALUE && this.zCoord - tile.zCoord <= Byte.MAX_VALUE) {
                                     PacketHandler.INSTANCE.sendToAllAround(new PacketFXEssentiaSource(this.xCoord, this.yCoord + 1, this.zCoord, (byte) (this.xCoord - tile.xCoord), (byte) (this.yCoord - tile.yCoord), (byte) (this.zCoord - tile.zCoord), aspect.getColor()), new NetworkRegistry.TargetPoint(tile.getWorldObj().provider.dimensionId, tile.xCoord, tile.yCoord, tile.zCoord, 32.0D));
                                 }

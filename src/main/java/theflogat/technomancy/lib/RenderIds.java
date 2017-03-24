@@ -1,14 +1,14 @@
 package theflogat.technomancy.lib;
 
-public class RenderIds {
+public final class RenderIds {
 
-    public static int idEssentiaContainer;
+    public static int idEssentiaCont;
     public static int idEssentiaDynamo;
     public static int idNodeDynamo;
     public static int idBiomeMorpher;
     public static int idNodeGenerator;
     public static int idFluxLamp;
-    public static int idEssentiaTransmitter;
+    public static int idEssentiaTrans;
     public static int idElectricBellows;
     public static int idCreativeJar;
     public static int idReconstructor;
@@ -25,4 +25,6 @@ public class RenderIds {
     public static int idExFountain;
     public static int idExPylon;
     public static int idExBurner;
+    
+    private RenderIds() {}
 }

@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileAdvDeconTable;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.lib.RenderIds;
 import theflogat.technomancy.util.helpers.WorldHelper;
 import cpw.mods.fml.relauncher.Side;
@@ -22,7 +22,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockAdvDeconTable extends BlockContainerAdvanced {
 
     public BlockAdvDeconTable() {
-        setBlockName(Ref.getId(Names.advDeconTable));
+        setBlockName(Reference.getId(Names.ADVDECONTABLE));
     }
 
     @Override
@@ -77,7 +77,7 @@ public class BlockAdvDeconTable extends BlockContainerAdvanced {
     @SideOnly(Side.CLIENT)
     @Override
     public void registerBlockIcons(IIconRegister iconRegister) {
-        blockIcon = iconRegister.registerIcon(Ref.getAsset(Names.advDeconTable));
+        blockIcon = iconRegister.registerIcon(Reference.getAsset(Names.ADVDECONTABLE));
     }
 
     private static TileAdvDeconTable getTE(IBlockAccess world, int x, int y, int z) {

@@ -7,13 +7,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 
 public class ItemRitualTome extends Item {
 
     public ItemRitualTome() {
         setCreativeTab(Technomancy.tabsTM);
-        setUnlocalizedName(Ref.getId(Names.ritualTome));
+        setUnlocalizedName(Reference.getId(Names.RITUALTOME));
     }
 
     @Override
@@ -24,7 +24,7 @@ public class ItemRitualTome extends Item {
 
     @Override
     public void registerIcons(IIconRegister reg) {
-        itemIcon = reg.registerIcon(Ref.getAsset(Names.ritualTome));
+        itemIcon = reg.registerIcon(Reference.getAsset(Names.RITUALTOME));
     }
 
     public static class Res {

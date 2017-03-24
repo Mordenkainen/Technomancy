@@ -35,7 +35,7 @@ public class BlockEssentiaContainerRenderer implements ISimpleBlockRenderingHand
 
     @Override
     public int getRenderId() {
-        return RenderIds.idEssentiaContainer;
+        return RenderIds.idEssentiaCont;
     }
 
 }

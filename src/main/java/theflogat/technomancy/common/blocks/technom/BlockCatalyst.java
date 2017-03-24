@@ -17,7 +17,7 @@ import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.lib.RenderIds;
 
 public class BlockCatalyst extends BlockContainerAdvanced {
@@ -28,7 +28,7 @@ public class BlockCatalyst extends BlockContainerAdvanced {
     public IIcon[] icons;
 
     public BlockCatalyst() {
-        setBlockName(Ref.getId(Names.catalyst));
+        setBlockName(Reference.getId(Names.CATALYST));
         setCreativeTab(Technomancy.tabsTM);
     }
 
@@ -78,7 +78,7 @@ public class BlockCatalyst extends BlockContainerAdvanced {
     public void registerBlockIcons(IIconRegister icon) {
         icons = new IIcon[maxSubBlocks];
         for (int i = 0; i < icons.length; i++)
-            icons[i] = icon.registerIcon(Ref.getAsset(Names.catalyst) + "_" + i);
+            icons[i] = icon.registerIcon(Reference.getAsset(Names.CATALYST) + "_" + i);
     }
 
     @SideOnly(Side.CLIENT)

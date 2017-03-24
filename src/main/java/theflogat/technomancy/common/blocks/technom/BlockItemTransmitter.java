@@ -14,14 +14,14 @@ import theflogat.technomancy.common.items.technom.ItemBoost;
 import theflogat.technomancy.common.items.technom.ItemCoilCoupler;
 import theflogat.technomancy.common.tiles.technom.TileItemTransmitter;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.lib.RenderIds;
 
 public class BlockItemTransmitter extends BlockCoilTransmitter {
 
     public BlockItemTransmitter() {
         super();
-        setBlockName(Ref.getId(Names.itemTransmitter));
+        setBlockName(Reference.getId(Names.ITEMTRANSMITTER));
     }
 
     @Override

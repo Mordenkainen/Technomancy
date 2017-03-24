@@ -48,9 +48,9 @@ import theflogat.technomancy.common.tiles.technom.existence.TileExistenceFountai
 import theflogat.technomancy.common.tiles.technom.existence.TileExistenceHarvester;
 import theflogat.technomancy.common.tiles.technom.existence.TileExistencePylon;
 import theflogat.technomancy.common.tiles.technom.existence.TileExistenceSealingDevice;
-import theflogat.technomancy.lib.Ids;
+import theflogat.technomancy.lib.TMConfig;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class TMBlocks {
@@ -96,39 +96,39 @@ public class TMBlocks {
     public static Fluid manaFluid;
 
     public static void initTechnomancy() {
-        crystalBlock = Ids.crystalBlock ? new BlockCrystal() : null;
-        catalyst = Ids.catalyst ? new BlockCatalyst() : null;
-        fakeAirLight = Ids.catalyst ? new BlockFakeAirLight() : null;
-        itemTransmitter = Ids.itemTransmitter ? new BlockItemTransmitter() : null;
-        basalt = Ids.basalt ? new BlockBasalt() : null;
-        fountainExistence = Ids.existenceFountain ? new BlockExistenceFountain() : null;
-        existenceBurner = Ids.existenceBurner ? new BlockExistenceBurner() : null;
-        existencePylon = Ids.existencePylon ? new BlockExistencePylon() : null;
-        existenceUser = Ids.existenceUser ? new BlockExistenceUser() : null;
+        crystalBlock = TMConfig.crystalBlock ? new BlockCrystal() : null;
+        catalyst = TMConfig.catalyst ? new BlockCatalyst() : null;
+        fakeAirLight = TMConfig.catalyst ? new BlockFakeAirLight() : null;
+        itemTransmitter = TMConfig.itemTransmitter ? new BlockItemTransmitter() : null;
+        basalt = TMConfig.basalt ? new BlockBasalt() : null;
+        fountainExistence = TMConfig.existenceFountain ? new BlockExistenceFountain() : null;
+        existenceBurner = TMConfig.existenceBurner ? new BlockExistenceBurner() : null;
+        existencePylon = TMConfig.existencePylon ? new BlockExistencePylon() : null;
+        existenceUser = TMConfig.existenceUser ? new BlockExistenceUser() : null;
 
-        registerBlock(crystalBlock, Names.crystalBlock, ItemCrystal.class);
-        registerBlock(catalyst, Names.catalyst, ItemCatalyst.class);
-        registerBlock(fakeAirLight, Names.fakeAirLight);
-        registerBlock(itemTransmitter, Names.itemTransmitter);
-        registerBlock(basalt, Names.basalt);
-        registerBlock(fountainExistence, Names.existenceFountain);
-        registerBlock(existenceBurner, Names.existenceBurner[0], ItemBlockExistenceBurner.class);
-        registerBlock(existencePylon, Names.existencePylon, ItemBlockExistencePylon.class);
+        registerBlock(crystalBlock, Names.CRYSTALBLOCK, ItemCrystal.class);
+        registerBlock(catalyst, Names.CATALYST, ItemCatalyst.class);
+        registerBlock(fakeAirLight, Names.FAKEAIRLIGHT);
+        registerBlock(itemTransmitter, Names.ITEMTRANSMITTER);
+        registerBlock(basalt, Names.BASALT);
+        registerBlock(fountainExistence, Names.EXISTENCEFOUNTAIN);
+        registerBlock(existenceBurner, Names.EXISTENCEBURNER[0], ItemBlockExistenceBurner.class);
+        registerBlock(existencePylon, Names.EXISTENCEPYLON, ItemBlockExistencePylon.class);
         registerBlock(existenceUser, "existenceUser", ItemBlockExistenceUser.class);
 
         OreDictionary.registerOre("basalt", basalt);
 
-        GameRegistry.registerTileEntity(TileCrystal.class, Ref.MOD_PREFIX + "TileCrystal");
-        GameRegistry.registerTileEntity(TileCatalyst.class, Ref.MOD_PREFIX + "TileCatalyst");
-        GameRegistry.registerTileEntity(TileFakeAirCore.class, Ref.MOD_PREFIX + "TileFakeAirCore");
-        GameRegistry.registerTileEntity(TileItemTransmitter.class, Ref.MOD_PREFIX + "TileItemTransmitter");
-        GameRegistry.registerTileEntity(TileExistenceFountain.class, Ref.MOD_PREFIX + "TileExistenceFountain");
-        GameRegistry.registerTileEntity(TileExistenceBurner.class, Ref.MOD_PREFIX + "TileExistenceBurner");
-        GameRegistry.registerTileEntity(TileExistencePylon.class, Ref.MOD_PREFIX + "TileExistencePylon");
-        GameRegistry.registerTileEntity(TileExistenceDynamicBurner.class, Ref.MOD_PREFIX + "TileExistenceDynamicBurner");
-        GameRegistry.registerTileEntity(TileExistenceCropAccelerator.class, Ref.MOD_PREFIX + "TileExistenceCropAccelerator");
-        GameRegistry.registerTileEntity(TileExistenceHarvester.class, Ref.MOD_PREFIX + "TileExistenceHarvester");
-        GameRegistry.registerTileEntity(TileExistenceSealingDevice.class, Ref.MOD_PREFIX + "TileExistenceSealingDevice");
+        GameRegistry.registerTileEntity(TileCrystal.class, Reference.MOD_PREFIX + "TileCrystal");
+        GameRegistry.registerTileEntity(TileCatalyst.class, Reference.MOD_PREFIX + "TileCatalyst");
+        GameRegistry.registerTileEntity(TileFakeAirCore.class, Reference.MOD_PREFIX + "TileFakeAirCore");
+        GameRegistry.registerTileEntity(TileItemTransmitter.class, Reference.MOD_PREFIX + "TileItemTransmitter");
+        GameRegistry.registerTileEntity(TileExistenceFountain.class, Reference.MOD_PREFIX + "TileExistenceFountain");
+        GameRegistry.registerTileEntity(TileExistenceBurner.class, Reference.MOD_PREFIX + "TileExistenceBurner");
+        GameRegistry.registerTileEntity(TileExistencePylon.class, Reference.MOD_PREFIX + "TileExistencePylon");
+        GameRegistry.registerTileEntity(TileExistenceDynamicBurner.class, Reference.MOD_PREFIX + "TileExistenceDynamicBurner");
+        GameRegistry.registerTileEntity(TileExistenceCropAccelerator.class, Reference.MOD_PREFIX + "TileExistenceCropAccelerator");
+        GameRegistry.registerTileEntity(TileExistenceHarvester.class, Reference.MOD_PREFIX + "TileExistenceHarvester");
+        GameRegistry.registerTileEntity(TileExistenceSealingDevice.class, Reference.MOD_PREFIX + "TileExistenceSealingDevice");
 
         MovableTileRegistry.addAllowed(TileCrystal.class);
         MovableTileRegistry.addAllowed(TileCatalyst.class);

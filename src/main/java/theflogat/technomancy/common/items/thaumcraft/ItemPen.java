@@ -15,7 +15,7 @@ import thaumcraft.common.tiles.TileResearchTable;
 import thaumcraft.common.tiles.TileTable;
 import theflogat.technomancy.common.items.base.ItemBase;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -70,12 +70,12 @@ public class ItemPen extends ItemBase implements IScribeTools {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister icon) {
-        itemIcon = icon.registerIcon(Ref.getAsset("penItem"));
+        itemIcon = icon.registerIcon(Reference.getAsset("penItem"));
     }
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return Ref.getId(Names.pen);
+        return Reference.getId(Names.PEN);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

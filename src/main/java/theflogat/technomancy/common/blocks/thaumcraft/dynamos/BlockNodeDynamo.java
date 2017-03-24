@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 import theflogat.technomancy.common.blocks.base.BlockDynamoBase;
 import theflogat.technomancy.common.tiles.thaumcraft.dynamos.TileNodeDynamo;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.lib.RenderIds;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -17,7 +17,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockNodeDynamo extends BlockDynamoBase {
 
     public BlockNodeDynamo() {
-        setBlockName(Ref.getId(Names.nodeDynamo));
+        setBlockName(Reference.getId(Names.NODEDYNAMO));
     }
 
     @Override

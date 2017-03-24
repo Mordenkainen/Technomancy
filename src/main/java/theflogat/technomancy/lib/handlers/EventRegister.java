@@ -32,8 +32,7 @@ import theflogat.technomancy.common.items.technom.existence.ItemTreasure;
 import theflogat.technomancy.common.player.PlayerData;
 import theflogat.technomancy.common.potions.TMPotions;
 import theflogat.technomancy.common.tiles.air.TileFakeAirNG;
-import theflogat.technomancy.lib.Conf;
-import theflogat.technomancy.lib.Ids;
+import theflogat.technomancy.lib.TMConfig;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.network.PacketHandler;
 import theflogat.technomancy.util.Ore;
@@ -63,7 +62,7 @@ public class EventRegister {
     public void renderOverlayEvent(RenderTickEvent event) {
         Minecraft mc = FMLClientHandler.instance().getClient();
         if ((mc.inGameHasFocus || mc.currentScreen == null) && !Minecraft.getMinecraft().gameSettings.showDebugInfo) {
-            if (event.phase == Phase.END && Minecraft.getMinecraft().theWorld != null && Conf.showHUD) {
+            if (event.phase == Phase.END && Minecraft.getMinecraft().theWorld != null && TMConfig.showHUD) {
                 PlayerData.renderHUD(Minecraft.getMinecraft().thePlayer);
             }
         }
@@ -77,7 +76,7 @@ public class EventRegister {
             event.entityLiving.removePotionEffect(TMPotions.slowFall.id);
         }
 
-        if (event.entityLiving.isPotionActive(Ids.drown)) {
+        if (event.entityLiving.isPotionActive(TMConfig.drown)) {
             int air = event.entityLiving.getEntityData().getInteger("idrown");
             decreaseAirSupply(air, event.entityLiving);
             event.entityLiving.getEntityData().setInteger("idrown", air);
@@ -87,7 +86,7 @@ public class EventRegister {
                 event.entityLiving.getEntityData().setInteger("idrown", air);
                 event.entityLiving.attackEntityFrom(DamageSource.drown, 2.0F);
             }
-        } else if (event.entityLiving.isPotionActive(Ids.slowFall)) {
+        } else if (event.entityLiving.isPotionActive(TMConfig.slowFall)) {
             if (event.entityLiving.fallDistance > 3.0F) {
                 event.entityLiving.fallDistance = 3.0F;
             }
@@ -120,7 +119,7 @@ public class EventRegister {
             PlayerData.prepareData((EntityPlayer) event.entity);
         }
 
-        if (Ids.treasures) {
+        if (TMConfig.treasures) {
             if (event.entity instanceof EntityVillager && !event.entity.getEntityData().hasKey("treasureAttempt")) {
                 event.entity.getEntityData().setBoolean("treasureAttempt", true);
                 ArrayList<Integer> l = new ArrayList<Integer>();
@@ -140,7 +139,7 @@ public class EventRegister {
                     }
                 }
                 if (c != -1) {
-                    event.entity.getEntityData().setString("treasure", Names.treasures[c]);
+                    event.entity.getEntityData().setString("treasure", Names.TREASURES[c]);
                 }
             }
         }
@@ -149,7 +148,7 @@ public class EventRegister {
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onHurt(LivingHurtEvent event) {
 
-        if (Ids.treasures) {
+        if (TMConfig.treasures) {
             if (event.entityLiving instanceof EntityVillager && event.entityLiving.getEntityData().hasKey("treasure")) {
                 if (!event.entityLiving.getEntityData().hasKey("seal") || !event.entityLiving.getEntityData().getBoolean("seal")) {
                     TMItems.treasures.onUserHit(event, TMItems.treasures.getTreasureId(event.entityLiving.getEntityData().getString("treasure")));
@@ -168,7 +167,7 @@ public class EventRegister {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void entityDeath(LivingDeathEvent event) {
-        if (Ids.treasures) {
+        if (TMConfig.treasures) {
             if (event.entityLiving instanceof EntityVillager && event.entityLiving.getEntityData().hasKey("treasure")) {
                 if (!event.entityLiving.getEntityData().hasKey("seal") || !event.entityLiving.getEntityData().getBoolean("seal")) {
                     TMItems.treasures.onTreasureDestroyed(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ, event.entityLiving, TMItems.treasures.getTreasureId(event.entityLiving.getEntityData().getString("treasure")));

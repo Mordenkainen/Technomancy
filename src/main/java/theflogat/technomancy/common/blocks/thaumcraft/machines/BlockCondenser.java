@@ -17,7 +17,7 @@ import thaumcraft.api.aspects.AspectList;
 import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileCondenser;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.lib.compat.Thaumcraft;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -30,7 +30,7 @@ public class BlockCondenser extends BlockContainerAdvanced {
     IIcon[] icons;
 
     public BlockCondenser() {
-        setBlockName(Ref.getId(Names.condenserBlock));
+        setBlockName(Reference.getId(Names.CONDENSERBLOCK));
     }
 
     @Override
@@ -71,12 +71,12 @@ public class BlockCondenser extends BlockContainerAdvanced {
     @Override
     public void registerBlockIcons(IIconRegister icon) {
         icons = new IIcon[6];
-        icons[0] = icon.registerIcon(Ref.getAsset(Names.condenserBlock + "Front"));
-        icons[1] = icon.registerIcon(Ref.getAsset(Names.condenserBlock + "Side"));
-        icons[2] = icon.registerIcon(Ref.getAsset(Names.condenserBlock + "Top"));
-        icons[3] = icon.registerIcon(Ref.getAsset(Names.condenserBlock + "Bottom"));
-        icons[4] = icon.registerIcon(Ref.getAsset(Names.condenserBlock + "Out"));
-        icons[5] = icon.registerIcon(Ref.getAsset(Names.condenserBlock + "Out2"));
+        icons[0] = icon.registerIcon(Reference.getAsset(Names.CONDENSERBLOCK + "Front"));
+        icons[1] = icon.registerIcon(Reference.getAsset(Names.CONDENSERBLOCK + "Side"));
+        icons[2] = icon.registerIcon(Reference.getAsset(Names.CONDENSERBLOCK + "Top"));
+        icons[3] = icon.registerIcon(Reference.getAsset(Names.CONDENSERBLOCK + "Bottom"));
+        icons[4] = icon.registerIcon(Reference.getAsset(Names.CONDENSERBLOCK + "Out"));
+        icons[5] = icon.registerIcon(Reference.getAsset(Names.CONDENSERBLOCK + "Out2"));
     }
 
     @Override

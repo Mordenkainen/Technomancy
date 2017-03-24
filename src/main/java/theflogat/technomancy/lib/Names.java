@@ -5,69 +5,69 @@ public class Names {
     /*
      * Items
      */
-    public static final String essentiaCannon = "essentiaCannon";
-    public static final String itemMaterial = "itemMaterial";
-    public static final String pen = "pen";
-    public static final String wandCores = "wandCores";
-    public static final String itemBM = "itemBM";
-    public static final String itemBO = "itemBO";
-    public static final String itemBoost = "itemBoost";
-    public static final String ritualTome = "ritualTome";
-    public static final String manaBucket = "manaBucket";
-    public static final String coilCoupler = "coilCoupler";
-    public static final String scepter = "itemScepter";
-    public static final String itemGlasses = "itemGlasses";
-    public static final String exGem = "existenceGem";
-    public static final String treasures[] = { "fireGem", "powerPlate", "goldenWing" };
+    public static final String ESSENTIACANNON = "essentiaCannon";
+    public static final String ITEMMATERIAL = "itemMaterial";
+    public static final String PEN = "pen";
+    public static final String WANDCORES = "wandCores";
+    public static final String ITEMBM = "itemBM";
+    public static final String ITEMBO = "itemBO";
+    public static final String ITEMBOOST = "itemBoost";
+    public static final String RITUALTOME = "ritualTome";
+    public static final String MANABUCKET = "manaBucket";
+    public static final String COILCOUPLER = "coilCoupler";
+    public static final String SCEPTER = "itemScepter";
+    public static final String ITEMGLASSES = "itemGlasses";
+    public static final String EXGEM = "existenceGem";
+    public static final String TREASURES[] = { "fireGem", "powerPlate", "goldenWing" };
 
     /*
      * Blocks
      */
-    public static final String nodeDynamo = "nodeDynamo";
-    public static final String essentiaContainer = "essentiaContainer";
-    public static final String cosmeticOpaque = "cosmeticOpaque";
-    public static final String essentiaDynamo = "essentiaDynamo";
-    public static final String biomeMorpher = "biomeMorpher";
-    public static final String cosmeticPane = "cosmeticPane";
-    public static final String nodeGenerator = "nodeGenerator";
-    public static final String fluxLamp = "fluxLamp";
-    public static final String essentiaTransmitter = "teslaCoil";
-    public static final String electricBellows = "electricBellows";
-    public static final String fusionFocus = "fusionFocus";
-    public static final String crystalBlock = "crystalBlock";
-    public static final String creativeJar = "creativeJar";
-    public static final String reconstructor = "reconstructorBlock";
-    public static final String bloodDynamo = "bloodDynamo";
-    public static final String condenserBlock = "condenserBlock";
-    public static final String bloodFabricator = "bloodFabricator";
-    public static final String flowerDynamo = "flowerDynamo";
-    public static final String manaFabricator = "manaFabricator";
-    public static final String processor = "processor";
-    public static final String eldritchConsumer = "eldritchConsumer";
-    public static final String catalyst = "catalyst";
-    public static final String fakeAirNG = "fakeAir";
-    public static final String reservoir = "reservoir";
-    public static final String fakeAirLight = "fakeAirLight";
-    public static final String advDeconTable = "advDeconTable";
-    public static final String manaFluidBlock = "manaFluidBlock";
-    public static final String manaExchanger = "manaExchanger";
-    public static final String itemTransmitter = "itemTransmitter";
-    public static final String basalt = "basalt";
-    public static final String fusor = "fusor";
-    public static final String existenceFountain = "existenceFountain";
-    public static final String existencePylon = "existencePylon";
+    public static final String NODEDYNAMO = "nodeDynamo";
+    public static final String ESSENTIACONTAINER = "essentiaContainer";
+    public static final String COSMETICOPAQUE = "cosmeticOpaque";
+    public static final String ESSENTIADYNAMO = "essentiaDynamo";
+    public static final String BIOMEMORPHER = "biomeMorpher";
+    public static final String COSMETICPANE = "cosmeticPane";
+    public static final String NODEGENERATOR = "nodeGenerator";
+    public static final String FLUXLAMP = "fluxLamp";
+    public static final String ESSENTIATRANS = "teslaCoil";
+    public static final String ELECTRICBELLOWS = "electricBellows";
+    public static final String FUSIONFOCUS = "fusionFocus";
+    public static final String CRYSTALBLOCK = "crystalBlock";
+    public static final String CREATIVEJAR = "creativeJar";
+    public static final String RECONSTRUCTOR = "reconstructorBlock";
+    public static final String BLOODDYNAMO = "bloodDynamo";
+    public static final String CONDENSERBLOCK = "condenserBlock";
+    public static final String BLOODFABRICATOR = "bloodFabricator";
+    public static final String FLOWERDYNAMO = "flowerDynamo";
+    public static final String MANAFABRICATOR = "manaFabricator";
+    public static final String PROCESSOR = "processor";
+    public static final String ELDRITCHCONSUMER = "eldritchConsumer";
+    public static final String CATALYST = "catalyst";
+    public static final String FAKEAIRNG = "fakeAir";
+    public static final String RESERVOIR = "reservoir";
+    public static final String FAKEAIRLIGHT = "fakeAirLight";
+    public static final String ADVDECONTABLE = "advDeconTable";
+    public static final String MANAFLUIDBLOCK = "manaFluidBlock";
+    public static final String MANAEXCHANGER = "manaExchanger";
+    public static final String ITEMTRANSMITTER = "itemTransmitter";
+    public static final String BASALT = "basalt";
+    public static final String FUSOR = "fusor";
+    public static final String EXISTENCEFOUNTAIN = "existenceFountain";
+    public static final String EXISTENCEPYLON = "existencePylon";
 
-    public static final String[] existenceBurner = { "existenceBurner", "existenceDynamicBurner" };
-    public static final String[] existenceUser = { "existenceCropAcc", "existenceHarvester", "existenceSealer" };
+    public static final String[] EXISTENCEBURNER = { "existenceBurner", "existenceDynamicBurner" };
+    public static final String[] EXISTENCEUSER = { "existenceCropAcc", "existenceHarvester", "existenceSealer" };
 
     /*
      * Fluids
      */
-    public static final String manaFluid = "manaFluid";
+    public static final String MANAFLUID = "manaFluid";
 
     /*
      * Potions
      */
-    public static final String drown = "drown";
-    public static final String slowFall = "slowFall";
+    public static final String DROWN = "drown";
+    public static final String SLOWFALL = "slowFall";
 }

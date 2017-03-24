@@ -11,13 +11,13 @@ import theflogat.technomancy.common.blocks.base.BlockContainerAdvanced;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEldritchConsumer;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEldritchConsumer.Range;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.lib.RenderIds;
 
 public class BlockEldritchConsumer extends BlockContainerAdvanced {
 
     public BlockEldritchConsumer() {
-        setBlockName(Ref.getId(Names.eldritchConsumer));
+        setBlockName(Reference.getId(Names.ELDRITCHCONSUMER));
     }
 
     @Override
@@ -60,7 +60,7 @@ public class BlockEldritchConsumer extends BlockContainerAdvanced {
 
     @Override
     public void registerBlockIcons(IIconRegister reg) {
-        blockIcon = reg.registerIcon(Ref.getAsset("eldCons"));
+        blockIcon = reg.registerIcon(Reference.getAsset("eldCons"));
     }
 
     @Override

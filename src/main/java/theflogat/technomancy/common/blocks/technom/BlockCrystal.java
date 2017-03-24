@@ -15,13 +15,13 @@ import net.minecraft.world.World;
 import theflogat.technomancy.common.blocks.base.BlockContainerBase;
 import theflogat.technomancy.common.tiles.technom.TileCrystal;
 import theflogat.technomancy.lib.Names;
-import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.lib.RenderIds;
 
 public class BlockCrystal extends BlockContainerBase {
 
     public BlockCrystal() {
-        setBlockName(Ref.MOD_PREFIX + Names.crystalBlock);
+        setBlockName(Reference.MOD_PREFIX + Names.CRYSTALBLOCK);
         setLightLevel(1);
     }
 
@@ -91,7 +91,7 @@ public class BlockCrystal extends BlockContainerBase {
     @Override
     public void registerBlockIcons(IIconRegister icon) {
         for (int i = 0; i < icons.length; i++) {
-            icons[i] = icon.registerIcon(Ref.getAsset(Names.catalyst) + "_" + i);
+            icons[i] = icon.registerIcon(Reference.getAsset(Names.CATALYST) + "_" + i);
         }
     }
 
