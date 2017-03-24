@@ -11,7 +11,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class CreativeTabTM extends CreativeTabs {
 
-    public CreativeTabTM(int id, String tabLabel) {
+    public CreativeTabTM(final int id, final String tabLabel) {
         super(id, tabLabel);
     }
 
@@ -26,7 +26,8 @@ public class CreativeTabTM extends CreativeTabs {
     public ItemStack getIconItemStack() {
         if (TMItems.itemMaterial != null) {
             return new ItemStack(TMItems.itemMaterial);
-        } else if (Ore.ORES.get(0) != null) {
+        }
+        if (Ore.ORES.get(0) != null) {
             return new ItemStack(Ore.ORES.get(0).getPure(), 1, 5);
         }
         return super.getIconItemStack();

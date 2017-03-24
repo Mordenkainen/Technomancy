@@ -8,6 +8,7 @@ public class ModelEssentiaFusor extends ModelBase {
     public ModelRenderer fusor;
 
     public ModelEssentiaFusor() {
+        super();
         textureWidth = 64;
         textureHeight = 32;
         fusor = new ModelRenderer(this, 0, 0);

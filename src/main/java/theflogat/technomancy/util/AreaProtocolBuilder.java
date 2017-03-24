@@ -23,9 +23,6 @@ public abstract class AreaProtocolBuilder {
                 return true;
             }
         }
-        if (!area.hasNext()) {
-            return false;
-        }
         return false;
     }
 

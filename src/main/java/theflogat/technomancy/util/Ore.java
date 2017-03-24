@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
@@ -190,7 +191,7 @@ public class Ore {
             iconName = iconName.substring(colonIndex + 1, iconName.length());
         }
 
-        string = string.toLowerCase();
+        string = string.toLowerCase(Locale.US);
         iconName = "textures/items/" + iconName + ".png";
         return new ResourceLocation(string, iconName);
     }

@@ -11,18 +11,19 @@ import theflogat.technomancy.lib.Reference;
 
 public class ItemBlockExistenceBurner extends ItemBlock {
 
-    public ItemBlockExistenceBurner(Block b) {
+    public ItemBlockExistenceBurner(final Block b) {
         super(b);
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
-    public void getSubItems(Item item, CreativeTabs tab, List l) {
+    public void getSubItems(final Item item, final CreativeTabs tab, final List l) {
         l.add(new ItemStack(item, 1, 0));
         l.add(new ItemStack(item, 1, 1));
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack items) {
+    public String getUnlocalizedName(final ItemStack items) {
         return Reference.getId(Names.EXISTENCEBURNER[items.getItemDamage() % 2]);
     }
 }

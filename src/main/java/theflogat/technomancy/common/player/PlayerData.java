@@ -15,7 +15,7 @@ import org.lwjgl.opengl.GL11;
 import theflogat.technomancy.lib.TMConfig;
 import theflogat.technomancy.lib.Reference;
 import theflogat.technomancy.network.PacketHandler;
-import theflogat.technomancy.util.Loc;
+import theflogat.technomancy.util.Location;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -103,7 +103,7 @@ public class PlayerData {
     }
 
     public static void prepareData(EntityPlayer player) {
-        if (Loc.isServer()) {
+        if (Location.isServer()) {
             syncData(player);
         }
         NBTTagCompound data = getData(player);

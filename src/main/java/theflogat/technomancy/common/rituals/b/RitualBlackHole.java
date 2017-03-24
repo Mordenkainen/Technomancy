@@ -12,7 +12,7 @@ import theflogat.technomancy.api.rituals.Ritual;
 import theflogat.technomancy.client.models.ModelBlackSphere;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 import theflogat.technomancy.lib.Reference;
-import theflogat.technomancy.util.Loc;
+import theflogat.technomancy.util.Location;
 
 public abstract class RitualBlackHole extends Ritual implements IRitualEffectHandler {
 
@@ -75,7 +75,7 @@ public abstract class RitualBlackHole extends Ritual implements IRitualEffectHan
 
         ((TileCatalyst) w.getTileEntity(x, y, z)).remCount = 60;
         ((TileCatalyst) w.getTileEntity(x, y, z)).handler = this;
-        if (Loc.isClient()) {
+        if (Location.isClient()) {
             ((TileCatalyst) w.getTileEntity(x, y, z)).specialRender = specialRender;
             ((TileCatalyst) w.getTileEntity(x, y, z)).textLoc = textLoc;
         }

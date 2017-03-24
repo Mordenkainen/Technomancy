@@ -12,7 +12,7 @@ import net.minecraft.network.Packet;
 import theflogat.technomancy.common.player.PlayerData;
 import theflogat.technomancy.common.player.PlayerData.Affinity;
 import theflogat.technomancy.lib.Reference;
-import theflogat.technomancy.util.Loc;
+import theflogat.technomancy.util.Location;
 import cpw.mods.fml.common.network.FMLEmbeddedChannel;
 import cpw.mods.fml.common.network.FMLIndexedMessageToMessageCodec;
 import cpw.mods.fml.common.network.FMLOutboundHandler;
@@ -26,7 +26,7 @@ public class PacketHandler {
 
     public PacketHandler() {
         channels = NetworkRegistry.INSTANCE.newChannel(Reference.MOD_ID, new TechnomChannelHandler());
-        if (Loc.isClient()) {
+        if (Location.isClient()) {
             final FMLEmbeddedChannel channel = channels.get(Side.CLIENT);
 
             final String handler = channel.findChannelHandlerNameForType(TechnomChannelHandler.class);

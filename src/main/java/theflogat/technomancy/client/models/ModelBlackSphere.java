@@ -5,7 +5,7 @@ import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.glu.Sphere;
 
 import theflogat.technomancy.api.renderers.ModelCatalystSpecial;
-import theflogat.technomancy.util.Loc;
+import theflogat.technomancy.util.Location;
 
 public class ModelBlackSphere extends ModelCatalystSpecial {
 
@@ -15,7 +15,7 @@ public class ModelBlackSphere extends ModelCatalystSpecial {
         textureHeight = 32;
         textureWidth = 64;
 
-        if (Loc.isClient()) {
+        if (Location.isClient()) {
             Sphere sphere = new Sphere();
             sphere.setDrawStyle(GLU.GLU_FILL);
             sphere.setNormals(GLU.GLU_SMOOTH);

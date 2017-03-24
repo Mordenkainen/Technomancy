@@ -16,7 +16,7 @@ public class TileExistenceCropAccelerator extends TileExistenceRedstoneBase {
         if (!worldObj.isRemote && set.canRun(this) && power > 605) {
             for (int xx = -5; xx <= 5; xx++) {
                 for (int zz = -5; zz <= 5; zz++) {
-                    Block b = worldObj.getBlock(xCoord + xx, yCoord + 2, zCoord + zz);
+                    final Block b = worldObj.getBlock(xCoord + xx, yCoord + 2, zCoord + zz);
                     if (b instanceof IPlantable) {
                         if (b instanceof IGrowable) {
                             if (((IGrowable) b).func_149851_a(worldObj, xCoord + xx, yCoord + 2, zCoord + zz, worldObj.isRemote)) {

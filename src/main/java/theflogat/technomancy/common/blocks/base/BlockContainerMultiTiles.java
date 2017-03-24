@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 public abstract class BlockContainerMultiTiles extends BlockContainerBase implements IMultiTiles {
 
     @Override
-    public TileEntity createNewTileEntity(World w, int wut) {
+    public TileEntity createNewTileEntity(final World w, final int wut) {
         return new TileSelector();
     }
 }
