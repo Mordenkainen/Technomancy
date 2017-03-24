@@ -20,7 +20,7 @@ public class DynamoHUDHandler implements IWailaDataProvider {
         final TileDynamoBase tileEntity = (TileDynamoBase) accessor.getTileEntity();
         WailaHelper.drawDefault(currenttip, tileEntity);
         if (tileEntity instanceof TileBloodDynamo) {
-            currenttip.add(SpecialChars.DRED + "Blood: " + ((TileBloodDynamo) tileEntity).liquid + " / " + TileBloodDynamo.capacity);
+            currenttip.add(SpecialChars.DRED + "Blood: " + ((TileBloodDynamo) tileEntity).liquid + " / " + TileBloodDynamo.CAPACITY);
         }
 
         return currenttip;

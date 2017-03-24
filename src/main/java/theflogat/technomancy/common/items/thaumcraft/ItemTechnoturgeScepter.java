@@ -66,7 +66,7 @@ public class ItemTechnoturgeScepter extends ItemWandCasting implements IToolCrow
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item id, CreativeTabs tab, List list) {
-        ItemStack scepter = new ItemStack(TMItems.itemTechnoturgeScepter, 1);
+        ItemStack scepter = new ItemStack(TMItems.technoScepter, 1);
         scepter.setTagInfo("sceptre", new NBTTagByte((byte) 1));
         ((ItemWandCasting) scepter.getItem()).setCap(scepter, WandCap.caps.get("thaumium"));
         ((ItemWandCasting) scepter.getItem()).setRod(scepter, WandRod.rods.get("technoturge"));

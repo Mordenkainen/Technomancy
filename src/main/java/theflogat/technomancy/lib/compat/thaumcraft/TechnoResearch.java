@@ -108,7 +108,7 @@ public class TechnoResearch {
                 for (Aspect as : Aspect.getPrimalAspects()) {
                     al1.add(as, cost);
                 }
-                ItemStack scepter1 = new ItemStack(TMItems.itemTechnoturgeScepter, 1, cost);
+                ItemStack scepter1 = new ItemStack(TMItems.technoScepter, 1, cost);
                 scepter1.setTagInfo("sceptre", new NBTTagByte((byte) 1));
                 ((ItemWandCasting) scepter1.getItem()).setCap(scepter1, WandCap.caps.get("iron"));
                 ((ItemWandCasting) scepter1.getItem()).setRod(scepter1, WandRod.rods.get("technoturge"));
@@ -119,7 +119,7 @@ public class TechnoResearch {
                 for (Aspect as : Aspect.getPrimalAspects()) {
                     al2.add(as, cost);
                 }
-                ItemStack scepter2 = new ItemStack(TMItems.itemTechnoturgeScepter, 1, cost);
+                ItemStack scepter2 = new ItemStack(TMItems.technoScepter, 1, cost);
                 scepter2.setTagInfo("sceptre", new NBTTagByte((byte) 1));
                 ((ItemWandCasting) scepter2.getItem()).setCap(scepter2, WandCap.caps.get("gold"));
                 ((ItemWandCasting) scepter2.getItem()).setRod(scepter2, WandRod.rods.get("technoturge"));
@@ -130,7 +130,7 @@ public class TechnoResearch {
                 for (Aspect as : Aspect.getPrimalAspects()) {
                     al3.add(as, cost);
                 }
-                ItemStack scepter3 = new ItemStack(TMItems.itemTechnoturgeScepter, 1, cost);
+                ItemStack scepter3 = new ItemStack(TMItems.technoScepter, 1, cost);
                 scepter3.setTagInfo("sceptre", new NBTTagByte((byte) 1));
                 ((ItemWandCasting) scepter3.getItem()).setCap(scepter3, WandCap.caps.get("thaumium"));
                 ((ItemWandCasting) scepter3.getItem()).setRod(scepter3, WandRod.rods.get("technoturge"));

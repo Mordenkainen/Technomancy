@@ -21,20 +21,22 @@ public class CommonProxy implements IGuiHandler {
     }
 
     @Override
-    public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-        switch (ID) {
+    public Object getServerGuiElement(final int id, final EntityPlayer player, final World world, final int x, final int y, final int z) {
+        switch (id) {
             case 0:
                 return new ContainerTCProcessor(player.inventory, ((TileTCProcessor) world.getTileEntity(x, y, z)));
             case 1:
                 return new ContainerBMProcessor(player.inventory, ((TileBMProcessor) world.getTileEntity(x, y, z)));
             case 2:
                 return new ContainerBOProcessor(player.inventory, ((TileBOProcessor) world.getTileEntity(x, y, z)));
+            default:
+                break;
         }
         return null;
     }
 
     @Override
-    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+    public Object getClientGuiElement(final int id, final EntityPlayer player, final World world, final int x, final int y, final int z) {
         return null;
     }
 

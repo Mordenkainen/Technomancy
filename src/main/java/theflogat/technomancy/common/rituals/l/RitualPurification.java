@@ -15,7 +15,7 @@ public class RitualPurification extends Ritual implements IRitualEffectHandler {
 
     protected int radiusX, radiusZ, minY, maxY;
 
-    public RitualPurification(Type[] frame, Type core, int radX, int radZ, int minY, int maxY) {
+    public RitualPurification(final Type[] frame, final Type core, final int radX, final int radZ, final int minY, final int maxY) {
         super(frame, core);
         radiusX = radX;
         radiusZ = radZ;
@@ -25,21 +25,22 @@ public class RitualPurification extends Ritual implements IRitualEffectHandler {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void applyEffect(TileCatalyst te) {
-        ArrayList<EntityLivingBase> e = (ArrayList<EntityLivingBase>) te.getWorldObj().getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(te.xCoord - radiusX, te.yCoord + minY, te.zCoord - radiusZ, te.xCoord + radiusX, te.yCoord + maxY, te.zCoord + radiusZ));
-        for (Entity ent : e) {
-            if (ent.isCreatureType(EnumCreatureType.monster, false))
+    public void applyEffect(final TileCatalyst te) {
+        final ArrayList<EntityLivingBase> e = (ArrayList<EntityLivingBase>) te.getWorldObj().getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(te.xCoord - radiusX, te.yCoord + minY, te.zCoord - radiusZ, te.xCoord + radiusX, te.yCoord + maxY, te.zCoord + radiusZ));
+        for (final Entity ent : e) {
+            if (ent.isCreatureType(EnumCreatureType.monster, false)) {
                 ent.setDead();
+            }
         }
     }
 
     @Override
-    public boolean canApplyEffect(World w, int x, int y, int z) {
+    public boolean canApplyEffect(final World w, final int x, final int y, final int z) {
         return true;
     }
 
     @Override
-    public void applyEffect(World w, int x, int y, int z) {
+    public void applyEffect(final World w, final int x, final int y, final int z) {
         ((TileCatalyst) w.getTileEntity(x, y, z)).handler = this;
     }
 

@@ -13,7 +13,7 @@ import net.minecraft.util.IIcon;
 
 public class ItemManaBucket extends ItemBucket {
 
-    public ItemManaBucket(Block fluid) {
+    public ItemManaBucket(final Block fluid) {
         super(fluid);
         setUnlocalizedName(Reference.MOD_PREFIX + Names.MANABUCKET);
         setContainerItem(Items.bucket);
@@ -22,11 +22,11 @@ public class ItemManaBucket extends ItemBucket {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(int p_77617_1_) {
+    public IIcon getIconFromDamage(final int damage) {
         return Items.water_bucket.getIconFromDamage(0);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister icon) {}
+    public void registerIcons(final IIconRegister icon) {}
 }

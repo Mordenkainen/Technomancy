@@ -9,19 +9,19 @@ public class RitualWater extends Ritual {
 
     protected int radiusX, radiusZ;
 
-    public RitualWater(Type[] frame, Type core, int radX, int radZ) {
+    public RitualWater(final Type[] frame, final Type core, final int radX, final int radZ) {
         super(frame, core);
         radiusX = radX;
         radiusZ = radZ;
     }
 
     @Override
-    public boolean canApplyEffect(World w, int x, int y, int z) {
+    public boolean canApplyEffect(final World w, final int x, final int y, final int z) {
         return true;
     }
 
     @Override
-    public void applyEffect(World w, int x, int y, int z) {
+    public void applyEffect(final World w, final int x, final int y, final int z) {
         w.setBlockToAir(x, y, z);
         removeFrame(w, x, y, z);
 

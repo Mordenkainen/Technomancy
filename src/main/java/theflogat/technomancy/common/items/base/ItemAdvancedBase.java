@@ -23,26 +23,26 @@ import theflogat.technomancy.lib.TMConfig;
 
 public class ItemAdvancedBase extends ItemBlock {
 
-    ArrayList<String> tileInterfaces = new ArrayList<String>();
+    protected List<String> tileInterfaces = new ArrayList<String>();
 
-    public ItemAdvancedBase(Block b) {
+    public ItemAdvancedBase(final Block b) {
         super(b);
-        TileEntity te = ((BlockContainerAdvanced) b).createNewTileEntity(null, 0);
-        Class<?>[] interfaces = te.getClass().getInterfaces();
-        for (Class<?> curInterface : interfaces) {
-            String intName = curInterface.getName();
+        final TileEntity te = ((BlockContainerAdvanced) b).createNewTileEntity(null, 0);
+        final Class<?>[] interfaces = te.getClass().getInterfaces();
+        for (final Class<?> curInterface : interfaces) {
+            final String intName = curInterface.getName();
             tileInterfaces.add(intName.substring(intName.lastIndexOf('.') + 1, intName.length()));
         }
         setUnlocalizedName(b.getUnlocalizedName());
         if (tileInterfaces.contains("IUpgradable")) {
-            IUpgradable up = (IUpgradable) te;
-            String name = String.format(StatCollector.translateToLocal(b.getUnlocalizedName() + ".name"));
+            final IUpgradable up = (IUpgradable) te;
+            final String name = String.format(StatCollector.translateToLocal(b.getUnlocalizedName() + ".name"));
             ItemBoost.upgradeable.add(name + ": " + up.getInfo());
         }
     }
 
     @Override
-    public void onUpdate(ItemStack items, World w, Entity player, int dmg, boolean held) {
+    public void onUpdate(final ItemStack items, final World w, final Entity player, final int dmg, final boolean held) {
         if (items.stackTagCompound == null) {
             initializeNBT(items);
         }
@@ -50,9 +50,10 @@ public class ItemAdvancedBase extends ItemBlock {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public void addInformation(ItemStack items, EntityPlayer player, List l, boolean moreInfo) {
-        if (items == null)
+    public void addInformation(final ItemStack items, final EntityPlayer player, final List l, final boolean moreInfo) {
+        if (items == null) {
             return;
+        }
         try {
             if (items.stackTagCompound == null) {
                 initializeNBT(items);
@@ -67,7 +68,7 @@ public class ItemAdvancedBase extends ItemBlock {
         }
     }
 
-    public void initializeNBT(ItemStack items) {
+    public void initializeNBT(final ItemStack items) {
         items.stackTagCompound = new NBTTagCompound();
         ((BlockContainerAdvanced) field_150939_a).createNewTileEntity(null, 0).writeToNBT(items.stackTagCompound);
     }

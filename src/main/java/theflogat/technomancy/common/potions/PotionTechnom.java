@@ -4,12 +4,12 @@ import net.minecraft.potion.Potion;
 
 public class PotionTechnom extends Potion {
 
-    public PotionTechnom(int id, boolean isNeg, int color) {
+    public PotionTechnom(final int id, final boolean isNeg, final int color) {
         super(id, isNeg, color);
     }
 
     @Override
-    public Potion setIconIndex(int par1, int par2) {
+    public Potion setIconIndex(final int par1, final int par2) {
         super.setIconIndex(par1, par2);
         return this;
     }

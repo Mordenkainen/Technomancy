@@ -189,7 +189,7 @@ public class Thaumcraft extends ModuleBase {
         TMItems.itemPen = TMConfig.pen ? new ItemPen() : null;
         TMItems.itemWandCores = TMConfig.wandCores ? new ItemWandCores() : null;
         TMItems.itemFusionFocus = TMConfig.focusFusion ? new ItemFusionFocus() : null;
-        TMItems.itemTechnoturgeScepter = TMConfig.scepter ? new ItemTechnoturgeScepter() : null;
+        TMItems.technoScepter = TMConfig.scepter ? new ItemTechnoturgeScepter() : null;
 
         // Registry
         // GameRegistry.registerItem(essentiaCannon,
@@ -197,7 +197,7 @@ public class Thaumcraft extends ModuleBase {
         registerItem(TMItems.itemMaterial, Names.ITEMMATERIAL);
         registerItem(TMItems.itemPen, Names.PEN);
         registerItem(TMItems.itemFusionFocus, Names.FUSIONFOCUS);
-        registerItem(TMItems.itemTechnoturgeScepter, Names.SCEPTER);
+        registerItem(TMItems.technoScepter, Names.SCEPTER);
 
         registerItem(TMItems.itemWandCores, Names.WANDCORES);
         if (TMConfig.wandCores) {

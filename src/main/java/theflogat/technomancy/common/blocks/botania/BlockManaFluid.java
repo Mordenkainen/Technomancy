@@ -27,35 +27,38 @@ public class BlockManaFluid extends BlockFluidClassic {
     }
 
     @Override
-    public IIcon getIcon(int side, int meta) {
+    public IIcon getIcon(final int side, final int meta) {
         return Blocks.flowing_water.getIcon(side, 0);
     }
 
     @Override
-    public boolean canDisplace(IBlockAccess world, int x, int y, int z) {
-        if (world.getBlock(x, y, z).getMaterial().isLiquid())
+    public boolean canDisplace(final IBlockAccess world, final int x, final int y, final int z) {
+        if (world.getBlock(x, y, z).getMaterial().isLiquid()) {
             return false;
+        }
         return super.canDisplace(world, x, y, z);
     }
 
     @Override
-    public boolean displaceIfPossible(World world, int x, int y, int z) {
-        if (world.getBlock(x, y, z).getMaterial().isLiquid())
+    public boolean displaceIfPossible(final World world, final int x, final int y, final int z) {
+        if (world.getBlock(x, y, z).getMaterial().isLiquid()) {
             return false;
+        }
         return super.displaceIfPossible(world, x, y, z);
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void randomDisplayTick(World world, int x, int y, int z, Random r) {
-        Color color = new Color(0x00C6FF);
-        if (Math.random() > 0.5)
+    public void randomDisplayTick(final World world, final int x, final int y, final int z, final Random r) {
+        final Color color = new Color(0x00C6FF);
+        if (Math.random() > 0.5) {
             Botania.proxy.wispFX(world, x + 0.3 + Math.random() * 0.5, y + 0.6 + Math.random() * 0.25, z + Math.random(), color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, (float) Math.random() / 3F, (float) -Math.random() / 25F, 2F);
+        }
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void registerBlockIcons(IIconRegister icon) {
+    public void registerBlockIcons(final IIconRegister icon) {
         TMBlocks.manaFluid.setIcons(Blocks.water.getIcon(0, 0), Blocks.flowing_water.getIcon(2, 0));
     }
 }

@@ -89,7 +89,7 @@ public class ScepterRecipe implements IArcaneRecipe {
 
             if ((bc != null) && (br != null)) {
                 int cost = (int) (cc * cr * 1.5F);
-                out = new ItemStack(TMItems.itemTechnoturgeScepter, 1, cost);
+                out = new ItemStack(TMItems.technoScepter, 1, cost);
                 ((ItemWandCasting) out.getItem()).setCap(out, WandCap.caps.get(bc));
                 ((ItemWandCasting) out.getItem()).setRod(out, WandRod.rods.get(br));
                 out.setTagInfo("sceptre", new NBTTagByte((byte) 1));

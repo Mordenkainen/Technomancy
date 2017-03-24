@@ -8,16 +8,16 @@ import thaumcraft.api.aspects.IEssentiaTransport;
 
 public class AspectContainerEssentiaTransport implements IAspectContainer {
 
-    IEssentiaTransport trans;
+    private final IEssentiaTransport trans;
 
-    public AspectContainerEssentiaTransport(IEssentiaTransport trans) {
+    public AspectContainerEssentiaTransport(final IEssentiaTransport trans) {
         this.trans = trans;
     }
 
     @Override
     public AspectList getAspects() {
-        AspectList as = new AspectList();
-        for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
+        final AspectList as = new AspectList();
+        for (final ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
             if (trans.getEssentiaType(dir) != null) {
                 as.add(trans.getEssentiaType(dir), trans.getEssentiaAmount(dir));
             }
@@ -26,12 +26,12 @@ public class AspectContainerEssentiaTransport implements IAspectContainer {
     }
 
     @Override
-    public void setAspects(AspectList aspects) {}
+    public void setAspects(final AspectList aspects) {}
 
     @Override
-    public boolean doesContainerAccept(Aspect tag) {
-        AspectList as = new AspectList();
-        for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
+    public boolean doesContainerAccept(final Aspect tag) {
+        final AspectList as = new AspectList();
+        for (final ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
             if (trans.getEssentiaType(dir) != null) {
                 as.add(trans.getEssentiaType(dir), 1);
             }
@@ -40,22 +40,23 @@ public class AspectContainerEssentiaTransport implements IAspectContainer {
     }
 
     @Override
-    public int addToContainer(Aspect tag, int amount) {
+    public int addToContainer(final Aspect tag, final int amount) {
         int amountSent = 0;
         int amountToSend = amount;
-        for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
-            int i = trans.addEssentia(tag, amountToSend, dir);
+        for (final ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
+            final int i = trans.addEssentia(tag, amountToSend, dir);
             amountToSend -= i;
             amountSent += i;
-            if (amountToSend <= 0)
+            if (amountToSend <= 0) {
                 break;
+            }
         }
         return amount - amountSent;
     }
 
     @Override
-    public boolean takeFromContainer(Aspect tag, int amount) {
-        for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
+    public boolean takeFromContainer(final Aspect tag, final int amount) {
+        for (final ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
             if (trans.getEssentiaType(dir) == tag && trans.getEssentiaAmount(dir) >= amount) {
                 trans.takeEssentia(tag, amount, dir);
                 return true;
@@ -65,13 +66,13 @@ public class AspectContainerEssentiaTransport implements IAspectContainer {
     }
 
     @Override
-    public boolean takeFromContainer(AspectList ot) {
+    public boolean takeFromContainer(final AspectList ot) {
         return false;
     }
 
     @Override
-    public boolean doesContainerContainAmount(Aspect tag, int amount) {
-        for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
+    public boolean doesContainerContainAmount(final Aspect tag, final int amount) {
+        for (final ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
             if (trans.getEssentiaType(dir) == tag && trans.getEssentiaAmount(dir) >= amount) {
                 return true;
             }
@@ -80,13 +81,13 @@ public class AspectContainerEssentiaTransport implements IAspectContainer {
     }
 
     @Override
-    public boolean doesContainerContain(AspectList ot) {
+    public boolean doesContainerContain(final AspectList ot) {
         return false;
     }
 
     @Override
-    public int containerContains(Aspect tag) {
-        for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
+    public int containerContains(final Aspect tag) {
+        for (final ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
             if (trans.getEssentiaType(dir) == tag) {
                 return trans.getEssentiaAmount(dir);
             }

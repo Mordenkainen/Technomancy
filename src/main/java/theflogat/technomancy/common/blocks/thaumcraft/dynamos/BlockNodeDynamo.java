@@ -17,24 +17,25 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockNodeDynamo extends BlockDynamoBase {
 
     public BlockNodeDynamo() {
+        super();
         setBlockName(Reference.getId(Names.NODEDYNAMO));
     }
 
     @Override
-    public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase entity, ItemStack items) {
+    public void onBlockPlacedBy(final World w, final int x, final int y, final int z, final EntityLivingBase entity, final ItemStack items) {
         super.onBlockPlacedBy(w, x, y, z, entity, items);
-        TileNodeDynamo tile = (TileNodeDynamo) w.getTileEntity(x, y, z);
+        final TileNodeDynamo tile = (TileNodeDynamo) w.getTileEntity(x, y, z);
         tile.facing = 0;
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void registerBlockIcons(IIconRegister reg) {
+    public void registerBlockIcons(final IIconRegister reg) {
         blockIcon = Blocks.stone.getIcon(0, 0);
     }
 
     @Override
-    public TileEntity createNewTileEntity(World w, int meta) {
+    public TileEntity createNewTileEntity(final World w, final int meta) {
         return new TileNodeDynamo();
     }
 

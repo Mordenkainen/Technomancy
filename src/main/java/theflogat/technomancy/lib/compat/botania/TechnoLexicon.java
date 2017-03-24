@@ -7,7 +7,7 @@ import vazkii.botania.api.lexicon.LexiconEntry;
 
 public class TechnoLexicon extends LexiconEntry implements IAddonEntry {
 
-    public TechnoLexicon(String unlocalizedName, LexiconCategory category) {
+    public TechnoLexicon(final String unlocalizedName, final LexiconCategory category) {
         super(unlocalizedName, category);
         BotaniaAPI.addEntry(this, category);
     }

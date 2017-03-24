@@ -14,17 +14,18 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockEssentiaDynamo extends BlockDynamoBase {
 
     public BlockEssentiaDynamo() {
+        super();
         setBlockName(Reference.getId(Names.ESSENTIADYNAMO));
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void registerBlockIcons(IIconRegister icon) {
+    public void registerBlockIcons(final IIconRegister icon) {
         blockIcon = icon.registerIcon(Reference.getAsset(Names.ESSENTIADYNAMO));
     }
 
     @Override
-    public TileEntity createNewTileEntity(World w, int meta) {
+    public TileEntity createNewTileEntity(final World w, final int meta) {
         return new TileEssentiaDynamo();
     }
 

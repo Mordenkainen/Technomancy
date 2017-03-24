@@ -10,12 +10,12 @@ public class RitualPurificationT2 extends RitualPurification {
     }
 
     @Override
-    public boolean canApplyEffect(World w, int x, int y, int z) {
+    public boolean canApplyEffect(final World w, final int x, final int y, final int z) {
         return true;
     }
 
     @Override
-    public void applyEffect(World w, int x, int y, int z) {
+    public void applyEffect(final World w, final int x, final int y, final int z) {
         ((TileCatalyst) w.getTileEntity(x, y, z)).handler = this;
     }
 }

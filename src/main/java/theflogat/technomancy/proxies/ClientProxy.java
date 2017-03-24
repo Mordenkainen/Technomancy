@@ -110,7 +110,7 @@ public class ClientProxy extends CommonProxy implements IGuiHandler {
         ClientRegistry.bindTileEntitySpecialRenderer(TileExistencePylon.class, new TileExistencePylonRenderer());
         RenderIds.idExPylon = RenderingRegistry.getNextAvailableRenderId();
 
-        TileExistenceBurnerRenderer rendBurner = new TileExistenceBurnerRenderer();
+        final TileExistenceBurnerRenderer rendBurner = new TileExistenceBurnerRenderer();
         ClientRegistry.bindTileEntitySpecialRenderer(TileExistenceBurner.class, rendBurner);
         ClientRegistry.bindTileEntitySpecialRenderer(TileExistenceDynamicBurner.class, rendBurner);
         RenderIds.idExBurner = RenderingRegistry.getNextAvailableRenderId();
@@ -150,11 +150,6 @@ public class ClientProxy extends CommonProxy implements IGuiHandler {
             ClientRegistry.bindTileEntitySpecialRenderer(TileCreativeJar.class, new TileCreativeJarRenderer());
             RenderIds.idCreativeJar = RenderingRegistry.getNextAvailableRenderId();
 
-            // ClientRegistry.bindTileEntitySpecialRenderer(TileReconstructor.class,
-            // new TileReconstructorRenderer());
-            // RenderIds.idReconstructor =
-            // RenderingRegistry.getNextAvailableRenderId();
-
             ClientRegistry.bindTileEntitySpecialRenderer(TileAdvDeconTable.class, new TileAdvDeconTableRenderer());
             RenderIds.idAdvDeconTable = RenderingRegistry.getNextAvailableRenderId();
 
@@ -173,13 +168,11 @@ public class ClientProxy extends CommonProxy implements IGuiHandler {
             RenderingRegistry.registerBlockHandler(new BlockEssentiaTransmitterRenderer());
             RenderingRegistry.registerBlockHandler(new BlockElectricBellowsRenderer());
             RenderingRegistry.registerBlockHandler(new BlockCreativeJarRenderer());
-            // RenderingRegistry.registerBlockHandler(new
-            // BlockReconstructorRenderer());
             RenderingRegistry.registerBlockHandler(new BlockEldritchConsumerRenderer());
             RenderingRegistry.registerBlockHandler(new BlockAdvDeconTableRenderer());
             RenderingRegistry.registerBlockHandler(new BlockEssentiaFusorRenderer());
 
-            MinecraftForgeClient.registerItemRenderer(TMItems.itemTechnoturgeScepter, new ItemWandRenderer());
+            MinecraftForgeClient.registerItemRenderer(TMItems.technoScepter, new ItemWandRenderer());
         }
 
         if (CompatibilityHandler.bm) {
@@ -207,9 +200,9 @@ public class ClientProxy extends CommonProxy implements IGuiHandler {
     }
 
     @Override
-    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+    public Object getClientGuiElement(final int id, final EntityPlayer player, final World world, final int x, final int y, final int z) {
         if (world instanceof WorldClient) {
-            switch (ID) {
+            switch (id) {
                 case 0:
                     return new GuiProcessorTC(player.inventory, ((TileTCProcessor) world.getTileEntity(x, y, z)));
                 case 1:
@@ -218,6 +211,8 @@ public class ClientProxy extends CommonProxy implements IGuiHandler {
                     return new GuiProcessorBO(player.inventory, ((TileBOProcessor) world.getTileEntity(x, y, z)));
                 case 3:
                     return new GuiRitualTome();
+                default:
+                    break;
             }
         }
         return null;

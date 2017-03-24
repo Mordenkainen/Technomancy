@@ -12,13 +12,13 @@ import vazkii.botania.api.mana.IManaReceiver;
 
 public class TileFlowerDynamo extends TileDynamoBase implements IManaReceiver {
 
-    public int mana = 0;
+    public int mana;
     public int maxMana = 100000;
 
     @Override
-    public int extractFuel(int ener) {
-        float ratio = (ener) / 80F;
-        int val = (int) Math.ceil(20 * ratio);
+    public int extractFuel(final int ener) {
+        final float ratio = (ener) / 80F;
+        final int val = (int) Math.ceil(20 * ratio);
         if (val > mana) {
             return 0;
         }
@@ -37,9 +37,9 @@ public class TileFlowerDynamo extends TileDynamoBase implements IManaReceiver {
     public void drainMana() {
         for (int x = -4; x < 5; x++) {
             for (int z = -4; z < 5; z++) {
-                TileEntity tile = worldObj.getTileEntity(xCoord + x, yCoord, zCoord + z);
+                final TileEntity tile = worldObj.getTileEntity(xCoord + x, yCoord, zCoord + z);
                 if (tile instanceof IManaPool) {
-                    IManaPool pool = (IManaPool) tile;
+                    final IManaPool pool = (IManaPool) tile;
                     if (pool.getCurrentMana() >= 100 && mana <= maxMana - 100) {
                         pool.recieveMana(-100);
                         mana += 100;
@@ -50,28 +50,25 @@ public class TileFlowerDynamo extends TileDynamoBase implements IManaReceiver {
     }
 
     @Override
-    public void writeSyncData(NBTTagCompound comp) {
+    public void writeSyncData(final NBTTagCompound comp) {
         super.writeSyncData(comp);
         comp.setInteger("Mana", this.mana);
     }
 
     @Override
-    public void readSyncData(NBTTagCompound comp) {
+    public void readSyncData(final NBTTagCompound comp) {
         super.readSyncData(comp);
         mana = comp.getInteger("Mana");
     }
 
     @Override
     public boolean isFull() {
-        if (mana < maxMana) {
-            return false;
-        }
-        return true;
+        return mana >= maxMana;
     }
 
     @Override
-    public void recieveMana(int mana) {
-        mana += mana;
+    public void recieveMana(final int mana) {
+        this.mana += mana;
     }
 
     @Override
@@ -84,9 +81,8 @@ public class TileFlowerDynamo extends TileDynamoBase implements IManaReceiver {
         return mana;
     }
 
-    public void renderHUD(Minecraft mc, ScaledResolution res) {
-        int color = 0x660000FF;
-        BotaniaAPI.internalHandler.drawSimpleManaHUD(color, mana, maxMana, TMBlocks.flowerDynamo.getLocalizedName(), res);
+    public void renderHUD(final Minecraft mc, final ScaledResolution res) {
+        BotaniaAPI.internalHandler.drawSimpleManaHUD(0x660000FF, mana, maxMana, TMBlocks.flowerDynamo.getLocalizedName(), res);
     }
 
 }

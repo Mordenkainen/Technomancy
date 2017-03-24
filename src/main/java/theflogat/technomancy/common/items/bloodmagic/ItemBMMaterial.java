@@ -14,38 +14,39 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemBMMaterial extends ItemBase {
+    
+    public IIcon[] itemIcon = new IIcon[2];
 
     public ItemBMMaterial() {
+        super();
         setMaxStackSize(64);
         setHasSubtypes(true);
     }
 
-    public IIcon[] itemIcon = new IIcon[2];
-
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister icon) {
+    public void registerIcons(final IIconRegister icon) {
         itemIcon[0] = icon.registerIcon(Reference.TEXTURE_PREFIX + "sacrificialIngot");
         itemIcon[1] = icon.registerIcon(Reference.TEXTURE_PREFIX + "bloodCoil");
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(int par) {
+    public IIcon getIconFromDamage(final int par) {
         return this.itemIcon[par];
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
+    public String getUnlocalizedName(final ItemStack stack) {
         return Reference.MOD_PREFIX + Names.ITEMBM + "." + stack.getItemDamage();
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs tab, List list) {
+    public void getSubItems(final Item id, final CreativeTabs tab, final List list) {
         for (int i = 0; i < itemIcon.length; i++) {
-            ItemStack stack = new ItemStack(id, 1, i);
+            final ItemStack stack = new ItemStack(id, 1, i);
             list.add(stack);
         }
     }

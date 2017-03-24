@@ -17,22 +17,23 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockFlowerDynamo extends BlockDynamoBase implements IWandHUD {
 
     public BlockFlowerDynamo() {
+        super();
         setBlockName(Reference.getId(Names.FLOWERDYNAMO));
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void registerBlockIcons(IIconRegister icon) {
+    public void registerBlockIcons(final IIconRegister icon) {
         blockIcon = icon.registerIcon(Reference.getAsset(Names.FLOWERDYNAMO));
     }
 
     @Override
-    public TileEntity createNewTileEntity(World w, int meta) {
+    public TileEntity createNewTileEntity(final World w, final int meta) {
         return new TileFlowerDynamo();
     }
 
     @Override
-    public void renderHUD(Minecraft mc, ScaledResolution res, World world, int x, int y, int z) {
+    public void renderHUD(final Minecraft mc, final ScaledResolution res, final World world, final int x, final int y, final int z) {
         ((TileFlowerDynamo) world.getTileEntity(x, y, z)).renderHUD(mc, res);
     }
 

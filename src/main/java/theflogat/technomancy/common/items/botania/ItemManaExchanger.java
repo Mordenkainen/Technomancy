@@ -8,13 +8,13 @@ import theflogat.technomancy.common.items.base.ItemAdvancedBase;
 
 public class ItemManaExchanger extends ItemAdvancedBase {
 
-    public ItemManaExchanger(Block block) {
+    public ItemManaExchanger(final Block block) {
         super(block);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
-    public void addInformation(ItemStack items, EntityPlayer player, List l, boolean moreInfo) {
+    public void addInformation(final ItemStack items, final EntityPlayer player, final List l, final boolean moreInfo) {
         super.addInformation(items, player, l, moreInfo);
         l.add("Right-Click With A Wrench To Switch");
         l.add("Between Importing And Exporting Mana");

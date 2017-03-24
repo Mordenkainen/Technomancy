@@ -12,7 +12,7 @@ import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.util.Ore;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-public class TMItems {
+public final class TMItems {
 
     // Item Instances
     public static Item essentiaCannon;
@@ -26,10 +26,12 @@ public class TMItems {
     public static Item itemBO;
     public static Item manaBucket;
     public static Item coilCoupler;
-    public static Item itemTechnoturgeScepter;
+    public static Item technoScepter;
     public static Item exGem;
     public static ItemTreasure treasures;
 
+    private TMItems () {}
+    
     public static void initTechnomancy() {
         itemBoost = TMConfig.itemBoost ? new ItemBoost() : null;
         ritualTome = TMConfig.ritualTome ? new ItemRitualTome() : null;
@@ -45,7 +47,7 @@ public class TMItems {
     }
 
     public static void initPureOres() {
-        for (Ore ore : Ore.ORES) {
+        for (final Ore ore : Ore.ORES) {
             if (ore.isEnabled()) {
                 ore.setPure(new ItemProcessedOre(ore));
                 GameRegistry.registerItem(ore.getPure(), "pure" + ore.oreName().substring(3));
@@ -53,7 +55,7 @@ public class TMItems {
         }
     }
 
-    private static void registerItem(Item item, String name) {
+    private static void registerItem(final Item item, final String name) {
         if (item != null) {
             GameRegistry.registerItem(item, name);
         }

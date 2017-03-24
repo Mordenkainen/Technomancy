@@ -15,36 +15,37 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemBOMaterial extends ItemBase {
 
+    public IIcon[] itemIcon = new IIcon[2];
+
     public ItemBOMaterial() {
+        super();
         setMaxStackSize(64);
         setHasSubtypes(true);
     }
-
-    public IIcon[] itemIcon = new IIcon[2];
-
+    
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister icon) {
+    public void registerIcons(final IIconRegister icon) {
         itemIcon[0] = icon.registerIcon(Reference.TEXTURE_PREFIX + "manaCoil");
         itemIcon[1] = icon.registerIcon(Reference.TEXTURE_PREFIX + "manaGear");
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(int meta) {
+    public IIcon getIconFromDamage(final int meta) {
         return itemIcon[meta];
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
+    public String getUnlocalizedName(final ItemStack stack) {
         return Reference.MOD_PREFIX + Names.ITEMBO + "." + stack.getItemDamage();
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
-    public void getSubItems(Item id, CreativeTabs tab, List list) {
+    public void getSubItems(final Item id, final CreativeTabs tab, final List list) {
         for (int i = 0; i < itemIcon.length; i++) {
-            ItemStack stack = new ItemStack(id, 1, i);
+            final ItemStack stack = new ItemStack(id, 1, i);
             list.add(stack);
         }
     }

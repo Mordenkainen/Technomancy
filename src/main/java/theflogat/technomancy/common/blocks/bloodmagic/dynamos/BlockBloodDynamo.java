@@ -19,37 +19,36 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockBloodDynamo extends BlockDynamoBase {
 
     public BlockBloodDynamo() {
+        super();
         setBlockName(Reference.getId(Names.BLOODDYNAMO));
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float vecX, float vecY, float vecZ) {
+    public boolean onBlockActivated(final World world, final int x, final int y, final int z, final EntityPlayer player, final int side, final float vecX, final float vecY, final float vecZ) {
         if (player.getHeldItem() != null) {
-            TileBloodDynamo tile = (TileBloodDynamo) world.getTileEntity(x, y, z);
+            final TileBloodDynamo tile = (TileBloodDynamo) world.getTileEntity(x, y, z);
             if (player.getHeldItem().getItem() == BloodMagic.divinationSigil) {
                 if (!world.isRemote) {
                     player.addChatComponentMessage(new ChatComponentText("Energy: " + tile.getEnergyStored(null) + "/" + tile.getMaxEnergyStored(null)));
-                    player.addChatComponentMessage(new ChatComponentText("Blood: " + tile.liquid + "/" + TileBloodDynamo.capacity));
+                    player.addChatComponentMessage(new ChatComponentText("Blood: " + tile.liquid + "/" + TileBloodDynamo.CAPACITY));
                 }
                 return true;
-            } else if (player.getHeldItem().getItem() == BloodMagic.bucketLife) {
-                if (tile.emptyBucket()) {
-                    player.inventory.mainInventory[player.inventory.currentItem] = new ItemStack(Items.bucket);
-                    return true;
-                }
+            } else if (player.getHeldItem().getItem() == BloodMagic.bucketLife && tile.emptyBucket()) {
+                player.inventory.mainInventory[player.inventory.currentItem] = new ItemStack(Items.bucket);
+                return true;
             }
         }
         return super.onBlockActivated(world, x, y, z, player, side, vecX, vecY, vecZ);
     }
 
     @Override
-    public TileEntity createNewTileEntity(World w, int meta) {
+    public TileEntity createNewTileEntity(final World w, final int meta) {
         return new TileBloodDynamo();
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void registerBlockIcons(IIconRegister icon) {
+    public void registerBlockIcons(final IIconRegister icon) {
         blockIcon = icon.registerIcon(Reference.getAsset(Names.BLOODDYNAMO));
     }
 

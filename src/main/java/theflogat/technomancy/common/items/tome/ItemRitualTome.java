@@ -12,22 +12,23 @@ import theflogat.technomancy.lib.Reference;
 public class ItemRitualTome extends Item {
 
     public ItemRitualTome() {
+        super();
         setCreativeTab(Technomancy.tabsTM);
         setUnlocalizedName(Reference.getId(Names.RITUALTOME));
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack item, World w, EntityPlayer player) {
+    public ItemStack onItemRightClick(final ItemStack item, final World w, final EntityPlayer player) {
         player.openGui(Technomancy.instance, 3, w, 0, 0, 0);
         return item;
     }
 
     @Override
-    public void registerIcons(IIconRegister reg) {
+    public void registerIcons(final IIconRegister reg) {
         itemIcon = reg.registerIcon(Reference.getAsset(Names.RITUALTOME));
     }
 
-    public static class Res {
+    public static class Resources {
 
         public static final String E = ".png";
 
