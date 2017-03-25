@@ -23,46 +23,44 @@ import theflogat.technomancy.util.helpers.WorldHelper;
 @Optional.Interface(iface = "me.jezza.thaumicpipes.api.interfaces.IThaumicInput", modid = "ThaumicPipes")
 public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, IEssentiaTransport, IFluidHandler, IThaumicInput {
 
-    int amount = 0;
-    int maxAmount = 32;
+    private int amount;
+    private final static int MAXAMOUNT = 32;
     public FluidTank tank = new FluidTank(1000);
-    Aspect aspectSuction;
-    boolean stabilize = true;
-    public boolean placed = false;
+    private boolean stabilize = true;
+    public boolean placed;
+    private int count;
 
     @Override
-    public void writeCustomNBT(NBTTagCompound compound) {
+    public void writeCustomNBT(final NBTTagCompound compound) {
         compound.setBoolean("Stabilize", stabilize);
     }
 
     @Override
-    public void readCustomNBT(NBTTagCompound compound) {
+    public void readCustomNBT(final NBTTagCompound compound) {
         stabilize = compound.getBoolean("Stabilize");
     }
 
     @Override
-    public void writeSyncData(NBTTagCompound compound) {
+    public void writeSyncData(final NBTTagCompound compound) {
         compound.setInteger("AspectAmount", amount);
         compound.setBoolean("Placed", placed);
         tank.writeToNBT(compound);
     }
 
     @Override
-    public void readSyncData(NBTTagCompound compound) {
+    public void readSyncData(final NBTTagCompound compound) {
         amount = compound.getInteger("AspectAmount");
         placed = compound.getBoolean("Placed");
         tank = new FluidTank(1000);
         tank.readFromNBT(compound);
     }
 
-    int count;
-
     @Override
     public void updateEntity() {
         if (!worldObj.isRemote) {
             TileEntity tile = null;
             if (!worldObj.isRemote && ++count % 10 == 0) {
-                if (amount < maxAmount) {
+                if (amount < MAXAMOUNT) {
                     fill();
                 }
                 tile = getMatrix();
@@ -88,11 +86,11 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
         }
     }
 
-    TileEntity getMatrix() {
+    private TileEntity getMatrix() {
         for (int yy = -5; yy < 5; yy++) {
             for (int xx = -10; xx < 10; xx++) {
                 for (int zz = -10; zz < 10; zz++) {
-                    TileEntity te = this.worldObj.getTileEntity(this.xCoord + xx, this.yCoord + yy, this.zCoord + zz);
+                    final TileEntity te = this.worldObj.getTileEntity(this.xCoord + xx, this.yCoord + yy, this.zCoord + zz);
                     if (te instanceof TileInfusionMatrix) {
                         return te;
                     }
@@ -102,10 +100,10 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
         return null;
     }
 
-    void fill() {
-        TileEntity te = Thaumcraft.getConnectableTile(this.worldObj, this.xCoord, this.yCoord, this.zCoord, ForgeDirection.UP);
+    public void fill() {
+        final TileEntity te = Thaumcraft.getConnectableTile(this.worldObj, this.xCoord, this.yCoord, this.zCoord, ForgeDirection.UP);
         if (te != null) {
-            IEssentiaTransport ic = (IEssentiaTransport) te;
+            final IEssentiaTransport ic = (IEssentiaTransport) te;
             if (!ic.canOutputTo(ForgeDirection.DOWN)) {
                 return;
             }
@@ -117,7 +115,7 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
 
     @Override
     public AspectList getAspects() {
-        AspectList al = new AspectList();
+        final AspectList al = new AspectList();
         if (this.amount > 0) {
             al.add(Aspect.ORDER, this.amount);
         }
@@ -125,12 +123,12 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
     }
 
     @Override
-    public int addToContainer(Aspect tag, int amount) {
+    public int addToContainer(final Aspect tag, int amount) {
         if (amount == 0) {
             return amount;
         }
-        if (this.amount < this.maxAmount && tag == Aspect.ORDER) {
-            int added = Math.min(amount, this.maxAmount - this.amount);
+        if (this.amount < MAXAMOUNT && tag == Aspect.ORDER) {
+            final int added = Math.min(amount, MAXAMOUNT - this.amount);
             this.amount += added;
             amount -= added;
         }
@@ -139,7 +137,7 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
     }
 
     @Override
-    public boolean takeFromContainer(Aspect tag, int amount) {
+    public boolean takeFromContainer(final Aspect tag, final int amount) {
         if (this.amount >= amount && tag == Aspect.ORDER) {
             this.amount -= amount;
             this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
@@ -149,22 +147,16 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
     }
 
     @Override
-    public boolean doesContainerContainAmount(Aspect tag, int amt) {
-        if (amount >= amt && tag == Aspect.ORDER) {
-            return true;
-        }
-        return false;
+    public boolean doesContainerContainAmount(final Aspect tag, final int amt) {
+        return amount >= amt && tag == Aspect.ORDER;
     }
 
     @Override
-    public boolean doesContainerContain(AspectList ot) {
+    public boolean doesContainerContain(final AspectList ot) {
         if (ot.size() > 1) {
             return false;
         }
-        if (ot.getAspects()[1] == Aspect.ORDER && this.amount >= ot.getAmount(Aspect.ORDER)) {
-            return true;
-        }
-        return false;
+        return ot.getAspects()[1] == Aspect.ORDER && this.amount >= ot.getAmount(Aspect.ORDER);
     }
 
     @Override
@@ -173,12 +165,12 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
     }
 
     @Override
-    public int takeEssentia(Aspect aspect, int amount, ForgeDirection dir) {
+    public int takeEssentia(final Aspect aspect, final int amount, final ForgeDirection dir) {
         return takeFromContainer(aspect, amount) ? amount : 0;
     }
 
     @Override
-    public void setAspects(AspectList aspects) {}
+    public void setAspects(final AspectList aspects) {}
 
     @Override
     public boolean canUpdate() {
@@ -186,7 +178,7 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
     }
 
     @Override
-    public boolean takeFromContainer(AspectList ot) {
+    public boolean takeFromContainer(final AspectList ot) {
         return false;
     }
 
@@ -196,96 +188,93 @@ public class TileFluxLamp extends TileTechnomancy implements IAspectContainer, I
     }
 
     @Override
-    public int containerContains(Aspect tag) {
+    public int containerContains(final Aspect tag) {
         return tag == Aspect.ORDER ? amount : 0;
     }
 
     @Override
-    public boolean doesContainerAccept(Aspect tag) {
-        return tag == Aspect.ORDER && amount < maxAmount;
+    public boolean doesContainerAccept(final Aspect tag) {
+        return tag == Aspect.ORDER && amount < MAXAMOUNT;
     }
 
     @Override
-    public boolean isConnectable(ForgeDirection face) {
+    public boolean isConnectable(final ForgeDirection face) {
         return face == ForgeDirection.UP;
     }
 
     @Override
-    public boolean canInputFrom(ForgeDirection face) {
+    public boolean canInputFrom(final ForgeDirection face) {
         return face == ForgeDirection.UP;
     }
 
     @Override
-    public boolean canOutputTo(ForgeDirection face) {
+    public boolean canOutputTo(final ForgeDirection face) {
         return false;
     }
 
     @Override
-    public Aspect getSuctionType(ForgeDirection face) {
-        if (this.amount < this.maxAmount) {
+    public Aspect getSuctionType(final ForgeDirection face) {
+        if (this.amount < MAXAMOUNT) {
             return Aspect.ORDER;
         }
         return null;
     }
 
     @Override
-    public int getSuctionAmount(ForgeDirection loc) {
-        if (this.amount < this.maxAmount) {
+    public int getSuctionAmount(final ForgeDirection loc) {
+        if (this.amount < MAXAMOUNT) {
             return 128;
         }
         return 0;
     }
 
     @Override
-    public int addEssentia(Aspect aspect, int amount, ForgeDirection dir) {
+    public int addEssentia(final Aspect aspect, final int amount, final ForgeDirection dir) {
         return amount - addToContainer(aspect, amount);
     }
 
     @Override
-    public Aspect getEssentiaType(ForgeDirection face) {
+    public Aspect getEssentiaType(final ForgeDirection face) {
         return amount > 0 ? Aspect.ORDER : null;
     }
 
     @Override
-    public int getEssentiaAmount(ForgeDirection face) {
+    public int getEssentiaAmount(final ForgeDirection face) {
         return this.amount;
     }
 
     @Override
-    public void setSuction(Aspect aspect, int amount) {}
+    public void setSuction(final Aspect aspect, final int amount) {}
 
     @Override
-    public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
+    public int fill(final ForgeDirection from, final FluidStack resource, final boolean doFill) {
         return this.tank.fill(resource, doFill);
     }
 
     @Override
-    public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
+    public FluidStack drain(final ForgeDirection from, final FluidStack resource, final boolean doDrain) {
         return this.tank.drain(resource.amount, doDrain);
     }
 
     @Override
-    public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
+    public FluidStack drain(final ForgeDirection from, final int maxDrain, final boolean doDrain) {
         return this.tank.drain(maxDrain, doDrain);
     }
 
     @Override
-    public boolean canFill(ForgeDirection from, Fluid fluid) {
+    public boolean canFill(final ForgeDirection from, final Fluid fluid) {
         return false;
     }
 
     @Override
-    public boolean canDrain(ForgeDirection from, Fluid fluid) {
-        FluidStack stack = FluidRegistry.getFluidStack(fluid.getName(), 200);
-        int f = WorldHelper.insertFluidIntoAdjacentFluidHandler(this, from.ordinal(), stack, false);
-        if (f == 200) {
-            return true;
-        }
-        return false;
+    public boolean canDrain(final ForgeDirection from, final Fluid fluid) {
+        final FluidStack stack = FluidRegistry.getFluidStack(fluid.getName(), 200);
+        final int f = WorldHelper.insertFluidIntoAdjacentFluidHandler(this, from.ordinal(), stack, false);
+        return f == 200;
     }
 
     @Override
-    public FluidTankInfo[] getTankInfo(ForgeDirection from) {
+    public FluidTankInfo[] getTankInfo(final ForgeDirection from) {
         return new FluidTankInfo[] { this.tank.getInfo() };
     }
 

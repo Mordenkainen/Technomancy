@@ -7,30 +7,31 @@ import net.minecraft.entity.Entity;
 public class ModelNodeDynamo extends ModelBase {
 
     // fields
-    ModelRenderer Base;
-    ModelRenderer UpperBase;
-    ModelRenderer SmallPost1;
-    ModelRenderer SmallPost2;
-    ModelRenderer SmallPost3;
-    ModelRenderer SmallPost4;
-    ModelRenderer Arm1;
-    ModelRenderer Arm2;
-    ModelRenderer Arm3;
-    ModelRenderer Arm4;
-    ModelRenderer SmallArm1;
-    ModelRenderer SmallArm2;
-    ModelRenderer SmallArm3;
-    ModelRenderer SmallArm4;
-    ModelRenderer Pannel1;
-    ModelRenderer Pannel2;
-    ModelRenderer Pannel3;
-    ModelRenderer Pannel4;
-    ModelRenderer Post1;
-    ModelRenderer Post2;
-    ModelRenderer Post3;
-    ModelRenderer Post4;
+    private final ModelRenderer Base;
+    private final ModelRenderer UpperBase;
+    private final ModelRenderer SmallPost1;
+    private final ModelRenderer SmallPost2;
+    private final ModelRenderer SmallPost3;
+    private final ModelRenderer SmallPost4;
+    private final ModelRenderer Arm1;
+    private final ModelRenderer Arm2;
+    private final ModelRenderer Arm3;
+    private final ModelRenderer Arm4;
+    private final ModelRenderer SmallArm1;
+    private final ModelRenderer SmallArm2;
+    private final ModelRenderer SmallArm3;
+    private final ModelRenderer SmallArm4;
+    private final ModelRenderer Pannel1;
+    private final ModelRenderer Pannel2;
+    private final ModelRenderer Pannel3;
+    private final ModelRenderer Pannel4;
+    private final ModelRenderer Post1;
+    private final ModelRenderer Post2;
+    private final ModelRenderer Post3;
+    private final ModelRenderer Post4;
 
     public ModelNodeDynamo() {
+        super();
         textureWidth = 64;
         textureHeight = 32;
 
@@ -194,14 +195,14 @@ public class ModelNodeDynamo extends ModelBase {
         Post4.render(f5);
     }
 
-    private static void setRotation(ModelRenderer model, float x, float y, float z) {
+    private static void setRotation(final ModelRenderer model, final float x, final float y, final float z) {
         model.rotateAngleX = x;
         model.rotateAngleY = y;
         model.rotateAngleZ = z;
     }
 
     @Override
-    public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
+    public void setRotationAngles(final float f, final float f1, final float f2, final float f3, final float f4, final float f5, final Entity entity) {
         super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
     }
 

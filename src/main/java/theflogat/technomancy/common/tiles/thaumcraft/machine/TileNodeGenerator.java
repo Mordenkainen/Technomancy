@@ -2,6 +2,7 @@ package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -38,18 +39,18 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
 
     private boolean regenDummyBlocks = true;
     private Aspect aspect;
-    public int amount = 0;
-    private int maxAmount = 256;
-    public boolean active = false;
-    private boolean canSpawn = false;
-    private boolean addNode = false;
+    public int amount;
+    private final static int MAXAMOUNT = 256;
+    public boolean active;
+    private boolean canSpawn;
+    private boolean addNode;
     public byte facing = 2;
-    public int rotation = 0;
-    private boolean initiator = false;
-    public boolean running = false;
-    public int step = 0;
-    public boolean boost = false;
-    private static HashMap<Byte, double[][]> lightning = new HashMap<Byte, double[][]>();
+    public int rotation;
+    private boolean initiator;
+    public boolean running;
+    public int step;
+    public boolean boost;
+    private static Map<Byte, double[][]> lightning = new HashMap<Byte, double[][]>();
 
     static {
         lightning.put((byte) 2, new double[][] { { 1.5, 2.5, -.5, -.5, .5, -4.5, 0 }, { -.5, 2.5, -.5, 1.5, .5, -4.5, 0 }, { 1.5, .5, -.5, -.5, 2.5, -4.5, 0 }, { -.5, .5, -.5, 1.5, 2.5, -4.5, 0 } });
@@ -70,8 +71,18 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
                 createDummyBlocks();
                 regenDummyBlocks = false;
             }
-            if (!worldObj.isRemote) {
-                TileNodeGenerator partner = getTE(worldObj, xCoord + ForgeDirection.getOrientation(facing).offsetX * 6, yCoord, zCoord + ForgeDirection.getOrientation(facing).offsetZ * 6);
+            if (worldObj.isRemote) {
+                if (active) {
+                    rotation += 1 + step / 5;
+                    if (rotation >= 360) {
+                        rotation -= 360;
+                    }
+                    if (worldObj.rand.nextInt(Math.max(60 - step / 4, 1)) == 0) {
+                        shootLightning();
+                    }
+                }
+            } else {
+                final TileNodeGenerator partner = getTE(worldObj, xCoord + ForgeDirection.getOrientation(facing).offsetX * 6, yCoord, zCoord + ForgeDirection.getOrientation(facing).offsetZ * 6);
                 active = partner != null ? partner.isWholeTileLoaded() ? ForgeDirection.getOrientation(facing).getOpposite() == ForgeDirection.getOrientation(partner.facing) : false : false;
                 if (active) {
                     int xx = xCoord + ForgeDirection.getOrientation(facing).offsetX * 3;
@@ -114,16 +125,6 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
                     }
                     fill();
                     worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-                }
-            } else {
-                if (active) {
-                    rotation += 1 + step / 5;
-                    if (rotation >= 360) {
-                        rotation -= 360;
-                    }
-                    if (worldObj.rand.nextInt(Math.max(60 - step / 4, 1)) == 0) {
-                        shootLightning();
-                    }
                 }
             }
 
@@ -352,9 +353,9 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
 
     @Override
     public int addToContainer(Aspect tag, int amt) {
-        if (amt != 0 && (amount < maxAmount && tag == aspect || amount == 0)) {
+        if (amt != 0 && (amount < MAXAMOUNT && tag == aspect || amount == 0)) {
             aspect = tag;
-            int added = Math.min(amt, maxAmount - amount);
+            int added = Math.min(amt, MAXAMOUNT - amount);
             amount += added;
             amt -= added;
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
@@ -431,12 +432,12 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
     public boolean doesContainerAccept(Aspect tag) {
         if (!addNode && active) {
             if ((facing == 2 || facing == 4)) {
-                return tag == Aspect.AURA && amount < maxAmount;
+                return tag == Aspect.AURA && amount < MAXAMOUNT;
             } else {
-                return tag == Aspect.TAINT && amount < maxAmount;
+                return tag == Aspect.TAINT && amount < MAXAMOUNT;
             }
         } else {
-            return aspect == null ? true : (aspect == tag && amount < maxAmount);
+            return aspect == null ? true : (aspect == tag && amount < MAXAMOUNT);
         }
     }
 
@@ -457,7 +458,7 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
 
     @Override
     public int getSuctionAmount(ForgeDirection face) {
-        return amount < maxAmount ? 48 : 0;
+        return amount < MAXAMOUNT ? 48 : 0;
     }
 
     @Override

@@ -2,6 +2,7 @@ package theflogat.technomancy.common.tiles.thaumcraft.machine;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -20,6 +21,9 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileEssentiaFusor extends TileMachineRedstone implements IAspectContainer, IEssentiaTransport {
 
+    private final Map<ForgeDirection, SideInfo> sides = new HashMap<ForgeDirection, SideInfo>();
+    private static final int MAX_AMOUNT = 64;
+    
     private enum SideType {
         INPUT,
         OUTPUT,
@@ -28,17 +32,17 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
 
     private class SideInfo {
 
-        public Aspect aspect = null;
-        public int amount = 0;
+        public Aspect aspect;
+        public int amount;
         public SideType type = SideType.NONE;
         public ForgeDirection side = ForgeDirection.UNKNOWN;
 
-        public SideInfo(ForgeDirection side) {
+        public SideInfo(final ForgeDirection side) {
             this.side = side;
         }
 
         public NBTTagCompound save() {
-            NBTTagCompound tags = new NBTTagCompound();
+            final NBTTagCompound tags = new NBTTagCompound();
             tags.setInteger("amount", amount);
             tags.setByte("type", (byte) type.ordinal());
             tags.setByte("side", (byte) side.ordinal());
@@ -48,15 +52,12 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
             return tags;
         }
 
-        public void load(NBTTagCompound tags) {
+        public void load(final NBTTagCompound tags) {
             aspect = tags.hasKey("aspect") ? Aspect.getAspect(tags.getString("aspect")) : null;
             type = SideType.values()[tags.getByte("type")];
             amount = tags.getInteger("amount");
         }
     }
-
-    private HashMap<ForgeDirection, SideInfo> sides = new HashMap<ForgeDirection, SideInfo>();
-    private static final int MAX_AMOUNT = 64;
 
     public TileEssentiaFusor() {
         super(Rate.fusorCost * 10, RedstoneSet.HIGH);
@@ -81,12 +82,12 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
 
     private boolean fill() {
         boolean ret = false;
-        for (SideInfo side : getInputSides()) {
+        for (final SideInfo side : getInputSides()) {
             if (side.amount < MAX_AMOUNT) {
-                TileEntity te = Thaumcraft.getConnectableTile(this.worldObj, this.xCoord, this.yCoord, this.zCoord, side.side);
+                final TileEntity te = Thaumcraft.getConnectableTile(this.worldObj, this.xCoord, this.yCoord, this.zCoord, side.side);
                 if (te != null) {
-                    IEssentiaTransport ic = (IEssentiaTransport) te;
-                    Aspect ta = ic.getEssentiaType(side.side.getOpposite());
+                    final IEssentiaTransport ic = (IEssentiaTransport) te;
+                    final Aspect ta = ic.getEssentiaType(side.side.getOpposite());
                     if (ta == side.aspect && ic.getEssentiaAmount(side.side.getOpposite()) > 0 && ic.getSuctionAmount(side.side.getOpposite()) < getSuctionAmount(side.side) && getSuctionAmount(side.side) >= ic.getMinimumSuction()) {
                         addEssentia(ta, ic.takeEssentia(ta, 1, side.side.getOpposite()), side.side);
                         ret = true;
@@ -101,24 +102,22 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
         boolean ret = false;
         if (set.canRun(this) && outputMarked() && getOutputSideInfo().amount < MAX_AMOUNT && getEnergyStored(ForgeDirection.UNKNOWN) >= Rate.fusorCost) {
             SideInfo[] inputSides = getInputSides();
-            if (inputSides.length == 2) {
-                if (inputSides[0].amount > 0 && inputSides[1].amount > 0) {
-                    extractEnergy(ForgeDirection.UNKNOWN, Rate.fusorCost, false);
-                    inputSides[0].amount--;
-                    inputSides[1].amount--;
-                    getOutputSideInfo().amount++;
-                    ret = true;
-                }
+            if (inputSides.length == 2 && inputSides[0].amount > 0 && inputSides[1].amount > 0) {
+                extractEnergy(ForgeDirection.UNKNOWN, Rate.fusorCost, false);
+                inputSides[0].amount--;
+                inputSides[1].amount--;
+                getOutputSideInfo().amount++;
+                ret = true;
             }
         }
         return ret;
     }
 
-    public boolean isSideOccupied(ForgeDirection side) {
+    public boolean isSideOccupied(final ForgeDirection side) {
         return sides.get(side).type != SideType.NONE;
     }
 
-    public boolean markSide(ForgeDirection side, ItemStack stack) {
+    public boolean markSide(final ForgeDirection side, final ItemStack stack) {
         if (stack.getItemDamage() == 0) {
             if (!outputMarked()) {
                 sides.get(side).type = SideType.OUTPUT;
@@ -126,14 +125,14 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
                 return true;
             }
         } else {
-            SideInfo[] inputSides = getInputSides();
+            final SideInfo[] inputSides = getInputSides();
             if (inputSides.length == 0) {
                 sides.get(side).type = SideType.INPUT;
                 sides.get(side).aspect = getAspectFromStack(stack);
                 return true;
             } else if (inputSides.length == 1) {
-                Aspect newAspect = getAspectFromStack(stack);
-                Aspect comboAspect = getAspectCombo(newAspect, inputSides[0].aspect);
+                final Aspect newAspect = getAspectFromStack(stack);
+                final Aspect comboAspect = getAspectCombo(newAspect, inputSides[0].aspect);
                 if (comboAspect != null) {
                     sides.get(side).type = SideType.INPUT;
                     sides.get(side).aspect = newAspect;
@@ -146,25 +145,25 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
     }
 
     private void setOutputAspect() {
-        SideInfo outputSide = getOutputSideInfo();
-        SideInfo[] inputSides = getInputSides();
+        final SideInfo outputSide = getOutputSideInfo();
+        final SideInfo[] inputSides = getInputSides();
         if (outputSide != null && inputSides.length == 2) {
             outputSide.aspect = getAspectCombo(inputSides[0].aspect, inputSides[1].aspect);
         }
     }
 
-    private void setOutputAspect(Aspect comboAspect) {
-        SideInfo outputSide = getOutputSideInfo();
+    private void setOutputAspect(final Aspect comboAspect) {
+        final SideInfo outputSide = getOutputSideInfo();
         if (outputSide != null) {
             outputSide.aspect = comboAspect;
         }
     }
 
-    private static Aspect getAspectCombo(Aspect priAspect, Aspect secAspect) {
+    private static Aspect getAspectCombo(final Aspect priAspect, final Aspect secAspect) {
         if (priAspect != secAspect) {
-            for (Aspect curAspect : Aspect.getCompoundAspects()) {
-                Aspect aspect1 = curAspect.getComponents()[0];
-                Aspect aspect2 = curAspect.getComponents()[1];
+            for (final Aspect curAspect : Aspect.getCompoundAspects()) {
+                final Aspect aspect1 = curAspect.getComponents()[0];
+                final Aspect aspect2 = curAspect.getComponents()[1];
                 if ((aspect1 == priAspect || aspect2 == priAspect) && (aspect1 == secAspect || aspect2 == secAspect)) {
                     return curAspect;
                 }
@@ -173,11 +172,11 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
         return null;
     }
 
-    public ItemStack clearSide(ForgeDirection side) {
+    public ItemStack clearSide(final ForgeDirection side) {
         ItemStack output = null;
-        SideInfo outputSide = getOutputSideInfo();
+        final SideInfo outputSide = getOutputSideInfo();
         if (outputSide == null || outputSide.amount == 0) {
-            SideInfo targetSide = sides.get(side);
+            final SideInfo targetSide = sides.get(side);
             if (targetSide.amount == 0) {
                 output = getItemForSlot(side);
                 targetSide.type = SideType.NONE;
@@ -190,9 +189,9 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
         return output;
     }
 
-    public ItemStack getItemForSlot(ForgeDirection side) {
+    public ItemStack getItemForSlot(final ForgeDirection side) {
         ItemStack output = null;
-        SideInfo target = sides.get(side);
+        final SideInfo target = sides.get(side);
         if (target.type == SideType.OUTPUT) {
             output = new ItemStack(ConfigItems.itemEssence, 1, 0);
         } else if (target.type == SideType.INPUT) {
@@ -203,7 +202,7 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
     }
 
     public Aspect getOutputAspect() {
-        SideInfo output = getOutputSideInfo();
+        final SideInfo output = getOutputSideInfo();
         return output == null ? null : output.aspect;
     }
 
@@ -212,12 +211,12 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
     }
 
     public ForgeDirection getOutputSide() {
-        SideInfo output = getOutputSideInfo();
-        return output != null ? output.side : ForgeDirection.UNKNOWN;
+        final SideInfo output = getOutputSideInfo();
+        return output == null ? ForgeDirection.UNKNOWN : output.side;
     }
 
     public SideInfo getOutputSideInfo() {
-        for (SideInfo side : sides.values()) {
+        for (final SideInfo side : sides.values()) {
             if (side.type == SideType.OUTPUT) {
                 return side;
             }
@@ -226,8 +225,8 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
     }
 
     private SideInfo[] getInputSides() {
-        ArrayList<SideInfo> inputSides = new ArrayList<SideInfo>();
-        for (SideInfo side : sides.values()) {
+        final ArrayList<SideInfo> inputSides = new ArrayList<SideInfo>();
+        for (final SideInfo side : sides.values()) {
             if (side.type == SideType.INPUT) {
                 inputSides.add(side);
             }
@@ -235,7 +234,7 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
         return inputSides.toArray(new SideInfo[inputSides.size()]);
     }
 
-    private static Aspect getAspectFromStack(ItemStack stack) {
+    private static Aspect getAspectFromStack(final ItemStack stack) {
         if (stack.getItem() instanceof ItemEssence) {
             return ((ItemEssence) stack.getItem()).getAspects(stack).getAspects()[0];
         }
@@ -243,40 +242,37 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
     }
 
     private boolean fullyMarked() {
-        if (getInputSides().length == 2 && outputMarked()) {
-            return true;
-        }
-        return false;
+        return getInputSides().length == 2 && outputMarked();
     }
 
-    private static boolean isValidSide(ForgeDirection side) {
+    private static boolean isValidSide(final ForgeDirection side) {
         return side != ForgeDirection.UP && side != ForgeDirection.DOWN;
     }
 
     @Override
-    public boolean canConnectEnergy(ForgeDirection from) {
+    public boolean canConnectEnergy(final ForgeDirection from) {
         return from != ForgeDirection.UP;
     }
 
     @Override
-    public void writeSyncData(NBTTagCompound comp) {
+    public void writeSyncData(final NBTTagCompound comp) {
         super.writeSyncData(comp);
-        NBTTagList list = new NBTTagList();
+        final NBTTagList list = new NBTTagList();
 
-        for (SideInfo side : sides.values()) {
-            NBTTagCompound sideVal = side.save();
+        for (final SideInfo side : sides.values()) {
+            final NBTTagCompound sideVal = side.save();
             list.appendTag(sideVal);
         }
         comp.setTag("SideInfo", list);
     }
 
     @Override
-    public void readSyncData(NBTTagCompound comp) {
+    public void readSyncData(final NBTTagCompound comp) {
         super.readSyncData(comp);
-        NBTTagList list = comp.getTagList("SideInfo", 10);
+        final NBTTagList list = comp.getTagList("SideInfo", 10);
 
         for (int i = 0; i < list.tagCount(); i++) {
-            NBTTagCompound sideVal = list.getCompoundTagAt(i);
+            final NBTTagCompound sideVal = list.getCompoundTagAt(i);
             sides.get(ForgeDirection.getOrientation(sideVal.getByte("side"))).load(sideVal);
         }
         if (worldObj != null) {
@@ -285,10 +281,10 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
     }
 
     @Override
-    public int addToContainer(Aspect aspect, int amount) {
+    public int addToContainer(final Aspect aspect, final int amount) {
         for (SideInfo side : sides.values()) {
             if (side.type == SideType.INPUT && side.aspect == aspect && side.amount < MAX_AMOUNT) {
-                int amountToAdd = Math.min(amount, MAX_AMOUNT - side.amount);
+                final int amountToAdd = Math.min(amount, MAX_AMOUNT - side.amount);
                 side.amount += amountToAdd;
                 return amount - amountToAdd;
             }
@@ -297,8 +293,8 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
     }
 
     @Override
-    public int containerContains(Aspect aspect) {
-        for (SideInfo side : sides.values()) {
+    public int containerContains(final Aspect aspect) {
+        for (final SideInfo side : sides.values()) {
             if (side.type != SideType.NONE && side.aspect == aspect) {
                 return side.amount;
             }
@@ -307,8 +303,8 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
     }
 
     @Override
-    public boolean doesContainerAccept(Aspect aspect) {
-        for (SideInfo side : sides.values()) {
+    public boolean doesContainerAccept(final Aspect aspect) {
+        for (final SideInfo side : sides.values()) {
             if (side.type == SideType.INPUT && side.aspect == aspect && side.amount < MAX_AMOUNT) {
                 return true;
             }
@@ -317,8 +313,8 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
     }
 
     @Override
-    public boolean doesContainerContain(AspectList aspects) {
-        for (Aspect aspect : aspects.getAspects()) {
+    public boolean doesContainerContain(final AspectList aspects) {
+        for (final Aspect aspect : aspects.getAspects()) {
             if (!doesContainerContainAmount(aspect, aspects.getAmount(aspect))) {
                 return false;
             }
@@ -327,8 +323,8 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
     }
 
     @Override
-    public boolean doesContainerContainAmount(Aspect aspect, int amount) {
-        for (SideInfo side : sides.values()) {
+    public boolean doesContainerContainAmount(final Aspect aspect, final int amount) {
+        for (final SideInfo side : sides.values()) {
             if (side.type == SideType.INPUT && side.aspect == aspect && side.amount >= amount) {
                 return true;
             }
@@ -338,8 +334,8 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
 
     @Override
     public AspectList getAspects() {
-        AspectList aspects = new AspectList();
-        for (SideInfo side : sides.values()) {
+        final AspectList aspects = new AspectList();
+        for (final SideInfo side : sides.values()) {
             if (side.type != SideType.NONE && side.aspect != null && side.amount > 0) {
                 aspects.add(side.aspect, side.amount);
             }
@@ -348,15 +344,15 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
     }
 
     @Override
-    public void setAspects(AspectList arg0) {}
+    public void setAspects(final AspectList arg0) {}
 
     @Override
-    public boolean takeFromContainer(AspectList al) {
+    public boolean takeFromContainer(final AspectList al) {
         return false;
     }
 
     @Override
-    public boolean takeFromContainer(Aspect aspect, int amount) {
+    public boolean takeFromContainer(final Aspect aspect, final int amount) {
         for (SideInfo side : sides.values()) {
             if (side.type != SideType.NONE && (aspect == null || side.aspect == aspect) && side.amount >= amount) {
                 side.amount -= amount;
@@ -367,11 +363,11 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
     }
 
     @Override
-    public int addEssentia(Aspect aspect, int amount, ForgeDirection side) {
+    public int addEssentia(final Aspect aspect, final int amount, final ForgeDirection side) {
         if (isValidSide(side)) {
             SideInfo targetSide = sides.get(side);
             if (targetSide.type == SideType.INPUT && targetSide.aspect == aspect) {
-                int amountToAdd = Math.min(amount, MAX_AMOUNT - targetSide.amount);
+                final int amountToAdd = Math.min(amount, MAX_AMOUNT - targetSide.amount);
                 targetSide.amount += amountToAdd;
                 return amountToAdd;
             }
@@ -380,22 +376,22 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
     }
 
     @Override
-    public boolean canInputFrom(ForgeDirection side) {
+    public boolean canInputFrom(final ForgeDirection side) {
         return isValidSide(side) && sides.get(side).type == SideType.INPUT && fullyMarked() ? true : false;
     }
 
     @Override
-    public boolean canOutputTo(ForgeDirection side) {
-        return isValidSide(side) && (sides.get(side).type == SideType.OUTPUT || (sides.get(side).type == SideType.INPUT && !fullyMarked())) ? true : false;
+    public boolean canOutputTo(final ForgeDirection side) {
+        return isValidSide(side) && (sides.get(side).type == SideType.OUTPUT || sides.get(side).type == SideType.INPUT && !fullyMarked()) ? true : false;
     }
 
     @Override
-    public int getEssentiaAmount(ForgeDirection side) {
+    public int getEssentiaAmount(final ForgeDirection side) {
         return isValidSide(side) && sides.get(side).type != SideType.NONE ? sides.get(side).amount : 0;
     }
 
     @Override
-    public Aspect getEssentiaType(ForgeDirection side) {
+    public Aspect getEssentiaType(final ForgeDirection side) {
         return isValidSide(side) && sides.get(side).type != SideType.NONE ? sides.get(side).aspect : null;
     }
 
@@ -405,17 +401,17 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
     }
 
     @Override
-    public int getSuctionAmount(ForgeDirection side) {
-        return isValidSide(side) && fullyMarked() ? (sides.get(side).type == SideType.INPUT ? 48 : (sides.get(side).type == SideType.OUTPUT ? -48 : 0)) : 0;
+    public int getSuctionAmount(final ForgeDirection side) {
+        return isValidSide(side) && fullyMarked() ? (sides.get(side).type == SideType.INPUT ? 48 : sides.get(side).type == SideType.OUTPUT ? -48 : 0) : 0;
     }
 
     @Override
-    public Aspect getSuctionType(ForgeDirection side) {
+    public Aspect getSuctionType(final ForgeDirection side) {
         return isValidSide(side) && sides.get(side).type != SideType.NONE ? sides.get(side).aspect : null;
     }
 
     @Override
-    public boolean isConnectable(ForgeDirection side) {
+    public boolean isConnectable(final ForgeDirection side) {
         return isValidSide(side) && sides.get(side).type != SideType.NONE;
     }
 
@@ -425,14 +421,14 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
     }
 
     @Override
-    public void setSuction(Aspect aspect, int amount) {}
+    public void setSuction(final Aspect aspect, final int amount) {}
 
     @Override
-    public int takeEssentia(Aspect aspect, int amount, ForgeDirection side) {
+    public int takeEssentia(final Aspect aspect, final int amount, final ForgeDirection side) {
         if (side != ForgeDirection.UP && side != ForgeDirection.DOWN) {
             SideInfo curSide = sides.get(side);
             if (curSide.type != SideType.NONE && curSide.aspect == aspect) {
-                int amountToTake = Math.min(amount, curSide.amount);
+                final int amountToTake = Math.min(amount, curSide.amount);
                 curSide.amount -= amountToTake;
                 return amountToTake;
             }
