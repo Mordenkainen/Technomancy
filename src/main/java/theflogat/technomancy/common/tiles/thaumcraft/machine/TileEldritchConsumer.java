@@ -35,9 +35,9 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
         AVERAGE(4, 9, 4, "Average"),
         GIGANTIC(16, -1, 5, "Gigantic");
 
-        static Range[] ValidRanges = { LARGE, SMALL, TINY, MEDIUM, AVERAGE, GIGANTIC };
+        public final static Range[] VALIDRANGES = { LARGE, SMALL, TINY, MEDIUM, AVERAGE, GIGANTIC };
 
-        private static final String loc = "RangeIdentificator";
+        private static final String LOC = "RangeIdentificator";
 
         public int r;
         public int h;
@@ -49,24 +49,24 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
             return chat;
         }
 
-        Range(int range, int height, int id, String chat) {
+        Range(final int range, final int height, final int id, final String chat) {
             r = range;
             h = height;
             this.id = id;
             this.chat = chat;
         }
 
-        public void writeToNbt(NBTTagCompound comp) {
-            comp.setInteger(loc, id);
+        public void writeToNbt(final NBTTagCompound comp) {
+            comp.setInteger(LOC, id);
         }
 
         public Range getNext() {
-            return this == ValidRanges[ValidRanges.length - 1] ? ValidRanges[0] : ValidRanges[id + 1];
+            return this == VALIDRANGES[VALIDRANGES.length - 1] ? VALIDRANGES[0] : VALIDRANGES[id + 1];
         }
 
-        public static Range readFromNbt(NBTTagCompound comp) {
-            int i = comp.getInteger(loc);
-            for (Range r : ValidRanges) {
+        public static Range readFromNbt(final NBTTagCompound comp) {
+            final int i = comp.getInteger(LOC);
+            for (final Range r : VALIDRANGES) {
                 if (r.id == i) {
                     return r;
                 }
@@ -76,10 +76,10 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
     }
 
     public Range current = Range.LARGE;
-    AspectList list = new AspectList();
-    public int cooldown = 0;
-    public int time = 0;
-    public float panelRotation = 0;
+    private final AspectList list = new AspectList();
+    public int cooldown;
+    public int time;
+    public float panelRotation;
     public int cost = Rate.consumerCost;
 
     public TileEldritchConsumer() {
@@ -88,14 +88,24 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
 
     @Override
     public void updateEntity() {
-        if (!worldObj.isRemote) {
+        if (worldObj.isRemote) {
+            if (cooldown > 0) {
+                panelRotation = Math.min((float) -Math.PI / 4, panelRotation -= 0.02F);
+            } else {
+                if (panelRotation > 0) {
+                    panelRotation = Math.min(0, panelRotation -= 0.02F);
+                } else {
+                    panelRotation = Math.max(0, panelRotation += 0.02F);
+                }
+            }
+        } else {
             if (set.canRun(this)) {
                 if (time <= 0) {
                     if (canFillList(list) && getEnergyStored() >= cost) {
                         boolean flag = dealWithMobs();
                         flag |= dealWithItems();
                         if (getEnergyStored() >= cost) {
-                            Coords c = seekForBlock();
+                            final Coords c = seekForBlock();
                             if (c != null) {
                                 processFromCoords(c);
                                 extractEnergy(cost, false);
@@ -118,27 +128,17 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
                 cooldown--;
                 worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
             }
-        } else {
-            if (cooldown > 0) {
-                panelRotation = Math.min((float) -Math.PI / 4, panelRotation -= 0.02F);
-            } else {
-                if (panelRotation > 0) {
-                    panelRotation = Math.min(0, panelRotation -= 0.02F);
-                } else {
-                    panelRotation = Math.max(0, panelRotation += 0.02F);
-                }
-            }
         }
     }
 
-    private static boolean canFillList(AspectList list) {
+    private static boolean canFillList(final AspectList list) {
         if (list.getAspects().length >= 4) {
             return false;
         }
 
         boolean flag = true;
 
-        for (Aspect as : list.getAspects()) {
+        for (final Aspect as : list.getAspects()) {
             if (list.getAmount(as) > 4) {
                 flag = false;
                 break;
@@ -172,10 +172,10 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
     private boolean dealWithMobs() {
         boolean flag = false;
 
-        ArrayList<EntityLiving> mobs = (ArrayList<EntityLiving>) worldObj.getEntitiesWithinAABB(EntityLiving.class, AxisAlignedBB.getBoundingBox(xCoord - current.r, current.h == -1 ? 0 : yCoord - current.h - 1, zCoord - current.r, xCoord + current.r, yCoord - 1, zCoord + current.r));
+        final ArrayList<EntityLiving> mobs = (ArrayList<EntityLiving>) worldObj.getEntitiesWithinAABB(EntityLiving.class, AxisAlignedBB.getBoundingBox(xCoord - current.r, current.h == -1 ? 0 : yCoord - current.h - 1, zCoord - current.r, xCoord + current.r, yCoord - 1, zCoord + current.r));
 
         if (!mobs.isEmpty()) {
-            for (EntityLiving mob : mobs) {
+            for (final EntityLiving mob : mobs) {
                 if (!mob.isDead && mob.deathTime <= 0 && !mob.isEntityInvulnerable()) {
                     if (getEnergyStored() < cost) {
                         break;
@@ -194,7 +194,7 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
     private boolean dealWithItems() {
         boolean flag = false;
 
-        ArrayList<EntityItem> items = (ArrayList<EntityItem>) worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(xCoord - current.r, current.h == -1 ? 0 : yCoord - current.h - 1, zCoord - current.r, xCoord + current.r, yCoord - 1, zCoord + current.r));
+        final ArrayList<EntityItem> items = (ArrayList<EntityItem>) worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(xCoord - current.r, current.h == -1 ? 0 : yCoord - current.h - 1, zCoord - current.r, xCoord + current.r, yCoord - 1, zCoord + current.r));
 
         if (!items.isEmpty()) {
             for (EntityItem item : items) {
@@ -208,10 +208,9 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
                 if (--item.getEntityItem().stackSize <= 0) {
                     item.setDead();
                 }
-                for (Aspect as : al.getAspects()) {
+                for (final Aspect as : al.getAspects()) {
                     if (as != null) {
-                        int amount = al.getAmount(as);
-                        list.add(as, amount);
+                        list.add(as, al.getAmount(as));
                     }
                 }
             }
@@ -219,43 +218,38 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
         return flag;
     }
 
-    private void dealWithFluid(int x, int y, int z) {
-        Block block = worldObj.getBlock(x, y, z);
+    private void dealWithFluid(final int x, final int y, final int z) {
+        final Block block = worldObj.getBlock(x, y, z);
 
         if (block instanceof BlockFluidBase || block instanceof BlockLiquid) {
             worldObj.setBlockToAir(x, y, z);
         }
     }
 
-    private void stopFlows(int x, int y, int z) {
-        Block block = worldObj.getBlock(x, y, z);
+    private void stopFlows(final int x, final int y, final int z) {
+        final Block block = worldObj.getBlock(x, y, z);
 
         if (block instanceof BlockFluidBase || block instanceof BlockLiquid) {
             worldObj.setBlock(x, y, z, Blocks.stone, 0, 2);
         }
     }
 
-    private boolean isBlockOk(int x, int y, int z) {
-        Block block = worldObj.getBlock(x, y, z);
+    private boolean isBlockOk(final int x, final int y, final int z) {
+        final Block block = worldObj.getBlock(x, y, z);
 
-        if (block == null || block.isAir(worldObj, x, y, z) || block.getBlockHardness(worldObj, x, y, z) == -1) {
-            return false;
-        }
-
-        return true;
+        return block != null && !block.isAir(worldObj, x, y, z) && block.getBlockHardness(worldObj, x, y, z) != -1;
     }
 
-    private void processFromCoords(Coords c) {
-        ArrayList<ItemStack> drops = c.w.getBlock(c.x, c.y, c.z).getDrops(worldObj, c.x, c.y, c.z, c.w.getBlockMetadata(c.x, c.y, c.z), 0);
+    private void processFromCoords(final Coords c) {
+        final ArrayList<ItemStack> drops = c.w.getBlock(c.x, c.y, c.z).getDrops(worldObj, c.x, c.y, c.z, c.w.getBlockMetadata(c.x, c.y, c.z), 0);
 
-        for (ItemStack items : drops) {
+        for (final ItemStack items : drops) {
             AspectList al = ThaumcraftCraftingManager.getObjectTags(items);
             al = ThaumcraftCraftingManager.getBonusTags(items, al);
 
-            for (Aspect as : al.getAspects()) {
+            for (final Aspect as : al.getAspects()) {
                 if (as != null) {
-                    int amount = al.getAmount(as);
-                    list.add(as, amount);
+                    list.add(as, al.getAmount(as));
                 }
             }
         }
@@ -265,7 +259,7 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
     }
 
     @Override
-    public void writeSyncData(NBTTagCompound compound) {
+    public void writeSyncData(final NBTTagCompound compound) {
         super.writeSyncData(compound);
         list.writeToNBT(compound);
         compound.setInteger("cooldown", cooldown);
@@ -273,7 +267,7 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
     }
 
     @Override
-    public void readSyncData(NBTTagCompound compound) {
+    public void readSyncData(final NBTTagCompound compound) {
         super.readSyncData(compound);
         list.readFromNBT(compound);
         cooldown = compound.getInteger("cooldown");
@@ -286,20 +280,20 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
     }
 
     @Override
-    public void setAspects(AspectList al) {}
+    public void setAspects(final AspectList al) {}
 
     @Override
-    public boolean doesContainerAccept(Aspect paramAspect) {
+    public boolean doesContainerAccept(final Aspect paramAspect) {
         return false;
     }
 
     @Override
-    public int addToContainer(Aspect paramAspect, int paramInt) {
+    public int addToContainer(final Aspect paramAspect, final int paramInt) {
         return 0;
     }
 
     @Override
-    public boolean takeFromContainer(Aspect paramAspect, int paramInt) {
+    public boolean takeFromContainer(final Aspect paramAspect, final int paramInt) {
         if (!list.aspects.containsKey(paramAspect) || list.getAmount(paramAspect) < paramInt) {
             return false;
         }
@@ -308,8 +302,8 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
     }
 
     @Override
-    public boolean takeFromContainer(AspectList al) {
-        for (Aspect as : al.getAspects()) {
+    public boolean takeFromContainer(final AspectList al) {
+        for (final Aspect as : al.getAspects()) {
             if (!takeFromContainer(as, al.getAmount(as))) {
                 return false;
             }
@@ -318,13 +312,13 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
     }
 
     @Override
-    public boolean doesContainerContainAmount(Aspect as, int amount) {
+    public boolean doesContainerContainAmount(final Aspect as, final int amount) {
         return list.aspects.containsKey(as) && list.getAmount(as) >= amount;
     }
 
     @Override
-    public boolean doesContainerContain(AspectList al) {
-        for (Aspect as : al.getAspects()) {
+    public boolean doesContainerContain(final AspectList al) {
+        for (final Aspect as : al.getAspects()) {
             if (!doesContainerContainAmount(as, al.getAmount(as))) {
                 return false;
             }
@@ -333,40 +327,40 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
     }
 
     @Override
-    public int containerContains(Aspect as) {
+    public int containerContains(final Aspect as) {
         return list.aspects.containsKey(as) ? list.getAmount(as) : 0;
     }
 
     @Override
-    public boolean isConnectable(ForgeDirection paramForgeDirection) {
+    public boolean isConnectable(final ForgeDirection dir) {
         return true;
     }
 
     @Override
-    public boolean canInputFrom(ForgeDirection paramForgeDirection) {
+    public boolean canInputFrom(final ForgeDirection dir) {
         return false;
     }
 
     @Override
-    public boolean canOutputTo(ForgeDirection paramForgeDirection) {
+    public boolean canOutputTo(final ForgeDirection dir) {
         return true;
     }
 
     @Override
-    public void setSuction(Aspect paramAspect, int paramInt) {}
+    public void setSuction(final Aspect paramAspect, final int paramInt) {}
 
     @Override
-    public Aspect getSuctionType(ForgeDirection paramForgeDirection) {
+    public Aspect getSuctionType(final ForgeDirection dir) {
         return null;
     }
 
     @Override
-    public int getSuctionAmount(ForgeDirection paramForgeDirection) {
+    public int getSuctionAmount(final ForgeDirection dir) {
         return 0;
     }
 
     @Override
-    public int takeEssentia(Aspect paramAspect, int paramInt, ForgeDirection paramForgeDirection) {
+    public int takeEssentia(final Aspect paramAspect, final int paramInt, final ForgeDirection dir) {
         int amountToRemove = 0;
         if (list.aspects.containsKey(paramAspect)) {
             amountToRemove = Math.min(paramInt, list.getAmount(paramAspect));
@@ -377,17 +371,17 @@ public class TileEldritchConsumer extends TileMachineRedstone implements IAspect
     }
 
     @Override
-    public int addEssentia(Aspect paramAspect, int paramInt, ForgeDirection paramForgeDirection) {
+    public int addEssentia(final Aspect paramAspect, final int paramInt, final ForgeDirection dir) {
         return 0;
     }
 
     @Override
-    public Aspect getEssentiaType(ForgeDirection paramForgeDirection) {
+    public Aspect getEssentiaType(final ForgeDirection dir) {
         return list.getAspects()[0];
     }
 
     @Override
-    public int getEssentiaAmount(ForgeDirection paramForgeDirection) {
+    public int getEssentiaAmount(final ForgeDirection dir) {
         return list.getAmount(list.getAspects()[0]);
     }
 

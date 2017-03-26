@@ -37,7 +37,7 @@ public class TileEssentiaFusor extends TileMachineRedstone implements IAspectCon
         public SideType type = SideType.NONE;
         public ForgeDirection side = ForgeDirection.UNKNOWN;
 
-        public SideInfo(final ForgeDirection side) {
+        SideInfo(final ForgeDirection side) {
             this.side = side;
         }
 
