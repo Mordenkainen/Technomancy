@@ -6,7 +6,7 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.item.ItemStack;
 import theflogat.technomancy.common.tiles.base.TileProcessorBase;
 
-public class ProcessorHUDHandler extends WailaHudBase {
+public class ProcessorHUDHandler extends WailaHUDBase {
 
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {

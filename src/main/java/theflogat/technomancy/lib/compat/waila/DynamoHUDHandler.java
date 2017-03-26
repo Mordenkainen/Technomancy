@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
 import theflogat.technomancy.common.tiles.bloodmagic.dynamos.TileBloodDynamo;
 
-public class DynamoHUDHandler extends WailaHudBase {
+public class DynamoHUDHandler extends WailaHUDBase {
 
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {

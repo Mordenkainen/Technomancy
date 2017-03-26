@@ -11,9 +11,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public abstract class WailaHudBase implements IWailaDataProvider{
+public abstract class WailaHUDBase implements IWailaDataProvider{
 
-    public WailaHudBase() {
+    public WailaHUDBase() {
         super();
     }
 

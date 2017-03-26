@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 
-public class EldritchConsumerHUDHandler extends WailaHudBase {
+public class EldritchConsumerHUDHandler extends WailaHUDBase {
 
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {

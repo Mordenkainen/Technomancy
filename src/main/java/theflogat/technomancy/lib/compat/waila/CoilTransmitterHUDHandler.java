@@ -10,7 +10,7 @@ import theflogat.technomancy.common.tiles.base.TileCoilTransmitter;
 import theflogat.technomancy.common.tiles.technom.TileItemTransmitter;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaTransmitter;
 
-public class CoilTransmitterHUDHandler extends WailaHudBase {
+public class CoilTransmitterHUDHandler extends WailaHUDBase {
 
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
