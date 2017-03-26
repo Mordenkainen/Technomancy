@@ -10,7 +10,7 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 public class CondenserHUDHandler extends WailaHUDBase {
 
     @Override
-    public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+    public List<String> getWailaBody(final ItemStack itemStack, final List<String> currenttip, final IWailaDataAccessor accessor, final IWailaConfigHandler config) {
         final TileCondenser tileEntity = (TileCondenser) accessor.getTileEntity();
         WailaHelper.drawDefault(currenttip, tileEntity);
         return currenttip;

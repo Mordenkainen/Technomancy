@@ -10,7 +10,7 @@ import mcp.mobius.waila.api.SpecialChars;
 public class BloodFabricatorHUDHandler extends WailaHUDBase {
 
     @Override
-    public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+    public List<String> getWailaBody(final ItemStack itemStack, final List<String> currenttip, final IWailaDataAccessor accessor, final IWailaConfigHandler config) {
         final TileBloodFabricator tileEntity = (TileBloodFabricator) accessor.getTileEntity();
         currenttip.add(SpecialChars.DRED + "Blood: " + tileEntity.tank.getFluidAmount() + "/" + tileEntity.tank.getCapacity());
         WailaHelper.drawDefault(currenttip, tileEntity);

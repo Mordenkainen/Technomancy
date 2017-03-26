@@ -6,9 +6,11 @@ import mcp.mobius.waila.api.SpecialChars;
 import theflogat.technomancy.common.tiles.base.IRedstoneSensitive;
 import theflogat.technomancy.common.tiles.base.IUpgradable;
 
-public class WailaHelper {
+public final class WailaHelper {
 
-    public static void drawDefault(List<String> currenttip, TileEntity te) {
+    private WailaHelper () {}
+    
+    public static void drawDefault(final List<String> currenttip, final TileEntity te) {
         if (te instanceof IUpgradable) {
             drawBoost(currenttip, (IUpgradable) te);
         }
@@ -17,21 +19,21 @@ public class WailaHelper {
         }
     }
 
-    private static void drawBoost(List<String> currenttip, IUpgradable te) {
+    private static void drawBoost(final List<String> currenttip, final IUpgradable te) {
         if (te.isBoosted()) {
             currenttip.add(SpecialChars.GREEN + "Potency Gem Installed");
         }
     }
 
-    private static void drawRedstoneSet(List<String> currenttip, TileEntity te) {
+    private static void drawRedstoneSet(final List<String> currenttip, final TileEntity te) {
         currenttip.add("Redstone Setting: " + formatSetting(((IRedstoneSensitive) te).getCurrentSetting().id));
         currenttip.add(((IRedstoneSensitive) te).getCurrentSetting().canRun(te) ? SpecialChars.GREEN + "Enabled" : SpecialChars.RED + "Disabled");
     }
 
-    private static String formatSetting(String id) {
-        if (id.equals("High")) {
+    public static String formatSetting(final String id) {
+        if ("High".equals(id)) {
             return SpecialChars.RED + "High";
-        } else if (id.equals("Low")) {
+        } else if ("Low".equals(id)) {
             return SpecialChars.GREEN + "Low";
         } else {
             return SpecialChars.GRAY + "None";

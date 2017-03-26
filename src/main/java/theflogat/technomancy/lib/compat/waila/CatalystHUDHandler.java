@@ -9,7 +9,7 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 public class CatalystHUDHandler extends WailaHUDBase {
 
     @Override
-    public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+    public List<String> getWailaBody(final ItemStack itemStack, final List<String> currenttip, final IWailaDataAccessor accessor, final IWailaConfigHandler config) {
         final TileCatalyst te = (TileCatalyst) accessor.getTileEntity();
         currenttip.add("Is active: " + (te.handler != null));
         WailaHelper.drawDefault(currenttip, te);

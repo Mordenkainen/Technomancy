@@ -9,13 +9,13 @@ import mcp.mobius.waila.api.SpecialChars;
 public class BiomeMorpherHUDHandler extends WailaHUDNBT {
 
     @Override
-    public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+    public List<String> getWailaBody(final ItemStack itemStack, final List<String> currenttip, final IWailaDataAccessor accessor, final IWailaConfigHandler config) {
         currenttip.add("Biome: " + biomeForMeta(accessor.getMetadata()));
         WailaHelper.drawDefault(currenttip, accessor.getTileEntity());
         return currenttip;
     }
 
-    private static String biomeForMeta(int meta) {
+    private static String biomeForMeta(final int meta) {
         if (meta == 0) {
             return SpecialChars.GREEN + "Magical Forest";
         } else if (meta == 1) {

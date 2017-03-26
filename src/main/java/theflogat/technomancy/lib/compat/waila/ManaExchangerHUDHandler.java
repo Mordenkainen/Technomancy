@@ -10,10 +10,10 @@ import theflogat.technomancy.common.tiles.botania.machines.TileManaExchanger;
 public class ManaExchangerHUDHandler extends WailaHUDNBT {
 
     @Override
-    public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+    public List<String> getWailaBody(final ItemStack itemStack, final List<String> currenttip, final IWailaDataAccessor accessor, final IWailaConfigHandler config) {
         final TileManaExchanger tileEntity = (TileManaExchanger) accessor.getTileEntity();
         currenttip.add(tileEntity.mode ? "Exporting Mana" : "Importing Mana");
-        FluidTank tank = new FluidTank(1000);
+        final FluidTank tank = new FluidTank(1000);
         tank.readFromNBT(accessor.getNBTData());
         currenttip.add("Mana Condensate: " + tank.getFluidAmount() + "mB");
         WailaHelper.drawDefault(currenttip, tileEntity);

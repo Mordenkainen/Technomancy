@@ -11,16 +11,16 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 public class EssentiaFusorHUDHandler extends WailaHUDNBT {
 
     @Override
-    public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+    public List<String> getWailaBody(final ItemStack itemStack, final List<String> currenttip, final IWailaDataAccessor accessor, final IWailaConfigHandler config) {
         WailaHelper.drawDefault(currenttip, accessor.getTileEntity());
         if (accessor.getPlayer().isSneaking()) {
-            TileEssentiaFusor tile = (TileEssentiaFusor) accessor.getTileEntity();
-            for (ForgeDirection side : ForgeDirection.VALID_DIRECTIONS) {
+            final TileEssentiaFusor tile = (TileEssentiaFusor) accessor.getTileEntity();
+            for (final ForgeDirection side : ForgeDirection.VALID_DIRECTIONS) {
                 if (side != ForgeDirection.UP && side != ForgeDirection.DOWN) {
-                    if (tile.getEssentiaType(side) != null) {
-                        currenttip.add(side.name() + " : " + tile.getEssentiaType(side).getName());
-                    } else {
+                    if (tile.getEssentiaType(side) == null) {
                         currenttip.add(side.name() + " : None");
+                    } else {
+                        currenttip.add(side.name() + " : " + tile.getEssentiaType(side).getName());
                     }
                 }
             }

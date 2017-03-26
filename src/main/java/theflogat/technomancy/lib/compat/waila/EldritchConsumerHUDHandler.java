@@ -9,7 +9,7 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 public class EldritchConsumerHUDHandler extends WailaHUDBase {
 
     @Override
-    public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+    public List<String> getWailaBody(final ItemStack itemStack, final List<String> currenttip, final IWailaDataAccessor accessor, final IWailaConfigHandler config) {
         final TileEldritchConsumer tileEntity = (TileEldritchConsumer) accessor.getTileEntity();
         currenttip.add("Size Setting: " + tileEntity.current.toString());
         currenttip.add("Range: " + Integer.toString(tileEntity.current.r * 2 + 1) + "x" + Integer.toString(tileEntity.current.r * 2 + 1));

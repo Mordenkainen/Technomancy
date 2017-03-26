@@ -20,15 +20,15 @@ import theflogat.technomancy.util.Coords;
 public class FakeAirNGHUDHandler extends WailaHUDBase {
 
     @Override
-    public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+    public List<String> getWailaBody(final ItemStack itemStack, final List<String> currenttip, final IWailaDataAccessor accessor, final IWailaConfigHandler config) {
         final TileFakeAirNG tileAir = (TileFakeAirNG) accessor.getTileEntity();
-        Coords nodeGenerator = tileAir.getMain();
+        final Coords nodeGenerator = tileAir.getMain();
         final TileNodeGenerator tileEntity = (TileNodeGenerator) nodeGenerator.w.getTileEntity(nodeGenerator.x, nodeGenerator.y, nodeGenerator.z);
         if (tileEntity != null) {
             if (tileEntity.isBoosted()) {
                 currenttip.add(SpecialChars.GREEN + "Potency Gem Installed");
             }
-            currenttip.add("Redstone Setting: " + formatSetting(((IRedstoneSensitive) tileEntity).getCurrentSetting().id));
+            currenttip.add("Redstone Setting: " + WailaHelper.formatSetting(((IRedstoneSensitive) tileEntity).getCurrentSetting().id));
             currenttip.add(tileEntity.canRun() ? SpecialChars.GREEN + "Enabled" : SpecialChars.RED + "Disabled");
             if (accessor.getNBTData().getBoolean("Active")) {
                 currenttip.add(accessor.getNBTData().getBoolean("Spawn") ? "Mode: Create Node" : tileEntity.isBoosted() ? "Mode: Enhance Node" : "Mode: Recharge Node");
@@ -38,27 +38,18 @@ public class FakeAirNGHUDHandler extends WailaHUDBase {
     }
 
     @Override
-    public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
+    public ItemStack getWailaStack(final IWailaDataAccessor accessor, final IWailaConfigHandler config) {
         return new ItemStack(Item.getItemFromBlock(TMBlocks.nodeGenerator), 1);
     }
 
     @Override
-    public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x, int y, int z) {
+    public NBTTagCompound getNBTData(final EntityPlayerMP player, final TileEntity te, final NBTTagCompound tag, final World world, final int x, final int y, final int z) {
         if (te != null) {
-            Coords nodeGenerator = ((TileFakeAirNG) te).getMain();
-            TileNodeGenerator tileEntity = (TileNodeGenerator) nodeGenerator.w.getTileEntity(nodeGenerator.x, nodeGenerator.y, nodeGenerator.z);
+            final Coords nodeGenerator = ((TileFakeAirNG) te).getMain();
+            final TileNodeGenerator tileEntity = (TileNodeGenerator) nodeGenerator.w.getTileEntity(nodeGenerator.x, nodeGenerator.y, nodeGenerator.z);
             tileEntity.writeToNBT(tag);
         }
         return tag;
     }
 
-    private static String formatSetting(String id) {
-        if (id.equals("High")) {
-            return SpecialChars.RED + "High";
-        } else if (id.equals("Low")) {
-            return SpecialChars.GREEN + "Low";
-        } else {
-            return SpecialChars.GRAY + "None";
-        }
-    }
 }

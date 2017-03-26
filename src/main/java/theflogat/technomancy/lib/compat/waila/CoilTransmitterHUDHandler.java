@@ -13,7 +13,7 @@ import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaTransmi
 public class CoilTransmitterHUDHandler extends WailaHUDBase {
 
     @Override
-    public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+    public List<String> getWailaBody(final ItemStack itemStack, final List<String> currenttip, final IWailaDataAccessor accessor, final IWailaConfigHandler config) {
         final TileCoilTransmitter te = (TileCoilTransmitter) accessor.getTileEntity();
         if (te.redstoneState) {
             currenttip.add("Currently Emitting a Signal");

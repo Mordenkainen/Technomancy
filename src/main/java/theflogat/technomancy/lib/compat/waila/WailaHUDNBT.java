@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 public abstract class WailaHUDNBT extends WailaHUDBase {
 
     @Override
-    public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x, int y, int z) {
+    public NBTTagCompound getNBTData(final EntityPlayerMP player, final TileEntity te, final NBTTagCompound tag, final World world, final int x, final int y, final int z) {
         if (te != null) {
             te.writeToNBT(tag);
         }

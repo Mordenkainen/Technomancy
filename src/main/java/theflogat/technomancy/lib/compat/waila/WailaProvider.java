@@ -17,7 +17,9 @@ import theflogat.technomancy.common.tiles.thaumcraft.machine.TileFluxLamp;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
 import theflogat.technomancy.lib.handlers.CompatibilityHandler;
 
-public class WailaProvider {
+public final class WailaProvider {
+    
+    private WailaProvider() {}
 
     public static void callbackRegister(final IWailaRegistrar registrar) {
         registrar.registerBodyProvider(new DynamoHUDHandler(), TileDynamoBase.class);

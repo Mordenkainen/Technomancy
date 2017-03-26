@@ -9,7 +9,7 @@ import theflogat.technomancy.common.tiles.base.TileProcessorBase;
 public class ProcessorHUDHandler extends WailaHUDBase {
 
     @Override
-    public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+    public List<String> getWailaBody(final ItemStack itemStack, final List<String> currenttip, final IWailaDataAccessor accessor, final IWailaConfigHandler config) {
         final TileProcessorBase tileEntity = (TileProcessorBase) accessor.getTileEntity();
         if (tileEntity.isActive) {
             currenttip.add("Progress: " + (int) (((TileProcessorBase.maxTime - tileEntity.progress) * 100F) / TileProcessorBase.maxTime) + "%");

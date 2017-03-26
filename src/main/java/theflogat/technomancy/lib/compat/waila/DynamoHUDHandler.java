@@ -11,7 +11,7 @@ import theflogat.technomancy.common.tiles.bloodmagic.dynamos.TileBloodDynamo;
 public class DynamoHUDHandler extends WailaHUDBase {
 
     @Override
-    public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+    public List<String> getWailaBody(final ItemStack itemStack, final List<String> currenttip, final IWailaDataAccessor accessor, final IWailaConfigHandler config) {
         final TileDynamoBase tileEntity = (TileDynamoBase) accessor.getTileEntity();
         WailaHelper.drawDefault(currenttip, tileEntity);
         if (tileEntity instanceof TileBloodDynamo) {
