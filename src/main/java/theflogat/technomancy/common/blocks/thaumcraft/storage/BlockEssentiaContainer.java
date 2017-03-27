@@ -29,19 +29,26 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockEssentiaContainer extends BlockContainerAdvanced {
 
     public static BlockContainer instance;
+    
+    @SideOnly(Side.CLIENT)
+    public static IIcon iconLiquid;
+
+    @SideOnly(Side.CLIENT)
+    public static IIcon iconJar;
 
     public BlockEssentiaContainer() {
+        super();
         setHardness(1F);
         setBlockName(Reference.MOD_PREFIX + Names.ESSENTIACONTAINER);
         setBlockBounds(0.1875F, 0.0F, 0.1875F, 0.8125F, 0.75F, 0.8125F);
     }
 
     @Override
-    public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase entity, ItemStack items) {
+    public void onBlockPlacedBy(final World w, final int x, final int y, final int z, final EntityLivingBase entity, final ItemStack items) {
         super.onBlockPlacedBy(w, x, y, z, entity, items);
-        int face = MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 0.5D) & 0x3;
-        TileEntity tile = w.getTileEntity(x, y, z);
-        if ((tile instanceof TileEssentiaContainer)) {
+        final int face = MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 0.5D) & 0x3;
+        final TileEntity tile = w.getTileEntity(x, y, z);
+        if (tile instanceof TileEssentiaContainer) {
             if (face == 0) {
                 ((TileEssentiaContainer) tile).facing = 2;
             }
@@ -58,7 +65,7 @@ public class BlockEssentiaContainer extends BlockContainerAdvanced {
     }
 
     @Override
-    public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(final World w, final int x, final int y, final int z, final EntityPlayer player, final int side, final float hitX, final float hitY, final float hitZ) {
         if (w.getTileEntity(x, y, z) instanceof TileEssentiaContainer) {
             TileEssentiaContainer container = (TileEssentiaContainer) w.getTileEntity(x, y, z);
             ItemStack item = player.getHeldItem();
@@ -68,14 +75,14 @@ public class BlockEssentiaContainer extends BlockContainerAdvanced {
                 if (w.isRemote) {
                     w.playSound(x + 0.5F, y + 0.5F, z + 0.5F, "thaumcraft:page", 1.0F, 1.0F, false);
                 }
-                ForgeDirection fd = ForgeDirection.getOrientation(side);
+                final ForgeDirection fd = ForgeDirection.getOrientation(side);
                 if (!player.inventory.addItemStackToInventory(new ItemStack(Thaumcraft.itemResource, 1, 13))) {
                     w.spawnEntityInWorld(new EntityItem(w, x + 0.5F + fd.offsetX / 3.0F, y + 0.5F, z + 0.5F + fd.offsetZ / 3.0F, new ItemStack(Thaumcraft.itemResource, 1, 13)));
                 }
                 return true;
             }
             // Empties Jars
-            if ((player.isSneaking()) && (container.amount >= 0) && item == null && container.aspectFilter == null) {
+            if (player.isSneaking() && container.amount >= 0 && item == null && container.aspectFilter == null) {
                 container.amount = 0;
                 if (w.isRemote) {
                     w.playSound(x + 0.5F, y + 0.5F, z + 0.5F, "thaumcraft:jar", 1.0F, 1.0F, false);
@@ -105,25 +112,23 @@ public class BlockEssentiaContainer extends BlockContainerAdvanced {
                     return true;
                 }
                 // Adds Essentia from Phials
-                if (item.getItem() == Thaumcraft.itemEssence && item.getItemDamage() == 1 && container.amount <= (container.maxAmount - 8)) {
-                    if (container.addToContainer(((IEssentiaContainerItem) player.getHeldItem().getItem()).getAspects(player.getHeldItem()).getAspects()[0], 8) == 0) {
-                        item.stackSize--;
-                        ItemStack phial = new ItemStack(Thaumcraft.itemEssence, 1, 0);
-                        if (!player.inventory.addItemStackToInventory(phial)) {
-                            w.spawnEntityInWorld(new EntityItem(w, x + 0.5F, y + 0.5F, z + 0.5F, phial));
-                        }
-                        w.playSoundAtEntity(player, "game.neutral.swim", 0.25F, 1.0F);
-                        player.inventoryContainer.detectAndSendChanges();
-                        return true;
+                if (item.getItem() == Thaumcraft.itemEssence && item.getItemDamage() == 1 && container.amount <= (container.maxAmount - 8) && container.addToContainer(((IEssentiaContainerItem) player.getHeldItem().getItem()).getAspects(player.getHeldItem()).getAspects()[0], 8) == 0) {
+                    item.stackSize--;
+                    final ItemStack phial = new ItemStack(Thaumcraft.itemEssence, 1, 0);
+                    if (!player.inventory.addItemStackToInventory(phial)) {
+                        w.spawnEntityInWorld(new EntityItem(w, x + 0.5F, y + 0.5F, z + 0.5F, phial));
                     }
+                    w.playSoundAtEntity(player, "game.neutral.swim", 0.25F, 1.0F);
+                    player.inventoryContainer.detectAndSendChanges();
+                    return true;
                 }
                 // Adds Essentia to Phials
                 if (item.getItem() == Thaumcraft.itemEssence && item.getItemDamage() == 0 && container.aspect != null) {
-                    Aspect asp = Aspect.getAspect(container.aspect.getTag());
-                    if (container.takeFromContainer(container.aspect, 8) == true) {
+                    final Aspect asp = Aspect.getAspect(container.aspect.getTag());
+                    if (container.takeFromContainer(container.aspect, 8)) {
                         item.stackSize--;
                         w.playSoundAtEntity(player, "game.neutral.swim", 0.25F, 1.0F);
-                        ItemStack phial = new ItemStack(Thaumcraft.itemEssence, 1, 1);
+                        final ItemStack phial = new ItemStack(Thaumcraft.itemEssence, 1, 1);
                         setAspects(phial, new AspectList().add(asp, 8));
                         if (!player.inventory.addItemStackToInventory(phial)) {
                             w.spawnEntityInWorld(new EntityItem(w, x + 0.5F, y + 0.5F, z + 0.5F, phial));
@@ -133,14 +138,14 @@ public class BlockEssentiaContainer extends BlockContainerAdvanced {
                     }
                 }
                 // Fills empty, non-labeled Jars
-                if (((item.getItem() == Item.getItemFromBlock(Thaumcraft.blockJar) && item.getItemDamage() == 0)) && container.amount > 0) {
-                    int amountToAdd = Math.min(64, container.amount);
-                    AspectList newAspects = new AspectList().add(container.aspect, amountToAdd);
+                if (item.getItem() == Item.getItemFromBlock(Thaumcraft.blockJar) && item.getItemDamage() == 0 && container.amount > 0) {
+                    final int amountToAdd = Math.min(64, container.amount);
+                    final AspectList newAspects = new AspectList().add(container.aspect, amountToAdd);
                     container.amount -= amountToAdd;
                     if (container.amount <= 0) {
                         container.aspect = null;
                     }
-                    ItemStack newJar = new ItemStack(Thaumcraft.itemJarFilled, 1);
+                    final ItemStack newJar = new ItemStack(Thaumcraft.itemJarFilled, 1);
                     ((IEssentiaContainerItem) newJar.getItem()).setAspects(newJar, newAspects);
                     item.stackSize--;
                     if (!player.inventory.addItemStackToInventory(newJar)) {
@@ -152,24 +157,22 @@ public class BlockEssentiaContainer extends BlockContainerAdvanced {
                 }
                 // Empties Jars
                 if (item.getItem() == Thaumcraft.itemJarFilled && container.amount < container.maxAmount && ((IEssentiaContainerItem) item.getItem()).getAspects(item) != null && ((IEssentiaContainerItem) item.getItem()).getAspects(item).visSize() > 0) {
-                    Aspect targetAspect = container.aspect == null ? container.aspectFilter == null ? ((IEssentiaContainerItem) item.getItem()).getAspects(item).getAspects()[0] : container.aspectFilter : container.aspect;
+                    final Aspect targetAspect = container.aspect == null ? container.aspectFilter == null ? ((IEssentiaContainerItem) item.getItem()).getAspects(item).getAspects()[0] : container.aspectFilter : container.aspect;
                     if (targetAspect == ((IEssentiaContainerItem) item.getItem()).getAspects(item).getAspects()[0]) {
-                        int amountToAdd = Math.min(((IEssentiaContainerItem) item.getItem()).getAspects(item).getAmount(container.aspect), container.maxAmount - container.amount);
+                        final int amountToAdd = Math.min(((IEssentiaContainerItem) item.getItem()).getAspects(item).getAmount(container.aspect), container.maxAmount - container.amount);
                         container.aspect = targetAspect;
                         container.amount += amountToAdd;
-                        AspectList newAspects = ((IEssentiaContainerItem) item.getItem()).getAspects(item);
+                        final AspectList newAspects = ((IEssentiaContainerItem) item.getItem()).getAspects(item);
                         newAspects.remove(targetAspect, amountToAdd);
                         ((IEssentiaContainerItem) item.getItem()).setAspects(item, newAspects);
                         w.playSoundAtEntity(player, "game.neutral.swim", 0.25F, 1.0F);
-                        if (((IEssentiaContainerItem) item.getItem()).getAspects(item) == null) {
-                            if (!item.hasTagCompound() || !item.stackTagCompound.hasKey("AspectFilter")) {
-                                item.stackSize--;
-                                ItemStack jar = new ItemStack(Item.getItemFromBlock(Thaumcraft.blockJar), 1, 0);
-                                if (!player.inventory.addItemStackToInventory(jar)) {
-                                    w.spawnEntityInWorld(new EntityItem(w, x + 0.5F, y + 0.5F, z + 0.5F, jar));
-                                }
-                                player.inventoryContainer.detectAndSendChanges();
+                        if (((IEssentiaContainerItem) item.getItem()).getAspects(item) == null && (!item.hasTagCompound() || !item.stackTagCompound.hasKey("AspectFilter"))) {
+                            item.stackSize--;
+                            final ItemStack jar = new ItemStack(Item.getItemFromBlock(Thaumcraft.blockJar), 1, 0);
+                            if (!player.inventory.addItemStackToInventory(jar)) {
+                                w.spawnEntityInWorld(new EntityItem(w, x + 0.5F, y + 0.5F, z + 0.5F, jar));
                             }
+                            player.inventoryContainer.detectAndSendChanges();
                         }
                         return true;
                     }
@@ -181,7 +184,7 @@ public class BlockEssentiaContainer extends BlockContainerAdvanced {
     }
 
     @Override
-    public TileEntity createNewTileEntity(World w, int meta) {
+    public TileEntity createNewTileEntity(final World w, final int meta) {
         return new TileEssentiaContainer();
     }
 
@@ -200,7 +203,7 @@ public class BlockEssentiaContainer extends BlockContainerAdvanced {
         return RenderIds.idEssentiaCont;
     }
 
-    public void setAspects(ItemStack itemstack, AspectList aspects) {
+    public void setAspects(final ItemStack itemstack, final AspectList aspects) {
         if (!itemstack.hasTagCompound()) {
             itemstack.setTagCompound(new NBTTagCompound());
         }
@@ -208,24 +211,18 @@ public class BlockEssentiaContainer extends BlockContainerAdvanced {
     }
 
     @SideOnly(Side.CLIENT)
-    public static IIcon iconLiquid;
-
-    @SideOnly(Side.CLIENT)
-    public static IIcon iconJar;
-
-    @SideOnly(Side.CLIENT)
     @Override
-    public void registerBlockIcons(IIconRegister icon) {
+    public void registerBlockIcons(final IIconRegister icon) {
         iconJar = icon.registerIcon(Reference.MODEL_PREFIX + Names.ESSENTIACONTAINER);
         iconLiquid = icon.registerIcon(Reference.TEXTURE_PREFIX + "animatedglow");
         blockIcon = icon.registerIcon(Reference.TEXTURE_PREFIX + Names.ESSENTIACONTAINER);
     }
 
     @Override
-    public void getNBTInfo(NBTTagCompound comp, ArrayList<String> l, int meta) {
+    public void getNBTInfo(final NBTTagCompound comp, final ArrayList<String> l, final int meta) {
         super.getNBTInfo(comp, l, meta);
         if (comp.hasKey("AspectFilter")) {
-            Aspect as = Aspect.getAspect(comp.getString("AspectFilter"));
+            final Aspect as = Aspect.getAspect(comp.getString("AspectFilter"));
             l.add("Filter: " + as.getName());
         }
     }

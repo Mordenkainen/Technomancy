@@ -28,6 +28,6 @@ public abstract class RitualOfFireBase extends Ritual {
         }
     }
 
-    protected abstract void doAction(final World world, int x, int y, int z, int xOffset, int yOffset, int zOffset);
+    protected abstract void doAction(World world, int x, int y, int z, int xOffset, int yOffset, int zOffset);
     
 }
