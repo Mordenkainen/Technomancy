@@ -65,7 +65,7 @@ public class Technomancy {
         CompatibilityHandler.init();
 
         for (final IModModule mod : CompatibilityHandler.mods) {
-            mod.Init();
+            mod.init();
         }
 
         TMItems.initTechnomancy();
@@ -73,8 +73,8 @@ public class Technomancy {
         TMPotions.initTechnomancy();
 
         for (final IModModule mod : CompatibilityHandler.mods) {
-            mod.RegisterBlocks();
-            mod.RegisterItems();
+            mod.registerBlocks();
+            mod.registerItems();
         }
 
         proxy.initRenderers();
@@ -94,11 +94,11 @@ public class Technomancy {
         CraftingHandler.initFurnaceRecipes();
 
         for (final IModModule mod : CompatibilityHandler.mods) {
-            mod.RegisterRecipes();
+            mod.registerRecipes();
         }
 
         for (final IModModule mod : CompatibilityHandler.mods) {
-            mod.PostInit();
+            mod.postInit();
         }
     }
 

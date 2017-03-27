@@ -41,7 +41,7 @@ public class BloodMagic extends ModuleBase {
     }
 
     @Override
-    public void Init() {
+    public void init() {
         lifeEssenceFluid = FluidRegistry.getFluid("life essence");
         divinationSigil = GameRegistry.findItem("AWWayofTime", "divinationSigil");
         bucketLife = GameRegistry.findItem("AWWayofTime", "bucketLife");
@@ -55,10 +55,10 @@ public class BloodMagic extends ModuleBase {
     }
 
     @Override
-    public void PostInit() {}
+    public void postInit() {}
 
     @Override
-    public void RegisterItems() {
+    public void registerItems() {
         // Initializations
         TMItems.itemBM = TMConfig.matBM ? new ItemBMMaterial() : null;
 
@@ -67,7 +67,7 @@ public class BloodMagic extends ModuleBase {
     }
 
     @Override
-    public void RegisterBlocks() {
+    public void registerBlocks() {
         TMBlocks.bloodDynamo = TMConfig.bloodDynamo ? new BlockBloodDynamo() : null;
         TMBlocks.bloodFabricator = TMConfig.bloodFabricator ? new BlockBloodFabricator() : null;
         TMBlocks.processorBM = TMConfig.processorBM ? new BlockBMProcessor() : null;
@@ -82,7 +82,7 @@ public class BloodMagic extends ModuleBase {
     }
 
     @Override
-    public void RegisterRecipes() {
+    public void registerRecipes() {
         if (CompatibilityHandler.te) {
             // Altar Recipes
             if (TMConfig.bloodDynamo) {

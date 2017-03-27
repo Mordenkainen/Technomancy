@@ -1,6 +1,7 @@
 package theflogat.technomancy.common.tiles.base;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
@@ -13,20 +14,22 @@ import cofh.api.energy.IEnergyHandler;
 
 public interface ICouplable {
 
-    public class Couple {
+    final class Couple {
+        
+        public static List<String> forbidInv = new ArrayList<String>();
+        public static List<String> forbidAC = new ArrayList<String>();
+        public static List<String> forbidFl = new ArrayList<String>();
+        public static List<String> forbidRF = new ArrayList<String>();
 
-        public static ArrayList<String> forbidInv = new ArrayList<String>();
-        public static ArrayList<String> forbidAC = new ArrayList<String>();
-        public static ArrayList<String> forbidFl = new ArrayList<String>();
-        public static ArrayList<String> forbidRF = new ArrayList<String>();
-
+        private Couple() {}
+        
         static {
             forbidAC.add("thaumcraft.common.tiles.TileMirrorEssentia");
             forbidAC.add("theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaTransmitter");
             forbidInv.add("theflogat.technomancy.common.tiles.technom.TileItemTransmitter");
         }
 
-        public static ArrayList<String> getType(TileEntity te) {
+        public static List<String> getType(TileEntity te) {
             ArrayList<String> interfaceTypes = new ArrayList<String>();
             if (te instanceof IInventory && !forbidInv.contains(te.getClass().getName())) {
                 interfaceTypes.add(Type.ITEM.id);
@@ -34,10 +37,8 @@ public interface ICouplable {
             if ((te instanceof IFluidHandler || te instanceof IFluidTank) && !forbidFl.contains(te.getClass().getName())) {
                 interfaceTypes.add(Type.FLUID.id);
             }
-            if (CompatibilityHandler.th) {
-                if (te instanceof IAspectContainer && !forbidAC.contains(te.getClass().getName())) {
-                    interfaceTypes.add(Type.ESSENTIA.id);
-                }
+            if (CompatibilityHandler.th && te instanceof IAspectContainer && !forbidAC.contains(te.getClass().getName())) {
+                interfaceTypes.add(Type.ESSENTIA.id);
             }
             if (te instanceof IEnergyHandler && !forbidRF.contains(te.getClass().getName())) {
                 interfaceTypes.add(Type.ENERGYRF.id);
@@ -60,9 +61,9 @@ public interface ICouplable {
         }
     }
 
-    public abstract Type getType();
+    Type getType();
 
-    public abstract void addPos(ChunkCoordinates coords);
+    void addPos(ChunkCoordinates coords);
 
-    public abstract void clear();
+    void clear();
 }

@@ -33,7 +33,7 @@ public class ThermalExpansion extends ModuleBase {
     }
 
     @Override
-    public void Init() {
+    public void init() {
         powerCoilElectrum = GameRegistry.findItemStack("ThermalExpansion", "powerCoilElectrum", 1);
         capacitorResonant = GameRegistry.findItemStack("ThermalExpansion", "capacitorResonant", 1);
         powerCoilSilver = GameRegistry.findItemStack("ThermalExpansion", "powerCoilSilver", 1);
@@ -56,14 +56,14 @@ public class ThermalExpansion extends ModuleBase {
     }
 
     @Override
-    public void PostInit() {}
+    public void postInit() {}
 
     @Override
-    public void RegisterItems() {}
+    public void registerItems() {}
 
     @Override
-    public void RegisterBlocks() {}
+    public void registerBlocks() {}
 
     @Override
-    public void RegisterRecipes() {}
+    public void registerRecipes() {}
 }

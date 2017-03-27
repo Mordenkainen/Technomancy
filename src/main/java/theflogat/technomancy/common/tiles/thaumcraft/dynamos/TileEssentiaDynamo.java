@@ -20,20 +20,20 @@ import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
 public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContainer, IEssentiaTransport, IThaumicInput {
 
     private int amount;
-    private int maxAmount = 64;
-    private Aspect aspect = null;
+    private final static int MAXAMOUNT = 64;
+    private Aspect aspect;
     public int count;
 
     @Override
-    public int extractFuel(int ener) {
+    public int extractFuel(final int ener) {
         if (amount <= 0 || aspect == null) {
             return 0;
         }
-        float ratio = (ener) / 80F;
-        int val = getAspectFuel(aspect);
+        final float ratio = (ener) / 80F;
         if (ratio > amount) {
             return 0;
         }
+        final int val = getAspectFuel(aspect);
         amount -= Math.ceil(ratio);
         if (amount <= 0) {
             amount = 0;
@@ -43,7 +43,7 @@ public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContain
     }
 
     @Override
-    public void writeSyncData(NBTTagCompound comp) {
+    public void writeSyncData(final NBTTagCompound comp) {
         super.writeSyncData(comp);
         comp.setShort("Amount", (short) amount);
         if (aspect != null) {
@@ -52,13 +52,13 @@ public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContain
     }
 
     @Override
-    public void readSyncData(NBTTagCompound comp) {
+    public void readSyncData(final NBTTagCompound comp) {
         super.readSyncData(comp);
         amount = comp.getShort("Amount");
         aspect = Aspect.getAspect(comp.getString("Aspect"));
     }
 
-    public int getAspectFuel(Aspect aspect) {
+    public int getAspectFuel(final Aspect aspect) {
         if (aspect == Aspect.FIRE || aspect == Aspect.ENERGY) {
             return 800;
         }
@@ -97,14 +97,12 @@ public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContain
         if (aspect == Aspect.TREE || aspect == Aspect.PLANT || aspect == Aspect.CROP || aspect == Aspect.CLOTH || aspect == Aspect.FLESH) {
             return 40;
         }
-        if (aspect == Aspect.UNDEAD) {
-            if (worldObj.getBiomeGenForCoords(xCoord, yCoord) == BiomeGenBase.sky) {
-                return 100;
-            }
+        if (aspect == Aspect.UNDEAD && worldObj.getBiomeGenForCoords(xCoord, yCoord) == BiomeGenBase.sky) {
+            return 100;
         }
 
         if (aspect == Aspect.EXCHANGE) {
-            Random rand = new Random();
+            final Random rand = new Random();
             return rand.nextInt(1200);
         }
         if (aspect == Aspect.FLIGHT) {
@@ -148,8 +146,8 @@ public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContain
 
     @Override
     public AspectList getAspects() {
-        AspectList al = new AspectList();
-        if ((aspect != null) && (amount > 0)) {
+        final AspectList al = new AspectList();
+        if (aspect != null && amount > 0) {
             al.add(this.aspect, this.amount);
         }
         return al;
@@ -158,7 +156,7 @@ public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContain
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!worldObj.isRemote && amount < maxAmount) {
+        if (!worldObj.isRemote && amount < MAXAMOUNT) {
             fill();
         }
     }
@@ -166,12 +164,12 @@ public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContain
     public void fill() {
         TileEntity te = null;
         IEssentiaTransport ic = null;
-        for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
+        for (final ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
             if (dir != ForgeDirection.getOrientation(facing)) {
                 te = Thaumcraft.getConnectableTile(worldObj, xCoord, yCoord, zCoord, dir);
                 if (te != null) {
                     ic = (IEssentiaTransport) te;
-                    Aspect ta = ic.getEssentiaType(dir.getOpposite());
+                    final Aspect ta = ic.getEssentiaType(dir.getOpposite());
                     if (ic.getEssentiaAmount(dir.getOpposite()) > 0 && ic.getSuctionAmount(dir.getOpposite()) < getSuctionAmount(null) && getSuctionAmount(null) >= ic.getMinimumSuction()) {
                         addToContainer(ta, ic.takeEssentia(ta, 1, dir.getOpposite()));
                         return;
@@ -182,13 +180,13 @@ public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContain
     }
 
     @Override
-    public int addToContainer(Aspect tag, int am) {
+    public int addToContainer(final Aspect tag, int am) {
         if (am == 0) {
             return am;
         }
-        if ((amount < maxAmount && tag == aspect) || amount == 0) {
+        if (amount < MAXAMOUNT && tag.equals(aspect) || amount == 0) {
             aspect = tag;
-            int added = Math.min(am, maxAmount - amount);
+            final int added = Math.min(am, MAXAMOUNT - amount);
             amount += added;
             am -= added;
         }
@@ -197,8 +195,8 @@ public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContain
     }
 
     @Override
-    public boolean takeFromContainer(Aspect tag, int amount) {
-        if (this.amount >= amount && tag == aspect) {
+    public boolean takeFromContainer(final Aspect tag, final int amount) {
+        if (this.amount >= amount && tag.equals(aspect)) {
             this.amount -= amount;
             if (this.amount <= 0) {
                 aspect = null;
@@ -211,26 +209,21 @@ public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContain
     }
 
     @Override
-    public boolean doesContainerContainAmount(Aspect tag, int amount) {
-        if ((this.amount >= amount) && (tag == aspect)) {
-            return true;
-        }
-        return false;
+    public boolean doesContainerContainAmount(final Aspect tag, final int amount) {
+        return this.amount >= amount && tag.equals(aspect);
     }
 
     @Override
-    public boolean doesContainerContain(AspectList ot) {
+    public boolean doesContainerContain(final AspectList ot) {
         if (ot.size() > 1) {
             return false;
         }
-        for (Aspect tt : ot.getAspects()) {
-            return doesContainerContainAmount(tt, ot.getAmount(tt));
-        }
-        return false;
+        final Aspect tt = ot.getAspects()[0];
+        return doesContainerContainAmount(tt, ot.getAmount(tt));
     }
 
     @Override
-    public int takeEssentia(Aspect aspect, int amount, ForgeDirection dir) {
+    public int takeEssentia(final Aspect aspect, final int amount, final ForgeDirection dir) {
         return takeFromContainer(aspect, amount) ? amount : 0;
     }
 
@@ -245,43 +238,43 @@ public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContain
     }
 
     @Override
-    public boolean isConnectable(ForgeDirection face) {
+    public boolean isConnectable(final ForgeDirection face) {
         return face != ForgeDirection.getOrientation(facing);
     }
 
     @Override
-    public boolean canInputFrom(ForgeDirection face) {
+    public boolean canInputFrom(final ForgeDirection face) {
         return true;
     }
 
     @Override
-    public boolean doesContainerAccept(Aspect tag) {
-        return (aspect == null || tag == aspect) && amount < maxAmount;
+    public boolean doesContainerAccept(final Aspect tag) {
+        return (aspect == null || tag.equals(aspect)) && amount < MAXAMOUNT;
     }
 
     @Override
-    public int containerContains(Aspect tag) {
-        return (aspect != null && tag == aspect) ? amount : 0;
+    public int containerContains(final Aspect tag) {
+        return aspect != null && aspect.equals(tag) ? amount : 0;
     }
 
     @Override
-    public boolean takeFromContainer(AspectList ot) {
+    public boolean takeFromContainer(final AspectList ot) {
         return false;
     }
 
     @Override
-    public boolean canOutputTo(ForgeDirection face) {
+    public boolean canOutputTo(final ForgeDirection face) {
         return false;
     }
 
     @Override
-    public void setAspects(AspectList aspects) {}
+    public void setAspects(final AspectList aspects) {}
 
     @Override
-    public void setSuction(Aspect aspect, int amount) {}
+    public void setSuction(final Aspect aspect, final int amount) {}
 
     @Override
-    public Aspect getSuctionType(ForgeDirection face) {
+    public Aspect getSuctionType(final ForgeDirection face) {
         if (amount > 0) {
             return aspect;
         }
@@ -289,25 +282,25 @@ public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContain
     }
 
     @Override
-    public int getSuctionAmount(ForgeDirection face) {
-        if (amount < maxAmount) {
+    public int getSuctionAmount(final ForgeDirection face) {
+        if (amount < MAXAMOUNT) {
             return 128;
         }
         return 0;
     }
 
     @Override
-    public int addEssentia(Aspect aspect, int amount, ForgeDirection dir) {
+    public int addEssentia(final Aspect aspect, final int amount, final ForgeDirection dir) {
         return amount - addToContainer(aspect, amount);
     }
 
     @Override
-    public Aspect getEssentiaType(ForgeDirection face) {
+    public Aspect getEssentiaType(final ForgeDirection face) {
         return this.aspect;
     }
 
     @Override
-    public int getEssentiaAmount(ForgeDirection face) {
+    public int getEssentiaAmount(final ForgeDirection face) {
         return this.amount;
     }
 }

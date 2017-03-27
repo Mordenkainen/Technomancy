@@ -31,9 +31,11 @@ public interface IRedstoneSensitive {
         public static RedstoneSet load(NBTTagCompound comp) {
             String oldId = comp.getString("redstoneSettings");
 
-            for (RedstoneSet set : sets)
-                if (set.id.equalsIgnoreCase(oldId))
+            for (RedstoneSet set : sets) {
+                if (set.id.equalsIgnoreCase(oldId)) {
                     return set;
+                }
+            }
 
             return HIGH;
         }
@@ -42,8 +44,9 @@ public interface IRedstoneSensitive {
             int pos = -1;
             for (int i = 0; i < sets.length; i++) {
                 RedstoneSet set = sets[i];
-                if (id.equalsIgnoreCase(set.id))
+                if (id.equalsIgnoreCase(set.id)) {
                     pos = i;
+                }
             }
 
             pos++;
@@ -52,7 +55,7 @@ public interface IRedstoneSensitive {
         }
 
         public boolean canRun(TileEntity tile) {
-            if (tile != null && tile.getWorldObj() != null)
+            if (tile != null && tile.getWorldObj() != null) {
                 switch (this) {
                     case HIGH:
                         return tile.getWorldObj().isBlockIndirectlyGettingPowered(tile.xCoord, tile.yCoord, tile.zCoord);
@@ -60,7 +63,10 @@ public interface IRedstoneSensitive {
                         return !tile.getWorldObj().isBlockIndirectlyGettingPowered(tile.xCoord, tile.yCoord, tile.zCoord);
                     case NONE:
                         return true;
+                    default:
+                        return false;
                 }
+            }
             return false;
         }
 
@@ -72,16 +78,17 @@ public interface IRedstoneSensitive {
                     return !world.isBlockIndirectlyGettingPowered(x, y, z);
                 case NONE:
                     return true;
+                default:
+                    return false;
             }
-            return false;
         }
     }
 
-    public RedstoneSet getCurrentSetting();
+    RedstoneSet getCurrentSetting();
 
-    public void setNewSetting(RedstoneSet newSet);
+    void setNewSetting(RedstoneSet newSet);
 
-    public boolean isModified();
+    boolean isModified();
 
-    public boolean canBeModified();
+    boolean canBeModified();
 }

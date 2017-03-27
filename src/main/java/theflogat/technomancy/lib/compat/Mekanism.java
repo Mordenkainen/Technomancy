@@ -24,18 +24,18 @@ public class Mekanism implements IModModule {
     }
 
     @Override
-    public void Init() {
+    public void init() {
         energyCube = new ItemStack(GameRegistry.findItem("Mekanism", "EnergyCube"), 1);
         setEnergyCubeTier(BaseTier.ADVANCED, energyCube);
         steelCasing = new ItemStack(GameRegistry.findItem("Mekanism", "BasicBlock"), 1, 8);
         energyTablet = GameRegistry.findItemStack("Mekanism", "EnergyTablet", 1);
         enrichedAlloy = GameRegistry.findItemStack("Mekanism", "EnrichedAlloy", 1);
         lithiumDust = new ItemStack(GameRegistry.findItem("Mekanism", "OtherDust"), 1, 4);
-        if (energyCube != null && steelCasing != null && energyTablet != null && enrichedAlloy != null && lithiumDust != null) {
-            Technomancy.logger.info("Mekanism compatibility module loaded.");
-        } else {
+        if (energyCube == null || steelCasing == null || energyTablet == null || enrichedAlloy == null || lithiumDust == null) {
             Technomancy.logger.warn("Mekanism compatibility module failed to load.");
             CompatibilityHandler.mk = false;
+        } else {
+            Technomancy.logger.info("Mekanism compatibility module loaded.");
         }
     }
 
@@ -45,19 +45,19 @@ public class Mekanism implements IModModule {
         ELITE("Elite"),
         ULTIMATE("Ultimate"),
         CREATIVE("Creative");
-
+        
+        private String name;
+        
         public String getName() {
             return name;
         }
 
-        String name;
-
-        private BaseTier(String s) {
+        private BaseTier(final String s) {
             name = s;
         }
     }
 
-    public void setEnergyCubeTier(BaseTier tier, ItemStack items) {
+    public void setEnergyCubeTier(final BaseTier tier, final ItemStack items) {
         if (tier == BaseTier.BASIC) {
             items.stackTagCompound = null;
         } else {
@@ -67,22 +67,22 @@ public class Mekanism implements IModModule {
     }
 
     @Override
-    public void PostInit() {
+    public void postInit() {
 
     }
 
     @Override
-    public void RegisterItems() {
+    public void registerItems() {
 
     }
 
     @Override
-    public void RegisterBlocks() {
+    public void registerBlocks() {
 
     }
 
     @Override
-    public void RegisterRecipes() {
+    public void registerRecipes() {
 
     }
 }

@@ -85,17 +85,17 @@ public class Botania extends ModuleBase {
     }
 
     @Override
-    public void Init() {
+    public void init() {
         Technomancy.logger.info("Botania compatibility module loaded.");
     }
 
     @Override
-    public void PostInit() {
+    public void postInit() {
         initBotaniaLexicon();
     }
 
     @Override
-    public void RegisterItems() {
+    public void registerItems() {
         // Initializations
         TMItems.itemBO = TMConfig.matBO ? new ItemBOMaterial() : null;
         TMItems.manaBucket = TMConfig.manaFluid ? new ItemManaBucket(TMBlocks.manaFluidBlock) : null;
@@ -108,7 +108,7 @@ public class Botania extends ModuleBase {
     }
 
     @Override
-    public void RegisterBlocks() {
+    public void registerBlocks() {
         TMBlocks.manaFluid = TMConfig.manaFluid ? new ManaFluid() : null;
         TMBlocks.manaFluidBlock = TMConfig.manaFluid ? new BlockManaFluid() : null;
         TMBlocks.flowerDynamo = TMConfig.flowerDyn ? new BlockFlowerDynamo() : null;
@@ -129,7 +129,7 @@ public class Botania extends ModuleBase {
     }
 
     @Override
-    public void RegisterRecipes() {
+    public void registerRecipes() {
         if (CompatibilityHandler.te) {
             // ManaInfusion
             if (TMConfig.matBO) {

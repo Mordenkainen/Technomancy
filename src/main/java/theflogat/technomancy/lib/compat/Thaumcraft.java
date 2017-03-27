@@ -146,7 +146,7 @@ public class Thaumcraft extends ModuleBase {
     }
 
     @Override
-    public void Init() {
+    public void init() {
         FLUXGOO = FluidRegistry.getFluid("fluxgoo");
         blockCosmeticSolid = GameRegistry.findBlock("Thaumcraft", "blockCosmeticSolid");
         blockMetalDevice = GameRegistry.findBlock("Thaumcraft", "blockMetalDevice");
@@ -176,13 +176,13 @@ public class Thaumcraft extends ModuleBase {
     }
 
     @Override
-    public void PostInit() {
+    public void postInit() {
         TechnoResearch.init();
         smeltify();
     }
 
     @Override
-    public void RegisterItems() {
+    public void registerItems() {
         // Item Initializations
         // essentiaCannon = new ItemEssentiaCannon(ItemIds.idESSENTIA_CANNON);
         TMItems.itemMaterial = TMConfig.itemMaterial ? new ItemTHMaterial() : null;
@@ -207,7 +207,7 @@ public class Thaumcraft extends ModuleBase {
     }
 
     @Override
-    public void RegisterBlocks() {
+    public void registerBlocks() {
         TMBlocks.nodeDynamo = TMConfig.dynNode ? new BlockNodeDynamo() : null;
         TMBlocks.essentiaContainer = TMConfig.contEssentia ? new BlockEssentiaContainer() : null;
         TMBlocks.cosmeticOpaque = TMConfig.cosmeticOpaque ? new BlockCosmeticOpaque() : null;
@@ -269,7 +269,7 @@ public class Thaumcraft extends ModuleBase {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void RegisterRecipes() {
+    public void registerRecipes() {
         // Crucible Recipes
         if (TMConfig.itemMaterial) {
             TechnoResearch.recipes.put("NeutronizedMetal", ThaumcraftApi.addCrucibleRecipe("THAUMIUM", new ItemStack(TMItems.itemMaterial, 1, 0), new ItemStack(Thaumcraft.itemResource, 1, 2), new AspectList().add(Aspect.ORDER, 2).add(Aspect.ENERGY, 2)));

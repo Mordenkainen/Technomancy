@@ -3,17 +3,17 @@ package theflogat.technomancy.lib.compat;
 public interface IModModule {
 
     // Init Event
-    public void Init();
+    void init();
 
     // PostInit Event
-    public void PostInit();
+    void postInit();
 
     // Register Mod Specific Items
-    public void RegisterItems();
+    void registerItems();
 
     // Register Mod Specific Blocks
-    public void RegisterBlocks();
+    void registerBlocks();
 
     // Register Mod Specific Recipes
-    public void RegisterRecipes();
+    void registerRecipes();
 }

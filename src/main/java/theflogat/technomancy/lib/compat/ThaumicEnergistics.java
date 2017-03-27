@@ -26,10 +26,10 @@ public class ThaumicEnergistics implements IModModule {
     }
 
     @Override
-    public void Init() {}
+    public void init() {}
 
     @Override
-    public void PostInit() {
+    public void postInit() {
         final IThETransportPermissions perms = ThEApi.instance().transportPermissions();
 
         if (TMConfig.fluxLamp) {
@@ -68,17 +68,17 @@ public class ThaumicEnergistics implements IModModule {
     }
 
     @Override
-    public void RegisterItems() {
+    public void registerItems() {
 
     }
 
     @Override
-    public void RegisterBlocks() {
+    public void registerBlocks() {
 
     }
 
     @Override
-    public void RegisterRecipes() {
+    public void registerRecipes() {
 
     }
 }
