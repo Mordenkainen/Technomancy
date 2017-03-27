@@ -12,28 +12,28 @@ import theflogat.technomancy.util.helpers.MathHelper;
 
 public class RitualOfFireT3 extends Ritual implements IRitualEffectHandler {
 
-    static final int top = 90;
-    static final Area area = new Area(50, top, 50);
+    private static final int TOP = 90;
+    private static final Area AREA = new Area(50, TOP, 50);
 
     public RitualOfFireT3() {
         super(new Type[] { Type.FIRE, Type.FIRE, Type.FIRE }, Type.FIRE);
     }
 
     @Override
-    public boolean canApplyEffect(World w, int x, int y, int z) {
+    public boolean canApplyEffect(final World w, final int x, final int y, final int z) {
         return true;
     }
 
     @Override
-    public void applyEffect(World w, int x, int y, int z) {
-        TileCatalyst te = ((TileCatalyst) w.getTileEntity(x, y, z));
+    public void applyEffect(final World w, final int x, final int y, final int z) {
+        final TileCatalyst te = ((TileCatalyst) w.getTileEntity(x, y, z));
         te.data = new Object[1];
-        te.data[0] = new AreaProtocolBuilder(new Coords(x - area.lengthX / 2, 0, z - area.lengthZ / 2, w), area) {
+        te.data[0] = new AreaProtocolBuilder(new Coords(x - AREA.lengthX / 2, 0, z - AREA.lengthZ / 2, w), AREA) {
 
-            int[] tempC = { 0, -1, -1, -1, -1 };
+            private int[] tempC = { 0, -1, -1, -1, -1 };
 
             @Override
-            public boolean isPosValid(Coords c) {
+            public boolean isPosValid(final Coords c) {
                 if (tempC[0] != c.y) {
                     tempC[0] = c.y;
                     tempC[1] = RAND.nextInt(getScale(c.y));
@@ -44,7 +44,7 @@ public class RitualOfFireT3 extends Ritual implements IRitualEffectHandler {
                 return MathHelper.within(area.lengthX - tempC[1], area.lengthX + tempC[2], c.x) && MathHelper.within(area.lengthZ - tempC[3], area.lengthZ + tempC[4], c.z);
             }
 
-            private int getScale(int y) {
+            private int getScale(final int y) {
                 if (y == area.lengthY) {
                     return 1;
                 }
@@ -72,7 +72,7 @@ public class RitualOfFireT3 extends Ritual implements IRitualEffectHandler {
     }
 
     @Override
-    public void applyEffect(TileCatalyst te) {
+    public void applyEffect(final TileCatalyst te) {
         if (te.data != null && ((AreaProtocolBuilder) te.data[0]).buildNext(te.getWorldObj(), TMBlocks.basalt, new Coords(te))) {
             te.remCount = 20;
             return;

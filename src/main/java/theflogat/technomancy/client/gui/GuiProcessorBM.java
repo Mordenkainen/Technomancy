@@ -17,7 +17,7 @@ public class GuiProcessorBM extends GuiContainer {
     TileBMProcessor processor;
 
     public GuiProcessorBM(InventoryPlayer inventory, TileBMProcessor tileBMProcessor) {
-        super(new ContainerProcessor(inventory, ((TileProcessorBase) tileBMProcessor), 52, 107, 56, 114));
+        super(new ContainerProcessor(inventory, (TileProcessorBase) tileBMProcessor, 52, 107, 56, 114));
         this.processor = tileBMProcessor;
 
         xSize = 176;

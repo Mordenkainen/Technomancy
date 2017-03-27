@@ -4,33 +4,18 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
-import theflogat.technomancy.api.rituals.Ritual;
 
-public class RitualOfFireT1 extends Ritual {
+public class RitualOfFireT1 extends RitualOfFireBase {
 
     public RitualOfFireT1() {
         super(new Type[] { Type.FIRE }, Type.FIRE);
     }
 
     @Override
-    public boolean canApplyEffect(World w, int x, int y, int z) {
-        return true;
-    }
-
-    @Override
-    public void applyEffect(World w, int x, int y, int z) {
-        w.setBlockToAir(x, y, z);
-        removeFrame(w, x, y, z);
-
-        for (int i = -9; i <= 9; i++) {
-            for (int j = -9; j <= 9; j++) {
-                for (int k = -19; k < 0; k++) {
-                    Block bl = w.getBlock(x + i, y + k, z + j);
-                    if (bl != null && bl.getMaterial() == Material.water) {
-                        w.setBlock(x + i, y + k, z + j, Blocks.obsidian);
-                    }
-                }
-            }
+    protected void doAction(final World world, final int x, final int y, final int z, final int xOffset, final int yOffset, final int zOffset) {
+        final Block bl = world.getBlock(x + xOffset, y + yOffset, z + zOffset);
+        if (bl != null && bl.getMaterial() == Material.water) {
+            world.setBlock(x + xOffset, y + yOffset, z + zOffset, Blocks.obsidian);
         }
     }
 

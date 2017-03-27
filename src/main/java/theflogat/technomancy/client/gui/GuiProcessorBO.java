@@ -17,7 +17,7 @@ public class GuiProcessorBO extends GuiContainer {
     TileBOProcessor processor;
 
     public GuiProcessorBO(InventoryPlayer inventory, TileBOProcessor tileBOProcessor) {
-        super(new ContainerProcessor(inventory, ((TileProcessorBase) tileBOProcessor), 52, 108, 56, 114));
+        super(new ContainerProcessor(inventory, (TileProcessorBase) tileBOProcessor, 52, 108, 56, 114));
 
         this.processor = tileBOProcessor;
 
