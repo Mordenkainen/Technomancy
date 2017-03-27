@@ -1,6 +1,7 @@
 package theflogat.technomancy.common.items.technom;
 
-import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -19,17 +20,18 @@ import theflogat.technomancy.lib.Reference;
 public class ItemCoilCoupler extends Item {
 
     public ItemCoilCoupler() {
+        super();
         setUnlocalizedName(Reference.getId(Names.COILCOUPLER));
         setCreativeTab(Technomancy.tabsTM);
     }
 
     @Override
-    public void registerIcons(IIconRegister reg) {
+    public void registerIcons(final IIconRegister reg) {
         itemIcon = reg.registerIcon(Reference.getAsset(Names.COILCOUPLER));
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World w, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+    public boolean onItemUse(final ItemStack stack, final EntityPlayer player, final World w, final int x, final int y, final int z, final int side, final float hitX, final float hitY, final float hitZ) {
         if (stack.stackTagCompound == null) {
             stack.stackTagCompound = new NBTTagCompound();
             stack.stackTagCompound.setBoolean("ent", false);
@@ -41,7 +43,7 @@ public class ItemCoilCoupler extends Item {
         }
 
         if (!w.isRemote) {
-            TileEntity te = w.getTileEntity(x, y, z);
+            final TileEntity te = w.getTileEntity(x, y, z);
             if (te != null) {
                 if (te instanceof ICouplable) {
                     if (player.isSneaking()) {
@@ -59,12 +61,12 @@ public class ItemCoilCoupler extends Item {
                         return true;
                     }
                 } else {
-                    ArrayList<String> t = Couple.getType(te);
+                    final List<String> t = Couple.getType(te);
                     if (t.contains(stack.stackTagCompound.getString("type"))) {
                         if (stack.stackTagCompound.getBoolean("ent")) {
                             if (te.getWorldObj().provider.dimensionId == stack.stackTagCompound.getInteger("dimId")) {
                                 if (!areCoordsEqual(stack.stackTagCompound, x, y, z)) {
-                                    int[] i = retrievePos(stack.stackTagCompound);
+                                    final int[] i = retrievePos(stack.stackTagCompound);
                                     if (w.getTileEntity(i[0], i[1], i[2]) instanceof ICouplable) {
                                         ((ICouplable) w.getTileEntity(i[0], i[1], i[2])).addPos(new ChunkCoordinates(x, y, z));
                                         player.addChatComponentMessage(new ChatComponentText("Linked"));
@@ -86,11 +88,11 @@ public class ItemCoilCoupler extends Item {
         return false;
     }
 
-    private static boolean areCoordsEqual(NBTTagCompound comp, int x, int y, int z) {
+    private static boolean areCoordsEqual(final NBTTagCompound comp, final int x, final int y, final int z) {
         return comp.getInteger("x") == x && comp.getInteger("y") == y && comp.getInteger("z") == z;
     }
 
-    private static int[] retrievePos(NBTTagCompound comp) {
+    private static int[] retrievePos(final NBTTagCompound comp) {
         return new int[] { comp.getInteger("x"), comp.getInteger("y"), comp.getInteger("z") };
     }
 

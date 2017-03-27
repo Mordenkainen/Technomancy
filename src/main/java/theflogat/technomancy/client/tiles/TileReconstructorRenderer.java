@@ -13,10 +13,12 @@ import theflogat.technomancy.lib.Reference;
 
 public class TileReconstructorRenderer extends TileEntitySpecialRenderer {
 
-    ModelReconstructor model = new ModelReconstructor();
+    private static final ModelReconstructor MODEL = new ModelReconstructor();
+    private static final ResourceLocation MODELTEXTURE = new ResourceLocation(Reference.MODEL_RECON);
     private final RenderItem itemRenderer;
 
     public TileReconstructorRenderer() {
+        super();
         itemRenderer = new RenderItem() {
 
             @Override
@@ -27,10 +29,8 @@ public class TileReconstructorRenderer extends TileEntitySpecialRenderer {
         itemRenderer.setRenderManager(RenderManager.instance);
     }
 
-    private static final ResourceLocation modelTexture = new ResourceLocation(Reference.MODEL_RECON);
-
     @Override
-    public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float f) {
+    public void renderTileEntityAt(final TileEntity entity, final double x, final double y, final double z, final float f) {
 
         GL11.glPushMatrix();
         GL11.glTranslatef((float) x, (float) y, (float) z);
@@ -39,8 +39,8 @@ public class TileReconstructorRenderer extends TileEntitySpecialRenderer {
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        bindTexture(modelTexture);
-        model.render();
+        bindTexture(MODELTEXTURE);
+        MODEL.render();
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glPopMatrix();
 

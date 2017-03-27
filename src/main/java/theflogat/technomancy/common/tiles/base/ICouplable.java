@@ -29,7 +29,7 @@ public interface ICouplable {
             forbidInv.add("theflogat.technomancy.common.tiles.technom.TileItemTransmitter");
         }
 
-        public static List<String> getType(TileEntity te) {
+        public static List<String> getType(final TileEntity te) {
             ArrayList<String> interfaceTypes = new ArrayList<String>();
             if (te instanceof IInventory && !forbidInv.contains(te.getClass().getName())) {
                 interfaceTypes.add(Type.ITEM.id);

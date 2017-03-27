@@ -52,7 +52,7 @@ public class Mekanism implements IModModule {
             return name;
         }
 
-        private BaseTier(final String s) {
+        BaseTier(final String s) {
             name = s;
         }
     }

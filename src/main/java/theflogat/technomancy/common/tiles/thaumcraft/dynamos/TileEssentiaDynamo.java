@@ -29,7 +29,7 @@ public class TileEssentiaDynamo extends TileDynamoBase implements IAspectContain
         if (amount <= 0 || aspect == null) {
             return 0;
         }
-        final float ratio = (ener) / 80F;
+        final float ratio = ener / 80F;
         if (ratio > amount) {
             return 0;
         }
