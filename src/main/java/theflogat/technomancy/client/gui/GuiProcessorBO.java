@@ -7,7 +7,8 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import theflogat.technomancy.client.gui.container.ContainerBOProcessor;
+import theflogat.technomancy.client.gui.container.ContainerProcessor;
+import theflogat.technomancy.common.tiles.base.TileProcessorBase;
 import theflogat.technomancy.common.tiles.botania.machines.TileBOProcessor;
 import theflogat.technomancy.lib.Reference;
 
@@ -16,7 +17,7 @@ public class GuiProcessorBO extends GuiContainer {
     TileBOProcessor processor;
 
     public GuiProcessorBO(InventoryPlayer inventory, TileBOProcessor tileBOProcessor) {
-        super(new ContainerBOProcessor(inventory, tileBOProcessor));
+        super(new ContainerProcessor(inventory, ((TileProcessorBase) tileBOProcessor), 52, 108, 56, 114));
 
         this.processor = tileBOProcessor;
 

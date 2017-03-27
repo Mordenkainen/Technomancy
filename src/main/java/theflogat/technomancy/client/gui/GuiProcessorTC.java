@@ -2,7 +2,8 @@ package theflogat.technomancy.client.gui;
 
 import org.lwjgl.opengl.GL11;
 
-import theflogat.technomancy.client.gui.container.ContainerTCProcessor;
+import theflogat.technomancy.client.gui.container.ContainerProcessor;
+import theflogat.technomancy.common.tiles.base.TileProcessorBase;
 import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTCProcessor;
 import theflogat.technomancy.lib.Reference;
 import net.minecraft.client.Minecraft;
@@ -15,7 +16,7 @@ public class GuiProcessorTC extends GuiContainer {
     TileTCProcessor processor;
 
     public GuiProcessorTC(InventoryPlayer inventory, TileTCProcessor tileTCProcessor) {
-        super(new ContainerTCProcessor(inventory, tileTCProcessor));
+        super(new ContainerProcessor(inventory, ((TileProcessorBase) tileTCProcessor), 50, 107, 84, 142));
 
         this.processor = tileTCProcessor;
 

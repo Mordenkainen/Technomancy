@@ -1,11 +1,7 @@
 package theflogat.technomancy.proxies;
 
-import theflogat.technomancy.client.gui.container.ContainerBMProcessor;
-import theflogat.technomancy.client.gui.container.ContainerBOProcessor;
-import theflogat.technomancy.client.gui.container.ContainerTCProcessor;
-import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBMProcessor;
-import theflogat.technomancy.common.tiles.botania.machines.TileBOProcessor;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTCProcessor;
+import theflogat.technomancy.client.gui.container.ContainerProcessor;
+import theflogat.technomancy.common.tiles.base.TileProcessorBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.network.IGuiHandler;
@@ -24,11 +20,11 @@ public class CommonProxy implements IGuiHandler {
     public Object getServerGuiElement(final int id, final EntityPlayer player, final World world, final int x, final int y, final int z) {
         switch (id) {
             case 0:
-                return new ContainerTCProcessor(player.inventory, ((TileTCProcessor) world.getTileEntity(x, y, z)));
+                return new ContainerProcessor(player.inventory, ((TileProcessorBase) world.getTileEntity(x, y, z)), 50, 107, 84, 142);
             case 1:
-                return new ContainerBMProcessor(player.inventory, ((TileBMProcessor) world.getTileEntity(x, y, z)));
+                return new ContainerProcessor(player.inventory, ((TileProcessorBase) world.getTileEntity(x, y, z)), 52, 107, 56, 114);
             case 2:
-                return new ContainerBOProcessor(player.inventory, ((TileBOProcessor) world.getTileEntity(x, y, z)));
+                return new ContainerProcessor(player.inventory, ((TileProcessorBase) world.getTileEntity(x, y, z)), 52, 108, 56, 114);
             default:
                 break;
         }

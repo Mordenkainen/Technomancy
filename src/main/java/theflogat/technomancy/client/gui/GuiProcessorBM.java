@@ -7,7 +7,8 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import theflogat.technomancy.client.gui.container.ContainerBMProcessor;
+import theflogat.technomancy.client.gui.container.ContainerProcessor;
+import theflogat.technomancy.common.tiles.base.TileProcessorBase;
 import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBMProcessor;
 import theflogat.technomancy.lib.Reference;
 
@@ -16,7 +17,7 @@ public class GuiProcessorBM extends GuiContainer {
     TileBMProcessor processor;
 
     public GuiProcessorBM(InventoryPlayer inventory, TileBMProcessor tileBMProcessor) {
-        super(new ContainerBMProcessor(inventory, tileBMProcessor));
+        super(new ContainerProcessor(inventory, ((TileProcessorBase) tileBMProcessor), 52, 107, 56, 114));
         this.processor = tileBMProcessor;
 
         xSize = 176;
