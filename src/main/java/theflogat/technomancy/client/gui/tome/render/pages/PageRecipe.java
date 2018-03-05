@@ -10,11 +10,11 @@ import theflogat.technomancy.client.gui.tome.GuiTomeTemplate;
 
 public abstract class PageRecipe extends PageRender{
 	
-	protected static ItemStack glass = new ItemStack(Blocks.glass);
+	protected static ItemStack glass = new ItemStack(Blocks.GLASS);
 	
 	static{
-		glass.stackTagCompound = new NBTTagCompound();
-		glass.stackTagCompound.setBoolean("trans", true);
+		glass.setTagCompound(new NBTTagCompound());
+		glass.getTagCompound().setBoolean("trans", true);
 	}
 	
 	@Override
@@ -26,9 +26,8 @@ public abstract class PageRecipe extends PageRender{
 		int y = top + 100;
 		GL11.glDisable(GL11.GL_LIGHTING);	
 		try{
-			gui.getItemRend().renderItemAndEffectIntoGUI(gui.getFont(), gui.getMinecraft().getTextureManager(), getOutput(), x, y);
-			gui.getItemRend().renderItemOverlayIntoGUI(gui.getFont(), gui.getMinecraft().getTextureManager(), getOutput(), x, y,
-					(getOutput().stackSize==1 ? "" : Integer.toString(getOutput().stackSize)));
+			gui.getItemRend().renderItemAndEffectIntoGUI(getOutput(), x, y);
+			gui.getItemRend().renderItemOverlayIntoGUI(gui.getFont(), getOutput(), x, y, (getOutput().getCount()==1 ? "" : Integer.toString(getOutput().getCount())));
 		} catch(Exception e){}
 		   
 		for(int i = 0; i<3 ;i++){
@@ -38,10 +37,10 @@ public abstract class PageRecipe extends PageRender{
 					int newx = left + 46 + (j*18) + (page2 ? 110 : 0);
 					int newy = top + 82 + (i*18);
 					ItemStack items = inputs[(i*3)+j];
-					boolean isTrans = items.stackTagCompound != null && items.stackTagCompound.getBoolean("trans");
+					boolean isTrans = items.getTagCompound() != null && items.getTagCompound().getBoolean("trans");
 					if(isTrans){System.out.println("Transparent");GL11.glEnable(GL11.GL_LIGHTING);}
-					gui.getItemRend().renderItemAndEffectIntoGUI(gui.getFont(), gui.getMinecraft().getTextureManager(), items, newx, newy);
-					gui.getItemRend().renderItemOverlayIntoGUI(gui.getFont(), gui.getMinecraft().getTextureManager(), items, newx, newy, displayStackSize() && items.stackSize>1 ? Integer.toString(items.stackSize) : "");
+					gui.getItemRend().renderItemAndEffectIntoGUI(items, newx, newy);
+					gui.getItemRend().renderItemOverlayIntoGUI(gui.getFont(), items, newx, newy, displayStackSize() && items.getCount()>1 ? Integer.toString(items.getCount()) : "");
 					if(isTrans){GL11.glDisable(GL11.GL_LIGHTING);}
 				} catch (Exception e){
 					//e.printStackTrace();

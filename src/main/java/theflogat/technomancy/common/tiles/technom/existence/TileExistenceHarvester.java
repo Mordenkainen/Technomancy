@@ -1,6 +1,8 @@
 package theflogat.technomancy.common.tiles.technom.existence;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.math.BlockPos;
 import theflogat.technomancy.common.tiles.base.TileExistenceRedstoneBase;
 import theflogat.technomancy.util.helpers.InvHelper;
 
@@ -22,23 +25,22 @@ public class TileExistenceHarvester extends TileExistenceRedstoneBase implements
 	public boolean flag = false;
 
 	@Override
-	public void updateEntity() {
+	public void update() {
 		if(items!=null && flag){
 			checkInv();
 			flag = false;
 		}
 
-		if(!worldObj.isRemote && set.canRun(this) && items==null && power>=30){
+		if(!world.isRemote && set.canRun(this) && items==null && power>=30){
 			for(int xx=-5; xx<=5; xx++){
 				for(int zz=-5; zz<=5; zz++){
-					Block b = worldObj.getBlock(xCoord + xx, yCoord, zCoord + zz);
+					Block b = world.getBlockState(new BlockPos(pos.getX() + xx, pos.getY(), pos.getZ() + zz)).getBlock();
 					if(b instanceof IGrowable){
 						IGrowable grow = (IGrowable)b;
-						if(!(grow.func_149851_a(worldObj, xCoord + xx, yCoord, zCoord + zz, worldObj.isRemote))){
-							int meta = worldObj.getBlockMetadata(xCoord + xx, yCoord, zCoord + zz);
-							ArrayList<ItemStack> drops = b.getDrops(worldObj, xCoord + xx, yCoord, zCoord + zz, meta, 1);
+						if(!(grow.canGrow(world, new BlockPos(pos.getX() + xx, pos.getY(), pos.getZ() + zz), world.getBlockState(new BlockPos(pos.getX() + xx, pos.getY(), pos.getZ() + zz)), world.isRemote))){
+							List<ItemStack> drops = b.getDrops(world, new BlockPos(pos.getX() + xx, pos.getY(), pos.getZ() + zz), world.getBlockState(new BlockPos(pos.getX() + xx, pos.getY(), pos.getZ() + zz)), 1);
 							items = new ItemStack[drops.size()];
-							worldObj.setBlockMetadataWithNotify(xCoord + xx, yCoord, zCoord + zz, b.damageDropped(meta), 3);
+							world.notifyBlockUpdate(new BlockPos(pos.getX() + xx, pos.getY(), pos.getZ() + zz), world.getBlockState(new BlockPos(pos.getX() + xx, pos.getY(), pos.getZ() + zz)), world.getBlockState(new BlockPos(pos.getX() + xx, pos.getY(), pos.getZ() + zz)), 3);
 							for(ItemStack drop: drops){
 								if(drop.getItem()==Item.getItemFromBlock(b)){
 									items[drops.indexOf(drop)] = drop;
@@ -70,7 +72,7 @@ public class TileExistenceHarvester extends TileExistenceRedstoneBase implements
 				int slot = item.getByte("slots");
 
 				if(slot >= 0 && slot < getSizeInventory()) {
-					setInventorySlotContents(slot, ItemStack.loadItemStackFromNBT(item));
+					setInventorySlotContents(slot, new ItemStack(item));
 				}
 			}
 		}
@@ -85,7 +87,7 @@ public class TileExistenceHarvester extends TileExistenceRedstoneBase implements
 			for(int i = 0; i < this.getSizeInventory(); i++) {
 				ItemStack itemstack = this.getStackInSlot(i);
 
-				if(itemstack != null) {
+				if(!itemstack.isEmpty()) {
 					NBTTagCompound item = new NBTTagCompound();
 
 					item.setByte("slots", (byte) i);
@@ -113,8 +115,13 @@ public class TileExistenceHarvester extends TileExistenceRedstoneBase implements
 	}
 
 	@Override
+	public boolean isEmpty() {
+		return false;
+	}
+
+	@Override
 	public ItemStack getStackInSlot(int i) {
-		return items!=null ? items[i] : null;
+		return items!=null ? items[i] : ItemStack.EMPTY;
 	}
 
 	@Override
@@ -122,9 +129,9 @@ public class TileExistenceHarvester extends TileExistenceRedstoneBase implements
 		flag = true;
 		ItemStack itemstack = getStackInSlot(slot);
 
-		if(itemstack != null) {
-			if(itemstack.stackSize <= count) {
-				setInventorySlotContents(slot, null);
+		if(!itemstack.isEmpty()) {
+			if(itemstack.getCount() <= count) {
+				setInventorySlotContents(slot, ItemStack.EMPTY);
 			} else {
 				itemstack = itemstack.splitStack(count);
 			}
@@ -133,13 +140,8 @@ public class TileExistenceHarvester extends TileExistenceRedstoneBase implements
 	}
 
 	@Override
-	public ItemStack getStackInSlotOnClosing(int i) {
-		if(items!=null){
-			ItemStack it = items[i].copy();
-			setInventorySlotContents(i, null);
-			return it;
-		}
-		return null;
+	public ItemStack removeStackFromSlot(int index) {
+		return ItemStack.EMPTY;
 	}
 
 	@Override
@@ -151,36 +153,60 @@ public class TileExistenceHarvester extends TileExistenceRedstoneBase implements
 	}
 
 	@Override
-	public String getInventoryName() {
-		return null;
-	}
-
-	@Override
-	public boolean hasCustomInventoryName() {
-		return false;
-	}
-
-	@Override
 	public int getInventoryStackLimit() {
 		return 64;
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer player) {
+	public boolean isUsableByPlayer(EntityPlayer player) {
 		return false;
 	}
 
 	@Override
-	public void openInventory() {}
+	public void openInventory(EntityPlayer player) {
+
+	}
 
 	@Override
-	public void closeInventory() {}
+	public void closeInventory(EntityPlayer player) {
+
+	}
 
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack newItems) {
 		if(items!=null){
-			return items[i]==null ? true : (items[i].getItem() == newItems.getItem() && items[i].stackSize<64);
+			return items[i].isEmpty() ? true : (items[i].getItem() == newItems.getItem() && items[i].getCount()<64);
 		}
+		return false;
+	}
+
+	@Override
+	public int getField(int id) {
+		return 0;
+	}
+
+	@Override
+	public void setField(int id, int value) {
+
+	}
+
+	@Override
+	public int getFieldCount() {
+		return 0;
+	}
+
+	@Override
+	public void clear() {
+
+	}
+
+	@Override
+	public String getName() {
+		return null;
+	}
+
+	@Override
+	public boolean hasCustomName() {
 		return false;
 	}
 }

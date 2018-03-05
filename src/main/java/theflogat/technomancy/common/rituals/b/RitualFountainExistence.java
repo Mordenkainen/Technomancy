@@ -3,8 +3,9 @@ package theflogat.technomancy.common.rituals.b;
 import java.util.ArrayList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import theflogat.technomancy.api.rituals.IRitualEffectHandler;
 import theflogat.technomancy.api.rituals.Ritual;
@@ -26,22 +27,22 @@ public class RitualFountainExistence extends Ritual implements IRitualEffectHand
 	@Override
 	public void applyEffect(World w, int x, int y, int z) {
 		removeFrame(w, x, y, z);
-		((TileCatalyst)w.getTileEntity(x, y, z)).handler = this;
-		((TileCatalyst)w.getTileEntity(x, y, z)).data = new Object[]{0};
+		((TileCatalyst)w.getTileEntity(new BlockPos(x, y, z))).handler = this;
+		((TileCatalyst)w.getTileEntity(new BlockPos(x, y, z))).data = new Object[]{0};
 	}
 
 	@Override
 	public void applyEffect(TileCatalyst te) {
 		if(((Integer)te.data[0]).intValue()>=1000){
-			te.getWorldObj().setBlock(te.xCoord, te.yCoord, te.zCoord, TMBlocks.fountainExistence);
+			te.getWorld().setBlockState(te.getPos(), TMBlocks.fountainExistence.getBlockState().getBaseState());
 		}else{
 			@SuppressWarnings("unchecked")
-			ArrayList<EntityLivingBase> e = (ArrayList<EntityLivingBase>) te.getWorldObj().getEntitiesWithinAABB(EntityLivingBase.class,
-					AxisAlignedBB.getBoundingBox(te.xCoord - 11, te.yCoord - 11, te.zCoord - 11, te.xCoord + 11, te.yCoord + 11, te.zCoord + 11));
+			ArrayList<EntityLivingBase> e = (ArrayList<EntityLivingBase>) te.getWorld().getEntitiesWithinAABB(EntityLivingBase.class,
+					new AxisAlignedBB(te.getPos().getX() - 11, te.getPos().getY() - 11, te.getPos().getZ() - 11, te.getPos().getX() + 11, te.getPos().getY() + 11, te.getPos().getZ() + 11));
 
 			for(EntityLivingBase ent : e) {
-				if(!ent.isEntityInvulnerable() && !(ent instanceof EntityPlayer)) {
-					ent.onDeath(DamageSource.generic);
+				if(!ent.getIsInvulnerable() && !(ent instanceof EntityPlayer)) {
+					ent.onDeath(DamageSource.GENERIC);
 					ent.setDead();
 					te.data[0] = ((Integer)te.data[0]).intValue() + ExistenceConversion.getValue(ent);
 				}

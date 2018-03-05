@@ -1,0 +1,39 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cube_all",
+    "textures": {
+      "all": "blocks/dirt"
+    },
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "type": {
+      "one": {
+        "textures": {
+          "all": "technom:blocks/blank"
+        }
+      },
+      "two": {
+        "textures": {
+          "all": "technom:blocks/blank"
+        }
+      },
+      "three": {
+        "textures": {
+          "all": "technom:blocks/blank"
+        }
+      },
+      "four": {
+        "textures": {
+          "all": "technom:blocks/blank"
+        }
+      },
+      "five": {
+        "textures": {
+          "all": "technom:blocks/blank"
+        }
+      }
+    }
+  }
+}

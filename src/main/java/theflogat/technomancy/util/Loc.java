@@ -1,6 +1,6 @@
 package theflogat.technomancy.util;
 
-import cpw.mods.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class Loc {
 	

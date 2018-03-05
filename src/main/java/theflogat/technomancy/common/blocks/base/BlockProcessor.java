@@ -2,30 +2,29 @@ package theflogat.technomancy.common.blocks.base;
 
 import java.util.Random;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import theflogat.technomancy.common.tiles.base.TileProcessorBase;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.util.helpers.InvHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public abstract class BlockProcessor extends BlockContainerAdvanced {
-
-	@SideOnly(Side.CLIENT)
-	public IIcon[] icons;
 	
 	protected String name;
 	
 	@Override
 	public String getUnlocalizedName() {
 		return "tile." + Ref.MOD_PREFIX + Names.processor + name;
-	}	
-	
+	}
+
+	/**
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister icon) {
@@ -63,43 +62,47 @@ public abstract class BlockProcessor extends BlockContainerAdvanced {
 		}		
 		return icons[0];		
 	}
+	 */
+
+
 	
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void randomDisplayTick(World world, int x, int y, int z, Random r)	  {
-		TileEntity te = world.getTileEntity(x, y, z);
+	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random r) {
+		TileEntity te = world.getTileEntity(pos);
 	    if (te instanceof TileProcessorBase && ((TileProcessorBase)te).isActive)	    {
-	    	float f = x + 0.5F;
-    		float f1 = y + 0.2F + r.nextFloat() * 5.0F / 16.0F;
-    		float f2 = z + 0.5F;
+	    	float f = pos.getX() + 0.5F;
+    		float f1 = pos.getY() + 0.2F + r.nextFloat() * 5.0F / 16.0F;
+    		float f2 = pos.getZ() + 0.5F;
     		float f3 = 0.52F;
     		float f4 = r.nextFloat() * 0.5F - 0.25F;	      
-    		world.spawnParticle("smoke", f - f3, f1, f2 + f4, 0.0D, 0.0D, 0.0D);
-    		world.spawnParticle("flame", f - f3, f1, f2 + f4, 0.0D, 0.0D, 0.0D);
+    		world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, f - f3, f1, f2 + f4, 0.0D, 0.0D, 0.0D);
+    		world.spawnParticle(EnumParticleTypes.FLAME, f - f3, f1, f2 + f4, 0.0D, 0.0D, 0.0D);
         
-    		world.spawnParticle("smoke", f + f3, f1, f2 + f4, 0.0D, 0.0D, 0.0D);
-    		world.spawnParticle("flame", f + f3, f1, f2 + f4, 0.0D, 0.0D, 0.0D);
+    		world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, f + f3, f1, f2 + f4, 0.0D, 0.0D, 0.0D);
+    		world.spawnParticle(EnumParticleTypes.FLAME, f + f3, f1, f2 + f4, 0.0D, 0.0D, 0.0D);
         
-    		world.spawnParticle("smoke", f + f4, f1, f2 - f3, 0.0D, 0.0D, 0.0D);
-    		world.spawnParticle("flame", f + f4, f1, f2 - f3, 0.0D, 0.0D, 0.0D);
+    		world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, f + f4, f1, f2 - f3, 0.0D, 0.0D, 0.0D);
+    		world.spawnParticle(EnumParticleTypes.FLAME, f + f4, f1, f2 - f3, 0.0D, 0.0D, 0.0D);
         
-    		world.spawnParticle("smoke", f + f4, f1, f2 + f3, 0.0D, 0.0D, 0.0D);
-    		world.spawnParticle("flame", f + f4, f1, f2 + f3, 0.0D, 0.0D, 0.0D);
+    		world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, f + f4, f1, f2 + f3, 0.0D, 0.0D, 0.0D);
+    		world.spawnParticle(EnumParticleTypes.FLAME, f + f4, f1, f2 + f3, 0.0D, 0.0D, 0.0D);
 	    }
 	}
-	
+
 	@Override
-	public int getLightValue(IBlockAccess world, int x, int y, int z) {
-		TileEntity tile = world.getTileEntity(x, y, z);
+	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+		TileEntity tile = world.getTileEntity(pos);
 		if(tile instanceof TileProcessorBase && ((TileProcessorBase)tile).isActive) {
 			return 12;
 		}
-		return super.getLightValue(world, x, y, z);
+		return super.getLightValue(state, world, pos);
 	}
-	
+
 	@Override
-	public void breakBlock(World world, int x, int y, int z, Block id, int meta)	  {
-	    InvHelper.dropItemsFromTile(world, x, y, z);
-	    super.breakBlock(world, x, y, z, id, meta);
+	public void breakBlock(World w, BlockPos pos, IBlockState state) {
+		InvHelper.dropItemsFromTile(w, pos.getX(), pos.getY(), pos.getZ());
+		super.breakBlock(w, pos, state);
 	}
+
 }

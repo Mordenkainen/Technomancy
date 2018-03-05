@@ -1,6 +1,7 @@
 package theflogat.technomancy.api.rituals;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import theflogat.technomancy.common.player.PlayerData;
 import theflogat.technomancy.common.player.PlayerData.Affinity;
@@ -49,7 +50,7 @@ public abstract class Ritual {
 	}
 
 	public boolean isCoreComplete(World w, int x, int y, int z){
-		return w.getBlockMetadata(x, y, z)==core.id;
+		return w.getBlockState(new BlockPos(x, y, z)).getBlock().getMetaFromState(w.getBlockState(new BlockPos(x, y, z))) == core.id;
 	}
 	
 	public boolean isFrameComplete(World w, int x, int y, int z){

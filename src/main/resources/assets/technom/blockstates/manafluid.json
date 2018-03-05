@@ -1,0 +1,13 @@
+{
+	"forge_marker": 1,
+	"variants": {
+		"normal": [{
+			"model": "forge:fluid",
+			"transform": "forge:default-item",
+			"custom": {
+				"fluid": "manafluid"
+			}
+		}],
+        "inventory": { "model": "technom:mana" }
+	}
+}

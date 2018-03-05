@@ -1,6 +1,7 @@
 package theflogat.technomancy.util;
 
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import theflogat.technomancy.util.helpers.WorldHelper;
 
@@ -18,10 +19,10 @@ public class Coords {
 	}
 	
 	public Coords(TileEntity te) {
-		x = te.xCoord;
-		y = te.yCoord;
-		z = te.zCoord;
-		w = te.getWorldObj();
+		x = te.getPos().getX();
+		y = te.getPos().getY();
+		z = te.getPos().getZ();
+		w = te.getWorld();
 	}
 
 	@Override
@@ -31,7 +32,7 @@ public class Coords {
 	}
 	
 	public TileEntity getTile() {
-		return w.getTileEntity(x, y, z);
+		return w.getTileEntity(new BlockPos(x, y, z));
 	}
 	
 	public void setAirAndDrop(){

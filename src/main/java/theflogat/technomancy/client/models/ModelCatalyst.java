@@ -5,7 +5,7 @@ import org.lwjgl.opengl.GL11;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 
-public class ModelCatalyst extends ModelBase{
+public class ModelCatalyst extends ModelBase {
 	
 	ModelRenderer main;
 	

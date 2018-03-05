@@ -5,69 +5,69 @@ public class Names {
     /*
      * Items
      */
-    public static final String essentiaCannon = "essentiaCannon";
-	public static final String itemMaterial = "itemMaterial";
-	public static final String pen = "pen";
-	public static final String wandCores = "wandCores";
-	public static final String itemBM = "itemBM";
-	public static final String itemBO = "itemBO";
-	public static final String itemBoost = "itemBoost";
-	public static final String ritualTome = "ritualTome";
-	public static final String manaBucket = "manaBucket";
-	public static final String coilCoupler = "coilCoupler";
-	public static final String scepter = "itemScepter";
-	public static final String itemGlasses	= "itemGlasses";
-	public static final String exGem = "existenceGem";
-	public static final String treasures[] = {"fireGem","powerPlate","goldenWing"};
+    public static final String essentiaCannon = "essentiaCannon".toLowerCase();
+	public static final String itemMaterial = "itemMaterial".toLowerCase();
+	public static final String pen = "pen".toLowerCase();
+	public static final String wandCores = "wandCores".toLowerCase();
+	public static final String itemBM = "itemBM".toLowerCase();
+	public static final String itemBO = "itemBO".toLowerCase();
+	public static final String itemBoost = "itemBoost".toLowerCase();
+	public static final String ritualTome = "ritualTome".toLowerCase();
+	public static final String manaBucket = "manaBucket".toLowerCase();
+	public static final String coilCoupler = "coilCoupler".toLowerCase();
+	public static final String scepter = "itemScepter".toLowerCase();
+	public static final String itemGlasses	= "itemGlasses".toLowerCase();
+	public static final String exGem = "existenceGem".toLowerCase();
+	public static final String treasures[] = {"fireGem".toLowerCase(),"powerPlate".toLowerCase(),"goldenWing".toLowerCase()};
 
     /*
      * Blocks
      */
-    public static final String nodeDynamo = "nodeDynamo";
-    public static final String essentiaContainer = "essentiaContainer";
-	public static final String cosmeticOpaque = "cosmeticOpaque";
-	public static final String essentiaDynamo = "essentiaDynamo";
-	public static final String biomeMorpher = "biomeMorpher";
-	public static final String cosmeticPane = "cosmeticPane";
-	public static final String nodeGenerator = "nodeGenerator";
-	public static final String fluxLamp = "fluxLamp";
-	public static final String essentiaTransmitter = "teslaCoil";
-	public static final String electricBellows = "electricBellows";
-	public static final String fusionFocus = "fusionFocus";
-	public static final String crystalBlock = "crystalBlock";
-	public static final String creativeJar = "creativeJar";
-	public static final String reconstructor = "reconstructorBlock";
-	public static final String bloodDynamo = "bloodDynamo";
-	public static final String condenserBlock = "condenserBlock";
-	public static final String bloodFabricator = "bloodFabricator";
-	public static final String flowerDynamo = "flowerDynamo";
-	public static final String manaFabricator = "manaFabricator";
-	public static final String processor = "processor";
-	public static final String eldritchConsumer = "eldritchConsumer";
-	public static final String catalyst = "catalyst";
-	public static final String fakeAirNG = "fakeAir";
-	public static final String reservoir = "reservoir";
-	public static final String fakeAirLight = "fakeAirLight";
-	public static final String advDeconTable = "advDeconTable";
-	public static final String manaFluidBlock = "manaFluidBlock";
-	public static final String manaExchanger = "manaExchanger";
-	public static final String itemTransmitter = "itemTransmitter";
-	public static final String basalt = "basalt";
-	public static final String fusor = "fusor";
-	public static final String existenceFountain = "existenceFountain";
-	public static final String existencePylon	= "existencePylon";
+    public static final String nodeDynamo = "nodeDynamo".toLowerCase();
+    public static final String essentiaContainer = "essentiaContainer".toLowerCase();
+	public static final String cosmeticOpaque = "cosmeticOpaque".toLowerCase();
+	public static final String essentiaDynamo = "essentiaDynamo".toLowerCase();
+	public static final String biomeMorpher = "biomeMorpher".toLowerCase();
+	public static final String cosmeticPane = "cosmeticPane".toLowerCase();
+	public static final String nodeGenerator = "nodeGenerator".toLowerCase();
+	public static final String fluxLamp = "fluxLamp".toLowerCase();
+	public static final String essentiaTransmitter = "teslaCoil".toLowerCase();
+	public static final String electricBellows = "electricBellows".toLowerCase();
+	public static final String fusionFocus = "fusionFocus".toLowerCase();
+	public static final String crystalBlock = "crystalBlock".toLowerCase();
+	public static final String creativeJar = "creativeJar".toLowerCase();
+	public static final String reconstructor = "reconstructorBlock".toLowerCase();
+	public static final String bloodDynamo = "bloodDynamo".toLowerCase();
+	public static final String condenserBlock = "condenserBlock".toLowerCase();
+	public static final String bloodFabricator = "bloodFabricator".toLowerCase();
+	public static final String flowerDynamo = "flowerDynamo".toLowerCase();
+	public static final String manaFabricator = "manaFabricator".toLowerCase();
+	public static final String processor = "processor".toLowerCase();
+	public static final String eldritchConsumer = "eldritchConsumer".toLowerCase();
+	public static final String catalyst = "catalyst".toLowerCase();
+	public static final String fakeAirNG = "fakeAir".toLowerCase();
+	public static final String reservoir = "reservoir".toLowerCase();
+	public static final String fakeAirLight = "fakeAirLight".toLowerCase();
+	public static final String advDeconTable = "advDeconTable".toLowerCase();
+	public static final String manaFluidBlock = "manaFluidBlock".toLowerCase();
+	public static final String manaExchanger = "manaExchanger".toLowerCase();
+	public static final String itemTransmitter = "itemTransmitter".toLowerCase();
+	public static final String basalt = "basalt".toLowerCase();
+	public static final String fusor = "fusor".toLowerCase();
+	public static final String existenceFountain = "existenceFountain".toLowerCase();
+	public static final String existencePylon	= "existencePylon".toLowerCase();
 
-	public static final String[] existenceBurner = {"existenceBurner", "existenceDynamicBurner"};
-	public static final String[] existenceUser = {"existenceCropAcc", "existenceHarvester", "existenceSealer"};
+	public static final String[] existenceBurner = {"existenceBurner".toLowerCase(), "existenceDynamicBurner".toLowerCase()};
+	public static final String[] existenceUser = {"existenceCropAcc".toLowerCase(), "existenceHarvester".toLowerCase(), "existenceSealer".toLowerCase()};
 
     /*
      * Fluids
      */
-	public static final String manaFluid = "manaFluid";
+	public static final String manaFluid = "manafluid".toLowerCase();
 	
 	/*
 	 * Potions
 	 */
 	public static final String	drown = "drown";
-	public static final String	slowFall = "slowFall";
+	public static final String	slowFall = "slowfall";
 }

@@ -17,7 +17,7 @@ public class TileBloodDynamoRenderer extends TileEntitySpecialRenderer {
 	private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_BLOOD_DYNAMO_TEXTURE);
 
 	@Override
-	public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float t) {
+	public void render(TileEntity entity, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		if (entity instanceof TileBloodDynamo) {			
 			GL11.glPushMatrix();
 			GL11.glTranslatef((float)x, (float)y, (float)z);

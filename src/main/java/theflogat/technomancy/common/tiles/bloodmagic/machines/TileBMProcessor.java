@@ -1,26 +1,28 @@
 package theflogat.technomancy.common.tiles.bloodmagic.machines;
 
+import WayofTime.bloodmagic.util.helper.NetworkHelper;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumFacing;
 import theflogat.technomancy.common.tiles.base.TileProcessorBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 
 public class TileBMProcessor extends TileProcessorBase {
 
 	public String owner = "";
 
 	public TileBMProcessor() {
-		super(2);
+		super(1);
 	}
 
 	@Override
 	protected boolean getFuel(ItemStack items, int multiplier, int reprocess) {
-		int cost = multiplier * 100 + 1000 * reprocess;
-		if(!(SoulNetworkHandler.getCurrentEssence(owner) > cost)){
+		int cost = 16;
+		if(!(NetworkHelper.getSoulNetwork(owner).getCurrentEssence() > cost)){
 			return false;
 		}
-		if (!worldObj.isRemote) {
-			SoulNetworkHandler.setCurrentEssence(owner, (SoulNetworkHandler.getCurrentEssence(owner) - cost));
+		if (!world.isRemote) {
+			NetworkHelper.getSoulNetwork(owner).setCurrentEssence(NetworkHelper.getSoulNetwork(owner).getCurrentEssence() - cost);
 		}
 		return true;
 	}
@@ -38,18 +40,72 @@ public class TileBMProcessor extends TileProcessorBase {
 	}
 
 	@Override
-	public String getInventoryName() {
-		return null;
+	public int[] getSlotsForFace(EnumFacing side) {
+		return new int[0];
 	}
 
 	@Override
-	public boolean hasCustomInventoryName() {
+	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+		return true;
+	}
+
+	@Override
+	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
+		return true;
+	}
+
+	@Override
+	public boolean isEmpty() {
 		return false;
 	}
 
 	@Override
-	public void openInventory() {}
+	public ItemStack removeStackFromSlot(int index) {
+		return ItemStack.EMPTY;
+	}
 
 	@Override
-	public void closeInventory() {}
+	public boolean isUsableByPlayer(EntityPlayer player) {
+		return true;
+	}
+
+	@Override
+	public void openInventory(EntityPlayer player) {
+
+	}
+
+	@Override
+	public void closeInventory(EntityPlayer player) {
+
+	}
+
+	@Override
+	public int getField(int id) {
+		return 0;
+	}
+
+	@Override
+	public void setField(int id, int value) {
+
+	}
+
+	@Override
+	public int getFieldCount() {
+		return 0;
+	}
+
+	@Override
+	public void clear() {
+
+	}
+
+	@Override
+	public String getName() {
+		return null;
+	}
+
+	@Override
+	public boolean hasCustomName() {
+		return false;
+	}
 }

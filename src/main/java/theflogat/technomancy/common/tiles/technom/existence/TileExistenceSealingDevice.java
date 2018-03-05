@@ -2,7 +2,7 @@ package theflogat.technomancy.common.tiles.technom.existence;
 
 import java.util.ArrayList;
 import net.minecraft.entity.passive.EntityVillager;
-import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.math.AxisAlignedBB;
 import theflogat.technomancy.common.tiles.base.TileExistenceRedstoneBase;
 
 public class TileExistenceSealingDevice extends TileExistenceRedstoneBase{
@@ -12,11 +12,11 @@ public class TileExistenceSealingDevice extends TileExistenceRedstoneBase{
 	}
 	
 	@Override
-	public void updateEntity() {
+	public void update() {
 		if(power>=500000){
 			int rad = 3;
-			ArrayList<EntityVillager> e = (ArrayList<EntityVillager>) getWorldObj().getEntitiesWithinAABB(EntityVillager.class,
-					AxisAlignedBB.getBoundingBox(xCoord - rad, yCoord - rad, zCoord - rad, xCoord + rad, yCoord + rad, zCoord + rad));
+			ArrayList<EntityVillager> e = (ArrayList<EntityVillager>) world.getEntitiesWithinAABB(EntityVillager.class,
+					new AxisAlignedBB(pos.getX() - rad, pos.getY() - rad, pos.getZ() - rad, pos.getX() + rad, pos.getY() + rad, pos.getZ() + rad));
 			for(EntityVillager ent : e){
 				if(ent!=null && ent.getEntityData().hasKey("treasure") && !ent.getEntityData().hasKey("seal")){
 					ent.getEntityData().setBoolean("seal", true);

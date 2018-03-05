@@ -3,14 +3,14 @@ package theflogat.technomancy.asm;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
+import net.minecraftforge.fml.common.DummyModContainer;
+import net.minecraftforge.fml.common.LoadController;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.ModMetadata;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import theflogat.technomancy.lib.Ref;
-import cpw.mods.fml.common.DummyModContainer;
-import cpw.mods.fml.common.LoadController;
-import cpw.mods.fml.common.ModMetadata;
-import cpw.mods.fml.common.event.FMLConstructionEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.Mod.EventHandler;
 
 public class TechnomancyCore extends DummyModContainer {
 	public TechnomancyCore() {
@@ -22,6 +22,7 @@ public class TechnomancyCore extends DummyModContainer {
 		metadata.authorList.add("Democretes");
 		metadata.authorList.add("theflogat");
 		metadata.authorList.add("Mordenkainen");
+		metadata.authorList.add("abused_master");
 	}
 	
 	@Override
@@ -35,11 +36,11 @@ public class TechnomancyCore extends DummyModContainer {
 	public void modConstruction(FMLConstructionEvent event) {
 	}
 	
-	@EventHandler
+	@Mod.EventHandler
 	public void preinit(FMLPreInitializationEvent event) {
 	}
 	
-	@EventHandler
+	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 	}
 }

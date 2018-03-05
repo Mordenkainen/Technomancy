@@ -1,6 +1,8 @@
 package theflogat.technomancy.lib.compat.waila;
 
 import java.util.List;
+
+import net.minecraft.util.math.BlockPos;
 import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBloodFabricator;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -24,7 +26,7 @@ public class BloodFabricatorHUDHandler implements IWailaDataProvider {
 	
 	@Override
 	public ItemStack getWailaStack(IWailaDataAccessor accessor,	IWailaConfigHandler config) {
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 	@Override
@@ -38,7 +40,7 @@ public class BloodFabricatorHUDHandler implements IWailaDataProvider {
 	}
 
 	@Override
-	public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x, int y, int z) {
+	public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos) {
         return null;
 	}
 }

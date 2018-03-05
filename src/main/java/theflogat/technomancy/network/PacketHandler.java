@@ -9,15 +9,15 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.Packet;
+import net.minecraftforge.fml.common.network.FMLEmbeddedChannel;
+import net.minecraftforge.fml.common.network.FMLIndexedMessageToMessageCodec;
+import net.minecraftforge.fml.common.network.FMLOutboundHandler;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 import theflogat.technomancy.common.player.PlayerData;
 import theflogat.technomancy.common.player.PlayerData.Affinity;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.util.Loc;
-import cpw.mods.fml.common.network.FMLEmbeddedChannel;
-import cpw.mods.fml.common.network.FMLIndexedMessageToMessageCodec;
-import cpw.mods.fml.common.network.FMLOutboundHandler;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.relauncher.Side;
 
 public class PacketHandler {
 
@@ -31,7 +31,7 @@ public class PacketHandler {
 			FMLEmbeddedChannel channel = channels.get(Side.CLIENT);
 
 			String handler = channel.findChannelHandlerNameForType(TechnomChannelHandler.class);
-			channel.pipeline().addAfter(handler, "ExistenceStatsHandler", new ExistenceStatsHandler());
+			//channel.pipeline().addAfter(handler, "ExistenceStatsHandler", new ExistenceStatsHandler());
 		}
 	}
 
@@ -47,8 +47,13 @@ public class PacketHandler {
 
 	public static class ExistenceStatsHandler extends SimpleChannelInboundHandler<ExistenceStats>{
 		@Override
-		protected void channelRead0(ChannelHandlerContext ctx, ExistenceStats stats) throws Exception {
-			NBTTagCompound data = PlayerData.getData(Minecraft.getMinecraft().thePlayer);
+		protected void channelRead0(ChannelHandlerContext ctx, ExistenceStats stats) {
+			NBTTagCompound data;
+			if (PlayerData.getData(Minecraft.getMinecraft().player) != null) {
+				data = PlayerData.getData(Minecraft.getMinecraft().player);
+			}else {
+				data = new NBTTagCompound();
+			}
 			data.setInteger("existencelevel", stats.exLevel);
 			data.setInteger("existencepower", stats.exPower);
 			for(int i=0;i<Affinity.allAff.length;i++){
@@ -70,7 +75,7 @@ public class PacketHandler {
 		return instance.channels.get(Side.SERVER).generatePacketFrom(stats);
 	}
 
-	public class TechnomChannelHandler extends FMLIndexedMessageToMessageCodec<BaseMessage>{
+	public class TechnomChannelHandler extends FMLIndexedMessageToMessageCodec<BaseMessage> {
 
 		public TechnomChannelHandler() {
 			addDiscriminator(0, ExistenceStats.class);

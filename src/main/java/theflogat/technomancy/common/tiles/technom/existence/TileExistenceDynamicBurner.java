@@ -6,9 +6,9 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
 import theflogat.technomancy.common.tiles.base.TileMachineRedstone;
 
 public class TileExistenceDynamicBurner extends TileMachineRedstone implements IExistenceProducer{
@@ -21,17 +21,17 @@ public class TileExistenceDynamicBurner extends TileMachineRedstone implements I
 	private static final int maxPower = 150;
 	
 	@Override
-	public void updateEntity() {
+	public void update() {
 		if(power<maxPower && energy>=10000){
 			@SuppressWarnings("unchecked")
-			ArrayList<EntityLivingBase> e = (ArrayList<EntityLivingBase>) worldObj.getEntitiesWithinAABB(EntityLivingBase.class,
-					AxisAlignedBB.getBoundingBox(xCoord - 3, yCoord - 3, zCoord - 3, xCoord + 3, yCoord + 3, zCoord + 3));
+			ArrayList<EntityLivingBase> e = (ArrayList<EntityLivingBase>) world.getEntitiesWithinAABB(EntityLivingBase.class,
+					new AxisAlignedBB(pos.getX() - 3, pos.getY() - 3, pos.getZ() - 3, pos.getX() + 3, pos.getY() + 3, pos.getZ() + 3));
 
 			for(EntityLivingBase ent : e) {
-				if(!ent.isEntityInvulnerable() && !(ent instanceof EntityPlayer)) {
-					ent.onDeath(DamageSource.generic);
+				if((!ent.getIsInvulnerable()) && !(ent instanceof EntityPlayer)) {
+					ent.onDeath(DamageSource.GENERIC);
 					ent.setDead();
-					power += ent instanceof EntityVillager ? 20 : (EnumCreatureType.monster.getCreatureClass().isAssignableFrom(ent.getClass()) ? 2 : 4);
+					power += ent instanceof EntityVillager ? 20 : (EnumCreatureType.MONSTER.getCreatureClass().isAssignableFrom(ent.getClass()) ? 2 : 4);
 					energy -= 10000;
 				}
 			}
@@ -43,8 +43,8 @@ public class TileExistenceDynamicBurner extends TileMachineRedstone implements I
 	}
 	
 	@Override
-	public boolean canConnectEnergy(ForgeDirection from) {
-		return from==ForgeDirection.DOWN;
+	public boolean canConnectEnergy(EnumFacing from) {
+		return from==EnumFacing.DOWN;
 	}
 	
 	@Override

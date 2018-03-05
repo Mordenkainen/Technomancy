@@ -1,0 +1,44 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "technom:existence_pylon",
+    "textures": {
+      "all": "blocks/dirt"
+    },
+    "transform": "forge:default-block"
+  },
+    "variants": {
+		"type": {
+			"0": {
+				"textures": {
+					"all": "technom:blocks/blank"
+				}
+			},
+			"1": {
+				"textures": {
+					"all": "technom:blocks/blank"
+				}
+			},
+			"2": {
+				"textures": {
+					"all": "technom:blocks/blank"
+				}
+			},
+			"basic": {
+				"textures": {
+					"all": "technom:blocks/blank"
+				}
+			},
+			"advanced": {
+				"textures": {
+					"all": "technom:blocks/blank"
+				}
+			},
+			"complex": {
+				"textures": {
+					"all": "technom:blocks/blank"
+				}
+			}
+		}
+    }
+}

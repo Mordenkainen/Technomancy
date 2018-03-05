@@ -14,7 +14,7 @@ public class TileCrystalRenderer extends TileEntitySpecialRenderer {
 	private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_CRYSTAL_TEXTURE);
 
 	@Override
-	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float t) {
+	public void render(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		if (te instanceof TileCrystal) {
 			GL11.glPushMatrix();
 			GL11.glEnable(GL11.GL_BLEND);
@@ -23,7 +23,7 @@ public class TileCrystalRenderer extends TileEntitySpecialRenderer {
 			GL11.glScalef(-1F, -1F, 1f);
 			GL11.glTranslatef(-.5F, -1.5F, .5F);
 			bindTexture(modelTexture);
-			model.render(((TileCrystal)te).getStage(), te.getBlockMetadata());
+			model.render(((TileCrystal)te).getStage(), te.getWorld().getBlockState(te.getPos()).getBlock().getMetaFromState(te.getWorld().getBlockState(te.getPos())));
 			GL11.glDisable(GL11.GL_BLEND);
 			GL11.glPopMatrix();
 		}

@@ -1,0 +1,24 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "textures": {
+      "layer0": "blocks/dirt"
+    },
+    "transform": "forge:default-item"
+  },
+  "variants": {
+    "type": {
+      "itembm.0": {
+        "textures": {
+          "layer0": "technom:items/sacrificialingot"
+        }
+      },
+      "itembm.1": {
+        "textures": {
+          "layer0": "technom:items/bloodcoil"
+        }
+      }
+    }
+  }
+}

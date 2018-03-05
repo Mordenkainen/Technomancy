@@ -1,15 +1,16 @@
 package theflogat.technomancy.common.tiles.bloodmagic.dynamos;
 
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.fluids.*;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
 import theflogat.technomancy.lib.compat.BloodMagic;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
 
-public class TileBloodDynamo extends TileDynamoBase implements IFluidHandler {
+import javax.annotation.Nullable;
+
+public class TileBloodDynamo extends TileDynamoBase implements IFluidHandler, IFluidTank {
 
 	public int liquid = 0;
 	public static final int capacity = 8000;
@@ -33,9 +34,25 @@ public class TileBloodDynamo extends TileDynamoBase implements IFluidHandler {
 		return false;
 	}
 
+	@Nullable
 	@Override
-	public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
-		if (resource == null || from==ForgeDirection.UNKNOWN || from.ordinal()==facing) {
+	public FluidStack getFluid() {
+		return null;
+	}
+
+	@Override
+	public int getFluidAmount() {
+		return liquid;
+	}
+
+	@Override
+	public int getCapacity() {
+		return capacity;
+	}
+
+	@Override
+	public int fill(FluidStack resource, boolean doFill) {
+		if (resource == null) {
 			return 0;
 		}
 		if(resource.getFluid() == BloodMagic.lifeEssenceFluid) {
@@ -46,31 +63,32 @@ public class TileBloodDynamo extends TileDynamoBase implements IFluidHandler {
 		return 0;
 	}
 
+	@Nullable
 	@Override
-	public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
+	public FluidStack drain(int maxDrain, boolean doDrain) {
+		return null;
+	}
+
+	@Nullable
+	@Override
+	public FluidStack drain(FluidStack resource, boolean doDrain) {
 		return null;
 	}
 
 	@Override
-	public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
-		return null;
+	public IFluidTankProperties[] getTankProperties() {
+		return new IFluidTankProperties[0];
 	}
 
 	@Override
-	public boolean canFill(ForgeDirection from, Fluid fluid) {
-		return from.ordinal()!=facing;
+	public FluidTankInfo getInfo() {
+		if(FluidRegistry.isFluidRegistered(BloodMagic.lifeEssenceFluid)) {
+			return new FluidTankInfo(new FluidStack(BloodMagic.lifeEssenceFluid, liquid), capacity);
+		}else {
+			return null;
+		}
 	}
 
-	@Override
-	public boolean canDrain(ForgeDirection from, Fluid fluid) {
-		return false;
-	}
-
-	@Override
-	public FluidTankInfo[] getTankInfo(ForgeDirection from) {
-		return new FluidTankInfo[] { new FluidTankInfo(new FluidStack(BloodMagic.lifeEssenceFluid, liquid), capacity) };
-	}
-	
 	@Override
 	public void writeSyncData(NBTTagCompound comp) {
 		super.writeSyncData(comp);

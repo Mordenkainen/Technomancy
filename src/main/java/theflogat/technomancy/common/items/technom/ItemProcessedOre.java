@@ -2,30 +2,34 @@ package theflogat.technomancy.common.items.technom;
 
 import java.util.List;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
+import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
 import theflogat.technomancy.common.items.base.ItemBase;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.util.Ore;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import javax.annotation.Nullable;
 
 public class ItemProcessedOre extends ItemBase {
 	
 	public static final int MAXSTAGE = 6;
 	
-	protected String[] processors = {"Thaumcraft", "Botania", "Blood Magic", "Ars Magica", "Witchery", "Totemic" };
+	protected String[] processors = {"Botania", "Blood Magic", "Ars Magica", "Totemic" };
 	protected Ore ore;
 	
 	public ItemProcessedOre(Ore ore) {
@@ -34,6 +38,7 @@ public class ItemProcessedOre extends ItemBase {
 		setHasSubtypes(true);
 	}
 
+	/*
 	@SideOnly(Side.CLIENT)
 	public IIcon[] itemIcon;
 
@@ -45,73 +50,81 @@ public class ItemProcessedOre extends ItemBase {
 			itemIcon[i] = icon.registerIcon(Ref.TEXTURE_PREFIX + "ore" + i);
 		}
 	}
+	*/
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubItems(Item id, CreativeTabs tab, List list) {
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
 		for (int i = 0; i < MAXSTAGE; i++) {
-			ItemStack stack  = new ItemStack(id, 1, i);
-			list.add(stack);
+			ItemStack stack  = new ItemStack(this, 1, i);
+			items.add(stack);
 		}
 	}
 
-	@Override	
+	/**
+	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamage(int par) {
 		return itemIcon[par%itemIcon.length];
 	}
+	 */
 
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
 		return Ref.MOD_PREFIX + "pure" + ore.oreName().substring(3);
 	}
-	
+
 	@Override
+	@SideOnly(Side.CLIENT)
 	public String getItemStackDisplayName(ItemStack stack) {
-		return String.format(StatCollector.translateToLocal("item.techno.pure.name") + ore.name());
+		return I18n.format("item.techno.pure.name") + ore.name();
 	}
-	
+
 	@Override
-	public ItemStack onItemRightClick(ItemStack items, World w, EntityPlayer player) {
+	public ActionResult<ItemStack> onItemRightClick(World w, EntityPlayer player, EnumHand handIn) {
+		ItemStack items = player.getHeldItem(handIn);
 		for(int i = 0; i < processors.length; i++) {
-			if(items.stackTagCompound != null) {
-				if(items.stackTagCompound.hasKey(processors[i])) {
-					player.addChatComponentMessage(new ChatComponentText(processors[i] + " " + items.stackTagCompound.getInteger(processors[i]) + "x/2x"));
+			if(items.getTagCompound() != null) {
+				if(items.getTagCompound().hasKey(processors[i])) {
+					player.sendMessage(new TextComponentString(processors[i] + " " + items.getTagCompound().getInteger(processors[i]) + "x/2x"));
 				}
 			}
 		}
-		return items;
+		return super.onItemRightClick(w, player, handIn);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> list, ITooltipFlag flagIn) {
 		if(!(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))) {
-			list.add(EnumChatFormatting.BLUE.toString() + EnumChatFormatting.ITALIC + 
-					StatCollector.translateToLocal("info.techno:purity") + ": " + (stack.getItemDamage() + 1));
-			list.add(EnumChatFormatting.WHITE.toString() + EnumChatFormatting.ITALIC + StatCollector.translateToLocal("info.techno:shift"));
+			list.add(ChatFormatting.BLUE.toString() + ChatFormatting.BLUE.ITALIC +
+					I18n.format("info.techno:purity") + ": " + (stack.getItemDamage() + 1));
+			list.add(ChatFormatting.BLUE.WHITE.toString() + ChatFormatting.BLUE.ITALIC + I18n.format("info.techno:shift"));
 		}else{
-			list.add(StatCollector.translateToLocal(this.getUnlocalizedName()));
+			list.add(I18n.format(this.getUnlocalizedName()));
 			list.remove("item.null");
-			list.add(EnumChatFormatting.BLUE.toString() + EnumChatFormatting.ITALIC +
-					StatCollector.translateToLocal("info.techno:purity") + ": " + (stack.getItemDamage() + 1));
-			list.add(EnumChatFormatting.WHITE.toString() + EnumChatFormatting.ITALIC + 
-					StatCollector.translateToLocal("info.techno:process") + ":");
+			list.add(ChatFormatting.BLUE.BLUE.toString() + ChatFormatting.BLUE.ITALIC +
+					I18n.format("info.techno:purity") + ": " + (stack.getItemDamage() + 1));
+			list.add(ChatFormatting.BLUE.WHITE.toString() + ChatFormatting.BLUE.ITALIC +
+					I18n.format("info.techno:process") + ":");
 			for(int i = 0; i < processors.length; i++) {
-				if(stack.stackTagCompound != null) {
-					if(stack.stackTagCompound.hasKey(processors[i])) {
-						list.add(processors[i] + " " + stack.stackTagCompound.getInteger(processors[i]) + "x/2x");
+				if(stack.getTagCompound() != null) {
+					if(stack.getTagCompound().hasKey(processors[i])) {
+						list.add(processors[i] + " " + stack.getTagCompound().getInteger(processors[i]) + "x/2x");
 					}
 				}
 			}
 		}
 	}
-	
+
+
+	/**
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getColorFromItemStack(ItemStack par1ItemStack, int par2) {
 		return ore.color();
 	}
+	*/
 }

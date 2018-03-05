@@ -5,8 +5,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.Level;
 import theflogat.technomancy.Technomancy;
@@ -30,17 +30,16 @@ public class RitualExtraction extends Ritual{
 			return;
 		}
 		@SuppressWarnings("unchecked")
-		ArrayList<EntityLivingBase> l = (ArrayList<EntityLivingBase>) w.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB
-				.getBoundingBox(x - 5, y - 5, z - 5, x + 5,  y + 5, z + 5));
+		ArrayList<EntityLivingBase> l = (ArrayList<EntityLivingBase>) w.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(x - 5, y - 5, z - 5, x + 5,  y + 5, z + 5));
 		if(!l.isEmpty()){
 			for(EntityLivingBase ent : l){
 				if(ent instanceof EntityVillager && ent.getEntityData().hasKey("treasure")){
 					ItemStack it = TMItems.treasures.getTreasure(ent.getEntityData().getString("treasure"));
 					if(it!=null){
 						ent.getEntityData().removeTag("treasure");
-						ent.onDeath(DamageSource.generic);
+						ent.onDeath(DamageSource.GENERIC);
 						ent.setDead();
-						w.spawnEntityInWorld(new EntityItem(w, x, y+2, z, it));
+						w.spawnEntity(new EntityItem(w, x, y+2, z, it));
 						removeFrame(w, x, y, z);
 					}else{
 						Technomancy.logger.log(Level.ERROR, "Treasure Error: Please Report to Mod Author");

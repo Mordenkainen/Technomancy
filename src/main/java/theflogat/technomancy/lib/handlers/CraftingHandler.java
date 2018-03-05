@@ -1,10 +1,14 @@
 package theflogat.technomancy.lib.handlers;
 
+import com.google.common.base.Predicate;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.items.base.TMItems;
@@ -12,7 +16,6 @@ import theflogat.technomancy.common.items.technom.ItemProcessedOre;
 import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.compat.ThermalExpansion;
 import theflogat.technomancy.util.Ore;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CraftingHandler {
 
@@ -23,161 +26,166 @@ public class CraftingHandler {
 		for (Ore ore : Ore.ores) {
 			if (ore.getEnabled()) {
 				for(int i = 0; i < ItemProcessedOre.MAXSTAGE; i++) {
-					FurnaceRecipes.smelting().func_151394_a(new ItemStack(ore.getPure(), 1, i), new ItemStack(ore.ingot().getItem(), ore.getIngotsPerStage(i), ore.ingot().getItemDamage()), 1.0F);
+					FurnaceRecipes.instance().addSmeltingRecipe(new ItemStack(ore.getPure(), 1, i), new ItemStack(ore.ingot().getItem(), ore.getIngotsPerStage(i), ore.ingot().getItemDamage()), 1.0F);
 				}
 			}
 		}
 	}
 
 	public static void initTechnomancyRecipes() {
+
 		if(Ids.itemBoost)
-			itemBoost = GameRegistry.addShapedRecipe(new ItemStack(TMItems.itemBoost), new Object[]{
+			GameRegistry.addShapedRecipe(TMItems.itemBoost.getRegistryName(), null, new ItemStack(TMItems.itemBoost), new Object[]{
 				" R ",
 				"RNR",
 				" G ",
-				'R', Items.redstone, 'N', Items.quartz, 'G', Items.gold_ingot
+				'R', Items.REDSTONE, 'N', Items.QUARTZ, 'G', Items.GOLD_INGOT
 			});
 
 		if(Ids.crystalBlock){
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.crystalBlock, 3, 0), new Object[]{
+			GameRegistry.addShapedRecipe(TMBlocks.crystalBlock.getRegistryName(), new ResourceLocation("crystalblock"), new ItemStack(TMBlocks.crystalBlock, 3, 0), new Object[]{
 				"GR ",
 				"RG ",
-				'G', Items.glowstone_dust, 'R', "dyeBlack"
-			}));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.crystalBlock, 3, 1), new Object[]{
+				'G', Items.GLOWSTONE_DUST, 'R', "dyeBlack"
+			});
+			GameRegistry.addShapedRecipe(TMBlocks.crystalBlock.getRegistryName(), new ResourceLocation("crystalblock"), new ItemStack(TMBlocks.crystalBlock, 3, 1), new Object[]{
 				"GR ",
 				"RG ",
-				'G', Items.glowstone_dust, 'R', "dyeWhite"
-			}));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.crystalBlock, 3, 2), new Object[]{
+				'G', Items.GLOWSTONE_DUST, 'R', "dyeWhite"
+			});
+			GameRegistry.addShapedRecipe(TMBlocks.crystalBlock.getRegistryName(), new ResourceLocation("crystalblock"), new ItemStack(TMBlocks.crystalBlock, 3, 2), new Object[]{
 				"GR ",
 				"RG ",
-				'G', Items.glowstone_dust, 'R', "dyeRed"
-			}));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.crystalBlock, 3, 3), new Object[]{
+				'G', Items.GLOWSTONE_DUST, 'R', "dyeRed"
+			});
+			GameRegistry.addShapedRecipe(TMBlocks.crystalBlock.getRegistryName(), new ResourceLocation("crystalblock"), new ItemStack(TMBlocks.crystalBlock, 3, 3), new Object[]{
 				"GR ",
 				"RG ",
-				'G', Items.glowstone_dust, 'R', "dyeGreen"
-			}));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.crystalBlock, 3, 4), new Object[]{
+				'G', Items.GLOWSTONE_DUST, 'R', "dyeGreen"
+			});
+			GameRegistry.addShapedRecipe(TMBlocks.crystalBlock.getRegistryName(), new ResourceLocation("crystalblock"), new ItemStack(TMBlocks.crystalBlock, 3, 4), new Object[]{
 				"GR ",
 				"RG ",
-				'G', Items.glowstone_dust, 'R', "dyeBlue"
-			}));
+				'G', Items.GLOWSTONE_DUST, 'R', "dyeBlue"
+			});
 		}
 		if(Ids.catalyst){
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.catalyst, 1, 0), new Object[]{
+			GameRegistry.addShapedRecipe(TMBlocks.catalyst.getRegistryName(), null, new ItemStack(TMBlocks.catalyst, 1, 0), new Object[]{
 				"BRA",
 				"RGR",
 				"ARB",
-				'G', Blocks.gold_block, 'R', "dyeBlack", 'B', Blocks.obsidian, 'A', Items.ender_pearl
-			}));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.catalyst, 1, 1), new Object[]{
+				'G', Blocks.GOLD_BLOCK, 'R', "dyeBlack", 'B', Blocks.OBSIDIAN, 'A', Items.ENDER_PEARL
+			});
+			GameRegistry.addShapedRecipe(TMBlocks.catalyst.getRegistryName(), null, new ItemStack(TMBlocks.catalyst, 1, 1), new Object[]{
 				"BRA",
 				"RGR",
 				"ARB",
-				'G', Blocks.gold_block, 'R', "dyeWhite", 'B', Items.golden_apple, 'A', Items.golden_carrot
-			}));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.catalyst, 1, 2), new Object[]{
+				'G', Blocks.GOLD_BLOCK, 'R', "dyeWhite", 'B', Items.GOLDEN_APPLE, 'A', Items.GOLDEN_CARROT
+			});
+			GameRegistry.addShapedRecipe(TMBlocks.catalyst.getRegistryName(), null, new ItemStack(TMBlocks.catalyst, 1, 2), new Object[]{
 				"BRB",
 				"RGR",
 				"BRB",
-				'G', Blocks.gold_block, 'R', "dyeRed", 'B', Items.blaze_rod
-			}));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.catalyst, 1, 4), new Object[]{
+				'G', Blocks.GOLD_BLOCK, 'R', "dyeRed", 'B', Items.BLAZE_ROD
+			});
+			GameRegistry.addShapedRecipe(TMBlocks.catalyst.getRegistryName(), null, new ItemStack(TMBlocks.catalyst, 1, 4), new Object[]{
 				"ARB",
 				"RGR",
 				"BRA",
-				'G', Blocks.gold_block, 'R', "dyeBlue", 'B', Blocks.clay, 'A', Items.fish
-			}));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMBlocks.catalyst, 1, 3), new Object[]{
+				'G', Blocks.GOLD_BLOCK, 'R', "dyeBlue", 'B', Blocks.CLAY, 'A', Items.FISH
+			});
+			GameRegistry.addShapedRecipe(TMBlocks.catalyst.getRegistryName(), null, new ItemStack(TMBlocks.catalyst, 1, 3), new Object[]{
 				"BRB",
 				"RGR",
 				"BRB",
-				'G', Blocks.gold_block, 'R', "dyeGreen", 'B', Blocks.grass
-			}));
+				'G', Blocks.GOLD_BLOCK, 'R', "dyeGreen", 'B', Blocks.GRASS
+			});
 		}
+
+		/**
 		if(Ids.coilCoupler){
-			coilCoupler = GameRegistry.addShapedRecipe(new ItemStack(TMItems.coilCoupler, 1), new Object[]{
+			GameRegistry.addShapedRecipe(TMItems.coilCoupler.getRegistryName(), null, new ItemStack(TMItems.coilCoupler, 1), new Object[]{
 				"IRG",
 				"SRR",
 				"S  ",
-				'G', Items.glowstone_dust, 'R', Items.redstone, 'S', Items.stick, 'I', Items.iron_ingot
+				'G', Items.GLOWSTONE_DUST, 'R', Items.REDSTONE, 'S', Items.STICK, 'I', Items.IRON_INGOT
 			});
 		}
+		 */
+
 		if(Ids.itemTransmitter){
-			GameRegistry.addShapedRecipe(new ItemStack(TMBlocks.itemTransmitter, 1), new Object[]{
+			GameRegistry.addShapedRecipe(TMBlocks.itemTransmitter.getRegistryName(), null, new ItemStack(TMBlocks.itemTransmitter, 1), new Object[]{
 				"III",
 				"ISI",
 				"ERE",
-				'R', Items.ender_pearl, 'S', Items.stick, 'I', Items.iron_ingot, 'E', Items.redstone
+				'R', Items.ENDER_PEARL, 'S', Items.STICK, 'I', Items.IRON_INGOT, 'E', Items.REDSTONE
 			});
 		}
 		if(Ids.ritualTome){
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(TMItems.ritualTome, 1), new Object[]{
+			GameRegistry.addShapedRecipe(TMItems.ritualTome.getRegistryName(), null, new ItemStack(TMItems.ritualTome, 1), new Object[]{
 				"RI ",
 				"IS ",
 				"   ",
-				'R', Items.book, 'S', "dyeBlack", 'I', Items.glowstone_dust
-			}));
+				'R', Items.BOOK, 'S', "dyeBlack", 'I', Items.GLOWSTONE_DUST
+			});
 		}
 		if(Ids.exGem){
-			GameRegistry.addRecipe(new ItemStack(TMItems.exGem, 1, 100), new Object[]{
+			GameRegistry.addShapedRecipe(TMItems.exGem.getRegistryName(), null, new ItemStack(TMItems.exGem, 1, 100), new Object[]{
 				" N ",
 				"NEN",
 				" N ",
-				'E', Items.emerald, 'N', Items.gold_nugget
+				'E', Items.EMERALD, 'N', Items.GOLD_NUGGET
 			});
 			if(Ids.existenceBurner){
-				GameRegistry.addRecipe(new ItemStack(TMBlocks.existenceBurner, 1), new Object[]{
+				GameRegistry.addShapedRecipe(TMBlocks.existenceBurner.getRegistryName(), null, new ItemStack(TMBlocks.existenceBurner, 1), new Object[]{
 					"E  ",
 					"A  ",
 					"   ",
-					'E', TMItems.exGem, 'A', Blocks.anvil
+					'E', TMItems.exGem, 'A', Blocks.ANVIL
 				});
 				if(CompatibilityHandler.te){
-					GameRegistry.addShapelessRecipe(new ItemStack(TMBlocks.existenceBurner, 1, 1), new Object[]{
-						TMBlocks.existenceBurner, ThermalExpansion.frameMachineBasic, ThermalExpansion.powerCoilSilver
-					});
+					GameRegistry.addShapelessRecipe(TMBlocks.existenceBurner.getRegistryName(), null, new ItemStack(TMBlocks.existenceBurner, 1, 1), Ingredient.fromStacks(
+						new ItemStack(TMBlocks.existenceBurner), ThermalExpansion.frameMachineBasic, ThermalExpansion.powerCoilSilver
+					));
 				} else {
-					GameRegistry.addShapelessRecipe(new ItemStack(TMBlocks.existenceBurner, 1, 1), new Object[]{
-						TMBlocks.existenceBurner, Items.redstone, Blocks.piston
-					});
+					GameRegistry.addShapelessRecipe(TMBlocks.existenceBurner.getRegistryName(), null, new ItemStack(TMBlocks.existenceBurner, 1, 1), Ingredient.fromStacks(
+						new ItemStack(TMBlocks.existenceBurner), new ItemStack(Items.REDSTONE), new ItemStack(Blocks.PISTON)
+					));
 				}
 			}
 			if(Ids.existenceUser){
-				GameRegistry.addRecipe(new ItemStack(TMBlocks.existenceUser, 1), new Object[]{
+				GameRegistry.addShapedRecipe(TMBlocks.existenceUser.getRegistryName(), null, new ItemStack(TMBlocks.existenceUser, 1), new Object[]{
 					" A ",
 					"BGB",
 					" A ",
-					'G', TMItems.exGem, 'B', Items.golden_apple, 'A', Items.golden_carrot
+					'G', TMItems.exGem, 'B', Items.GOLDEN_APPLE, 'A', Items.GOLDEN_CARROT
 				});
-				GameRegistry.addRecipe(new ItemStack(TMBlocks.existenceUser, 1, 1), new Object[]{
+				GameRegistry.addShapedRecipe(TMBlocks.existenceUser.getRegistryName(), null, new ItemStack(TMBlocks.existenceUser, 1, 1), new Object[]{
 					" H ",
 					"BGB",
 					" H ",
-					'G', TMItems.exGem, 'B', Items.golden_apple, 'H', Items.iron_hoe
+					'G', TMItems.exGem, 'B', Items.GOLDEN_APPLE, 'H', Items.IRON_HOE
 				});
-				GameRegistry.addRecipe(new ItemStack(TMBlocks.existenceUser, 1, 2), new Object[]{
+				GameRegistry.addShapedRecipe(TMBlocks.existenceUser.getRegistryName(), null, new ItemStack(TMBlocks.existenceUser, 1, 2), new Object[]{
 					"OFO",
 					"FGF",
 					"OFO",
-					'G', TMItems.exGem, 'O', Blocks.obsidian, 'F', Items.flint_and_steel
+					'G', TMItems.exGem, 'O', Blocks.OBSIDIAN, 'F', Items.FLINT_AND_STEEL
 				});
 			}
 			if(Ids.existencePylon){
-				GameRegistry.addRecipe(new ItemStack(TMBlocks.existencePylon, 1, 0), new Object[]{
+				GameRegistry.addShapedRecipe(TMBlocks.existencePylon.getRegistryName(), null, new ItemStack(TMBlocks.existencePylon, 1, 0), new Object[] {
 					"RRR",
 					"RER",
 					"RPR",
-					'R', Items.redstone, 'E', TMItems.exGem, 'P', Blocks.piston
+					'R', Items.REDSTONE, 'E', TMItems.exGem, 'P', Blocks.PISTON
 				});
-				GameRegistry.addShapelessRecipe(new ItemStack(TMBlocks.existencePylon, 1, 1), new Object[]{
-					Items.diamond, TMItems.itemBoost, TMItems.exGem, new ItemStack(TMBlocks.existencePylon, 1, 0)
-				});
-				GameRegistry.addShapelessRecipe(new ItemStack(TMBlocks.existencePylon, 1, 2), new Object[]{
-					Items.ender_pearl, Items.diamond, TMItems.exGem, new ItemStack(TMBlocks.existencePylon, 1, 1)
-				});
+				GameRegistry.addShapelessRecipe(TMBlocks.existencePylon.getRegistryName(), null, new ItemStack(TMBlocks.existencePylon, 1, 1), Ingredient.fromStacks(
+					new ItemStack(Items.DIAMOND), new ItemStack(TMItems.itemBoost), new ItemStack(TMItems.exGem), new ItemStack(TMBlocks.existencePylon, 1, 0)
+				));
+				GameRegistry.addShapelessRecipe(TMBlocks.existencePylon.getRegistryName(), null, new ItemStack(TMBlocks.existencePylon, 1, 2), Ingredient.fromStacks(
+					new ItemStack(Items.ENDER_PEARL), new ItemStack(Items.DIAMOND), new ItemStack(TMItems.exGem), new ItemStack(TMBlocks.existencePylon, 1, 1)
+				));
 			}
 		}
 	}

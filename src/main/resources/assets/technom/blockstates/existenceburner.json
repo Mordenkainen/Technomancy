@@ -1,0 +1,44 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "technom:burner",
+    "textures": {
+      "all": "blocks/dirt"
+    },
+    "transform": "forge:default-block"
+  },
+    "variants": {
+		"type": {
+			"0": {
+				"textures": {
+					"all": "technom:blocks/blank"
+				}
+			},
+			"1": {
+				"textures": {
+					"all": "technom:blocks/blank"
+				}
+			},
+			"2": {
+				"textures": {
+					"all": "technom:blocks/blank"
+				}
+			},
+			"basic": {
+				"textures": {
+					"all": "technom:blocks/blank"
+				}
+			},
+			"burner": {
+				"textures": {
+					"all": "technom:blocks/blank"
+				}
+			},
+			"dynamicburner": {
+				"textures": {
+					"all": "technom:blocks/blank"
+				}
+			}
+		}
+    }
+}

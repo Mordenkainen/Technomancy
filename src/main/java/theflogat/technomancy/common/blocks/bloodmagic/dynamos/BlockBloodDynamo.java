@@ -1,45 +1,66 @@
 package theflogat.technomancy.common.blocks.bloodmagic.dynamos;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import theflogat.technomancy.common.blocks.base.BlockDynamoBase;
 import theflogat.technomancy.common.tiles.bloodmagic.dynamos.TileBloodDynamo;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.lib.RenderIds;
 import theflogat.technomancy.lib.compat.BloodMagic;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockBloodDynamo extends BlockDynamoBase {
 
 	public BlockBloodDynamo() {
-		setBlockName(Ref.getId(Names.bloodDynamo));
+		setUnlocalizedName(Ref.getId(Names.bloodDynamo));
 	}
-	
+
 	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float vecX, float vecY, float vecZ) {
-		if (player.getHeldItem() != null) {
-			TileBloodDynamo tile = (TileBloodDynamo)world.getTileEntity(x, y, z);
-			if(player.getHeldItem().getItem()==BloodMagic.divinationSigil){
+	public boolean isFullCube(IBlockState state) {
+		return false;
+	}
+
+	@Override
+	public boolean isTranslucent(IBlockState state) {
+		return true;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public BlockRenderLayer getBlockLayer()
+	{
+		return BlockRenderLayer.CUTOUT;
+	}
+
+	@Override
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (player.getHeldItem(hand) != null) {
+			TileBloodDynamo tile = (TileBloodDynamo)world.getTileEntity(pos);
+			if(player.getHeldItem(hand).getItem()==BloodMagic.divinationSigil){
 				if(!world.isRemote) {
-					player.addChatComponentMessage(new ChatComponentText("Energy: " + tile.getEnergyStored(null) + "/" + tile.getMaxEnergyStored(null)));
-					player.addChatComponentMessage(new ChatComponentText("Blood: " + tile.liquid + "/" + TileBloodDynamo.capacity));
+					player.sendMessage(new TextComponentString("Energy: " + tile.getEnergyStored(null) + "/" + tile.getMaxEnergyStored(null)));
+					player.sendMessage(new TextComponentString("Blood: " + tile.liquid + "/" + TileBloodDynamo.capacity));
 				}
 				return true;
-			}else if(player.getHeldItem().getItem()==BloodMagic.bucketLife){
+			}else if(player.getHeldItem(hand).getItem()==BloodMagic.bucketLife){
 				if(tile.emptyBucket()) {
-					player.inventory.mainInventory[player.inventory.currentItem] = new ItemStack(Items.bucket);
+					player.inventory.mainInventory.set(player.inventory.currentItem, new ItemStack(Items.BUCKET));
 					return true;
 				}
 			}
 		}
-		return super.onBlockActivated(world, x, y, z, player, side, vecX, vecY, vecZ);
+		return super.onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ);
 	}
 	
 	@Override
@@ -47,14 +68,8 @@ public class BlockBloodDynamo extends BlockDynamoBase {
 		return new TileBloodDynamo();
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void registerBlockIcons(IIconRegister icon) {
-		blockIcon = icon.registerIcon(Ref.getAsset(Names.bloodDynamo));
-	}
-
-	@Override
-	public int getRenderType() {
-		return RenderIds.idBloodDynamo;
+	public EnumBlockRenderType getRenderType(IBlockState state) {
+		return EnumBlockRenderType.MODEL;
 	}
 }

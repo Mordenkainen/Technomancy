@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "normal": { "model": "technom:crystalblock3" },
+        "inventory": { "model": "technom:crystalblock3" }
+    }
+}

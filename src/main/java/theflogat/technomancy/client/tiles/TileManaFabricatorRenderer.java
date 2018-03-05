@@ -17,12 +17,12 @@ public class TileManaFabricatorRenderer extends TileEntitySpecialRenderer{
 	private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_MANA_FABRICATOR_TEXTURE);
 
 	@Override
-	public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float f) {
+	public void render(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float)x, (float)y, (float)z);
 		GL11.glScalef(-1F, -1F, 1f);
 		GL11.glTranslatef(-.5F, 0.5F, .5F);
-		renderFacing(entity);		
+		renderFacing(te);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

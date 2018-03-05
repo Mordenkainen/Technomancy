@@ -19,9 +19,9 @@ public final class Rate {
        	fusorCost = config.get(category, "EssentiaFusor", fusorCost).getInt(Rate.fusorCost);
 	}
 	
-	public static int manaFabCost = 1000000;
-	public static int bloodFabCost = 1000000;
-	public static int condenserCost = 1000000;
+	public static int manaFabCost = 5000;
+	public static int bloodFabCost = 5000;
+	public static int condenserCost = 10000;
 	public static int biomeMorpherCost = 20000;
 	public static int consumerCost = 20000;
 	public static int bellowsCost = 500;

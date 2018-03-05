@@ -1,58 +1,30 @@
 package theflogat.technomancy.proxies;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.DefaultStateMapper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.client.MinecraftForgeClient;
-import thaumcraft.client.renderers.item.ItemWandRenderer;
-import theflogat.technomancy.client.blocks.BlockAdvDeconTableRenderer;
-import theflogat.technomancy.client.blocks.BlockBiomeMorpherRenderer;
-import theflogat.technomancy.client.blocks.BlockBloodDynamoRenderer;
-import theflogat.technomancy.client.blocks.BlockBloodFabricatorRenderer;
-import theflogat.technomancy.client.blocks.BlockCatalystRenderer;
-import theflogat.technomancy.client.blocks.BlockCreativeJarRenderer;
-import theflogat.technomancy.client.blocks.BlockCrystalRenderer;
-import theflogat.technomancy.client.blocks.BlockEldritchConsumerRenderer;
-import theflogat.technomancy.client.blocks.BlockElectricBellowsRenderer;
-import theflogat.technomancy.client.blocks.BlockEssentiaContainerRenderer;
-import theflogat.technomancy.client.blocks.BlockEssentiaDynamoRenderer;
-import theflogat.technomancy.client.blocks.BlockEssentiaFusorRenderer;
-import theflogat.technomancy.client.blocks.BlockEssentiaTransmitterRenderer;
-import theflogat.technomancy.client.blocks.BlockExistenceBurnerRenderer;
-import theflogat.technomancy.client.blocks.BlockExistenceFountainRenderer;
-import theflogat.technomancy.client.blocks.BlockExistencePylonRenderer;
-import theflogat.technomancy.client.blocks.BlockFlowerDynamoRenderer;
-import theflogat.technomancy.client.blocks.BlockFluxLampRenderer;
-import theflogat.technomancy.client.blocks.BlockItemTransmitterRenderer;
-import theflogat.technomancy.client.blocks.BlockManaFabricatorRenderer;
-import theflogat.technomancy.client.blocks.BlockNodeDynamoRenderer;
-import theflogat.technomancy.client.blocks.BlockNodeGeneratorRenderer;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.IGuiHandler;
 import theflogat.technomancy.client.gui.GuiProcessorBM;
 import theflogat.technomancy.client.gui.GuiProcessorBO;
-import theflogat.technomancy.client.gui.GuiProcessorTC;
 import theflogat.technomancy.client.gui.GuiRitualTome;
-import theflogat.technomancy.client.tiles.TileAdvDeconTableRenderer;
-import theflogat.technomancy.client.tiles.TileBiomeMorpherRenderer;
-import theflogat.technomancy.client.tiles.TileBloodDynamoRenderer;
-import theflogat.technomancy.client.tiles.TileBloodFabricatorRenderer;
-import theflogat.technomancy.client.tiles.TileCatalystRenderer;
-import theflogat.technomancy.client.tiles.TileCreativeJarRenderer;
-import theflogat.technomancy.client.tiles.TileCrystalRenderer;
-import theflogat.technomancy.client.tiles.TileEldritchConsumerRenderer;
-import theflogat.technomancy.client.tiles.TileElectricBellowsRenderer;
-import theflogat.technomancy.client.tiles.TileEssentiaContainerRenderer;
-import theflogat.technomancy.client.tiles.TileEssentiaDynamoRenderer;
-import theflogat.technomancy.client.tiles.TileEssentiaFusorRenderer;
-import theflogat.technomancy.client.tiles.TileEssentiaTransmitterRenderer;
-import theflogat.technomancy.client.tiles.TileExistenceBurnerRenderer;
-import theflogat.technomancy.client.tiles.TileExistenceFountainRenderer;
-import theflogat.technomancy.client.tiles.TileExistencePylonRenderer;
-import theflogat.technomancy.client.tiles.TileFlowerDynamoRenderer;
-import theflogat.technomancy.client.tiles.TileFluxLampRenderer;
-import theflogat.technomancy.client.tiles.TileItemTransmitterRenderer;
-import theflogat.technomancy.client.tiles.TileManaFabricatorRenderer;
-import theflogat.technomancy.client.tiles.TileNodeDynamoRenderer;
-import theflogat.technomancy.client.tiles.TileNodeGeneratorRenderer;
+import theflogat.technomancy.client.tiles.*;
+import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.items.base.TMItems;
 import theflogat.technomancy.common.tiles.bloodmagic.dynamos.TileBloodDynamo;
 import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBMProcessor;
@@ -67,156 +39,133 @@ import theflogat.technomancy.common.tiles.technom.existence.TileExistenceBurner;
 import theflogat.technomancy.common.tiles.technom.existence.TileExistenceDynamicBurner;
 import theflogat.technomancy.common.tiles.technom.existence.TileExistenceFountain;
 import theflogat.technomancy.common.tiles.technom.existence.TileExistencePylon;
-import theflogat.technomancy.common.tiles.thaumcraft.dynamos.TileEssentiaDynamo;
-import theflogat.technomancy.common.tiles.thaumcraft.dynamos.TileNodeDynamo;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileAdvDeconTable;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileBiomeMorpher;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEldritchConsumer;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileElectricBellows;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaFusor;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileEssentiaTransmitter;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileFluxLamp;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileNodeGenerator;
-import theflogat.technomancy.common.tiles.thaumcraft.machine.TileTCProcessor;
-import theflogat.technomancy.common.tiles.thaumcraft.storage.TileCreativeJar;
-import theflogat.technomancy.common.tiles.thaumcraft.storage.TileEssentiaContainer;
-import theflogat.technomancy.lib.RenderIds;
+import theflogat.technomancy.lib.Ref;
+import theflogat.technomancy.lib.compat.IModModule;
 import theflogat.technomancy.lib.handlers.CompatibilityHandler;
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.network.IGuiHandler;
 
-public class ClientProxy extends CommonProxy implements IGuiHandler{
+import java.util.Map;
+
+public class ClientProxy extends CommonProxy implements IGuiHandler {
 
     @Override
     public void initSounds() {
 
     }
 
-    @Override
+	@Override
+	public void preInit(FMLPreInitializationEvent e) {
+		super.preInit(e);
+		TMItems.registerRenders();
+		TMBlocks.registerRenders();
+		TMItems.initPureOresRender();
+		for(IModModule mod : CompatibilityHandler.mods) {
+			mod.preInit();
+		}
+	}
+
+	@Override
     public void initRenderers() {
-    	ClientRegistry.bindTileEntitySpecialRenderer(TileCrystal.class, new TileCrystalRenderer());
-		RenderIds.idCrystal = RenderingRegistry.getNextAvailableRenderId();
-		
+		ClientRegistry.bindTileEntitySpecialRenderer(TileCrystal.class, new TileCrystalRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileCatalyst.class, new TileCatalystRenderer());
-		RenderIds.idCatalyst = RenderingRegistry.getNextAvailableRenderId();
-		
 		ClientRegistry.bindTileEntitySpecialRenderer(TileItemTransmitter.class, new TileItemTransmitterRenderer());
-		RenderIds.idItemTransmitter = RenderingRegistry.getNextAvailableRenderId();
-		
 		ClientRegistry.bindTileEntitySpecialRenderer(TileExistenceFountain.class, new TileExistenceFountainRenderer());
-		RenderIds.idExFountain = RenderingRegistry.getNextAvailableRenderId();
-		
 		ClientRegistry.bindTileEntitySpecialRenderer(TileExistencePylon.class, new TileExistencePylonRenderer());
-		RenderIds.idExPylon = RenderingRegistry.getNextAvailableRenderId();
-		
 		TileExistenceBurnerRenderer rendBurner = new TileExistenceBurnerRenderer();
 		ClientRegistry.bindTileEntitySpecialRenderer(TileExistenceBurner.class, rendBurner);
 		ClientRegistry.bindTileEntitySpecialRenderer(TileExistenceDynamicBurner.class, rendBurner);
-		RenderIds.idExBurner = RenderingRegistry.getNextAvailableRenderId();
-		
-		RenderingRegistry.registerBlockHandler(new BlockCrystalRenderer());
-		RenderingRegistry.registerBlockHandler(new BlockCatalystRenderer());
-    	RenderingRegistry.registerBlockHandler(new BlockItemTransmitterRenderer());
-    	RenderingRegistry.registerBlockHandler(new BlockExistenceFountainRenderer());
-    	RenderingRegistry.registerBlockHandler(new BlockExistencePylonRenderer());
-    	RenderingRegistry.registerBlockHandler(new BlockExistenceBurnerRenderer());
-    	
-    	if(CompatibilityHandler.th) {
-    		ClientRegistry.bindTileEntitySpecialRenderer(TileNodeDynamo.class, new TileNodeDynamoRenderer());
-    		RenderIds.idNodeDynamo = RenderingRegistry.getNextAvailableRenderId();
-    	
-    		ClientRegistry.bindTileEntitySpecialRenderer(TileEssentiaDynamo.class, new TileEssentiaDynamoRenderer());
-    		RenderIds.idEssentiaDynamo = RenderingRegistry.getNextAvailableRenderId();
-    	
-    		ClientRegistry.bindTileEntitySpecialRenderer(TileEssentiaContainer.class, new TileEssentiaContainerRenderer());
-    		RenderIds.idEssentiaContainer = RenderingRegistry.getNextAvailableRenderId();    	
-    	
-    		ClientRegistry.bindTileEntitySpecialRenderer(TileBiomeMorpher.class, new TileBiomeMorpherRenderer());
-    		RenderIds.idBiomeMorpher = RenderingRegistry.getNextAvailableRenderId(); 
-    	
-    		ClientRegistry.bindTileEntitySpecialRenderer(TileNodeGenerator.class, new TileNodeGeneratorRenderer());
-    		RenderIds.idNodeGenerator = RenderingRegistry.getNextAvailableRenderId(); 
-
-    		ClientRegistry.bindTileEntitySpecialRenderer(TileFluxLamp.class, new TileFluxLampRenderer());
-    		RenderIds.idFluxLamp = RenderingRegistry.getNextAvailableRenderId();
-    	
-    		ClientRegistry.bindTileEntitySpecialRenderer(TileEssentiaTransmitter.class, new TileEssentiaTransmitterRenderer());
-    		RenderIds.idEssentiaTransmitter = RenderingRegistry.getNextAvailableRenderId(); 
-    	
-    		ClientRegistry.bindTileEntitySpecialRenderer(TileElectricBellows.class, new TileElectricBellowsRenderer());
-    		RenderIds.idElectricBellows = RenderingRegistry.getNextAvailableRenderId();
-    	
-    		ClientRegistry.bindTileEntitySpecialRenderer(TileCreativeJar.class, new TileCreativeJarRenderer());
-    		RenderIds.idCreativeJar = RenderingRegistry.getNextAvailableRenderId(); 
-    	
-//    		ClientRegistry.bindTileEntitySpecialRenderer(TileReconstructor.class, new TileReconstructorRenderer());
-//    		RenderIds.idReconstructor = RenderingRegistry.getNextAvailableRenderId();
-    		
-    		ClientRegistry.bindTileEntitySpecialRenderer(TileAdvDeconTable.class, new TileAdvDeconTableRenderer());
-    		RenderIds.idAdvDeconTable = RenderingRegistry.getNextAvailableRenderId();
-    		
-    		ClientRegistry.bindTileEntitySpecialRenderer(TileEldritchConsumer.class, new TileEldritchConsumerRenderer());
-    		RenderIds.idEldrichConsumer = RenderingRegistry.getNextAvailableRenderId();
-    		
-    		ClientRegistry.bindTileEntitySpecialRenderer(TileEssentiaFusor.class, new TileEssentiaFusorRenderer());
-    		RenderIds.idEssentiaFusor = RenderingRegistry.getNextAvailableRenderId();
-    		
-    		RenderingRegistry.registerBlockHandler(new BlockNodeDynamoRenderer());
-        	RenderingRegistry.registerBlockHandler(new BlockEssentiaDynamoRenderer());
-        	RenderingRegistry.registerBlockHandler(new BlockEssentiaContainerRenderer());  	
-        	RenderingRegistry.registerBlockHandler(new BlockBiomeMorpherRenderer());
-        	RenderingRegistry.registerBlockHandler(new BlockNodeGeneratorRenderer()); 
-        	RenderingRegistry.registerBlockHandler(new BlockFluxLampRenderer());
-        	RenderingRegistry.registerBlockHandler(new BlockEssentiaTransmitterRenderer());  
-        	RenderingRegistry.registerBlockHandler(new BlockElectricBellowsRenderer());
-        	RenderingRegistry.registerBlockHandler(new BlockCreativeJarRenderer());
-//        	RenderingRegistry.registerBlockHandler(new BlockReconstructorRenderer());
-        	RenderingRegistry.registerBlockHandler(new BlockEldritchConsumerRenderer());
-        	RenderingRegistry.registerBlockHandler(new BlockAdvDeconTableRenderer());
-        	RenderingRegistry.registerBlockHandler(new BlockEssentiaFusorRenderer());
-        	
-        	MinecraftForgeClient.registerItemRenderer(TMItems.itemTechnoturgeScepter, new ItemWandRenderer());
-    	}
     	
     	if(CompatibilityHandler.bm) {
     		ClientRegistry.bindTileEntitySpecialRenderer(TileBloodDynamo.class, new TileBloodDynamoRenderer());
-    		RenderIds.idBloodDynamo = RenderingRegistry.getNextAvailableRenderId();
-    	
-    		ClientRegistry.bindTileEntitySpecialRenderer(TileBloodFabricator.class, new TileBloodFabricatorRenderer());
-    		RenderIds.idBloodFabricator = RenderingRegistry.getNextAvailableRenderId();    		
 
-        	RenderingRegistry.registerBlockHandler(new BlockBloodDynamoRenderer());
-        	RenderingRegistry.registerBlockHandler(new BlockBloodFabricatorRenderer());
+    		ClientRegistry.bindTileEntitySpecialRenderer(TileBloodFabricator.class, new TileBloodFabricatorRenderer());
     	}
     	
     	if(CompatibilityHandler.bo) {
     		ClientRegistry.bindTileEntitySpecialRenderer(TileManaFabricator.class, new TileManaFabricatorRenderer());
-    		RenderIds.idManaFabricator = RenderingRegistry.getNextAvailableRenderId();
-    	
     		ClientRegistry.bindTileEntitySpecialRenderer(TileFlowerDynamo.class, new TileFlowerDynamoRenderer());
-    		RenderIds.idFlowerDynamo = RenderingRegistry.getNextAvailableRenderId();
-    		
-        	RenderingRegistry.registerBlockHandler(new BlockManaFabricatorRenderer());
-        	RenderingRegistry.registerBlockHandler(new BlockFlowerDynamoRenderer());  
-    	}	    	
+    	}
     	  	
     }
 
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world,	int x, int y, int z) {
+		BlockPos pos = new BlockPos(x, y, z);
 		if(world instanceof WorldClient) {
 			switch(ID) {
 				case 0: 
-					return new GuiProcessorTC(player.inventory, ((TileTCProcessor)world.getTileEntity(x, y, z)));
+					return null;
 				case 1:
-					return new GuiProcessorBM(player.inventory, ((TileBMProcessor)world.getTileEntity(x, y, z)));
+					return new GuiProcessorBM(player.inventory, ((TileBMProcessor)world.getTileEntity(pos)));
 				case 2:
-					return new GuiProcessorBO(player.inventory, ((TileBOProcessor)world.getTileEntity(x, y, z)));
+					return new GuiProcessorBO(player.inventory, ((TileBOProcessor)world.getTileEntity(pos)));
 				case 3:
 					return new GuiRitualTome();
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public void registerWithMapper(Block block) {
+		if (FMLCommonHandler.instance().getEffectiveSide().isClient() && block != null) {
+			final String resourcePath = String.format("%s:%s", Ref.MOD_ID, block.getRegistryName().getResourcePath());
+
+			ModelLoader.setCustomStateMapper(block, new DefaultStateMapper() {
+				@Override
+				protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+					return new ModelResourceLocation(resourcePath, getPropertyString(state.getProperties()));
+				}
+			});
+
+			NonNullList<ItemStack> subBlocks = NonNullList.create();
+			block.getSubBlocks(null, (NonNullList<ItemStack>) subBlocks);
+
+			for (ItemStack stack : subBlocks) {
+				IBlockState state = block.getStateFromMeta(stack.getMetadata());
+				ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), stack.getMetadata(), new ModelResourceLocation(resourcePath, this.getPropertyString(state.getProperties())));
+			}
+		}
+	}
+
+	@Override
+	public void registerWithMapper(Item item, String... types) {
+		if (FMLCommonHandler.instance().getEffectiveSide().isClient()) {
+			for (int i = 0; i < types.length; i++) {
+				ResourceLocation location = item.getRegistryName();
+				ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(location, "type=" + types[i]));
+			}
+		}
+	}
+
+	public static String getPropertyString(Map<IProperty<?>, Comparable<?>> values, String... extrasArgs) {
+		StringBuilder stringbuilder = new StringBuilder();
+
+		for (Map.Entry<IProperty<?>, Comparable<?>> entry : values.entrySet()) {
+			if (stringbuilder.length() != 0) {
+				stringbuilder.append(",");
+			}
+
+			IProperty<?> iproperty = (IProperty) entry.getKey();
+			stringbuilder.append(iproperty.getName());
+			stringbuilder.append("=");
+			stringbuilder.append(getPropertyName(iproperty, (Comparable) entry.getValue()));
+		}
+
+		if (stringbuilder.length() == 0) {
+			stringbuilder.append("inventory");
+		}
+
+		for (String args : extrasArgs) {
+			if (stringbuilder.length() != 0)
+				stringbuilder.append(",");
+			stringbuilder.append(args);
+		}
+
+		return stringbuilder.toString();
+	}
+
+	@SuppressWarnings("unchecked")
+	private static <T extends Comparable<T>> String getPropertyName(IProperty<T> property, Comparable<?> comparable) {
+		return property.getName((T) comparable);
 	}
 }

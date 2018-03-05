@@ -3,9 +3,13 @@ package theflogat.technomancy.common.items.technom;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
 
 public class ItemCatalyst extends ItemBlock {
 
@@ -15,8 +19,8 @@ public class ItemCatalyst extends ItemBlock {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public void addInformation(ItemStack items, EntityPlayer player, List l, boolean moreInfo) {
-		switch(items.getItemDamage()){
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> l, ITooltipFlag flagIn) {
+		switch(stack.getItemDamage()){
 		case 0:
 			l.add("Dark ritual core");
 			l.add("Possible sizes: 3x3, 5x5, 9x9");

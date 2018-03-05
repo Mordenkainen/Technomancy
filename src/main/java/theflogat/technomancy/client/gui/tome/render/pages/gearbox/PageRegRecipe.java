@@ -9,7 +9,7 @@ public class PageRegRecipe extends PageRecipe{
 	ItemStack[] pattern = new ItemStack[9];
 
 	public PageRegRecipe(ItemStack out) {
-		out.stackSize = 1;
+		out.setCount(1);
 		output = out;
 
 //		List list = CraftingManager.getInstance().getRecipeList();

@@ -2,6 +2,7 @@ package theflogat.technomancy.common.tiles.technom.existence;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.IPlantable;
 import theflogat.technomancy.common.tiles.base.TileExistenceRedstoneBase;
 
@@ -12,19 +13,19 @@ public class TileExistenceCropAccelerator extends TileExistenceRedstoneBase{
 	}
 
 	@Override
-	public void updateEntity() {
-		if(!worldObj.isRemote && set.canRun(this) && power>605){
+	public void update() {
+		if(!world.isRemote && set.canRun(this) && power>605){
 			for(int xx=-5;xx<=5; xx++){
 				for(int zz=-5;zz<=5; zz++){
-					Block b = worldObj.getBlock(xCoord + xx, yCoord + 2, zCoord + zz);
+					Block b = world.getBlockState(new BlockPos(pos.getX() + xx, pos.getY() + 2, pos.getZ() + zz)).getBlock();
 					if(b instanceof IPlantable){
 						if(b instanceof IGrowable){
-							if(((IGrowable)b).func_149851_a(worldObj, xCoord + xx, yCoord + 2, zCoord + zz, worldObj.isRemote)){
-								((IGrowable)b).func_149853_b(worldObj, worldObj.rand, xCoord + xx, yCoord + 2, zCoord + zz);
+							if(((IGrowable)b).canGrow(world, new BlockPos(pos.getX() + xx, pos.getY() + 2, pos.getZ() + zz), world.getBlockState(new BlockPos(pos.getX() + xx, pos.getY() + 2, pos.getZ() + zz)), world.isRemote)){
+								((IGrowable)b).canUseBonemeal(world, world.rand, new BlockPos(pos.getX() + xx, pos.getY() + 2, pos.getZ() + zz), world.getBlockState(new BlockPos(pos.getX() + xx, pos.getY() + 2, pos.getZ() + zz)));
 								power -= 30;
 							}
 						}else{
-							b.updateTick(worldObj, xCoord + xx, yCoord + 2, zCoord + zz, worldObj.rand);
+							b.updateTick(world, new BlockPos(pos.getX() + xx, pos.getY() + 2, pos.getZ() + zz), world.getBlockState(new BlockPos(pos.getX() + xx, pos.getY() + 2, pos.getZ() + zz)), world.rand);
 							power -= 5;
 						}
 					}

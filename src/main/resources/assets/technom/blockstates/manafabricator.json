@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "normal": { "model": "technom:itemtransmitter" },
+        "inventory": { "model": "technom:manafab_inv" }
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "normal": { "model": "technom:processorbo" },
+        "inventory": { "model": "technom:processorbo" }
+    }
+}

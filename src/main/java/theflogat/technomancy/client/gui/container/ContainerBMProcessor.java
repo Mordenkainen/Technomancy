@@ -1,5 +1,8 @@
 package theflogat.technomancy.client.gui.container;
 
+import net.minecraft.inventory.IContainerListener;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import theflogat.technomancy.common.items.technom.ItemProcessedOre;
 import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBMProcessor;
 import theflogat.technomancy.common.tiles.base.TileProcessorBase;
@@ -7,11 +10,8 @@ import theflogat.technomancy.util.Ore;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ContainerBMProcessor extends Container {
 
@@ -47,24 +47,24 @@ public class ContainerBMProcessor extends Container {
 			addSlotToContainer(new Slot(inventory, i, 8 + i * 18,  114));
 		}		
 	}
-	
+
 	@Override
-	public void addCraftingToCrafters(ICrafting craft) {
-		super.addCraftingToCrafters(craft);
-		craft.sendProgressBarUpdate(this, 0, this.processor.progress);
-		craft.sendProgressBarUpdate(this, 1, TileProcessorBase.maxTime);		
+	public void addListener(IContainerListener listener) {
+		listener.sendWindowProperty(this, 0, this.processor.progress);
+		listener.sendWindowProperty(this, 1, TileProcessorBase.maxTime);
+		super.addListener(listener);
 	}
-	
+
 	@Override
 	public void detectAndSendChanges() {
 		super.detectAndSendChanges();
-		for (int i = 0; i < this.crafters.size(); i++) {
-			ICrafting craft = (ICrafting)this.crafters.get(i);
+		for (int i = 0; i < this.listeners.size(); i++) {
+			IContainerListener craft = (IContainerListener)this.listeners.get(i);
 			if(this.lastTime != this.processor.progress) {
-				craft.sendProgressBarUpdate(this, 0, this.processor.progress);
+				craft.sendWindowProperty(this, 0, this.processor.progress);
 		    }
 			if(this.lastMax != TileProcessorBase.maxTime) {
-				craft.sendProgressBarUpdate(this, 1, TileProcessorBase.maxTime);
+				craft.sendWindowProperty(this, 1, TileProcessorBase.maxTime);
 			}
 		}
 		this.lastTime = this.processor.progress;
@@ -81,15 +81,15 @@ public class ContainerBMProcessor extends Container {
 	
 	@Override
 	public boolean canInteractWith(EntityPlayer entityplayer) {
-		return processor.isUseableByPlayer(entityplayer);
+		return processor.isUsableByPlayer(entityplayer);
 	}	
 	
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int i)  {
-		ItemStack stack = null;
+		ItemStack stack = ItemStack.EMPTY;
 	    Slot slot = (Slot)this.inventorySlots.get(i);
 	    
-	    int invTile = this.processor.inv.length;
+	    int invTile = this.processor.inv.size();
 	    int invPlayer = invTile + 27;
 	    int invFull = invTile + 36;
 	    if ((slot != null) && (slot.getHasStack()))    {
@@ -97,33 +97,33 @@ public class ContainerBMProcessor extends Container {
 	    	stack = stackInSlot.copy();
 	    	if (i == 1)      {
 	    		if (!mergeItemStack(stackInSlot, invTile, invFull, true)) {
-	    			return null;
+	    			return ItemStack.EMPTY;
 	    		}
 	    		slot.onSlotChange(stackInSlot, stack);
 	    	}else if (i != 0) {
 	    		if (processor.isItemValidForSlot(0, (stackInSlot))) {
 	    			if (!mergeItemStack(stackInSlot, 0, 1, false)) {
-	    				return null;
+	    				return ItemStack.EMPTY;
 	    			}
 	    		}else if ((i >= invTile) && (i < invPlayer)) {
 	    			if (!mergeItemStack(stackInSlot, invPlayer, invFull, false)) {
-	    				return null;
+	    				return ItemStack.EMPTY;
 	    			}
 	    		}else if ((i >= invPlayer) && (i < invFull) && (!mergeItemStack(stackInSlot, invTile, invPlayer, false))) {
-	    			return null;
+	    			return ItemStack.EMPTY;
 	    		}
 	    	}else if (!mergeItemStack(stackInSlot, invTile, invFull, false)) {
-	    		return null;
+	    		return ItemStack.EMPTY;
 	    	}
-	    	if (stackInSlot.stackSize == 0) {
-	    		slot.putStack((ItemStack)null);
+	    	if (stackInSlot.getCount() == 0) {
+	    		slot.putStack(ItemStack.EMPTY);
 	    	}else{
 	    		slot.onSlotChanged();
 	    	}
-	    	if(stackInSlot.stackSize == stack.stackSize) {
-	    		return null;
+	    	if(stackInSlot.getCount() == stack.getCount()) {
+	    		return ItemStack.EMPTY;
 	    	}
-	    	slot.onPickupFromSlot(player, stackInSlot);
+	    	slot.onTake(player, stackInSlot);
 	    }
 	    return stack;
 	}		

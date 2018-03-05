@@ -1,14 +1,14 @@
 package theflogat.technomancy.lib.handlers;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import theflogat.technomancy.common.items.base.TMItems;
 import theflogat.technomancy.util.Ore;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
+/**
 public class CreativeTabTM extends CreativeTabs {
 
     public CreativeTabTM(int id, String tabLabel) {
@@ -18,7 +18,7 @@ public class CreativeTabTM extends CreativeTabs {
     @SideOnly(Side.CLIENT)
     @Override
     public String getTabLabel() {
-        return "Technomancy";
+        return "technomancy";
     }
     
     @SideOnly(Side.CLIENT)
@@ -34,7 +34,8 @@ public class CreativeTabTM extends CreativeTabs {
 
     @SideOnly(Side.CLIENT)
 	@Override
-	public Item getTabIconItem() {
-    	return Item.getItemFromBlock(Blocks.stone);
+	public ItemStack getTabIconItem() {
+    	return new ItemStack(Blocks.STONE);
 	}
 }
+ */

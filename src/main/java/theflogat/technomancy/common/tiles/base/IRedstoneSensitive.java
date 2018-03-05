@@ -2,6 +2,7 @@ package theflogat.technomancy.common.tiles.base;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public interface IRedstoneSensitive {
@@ -50,12 +51,12 @@ public interface IRedstoneSensitive {
 		}
 
 		public boolean canRun(TileEntity tile){
-			if(tile!=null && tile.getWorldObj()!=null)
+			if(tile!=null && tile.getWorld()!=null)
 				switch(this){
 				case HIGH:
-					return tile.getWorldObj().isBlockIndirectlyGettingPowered(tile.xCoord, tile.yCoord, tile.zCoord);
+					return tile.getWorld().isBlockPowered(tile.getPos());
 				case LOW:
-					return !tile.getWorldObj().isBlockIndirectlyGettingPowered(tile.xCoord, tile.yCoord, tile.zCoord);
+					return !tile.getWorld().isBlockPowered(tile.getPos());
 				case NONE:
 					return true;
 				}
@@ -65,9 +66,9 @@ public interface IRedstoneSensitive {
 		public boolean canRun(World world, int x, int y, int z){
 			switch(this){
 			case HIGH:
-				return world.isBlockIndirectlyGettingPowered(x, y, z);
+				return world.isBlockPowered(new BlockPos(x, y, z));
 			case LOW:
-				return !world.isBlockIndirectlyGettingPowered(x, y, z);
+				return !world.isBlockPowered(new BlockPos(x, y, z));
 			case NONE:
 				return true;
 			}

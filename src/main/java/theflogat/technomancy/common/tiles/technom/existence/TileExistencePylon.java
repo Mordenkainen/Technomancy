@@ -2,14 +2,31 @@ package theflogat.technomancy.common.tiles.technom.existence;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.math.BlockPos;
 import theflogat.technomancy.common.tiles.base.TileTechnomancyRedstone;
 
 public class TileExistencePylon extends TileTechnomancyRedstone implements IExistenceTransmitter{
 
-	public enum Type {
-		BASIC(5, 0),
-		ADVANCED(25, 1),
-		COMPLEX(125, 2);
+	public enum Type implements IStringSerializable {
+		BASIC(5, 0) {
+			@Override
+			public String getName() {
+				return "basic";
+			}
+		},
+		ADVANCED(25, 1){
+			@Override
+			public String getName() {
+				return "advanced";
+			}
+		},
+		COMPLEX(125, 2){
+			@Override
+			public String getName() {
+				return "complex";
+			}
+		};
 
 		public int id;
 		public int tRate;
@@ -38,11 +55,10 @@ public class TileExistencePylon extends TileTechnomancyRedstone implements IExis
 	}
 
 	@Override
-	public void updateEntity() {
+	public void update() {
 		if(transferRate==null){
-			blockMetadata = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
-			transferRate = Type.getTypeFromId(blockMetadata);
-			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+			transferRate = Type.getTypeFromId(getBlockMetadata());
+			world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 		}
 
 		if(power<transferRate.tRate){
@@ -60,7 +76,7 @@ public class TileExistencePylon extends TileTechnomancyRedstone implements IExis
 		for(int xx =-7; xx<=7; xx++){
 			for(int zz =-7; zz<=7; zz++){
 				for(int yy =-1; yy<=1; yy++){
-					TileEntity te = worldObj.getTileEntity(xCoord + xx, yCoord + yy, zCoord + zz);
+					TileEntity te = world.getTileEntity(new BlockPos(pos.getX() + xx, pos.getY() + yy, pos.getZ() + zz));
 					if(te!=null && te instanceof IExistenceProducer && !(te instanceof TileExistencePylon)){
 						IExistenceProducer ex = (IExistenceProducer)te;
 						if(ex.canOutput()){
@@ -80,7 +96,7 @@ public class TileExistencePylon extends TileTechnomancyRedstone implements IExis
 		for(int xx =-7; xx<=7; xx++){
 			for(int zz =-7; zz<=7; zz++){
 				for(int yy =-1; yy<=1; yy++){
-					TileEntity te = worldObj.getTileEntity(xCoord + xx, yCoord + yy, zCoord + zz);
+					TileEntity te = world.getTileEntity(new BlockPos(pos.getX() + xx, pos.getY() + yy, pos.getZ() + zz));
 					if(te!=null && te instanceof TileExistencePylon){
 						TileExistencePylon ex = (TileExistencePylon)te;
 						int t = Math.min(power, Math.min(ex.getMaxRate(), ex.getPowerCap() - ex.getPower()));
@@ -98,7 +114,7 @@ public class TileExistencePylon extends TileTechnomancyRedstone implements IExis
 		for(int xx =-7; xx<=7; xx++){
 			for(int zz =-7; zz<=7; zz++){
 				for(int yy =-1; yy<=1; yy++){
-					TileEntity te = worldObj.getTileEntity(xCoord + xx, yCoord + yy, zCoord + zz);
+					TileEntity te = world.getTileEntity(new BlockPos(pos.getX() + xx, pos.getY() + yy, pos.getZ() + zz));
 					if(te!=null && te instanceof IExistenceConsumer){
 						IExistenceConsumer ex = (IExistenceConsumer)te;
 						if(ex.canInput()){
@@ -129,8 +145,8 @@ public class TileExistencePylon extends TileTechnomancyRedstone implements IExis
 	@Override
 	public int getMaxRate() {
 		if(transferRate==null){
-			transferRate = Type.getTypeFromId(blockMetadata);
-			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+			transferRate = Type.getTypeFromId(getBlockMetadata());
+			world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 		}
 		return transferRate.tRate;
 	}
@@ -141,8 +157,8 @@ public class TileExistencePylon extends TileTechnomancyRedstone implements IExis
 
 	public int getPowerCap() {
 		if(transferRate==null){
-			transferRate = Type.getTypeFromId(blockMetadata);
-			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+			transferRate = Type.getTypeFromId(getBlockMetadata());
+			world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 		}
 		return transferRate.tRate;
 	}

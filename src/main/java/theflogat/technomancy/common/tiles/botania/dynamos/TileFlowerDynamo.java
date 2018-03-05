@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.tiles.base.TileDynamoBase;
 import vazkii.botania.api.BotaniaAPI;
@@ -27,8 +28,8 @@ public class TileFlowerDynamo extends TileDynamoBase implements IManaReceiver {
 	}
 	
 	@Override
-	public void updateEntity() {
-		super.updateEntity();
+	public void update() {
+		super.update();
 		if(mana <= maxMana - 100) {
 			drainMana();
 		}
@@ -37,7 +38,7 @@ public class TileFlowerDynamo extends TileDynamoBase implements IManaReceiver {
 	public void drainMana(){
 		for(int x = -4; x < 5; x++) {
 			for(int z = -4; z < 5; z++) {
-				TileEntity tile = worldObj.getTileEntity(xCoord + x, yCoord, zCoord + z);
+				TileEntity tile = world.getTileEntity(new BlockPos(pos.getX() + x, pos.getY(), pos.getZ()+ z));
 				if(tile instanceof IManaPool) {
 					IManaPool pool = (IManaPool)tile;
 					if(pool.getCurrentMana() >= 100 && mana <= maxMana - 100) {

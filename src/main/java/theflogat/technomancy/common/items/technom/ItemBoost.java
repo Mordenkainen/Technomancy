@@ -2,15 +2,22 @@ package theflogat.technomancy.common.items.technom;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.client.renderer.texture.IIconRegister;
+
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.common.tiles.base.IUpgradable;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
+
+import javax.annotation.Nullable;
 
 public class ItemBoost extends Item {
 
@@ -23,7 +30,7 @@ public class ItemBoost extends Item {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public void addInformation(ItemStack items, EntityPlayer player, List l, boolean moreInfo) {
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> l, ITooltipFlag flagIn) {
 		l.add("Apply to:");
 		for(String s:upgradeable){
 			l.add(s);
@@ -31,7 +38,7 @@ public class ItemBoost extends Item {
 	}
 
 	@Override
-	public boolean onItemUse(ItemStack items, EntityPlayer player, World w, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+	public EnumActionResult onItemUse(EntityPlayer player, World w, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 //		if(!w.isRemote){
 //			if(w.getTileEntity(x, y, z) instanceof IExistenceProducer){
 //				player.addChatComponentMessage(new ChatComponentText("Power:" + ((IExistenceProducer)w.getTileEntity(x, y, z)).getPower()));
@@ -47,24 +54,26 @@ public class ItemBoost extends Item {
 //		if(!w.isRemote){
 //			player.addChatComponentMessage(new ChatComponentText("Power:" + PlayerData.getCurrentPower(player) + "/" + PlayerData.getExistenceLevel(player)));
 //		}
-		if(w.getTileEntity(x, y, z) instanceof IUpgradable){
-			IUpgradable tile = (IUpgradable)w.getTileEntity(x, y, z);
+		if(w.getTileEntity(pos) instanceof IUpgradable){
+			IUpgradable tile = (IUpgradable)w.getTileEntity(pos);
 			if(tile.getBoost() == false){
 				if(!w.isRemote) {
 					tile.setBoost(true);
-					w.markBlockForUpdate(x, y, z);
+					w.notifyBlockUpdate(pos, w.getBlockState(pos), w.getBlockState(pos), 3);
 				}
-				if(--player.inventory.mainInventory[player.inventory.currentItem].stackSize == 0) {
-					player.inventory.mainInventory[player.inventory.currentItem] = null;
+				if(-player.inventory.mainInventory.get(player.inventory.currentItem).getCount() == 0) {
+					player.inventory.mainInventory.set(player.inventory.currentItem, null);
 				}
-				return true;
+				return EnumActionResult.SUCCESS;
 			}
 		}
-		return false;
+		return EnumActionResult.FAIL;
 	}
 
+	/**
 	@Override
 	public void registerIcons(IIconRegister reg) {
 		itemIcon = reg.registerIcon(Ref.TEXTURE_PREFIX + Names.itemBoost);
 	}
+	*/
 }

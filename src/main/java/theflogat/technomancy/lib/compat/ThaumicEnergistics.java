@@ -1,5 +1,6 @@
 package theflogat.technomancy.lib.compat;
 
+/**
 import thaumicenergistics.api.IThETransportPermissions;
 import thaumicenergistics.api.ThEApi;
 import theflogat.technomancy.common.tiles.air.TileFakeAirNG;
@@ -82,3 +83,4 @@ public class ThaumicEnergistics implements IModModule{
 		
 	}
 }
+ */

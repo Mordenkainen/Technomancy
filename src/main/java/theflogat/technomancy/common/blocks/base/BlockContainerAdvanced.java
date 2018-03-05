@@ -1,7 +1,12 @@
 package theflogat.technomancy.common.blocks.base;
 
 import java.util.ArrayList;
+
+import cofh.redstoneflux.api.IEnergyHandler;
+import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -9,11 +14,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.lwjgl.input.Keyboard;
 import theflogat.technomancy.common.tiles.base.IRedstoneSensitive;
 import theflogat.technomancy.common.tiles.base.IRedstoneSensitive.RedstoneSet;
@@ -22,7 +31,6 @@ import theflogat.technomancy.common.tiles.base.IWrenchable;
 import theflogat.technomancy.lib.handlers.CompatibilityHandler;
 import theflogat.technomancy.util.ToolWrench;
 import theflogat.technomancy.util.helpers.WorldHelper;
-import cofh.api.energy.IEnergyHandler;
 
 public abstract class BlockContainerAdvanced extends BlockContainerRedstone{
 
@@ -36,40 +44,38 @@ public abstract class BlockContainerAdvanced extends BlockContainerRedstone{
 	NBTTagCompound comp = new NBTTagCompound();
 
 	@Override
-	public void breakBlock(World w, int x, int y, int z, Block b, int meta) {
-		TileEntity tile = w.getTileEntity(x, y, z);
+	public void breakBlock(World w, BlockPos pos, IBlockState state) {
+		TileEntity tile = w.getTileEntity(pos);
 		comp = new NBTTagCompound();
 		if(tile != null) {
 			tile.writeToNBT(comp);
-			w.removeTileEntity(x, y, z);
+			w.removeTileEntity(pos);
 		}
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(World w, int x, int y, int z, int metadata, int fortune) {
-		ItemStack drop = new ItemStack(this, 1, metadata);
-		drop.stackTagCompound = (NBTTagCompound)comp.copy();
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+		ItemStack drop = new ItemStack(this, 1, getMetaFromState(state));
+		drop.setTagCompound((NBTTagCompound)comp.copy());
 		drops.add(drop);
-		return drops;
 	}
 
 	@Override
-	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase player,	ItemStack items) {
-		if(items != null && items.hasTagCompound()) {
-			items.stackTagCompound.setInteger("x", x);
-			items.stackTagCompound.setInteger("y", y);
-			items.stackTagCompound.setInteger("z", z);
-			if(w.getTileEntity(x, y, z)!=null){
-				w.getTileEntity(x, y, z).readFromNBT(items.stackTagCompound);
+	public void onBlockPlacedBy(World w, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+		if(stack != null && stack.hasTagCompound()) {
+			stack.getTagCompound().setInteger("x", pos.getX());
+			stack.getTagCompound().setInteger("y", pos.getY());
+			stack.getTagCompound().setInteger("z", pos.getZ());
+			if(w.getTileEntity(pos)!=null){
+				w.getTileEntity(pos).readFromNBT(stack.getTagCompound());
 			}
 		}
 	}
 
 	@Override
-	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-		TileEntity te = w.getTileEntity(x, y, z);
-		ItemStack items = player.inventory.mainInventory[player.inventory.currentItem];
+	public boolean onBlockActivated(World w, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		TileEntity te = w.getTileEntity(pos);
+		ItemStack items = player.inventory.mainInventory.get(player.inventory.currentItem);
 		if(te instanceof IWrenchable){
 			if (ToolWrench.isWrench(items)){
 				((IWrenchable)te).onWrenched(player.isSneaking());
@@ -81,32 +87,20 @@ public abstract class BlockContainerAdvanced extends BlockContainerRedstone{
 				if(((IUpgradable)te).getBoost()){
 					if(!w.isRemote) {
 						((IUpgradable)te).toggleBoost();
-						WorldHelper.dropBoost(w, x, y, z);
-						w.markBlockForUpdate(x, y, z);
+						WorldHelper.dropBoost(w, pos.getX(), pos.getY(), pos.getZ());
+						w.notifyBlockUpdate(pos, state, state, 3);
 					}
 					return true;
 				}
 			}
 		}
-		return super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ);
+		return super.onBlockActivated(w, pos, state, player, hand, facing, hitX, hitY, hitZ);
 	}
 
 	public void getNBTInfo(NBTTagCompound comp, ArrayList<String> l, int meta){
 		dummy.readFromNBT(comp);
 		if(dummy instanceof IEnergyHandler){
 			l.add("Energy: " + ((IEnergyHandler)dummy).getEnergyStored(null) + "/" + ((IEnergyHandler)dummy).getMaxEnergyStored(null));
-		}
-		if(CompatibilityHandler.th && dummy instanceof thaumcraft.api.aspects.IAspectContainer){
-			if(Keyboard.isKeyDown(Keyboard.KEY_A)){
-				thaumcraft.api.aspects.AspectList al = ((thaumcraft.api.aspects.IAspectContainer)dummy).getAspects();
-				for(thaumcraft.api.aspects.Aspect as: al.getAspects()){
-					if(al.getAmount(as)>0){
-						l.add(as.getName() + ":" + al.getAmount(as));
-					}
-				}
-			}else{
-				l.add(EnumChatFormatting.WHITE.toString() + EnumChatFormatting.ITALIC + StatCollector.translateToLocal("info.techno:a"));
-			}
 		}
 		if(dummy instanceof IUpgradable){
 			if(((IUpgradable)dummy).getBoost()){
@@ -124,21 +118,20 @@ public abstract class BlockContainerAdvanced extends BlockContainerRedstone{
 					NBTTagCompound stack = list.getCompoundTagAt(i);
 					byte slot = stack.getByte("Slot");
 					if ((slot >= 0) && (slot < ((IInventory)dummy).getSizeInventory())) {
-						ItemStack it = ItemStack.loadItemStackFromNBT(stack);
-						l.add(it.getDisplayName() + " " + it.stackSize);
+						ItemStack it = new ItemStack(stack);
+						l.add(it.getDisplayName() + " " + it.getCount());
 					}
 				}
 			}else{
-				l.add(EnumChatFormatting.WHITE.toString() + EnumChatFormatting.ITALIC + StatCollector.translateToLocal("info.techno:ctrl"));
+				l.add(ChatFormatting.WHITE.toString() + ChatFormatting.ITALIC + I18n.format("info.techno:ctrl"));
 			}
 		}
-		if(dummy instanceof IFluidHandler){
-			FluidTankInfo[] infoTanks = ((IFluidHandler)dummy).getTankInfo(null);
-			for(FluidTankInfo info:infoTanks) {
-				if(info.fluid != null) {
-					l.add(info.fluid.getLocalizedName() + ": " + info.fluid.amount + "/" + info.capacity);
-				}
+		if(dummy instanceof IFluidTank) {
+			FluidTankInfo infoTanks = ((IFluidTank) dummy).getInfo();
+			if (infoTanks.fluid != null) {
+				l.add(infoTanks.fluid.getLocalizedName() + ": " + infoTanks.fluid.amount + "/" + infoTanks.capacity);
 			}
+
 		}
 	}
 }

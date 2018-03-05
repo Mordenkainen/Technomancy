@@ -1,83 +1,87 @@
 #Item Names
 
-item.techno:essentiaCannon.name=Essentia Cannon
+item.techno:essentiacannon.name=Essentia Cannon
 item.Wand.electric.rod=Energized
 item.Wand.technoturge.rod=Technoturges
-techno:itemMaterial.0.name=Neutronized Metal
-techno:itemMaterial.1.name=Enchanted Coil
-techno:itemMaterial.2.name=Neutronized Gear
-techno:itemMaterial.3.name=Pen Core
+techno:itemmaterial.0.name=Neutronized Metal
+techno:itemmaterial.1.name=Enchanted Coil
+techno:itemmaterial.2.name=Neutronized Gear
+techno:itemmaterial.3.name=Pen Core
 item.techno:coilCoupler.name=Coil Coupler
 techno:pen.name=Pen
-techno:wandCores.0.name=Energized Wand Core
-techno:wandCores.1.name=Technoturges Scepter Core
-techno:itemBM.0.name=Sacrificial Ingot
-techno:itemBM.1.name=Life Coil
-techno:itemBO.0.name=Mana Coil
-techno:itemBO.1.name=Manasteel Gear
-techno:pureIron.name=Purified Iron
-techno:pureGold.name=Purified Gold
-techno:pureCopper.name=Purified Copper
-techno:pureTin.name=Purified Tin
-techno:pureSilver.name=Purified Silver
-techno:pureLead.name=Purified Lead
-techno:pureNickel.name=Purified Nickel
-item.techno:itemBoost.name=Potency Gem
+techno:wandcores.0.name=Energized Wand Core
+techno:wandcores.1.name=Technoturges Scepter Core
+techno:itembm.0.name=Sacrificial Ingot
+techno:itembm.1.name=Life Coil
+techno:itembo.0.name=Mana Coil
+techno:itembo.1.name=Manasteel Gear
+techno:pureiron.name=Purified Iron
+techno:puregold.name=Purified Gold
+techno:purecopper.name=Purified Copper
+techno:puretin.name=Purified Tin
+techno:puresilver.name=Purified Silver
+techno:purelead.name=Purified Lead
+techno:purenickel.name=Purified Nickel
+item.techno:itemboost.name=Potency Gem
 item.techno.pure.name=Purified 
-item.techno:manaBucket.name=Mana Condensate Bucket
-item.techno:ritualTome.name=Ritual Tome
-item.techno:existenceGem.name=Existence Gem
-techno:fireGem.name=Fire Gem
-techno:powerPlate.name=Pure Existence Plate
-techno:goldenWing.name=A Certain Magical Beast's Wing
+item.techno:manabucket.name=Mana Condensate Bucket
+item.techno:ritualtome.name=Ritual Tome
+item.techno:existencegem.name=Existence Gem
+techno:firegem.name=Fire Gem
+techno:powerplate.name=Pure Existence Plate
+techno:goldenwing.name=A Certain Magical Beast's Wing
 
 #Block Names
-tile.techno:cosmeticOpaque.name=Quantized Glass
-tile.techno:cosmeticPane.name=Quantized Glass Pane
-tile.techno:nodeDynamo.name=Node Dynamo
-tile.techno:essentiaDynamo.name=Essentia Dynamo
-tile.techno:essentiaContainer.name=Quantum Jar
-tile.techno:biomeMorpher.name= Ecologic Transmuter
-tile.techno:nodeGenerator.name=Node Fabricator
-tile.techno:fluxLamp.name=Orderly Lamp
-tile.techno:teslaCoil.name=Essentia Coil
-tile.techno:electricBellows.name=Galvanized Bellows
-tile.techno:creativeJar.name=Creative Jar
-tile.techno:reconstructorBlock.name=Essentia Reconstructor
-tile.techno:crystalBlock.0.name=Spatial Crystal
-tile.techno:crystalBlock.1.name=Reality Crystal
-tile.techno:crystalBlock.2.name=Energy Crystal
-tile.techno:bloodDynamo.name=Blood Dynamo
-tile.techno:condenserBlock.name=Energy Condenser
-tile.techno:bloodFabricator.name=Blood Fabricator
-tile.techno:flowerDynamo.name=Hippie Dynamo
-tile.techno:manaFabricator.name=Mana Fabricator
-tile.techno:processorTC.name=Ignis Incinerator
-tile.techno:processorBM.name=Sanguine Infuser
-tile.techno:processorBO.name=Botanical Purifier
-tile.techno:eldritchConsumer.name=Eldritch Consumer
-tile.techno:crystalBlock.name=Crystal Block
+tile.techno:cosmeticopaque.name=Quantized Glass
+tile.techno:cosmeticpane.name=Quantized Glass Pane
+tile.techno:nodedynamo.name=Node Dynamo
+tile.techno:essentiadynamo.name=Essentia Dynamo
+tile.techno:essentiacontainer.name=Quantum Jar
+tile.techno:biomemorpher.name= Ecologic Transmuter
+tile.techno:nodegenerator.name=Node Fabricator
+tile.techno:fluxlamp.name=Orderly Lamp
+tile.techno:teslacoil.name=Essentia Coil
+tile.techno:electricbellows.name=Galvanized Bellows
+tile.techno:creativejar.name=Creative Jar
+tile.techno:reconstructorblock.name=Essentia Reconstructor
+tile.techno:crystalblock.0.name=Spatial Crystal
+tile.techno:crystalblock.1.name=Reality Crystal
+tile.techno:crystalblock.2.name=Energy Crystal
+tile.techno:blooddynamo.name=Blood Dynamo
+tile.techno:condenserblock.name=Energy Condenser
+tile.techno:bloodfabricator.name=Blood Fabricator
+tile.techno:flowerdynamo.name=Hippie Dynamo
+tile.techno:manafabricator.name=Mana Fabricator
+tile.techno:processortc.name=Ignis Incinerator
+tile.techno:processorbm.name=Sanguine Infuser
+tile.techno:processorbo.name=Botanical Purifier
+tile.techno:eldritchconsumer.name=Eldritch Consumer
+tile.techno:crystalblock.name=Crystal Block
 tile.techno:catalyst.name=Catalyst
-tile.techno:advDeconTable.name=Advanced Deconstruction Table
-tile.techno:manaFluid.name=Mana Condensate
-tile.techno:manaExchanger.name=Mana Exchanger
-tile.techno:itemTransmitter.name=Item Coil
+tile.techno:advdecontable.name=Advanced Deconstruction Table
+tile.techno:manafluid.name=Mana Condensate
+tile.techno:manaexchanger.name=Mana Exchanger
+tile.techno:itemtransmitter.name=Item Coil
 tile.techno:basalt.name=Basalt
 tile.techno:fusor.name=Essentia Fusor
-techno:existencePylon0.name=Existence Pylon T1
-techno:existencePylon1.name=Existence Pylon T2
-techno:existencePylon2.name=Existence Pylon T3
-techno:existenceBurner.name=Existence Burner
-techno:existenceDynamicBurner.name=Dynamic Existence Burner
-techno:existenceCropAcc.name=Existence Crop Fertiliser
-techno:existenceHarvester.name=Existence Crop Harvester
-tile.techno:existenceFountain.name=Fountain of Existence
+techno:existencepylon0.name=Existence Pylon T1
+techno:existencepylon1.name=Existence Pylon T2
+techno:existencepylon2.name=Existence Pylon T3
+techno:existenceburner.name=Existence Burner
+techno:existencedynamicburner.name=Dynamic Existence Burner
+techno:existencecropacc.name=Existence Crop Fertiliser
+techno:existenceharvester.name=Existence Crop Harvester
+techno:existencesealer.name=Existence Sealer
+tile.techno:existencefountain.name=Fountain of Existence
+tile.manafluid.name=Mana Condensate Block
+tile.techno:fakeairlight.name=Fake Light Air
 
 #Fluid Names
-fluid.techno:manaFluid=Mana Condensate
+fluid.techno:manafluid=Mana Condensate
 
 #Potion Names
-techno:slowFall=Feather Fall
+#Potion Names
+techno:slowfall=Feather Fall
 
 #Information
 info.techno:purity=Purity
@@ -180,4 +184,4 @@ techno.lexicon_page.MANAEXCHANGER.2=The Mana Condensate can be pumped out using 
 
 
 #Creative Tab
-itemGroup.Technomancy=Technomancy
+itemGroup.technomancy=Technomancy

@@ -21,8 +21,8 @@ public abstract class PageRecipeLiquidFuel extends PageRender{
 		for(int i = 0; i<getOutputs().length; i++){
 			if(getOutputs()[i]!=null){
 				ItemStack toRender = new ItemStack(getOutputs()[i].getFluid().getBlock());
-				gui.getItemRend().renderItemAndEffectIntoGUI(gui.getFont(), gui.getMinecraft().getTextureManager(), toRender, x, y + i*16);
-				gui.getItemRend().renderItemOverlayIntoGUI(gui.getFont(), gui.getMinecraft().getTextureManager(), toRender, x, y, "");
+				gui.getItemRend().renderItemAndEffectIntoGUI(toRender, x, y + i*16);
+				gui.getItemRend().renderItemOverlayIntoGUI(gui.getFont(), toRender, x, y, "");
 				gui.getFont().drawString(Integer.toString(getValues()[i]) + " tick(s)", x + 16, y + i*16 + 4, getColor().getRGB());
 			}
 			GL11.glColor3f(1, 1, 1);

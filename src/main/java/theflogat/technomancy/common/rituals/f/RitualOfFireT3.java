@@ -1,5 +1,6 @@
 package theflogat.technomancy.common.rituals.f;
 
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import theflogat.technomancy.api.rituals.IRitualEffectHandler;
 import theflogat.technomancy.api.rituals.Ritual;
@@ -26,7 +27,7 @@ public class RitualOfFireT3 extends Ritual implements IRitualEffectHandler{
 
 	@Override
 	public void applyEffect(World w, int x, int y, int z) {
-		TileCatalyst te = ((TileCatalyst)w.getTileEntity(x, y, z));
+		TileCatalyst te = ((TileCatalyst)w.getTileEntity(new BlockPos(x, y, z)));
 		te.data = new Object[1];
 		te.data[0] = new AreaProtocolBuilder(new Coords(x-area.lengthX/2, 0, z-area.lengthZ/2, w), area){
 			int[] tempC = {0,-1,-1,-1,-1};
@@ -72,7 +73,7 @@ public class RitualOfFireT3 extends Ritual implements IRitualEffectHandler{
 
 	@Override
 	public void applyEffect(TileCatalyst te) {
-		if(te.data!=null && ((AreaProtocolBuilder)te.data[0]).buildNext(te.getWorldObj(), TMBlocks.basalt, new Coords(te))){
+		if(te.data!=null && ((AreaProtocolBuilder)te.data[0]).buildNext(te.getWorld(), TMBlocks.basalt.getDefaultState(), new Coords(te))){
 			te.remCount = 20;
 			return;
 		}

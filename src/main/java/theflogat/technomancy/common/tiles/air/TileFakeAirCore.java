@@ -1,6 +1,7 @@
 package theflogat.technomancy.common.tiles.air;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
 import theflogat.technomancy.common.tiles.base.TileTechnomancy;
 import theflogat.technomancy.util.Coords;
 
@@ -12,14 +13,14 @@ public class TileFakeAirCore extends TileTechnomancy{
 	protected Class<?> core;
 
 	@Override
-	public void updateEntity() {
-		if(!(worldObj.getBlock(x, y, z).getClass()==core)){
-			worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+	public void update() {
+		if(!(world.getBlockState(new BlockPos(x, y, z)).getBlock().getClass()==core)){
+			world.setBlockToAir(pos);
 		}
 	}
 
 	public Coords getMain(){
-		return new Coords(x, y, z, worldObj);
+		return new Coords(x, y, z, world);
 	}
 
 	public void addMain(int x, int y, int z, Class<?> core) {

@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "normal": { "model": "technom:exchanger" },
+        "inventory": { "model": "technom:exchanger" }
+    }
+}

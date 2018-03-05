@@ -16,7 +16,7 @@ public class TileBiomeMorpherRenderer extends TileEntitySpecialRenderer{
 	private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_BIOME_MODIFIER_TEXTURE);
 
 	@Override
-	public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float f) {
+	public void render(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float)x, (float)y, (float)z);
@@ -27,8 +27,6 @@ public class TileBiomeMorpherRenderer extends TileEntitySpecialRenderer{
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		bindTexture(modelTexture);
 		model.render();
-		
 		GL11.glPopMatrix();
 	}
-
 }

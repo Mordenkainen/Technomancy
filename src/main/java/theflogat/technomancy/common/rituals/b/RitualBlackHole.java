@@ -3,9 +3,10 @@ package theflogat.technomancy.common.rituals.b;
 import java.util.ArrayList;
 
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import theflogat.technomancy.api.rituals.IRitualEffectHandler;
 import theflogat.technomancy.api.rituals.Ritual;
@@ -29,13 +30,13 @@ public abstract class RitualBlackHole extends Ritual implements IRitualEffectHan
 	@Override
 	public void applyEffect(TileCatalyst te) {
 		@SuppressWarnings("unchecked")
-		ArrayList<EntityLivingBase> e = (ArrayList<EntityLivingBase>) te.getWorldObj().getEntitiesWithinAABB(EntityLivingBase.class,
-				AxisAlignedBB.getBoundingBox(te.xCoord - radiusX, te.yCoord - radiusY, te.zCoord - radiusZ, te.xCoord + radiusX, 
-				te.yCoord + radiusY, te.zCoord + radiusZ));
+		ArrayList<EntityLivingBase> e = (ArrayList<EntityLivingBase>) te.getWorld().getEntitiesWithinAABB(EntityLivingBase.class,
+				new AxisAlignedBB(te.getPos().getX() - radiusX, te.getPos().getY() - radiusY, te.getPos().getZ() - radiusZ, te.getPos().getX() + radiusX,
+				te.getPos().getY() + radiusY, te.getPos().getZ() + radiusZ));
 
 		for(EntityLivingBase ent : e) {
-			if(ent.isEntityInvulnerable()) {
-				ent.onDeath(DamageSource.generic);
+			if(ent.getIsInvulnerable()) {
+				ent.onDeath(DamageSource.GENERIC);
 				ent.setDead();
 			}
 		}
@@ -56,7 +57,7 @@ public abstract class RitualBlackHole extends Ritual implements IRitualEffectHan
 					int zz = z + k;
 					if(canDestroy(w, x, y, z, i, j, k)) {
 						if(i != 0 || j != 0 || k != 0) {
-							w.setBlockToAir(xx, yy, zz);
+							w.setBlockToAir(new BlockPos(xx, yy, zz));
 						}
 					}
 				}
@@ -66,25 +67,25 @@ public abstract class RitualBlackHole extends Ritual implements IRitualEffectHan
 
 		@SuppressWarnings("unchecked")
 		ArrayList<EntityLivingBase> e = (ArrayList<EntityLivingBase>) w.getEntitiesWithinAABB(EntityLivingBase.class,
-				AxisAlignedBB.getBoundingBox(x - radiusX, y - radiusY, z - radiusZ, x + radiusX, y + radiusY, z + radiusZ));
+				new AxisAlignedBB(x - radiusX, y - radiusY, z - radiusZ, x + radiusX, y + radiusY, z + radiusZ));
 
 		for(EntityLivingBase ent : e) {
-			if(ent.isEntityInvulnerable()) {
-				ent.onDeath(DamageSource.generic);
+			if(ent.getIsInvulnerable()) {
+				ent.onDeath(DamageSource.GENERIC);
 				ent.setDead();
 			}
 		}
 		
-		((TileCatalyst)w.getTileEntity(x, y, z)).remCount = 60;
-		((TileCatalyst)w.getTileEntity(x, y, z)).handler = this;
+		((TileCatalyst)w.getTileEntity(new BlockPos(x, y, z))).remCount = 60;
+		((TileCatalyst)w.getTileEntity(new BlockPos(x, y, z))).handler = this;
 		if(Loc.isClient()) {
-			((TileCatalyst)w.getTileEntity(x, y, z)).specialRender = specialRender;
-			((TileCatalyst)w.getTileEntity(x, y, z)).textLoc = textLoc;
+			((TileCatalyst)w.getTileEntity(new BlockPos(x, y, z))).specialRender = specialRender;
+			((TileCatalyst)w.getTileEntity(new BlockPos(x, y, z))).textLoc = textLoc;
 		}
 	}
 	
 	protected static boolean canDestroy(World w, int x, int y, int z, int i, int j, int k) {
-		return !(w.getBlock(x + i, y + j, z + k).getBlockHardness(w, x + i, y + j, z + k) < 0);
+		return !(w.getBlockState(new BlockPos(x + i, y + j, z + k)).getBlock().getBlockHardness(w.getBlockState(new BlockPos(x + i, y + j, z + k)), w, new BlockPos(x + i, y + j, z + k)) < 0);
 	}
 
 }

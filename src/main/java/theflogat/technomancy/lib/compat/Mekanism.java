@@ -1,8 +1,10 @@
 package theflogat.technomancy.lib.compat;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.lib.handlers.CompatibilityHandler;
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -24,13 +26,18 @@ public class Mekanism implements IModModule{
 	}
 
 	@Override
+	public void preInit() {
+
+	}
+
+	@Override
 	public void Init() {
-		energyCube = new ItemStack(GameRegistry.findItem("Mekanism", "EnergyCube"), 1);
+		energyCube = new ItemStack(Block.REGISTRY.getObject(new ResourceLocation("mekanism:energycube")), 1);
 		setEnergyCubeTier(BaseTier.ADVANCED, energyCube);
-		steelCasing = new ItemStack(GameRegistry.findItem("Mekanism", "BasicBlock"), 1, 8);
-		energyTablet = GameRegistry.findItemStack("Mekanism", "EnergyTablet", 1);
-		enrichedAlloy = GameRegistry.findItemStack("Mekanism", "EnrichedAlloy", 1);
-		lithiumDust = new ItemStack(GameRegistry.findItem("Mekanism", "OtherDust"), 1, 4);
+		steelCasing = new ItemStack(Block.REGISTRY.getObject(new ResourceLocation("mekanism:basicblock")), 1, 8);
+		energyTablet = new ItemStack(Item.REGISTRY.getObject(new ResourceLocation("mekanism:energytablet")), 1);
+		enrichedAlloy = new ItemStack(Item.REGISTRY.getObject(new ResourceLocation("mekanism:enrichedalloy")), 1);
+		lithiumDust = new ItemStack(Item.REGISTRY.getObject(new ResourceLocation("mekanism:otherdust")), 1, 4);
 		if(energyCube != null && steelCasing != null && energyTablet != null && enrichedAlloy != null &&
 				lithiumDust != null) {
 			Technomancy.logger.info("Mekanism compatibility module loaded.");
@@ -40,7 +47,7 @@ public class Mekanism implements IModModule{
 		}
 	}
 	
-	public static enum BaseTier{
+	public static enum BaseTier {
 		BASIC("Basic"),
 		ADVANCED("Advanced"),
 		ELITE("Elite"),
@@ -60,10 +67,10 @@ public class Mekanism implements IModModule{
 	
 	public void setEnergyCubeTier(BaseTier tier, ItemStack items){
 		if(tier==BaseTier.BASIC){
-			items.stackTagCompound = null;
+			items.setTagCompound(null);
 		}else{
-			items.stackTagCompound = new NBTTagCompound();
-			items.stackTagCompound.setString("tier", tier.name);
+			items.setTagCompound(new NBTTagCompound());
+			items.getTagCompound().setString("tier", tier.name);
 		}
 	}
 

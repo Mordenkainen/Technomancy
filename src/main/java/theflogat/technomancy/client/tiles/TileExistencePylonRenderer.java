@@ -15,15 +15,15 @@ public class TileExistencePylonRenderer extends TileEntitySpecialRenderer{
 	private static final ResourceLocation cube = new ResourceLocation(Ref.MODEL_WHITE_TEXTURE);
 
 	@Override
-	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float t) {
+	public void render(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		if(te instanceof TileExistencePylon){
 			GL11.glPushMatrix();
 			GL11.glTranslatef((float)x, (float)y, (float)z);
 			GL11.glTranslatef(.5F, 0, .5F);
-			bindTexture(modelTexture);
-			model.render();
+			//bindTexture(modelTexture);
+			//model.render();
 			bindTexture(cube);
-			model.renderCube(((TileExistencePylon)te).blockMetadata);
+			model.renderCube(te.getWorld().getBlockState(te.getPos()).getBlock().getMetaFromState(te.getWorld().getBlockState(te.getPos())));
 			GL11.glPopMatrix();
 		}
 	}

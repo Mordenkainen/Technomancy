@@ -2,6 +2,7 @@ package theflogat.technomancy.common.tiles.technom;
 
 import java.util.Collections;
 import java.util.Iterator;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.inventory.IInventory;
@@ -10,19 +11,20 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.ChunkCoordinates;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.ILockableContainer;
 import theflogat.technomancy.common.tiles.base.TileCoilTransmitter;
 import theflogat.technomancy.util.helpers.InvHelper;
 import theflogat.technomancy.util.helpers.WorldHelper;
 
 public class TileItemTransmitter extends TileCoilTransmitter {
 
-	public ItemStack filter = null;
+	public ItemStack filter = ItemStack.EMPTY;
 
 	@Override
-	public void updateEntity() {		
-		if(!worldObj.isRemote) {
+	public void update() {
+		if(!world.isRemote) {
 			if(set==null) {
 				set = RedstoneSet.LOW;
 			}
@@ -51,46 +53,46 @@ public class TileItemTransmitter extends TileCoilTransmitter {
 				}
 			}
 			if(flag) {
-				worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, blockType);
-				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+				world.notifyNeighborsOfStateChange(pos, blockType, true);
+				world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 			}
 		
 			if (set.canRun(this) && !sources.isEmpty()) {
 				IInventory inv = (IInventory) te;
 				if(!InvHelper.isFull(inv)) {
 					Collections.shuffle(sources);
-					Iterator<ChunkCoordinates> sourceIter = sources.iterator();
+					Iterator<BlockPos> sourceIter = sources.iterator();
 					while (sourceIter.hasNext()) {
-						ChunkCoordinates coords = sourceIter.next();
-						TileEntity tile = worldObj.getTileEntity(coords.posX, coords.posY, coords.posZ);
+						BlockPos coords = sourceIter.next();
+						TileEntity tile = world.getTileEntity(coords);
 						if(tile != null && !tile.isInvalid() && tile instanceof IInventory) {
 							IInventory rem = null;
-							Block chestBlock = worldObj.getBlock(coords.posX, coords.posY, coords.posZ);
+							Block chestBlock = world.getBlockState(coords).getBlock();
 							if(chestBlock instanceof BlockChest) {
 								rem = (IInventory)tile;
-								if (worldObj.getBlock(coords.posX - 1, coords.posY, coords.posZ) == chestBlock) {
-									rem = new InventoryLargeChest("container.chestDouble", (TileEntityChest)worldObj.getTileEntity(coords.posX - 1, coords.posY, coords.posZ), (IInventory)rem);
+								if (world.getBlockState(new BlockPos(coords.getX() - 1, coords.getY(), coords.getZ())) == chestBlock) {
+									rem = new InventoryLargeChest("container.chestDouble", (TileEntityChest)world.getTileEntity(new BlockPos(coords.getX() - 1, coords.getY(), coords.getZ())), (ILockableContainer) rem);
 								}
 
-								if (worldObj.getBlock(coords.posX + 1, coords.posY, coords.posZ) == chestBlock) {
-									rem = new InventoryLargeChest("container.chestDouble", (IInventory)rem, (TileEntityChest)worldObj.getTileEntity(coords.posX + 1, coords.posY, coords.posZ));
+								if (world.getBlockState(new BlockPos(coords.getX() + 1, coords.getY(), coords.getZ())) == chestBlock) {
+									rem = new InventoryLargeChest("container.chestDouble", (ILockableContainer) rem, (TileEntityChest)world.getTileEntity(new BlockPos(coords.getX() + 1, coords.getY(), coords.getZ())));
 								}
 
-								if (worldObj.getBlock(coords.posX, coords.posY, coords.posZ - 1) == chestBlock) {
-									rem = new InventoryLargeChest("container.chestDouble", (TileEntityChest)worldObj.getTileEntity(coords.posX, coords.posY, coords.posZ - 1), (IInventory)rem);
+								if (world.getBlockState(new BlockPos(coords.getX(), coords.getY(), coords.getZ() - 1)) == chestBlock) {
+									rem = new InventoryLargeChest("container.chestDouble", (TileEntityChest)world.getTileEntity(new BlockPos(coords.getX(), coords.getY(), coords.getZ()- 1)), (ILockableContainer) rem);
 								}
 
-								if (worldObj.getBlock(coords.posX, coords.posY, coords.posZ + 1) == chestBlock) {
-									rem = new InventoryLargeChest("container.chestDouble", (IInventory)rem, (TileEntityChest)worldObj.getTileEntity(coords.posX, coords.posY, coords.posZ + 1));
+								if (world.getBlockState(new BlockPos(coords.getX(), coords.getY(), coords.getZ() + 1)) == chestBlock) {
+									rem = new InventoryLargeChest("container.chestDouble", (ILockableContainer) rem, (TileEntityChest)world.getTileEntity(new BlockPos(coords.getX(), coords.getY(), coords.getZ() + 1)));
 								}
 							} else {
 								rem = (IInventory)tile;
 							}
 							for(int i = 0; i < rem.getSizeInventory() && !InvHelper.isFull(inv); i++) {
 								ItemStack toMove = rem.getStackInSlot(i);
-								if(toMove != null && (filter == null || areItemStacksEqual(toMove, filter))){
-									if(InvHelper.insertInEmptySlot(inv, toMove, ForgeDirection.getOrientation(facing).getOpposite())) {
-										rem.setInventorySlotContents(i, null);
+								if(!toMove.isEmpty() && (filter.isEmpty() || areItemStacksEqual(toMove, filter))){
+									if(InvHelper.insertInEmptySlot(inv, toMove, EnumFacing.getFront(facing).getOpposite())) {
+										rem.setInventorySlotContents(i, ItemStack.EMPTY);
 										break;
 									}
 								}
@@ -113,7 +115,7 @@ public class TileItemTransmitter extends TileCoilTransmitter {
 	@Override
 	public void writeSyncData(NBTTagCompound comp) {
 		super.writeSyncData(comp);
-		if(filter!=null){
+		if(!filter.isEmpty()){
 			NBTTagCompound item = new NBTTagCompound();
 			filter.writeToNBT(item);
 			comp.setTag("filter", item);
@@ -125,9 +127,9 @@ public class TileItemTransmitter extends TileCoilTransmitter {
 		super.readSyncData(comp);
 		if(comp.hasKey("filter")){
 			NBTTagCompound item = comp.getCompoundTag("filter");
-			filter = ItemStack.loadItemStackFromNBT(item);
+			filter = new ItemStack(item);
 		} else {
-			filter = null;
+			filter = ItemStack.EMPTY;
 		}
 	}
 
@@ -142,7 +144,7 @@ public class TileItemTransmitter extends TileCoilTransmitter {
 			TileEntity tile = WorldHelper.getAdjacentTileEntity(this, (byte) (i % 6));
 			if (tile instanceof IInventory) {
 				facing = (byte) (i % 6);
-				worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord));
+				world.notifyNeighborsOfStateChange(pos, world.getBlockState(pos).getBlock(), true);
 				return true;
 			}
 		}
@@ -151,6 +153,6 @@ public class TileItemTransmitter extends TileCoilTransmitter {
 
 	public void addFilter(ItemStack newFilter) {
 		filter = newFilter.copy();
-		filter.stackSize = 1;
+		filter.setCount(1);
 	}
 }

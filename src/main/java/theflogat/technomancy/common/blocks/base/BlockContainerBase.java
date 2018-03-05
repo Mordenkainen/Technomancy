@@ -7,7 +7,7 @@ import theflogat.technomancy.Technomancy;
 public abstract class BlockContainerBase extends BlockContainer {
 	
 	public BlockContainerBase() {
-		super(Material.iron);
+		super(Material.IRON);
 		setCreativeTab(Technomancy.tabsTM);
 		setHardness(2F);
 	}

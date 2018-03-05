@@ -1,6 +1,9 @@
 package theflogat.technomancy.lib.compat;
 
 public interface IModModule {
+
+	public void preInit();
+
 	// Init Event
 	public void Init();
 	

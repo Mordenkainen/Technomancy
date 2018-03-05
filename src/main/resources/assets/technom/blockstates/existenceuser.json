@@ -1,0 +1,44 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cube_all",
+    "textures": {
+      "all": "blocks/dirt"
+    },
+    "transform": "forge:default-block"
+  },
+    "variants": {
+		"type": {
+			"cropacc": {
+				"textures": {
+					"up": "technom:blocks/existencecropacc_top",
+					"down": "technom:blocks/existencecropacc",
+					"north": "technom:blocks/existencecropacc",
+					"east": "technom:blocks/existencecropacc",
+					"south": "technom:blocks/existencecropacc",
+					"west": "technom:blocks/existencecropacc"
+				}
+			},
+			"harvester": {
+				"textures": {
+					"up": "technom:blocks/existencecropacc",
+					"down": "technom:blocks/existencecropacc",
+					"north": "technom:blocks/existencecropacc_top",
+					"east": "technom:blocks/existencecropacc_top",
+					"south": "technom:blocks/existencecropacc_top",
+					"west": "technom:blocks/existencecropacc_top"
+				}
+			},
+			"sealer": {
+				"textures": {
+					"up": "technom:blocks/existencesealer",
+					"down": "technom:blocks/existencecropacc",
+					"north": "technom:blocks/existencecropacc",
+					"east": "technom:blocks/existencecropacc",
+					"south": "technom:blocks/existencecropacc",
+					"west": "technom:blocks/existencecropacc"
+				}
+			}
+		}
+    }
+}

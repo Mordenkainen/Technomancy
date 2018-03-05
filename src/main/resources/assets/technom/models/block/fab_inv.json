@@ -1,0 +1,93 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "0": "technom:blocks/bmfab/bm_fabricator_sides",
+        "1": "technom:blocks/bmfab/bm_fabricator_top",
+        "2": "technom:blocks/bmfab/stone",
+        "3": "technom:blocks/bmfab/bm_fabricator_tank"
+    },
+    "elements": [
+        {
+            "name": "Cube",
+            "from": [ 1.0, 0.0, 1.0 ], 
+            "to": [ 15.0, 3.0, 15.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 14.0, 3.0 ] },
+                "east": { "texture": "#0", "uv": [ 0.0, 4.0, 14.0, 7.0 ] },
+                "south": { "texture": "#0", "uv": [ 0.0, 8.0, 14.0, 11.0 ] },
+                "west": { "texture": "#0", "uv": [ 0.0, 13.0, 14.0, 16.0 ] },
+                "up": { "texture": "#1", "uv": [ 0.0, 0.0, 14.0, 14.0 ] },
+                "down": { "texture": "#2", "uv": [ 0.0, 0.0, 14.0, 14.0 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ 4.0, 3.0, 4.0 ], 
+            "to": [ 12.0, 16.0, 12.0 ], 
+            "faces": {
+                "north": { "texture": "#3", "uv": [ 0.0, 0.0, 8.0, 13.0 ] },
+                "east": { "texture": "#3", "uv": [ 0.0, 0.0, 8.0, 13.0 ] },
+                "south": { "texture": "#3", "uv": [ 0.0, 0.0, 8.0, 13.0 ] },
+                "west": { "texture": "#3", "uv": [ 0.0, 0.0, 8.0, 13.0 ] },
+                "up": { "texture": "#3", "uv": [ 8.0, 0.0, 16.0, 8.0 ] },
+                "down": { "texture": "#3", "uv": [ 8.0, 0.0, 16.0, 8.0 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ 6.0, 0.0, -2.0 ], 
+            "to": [ 10.0, 3.0, 0.0 ], 
+            "rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "y", "angle": 45.0 },
+            "faces": {
+                "north": { "texture": "#3", "uv": [ 11.0, 12.0, 15.0, 15.0 ] },
+                "east": { "texture": "#3", "uv": [ 10.0, 13.0, 11.0, 16.0 ] },
+                "south": { "texture": "#3", "uv": [ 11.0, 12.0, 15.0, 15.0 ] },
+                "west": { "texture": "#3", "uv": [ 10.0, 12.0, 11.0, 15.0 ] },
+                "up": { "texture": "#3", "uv": [ 10.0, 13.0, 11.0, 15.0 ] },
+                "down": { "texture": "#3", "uv": [ 10.0, 12.0, 11.0, 14.0 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ 6.0, 0.0, 16.0 ], 
+            "to": [ 10.0, 3.0, 18.0 ], 
+            "rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "y", "angle": 45.0 },
+            "faces": {
+                "north": { "texture": "#3", "uv": [ 11.0, 12.0, 15.0, 15.0 ] },
+                "east": { "texture": "#3", "uv": [ 10.0, 12.0, 11.0, 15.0 ] },
+                "south": { "texture": "#3", "uv": [ 11.0, 12.0, 15.0, 15.0 ] },
+                "west": { "texture": "#3", "uv": [ 10.0, 12.0, 11.0, 15.0 ] },
+                "up": { "texture": "#3", "uv": [ 10.0, 13.0, 11.0, 15.0 ] },
+                "down": { "texture": "#3", "uv": [ 10.0, 12.0, 11.0, 14.0 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ 16.0, 0.0, 6.0 ], 
+            "to": [ 18.0, 3.0, 10.0 ], 
+            "rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "y", "angle": 45.0 },
+            "faces": {
+                "north": { "texture": "#3", "uv": [ 10.0, 12.0, 11.0, 15.0 ] },
+                "east": { "texture": "#3", "uv": [ 11.0, 12.0, 15.0, 15.0 ] },
+                "south": { "texture": "#3", "uv": [ 10.0, 12.0, 11.0, 15.0 ] },
+                "west": { "texture": "#3", "uv": [ 11.0, 12.0, 15.0, 15.0 ] },
+                "up": { "texture": "#3", "uv": [ 10.0, 12.0, 11.0, 16.0 ] },
+                "down": { "texture": "#3", "uv": [ 10.0, 12.0, 11.0, 16.0 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ -2.0, 0.0, 6.0 ], 
+            "to": [ 0.0, 3.0, 10.0 ], 
+            "rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "y", "angle": 45.0 },
+            "faces": {
+                "north": { "texture": "#3", "uv": [ 10.0, 12.0, 11.0, 15.0 ] },
+                "east": { "texture": "#3", "uv": [ 11.0, 12.0, 15.0, 15.0 ] },
+                "south": { "texture": "#3", "uv": [ 10.0, 12.0, 11.0, 15.0 ] },
+                "west": { "texture": "#3", "uv": [ 11.0, 12.0, 15.0, 15.0 ] },
+                "up": { "texture": "#3", "uv": [ 10.0, 12.0, 11.0, 16.0 ] },
+                "down": { "texture": "#3", "uv": [ 10.0, 12.0, 11.0, 16.0 ] }
+            }
+        }
+    ]
+}

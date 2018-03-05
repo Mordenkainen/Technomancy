@@ -13,14 +13,19 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 
-import cpw.mods.fml.common.Loader;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.client.renderer.color.ItemColors;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemColored;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.oredict.OreDictionary;
+import org.lwjgl.Sys;
+import theflogat.technomancy.Technomancy;
 
 public class Ore {
 
@@ -28,12 +33,31 @@ public class Ore {
 	public static final ArrayList<String> oreNames = new ArrayList<String>();
 
 	public static Ore newOre(String dictName, ItemStack ingot, String name) {
+		if(dictName.equals("oreGold")) {
+			oreNames.add(dictName);
+			return new Ore(dictName, ingot, name.toLowerCase(), 0);
+		}
 		oreNames.add(dictName);
-		return new Ore(dictName, ingot, name);
+		return new Ore(dictName, ingot, name.toLowerCase());
 	}
 	
 	public static void init() {
-		getMetalsWithPrefixes("ore", "ingot");
+
+		if(Loader.isModLoaded("thermalexpansion")) {
+			newOre("oreGold", FurnaceRecipes.instance().getSmeltingResult(OreDictionary.getOres("oreGold").get(0)), "oreGold".substring("ore".length()));
+			newOre("oreIron", FurnaceRecipes.instance().getSmeltingResult(OreDictionary.getOres("oreIron").get(0)), "oreIron".substring("ore".length()));
+			newOre("oreCopper", OreDictionary.getOres("ingotCopper").get(0), "oreCopper".substring("ore".length()));
+			newOre("oreLead", OreDictionary.getOres("ingotLead").get(0), "oreLead".substring("ore".length()));
+			newOre("oreNickel", OreDictionary.getOres("ingotNickel").get(0), "oreNickel".substring("ore".length()));
+			newOre("orePlatinum", OreDictionary.getOres("ingotPlatinum").get(0), "orePlatinum".substring("ore".length()));
+			newOre("oreSilver", OreDictionary.getOres("ingotSilver").get(0), "oreSilver".substring("ore".length()));
+			newOre("oreTin", OreDictionary.getOres("ingotTin").get(0), "oreTin".substring("ore".length()));
+			newOre("oreAluminum", OreDictionary.getOres("ingotAluminum").get(0), "oreAluminum".substring("ore".length()));
+			newOre("oreIridium", OreDictionary.getOres("ingotIridium").get(0), "oreIridium".substring("ore".length()));
+			newOre("oreMithril", OreDictionary.getOres("ingotMithril").get(0), "oreMithril".substring("ore".length()));
+		 }else {
+			getMetalsWithPrefixes("ore", "ingot");
+		}
 	}
 	
 	private static void getMetalsWithPrefixes(String prefix1, String prefix2) {
@@ -44,7 +68,7 @@ public class Ore {
 				for (String n : OreDictionary.getOreNames()) {
 					if (n.equals(prefix2 + oreName) && !OreDictionary.getOres(n).isEmpty()) {
 						for (ItemStack ore : OreDictionary.getOres(name)) {
-							ItemStack testIngot = FurnaceRecipes.smelting().getSmeltingResult(ore);
+							ItemStack testIngot = FurnaceRecipes.instance().getSmeltingResult(ore);
 							if (testIngot != null) {
 								for (ItemStack ingot: OreDictionary.getOres(n)) {
 									if (testIngot.isItemEqual(ingot) && testIngot.getItemDamage() == ingot.getItemDamage()) {
@@ -59,13 +83,13 @@ public class Ore {
 			}
 		}
 		
-		if (oreNames.contains("oreAluminum") && oreNames.contains("oreAluminium")) {
+		if (oreNames.contains("orealuminum") && oreNames.contains("orealuminium")) {
 			Iterator<Ore> oreIter = ores.iterator();
 			while (oreIter.hasNext()) {
 				Ore ore = oreIter.next();
-				if (ore.oreName() == "oreAluminium") {
+				if (ore.oreName() == "orealuminium") {
 					oreIter.remove();
-					oreNames.remove("oreAluminium");
+					oreNames.remove("orealuminium");
 					break;
 				}
 			}
@@ -73,110 +97,10 @@ public class Ore {
 	}
 
 	private static String adjustName(String name) {
-		if (name.equals("FzDarkIron"))
+		if (name.equals("FzDarkIron".toLowerCase()))
 			return "Dark Iron";
 		else
 			return name;
-	}
-	
-	public static void initColors() {
-		for (Ore ore : ores)
-			ore.setColor(getColor(ore.oreName().substring(3)));
-	}
-	
-	private static int getStackColor(ItemStack stack, int pass) {
-		if (Loader.isModLoaded("gregtech"))
-			try {
-				Class<?> cls = Class.forName("gregtech.api.items.GT_MetaGenerated_Item");
-				Class<?> itemCls = stack.getItem().getClass();
-				if (cls.isAssignableFrom(itemCls)) {
-					Method m = itemCls.getMethod("getRGBa", ItemStack.class);
-					short[] rgba = (short[]) m.invoke(stack.getItem(), stack);
-					return new Color(rgba[0], rgba[1], rgba[2], rgba[3]).getRGB();
-				}
-			} catch (Exception e) {
-			}
-		return stack.getItem().getColorFromItemStack(stack, pass);
-	}
-
-	private static Color getColor(String oreName) {
-		List<ItemStack> ores = OreDictionary.getOres("ingot" + oreName);
-		if (ores.isEmpty())
-			return null;
-
-		Set<Color> colors = new LinkedHashSet<Color>();
-		for (ItemStack stack : ores)
-			try {
-				BufferedImage texture = ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(getIconResource(stack)).getInputStream());
-				Color texColour = getAverageColor(texture);
-				colors.add(texColour);
-				for (int pass = 0; pass < stack.getItem().getRenderPasses(stack.getItemDamage()); pass++) {
-					int c = getStackColor(stack, pass);
-					if (c != 0xFFFFFF) {
-						colors.add(new Color(c));
-						colors.remove(texColour);
-					}
-				}
-			} catch (Exception e) {
-				continue;
-			}
-
-		float red = 0;
-		float green = 0;
-		float blue = 0;
-		for (Color c : colors) {
-			red += c.getRed();
-			green += c.getGreen();
-			blue += c.getBlue();
-		}
-		float count = colors.size();
-		return new Color((int) (red / count), (int) (green / count), (int) (blue / count));
-	}
-
-	private static Color getAverageColor(BufferedImage image) {
-		float red = 0;
-		float green = 0;
-		float blue = 0;
-		float count = 0;
-		for (int i = 0; i < image.getWidth(); i++)
-			for (int j = 0; j < image.getHeight(); j++) {
-				Color c = new Color(image.getRGB(i, j));
-				if (c.getAlpha() != 255 || c.getRed() <= 10 && c.getBlue() <= 10 && c.getGreen() <= 10)
-					continue;
-				red += c.getRed();
-				green += c.getGreen();
-				blue += c.getBlue();
-				count++;
-			}
-
-		return new Color((int) (red / count), (int) (green / count), (int) (blue / count));
-	}
-
-	private static String getIconName(ItemStack stack) {
-		IIcon icon = stack.getItem().getIconFromDamage(stack.getItemDamage());
-		if (icon != null)
-			return icon.getIconName();
-		return null;
-	}
-
-	private static ResourceLocation getIconResource(ItemStack stack) {
-		String iconName = getIconName(stack);
-		if (iconName == null)
-			return null;
-
-		String string = "minecraft";
-
-		int colonIndex = iconName.indexOf(58);
-		if (colonIndex >= 0) {
-			if (colonIndex > 1)
-				string = iconName.substring(0, colonIndex);
-
-			iconName = iconName.substring(colonIndex + 1, iconName.length());
-		}
-
-		string = string.toLowerCase();
-		iconName = "textures/items/" + iconName + ".png";
-		return new ResourceLocation(string, iconName);
 	}
 	
 	public static boolean isProcessableOre(ItemStack items) {
@@ -202,6 +126,21 @@ public class Ore {
 		this.ingot = ingot;
 		this.name = adjustName(name);
 		ores.add(this);
+	}
+
+	protected Ore(String oreName, ItemStack ingot, String name, int pos) {
+		this.oreName = oreName;
+		this.ingot = ingot;
+		this.name = adjustName(name);
+		ores.add(pos, this);
+	}
+
+	public static String[] getNames() {
+		String[] str = new String[oreNames.size()];
+		for (int i = 0; i < str.length; i++) {
+			str[i] = oreNames.get(i);
+		}
+		return str;
 	}
 
 	public String oreName() {
@@ -230,6 +169,10 @@ public class Ore {
 	
 	public Item getPure() {
 		return pureItem;
+	}
+
+	public ItemStack getPureStack() {
+		return new ItemStack(pureItem);
 	}
 
 	public int getIngotsPerStage(int stage) {

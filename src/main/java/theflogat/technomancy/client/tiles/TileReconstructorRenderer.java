@@ -1,6 +1,6 @@
 package theflogat.technomancy.client.tiles;
 
-import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
@@ -14,23 +14,14 @@ import theflogat.technomancy.lib.Ref;
 public class TileReconstructorRenderer extends TileEntitySpecialRenderer{
 
 	ModelReconstructor model = new ModelReconstructor();
-	private final RenderItem itemRenderer;
 
 	public TileReconstructorRenderer(){
-		itemRenderer = new RenderItem(){
-			@Override
-			public boolean shouldBob()
-			{
-				return false;
-			}
-		};
-		itemRenderer.setRenderManager(RenderManager.instance);
 	}
 
 	private static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_RECONSTRUCTOR_TEXTURE);
 
 	@Override
-	public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float f) {
+	public void render(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float)x, (float)y, (float)z);
@@ -49,9 +40,9 @@ public class TileReconstructorRenderer extends TileEntitySpecialRenderer{
 		GL11.glDisable(GL11.GL_CULL_FACE);
 //		TileReconstructor rec = (TileReconstructor)entity;
 
-//		if(rec.getWorldObj() != null && rec.getStackInSlot(0) != null) {
+//		if(rec.getworld() != null && rec.getStackInSlot(0) != null) {
 //			GL11.glPushMatrix();
-//			EntityItem ghost = new EntityItem(rec.getWorldObj());
+//			EntityItem ghost = new EntityItem(rec.getworld());
 //			ghost.setEntityItemStack(rec.getStackInSlot(0));
 //			float yOffset = 0.3F;
 //			float scale = 0.7F;

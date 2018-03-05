@@ -1,22 +1,24 @@
 package theflogat.technomancy.common.tiles.botania.machines;
 
+import cofh.redstoneflux.api.IEnergyReceiver;
+import cofh.redstoneflux.impl.EnergyStorage;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.*;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.tiles.base.IWrenchable;
 import theflogat.technomancy.common.tiles.base.TileTechnomancyRedstone;
 import theflogat.technomancy.lib.handlers.Rate;
 import vazkii.botania.common.block.tile.mana.TilePool;
-import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyReceiver;
 
-public class TileManaExchanger extends TileTechnomancyRedstone implements IFluidHandler, IEnergyReceiver, IWrenchable {
+import javax.annotation.Nullable;
+
+public class TileManaExchanger extends TileTechnomancyRedstone implements IFluidHandler, IFluidTank, IEnergyReceiver, IWrenchable {
 
 	public TileManaExchanger() {
 		super(RedstoneSet.LOW);
@@ -51,16 +53,16 @@ public class TileManaExchanger extends TileTechnomancyRedstone implements IFluid
 	}
 	
 	@Override
-	public void updateEntity() {
+	public void update() {
 		if (!set.canRun(this)) {
 			active = false;
 			return;
 		} else {
 			active = true;
 		}
-		TileEntity tile = worldObj.getTileEntity(xCoord, yCoord + 1, zCoord);
+		TileEntity tile = world.getTileEntity(pos.up(1));
 		if(tile instanceof TilePool){
-			if (worldObj.isRemote) {
+			if (world.isRemote) {
 				return;
 			}
 			TilePool pool = (TilePool)tile;
@@ -70,14 +72,14 @@ public class TileManaExchanger extends TileTechnomancyRedstone implements IFluid
 						pool.recieveMana(1000);
 						tank.drain(1, true);
 						storage.extractEnergy(Rate.exchangerCost, false);
-						worldObj.markBlockForUpdate(xCoord, yCoord + 1, zCoord);
+						world.notifyBlockUpdate(pos.up(1), world.getBlockState(pos.up(1)), world.getBlockState(pos.up(1)), 3);
 					}
 				} else {
 					if(tank.getFluidAmount() < tank.getCapacity() && pool.getCurrentMana() >= 1000) {
 						pool.recieveMana(-1000);
 						tank.fill(new FluidStack(TMBlocks.manaFluid, 1), true);
 						storage.extractEnergy(Rate.exchangerCost, false);
-						worldObj.markBlockForUpdate(xCoord, yCoord + 1, zCoord);
+						world.notifyBlockUpdate(pos.up(1), world.getBlockState(pos.up(1)), world.getBlockState(pos.up(1)), 3);
 					}
 				}
 			}
@@ -86,62 +88,73 @@ public class TileManaExchanger extends TileTechnomancyRedstone implements IFluid
 		}
 	}
 
+	@Nullable
 	@Override
-	public FluidTankInfo[] getTankInfo(ForgeDirection from) {
-		return new FluidTankInfo[] {this.tank.getInfo()};
+	public FluidStack getFluid() {
+		return tank.getFluid();
 	}
 
 	@Override
-	public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
-		if(resource.getFluid() != TMBlocks.manaFluid || from == ForgeDirection.UP || !mode) {
+	public int getFluidAmount() {
+		return tank.getFluidAmount();
+	}
+
+	@Override
+	public int getCapacity() {
+		return tank.getCapacity();
+	}
+
+	@Override
+	public FluidTankInfo getInfo() {
+		return this.tank.getInfo();
+	}
+
+	@Override
+	public IFluidTankProperties[] getTankProperties() {
+		return new IFluidTankProperties[0];
+	}
+
+	@Override
+	public int fill(FluidStack resource, boolean doFill) {
+		if(resource.getFluid() != TMBlocks.manaFluid || !mode) {
 			return 0;
 		}
 		return tank.fill(resource, doFill);
 	}
 
 	@Override
-	public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
+	public FluidStack drain(FluidStack resource, boolean doDrain) {
 		if(resource.getFluid() != TMBlocks.manaFluid) {
 			return null;
 		}
-		return drain(from, resource.amount, doDrain);
+		return drain(resource.amount, doDrain);
 	}
 
 	@Override
-	public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
-		if(from == ForgeDirection.UP || mode) {
+	public FluidStack drain(int maxDrain, boolean doDrain) {
+		if(mode) {
 			return null;
 		}
 		return tank.drain(maxDrain, doDrain);
 	}
 
 	@Override
-	public boolean canFill(ForgeDirection from, Fluid fluid) {
-		return from != ForgeDirection.UP && mode;
+	public boolean canConnectEnergy(EnumFacing from) {
+		return from != EnumFacing.UP;
 	}
 
 	@Override
-	public boolean canDrain(ForgeDirection from, Fluid fluid) {
-		return from != ForgeDirection.UP && !mode;
-	}
-
-	@Override
-	public boolean canConnectEnergy(ForgeDirection from) {
-		return from != ForgeDirection.UP;
-	}
-
-	@Override
-	public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate) {
+	public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate) {
 		return storage.receiveEnergy(maxReceive, simulate);
 	}
 
 	@Override
-	public int getEnergyStored(ForgeDirection from) {
+	public int getEnergyStored(EnumFacing from) {
 		return storage.getEnergyStored();
 	}
 
 	@Override
-	public int getMaxEnergyStored(ForgeDirection from) {
+	public int getMaxEnergyStored(EnumFacing from) {
 		return storage.getMaxEnergyStored();
 	}
 
@@ -149,5 +162,22 @@ public class TileManaExchanger extends TileTechnomancyRedstone implements IFluid
 	public boolean onWrenched(boolean sneaking) {
 		mode = !mode;
 		return true;
+	}
+
+	@Override
+	public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+		if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+			return true;
+		}
+		return super.hasCapability(capability, facing);
+	}
+
+	@Nullable
+	@Override
+	public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+		if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+			return (T) tank;
+		}
+		return super.getCapability(capability, facing);
 	}
 }

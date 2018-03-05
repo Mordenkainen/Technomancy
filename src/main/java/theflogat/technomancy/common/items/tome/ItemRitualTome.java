@@ -1,9 +1,11 @@
 package theflogat.technomancy.common.items.tome;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.lib.Names;
@@ -17,15 +19,17 @@ public class ItemRitualTome extends Item{
 	}
 	
 	@Override
-	public ItemStack onItemRightClick(ItemStack item, World w, EntityPlayer player) {
-		player.openGui(Technomancy.instance, 3, w, 0, 0, 0);
-		return item;
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand handIn) {
+		player.openGui(Technomancy.instance, 3, worldIn, 0, 0, 0);
+		return super.onItemRightClick(worldIn, player, handIn);
 	}
-	
+
+	/*
 	@Override
 	public void registerIcons(IIconRegister reg) {
 		itemIcon = reg.registerIcon(Ref.getAsset(Names.ritualTome));
 	}
+	*/
 
 	public static class Res{
 		public static final String E = ".png";

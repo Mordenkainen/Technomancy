@@ -21,12 +21,12 @@ public class TileCatalyst extends TileTechnomancy {
 	public Object[] data;
 
 	@Override
-	public void updateEntity() {
-		if(worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)){
+	public void update() {
+		if(world.isBlockPowered(pos)){
 			if(userName.equals("")){
 				activateRitual(null);
 			}else{
-				activateRitual(worldObj.getPlayerEntityByName(userName));
+				activateRitual(world.getPlayerEntityByName(userName));
 			}
 		}
 
@@ -35,7 +35,7 @@ public class TileCatalyst extends TileTechnomancy {
 
 		if(remCount!=-1){
 			if(remCount==0){
-				worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+				world.setBlockToAir(pos);
 			}else{
 				remCount--;
 			}
@@ -44,17 +44,17 @@ public class TileCatalyst extends TileTechnomancy {
 
 	public void activateRitual(EntityPlayer player) {
 		if(player!=null) {
-			userName = player.getDisplayName();
+			userName = player.getDisplayName().getFormattedText();
 		}
 		for(Ritual r : RitualRegistry.getRituals()){
 			if(r!=null){
-				if(r.isCoreComplete(worldObj, xCoord, yCoord, zCoord)){
-					if(r.isFrameComplete(worldObj, xCoord, yCoord, zCoord)){
-						if(r.canApplyEffect(worldObj, xCoord, yCoord, zCoord)){
-							r.applyEffect(worldObj, xCoord, yCoord, zCoord);
+				if(r.isCoreComplete(world, pos.getX(), pos.getY(), pos.getZ())){
+					if(r.isFrameComplete(world, pos.getX(), pos.getY(), pos.getZ())){
+						if(r.canApplyEffect(world, pos.getX(), pos.getY(), pos.getZ())){
+							r.applyEffect(world, pos.getX(), pos.getY(), pos.getZ());
 							if(!userName.equals("")){
-								r.addAffinity(worldObj, userName);
-								PlayerData.addExistencePower(worldObj, userName);
+								r.addAffinity(world, userName);
+								PlayerData.addExistencePower(world, userName);
 							}
 						}
 					}
@@ -79,7 +79,7 @@ public class TileCatalyst extends TileTechnomancy {
 	
 	public EntityPlayer getOwner(){
 		try{
-			return worldObj.getPlayerEntityByName(userName);
+			return world.getPlayerEntityByName(userName);
 		}catch(Exception e){
 			return null;
 		}

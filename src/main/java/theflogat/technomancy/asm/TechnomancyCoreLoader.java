@@ -2,11 +2,10 @@ package theflogat.technomancy.asm;
 
 import java.util.Map;
 
-import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
-
+import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import theflogat.technomancy.lib.Ref;
 
-@IFMLLoadingPlugin.MCVersion("1.7.10")
+@IFMLLoadingPlugin.MCVersion("1.12")
 @IFMLLoadingPlugin.Name(Ref.MOD_NAME + " Core")
 public class TechnomancyCoreLoader implements IFMLLoadingPlugin {
 

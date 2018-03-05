@@ -2,9 +2,10 @@ package theflogat.technomancy.common.tiles.botania.machines;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.tiles.base.IWrenchable;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
@@ -25,11 +26,11 @@ public class TileManaFabricator extends TileMachineBase implements IManaPool, IW
 	}
 	
 	@Override
-	public void updateEntity() {
+	public void update() {
 		if(getEnergyStored()>=cost && mana+100<=maxMana) {
 			mana += 100;
 			extractEnergy(cost, false);
-			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+			world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 		}
 	}
 	
@@ -71,14 +72,24 @@ public class TileManaFabricator extends TileMachineBase implements IManaPool, IW
 	public boolean isOutputtingPower() {
 		return false;
 	}
-	
+
+	@Override
+	public EnumDyeColor getColor() {
+		return EnumDyeColor.GREEN;
+	}
+
+	@Override
+	public void setColor(EnumDyeColor enumDyeColor) {
+
+	}
+
 	public void renderHUD(Minecraft mc, ScaledResolution res) {
 		int color = 0x660000FF;
 		BotaniaAPI.internalHandler.drawSimpleManaHUD(color, mana, maxMana, TMBlocks.manaFabricator.getLocalizedName(), res);
 	}
 	
 	@Override
-	public boolean canConnectEnergy(ForgeDirection from) {
+	public boolean canConnectEnergy(EnumFacing from) {
 		return from.ordinal() == facing;
 	}
 
@@ -87,10 +98,10 @@ public class TileManaFabricator extends TileMachineBase implements IManaPool, IW
 		for (int i = facing + 1; i < facing + 6; i++) {
 			TileEntity tile = WorldHelper.getAdjacentTileEntity(this, (byte) (i % 6));
 			if (WorldHelper.isEnergyHandlerFromOppFacing(tile, (byte) (i % 6))) {
-				if(!worldObj.isRemote) {
+				if(!world.isRemote) {
 					facing = (byte) (i % 6);
-					worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord));
-					worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+					world.notifyNeighborsOfStateChange(pos, world.getBlockState(pos).getBlock(), true);
+					world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 				}
 				return true;
 			}

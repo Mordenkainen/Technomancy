@@ -2,7 +2,6 @@ package theflogat.technomancy.common.items.technom.existence;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -12,22 +11,26 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.common.items.base.ItemBase;
 import theflogat.technomancy.common.player.PlayerData;
 import theflogat.technomancy.common.player.PlayerData.Affinity;
 import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemTreasure extends ItemBase{
+
+	public ItemTreasure() {
+		Technomancy.proxy.registerWithMapper(this, getNames());
+	}
 
 	/**
 	 * Out of 100
@@ -39,12 +42,13 @@ public class ItemTreasure extends ItemBase{
 	}
 
 	@Override
-	public void getSubItems(Item item, CreativeTabs tab, List l) {
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> l) {
 		for(int i=0;i<Names.treasures.length;i++){
-			l.add(new ItemStack(item, 1, i));
+			l.add(new ItemStack(this, 1, i));
 		}
 	}
 
+	/**
 	@SideOnly(Side.CLIENT)
 	IIcon[] icons;
 
@@ -61,6 +65,17 @@ public class ItemTreasure extends ItemBase{
 	@Override
 	public IIcon getIconFromDamage(int meta) {
 		return icons[meta%icons.length];
+	}
+	*/
+
+	public static String[] getNames() {
+		String[] str = new String[Names.treasures.length];
+		String[] values = Names.treasures;
+		for (int i = 0; i < values.length; i++) {
+			String type = values[i];
+			str[i] = type;
+		}
+		return str;
 	}
 	
 	public Affinity getAffinity(int meta){
@@ -85,13 +100,13 @@ public class ItemTreasure extends ItemBase{
 		}
 		switch(stack.getItemDamage()){
 		case 0:
-			((EntityPlayer)player).addPotionEffect(new PotionEffect(Potion.fireResistance.id, 1, 2));
+			((EntityPlayer)player).addPotionEffect(new PotionEffect(Potion.getPotionById(12), 1, 2));
 			return;
 		case 1:
-			((EntityPlayer)player).addPotionEffect(new PotionEffect(Potion.resistance.id, 1, 1));
+			((EntityPlayer)player).addPotionEffect(new PotionEffect(Potion.getPotionById(11), 1, 1));
 			return;
 		case 2:
-			((EntityPlayer)player).addPotionEffect(new PotionEffect(Ids.slowFall, 1, 0));
+			((EntityPlayer)player).addPotionEffect(new PotionEffect(Potion.getPotionById(Ids.slowFall), 1, 0));
 			return;
 		}
 	}
@@ -99,19 +114,19 @@ public class ItemTreasure extends ItemBase{
 	public void onUserHit(LivingHurtEvent event, int itemDamage) {
 		switch(itemDamage){
 		case 0:
-			if(event.source.isFireDamage()){
+			if(event.getSource().isFireDamage()){
 				event.setCanceled(true);
 			}
-			if(event.source instanceof EntityDamageSource){
-				((EntityDamageSource)event.source).getEntity().setFire(15);
+			if(event.getSource() instanceof EntityDamageSource){
+				((EntityDamageSource)event.getSource()).getTrueSource().setFire(15);
 			}
 			return;
 		case 1:
-			event.entityLiving.addPotionEffect(new PotionEffect(Potion.resistance.id, 1, 4));
+			event.getEntityLiving().addPotionEffect(new PotionEffect(Potion.getPotionById(11), 1, 4));
 			return;
 		case 2:
-			if(event.source instanceof EntityDamageSource){
-				Entity hit = ((EntityDamageSource)event.source).getEntity();
+			if(event.getSource() instanceof EntityDamageSource){
+				Entity hit = ((EntityDamageSource)event.getSource()).getTrueSource();
 				int knockBack = 3;
 				hit.addVelocity(-MathHelper.sin((float)(Math.PI- hit.rotationYaw) * (float)Math.PI / 180.0F) * knockBack * 0.5F, 2.1D,
 						MathHelper.cos((float)(Math.PI - hit.rotationYaw) * (float)Math.PI / 180.0F) * knockBack * 0.5F);
@@ -123,33 +138,33 @@ public class ItemTreasure extends ItemBase{
 	public void onTreasureDestroyed(World w, double posX, double posY, double posZ, EntityLivingBase entityLiving, int meta){
 		switch(meta){
 		case 0:
-			entityLiving.worldObj.createExplosion(entityLiving, posX, posY, posZ, 30, true);
+			entityLiving.world.createExplosion(entityLiving, posX, posY, posZ, 30, true);
 			int radius = 25;
-			ArrayList<EntityLivingBase> l = (ArrayList<EntityLivingBase>) entityLiving.worldObj.getEntitiesWithinAABB(EntityLivingBase.class,
-					AxisAlignedBB.getBoundingBox(entityLiving.posX-radius, entityLiving.posY-radius, entityLiving.posZ-radius,
+			ArrayList<EntityLivingBase> l = (ArrayList<EntityLivingBase>) entityLiving.world.getEntitiesWithinAABB(EntityLivingBase.class,
+					new AxisAlignedBB(entityLiving.posX-radius, entityLiving.posY-radius, entityLiving.posZ-radius,
 							entityLiving.posX+radius, entityLiving.posY+radius, entityLiving.posZ+radius));
 			for(EntityLivingBase ent:l){
-				if(!ent.isEntityInvulnerable()){
+				if(!ent.getIsInvulnerable()){
 					ent.setFire(120);
 				}
 			}
 			return;
 		case 1:
 			int range = 5;
-			ArrayList<EntityLivingBase> l2 = (ArrayList<EntityLivingBase>) entityLiving.worldObj.getEntitiesWithinAABB(EntityLivingBase.class,
-					AxisAlignedBB.getBoundingBox(entityLiving.posX-range, entityLiving.posY-range, entityLiving.posZ-range,
+			ArrayList<EntityLivingBase> l2 = (ArrayList<EntityLivingBase>) entityLiving.world.getEntitiesWithinAABB(EntityLivingBase.class,
+					new AxisAlignedBB(entityLiving.posX-range, entityLiving.posY-range, entityLiving.posZ-range,
 							entityLiving.posX+range, entityLiving.posY+range, entityLiving.posZ+range));
 			for(EntityLivingBase ent:l2){
-				if(!ent.isEntityInvulnerable()){
-					ent.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 1, 2));
+				if(!ent.getIsInvulnerable()){
+					ent.addPotionEffect(new PotionEffect(Potion.getPotionById(4), 1, 2));
 				}
 			}
 			if(!w.isRemote){
 				for(int xx=-range;xx<=range;xx++){
 					for(int yy=-range;yy<=range;yy++){
 						for(int zz=-range;zz<=range;zz++){
-							if(w.getBlock((int)posX+xx, (int)posY+yy, (int)posZ+zz).getBlockHardness(w, (int)posX+xx, (int)posY+yy, (int)posZ+zz)!=-1){
-								w.setBlock((int)posX+xx, (int)posY+yy, (int)posZ+zz, Blocks.obsidian);
+							if(w.getBlockState(new BlockPos((int)posX+xx, (int)posY+yy, (int)posZ+zz)).getBlockHardness(w, new BlockPos((int)posX+xx, (int)posY+yy, (int)posZ+zz))!=-1){
+								w.setBlockState(new BlockPos((int)posX+xx, (int)posY+yy, (int)posZ+zz), Blocks.OBSIDIAN.getDefaultState());
 							}
 						}
 					}
@@ -158,8 +173,8 @@ public class ItemTreasure extends ItemBase{
 			return;
 		case 2:
 			int range2 = 25;
-			ArrayList<EntityLivingBase> l3 = (ArrayList<EntityLivingBase>) entityLiving.worldObj.getEntitiesWithinAABB(EntityLivingBase.class,
-					AxisAlignedBB.getBoundingBox(entityLiving.posX-range2, entityLiving.posY-range2, entityLiving.posZ-range2,
+			ArrayList<EntityLivingBase> l3 = (ArrayList<EntityLivingBase>) entityLiving.world.getEntitiesWithinAABB(EntityLivingBase.class,
+					new AxisAlignedBB(entityLiving.posX-range2, entityLiving.posY-range2, entityLiving.posZ-range2,
 							entityLiving.posX+range2, entityLiving.posY+range2, entityLiving.posZ+range2));
 			int knockBack = 3;
 			for(EntityLivingBase hit:l3){

@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "normal": { "model": "technom:user0" },
+        "inventory": { "model": "technom:user0" }
+    }
+}

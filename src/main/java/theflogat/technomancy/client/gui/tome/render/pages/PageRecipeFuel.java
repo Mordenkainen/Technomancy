@@ -19,10 +19,10 @@ public abstract class PageRecipeFuel extends PageRender{
 		GL11.glDisable(GL11.GL_LIGHTING);
 		for(int i = 0; i<getOutputs().length; i++){
 			if(getOutputs()[i]!=null){
-				boolean isTrans = getOutputs()[i].stackTagCompound != null && getOutputs()[i].stackTagCompound.getBoolean("trans");
+				boolean isTrans = getOutputs()[i].getTagCompound() != null && getOutputs()[i].getTagCompound().getBoolean("trans");
 				if(isTrans){GL11.glEnable(GL11.GL_LIGHTING);}
-				gui.getItemRend().renderItemAndEffectIntoGUI(gui.getFont(), gui.getMinecraft().getTextureManager(), getOutputs()[i], x, y + i*16);
-				gui.getItemRend().renderItemOverlayIntoGUI(gui.getFont(), gui.getMinecraft().getTextureManager(), getOutputs()[i], x, y, "");
+				gui.getItemRend().renderItemAndEffectIntoGUI(getOutputs()[i], x, y + i*16);
+				gui.getItemRend().renderItemOverlayIntoGUI(gui.getFont(), getOutputs()[i], x, y, "");
 				gui.getFont().drawString(Integer.toString(getValues()[i]) + " tick(s)", x + 16, y + i*16 + 4, getColor().getRGB());
 				if(isTrans){GL11.glDisable(GL11.GL_LIGHTING);}
 			}

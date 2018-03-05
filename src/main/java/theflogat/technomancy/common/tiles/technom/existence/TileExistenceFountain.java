@@ -10,7 +10,7 @@ public class TileExistenceFountain extends TileTechnomancy implements IExistence
 	private static final int prodRate = 500;
 	
 	@Override
-	public void updateEntity() {
+	public void update() {
 		power += Math.min(prodRate, powerCap - power);
 	}
 

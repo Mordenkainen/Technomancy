@@ -1,0 +1,22 @@
+{
+    "parent": "block/block",
+    "textures": {
+        "particle": "technom:blocks/processorboactive",
+        "0": "technom:blocks/processorboactive",
+        "1": "technom:blocks/processorboside",
+		"2": "technom:blocks/processorbotop"
+    },
+    "elements": [
+        {   "from": [ 0, 0, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "down":  { "texture": "#1", "cullface": "down" },
+                "up":    { "texture": "#2", "cullface": "up"   },
+                "north": { "texture": "#0", "cullface": "north"   },
+                "south": { "texture": "#1", "cullface": "south"   },
+                "west":  { "texture": "#1", "cullface": "west"   },
+                "east":  { "texture": "#1", "cullface": "east"   }
+            }
+        }
+    ]
+}

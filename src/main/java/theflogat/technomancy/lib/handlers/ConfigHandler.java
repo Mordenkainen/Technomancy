@@ -20,17 +20,17 @@ public class ConfigHandler {
         config.load();
         String blocks = "Blocks";
         //Blocks
-        Ids.dynNode = config.get(blocks, Names.nodeDynamo, true).getBoolean();
-        Ids.contEssentia = config.get(blocks, Names.essentiaContainer, true).getBoolean();
-        Ids.cosmeticOpaque = config.get(blocks, Names.cosmeticOpaque, true).getBoolean();
-        Ids.idCOSMETIC_PANE = config.get(blocks, Names.cosmeticPane, true).getBoolean();
-        Ids.dynEssentia = config.get(blocks, Names.essentiaDynamo, true).getBoolean();
-        Ids.biomeMorpher = config.get(blocks, Names.biomeMorpher, true).getBoolean();
-        Ids.nodeGen = config.get(blocks, Names.nodeGenerator, true).getBoolean();
-        Ids.fluxLamp = config.get(blocks, Names.fluxLamp, true).getBoolean();
+        //Ids.dynNode = config.get(blocks, Names.nodeDynamo, true).getBoolean();
+        //Ids.contEssentia = config.get(blocks, Names.essentiaContainer, true).getBoolean();
+        //Ids.cosmeticOpaque = config.get(blocks, Names.cosmeticOpaque, true).getBoolean();
+        //Ids.idCOSMETIC_PANE = config.get(blocks, Names.cosmeticPane, true).getBoolean();
+        //Ids.dynEssentia = config.get(blocks, Names.essentiaDynamo, true).getBoolean();
+        //Ids.biomeMorpher = config.get(blocks, Names.biomeMorpher, true).getBoolean();
+        //Ids.nodeGen = config.get(blocks, Names.nodeGenerator, true).getBoolean();
+        //Ids.fluxLamp = config.get(blocks, Names.fluxLamp, true).getBoolean();
         Ids.wirelessCoil = config.get(blocks, Names.essentiaTransmitter, true).getBoolean();
-        Ids.electricBellows = config.get(blocks, Names.electricBellows, true).getBoolean();
-        Ids.creativeJar = config.get(blocks, Names.creativeJar, true).getBoolean();
+        //Ids.electricBellows = config.get(blocks, Names.electricBellows, true).getBoolean();
+        //Ids.creativeJar = config.get(blocks, Names.creativeJar, true).getBoolean();
         Ids.crystalBlock = config.get(blocks, Names.crystalBlock, true).getBoolean();
 //      Ids.reconstructor = config.get(blocks, Names.reconstructor, true).getBoolean();
         Ids.bloodDynamo = config.get(blocks, Names.bloodDynamo, true).getBoolean();
@@ -44,7 +44,7 @@ public class ConfigHandler {
         Ids.eldrichConsumer = config.get(blocks, Names.eldritchConsumer, true).getBoolean();
         Ids.catalyst = config.get(blocks, Names.catalyst, true).getBoolean();
         Ids.reservoir = config.get(blocks, Names.reservoir, true).getBoolean();
-        Ids.advDeconTable = config.get(blocks, Names.advDeconTable, true).getBoolean();
+        //Ids.advDeconTable = config.get(blocks, Names.advDeconTable, true).getBoolean();
         Ids.manaFluid = config.get(blocks, Names.manaFluid, true).getBoolean();
         Ids.manaExchanger = config.get(blocks, Names.manaExchanger, true).getBoolean();
         Ids.itemTransmitter = config.get(blocks, Names.itemTransmitter, true).getBoolean();
@@ -57,9 +57,9 @@ public class ConfigHandler {
         
         String items = "Items";
         //Items        
-        Ids.essentiaCannon = config.get(items, Names.essentiaCannon, true).getBoolean();
+        //Ids.essentiaCannon = config.get(items, Names.essentiaCannon, true).getBoolean();
         Ids.itemMaterial = config.get(items, Names.itemMaterial, true).getBoolean();
-        Ids.pen = config.get(items, Names.pen, true).getBoolean();
+        //Ids.pen = config.get(items, Names.pen, true).getBoolean();
         Ids.wandCores = config.get(items, Names.wandCores, true).getBoolean();
         Ids.focusFusion = config.get(items, Names.fusionFocus, true).getBoolean();
         Ids.matBM = config.get(items, Names.itemBM, true).getBoolean();

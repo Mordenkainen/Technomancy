@@ -1,13 +1,16 @@
 package theflogat.technomancy.common.tiles.base;
 
+import cofh.redstoneflux.api.IEnergyHandler;
+import cofh.redstoneflux.api.IEnergyProvider;
+import cofh.redstoneflux.api.IEnergyReceiver;
+import cofh.redstoneflux.api.IEnergyStorage;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.EnumSkyBlock;
-import net.minecraftforge.common.util.ForgeDirection;
 import theflogat.technomancy.util.helpers.WorldHelper;
-import cofh.api.energy.IEnergyHandler;
 
-public abstract class TileDynamoBase extends TileTechnomancyRedstone implements IEnergyHandler, IUpgradable, IWrenchable {
+public abstract class TileDynamoBase extends TileTechnomancyRedstone implements IEnergyHandler, IEnergyReceiver, IEnergyProvider, IUpgradable, IWrenchable {
 	public TileDynamoBase() {
 		super(RedstoneSet.HIGH);
 	}
@@ -21,8 +24,8 @@ public abstract class TileDynamoBase extends TileTechnomancyRedstone implements 
 	public int fuel = 0;
 
 	@Override
-	public void updateEntity() {
-		if(worldObj.isRemote)
+	public void update() {
+		if(world.isRemote)
 			return;
 
 		if(set.canRun(this)) {
@@ -42,19 +45,20 @@ public abstract class TileDynamoBase extends TileTechnomancyRedstone implements 
 		return Math.min(maxEnergy - ener, (boost ? 320 : 80));
 	}
 
-	public void update() {
-		worldObj.updateLightByType(EnumSkyBlock.Block, xCoord, yCoord, zCoord);
-		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+	public void update2() {
+		world.checkLightFor(EnumSkyBlock.BLOCK, pos);
+		world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 	}
 
 	protected void updateAdjacentHandlers() {
 		if(ener > 0) {
 			TileEntity tile = WorldHelper.getAdjacentTileEntity(this, facing);
+			EnumFacing dir = EnumFacing.VALUES[facing%EnumFacing.VALUES.length];
 			if(WorldHelper.isEnergyHandlerFromOppFacing(tile, facing)) {
-				ener -= ((IEnergyHandler)tile).receiveEnergy(ForgeDirection.VALID_DIRECTIONS[facing].getOpposite(), Math.min(maxExtract, ener), false);		
+				ener -= ((IEnergyReceiver)tile).receiveEnergy(dir, Math.min(maxExtract, ener), false);
 			}
 		}
-		update();
+		update2();
 	}
 
 	public String nextRedstoneSet() {
@@ -105,12 +109,12 @@ public abstract class TileDynamoBase extends TileTechnomancyRedstone implements 
 	public abstract int extractFuel(int ener);
 
 	@Override
-	public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate) {
+	public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate) {
 		return 0;
 	}
 
 	@Override
-	public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate) {
+	public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate) {
 		if(from.ordinal() == facing) {
 			int ener = this.ener;
 			this.ener -= simulate ? 0 : Math.min(maxExtract, ener);
@@ -119,18 +123,20 @@ public abstract class TileDynamoBase extends TileTechnomancyRedstone implements 
 		return 0;
 	}
 
+
+
 	@Override
-	public boolean canConnectEnergy(ForgeDirection from) {
+	public boolean canConnectEnergy(EnumFacing from) {
 		return from.ordinal() == facing;
 	}
 	
 	@Override
-	public int getEnergyStored(ForgeDirection from) {
+	public int getEnergyStored(EnumFacing from) {
 		return ener;
 	}
 
 	@Override
-	public int getMaxEnergyStored(ForgeDirection from) {
+	public int getMaxEnergyStored(EnumFacing from) {
 		return maxEnergy;
 	}
 	
@@ -139,9 +145,9 @@ public abstract class TileDynamoBase extends TileTechnomancyRedstone implements 
 		for (int i = facing + 1; i < facing + 6; i++) {
 			TileEntity tile = WorldHelper.getAdjacentTileEntity(this, (byte)(i % 6));
 			if (WorldHelper.isEnergyHandlerFromOppFacing(tile, (byte)(i % 6))) {
-				if(!worldObj.isRemote) {
+				if(!world.isRemote) {
 					facing = (byte)(i % 6);
-					worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord));
+					world.notifyNeighborsOfStateChange(pos, world.getBlockState(pos).getBlock(), true);
 					updateAdjacentHandlers();
 				}
 				return true;
@@ -151,7 +157,7 @@ public abstract class TileDynamoBase extends TileTechnomancyRedstone implements 
 	}
 	
 	@Override
-	public String getInfo() {
+	public String getInfos() {
 		return "360 RF/t For Four Times The Fuel";
 	}
 }

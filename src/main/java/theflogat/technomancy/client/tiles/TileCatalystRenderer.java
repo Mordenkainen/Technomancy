@@ -15,7 +15,7 @@ public class TileCatalystRenderer extends TileEntitySpecialRenderer{
 	public static final ResourceLocation modelTexture = new ResourceLocation(Ref.MODEL_CATALYST_TEXTURE);
 
 	@Override
-	public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float t) {
+	public void render(TileEntity entity, double x, double y, double z, float t, int destroyStage, float alpha) {
 		if (entity instanceof TileCatalyst) {
 			TileCatalyst te =(TileCatalyst)entity;
 			if(te.specialRender!=null && te.textLoc!=null){
@@ -32,7 +32,7 @@ public class TileCatalystRenderer extends TileEntitySpecialRenderer{
 				GL11.glScalef(-1F, -1F, 1f);
 				GL11.glTranslatef(-.5F, -1.5F, .5F);
 				bindTexture(modelTexture);
-				model.render(te.getWorldObj().getBlockMetadata(te.xCoord, te.yCoord, te.zCoord));
+				model.render(te.getWorld().getBlockState(te.getPos()).getBlock().getMetaFromState(te.getWorld().getBlockState(te.getPos())));
 				GL11.glPopMatrix();
 			}
 		}

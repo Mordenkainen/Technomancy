@@ -1,5 +1,6 @@
 package theflogat.technomancy.common.rituals.l;
 
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import theflogat.technomancy.common.tiles.technom.TileCatalyst;
 
@@ -16,6 +17,6 @@ public class RitualPurificationT2 extends RitualPurification {
 
 	@Override
 	public void applyEffect(World w, int x, int y, int z) {
-		((TileCatalyst)w.getTileEntity(x, y, z)).handler = this;
+		((TileCatalyst)w.getTileEntity(new BlockPos(x, y, z))).handler = this;
 	}
 }

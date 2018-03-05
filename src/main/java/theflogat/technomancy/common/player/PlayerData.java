@@ -4,19 +4,21 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Random;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.VertexBuffer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.Ref;
 import theflogat.technomancy.network.PacketHandler;
 import theflogat.technomancy.util.Loc;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class PlayerData {
 
@@ -77,30 +79,44 @@ public class PlayerData {
 		}
 	}
 
-	public static NBTTagCompound getData(EntityPlayer player){
-		NBTTagCompound forgeData = player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG); 
-		NBTTagCompound data = forgeData.getCompoundTag(Ref.MOD_ID); 
+	public static NBTTagCompound getData(EntityPlayer player) {
+		if(player != null) {
+			NBTTagCompound forgeData = player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG);
+			NBTTagCompound data = forgeData.getCompoundTag(Ref.MOD_ID);
 
-		//For some reason it sometimes is null
-		if(data==null){
-			data = new NBTTagCompound();
-		}
+			//For some reason it sometimes is null
+			if (forgeData == null) {
+				forgeData = new NBTTagCompound();
+			}
 
-		if (!forgeData.hasKey(Ref.MOD_ID)){
-			forgeData.setTag(Ref.MOD_ID, data); 
-		}
-		if (!player.getEntityData().hasKey(EntityPlayer.PERSISTED_NBT_TAG)){
-			player.getEntityData().setTag(EntityPlayer.PERSISTED_NBT_TAG, forgeData); 
-		}
+			if (data == null) {
+				data = new NBTTagCompound();
+			}
 
-		return data; 
+			if (!forgeData.hasKey(Ref.MOD_ID)) {
+				forgeData.setTag(Ref.MOD_ID, data);
+			}
+			if (!player.getEntityData().hasKey(EntityPlayer.PERSISTED_NBT_TAG)) {
+				player.getEntityData().setTag(EntityPlayer.PERSISTED_NBT_TAG, forgeData);
+			}
+
+			return data;
+		}else {
+			return new NBTTagCompound();
+		}
 	}
 
 	public static void prepareData(EntityPlayer player){
 		if(Loc.isServer()){
 			syncData(player);
 		}
-		NBTTagCompound data = getData(player);
+		NBTTagCompound data;
+		if(player != null) {
+			data = getData(player);
+		}else {
+			data = new NBTTagCompound();
+		}
+
 		if(!(data.hasKey("existencelevel"))){
 			data.setInteger("existencelevel", 1);
 			data.setInteger("rexistencelevel", 0);
@@ -121,7 +137,13 @@ public class PlayerData {
 	}
 
 	public static Affinity getAffinity(EntityPlayer player){
-		NBTTagCompound data = getData(player);
+		NBTTagCompound data;
+		if(player != null) {
+			data = getData(player);
+		}else {
+			data = new NBTTagCompound();
+		}
+
 		if(data.getInteger("existencelevel") >= 20){
 			HashMap<Affinity, Integer> map = getAffinityValues(data);
 			int total = map.get(Affinity.NORMAL);
@@ -149,7 +171,13 @@ public class PlayerData {
 		if(aff==null){
 			return;
 		}
-		NBTTagCompound data = getData(player);
+		NBTTagCompound data;
+		if(player != null) {
+			data = getData(player);
+		}else {
+			data = new NBTTagCompound();
+		}
+
 		for(int j=0;j<i;j++){
 			try{
 				int randVal =  data.getInteger(aff.getName()) * 10 - data.getInteger(aff.getRName());
@@ -166,8 +194,16 @@ public class PlayerData {
 	}
 
 	public static void addExistencePower(World w, String userName) {
-		NBTTagCompound data = getData(w.getPlayerEntityByName(userName));
-		int randVal =  data.getInteger("existencelevel") * 100 - data.getInteger("rexistencelevel");
+		NBTTagCompound data;
+		if(w.getPlayerEntityByName(userName) != null) {
+			data = getData(w.getPlayerEntityByName(userName));
+		}else {
+			data = new NBTTagCompound();
+		}
+		int randVal = data.getInteger("existencelevel") * 100 - data.getInteger("rexistencelevel");
+		if(randVal <= 0) {
+			randVal = 1;
+		}
 		if(w.rand.nextInt(randVal)==0){
 			data.setInteger("existencelevel", data.getInteger("existencelevel") + 1);
 			data.setInteger("rexistencelevel", 0);
@@ -177,7 +213,12 @@ public class PlayerData {
 	}
 
 	public static void addExistencePower(Random rand, EntityPlayer player) {
-		NBTTagCompound data = getData(player);
+		NBTTagCompound data;
+		if(player != null) {
+			data = getData(player);
+		}else {
+			data = new NBTTagCompound();
+		}
 		if(data.hasKey("existencelevel")){
 			int randVal =  data.getInteger("existencelevel") * 100 - data.getInteger("rexistencelevel");
 			if(rand.nextInt(randVal)==0){
@@ -190,7 +231,13 @@ public class PlayerData {
 	}
 
 	public static int getExistenceLevel(EntityPlayer player) {
-		NBTTagCompound data = getData(player);
+		NBTTagCompound data;
+		if(player != null) {
+			data = getData(player);
+		}else {
+			data = new NBTTagCompound();
+		}
+
 		if(player==null || !(data.hasKey("existencelevel"))){
 			return 1;
 		}
@@ -198,7 +245,13 @@ public class PlayerData {
 	}
 
 	public static int getCurrentPower(EntityPlayer player) {
-		NBTTagCompound data = getData(player);
+		NBTTagCompound data;
+		if(player != null) {
+			data = getData(player);
+		}else {
+			data = new NBTTagCompound();
+		}
+
 		if(player==null || !(data.hasKey("existencepower"))){
 			return 1;
 		}
@@ -225,7 +278,7 @@ public class PlayerData {
 
 			Minecraft.getMinecraft().getTextureManager().bindTexture(modelTexture);
 			drawRectangle(Ids.hudStartX, Ids.hudStartY, 0, 0, xSize, ySize);
-			Color c = getAffinity(Minecraft.getMinecraft().thePlayer).getColor();
+			Color c = getAffinity(Minecraft.getMinecraft().player).getColor();
 			GL11.glColor3f(c.getRed(), c.getGreen(), c.getBlue());
 			Minecraft.getMinecraft().getTextureManager().bindTexture(exTexture);
 			drawRectangle(Ids.hudStartX, Ids.hudStartY + 5 + scale - amount, 0, 0, xSize, amount);
@@ -236,12 +289,13 @@ public class PlayerData {
 		public static void drawRectangle(int x, int y, int u, int v, double width, double length){
 			float f = 0.00390625F;
 			float f1 = 0.00390625F;
-			Tessellator tessellator = Tessellator.instance;
-			tessellator.startDrawingQuads();
-			tessellator.addVertexWithUV(x, y + length, 0, (u * f), (v + length) * f1);
-			tessellator.addVertexWithUV(x + width, y + length, 0, (u + width) * f, (v + length) * f1);
-			tessellator.addVertexWithUV(x + width, y, 0, (u + width) * f, v * f1);
-			tessellator.addVertexWithUV(x, y, 0, u * f, v * f1);
+			Tessellator tessellator = Tessellator.getInstance();
+			BufferBuilder b = tessellator.getBuffer();
+			b.begin(GL11.GL_QUADS, b.getVertexFormat());
+			b.addVertexData(new int[] {x, (int) (y + length), 0, (int) (u * f), (int) ((v + length) * f1)});
+			b.addVertexData(new int[] {(int) (x + width), (int) (y + length), 0, (int) ((u + width) * f), (int) ((v + length) * f1)});
+			b.addVertexData(new int[] {(int) (x + width), y, 0, (int) ((u + width) * f), (int) (v * f1)});
+			b.addVertexData(new int[] {x, y, 0, (int) (u * f), (int) (v * f1)});
 			tessellator.draw();
 		}
 	}

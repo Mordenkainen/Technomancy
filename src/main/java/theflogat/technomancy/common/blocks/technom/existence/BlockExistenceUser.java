@@ -1,93 +1,122 @@
 package theflogat.technomancy.common.blocks.technom.existence;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.BlockContainer;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.common.blocks.base.BlockContainerMultiTiles;
 import theflogat.technomancy.common.tiles.technom.existence.TileExistenceSealingDevice;
 import theflogat.technomancy.common.tiles.technom.existence.TileExistenceCropAccelerator;
 import theflogat.technomancy.common.tiles.technom.existence.TileExistenceHarvester;
-import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.Ref;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockExistenceUser extends BlockContainerMultiTiles{
+import javax.annotation.Nullable;
+
+public class BlockExistenceUser extends BlockContainer {
+
+	public static PropertyEnum<Types> TYPE = PropertyEnum.create("type", Types.class);
 
 	public BlockExistenceUser() {
-		setBlockName(Ref.getId("existenceUser"));
+		super(Material.IRON);
+		setCreativeTab(Technomancy.tabsTM);
+		setHardness(2F);
+		setUnlocalizedName(Ref.getId("existenceUser"));
+		setRegistryName("existenceuser");
+		this.setDefaultState(blockState.getBaseState().withProperty(TYPE, Types.harvester));
 	}
-	
-	@Override
-	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase ent, ItemStack items) {
-		w.setBlockMetadataWithNotify(x, y, z, items.getItemDamage(), 3);
+
+	@SideOnly(Side.CLIENT)
+	public BlockRenderLayer getBlockLayer()
+	{
+		return BlockRenderLayer.CUTOUT;
 	}
-	
+
 	@Override
-	public int damageDropped(int meta) {
-		return meta;
+	public EnumBlockRenderType getRenderType(IBlockState state) {
+		return EnumBlockRenderType.MODEL;
 	}
-	
+
 	@Override
-	public boolean isBlockNormalCube() {
+	public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
 		return false;
 	}
-	
+
 	@Override
-	public boolean isOpaqueCube() {
+	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
 
-	@SideOnly(Side.CLIENT)
-	IIcon[] icons;
-
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void registerBlockIcons(IIconRegister reg) {
-		icons = new IIcon[3];
-		blockIcon = reg.registerIcon(Ref.getAsset(Names.existenceUser[0]));
-		icons[0] = reg.registerIcon(Ref.getAsset(Names.existenceUser[0] + "_top"));
-		icons[1] = reg.registerIcon(Ref.getAsset(Names.existenceUser[1]));
-		icons[2] = reg.registerIcon(Ref.getAsset(Names.existenceUser[2]));
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public IIcon getIcon(int side, int meta) {
-		if(meta==0){
-			if(side==1){
-				return icons[0];
-			}
-			return blockIcon;
-		}
-		if(meta==1){
-			if(side!=0 && side!=1){
-				return icons[0];
-			}
-			return blockIcon;
-		}
-		if(meta==2){
-			if(side==1){
-				return icons[2];
-			}
-			return blockIcon;
-		}
-		return icons[1];
+	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+		return new ItemStack(this, 1, state.getValue(TYPE).ordinal());
 	}
 
 	@Override
-	public TileEntity getTile(int meta) {
+	public int getMetaFromState(IBlockState state) {
+		return state.getValue(TYPE).ordinal();
+	}
+
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+		return getDefaultState().withProperty(TYPE, Types.get(meta));
+	}
+
+	@Override
+	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) {
+		super.onBlockDestroyedByPlayer(worldIn, pos, state);
+	}
+
+	@Override
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, TYPE);
+	}
+
+	@Override
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+		worldIn.setBlockState(pos, state.withProperty(TYPE, Types.get(stack.getMetadata())));
+	}
+
+	@Nullable
+	@Override
+	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		switch(meta){
-		case 0:
-			return new TileExistenceCropAccelerator();
-		case 1:
-			return new TileExistenceHarvester();
-		case 2:
-			return new TileExistenceSealingDevice();
+			case 0:
+				return new TileExistenceCropAccelerator();
+			case 1:
+				return new TileExistenceHarvester();
+			case 2:
+				return new TileExistenceSealingDevice();
 		}
 		return null;
+	}
+
+	public enum Types implements IStringSerializable {
+		cropacc,
+		harvester,
+		sealer;
+
+		public static Types get(int i) {
+			return values()[i];
+		}
+
+		@Override
+		public String getName() {
+			return name().toLowerCase();
+		}
 	}
 }

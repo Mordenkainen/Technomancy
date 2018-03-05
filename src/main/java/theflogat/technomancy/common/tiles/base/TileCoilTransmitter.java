@@ -2,12 +2,13 @@ package theflogat.technomancy.common.tiles.base;
 
 import java.util.ArrayList;
 
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import theflogat.technomancy.common.blocks.base.BlockContainerRedstone;
 import theflogat.technomancy.util.helpers.WorldHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChunkCoordinates;
 
 public abstract class TileCoilTransmitter extends TileTechnomancyRedstone implements ICouplable, IWrenchable, IUpgradable {
 
@@ -17,7 +18,7 @@ public abstract class TileCoilTransmitter extends TileTechnomancyRedstone implem
 		super(RedstoneSet.LOW);
 	}
 
-	public ArrayList<ChunkCoordinates> sources = new ArrayList<ChunkCoordinates>();
+	public ArrayList<BlockPos> sources = new ArrayList<BlockPos>();
 	public int facing = 0;
 	public boolean boost;
 
@@ -26,9 +27,9 @@ public abstract class TileCoilTransmitter extends TileTechnomancyRedstone implem
 		int sourceCount = 0;
 		for(int i = 0; i < sources.size(); i++) {
 			if(sources.get(i) != null) {
-				comp.setInteger("xcoord" + sourceCount, sources.get(i).posX);
-				comp.setInteger("ycoord" + sourceCount, sources.get(i).posY);
-				comp.setInteger("zcoord" + sourceCount, sources.get(i).posZ);
+				comp.setInteger("pos.getX()" + sourceCount, sources.get(i).getX());
+				comp.setInteger("pos.getY()" + sourceCount, sources.get(i).getY());
+				comp.setInteger("pos.getZ()" + sourceCount, sources.get(i).getZ());
 				sourceCount++;
 			}		
 		}
@@ -39,10 +40,10 @@ public abstract class TileCoilTransmitter extends TileTechnomancyRedstone implem
 	public void readCustomNBT(NBTTagCompound comp) {
 		int size = comp.getInteger("size");
 		for(int i = 0; i < size; i ++) {
-			int xx = comp.getInteger("xcoord" + i);		
-			int yy = comp.getInteger("ycoord" + i);		
-			int zz = comp.getInteger("zcoord" + i);
-			this.sources.add(new ChunkCoordinates(xx, yy, zz));
+			int xx = comp.getInteger("pos.getX()" + i);
+			int yy = comp.getInteger("pos.getY()" + i);
+			int zz = comp.getInteger("pos.getZ()" + i);
+			this.sources.add(new BlockPos(xx, yy, zz));
 		}
 	}
 	
@@ -63,7 +64,7 @@ public abstract class TileCoilTransmitter extends TileTechnomancyRedstone implem
 	}
 
 	@Override
-	public void addPos(ChunkCoordinates coords) {
+	public void addPos(BlockPos coords) {
 		sources.add(coords);
 	}
 
@@ -98,9 +99,9 @@ public abstract class TileCoilTransmitter extends TileTechnomancyRedstone implem
 	private void fixRedstone() {
 		if(boost) {
 			if(modified) {
-				if(!worldObj.isRemote) {
+				if(!world.isRemote) {
 					Item it = BlockContainerRedstone.settingToItem.get(set);
-					WorldHelper.spawnEntItem(worldObj, xCoord, yCoord, zCoord, new ItemStack(it, 1));
+					WorldHelper.spawnEntItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(it, 1));
 				}
 				modified = false;
 			}
@@ -111,7 +112,7 @@ public abstract class TileCoilTransmitter extends TileTechnomancyRedstone implem
 	}
 
 	@Override
-	public String getInfo() {
+	public String getInfos() {
 		return "Emits A Redstone Signal When Not Full";
 	}
 }

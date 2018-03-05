@@ -39,24 +39,24 @@ public class GuiRitualTome extends GuiTomeTemplate{
 					}, 
 					new ItemStack[][]{
 							{
-								new ItemStack(Items.glowstone_dust),new ItemStack(Items.dye, 1, 0),null,
-								new ItemStack(Items.dye, 1, 0),new ItemStack(Items.glowstone_dust),
+								new ItemStack(Items.GLOWSTONE_DUST),new ItemStack(Items.DYE, 1, 0),null,
+								new ItemStack(Items.DYE, 1, 0),new ItemStack(Items.GLOWSTONE_DUST),
 							},{
 
-								new ItemStack(Items.glowstone_dust),new ItemStack(Items.dye, 1, 15),null,
-								new ItemStack(Items.dye, 1, 15),new ItemStack(Items.glowstone_dust),
+								new ItemStack(Items.GLOWSTONE_DUST),new ItemStack(Items.DYE, 1, 15),null,
+								new ItemStack(Items.DYE, 1, 15),new ItemStack(Items.GLOWSTONE_DUST),
 							},{
 
-								new ItemStack(Items.glowstone_dust),new ItemStack(Items.dye, 1, 1),null,
-								new ItemStack(Items.dye, 1, 1),new ItemStack(Items.glowstone_dust),	
+								new ItemStack(Items.GLOWSTONE_DUST),new ItemStack(Items.DYE, 1, 1),null,
+								new ItemStack(Items.DYE, 1, 1),new ItemStack(Items.GLOWSTONE_DUST),
 							},{
 
-								new ItemStack(Items.glowstone_dust),new ItemStack(Items.dye, 1, 2),null,
-								new ItemStack(Items.dye, 1, 2),new ItemStack(Items.glowstone_dust),	
+								new ItemStack(Items.GLOWSTONE_DUST),new ItemStack(Items.DYE, 1, 2),null,
+								new ItemStack(Items.DYE, 1, 2),new ItemStack(Items.GLOWSTONE_DUST),
 							},{
 
-								new ItemStack(Items.glowstone_dust),new ItemStack(Items.dye, 1, 4),null,
-								new ItemStack(Items.dye, 1, 4),new ItemStack(Items.glowstone_dust),	
+								new ItemStack(Items.GLOWSTONE_DUST),new ItemStack(Items.DYE, 1, 4),null,
+								new ItemStack(Items.DYE, 1, 4),new ItemStack(Items.GLOWSTONE_DUST),
 							}
 					}))
 				},
@@ -66,25 +66,25 @@ public class GuiRitualTome extends GuiTomeTemplate{
 							new ItemStack(TMBlocks.catalyst, 1, 3),new ItemStack(TMBlocks.catalyst, 1, 4)
 					}, new ItemStack[][]{
 							{
-								new ItemStack(Blocks.obsidian),new ItemStack(Items.dye, 1, 0),new ItemStack(Items.ender_pearl),
-								new ItemStack(Items.dye, 1, 0),new ItemStack(Blocks.gold_block),new ItemStack(Items.dye, 1, 0),
-								new ItemStack(Items.ender_pearl),new ItemStack(Items.dye, 1, 0),new ItemStack(Blocks.obsidian)
+								new ItemStack(Blocks.OBSIDIAN),new ItemStack(Items.DYE, 1, 0),new ItemStack(Items.ENDER_PEARL),
+								new ItemStack(Items.DYE, 1, 0),new ItemStack(Blocks.GOLD_BLOCK),new ItemStack(Items.DYE, 1, 0),
+								new ItemStack(Items.ENDER_PEARL),new ItemStack(Items.DYE, 1, 0),new ItemStack(Blocks.OBSIDIAN)
 							},{
-								new ItemStack(Items.golden_apple),new ItemStack(Items.dye, 1, 15),new ItemStack(Items.golden_carrot),
-								new ItemStack(Items.dye, 1, 15),new ItemStack(Blocks.gold_block),new ItemStack(Items.dye, 1, 15),
-								new ItemStack(Items.golden_carrot),new ItemStack(Items.dye, 1, 15),new ItemStack(Items.golden_apple)
+								new ItemStack(Items.GOLDEN_APPLE),new ItemStack(Items.DYE, 1, 15),new ItemStack(Items.GOLDEN_CARROT),
+								new ItemStack(Items.DYE, 1, 15),new ItemStack(Blocks.GOLD_BLOCK),new ItemStack(Items.DYE, 1, 15),
+								new ItemStack(Items.GOLDEN_CARROT),new ItemStack(Items.DYE, 1, 15),new ItemStack(Items.GOLDEN_APPLE)
 							},{
-								new ItemStack(Items.blaze_rod),new ItemStack(Items.dye, 1, 1),new ItemStack(Items.blaze_rod),
-								new ItemStack(Items.dye, 1, 1),new ItemStack(Blocks.gold_block),new ItemStack(Items.dye, 1, 1),
-								new ItemStack(Items.blaze_rod),new ItemStack(Items.dye, 1, 1),new ItemStack(Items.blaze_rod)
+								new ItemStack(Items.BLAZE_ROD),new ItemStack(Items.DYE, 1, 1),new ItemStack(Items.BLAZE_ROD),
+								new ItemStack(Items.DYE, 1, 1),new ItemStack(Blocks.GOLD_BLOCK),new ItemStack(Items.DYE, 1, 1),
+								new ItemStack(Items.BLAZE_ROD),new ItemStack(Items.DYE, 1, 1),new ItemStack(Items.BLAZE_ROD)
 							},{
-								new ItemStack(Blocks.grass),new ItemStack(Items.dye, 1, 2),new ItemStack(Blocks.grass),
-								new ItemStack(Items.dye, 1, 2),new ItemStack(Blocks.gold_block),new ItemStack(Items.dye, 1, 2),
-								new ItemStack(Blocks.grass),new ItemStack(Items.dye, 1, 2),new ItemStack(Blocks.grass)
+								new ItemStack(Blocks.GRASS),new ItemStack(Items.DYE, 1, 2),new ItemStack(Blocks.GRASS),
+								new ItemStack(Items.DYE, 1, 2),new ItemStack(Blocks.GOLD_BLOCK),new ItemStack(Items.DYE, 1, 2),
+								new ItemStack(Blocks.GRASS),new ItemStack(Items.DYE, 1, 2),new ItemStack(Blocks.GRASS)
 							},{
-								new ItemStack(Items.fish),new ItemStack(Items.dye, 1, 4),new ItemStack(Blocks.clay),
-								new ItemStack(Items.dye, 1, 4),new ItemStack(Blocks.gold_block),new ItemStack(Items.dye, 1, 4),
-								new ItemStack(Blocks.clay),new ItemStack(Items.dye, 1, 4),new ItemStack(Items.fish)
+								new ItemStack(Items.FISH),new ItemStack(Items.DYE, 1, 4),new ItemStack(Blocks.CLAY),
+								new ItemStack(Items.DYE, 1, 4),new ItemStack(Blocks.GOLD_BLOCK),new ItemStack(Items.DYE, 1, 4),
+								new ItemStack(Blocks.CLAY),new ItemStack(Items.DYE, 1, 4),new ItemStack(Items.FISH)
 							}
 					}))
 				}
@@ -235,38 +235,38 @@ public class GuiRitualTome extends GuiTomeTemplate{
 		Page[][] pagesP = {
 				{
 					new Page(Type.TEXT),new Page(Type.TEXT),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMItems.exGem, 1, 100), new ItemStack[]{
-						null,new ItemStack(Items.gold_nugget),null,
-						new ItemStack(Items.gold_nugget),new ItemStack(Items.emerald),new ItemStack(Items.gold_nugget),
-						null,new ItemStack(Items.gold_nugget),null
+						null,new ItemStack(Items.GOLD_NUGGET),null,
+						new ItemStack(Items.GOLD_NUGGET),new ItemStack(Items.EMERALD),new ItemStack(Items.GOLD_NUGGET),
+						null,new ItemStack(Items.GOLD_NUGGET),null
 					}))
 				},{
 					new Page(Type.TEXT),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existenceBurner), new ItemStack[]{
 						new ItemStack(TMItems.exGem),null,null,
-						new ItemStack(Blocks.anvil)
+						new ItemStack(Blocks.ANVIL)
 					})),new Page(Type.TEXT),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existenceBurner, 1, 1), CompatibilityHandler.te ?
 							new ItemStack[]{new ItemStack(TMBlocks.existenceBurner), ThermalExpansion.frameMachineBasic, ThermalExpansion.powerCoilSilver} :
-								new ItemStack[]{new ItemStack(TMBlocks.existenceBurner), new ItemStack(Items.redstone), new ItemStack(Blocks.piston)}))
+								new ItemStack[]{new ItemStack(TMBlocks.existenceBurner), new ItemStack(Items.REDSTONE), new ItemStack(Blocks.PISTON)}))
 				},{
 					new Page(Type.TEXT),new Page(Type.TEXT),new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.FT))),
 				},{
 					new Page(Type.TEXT),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existencePylon), new ItemStack[]{
-						new ItemStack(Items.redstone),new ItemStack(Items.redstone),new ItemStack(Items.redstone),
-						new ItemStack(Items.redstone),new ItemStack(Items.emerald),new ItemStack(Items.redstone),
-						new ItemStack(Items.redstone),new ItemStack(Blocks.piston),new ItemStack(Items.redstone)
+						new ItemStack(Items.REDSTONE),new ItemStack(Items.REDSTONE),new ItemStack(Items.REDSTONE),
+						new ItemStack(Items.REDSTONE),new ItemStack(Items.EMERALD),new ItemStack(Items.REDSTONE),
+						new ItemStack(Items.REDSTONE),new ItemStack(Blocks.PISTON),new ItemStack(Items.REDSTONE)
 					})),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existencePylon, 1, 1), new ItemStack[]{
-						new ItemStack(Items.diamond),new ItemStack(TMItems.itemBoost),new ItemStack(TMItems.exGem),new ItemStack(TMBlocks.existencePylon, 1, 0)
+						new ItemStack(Items.DIAMOND),new ItemStack(TMItems.itemBoost),new ItemStack(TMItems.exGem),new ItemStack(TMBlocks.existencePylon, 1, 0)
 					})),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existencePylon, 1, 2), new ItemStack[]{
-						new ItemStack(Items.ender_pearl),new ItemStack(Items.diamond),new ItemStack(TMItems.exGem),new ItemStack(TMBlocks.existencePylon, 1, 1)
+						new ItemStack(Items.ENDER_PEARL),new ItemStack(Items.DIAMOND),new ItemStack(TMItems.exGem),new ItemStack(TMBlocks.existencePylon, 1, 1)
 					}))
 				},{
 					new Page(Type.TEXT),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existenceUser, 1, 1), new ItemStack[]{
-						null,new ItemStack(Items.golden_carrot),null,
-						new ItemStack(Items.golden_apple), new ItemStack(TMItems.exGem), new ItemStack(Items.golden_apple),
-						null,new ItemStack(Items.golden_carrot),null
+						null,new ItemStack(Items.GOLDEN_CARROT),null,
+						new ItemStack(Items.GOLDEN_APPLE), new ItemStack(TMItems.exGem), new ItemStack(Items.GOLDEN_APPLE),
+						null,new ItemStack(Items.GOLDEN_CARROT),null
 					})), new Page(Type.TEXT),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existenceUser, 1, 2), new ItemStack[]{
-						null,new ItemStack(Items.iron_hoe),null,
-						new ItemStack(Items.golden_apple), new ItemStack(TMItems.exGem), new ItemStack(Items.golden_apple),
-						null,new ItemStack(Items.iron_hoe),null
+						null,new ItemStack(Items.IRON_HOE),null,
+						new ItemStack(Items.GOLDEN_APPLE), new ItemStack(TMItems.exGem), new ItemStack(Items.GOLDEN_APPLE),
+						null,new ItemStack(Items.IRON_HOE),null
 					}))
 				}
 		};
@@ -304,9 +304,9 @@ public class GuiRitualTome extends GuiTomeTemplate{
 					new Page(Type.TEXT),new Page(Type.IMAGE, new ResourceLocation(Ref.getGui(Res.ET))),
 				},{
 					new Page(Type.TEXT),new Page(Type.HANDLER, new PageRecipeInst(new ItemStack(TMBlocks.existenceUser, 1, 2), new ItemStack[]{
-						new ItemStack(Blocks.obsidian), new ItemStack(Items.flint_and_steel),new ItemStack(Blocks.obsidian),
-						new ItemStack(Items.flint_and_steel), new ItemStack(TMItems.exGem), new ItemStack(Items.flint_and_steel),
-						new ItemStack(Blocks.obsidian),new ItemStack(Items.flint_and_steel),new ItemStack(Blocks.obsidian)
+						new ItemStack(Blocks.OBSIDIAN), new ItemStack(Items.FLINT_AND_STEEL),new ItemStack(Blocks.OBSIDIAN),
+						new ItemStack(Items.FLINT_AND_STEEL), new ItemStack(TMItems.exGem), new ItemStack(Items.FLINT_AND_STEEL),
+						new ItemStack(Blocks.OBSIDIAN),new ItemStack(Items.FLINT_AND_STEEL),new ItemStack(Blocks.OBSIDIAN)
 					}))
 				}
 		};

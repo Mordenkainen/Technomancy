@@ -1,11 +1,27 @@
 package theflogat.technomancy.lib.compat;
 
+import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
+import WayofTime.bloodmagic.api.impl.BloodMagicRecipeRegistrar;
+import WayofTime.bloodmagic.api.impl.recipe.RecipeBloodAltar;
+import WayofTime.bloodmagic.block.BlockLifeEssence;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicBlocks;
+import WayofTime.bloodmagic.core.RegistrarBloodMagicItems;
+import WayofTime.bloodmagic.core.registry.AltarRecipeRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.GameData;
+import net.minecraftforge.registries.IForgeRegistry;
 import theflogat.technomancy.Technomancy;
 import theflogat.technomancy.common.blocks.base.TMBlocks;
 import theflogat.technomancy.common.blocks.bloodmagic.dynamos.BlockBloodDynamo;
@@ -19,8 +35,6 @@ import theflogat.technomancy.common.tiles.bloodmagic.machines.TileBloodFabricato
 import theflogat.technomancy.lib.Ids;
 import theflogat.technomancy.lib.Names;
 import theflogat.technomancy.lib.handlers.CompatibilityHandler;
-import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipeRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BloodMagic extends ModuleBase{
 	
@@ -30,6 +44,7 @@ public class BloodMagic extends ModuleBase{
 	public static Item divinationSigil;
 	public static Item bucketLife;
 	public static Item bloodRune;
+	public BloodMagicRecipeRegistrar registrar = BloodMagicAPI.INSTANCE.getRecipeRegistrar();
 
 	private BloodMagic() {}
 	
@@ -39,13 +54,21 @@ public class BloodMagic extends ModuleBase{
 		}
 		return instance;
 	}
-	
+
+	@Override
+	public void preInit() {
+		regBlock(TMBlocks.bloodDynamo);
+		regBlock(TMBlocks.bloodFabricator);
+		regBlock(TMBlocks.processorBM);
+	}
+
 	@Override
 	public void Init() {
-		lifeEssenceFluid = FluidRegistry.getFluid("life essence");
-		divinationSigil = GameRegistry.findItem("AWWayofTime", "divinationSigil");
-		bucketLife = GameRegistry.findItem("AWWayofTime", "bucketLife");
-		bloodRune = GameRegistry.findItem("AWWayofTime", "AlchemicalWizardrybloodRune");
+		lifeEssenceFluid = BlockLifeEssence.getLifeEssence();
+		divinationSigil = RegistrarBloodMagicItems.SIGIL_DIVINATION;
+		bucketLife = FluidUtil.getFilledBucket(new FluidStack(BlockLifeEssence.getLifeEssence(), 1000)).getItem();
+		bloodRune = Item.getItemFromBlock(RegistrarBloodMagicBlocks.BLOOD_RUNE);
+
 		if (lifeEssenceFluid != null && divinationSigil != null && bucketLife != null && bloodRune != null) {
 			Technomancy.logger.info("Blood Magic compatibility module loaded.");
 		} else {
@@ -63,7 +86,7 @@ public class BloodMagic extends ModuleBase{
         TMItems.itemBM = Ids.matBM ? new ItemBMMaterial() : null;        
         
         //Registration
-        registerItem(TMItems.itemBM, Names.itemBM);
+        registerItem(TMItems.itemBM);
 	}
 
 	@Override
@@ -74,7 +97,7 @@ public class BloodMagic extends ModuleBase{
 		
 		registerBlock(TMBlocks.bloodDynamo, Names.bloodDynamo);
 		registerBlock(TMBlocks.bloodFabricator, Names.bloodFabricator);
-		registerBlock(TMBlocks.processorBM, Names.processor + "BM");
+		registerBlock(TMBlocks.processorBM, Names.processor + "bm");
 		
 		registerTileEntity(TMBlocks.bloodDynamo, TileBloodDynamo.class, "TileBloodDynamo");
 		registerTileEntity(TMBlocks.bloodFabricator, TileBloodFabricator.class, "TileBloodFabricator");
@@ -86,61 +109,63 @@ public class BloodMagic extends ModuleBase{
 		if(CompatibilityHandler.te) {
 			//Altar Recipes
 			if(Ids.bloodDynamo) {
-				AltarRecipeRegistry.registerAltarRecipe(new ItemStack(TMBlocks.bloodDynamo), new ItemStack(ThermalExpansion.blockDynamo), 2,
-						10000, 100, 100, false);
+				registrar.addBloodAltar(Ingredient.fromStacks(ThermalExpansion.blockDynamo), new ItemStack(TMBlocks.bloodDynamo), 2,
+						10000, 100, 100);
 			}
 			if(Ids.matBM) {
-				AltarRecipeRegistry.registerAltarRecipe(new ItemStack(TMItems.itemBM, 1, 0), new ItemStack(Items.iron_ingot), 1, 1000, 100, 100, false);
-				AltarRecipeRegistry.registerAltarRecipe(new ItemStack(TMItems.itemBM, 1, 1), ThermalExpansion.powerCoilGold, 1, 1000, 100, 100, false);
+				registrar.addBloodAltar(Ingredient.fromStacks(new ItemStack(Items.IRON_INGOT)), new ItemStack(TMItems.itemBM, 1, 0), 1, 1000, 100, 100);
+				registrar.addBloodAltar(Ingredient.fromStacks(Loader.isModLoaded("thermalexpansion") ? ThermalExpansion.powerCoilGold : new ItemStack(Items.GOLD_INGOT)), new ItemStack(TMItems.itemBM, 1, 1), 1, 1000, 100, 100);
 			}
 
 			//Normal Recipes
 			if(Ids.bloodFabricator) {
-				GameRegistry.addShapedRecipe(new ItemStack(TMBlocks.bloodFabricator), 
+				GameRegistry.addShapedRecipe(TMBlocks.bloodFabricator.getRegistryName(), null, new ItemStack(TMBlocks.bloodFabricator),
 						new Object[] {" T ", "IMI", "CAC",
-					'T', new ItemStack(ThermalExpansion.blockTank, 1, 3),
+					'T', ThermalExpansion.blockTank[3],
 					'I', new ItemStack(TMItems.itemBM, 1, 0),
 					'M', ThermalExpansion.frameMachineBasic,
 					'C', new ItemStack(TMItems.itemBM, 1, 1),
-					'A', ThermalExpansion.frameTesseractFull});
+					'A', ThermalExpansion.frameCellBasic});
 			}
 			if(Ids.processorBM) {
-				GameRegistry.addShapedRecipe(new ItemStack(TMBlocks.processorBM),
+				GameRegistry.addShapedRecipe(TMBlocks.processorBM.getRegistryName(), null, new ItemStack(TMBlocks.processorBM),
 						new Object[] {" A ", "BMB", "ICI",
 					'M', ThermalExpansion.frameMachineBasic,
 					'I', new ItemStack(TMItems.itemBM, 1, 0),
 					'C', new ItemStack(TMItems.itemBM, 1, 1),
 					'B', new ItemStack(bloodRune, 1, 0),
-					'A', new ItemStack(Items.redstone)});
+					'A', new ItemStack(Items.REDSTONE)});
 			}
+
 		} else {
 			//Altar Recipes
 			if(Ids.bloodDynamo) {
-				AltarRecipeRegistry.registerAltarRecipe(new ItemStack(TMBlocks.bloodDynamo), new ItemStack(Blocks.redstone_block, 1), 2, 10000, 100, 100, false);
+				registrar.addBloodAltar(Ingredient.fromStacks(new ItemStack(Blocks.REDSTONE_BLOCK, 1)), new ItemStack(TMBlocks.bloodDynamo, 1), 2, 10000, 100, 100);
 			}
 			if(Ids.matBM) {
-				AltarRecipeRegistry.registerAltarRecipe(new ItemStack(TMItems.itemBM, 1, 0), new ItemStack(Items.iron_ingot, 1), 1, 1000, 100, 100, false);
-				AltarRecipeRegistry.registerAltarRecipe(new ItemStack(TMItems.itemBM, 1, 1), new ItemStack(Items.redstone, 1), 1, 1000, 100, 100, false);
+				registrar.addBloodAltar(Ingredient.fromStacks(new ItemStack(Items.IRON_INGOT, 1)), new ItemStack(TMItems.itemBM, 1, 0), 1, 1000, 100, 100);
+				registrar.addBloodAltar(Ingredient.fromStacks(new ItemStack(Items.REDSTONE, 1)), new ItemStack(TMItems.itemBM, 1, 1), 1, 1000, 100, 100);
 			}
 
 			//Normal Recipes
+
 			if(Ids.bloodFabricator) {
-				GameRegistry.addShapedRecipe(new ItemStack(TMBlocks.bloodFabricator), 
+				GameRegistry.addShapedRecipe(TMBlocks.bloodFabricator.getRegistryName(), null, new ItemStack(TMBlocks.bloodFabricator),
 						new Object[] {" T ", "IMI", "CAC",
-					'T', new ItemStack(Blocks.glass, 1, 0),
+					'T', new ItemStack(Blocks.GLASS, 1, 0),
 					'I', new ItemStack(TMItems.itemBM, 1, 0),
-					'M', new ItemStack(Blocks.redstone_block, 1, 0),
+					'M', new ItemStack(Blocks.REDSTONE_BLOCK, 1, 0),
 					'C', new ItemStack(TMItems.itemBM, 1, 1),
-					'A', new ItemStack(Items.ender_eye, 1, 0)});
+					'A', new ItemStack(Items.ENDER_EYE, 1, 0)});
 			}
 			if(Ids.processorBM) {
-				GameRegistry.addShapedRecipe(new ItemStack(TMBlocks.processorBM),
+				GameRegistry.addShapedRecipe(TMBlocks.processorBM.getRegistryName(), null, new ItemStack(TMBlocks.processorBM),
 						new Object[] {" A ", "BMB", "ICI",
-					'M', new ItemStack(Blocks.redstone_block, 1, 0),
+					'M', new ItemStack(Blocks.REDSTONE_BLOCK, 1, 0),
 					'I', new ItemStack(TMItems.itemBM, 1, 0),
 					'C', new ItemStack(TMItems.itemBM, 1, 1),
 					'B', new ItemStack(bloodRune, 1, 0),
-					'A', new ItemStack(Items.redstone)});
+					'A', new ItemStack(Items.REDSTONE)});
 			}
 		}
 	}

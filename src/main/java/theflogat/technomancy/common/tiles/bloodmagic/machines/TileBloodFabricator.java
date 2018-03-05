@@ -1,57 +1,62 @@
 package theflogat.technomancy.common.tiles.bloodmagic.machines;
 
+import WayofTime.bloodmagic.block.BlockLifeEssence;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.*;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import theflogat.technomancy.common.tiles.base.TileMachineBase;
 import theflogat.technomancy.lib.compat.BloodMagic;
 import theflogat.technomancy.lib.handlers.Rate;
-import theflogat.technomancy.util.helpers.WorldHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
 
-public class TileBloodFabricator extends TileMachineBase implements IFluidHandler {
+import javax.annotation.Nullable;
+
+public class TileBloodFabricator extends TileMachineBase implements IFluidHandler, IFluidTank {
 	
 	public FluidTank tank = new FluidTank(10000);
 	public static int cost = Rate.bloodFabCost;
 	int count = 0;
 	
 	public TileBloodFabricator() {
-		super(Rate.bloodFabCost * 50);
+		super(1000000);
 	}
 	@Override
-	public void updateEntity() {
-		if(getEnergyStored()>=cost && tank.getFluidAmount()+200<=tank.getCapacity()) {
+	public void update() {
+		if(getEnergyStored()>=cost && tank.getCapacity() + tank.getFluidAmount() >= 200) {
 			extractEnergy(cost, false);
-			tank.fill(new FluidStack(BloodMagic.lifeEssenceFluid, 200), true);
-			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+			tank.fill(new FluidStack(BlockLifeEssence.getLifeEssence(), 200), true);
+			world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 		}
 		if(tank.getFluidAmount() >= 200) {
-			for(ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
-				TileEntity te = worldObj.getTileEntity(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ);
+			for(EnumFacing dir : EnumFacing.VALUES) {
+				TileEntity te = world.getTileEntity(new BlockPos(pos.getX() + dir.getFrontOffsetX(), pos.getY() + dir.getFrontOffsetY(), pos.getZ()+ dir.getFrontOffsetZ()));
 				if(te instanceof IFluidHandler) {
-					IFluidHandler target = (IFluidHandler)te;
-					if(target.canFill(dir.getOpposite(), BloodMagic.lifeEssenceFluid)) {
-						FluidStack push = tank.getFluid().copy();
-						push.amount = Math.min(push.amount, 200);
-						int filled = target.fill(dir.getOpposite(), push, true);
-						if(filled > 0) {
-							tank.drain(filled, true);
-							return;
-						}
+					IFluidHandler target = (IFluidHandler) te;
+					FluidStack push = tank.getFluid().copy();
+					push.amount = Math.min(push.amount, 200);
+					int filled = target.fill(push, true);
+					if (filled > 0) {
+						tank.drain(filled, true);
+						return;
 					}
 				}
 			}
 		}
 	}
-	
+
 	@Override
-	public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
-		if ((resource == null) || ((from != ForgeDirection.UNKNOWN))) {
+	public IFluidTankProperties[] getTankProperties() {
+		return new IFluidTankProperties[0];
+	}
+
+	@Override
+	public int fill(FluidStack resource, boolean doFill) {
+		if ((resource == null)) {
 			return 0;
 		}
 		if(resource.getFluid() == BloodMagic.lifeEssenceFluid) {
@@ -61,38 +66,39 @@ public class TileBloodFabricator extends TileMachineBase implements IFluidHandle
 	}
 
 	@Override
-	public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
-		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+	public FluidStack drain(FluidStack resource, boolean doDrain) {
+		world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 		return tank.drain(resource.amount, doDrain);
 	}
 
 	@Override
-	public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
-		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+	public FluidStack drain(int maxDrain, boolean doDrain) {
+		world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 		if(tank.getFluid() != null) {
 			return tank.drain(maxDrain, doDrain);
 		}
 		return null;
 	}
 
+	@Nullable
 	@Override
-	public boolean canFill(ForgeDirection from, Fluid fluid) {
-		return false;
+	public FluidStack getFluid() {
+		return tank.getFluid();
 	}
 
 	@Override
-	public boolean canDrain(ForgeDirection from, Fluid fluid) {
-		FluidStack stack = FluidRegistry.getFluidStack(fluid.getName(), 200);
-		int f = WorldHelper.insertFluidIntoAdjacentFluidHandler(this, from.ordinal(), stack, false);
-		if(f == 200) {
-			return true;
-		}
-		return false;
+	public int getFluidAmount() {
+		return tank.getFluidAmount();
 	}
 
 	@Override
-	public FluidTankInfo[] getTankInfo(ForgeDirection from) {
-		return new FluidTankInfo[] {this.tank.getInfo()};
+	public int getCapacity() {
+		return tank.getCapacity();
+	}
+
+	@Override
+	public FluidTankInfo getInfo() {
+		return this.tank.getInfo();
 	}
 	
 	@Override
@@ -107,10 +113,27 @@ public class TileBloodFabricator extends TileMachineBase implements IFluidHandle
 		tank = new FluidTank(10000);
 		tank.readFromNBT(compound);
 	}
-	
+
 	@Override
-	public boolean canConnectEnergy(ForgeDirection from) {
-		return from==ForgeDirection.DOWN;
+	public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+		if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+			return true;
+		}
+		return super.hasCapability(capability, facing);
+	}
+
+	@Nullable
+	@Override
+	public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+		if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+			return (T) this.tank;
+		}
+		return super.getCapability(capability, facing);
+	}
+
+	@Override
+	public boolean canConnectEnergy(EnumFacing from) {
+		return from==EnumFacing.DOWN;
 	}
 
 }

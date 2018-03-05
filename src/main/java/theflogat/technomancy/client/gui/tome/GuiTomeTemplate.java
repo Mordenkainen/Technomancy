@@ -5,7 +5,7 @@ import java.awt.Color;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
@@ -22,7 +22,7 @@ public class GuiTomeTemplate extends GuiScreen{
 	private static final ResourceLocation page = new ResourceLocation(Ref.MOD_ID.toLowerCase(), "textures/gui/nextPrevious.png");
 	public static ButtonTab[] tabs;
 	private static final ButtonChangePage[] pageCh = new ButtonChangePage[2];
-	private static final RenderItem itemRender = new RenderItem();
+	private final RenderItem itemRenders = this.itemRender;
 	private int xSize;
 	private int ySize;
 	private int activeTab = -1;
@@ -79,7 +79,7 @@ public class GuiTomeTemplate extends GuiScreen{
 				if(tab.isPointInRegion(x, y, left, top, this)){
 					drawHoveringButton(left, top, tab.getX(), tab.getY());
 					//drawRect(x, y, tab.getName().length() * 5, 6, Color.black.getRGB());
-					fontRendererObj.drawString(tab.getName(), x, y, Color.white.getRGB());
+					fontRenderer.drawString(tab.getName(), x, y, Color.white.getRGB());
 				}
 			}
 		}catch(Exception e){}
@@ -151,7 +151,7 @@ public class GuiTomeTemplate extends GuiScreen{
 	}
 	
 	public FontRenderer getFont(){
-		return fontRendererObj;
+		return fontRenderer;
 	}
 	
 	public ResourceLocation getChangePage() {

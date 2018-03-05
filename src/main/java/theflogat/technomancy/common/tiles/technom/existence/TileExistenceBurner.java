@@ -6,8 +6,8 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.AxisAlignedBB;
 import theflogat.technomancy.common.tiles.base.TileTechnomancyRedstone;
 
 public class TileExistenceBurner extends TileTechnomancyRedstone implements IExistenceProducer{
@@ -20,20 +20,20 @@ public class TileExistenceBurner extends TileTechnomancyRedstone implements IExi
 	private static final int maxPower = 100;
 	
 	@Override
-	public void updateEntity() {
-		if(blockMetadata==1){
-			worldObj.setTileEntity(xCoord, yCoord, zCoord, new TileExistenceDynamicBurner());
+	public void update() {
+		if(world.getBlockState(pos).getBlock().getMetaFromState(world.getBlockState(pos))==1){
+			world.setTileEntity(pos, new TileExistenceDynamicBurner());
 		}
 		if(set.canRun(this) && power<maxPower){
 			@SuppressWarnings("unchecked")
-			ArrayList<EntityLivingBase> e = (ArrayList<EntityLivingBase>) worldObj.getEntitiesWithinAABB(EntityLivingBase.class,
-					AxisAlignedBB.getBoundingBox(xCoord - 3, yCoord - 3, zCoord - 3, xCoord + 3, yCoord + 3, zCoord + 3));
+			ArrayList<EntityLivingBase> e = (ArrayList<EntityLivingBase>) world.getEntitiesWithinAABB(EntityLivingBase.class,
+					new AxisAlignedBB(pos.getX() - 3, pos.getY() - 3, pos.getZ()- 3, pos.getX() + 3, pos.getY() + 3, pos.getZ() + 3));
 
 			for(EntityLivingBase ent : e) {
-				if(!ent.isEntityInvulnerable() && !(ent instanceof EntityPlayer)) {
-					ent.onDeath(DamageSource.generic);
+				if(!ent.getIsInvulnerable() && !(ent instanceof EntityPlayer)) {
+					ent.onDeath(DamageSource.GENERIC);
 					ent.setDead();
-					power += ent instanceof EntityVillager ? 15 : (EnumCreatureType.monster.getCreatureClass().isAssignableFrom(ent.getClass()) ? 1 : 2);
+					power += ent instanceof EntityVillager ? 15 : (EnumCreatureType.MONSTER.getCreatureClass().isAssignableFrom(ent.getClass()) ? 1 : 2);
 				}
 			}
 		}

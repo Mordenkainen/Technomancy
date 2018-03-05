@@ -1,5 +1,6 @@
 package theflogat.technomancy.lib.compat;
 
+/**
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -105,9 +106,9 @@ public class Thaumcraft extends ModuleBase {
 		return instance;
 	}
 
-	public static void wispFX3(World worldObj, double posX, double posY, double posZ, double posX2, double posY2, double posZ2,
+	public static void wispFX3(World world, double posX, double posY, double posZ, double posX2, double posY2, double posZ2,
 			float size, int type, boolean shrink, float gravity) {
-		thaumcraft.common.Thaumcraft.proxy.wispFX3(worldObj, posX, posY, posZ, posX2, posY2, posZ2, size, type, shrink, gravity);
+		thaumcraft.common.Thaumcraft.proxy.wispFX3(world, posX, posY, posZ, posX2, posY2, posZ2, size, type, shrink, gravity);
 	}
 
 	public static TileEntity getConnectableTile(World world, int x, int y, int z, ForgeDirection face){
@@ -572,3 +573,4 @@ public class Thaumcraft extends ModuleBase {
 		return true;
 	}
 }
+ */
