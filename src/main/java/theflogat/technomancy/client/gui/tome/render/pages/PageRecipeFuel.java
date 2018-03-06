@@ -39,4 +39,5 @@ public abstract class PageRecipeFuel extends PageRender {
     public abstract ItemStack[] getOutputs();
 
     public abstract Color getColor();
+    
 }

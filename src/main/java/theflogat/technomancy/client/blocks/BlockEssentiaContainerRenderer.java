@@ -15,7 +15,7 @@ public class BlockEssentiaContainerRenderer implements ISimpleBlockRenderingHand
 
     // TODO: Render liquid in inventory
     @Override
-    public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
+    public void renderInventoryBlock(final Block block, final int metadata, final int modelID, final RenderBlocks renderer) {
         GL11.glPushMatrix();
         GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
         TileEssentiaContainer te = new TileEssentiaContainer();
@@ -24,12 +24,12 @@ public class BlockEssentiaContainerRenderer implements ISimpleBlockRenderingHand
     }
 
     @Override
-    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
+    public boolean renderWorldBlock(final IBlockAccess world, final int x, final int y, final int z, final Block block, final int modelId, final RenderBlocks renderer) {
         return false;
     }
 
     @Override
-    public boolean shouldRender3DInInventory(int modelId) {
+    public boolean shouldRender3DInInventory(final int modelId) {
         return true;
     }
 

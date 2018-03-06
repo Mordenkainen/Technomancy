@@ -23,11 +23,11 @@ public class ItemTHMaterial extends ItemBase {
         setHasSubtypes(true);
     }
 
-    public IIcon[] itemIcon = new IIcon[5];
+    final public IIcon[] itemIcon = new IIcon[5];
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister icon) {
+    public void registerIcons(final IIconRegister icon) {
         itemIcon[0] = icon.registerIcon(Reference.TEXTURE_PREFIX + "neutronizedMetal");
         itemIcon[1] = icon.registerIcon(Reference.TEXTURE_PREFIX + "enchantedCoil");
         itemIcon[2] = icon.registerIcon(Reference.TEXTURE_PREFIX + "neutronizedGear");
@@ -36,18 +36,18 @@ public class ItemTHMaterial extends ItemBase {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(int dmg) {
+    public IIcon getIconFromDamage(final int dmg) {
         return this.itemIcon[dmg];
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
+    public String getUnlocalizedName(final ItemStack stack) {
         return Reference.MOD_PREFIX + Names.ITEMMATERIAL + "." + stack.getItemDamage();
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
-    public void getSubItems(Item id, CreativeTabs tab, List list) {
+    public void getSubItems(final Item id, final CreativeTabs tab, final List list) {
         for (int i = 0; i < itemIcon.length; i++) {
             ItemStack stack = new ItemStack(id, 1, i);
             list.add(stack);
@@ -55,7 +55,7 @@ public class ItemTHMaterial extends ItemBase {
     }
 
     @Override
-    public void onUpdate(ItemStack items, World w, Entity ent, int slot, boolean held) {
+    public void onUpdate(final ItemStack items, final World w, final Entity ent, final int slot, final boolean held) {
         if (items.getItemDamage() == 4) {
             ((EntityPlayer) ent).inventory.mainInventory[slot] = new ItemStack(TMItems.coilCoupler);
         }

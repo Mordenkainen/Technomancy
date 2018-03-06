@@ -12,11 +12,11 @@ import theflogat.technomancy.lib.compat.Thaumcraft;
 
 public class TileEssentiaReservoir extends TileTechnomancy implements IEssentiaTransport, IAspectContainer {
 
-    private static final int maxAmount = 256;
+    private static final int MAX_AMOUNT = 256;
 
     public Aspect suction;
-    Aspect as = null;
-    int amount = 0;
+    private Aspect as;
+    private int amount;
 
     @Override
     public void updateEntity() {
@@ -27,12 +27,12 @@ public class TileEssentiaReservoir extends TileTechnomancy implements IEssentiaT
     }
 
     public void fill() {
-        if (amount < maxAmount) {
-            for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
-                TileEntity te = Thaumcraft.getConnectableTile(worldObj, xCoord, yCoord, zCoord, dir);
+        if (amount < MAX_AMOUNT) {
+            for (final ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
+                final TileEntity te = Thaumcraft.getConnectableTile(worldObj, xCoord, yCoord, zCoord, dir);
                 if (te != null) {
-                    IEssentiaTransport ic = (IEssentiaTransport) te;
-                    Aspect ta = ic.getEssentiaType(dir.getOpposite());
+                    final IEssentiaTransport ic = (IEssentiaTransport) te;
+                    final Aspect ta = ic.getEssentiaType(dir.getOpposite());
                     if (ic.getEssentiaAmount(dir.getOpposite()) > 0 && ic.getSuctionAmount(dir.getOpposite()) < getSuctionAmount(null) && getSuctionAmount(null) >= ic.getMinimumSuction()) {
                         addToContainer(ta, ic.takeEssentia(ta, 1, dir.getOpposite()));
                     }
@@ -42,13 +42,13 @@ public class TileEssentiaReservoir extends TileTechnomancy implements IEssentiaT
     }
 
     @Override
-    public void readCustomNBT(NBTTagCompound comp) {}
+    public void readCustomNBT(final NBTTagCompound comp) {}
 
     @Override
-    public void writeCustomNBT(NBTTagCompound comp) {}
+    public void writeCustomNBT(final NBTTagCompound comp) {}
 
     @Override
-    public void writeSyncData(NBTTagCompound comp) {
+    public void writeSyncData(final NBTTagCompound comp) {
         comp.setInteger("amount", amount);
         if (as != null) {
             comp.setString("as", as.getTag());
@@ -59,59 +59,59 @@ public class TileEssentiaReservoir extends TileTechnomancy implements IEssentiaT
     }
 
     @Override
-    public void readSyncData(NBTTagCompound comp) {
+    public void readSyncData(final NBTTagCompound comp) {
         amount = comp.getInteger("amount");
         as = Aspect.getAspect(comp.getString("as"));
         suction = Aspect.getAspect(comp.getString("suction"));
     }
 
     @Override
-    public boolean isConnectable(ForgeDirection face) {
+    public boolean isConnectable(final ForgeDirection face) {
         return true;
     }
 
     @Override
-    public boolean canInputFrom(ForgeDirection face) {
+    public boolean canInputFrom(final ForgeDirection face) {
         return true;
     }
 
     @Override
-    public boolean canOutputTo(ForgeDirection face) {
+    public boolean canOutputTo(final ForgeDirection face) {
         return true;
     }
 
     @Override
-    public void setSuction(Aspect aspect, int amount) {
+    public void setSuction(final Aspect aspect, final int amount) {
 
     }
 
     @Override
-    public Aspect getSuctionType(ForgeDirection face) {
+    public Aspect getSuctionType(final ForgeDirection face) {
         return suction;
     }
 
     @Override
-    public int getSuctionAmount(ForgeDirection face) {
+    public int getSuctionAmount(final ForgeDirection face) {
         return 128;
     }
 
     @Override
-    public int takeEssentia(Aspect aspect, int amount, ForgeDirection face) {
+    public int takeEssentia(final Aspect aspect, final int amount, final ForgeDirection face) {
         return takeFromContainer(aspect, amount) ? 0 : amount;
     }
 
     @Override
-    public int addEssentia(Aspect aspect, int amount, ForgeDirection face) {
+    public int addEssentia(final Aspect aspect, final int amount, final ForgeDirection face) {
         return addToContainer(aspect, amount);
     }
 
     @Override
-    public Aspect getEssentiaType(ForgeDirection face) {
+    public Aspect getEssentiaType(final ForgeDirection face) {
         return as;
     }
 
     @Override
-    public int getEssentiaAmount(ForgeDirection face) {
+    public int getEssentiaAmount(final ForgeDirection face) {
         return amount;
     }
 
@@ -128,7 +128,7 @@ public class TileEssentiaReservoir extends TileTechnomancy implements IEssentiaT
     @Override
     public AspectList getAspects() {
         if (as != null && amount > 0) {
-            AspectList al = new AspectList();
+            final AspectList al = new AspectList();
             al.add(as, amount);
             return al;
         }
@@ -136,20 +136,20 @@ public class TileEssentiaReservoir extends TileTechnomancy implements IEssentiaT
     }
 
     @Override
-    public void setAspects(AspectList aspects) {
+    public void setAspects(final AspectList aspects) {
 
     }
 
     @Override
-    public boolean doesContainerAccept(Aspect tag) {
-        return as == null || as == tag;
+    public boolean doesContainerAccept(final Aspect tag) {
+        return as == null || as.equals(tag);
     }
 
     @Override
-    public int addToContainer(Aspect tag, int amt) {
-        if (amt != 0 && (amount < maxAmount && tag == as || amount == 0)) {
+    public int addToContainer(final Aspect tag, int amt) {
+        if (amt != 0 && (amount < MAX_AMOUNT && tag == as || amount == 0)) {
             as = tag;
-            int added = Math.min(amt, maxAmount - amount);
+            final int added = Math.min(amt, MAX_AMOUNT - amount);
             amount += added;
             amt -= added;
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
@@ -158,7 +158,7 @@ public class TileEssentiaReservoir extends TileTechnomancy implements IEssentiaT
     }
 
     @Override
-    public boolean takeFromContainer(Aspect tag, int amount) {
+    public boolean takeFromContainer(final Aspect tag, int amount) {
         if (as != null && tag == as && amount <= this.amount) {
             this.amount -= amount;
             return true;
@@ -167,22 +167,22 @@ public class TileEssentiaReservoir extends TileTechnomancy implements IEssentiaT
     }
 
     @Override
-    public boolean takeFromContainer(AspectList ot) {
+    public boolean takeFromContainer(final AspectList ot) {
         return false;
     }
 
     @Override
-    public boolean doesContainerContainAmount(Aspect tag, int amount) {
+    public boolean doesContainerContainAmount(final Aspect tag, final int amount) {
         return as != null && tag == as && amount <= this.amount;
     }
 
     @Override
-    public boolean doesContainerContain(AspectList ot) {
+    public boolean doesContainerContain(final AspectList ot) {
         return false;
     }
 
     @Override
-    public int containerContains(Aspect tag) {
+    public int containerContains(final Aspect tag) {
         return as != null && tag == as ? amount : 0;
     }
 

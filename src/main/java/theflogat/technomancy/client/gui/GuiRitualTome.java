@@ -142,7 +142,7 @@ public class GuiRitualTome extends GuiTomeTemplate {
         }
     }
 
-    public static String getTabFromId(int id) {
+    public static String getTabFromId(final int id) {
         switch (id) {
             case 0:
                 return "Ritual 101";

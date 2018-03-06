@@ -83,7 +83,7 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
         return false;
     }
 
-    protected ItemStack getOutput(ItemStack items) {
+    protected ItemStack getOutput(final ItemStack items) {
         if (Ore.isProcessableOre(items)) {
             return addTag(new ItemStack(itemFromOreDictName(items), 1));
         } else if (isProcessed(items) && isProcessable(items.stackTagCompound)) {
@@ -95,7 +95,7 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
         return null;
     }
 
-    protected ItemStack addTag(ItemStack items) {
+    protected ItemStack addTag(final ItemStack items) {
         if (items == null)
             return null;
 
@@ -108,15 +108,15 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
         return items;
     }
 
-    protected boolean canProcess(ItemStack items) {
+    protected boolean canProcess(final ItemStack items) {
         return Ore.isProcessableOre(items) || (isProcessed(items) && items.stackTagCompound != null && isProcessable(items.stackTagCompound));
     }
 
-    protected boolean isProcessable(NBTTagCompound comp) {
+    protected boolean isProcessable(final NBTTagCompound comp) {
         return comp.getInteger(tagCompound) < 2;
     }
 
-    protected Item itemFromOreDictName(ItemStack items) {
+    protected Item itemFromOreDictName(final ItemStack items) {
         for (int i : OreDictionary.getOreIDs(items)) {
             for (int j = 0; j < Ore.ORES.size(); j++) {
                 if (Ore.ORES.get(j).oreName() == OreDictionary.getOreName(i)) {
@@ -127,19 +127,19 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
         return null;
     }
 
-    protected boolean isProcessed(ItemStack items) {
+    protected boolean isProcessed(final ItemStack items) {
         return items.getItem() instanceof ItemProcessedOre;
     }
 
-    protected abstract boolean getFuel(ItemStack items, int multiplier, int reprocess);
+    protected abstract boolean getFuel(final ItemStack items, final int multiplier, final int reprocess);
 
     @SideOnly(Side.CLIENT)
-    public int getTimeScaled(int j) {
+    public int getTimeScaled(final int j) {
         return progress * j / maxTime;
     }
 
     @Override
-    public void readCustomNBT(NBTTagCompound compound) {
+    public void readCustomNBT(final NBTTagCompound compound) {
         NBTTagList list = compound.getTagList("ItemsTile", 10);
         inv = new ItemStack[2];
 
@@ -154,7 +154,7 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
     }
 
     @Override
-    public void writeCustomNBT(NBTTagCompound compound) {
+    public void writeCustomNBT(final NBTTagCompound compound) {
         NBTTagList list = new NBTTagList();
 
         for (int i = 0; i < this.getSizeInventory(); i++) {
@@ -173,13 +173,13 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
     }
 
     @Override
-    public void writeSyncData(NBTTagCompound compound) {
+    public void writeSyncData(final NBTTagCompound compound) {
         compound.setInteger("Time", progress);
         compound.setBoolean("Active", isActive);
     }
 
     @Override
-    public void readSyncData(NBTTagCompound compound) {
+    public void readSyncData(final NBTTagCompound compound) {
         progress = compound.getInteger("Time");
         isActive = compound.getBoolean("Active");
     }
@@ -190,12 +190,12 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
     }
 
     @Override
-    public ItemStack getStackInSlot(int i) {
+    public ItemStack getStackInSlot(final int i) {
         return inv[i];
     }
 
     @Override
-    public ItemStack decrStackSize(int i, int j) {
+    public ItemStack decrStackSize(final int i, final int j) {
         if (inv[i] != null) {
             if (inv[i].stackSize <= j) {
                 ItemStack stack = this.inv[i];
@@ -212,12 +212,12 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(int i) {
+    public ItemStack getStackInSlotOnClosing(final int i) {
         return inv[i];
     }
 
     @Override
-    public void setInventorySlotContents(int i, ItemStack stack) {
+    public void setInventorySlotContents(final int i, final ItemStack stack) {
         inv[i] = stack;
     }
 
@@ -232,22 +232,22 @@ public abstract class TileProcessorBase extends TileTechnomancy implements ISide
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack items) {
+    public boolean isItemValidForSlot(final int i, final ItemStack items) {
         return i == 0 && canProcess(items);
     }
 
     @Override
-    public int[] getAccessibleSlotsFromSide(int i) {
+    public int[] getAccessibleSlotsFromSide(final int i) {
         return new int[] { 0, 1 };
     }
 
     @Override
-    public boolean canInsertItem(int i, ItemStack stack, int j) {
+    public boolean canInsertItem(final int i, final ItemStack stack, final int j) {
         return i == 0;
     }
 
     @Override
-    public boolean canExtractItem(int i, ItemStack itemstack, int j) {
+    public boolean canExtractItem(final int i, final ItemStack itemstack, final int j) {
         return i == 1;
     }
 }

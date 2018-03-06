@@ -18,9 +18,10 @@ public class BlockBMProcessor extends BlockProcessor {
     }
 
     @Override
-    public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-        if (super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ))
+    public boolean onBlockActivated(final World w, final int x, final int y, final int z, final EntityPlayer player, final int side, final float hitX, final float hitY, final float hitZ) {
+        if (super.onBlockActivated(w, x, y, z, player, side, hitX, hitY, hitZ)) {
             return true;
+        }
         if (player != null) {
             TileEntity te = w.getTileEntity(x, y, z);
             if (te instanceof TileBMProcessor) {
@@ -34,7 +35,7 @@ public class BlockBMProcessor extends BlockProcessor {
     }
 
     @Override
-    public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase entity, ItemStack items) {
+    public void onBlockPlacedBy(final World w, final int x, final int y, final int z, final EntityLivingBase entity, final ItemStack items) {
         super.onBlockPlacedBy(w, x, y, z, entity, items);
         TileEntity tile = w.getTileEntity(x, y, z);
         if (tile instanceof TileBMProcessor && entity instanceof EntityPlayer) {
@@ -43,12 +44,12 @@ public class BlockBMProcessor extends BlockProcessor {
     }
 
     @Override
-    public TileEntity createNewTileEntity(World w, int meta) {
+    public TileEntity createNewTileEntity(final World w, final int meta) {
         return new TileBMProcessor();
     }
 
     @Override
-    public void getNBTInfo(NBTTagCompound comp, ArrayList<String> l, int meta) {
+    public void getNBTInfo(final NBTTagCompound comp, final ArrayList<String> l, final int meta) {
         super.getNBTInfo(comp, l, meta);
         l.add("Owner:" + comp.getString("owner"));
     }

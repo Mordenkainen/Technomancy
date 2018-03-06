@@ -59,7 +59,7 @@ public class TileExistenceHarvester extends TileExistenceRedstoneBase implements
     }
 
     @Override
-    public void readCustomNBT(NBTTagCompound comp) {
+    public void readCustomNBT(final NBTTagCompound comp) {
         super.readCustomNBT(comp);
         flag = true;
         if (comp.hasKey("items")) {
@@ -77,7 +77,7 @@ public class TileExistenceHarvester extends TileExistenceRedstoneBase implements
     }
 
     @Override
-    public void writeCustomNBT(NBTTagCompound comp) {
+    public void writeCustomNBT(final NBTTagCompound comp) {
         super.writeCustomNBT(comp);
         if (items != null) {
             NBTTagList list = new NBTTagList();
@@ -113,12 +113,12 @@ public class TileExistenceHarvester extends TileExistenceRedstoneBase implements
     }
 
     @Override
-    public ItemStack getStackInSlot(int i) {
+    public ItemStack getStackInSlot(final int i) {
         return items != null ? items[i] : null;
     }
 
     @Override
-    public ItemStack decrStackSize(int slot, int count) {
+    public ItemStack decrStackSize(final int slot, final int count) {
         flag = true;
         ItemStack itemstack = getStackInSlot(slot);
 
@@ -133,7 +133,7 @@ public class TileExistenceHarvester extends TileExistenceRedstoneBase implements
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(int i) {
+    public ItemStack getStackInSlotOnClosing(final int i) {
         if (items != null) {
             ItemStack it = items[i].copy();
             setInventorySlotContents(i, null);
@@ -143,7 +143,7 @@ public class TileExistenceHarvester extends TileExistenceRedstoneBase implements
     }
 
     @Override
-    public void setInventorySlotContents(int i, ItemStack newItems) {
+    public void setInventorySlotContents(final int i, final ItemStack newItems) {
         flag = true;
         if (items != null) {
             items[i] = newItems;
@@ -166,7 +166,7 @@ public class TileExistenceHarvester extends TileExistenceRedstoneBase implements
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player) {
+    public boolean isUseableByPlayer(final EntityPlayer player) {
         return false;
     }
 
@@ -177,7 +177,7 @@ public class TileExistenceHarvester extends TileExistenceRedstoneBase implements
     public void closeInventory() {}
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack newItems) {
+    public boolean isItemValidForSlot(final int i, final ItemStack newItems) {
         if (items != null) {
             return items[i] == null ? true : (items[i].getItem() == newItems.getItem() && items[i].stackSize < 64);
         }

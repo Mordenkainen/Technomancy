@@ -83,16 +83,16 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
                 }
             } else {
                 final TileNodeGenerator partner = getTE(worldObj, xCoord + ForgeDirection.getOrientation(facing).offsetX * 6, yCoord, zCoord + ForgeDirection.getOrientation(facing).offsetZ * 6);
-                active = partner != null ? partner.isWholeTileLoaded() ? ForgeDirection.getOrientation(facing).getOpposite() == ForgeDirection.getOrientation(partner.facing) : false : false;
+                active = partner != null && partner.isWholeTileLoaded() ? ForgeDirection.getOrientation(facing).getOpposite() == ForgeDirection.getOrientation(partner.facing) : false;
                 if (active) {
-                    int xx = xCoord + ForgeDirection.getOrientation(facing).offsetX * 3;
-                    int zz = zCoord + ForgeDirection.getOrientation(facing).offsetZ * 3;
-                    TileEntity entity = worldObj.getTileEntity(xx, yCoord + 1, zz);
+                    final int xx = xCoord + ForgeDirection.getOrientation(facing).offsetX * 3;
+                    final int zz = zCoord + ForgeDirection.getOrientation(facing).offsetZ * 3;
+                    final TileEntity entity = worldObj.getTileEntity(xx, yCoord + 1, zz);
                     if (entity == null && worldObj.isAirBlock(xx, yCoord + 1, zz)) {
                         canSpawn = true;
                         addNode = false;
                     } else if (entity instanceof TileNode) {
-                        INode node = (INode) entity;
+                        final INode node = (INode) entity;
                         addNode = true;
                         if (canRun() && !worldObj.isRemote && amount > 0 && aspect != null) {
                             if (getEnergyStored() >= 1000 && node.getAspects().aspects.containsKey(aspect) && node.getAspects().getAmount(aspect) < node.getAspectsBase().getAmount(aspect)) {
@@ -100,21 +100,19 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
                                 node.addToContainer(aspect, 1);
                                 takeFromContainer(aspect, 1);
                                 worldObj.markBlockForUpdate(xx, yCoord + 1, zz);
-                            } else if (boost && getEnergyStored() >= 10000 && amount >= 10) {
-                                if (node.getNodeVisBase(aspect) < Short.MAX_VALUE) {
-                                    extractEnergy(10000, false);
-                                    node.setNodeVisBase(aspect, (short) (node.getNodeVisBase(aspect) + 1));
-                                    node.addToContainer(aspect, 1);
-                                    takeFromContainer(aspect, 10);
-                                    worldObj.markBlockForUpdate(xx, yCoord + 1, zz);
-                                }
+                            } else if (boost && getEnergyStored() >= 10000 && amount >= 10 && node.getNodeVisBase(aspect) < Short.MAX_VALUE) {
+                                extractEnergy(10000, false);
+                                node.setNodeVisBase(aspect, (short) (node.getNodeVisBase(aspect) + 1));
+                                node.addToContainer(aspect, 1);
+                                takeFromContainer(aspect, 10);
+                                worldObj.markBlockForUpdate(xx, yCoord + 1, zz);
                             }
                         }
                         canSpawn = running = initiator = false;
                         step = 0;
                     }
                     if (step == 200 && initiator) {
-                        AspectList al = new AspectList();
+                        final AspectList al = new AspectList();
                         al.add(aspect, amount);
                         al.add(partner.aspect, partner.amount);
                         generateNode(al);
@@ -142,11 +140,13 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
     private boolean isWholeTileLoaded() {
         for (int w = -1; w < 2; w++) {
             if (facing == 2 || facing == 3) {
-                if (!WorldHelper.isChunkLoaded(worldObj, xCoord + w, zCoord))
+                if (!WorldHelper.isChunkLoaded(worldObj, xCoord + w, zCoord)) {
                     return false;
+                }
             } else {
-                if (!WorldHelper.isChunkLoaded(worldObj, xCoord, zCoord + w))
+                if (!WorldHelper.isChunkLoaded(worldObj, xCoord, zCoord + w)) {
                     return false;
+                }
             }
         }
         return true;
@@ -194,15 +194,15 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
 
     // Just using as a reference
     // NORMAL, UNSTABLE, DARK, TAINTED, HUNGRY, PURE
-    void generateNode(AspectList aspects) {
+    private void generateNode(final AspectList aspects) {
         int xx = xCoord + ForgeDirection.getOrientation(facing).offsetX * 3;
         int zz = zCoord + ForgeDirection.getOrientation(facing).offsetZ * 3;
         if (worldObj.isRemote) {
             for (int a = 0; a < 6; a++) {
                 for (int b = 0; b < 6; b++) {
-                    float fx = (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.5F;
-                    float fy = (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.5F;
-                    float fz = (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.5F;
+                    final float fx = (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.5F;
+                    final float fy = (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.5F;
+                    final float fz = (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.5F;
                     Thaumcraft.wispFX3(worldObj, xx + .5 + fx, yCoord + 1.5 + fy, zz + .5 + fz, xx + .5 + fx * 10.0F, yCoord + 1.5 + fy * 10.0F, zz + .5 + fz * 10.0F, 0.4F, b, true, 0.05F);
                 }
             }
@@ -211,11 +211,11 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
             NodeType type = NodeType.NORMAL;
             NodeModifier mod = null;
             Aspect ra = null;
-            int aurum = aspects.getAmount(Aspect.AURA);
-            int taint = aspects.getAmount(Aspect.TAINT);
+            final int aurum = aspects.getAmount(Aspect.AURA);
+            final int taint = aspects.getAmount(Aspect.TAINT);
             ra = BiomeHandler.getRandomBiomeTag(worldObj.getBiomeGenForCoords(xx, zz).biomeID, worldObj.rand);
             if (ra == null) {
-                ArrayList<Aspect> primals = Aspect.getPrimalAspects();
+                final ArrayList<Aspect> primals = Aspect.getPrimalAspects();
                 ra = primals.get(worldObj.rand.nextInt(primals.size()));
             }
             if (aurum == taint && (aurum + taint == 122 || aurum + taint == 152 || aurum + taint == 218 || aurum + taint == 510)) {
@@ -242,13 +242,13 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
         }
     }
 
-    void fill() {
-        for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
+    private void fill() {
+        for (final ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
             if (dir != ForgeDirection.getOrientation(facing)) {
-                TileEntity te = Thaumcraft.getConnectableTile(worldObj, xCoord, yCoord, zCoord, dir);
+                final TileEntity te = Thaumcraft.getConnectableTile(worldObj, xCoord, yCoord, zCoord, dir);
                 if (te != null) {
-                    IEssentiaTransport ic = (IEssentiaTransport) te;
-                    Aspect ta = ic.getEssentiaType(dir.getOpposite());
+                    final IEssentiaTransport ic = (IEssentiaTransport) te;
+                    final Aspect ta = ic.getEssentiaType(dir.getOpposite());
                     if (ic.getEssentiaAmount(dir.getOpposite()) > 0 && ic.getSuctionAmount(dir.getOpposite()) < getSuctionAmount(null) && getSuctionAmount(null) >= ic.getMinimumSuction()) {
                         addToContainer(ta, ic.takeEssentia(ta, 1, dir.getOpposite()));
                     }
@@ -257,9 +257,9 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
         }
     }
 
-    void shootLightning() {
-        double[] boltdata = lightning.get(facing)[worldObj.rand.nextInt(4)];
-        FXLightningBolt bolt = new FXLightningBolt(worldObj, xCoord + boltdata[0], yCoord + boltdata[1], zCoord + boltdata[2], xCoord + boltdata[3], yCoord + boltdata[4], zCoord + boltdata[5], worldObj.rand.nextLong(), 6, 0.5F);
+    private void shootLightning() {
+        final double[] boltdata = lightning.get(facing)[worldObj.rand.nextInt(4)];
+        final FXLightningBolt bolt = new FXLightningBolt(worldObj, xCoord + boltdata[0], yCoord + boltdata[1], zCoord + boltdata[2], xCoord + boltdata[3], yCoord + boltdata[4], zCoord + boltdata[5], worldObj.rand.nextLong(), 6, 0.5F);
         bolt.defaultFractal();
         bolt.setType((int) boltdata[6]);
         bolt.setWidth(0.02F);
@@ -268,11 +268,11 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
     }
 
     @Override
-    public int onWandRightClick(World world, ItemStack wandstack, EntityPlayer player, int x, int y, int z, int side, int md) {
+    public int onWandRightClick(final World world, final ItemStack wandstack, final EntityPlayer player, final int x, final int y, final int z, final int side, final int md) {
         if (canRun() && player != null && !player.isSneaking() && world != null && active && canSpawn && !running) {
-            int xx = xCoord + ForgeDirection.getOrientation(facing).offsetX * 6;
-            int zz = zCoord + ForgeDirection.getOrientation(facing).offsetZ * 6;
-            TileNodeGenerator partner = getTE(worldObj, xx, yCoord, zz);
+            final int xx = xCoord + ForgeDirection.getOrientation(facing).offsetX * 6;
+            final int zz = zCoord + ForgeDirection.getOrientation(facing).offsetZ * 6;
+            final TileNodeGenerator partner = getTE(worldObj, xx, yCoord, zz);
             if (partner != null && amount + partner.amount > 64) {
                 if (getEnergyStored() >= MathHelper.round(Math.pow((amount + partner.amount) / 2, 2) * 762.939453125)) {
                     initiator = true;
@@ -290,12 +290,12 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
     }
 
     @Override
-    public ItemStack onWandRightClick(World world, ItemStack items, EntityPlayer player) {
+    public ItemStack onWandRightClick(final World world, final ItemStack items, final EntityPlayer player) {
         return items;
     }
 
     @Override
-    public void onUsingWandTick(ItemStack wandstack, EntityPlayer player, int count) {}
+    public void onUsingWandTick(final ItemStack wandstack, final EntityPlayer player, final int count) {}
 
     @Override
     public void onWandStoppedUsing(ItemStack wandstack, World world, EntityPlayer player, int count) {}
@@ -311,7 +311,7 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
     }
 
     @Override
-    public void writeSyncData(NBTTagCompound compound) {
+    public void writeSyncData(final NBTTagCompound compound) {
         super.writeSyncData(compound);
         if (aspect != null) {
             compound.setString("Aspect", aspect.getTag());
@@ -328,7 +328,7 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
     }
 
     @Override
-    public void readSyncData(NBTTagCompound compound) {
+    public void readSyncData(final NBTTagCompound compound) {
         super.readSyncData(compound);
         aspect = Aspect.getAspect(compound.getString("Aspect"));
         amount = compound.getShort("Amount");
@@ -352,7 +352,7 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
     }
 
     @Override
-    public int addToContainer(Aspect tag, int amt) {
+    public int addToContainer(final Aspect tag, int amt) {
         if (amt != 0 && (amount < MAXAMOUNT && tag == aspect || amount == 0)) {
             aspect = tag;
             int added = Math.min(amt, MAXAMOUNT - amount);
@@ -364,7 +364,7 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
     }
 
     @Override
-    public boolean takeFromContainer(Aspect tag, int amt) {
+    public boolean takeFromContainer(final Aspect tag, final int amt) {
         if (doesContainerContainAmount(tag, amt)) {
             amount -= amt;
             if (amount <= 0) {
@@ -378,40 +378,40 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
     }
 
     @Override
-    public boolean takeFromContainer(AspectList ot) {
+    public boolean takeFromContainer(final AspectList ot) {
         return false;
     }
 
     @Override
-    public boolean doesContainerContainAmount(Aspect tag, int amt) {
+    public boolean doesContainerContainAmount(final Aspect tag, final int amt) {
         return amount >= amt && tag == aspect;
     }
 
     @Override
-    public int containerContains(Aspect tag) {
+    public int containerContains(final Aspect tag) {
         return aspect == tag ? amount : 0;
     }
 
     @Override
-    public boolean isConnectable(ForgeDirection face) {
+    public boolean isConnectable(final ForgeDirection face) {
         return face != ForgeDirection.getOrientation(facing);
     }
 
     @Override
-    public boolean canInputFrom(ForgeDirection face) {
+    public boolean canInputFrom(final ForgeDirection face) {
         return face != ForgeDirection.getOrientation(facing);
     }
 
     @Override
-    public boolean canOutputTo(ForgeDirection face) {
+    public boolean canOutputTo(final ForgeDirection face) {
         return face != ForgeDirection.getOrientation(facing);
     }
 
     @Override
-    public void setSuction(Aspect aspect, int amount) {}
+    public void setSuction(final Aspect aspect, final int amount) {}
 
     @Override
-    public int takeEssentia(Aspect aspect, int amount, ForgeDirection dir) {
+    public int takeEssentia(final Aspect aspect, final int amount, final ForgeDirection dir) {
         return takeFromContainer(aspect, amount) ? amount : 0;
     }
 
@@ -426,12 +426,12 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
     }
 
     @Override
-    public void setAspects(AspectList aspects) {}
+    public void setAspects(final AspectList aspects) {}
 
     @Override
-    public boolean doesContainerAccept(Aspect tag) {
+    public boolean doesContainerAccept(final Aspect tag) {
         if (!addNode && active) {
-            if ((facing == 2 || facing == 4)) {
+            if (facing == 2 || facing == 4) {
                 return tag == Aspect.AURA && amount < MAXAMOUNT;
             } else {
                 return tag == Aspect.TAINT && amount < MAXAMOUNT;
@@ -442,7 +442,7 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
     }
 
     @Override
-    public Aspect getSuctionType(ForgeDirection face) {
+    public Aspect getSuctionType(final ForgeDirection face) {
         if (aspect != null) {
             return aspect;
         }
@@ -457,27 +457,27 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
     }
 
     @Override
-    public int getSuctionAmount(ForgeDirection face) {
+    public int getSuctionAmount(final ForgeDirection face) {
         return amount < MAXAMOUNT ? 48 : 0;
     }
 
     @Override
-    public int addEssentia(Aspect aspect, int amount, ForgeDirection dir) {
+    public int addEssentia(final Aspect aspect, final int amount, final ForgeDirection dir) {
         return amount - addToContainer(aspect, amount);
     }
 
     @Override
-    public Aspect getEssentiaType(ForgeDirection face) {
+    public Aspect getEssentiaType(final ForgeDirection face) {
         return aspect;
     }
 
     @Override
-    public int getEssentiaAmount(ForgeDirection face) {
+    public int getEssentiaAmount(final ForgeDirection face) {
         return amount;
     }
 
     @Override
-    public boolean doesContainerContain(AspectList ot) {
+    public boolean doesContainerContain(final AspectList ot) {
         if (aspect != null && amount > 0 && ot.size() == 1) {
             if (ot.getAspects()[0] == aspect && ot.getAmount(aspect) <= amount) {
                 return true;
@@ -498,11 +498,11 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
     }
 
     @Override
-    public void setBoost(boolean newBoost) {
+    public void setBoost(final boolean newBoost) {
         boost = newBoost;
     }
 
-    private static TileNodeGenerator getTE(IBlockAccess world, int x, int y, int z) {
+    private static TileNodeGenerator getTE(final IBlockAccess world, final int x, final int y, final int z) {
         TileEntity tile = world.getTileEntity(x, y, z);
         return tile instanceof TileNodeGenerator ? (TileNodeGenerator) tile : null;
     }
@@ -522,7 +522,7 @@ public class TileNodeGenerator extends TileMachineRedstone implements IEssentiaT
     }
 
     @Override
-    public boolean onWrenched(boolean sneaking) {
+    public boolean onWrenched(final boolean sneaking) {
         if (sneaking) {
             destroyDummyBlocks();
             if (!worldObj.isRemote) {

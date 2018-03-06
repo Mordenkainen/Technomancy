@@ -28,7 +28,7 @@ public abstract class BlockProcessor extends BlockContainerAdvanced {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void registerBlockIcons(IIconRegister icon) {
+    public void registerBlockIcons(final IIconRegister icon) {
         icons = new IIcon[4];
         icons[0] = icon.registerIcon(Reference.TEXTURE_PREFIX + Names.PROCESSOR + name + "Side");
         icons[1] = icon.registerIcon(Reference.TEXTURE_PREFIX + Names.PROCESSOR + name + "Active");
@@ -38,7 +38,7 @@ public abstract class BlockProcessor extends BlockContainerAdvanced {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public IIcon getIcon(int side, int meta) {
+    public IIcon getIcon(final int side, final int meta) {
         if (side == 1) {
             return icons[3];
         }
@@ -50,7 +50,7 @@ public abstract class BlockProcessor extends BlockContainerAdvanced {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public IIcon getIcon(IBlockAccess access, int x, int y, int z, int side) {
+    public IIcon getIcon(final IBlockAccess access, final int x, final int y, final int z, final int side) {
         if (side == 1) {
             return icons[3];
         }
@@ -66,7 +66,7 @@ public abstract class BlockProcessor extends BlockContainerAdvanced {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void randomDisplayTick(World world, int x, int y, int z, Random r) {
+    public void randomDisplayTick(final World world, final int x, final int y, final int z, final Random r) {
         TileEntity te = world.getTileEntity(x, y, z);
         if (te instanceof TileProcessorBase && ((TileProcessorBase) te).isActive) {
             float f = x + 0.5F;
@@ -89,7 +89,7 @@ public abstract class BlockProcessor extends BlockContainerAdvanced {
     }
 
     @Override
-    public int getLightValue(IBlockAccess world, int x, int y, int z) {
+    public int getLightValue(final IBlockAccess world, final int x, final int y, final int z) {
         TileEntity tile = world.getTileEntity(x, y, z);
         if (tile instanceof TileProcessorBase && ((TileProcessorBase) tile).isActive) {
             return 12;
@@ -98,7 +98,7 @@ public abstract class BlockProcessor extends BlockContainerAdvanced {
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block id, int meta) {
+    public void breakBlock(final World world, final int x, final int y, final int z, final Block id, final int meta) {
         InvHelper.dropItemsFromTile(world, x, y, z);
         super.breakBlock(world, x, y, z, id, meta);
     }
