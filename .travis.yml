@@ -1,0 +1,30 @@
+sudo: false
+global_env: TERM=dumb
+group: stable
+dist: precise
+os: linux
+language: java
+jdk: oraclejdk8
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+  - rm -f  $HOME/.gradle/caches/minecraft/deobfedDeps/providedDummy.jar
+  - rm -f  $HOME/.gradle/caches/minecraft/deobfedDeps/compileDummy.jar
+cache:
+  directories:
+    - ./libs
+    - $HOME/.gradle/caches
+
+before_install: chmod +x gradlew
+install:
+  - ./gradlew setupCIWorkspace
+script:
+  - ./gradlew build
+after_success:
+  - wget https://raw.githubusercontent.com/Mordenkainen/travis-ci-discord-webhook/master/send.sh
+  - chmod +x send.sh
+  - ./send.sh success $WEBHOOK_URL
+after_failure:
+  - wget https://raw.githubusercontent.com/Mordenkainen/travis-ci-discord-webhook/master/send.sh
+  - chmod +x send.sh
+  - ./send.sh failure $WEBHOOK_URL
